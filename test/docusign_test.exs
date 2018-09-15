@@ -1,8 +1,8 @@
-defmodule DocusignTest do
+defmodule DocuSignTest do
   use ExUnit.Case
-  doctest Docusign
+  doctest DocuSign
 
   test "greets the world" do
-    assert Docusign.hello() == :world
+    assert DocuSign.hello() == :world
   end
 end
