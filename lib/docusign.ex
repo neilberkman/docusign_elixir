@@ -1,18 +1,20 @@
-defmodule Docusign do
+defmodule DocuSign do
+  alias DocuSign.APIClient
+
   @moduledoc """
-  Documentation for Docusign.
+  Documentation for DocuSign.
   """
 
   @doc """
-  Hello world.
+  Retrieves information for the current DocuSign user.
 
   ## Examples
 
-      iex> Docusign.hello()
-      :world
+      iex> DocuSign.user_info()
+      {}
 
   """
-  def hello do
-    :world
+  def user_info do
+    APIClient.user_info()
   end
 end

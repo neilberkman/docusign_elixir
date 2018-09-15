@@ -1,4 +1,4 @@
-# Docusign API Client
+# DocuSign API Client
 
 Unofficial DocuSign Elixir Library used to interact with the eSign REST API. Send, sign, and approve documents using this client.
 
