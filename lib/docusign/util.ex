@@ -32,11 +32,10 @@ defmodule DocuSign.Util do
     Enum.into(m, %{}, fn
       {k, v} when is_binary(k) ->
         a = String.to_existing_atom(k)
-      {a, v}
+        {a, v}
 
       entry ->
         entry
     end)
   end
-
 end
