@@ -11,9 +11,9 @@ defmodule DocuSign.OAuth2Strategy do
   use OAuth2.Strategy
 
   alias OAuth2.{Client, AccessToken, Error}
-  @type param         :: binary | %{binary => param} | [param]
-  @type params        :: %{binary => param} | Keyword.t
-  @type headers       :: [{binary, binary}]
+  @type param :: binary | %{binary => param} | [param]
+  @type params :: %{binary => param} | Keyword.t()
+  @type headers :: [{binary, binary}]
 
   @private_key Application.get_env(:docusign, :private_key)
   @token_expires_in Application.get_env(:docusign, :token_expires_in)
@@ -36,7 +36,7 @@ defmodule DocuSign.OAuth2Strategy do
   Check expiries of token.
   return true if token is expired
   """
-  @spec token_expired?(AccessToken.t()|nil|Client.t()) :: boolean
+  @spec token_expired?(AccessToken.t() | nil | Client.t()) :: boolean
   def token_expired?(%AccessToken{} = token), do: AccessToken.expired?(token)
   def token_expired?(nil), do: true
   def token_expired?(%Client{token: token}), do: token_expired?(token)
@@ -92,6 +92,7 @@ defmodule DocuSign.OAuth2Strategy do
   @spec assertion() :: binary
   defp assertion() do
     now_unix = :os.system_time(:seconds)
+
     %{
       iss: @client_id,
       sub: @user_id,
