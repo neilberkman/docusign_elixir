@@ -42,7 +42,7 @@ defmodule DocuSign.OAuth2Strategy do
   def token_expired?(%Client{token: token}), do: token_expired?(token)
 
   @doc """
-  Create new client api
+  Create new API client
   """
   @spec client() :: Client.t()
   def client do
