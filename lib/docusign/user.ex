@@ -1,6 +1,6 @@
 defmodule DocuSign.User do
   @moduledoc """
-  The module contains struct of User and functions for work it.
+  This module contains the User struct and functions for working with it.
 
   ### Examples
 
