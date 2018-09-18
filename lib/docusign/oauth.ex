@@ -53,7 +53,10 @@ defmodule DocuSign.OAuth do
   defp fetched_auth_token(assertion, {_, expiration}) do
     Request.post_form(
       "oauth/token",
-      [grant_type: 'urn:ietf:params:oauth:grant-type:jwt-bearer', assertion: assertion],
+      [
+        grant_type: 'urn:ietf:params:oauth:grant-type:jwt-bearer',
+        assertion: assertion
+      ],
       nil
     )
     |> extracted_auth_token(expiration)
