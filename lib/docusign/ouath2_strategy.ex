@@ -1,6 +1,6 @@
 defmodule DocuSign.OAuth2Strategy do
   @moduledoc ~S"""
-  This module implemetation oauth2 strategy of DocuSign.
+  This module implements an oauth2 strategy for DocuSign.
 
   ### Examples
 
@@ -21,7 +21,7 @@ defmodule DocuSign.OAuth2Strategy do
   @client_id Application.get_env(:docusign, :client_id)
   @user_id Application.get_env(:docusign, :user_id)
 
-  @grand_type "urn:ietf:params:oauth:grant-type:jwt-bearer"
+  @grant_type "urn:ietf:params:oauth:grant-type:jwt-bearer"
 
   @doc """
   Retrieve access token and return a client
@@ -58,7 +58,7 @@ defmodule DocuSign.OAuth2Strategy do
   @spec get_token(Client.t(), Keyword.t(), Keyword.t()) :: binary
   def get_token(client, _params, _headers) do
     client
-    |> put_param(:grant_type, @grand_type)
+    |> put_param(:grant_type, @grant_type)
     |> put_param(:assertion, assertion())
   end
 
