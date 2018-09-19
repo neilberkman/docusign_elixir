@@ -22,7 +22,6 @@ defmodule DocuSign.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:httpoison, "~> 1.3"},
       {:poison, "~> 3.0"},
       {:joken, "~> 1.5"},
       {:oauth2, "~> 0.9.3"}
