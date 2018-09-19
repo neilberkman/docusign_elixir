@@ -5,13 +5,8 @@ defmodule DocuSign.Application do
 
   use Application
 
-  @client_id Application.get_env(:docusign, :client_id)
-  @user_id Application.get_env(:docusign, :user_id)
-
   def start(_type, _args) do
-    children = [
-      {DocuSign.APIClient, {@client_id, @user_id}}
-    ]
+    children = [{DocuSign.APIClient, []}]
 
     opts = [strategy: :one_for_one, name: DocuSign.Supervisor]
     Supervisor.start_link(children, opts)
