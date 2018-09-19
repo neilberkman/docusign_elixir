@@ -33,6 +33,25 @@ defmodule DocuSign.OAuth do
   end
 
   @doc """
+  Refresh token
+  """
+  @spec refresh_token!(Client.t(), boolean) :: Client.t()
+  def refresh_token!(client, force \\ false) do
+    if force || token_expired?(client) do
+      Client.get_token!(client)
+    else
+      client
+    end
+  end
+
+  @doc """
+  Retrieve a new time to auto refresh token.
+  """
+  @spec interval_refresh_token(Client.t()) :: integer
+  def interval_refresh_token(client),
+    do: client.token.expires_at - :os.system_time(:seconds) - 10
+
+  @doc """
   Check expiries of token.
   return true if token is expired
   """
