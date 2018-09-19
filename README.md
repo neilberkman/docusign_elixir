@@ -1,6 +1,6 @@
 # DocuSign API Client
 
-[![CircleCI](https://circleci.com/gh/tandemequity/docusign_elixir.svg?style=svg)](https://circleci.com/gh/tandemequity/docusign_elixir)
+[![CircleCI](https://circleci.com/gh/tandemequity/docusign_elixir.svg?style=svg)](https://circleci.com/gh/tandemequity/docusign_elixir) [![Ebert](https://ebertapp.io/github/tandemequity/docusign_elixir.svg)](https://ebertapp.io/github/tandemequity/docusign_elixir)
 
 Unofficial DocuSign Elixir Library used to interact with the eSign REST API. Send, sign, and approve documents using this client.
 
