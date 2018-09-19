@@ -28,7 +28,10 @@ defmodule DocuSign.MixProject do
 
       # test
       {:mock, "~> 0.3.2"},
-      {:bypass, "~> 0.8.1"}
+      {:bypass, "~> 0.8.1"},
+
+      # dev
+      {:credo, "~> 0.10.0", only: [:dev, :test], runtime: false}
     ]
   end
 end
