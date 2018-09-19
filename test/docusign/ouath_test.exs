@@ -2,7 +2,8 @@ defmodule DocuSign.OAuthTest do
   use ExUnit.Case, async: true
 
   alias DocuSign.OAuth
-  alias OAuth2.{Client, AccessToken}
+  alias OAuth2.{AccessToken, Client}
+  alias Plug.Conn
 
   setup do
     bypass = Bypass.open()
@@ -17,12 +18,10 @@ defmodule DocuSign.OAuthTest do
       "expires_in": 28800})
 
     Bypass.expect_once(bypass, "POST", "/oauth/token", fn conn ->
-      Plug.Conn.resp(conn, 200, token)
+      Conn.resp(conn, 200, token)
     end)
 
-    client =
-      OAuth.client(site: "http://localhost:#{bypass.port}")
-      |> OAuth.get_token!()
+    client = OAuth.get_token!(OAuth.client(site: "http://localhost:#{bypass.port}"))
 
     assert %OAuth2.AccessToken{
              access_token: "ISSUED_ACCESS_TOKEN",
@@ -63,8 +62,6 @@ defmodule DocuSign.OAuthTest do
                "assertion" => _,
                "grant_type" => "urn:ietf:params:oauth:grant-type:jwt-bearer"
              }
-           } =
-             OAuth.client(site: "http://localhost")
-             |> OAuth.get_token([], [])
+           } = OAuth.get_token(OAuth.client(site: "http://localhost"), [], [])
   end
 end

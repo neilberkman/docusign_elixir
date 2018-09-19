@@ -44,7 +44,7 @@ defmodule DocuSign.User do
   ]
 
   alias OAuth2.Client
-  alias DocuSign.{Util, APIClient}
+  alias DocuSign.{APIClient, Util}
 
   @path "/oauth/userinfo"
 

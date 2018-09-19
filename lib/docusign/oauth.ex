@@ -10,7 +10,8 @@ defmodule DocuSign.OAuth do
   """
   use OAuth2.Strategy
 
-  alias OAuth2.{Client, AccessToken, Error}
+  alias JOSE.JWK
+  alias OAuth2.{AccessToken, Client, Error}
   @type param :: binary | %{binary => param} | [param]
   @type params :: %{binary => param} | Keyword.t()
   @type headers :: [{binary, binary}]
@@ -28,8 +29,7 @@ defmodule DocuSign.OAuth do
   """
   @spec get_token!(Client.t(), params, headers, Keyword.t()) :: Client.t() | Error.t()
   def get_token!(client, params \\ [], headers \\ [], opts \\ []) do
-    client
-    |> Client.get_token!(params, headers, opts)
+    Client.get_token!(client, params, headers, opts)
   end
 
   @doc """
@@ -95,7 +95,7 @@ defmodule DocuSign.OAuth do
   @spec token_key() :: binary
   defp token_key do
     @private_key
-    |> JOSE.JWK.from_pem_file()
+    |> JWK.from_pem_file()
     |> Joken.rs256()
   end
 
@@ -112,17 +112,16 @@ defmodule DocuSign.OAuth do
   # Create claim and sign with private key
   #
   @spec assertion() :: binary
-  defp assertion() do
+  defp assertion do
     now_unix = :os.system_time(:seconds)
 
-    %{
+    signed(%{
       iss: @client_id,
       sub: @user_id,
       aud: @hostname,
       iat: now_unix,
       exp: now_unix + @token_expires_in,
       scope: "signature"
-    }
-    |> signed
+    })
   end
 end
