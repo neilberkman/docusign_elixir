@@ -9,4 +9,7 @@ defmodule DocuSign.OAuthTest do
     assert OAuth.token_expired?(token)
     assert OAuth.token_expired?(%Client{token: token})
   end
+
+  test "refresh_token!" do
+  end
 end

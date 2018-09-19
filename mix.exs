@@ -24,7 +24,11 @@ defmodule DocuSign.MixProject do
     [
       {:poison, "~> 3.0"},
       {:joken, "~> 1.5"},
-      {:oauth2, "~> 0.9.3"}
+      {:oauth2, "~> 0.9.3"},
+
+      # test
+      {:mock, "~> 0.3.2"},
+      {:bypass, "~> 0.8.1"}
     ]
   end
 end
