@@ -15,18 +15,21 @@ defmodule DocuSign.OAuthTest do
       "token_type": "Bearer",
       "refresh_token": "ISSUED_REFRESH_TOKEN",
       "expires_in": 28800})
+
     Bypass.expect_once(bypass, "POST", "/oauth/token", fn conn ->
       Plug.Conn.resp(conn, 200, token)
     end)
 
-    client = OAuth.client(site: "http://localhost:#{bypass.port}")
-    |> OAuth.get_token!()
+    client =
+      OAuth.client(site: "http://localhost:#{bypass.port}")
+      |> OAuth.get_token!()
+
     assert %OAuth2.AccessToken{
-      access_token: "ISSUED_ACCESS_TOKEN",
-      other_params: %{},
-      refresh_token: "ISSUED_REFRESH_TOKEN",
-      token_type: "Bearer"
-    } = client.token
+             access_token: "ISSUED_ACCESS_TOKEN",
+             other_params: %{},
+             refresh_token: "ISSUED_REFRESH_TOKEN",
+             token_type: "Bearer"
+           } = client.token
   end
 
   test "token_expired?" do
