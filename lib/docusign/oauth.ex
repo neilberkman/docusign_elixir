@@ -64,13 +64,15 @@ defmodule DocuSign.OAuth do
   @doc """
   Create new API client
   """
-  @spec client() :: Client.t()
-  def client do
-    Client.new(
+  @spec client(Keyword.t()) :: Client.t()
+  def client(opts \\ []) do
+    [
       strategy: __MODULE__,
       client_id: @client_id,
       site: "https://#{@hostname}"
-    )
+    ]
+    |> Keyword.merge(opts)
+    |> Client.new()
   end
 
   # OAuth2.Strategy callback
