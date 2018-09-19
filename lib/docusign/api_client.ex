@@ -1,52 +1,70 @@
 defmodule DocuSign.APIClient do
+  @moduledoc ~S"""
+  GenServer to store API client and refresh access token by schedule.
+  """
+
   use GenServer
-
-  alias DocuSign.{OAuth, Request}
-
-  defstruct client_id: nil,
-            user_id: nil,
-            auth_token: %AuthToken{}
+  alias DocuSign.OAuth
 
   #####
   # External API
 
-  def start_link({client_id, user_id}) do
-    GenServer.start_link(__MODULE__, {client_id, user_id}, name: __MODULE__)
+  def start_link(opts \\ []) do
+    GenServer.start_link(__MODULE__, opts, name: __MODULE__)
   end
 
-  def user_info() do
-    GenServer.call(__MODULE__, {:user_info})
+  @doc """
+  Get Api Client
+  """
+  @spec client() :: OAuth2.Client.t()
+  def client do
+    GenServer.call(__MODULE__, :get_client, 10_000)
+  end
+
+  @doc """
+  Forces an access token refresh.
+  """
+  @spec refresh_token() :: OAuth2.Client.t()
+  def refresh_token do
+    GenServer.call(__MODULE__, :refresh_token, 10_000)
   end
 
   #####
   # GenServer implementation
 
-  def init({client_id, user_id}) do
-    state = %__MODULE__{
-      client_id: client_id,
-      user_id: user_id
-    }
-
-    {:ok, state}
+  def init(_opts) do
+    client = OAuth.client()
+    send(self(), :refresh_token)
+    {:ok, client}
   end
 
-  def handle_call({:user_info}, _from, state) do
-    {response, new_state} = call_api(state, "oauth/userinfo")
-    {:reply, response, new_state}
+  def handle_call(:get_client, _from, client) do
+    refresh_client = OAuth.refresh_token!(client)
+    {:reply, refresh_client, refresh_client}
   end
 
-  ###
-  # Private functions
-  ##
+  @doc """
+  Sync refreshes a token.
+  """
+  def handle_call(:refresh_token, _from, client) do
+    new_client = OAuth.refresh_token!(client, true)
+    {:reply, new_client, new_client}
+  end
 
-  defp call_api(state, path, params \\ []) do
-    new_state =
-      if OAuth.token_invalid?(state.auth_token) do
-        %{state | auth_token: OAuth.refreshed_auth_token(state)}
-      else
-        state
-      end
+  @doc """
+  Async refreshes a token.
+  """
+  def handle_info(:refresh_token, client) do
+    new_client = OAuth.refresh_token!(client, true)
 
-    {Request.get(path, params, new_state.auth_token), new_state}
+    new_client
+    |> OAuth.interval_refresh_token()
+    |> schedule_refresh_token
+
+    {:noreply, new_client}
+  end
+
+  defp schedule_refresh_token(seconds) do
+    Process.send_after(self(), :refresh_token, seconds * 1000)
   end
 end

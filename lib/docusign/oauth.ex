@@ -1,74 +1,127 @@
 defmodule DocuSign.OAuth do
+  @moduledoc ~S"""
+  This module implements an oauth2 strategy for DocuSign.
+
+  ### Examples
+
+  client = DocuSign.OAuth2Strategy.get_token!
+  {:ok, user_info } = OAuth2.Client.get(client, "/oauth/userinfo")
+
+  """
+  use OAuth2.Strategy
+
+  alias JOSE.JWK
+  alias OAuth2.{AccessToken, Client, Error}
+  @type param :: binary | %{binary => param} | [param]
+  @type params :: %{binary => param} | Keyword.t()
+  @type headers :: [{binary, binary}]
+
   @private_key Application.get_env(:docusign, :private_key)
   @token_expires_in Application.get_env(:docusign, :token_expires_in)
   @hostname Application.get_env(:docusign, :hostname)
+  @client_id Application.get_env(:docusign, :client_id)
+  @user_id Application.get_env(:docusign, :user_id)
 
-  alias DocuSign.Request
+  @grant_type "urn:ietf:params:oauth:grant-type:jwt-bearer"
 
-  def token_invalid?(%AuthToken{token: nil} = _), do: true
-  def token_invalid?(auth_token), do: token_expired?(auth_token)
-
-  def refreshed_auth_token(
-        %{client_id: client_id, user_id: user_id},
-        expires_in \\ @token_expires_in
-      ) do
-    now_and_later = time_span(expires_in)
-
-    claims(now_and_later, client_id, user_id)
-    |> signed_token
-    |> fetched_auth_token(now_and_later)
+  @doc """
+  Retrieve access token and return a client
+  """
+  @spec get_token!(Client.t(), params, headers, Keyword.t()) :: Client.t() | Error.t()
+  def get_token!(client, params \\ [], headers \\ [], opts \\ []) do
+    Client.get_token!(client, params, headers, opts)
   end
 
-  ###
-  # Private functions
-  ##
-
-  defp claims({now, expiration}, client_id, user_id) do
-    %{
-      iss: client_id,
-      sub: user_id,
-      aud: @hostname,
-      iat: now,
-      exp: expiration,
-      scope: "signature"
-    }
+  @doc """
+  Refresh token
+  """
+  @spec refresh_token!(Client.t(), boolean) :: Client.t()
+  def refresh_token!(client, force \\ false) do
+    if force || token_expired?(client) do
+      Client.get_token!(client)
+    else
+      client
+    end
   end
 
-  defp now_unix, do: DateTime.utc_now() |> DateTime.to_unix()
+  @doc """
+  Retrieve a new time to auto refresh token.
+  """
+  @spec interval_refresh_token(Client.t()) :: integer
+  def interval_refresh_token(client),
+    do: client.token.expires_at - :os.system_time(:seconds) - 10
 
-  defp time_span(seconds_in_future) do
-    now = now_unix()
-    {now, now + seconds_in_future}
+  @doc """
+  Check expiration of token
+  return true if token is expired
+  """
+  @spec token_expired?(AccessToken.t() | nil | Client.t()) :: boolean
+  def token_expired?(%AccessToken{} = token), do: AccessToken.expired?(token)
+  def token_expired?(nil), do: true
+  def token_expired?(%Client{token: nil}), do: true
+  def token_expired?(%Client{token: token}), do: token_expired?(token)
+
+  @doc """
+  Create new API client
+  """
+  @spec client(Keyword.t()) :: Client.t()
+  def client(opts \\ []) do
+    [
+      strategy: __MODULE__,
+      client_id: @client_id,
+      site: "https://#{@hostname}"
+    ]
+    |> Keyword.merge(opts)
+    |> Client.new()
   end
 
-  defp signed_token(claims) do
-    key = JOSE.JWK.from_pem_file(@private_key)
+  # OAuth2.Strategy callback
+  #
+  @spec get_token(Client.t(), Keyword.t(), Keyword.t()) :: binary
+  def get_token(client, _params, _headers) do
+    client
+    |> put_param(:grant_type, @grant_type)
+    |> put_param(:assertion, assertion())
+  end
 
-    claims
+  # OAuth2.Strategy callback
+  #
+  def authorize_url(_client, _params) do
+    raise Error, reason: "This strategy does not implement `authorize_url`."
+  end
+
+  # Take token_key from pem file
+  #
+  @spec token_key() :: binary
+  defp token_key do
+    @private_key
+    |> JWK.from_pem_file()
+    |> Joken.rs256()
+  end
+
+  # Signed payload use token key
+  #
+  @spec signed(map) :: binary
+  defp signed(payload) do
+    payload
     |> Joken.token()
-    |> Joken.sign(Joken.rs256(key))
+    |> Joken.sign(token_key())
     |> Joken.get_compact()
   end
 
-  defp fetched_auth_token(assertion, {_, expiration}) do
-    Request.post_form(
-      "oauth/token",
-      [grant_type: 'urn:ietf:params:oauth:grant-type:jwt-bearer', assertion: assertion],
-      nil
-    )
-    |> extracted_auth_token(expiration)
+  # Create claim and sign with private key
+  #
+  @spec assertion() :: binary
+  defp assertion do
+    now_unix = :os.system_time(:seconds)
+
+    signed(%{
+      iss: @client_id,
+      sub: @user_id,
+      aud: @hostname,
+      iat: now_unix,
+      exp: now_unix + @token_expires_in,
+      scope: "signature"
+    })
   end
-
-  defp extracted_auth_token({:ok, %HTTPoison.Response{body: body}}, expiration) do
-    data = Poison.decode!(body)
-    token = data["token_type"] <> " " <> data["access_token"]
-
-    %AuthToken{token: token, expiration: expiration}
-  end
-
-  defp extracted_auth_token({:error, %HTTPoison.Response{status_code: status_code}}, _) do
-    raise "Authentication failed with status code #{status_code}"
-  end
-
-  defp token_expired?(%AuthToken{} = expiration), do: now_unix() >= expiration
 end
