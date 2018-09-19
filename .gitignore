@@ -24,3 +24,6 @@ docusign-*.tar
 
 # Ignore RSA keys
 docusign_key.*
+
+# Ignore Secret config
+config/*.secret.exs
