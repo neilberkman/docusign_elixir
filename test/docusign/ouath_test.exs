@@ -45,4 +45,26 @@ defmodule DocuSign.OAuthTest do
 
   test "refresh_token!" do
   end
+
+  test "create new api client" do
+    assert %Client{
+             request_opts: [],
+             site: "http://localhost",
+             strategy: DocuSign.OAuth,
+             token: nil,
+             token_method: :post,
+             token_url: "/oauth/token"
+           } = OAuth.client(site: "http://localhost")
+  end
+
+  test "get_token" do
+    assert %Client{
+             params: %{
+               "assertion" => _,
+               "grant_type" => "urn:ietf:params:oauth:grant-type:jwt-bearer"
+             }
+           } =
+             OAuth.client(site: "http://localhost")
+             |> OAuth.get_token([], [])
+  end
 end
