@@ -45,8 +45,9 @@ defmodule DocuSign.User do
 
   @path "/oauth/userinfo"
 
-  def info(client) do
-    with {:ok, %{body: body}} <- Client.get(client, @path),
+  def info(client \\ nil) do
+    with api_client <- client || DocuSign.APIClient.client(),
+         {:ok, %{body: body}} <- Client.get(api_client, @path),
          attrs <- Util.map_keys_to_atoms(body),
          do: struct(__MODULE__, attrs)
   end
