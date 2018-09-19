@@ -30,10 +30,14 @@ defmodule DocuSign.OAuthTest do
   end
 
   test "token_expired?" do
-    token = %AccessToken{expires_at: :os.system_time(:seconds) - 30}
+    expired_token = %AccessToken{expires_at: :os.system_time(:seconds) - 30}
+    actual_token = %AccessToken{expires_at: :os.system_time(:seconds) + 3600}
     assert OAuth.token_expired?(nil)
-    assert OAuth.token_expired?(token)
-    assert OAuth.token_expired?(%Client{token: token})
+    assert OAuth.token_expired?(expired_token)
+    assert OAuth.token_expired?(%Client{token: expired_token})
+
+    refute OAuth.token_expired?(actual_token)
+    refute OAuth.token_expired?(%Client{token: actual_token})
   end
 
   test "refresh_token!" do
