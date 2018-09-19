@@ -4,9 +4,12 @@ defmodule DocuSign.User do
 
   ### Examples
 
-  client = DocuSign.OAuth2Strategy.get_token!
+  client = DocuSign.Client.get_token!
   user_info = DocuSign.User.info(client)
 
+  or
+
+  user_info = DocuSign.User.info()
   """
 
   defstruct [
