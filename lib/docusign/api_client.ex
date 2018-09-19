@@ -33,36 +33,38 @@ defmodule DocuSign.APIClient do
   # GenServer implementation
 
   def init(_opts) do
-    schedule_refresh_token(0)
-    {:ok, OAuth.client()}
+    client = OAuth.client()
+    send(self(), :refresh_token)
+    {:ok, client}
   end
 
   def handle_call(:get_client, _from, client) do
-    refresh_client = refresh_token(client)
+    refresh_client = OAuth.refresh_token!(client)
     {:reply, refresh_client, refresh_client}
   end
 
+  @doc """
+  Sync refreshing a token.
+  """
   def handle_call(:refresh_token, _from, client) do
-    new_client = refresh_token(client, true)
+    new_client = OAuth.refresh_token!(client, true)
     {:reply, new_client, new_client}
   end
 
-  def handle_cast(:refresh_token, client) do
-    new_client = refresh_token(client, true)
-    next_time = new_client.token.expires_at - :os.system_time(:seconds) - 10
-    schedule_refresh_token(next_time)
+  @doc """
+  Async refreshing a token.
+  """
+  def handle_info(:refresh_token, client) do
+    new_client = OAuth.refresh_token!(client, true)
+
+    new_client
+    |> OAuth.interval_refresh_token()
+    |> schedule_refresh_token
+
     {:noreply, new_client}
   end
 
-  defp refresh_token(client, force \\ false) do
-    if force || OAuth.token_expired?(client) do
-      OAuth.get_token!(client)
-    else
-      client
-    end
-  end
-
   defp schedule_refresh_token(seconds) do
-    Process.send_after(self(), {:"$gen_cast", :refresh_token}, seconds * 1000)
+    Process.send_after(self(), :refresh_token, seconds * 1000)
   end
 end
