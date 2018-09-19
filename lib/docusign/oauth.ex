@@ -52,7 +52,7 @@ defmodule DocuSign.OAuth do
     do: client.token.expires_at - :os.system_time(:seconds) - 10
 
   @doc """
-  Check expiries of token.
+  Check expiration of token
   return true if token is expired
   """
   @spec token_expired?(AccessToken.t() | nil | Client.t()) :: boolean

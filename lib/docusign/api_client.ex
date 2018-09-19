@@ -22,7 +22,7 @@ defmodule DocuSign.APIClient do
   end
 
   @doc """
-  Forcing refresh access token.
+  Forces an access token refresh.
   """
   @spec refresh_token() :: OAuth2.Client.t()
   def refresh_token do
@@ -44,7 +44,7 @@ defmodule DocuSign.APIClient do
   end
 
   @doc """
-  Sync refreshing a token.
+  Sync refreshes a token.
   """
   def handle_call(:refresh_token, _from, client) do
     new_client = OAuth.refresh_token!(client, true)
@@ -52,7 +52,7 @@ defmodule DocuSign.APIClient do
   end
 
   @doc """
-  Async refreshing a token.
+  Async refreshes a token.
   """
   def handle_info(:refresh_token, client) do
     new_client = OAuth.refresh_token!(client, true)
