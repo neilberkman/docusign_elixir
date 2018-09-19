@@ -41,12 +41,12 @@ defmodule DocuSign.User do
   ]
 
   alias OAuth2.Client
-  alias DocuSign.Util
+  alias DocuSign.{Util, APIClient}
 
   @path "/oauth/userinfo"
 
   def info(client \\ nil) do
-    with api_client <- client || DocuSign.APIClient.client(),
+    with api_client <- client || APIClient.client(),
          {:ok, %{body: body}} <- Client.get(api_client, @path),
          attrs <- Util.map_keys_to_atoms(body),
          do: struct(__MODULE__, attrs)
