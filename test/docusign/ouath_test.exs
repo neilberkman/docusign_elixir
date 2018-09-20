@@ -10,15 +10,15 @@ defmodule DocuSign.OAuthTest do
     {:ok, bypass: bypass}
   end
 
-  test "get_token!", %{bypass: bypass} do
-    token = ~s({
-      "access_token": "ISSUED_ACCESS_TOKEN",
-      "token_type": "Bearer",
-      "refresh_token": "ISSUED_REFRESH_TOKEN",
-      "expires_in": 28800})
+  @token ~s({
+    "access_token": "ISSUED_ACCESS_TOKEN",
+    "token_type": "Bearer",
+    "refresh_token": "ISSUED_REFRESH_TOKEN",
+    "expires_in": 28800})
 
+  test "get_token!", %{bypass: bypass} do
     Bypass.expect_once(bypass, "POST", "/oauth/token", fn conn ->
-      Conn.resp(conn, 200, token)
+      Conn.resp(conn, 200, @token)
     end)
 
     client = OAuth.get_token!(OAuth.client(site: "http://localhost:#{bypass.port}"))
@@ -42,9 +42,6 @@ defmodule DocuSign.OAuthTest do
     refute OAuth.token_expired?(%Client{token: actual_token})
   end
 
-  test "refresh_token!" do
-  end
-
   test "create new api client" do
     assert %Client{
              request_opts: [],
@@ -63,5 +60,39 @@ defmodule DocuSign.OAuthTest do
                "grant_type" => "urn:ietf:params:oauth:grant-type:jwt-bearer"
              }
            } = OAuth.get_token(OAuth.client(site: "http://localhost"), [], [])
+  end
+
+  test "refresh_token!", %{bypass: bypass} do
+    now = :os.system_time(:seconds)
+
+    client =
+      OAuth.client(
+        site: "http://localhost:#{bypass.port}",
+        token: %AccessToken{
+          expires_at: now + 3600,
+          access_token: "TEST_TOKEN"
+        }
+      )
+
+    Bypass.expect(bypass, "POST", "/oauth/token", fn conn ->
+      Conn.resp(conn, 200, @token)
+    end)
+
+    assert %AccessToken{access_token: "TEST_TOKEN"} = OAuth.refresh_token!(client).token
+
+    assert %AccessToken{access_token: "ISSUED_ACCESS_TOKEN"} =
+             OAuth.refresh_token!(client, true).token
+
+    expired_client = %Client{client | token: %AccessToken{expires_at: now - 3600}}
+
+    assert %AccessToken{access_token: "ISSUED_ACCESS_TOKEN"} =
+             OAuth.refresh_token!(expired_client).token
+  end
+
+  test "interval_refresh_token" do
+    now = :os.system_time(:seconds)
+    token = %AccessToken{expires_at: now + 3600}
+    client = %Client{token: token}
+    assert OAuth.interval_refresh_token(client) == 3590
   end
 end
