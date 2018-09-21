@@ -25,6 +25,7 @@ defmodule DocuSign.MixProject do
       {:poison, "~> 3.0"},
       {:joken, "~> 1.5"},
       {:oauth2, "~> 0.9.3"},
+      {:tesla, "~> 1.1"},
 
       # test
       {:mock, "~> 0.3.2"},
