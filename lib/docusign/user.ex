@@ -12,6 +12,8 @@ defmodule DocuSign.User do
   user_info = DocuSign.User.info()
   """
 
+  alias __MODULE__
+
   defstruct [
     # The user ID of the account holder
     :sub,
@@ -25,7 +27,8 @@ defmodule DocuSign.User do
     :created,
     # The email address of the account holder
     :email,
-    # Holds data on the individual accounts owned by the user. Each user may possess multiple accounts.
+    # Holds data on the individual accounts owned by the user.
+    # Each user may possess multiple accounts.
     :accounts,
     # The ID of the account.
     :account_id,
@@ -48,10 +51,31 @@ defmodule DocuSign.User do
 
   @path "/oauth/userinfo"
 
+  defmodule AppAccount do
+    defstruct [:account_id, :account_name, :base_uri, :is_default]
+  end
+
+  @doc """
+  Retrieve the user info
+  """
   def info(client \\ nil) do
     with api_client <- client || APIClient.client(),
          {:ok, %{body: body}} <- Client.get(api_client, @path),
-         attrs <- Util.map_keys_to_atoms(body),
-         do: struct(__MODULE__, attrs)
+         attrs <- Util.map_keys_to_atoms(body) do
+      struct(__MODULE__, attrs)
+      |> Map.update!(:accounts, fn accounts ->
+        accounts
+        |> Enum.map(&struct(AppAccount, Util.map_keys_to_atoms(&1)))
+      end)
+    end
   end
+
+  @doc """
+  Retrieve default account is exist
+  """
+  def default_account(%User{accounts: accounts} = _info) do
+    default_account(accounts)
+  end
+
+  def default_account(accounts), do: Enum.find(accounts, & &1.is_default)
 end
