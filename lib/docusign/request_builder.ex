@@ -38,7 +38,7 @@ defmodule DocuSign.RequestBuilder do
   """
   @spec url(map(), String.t()) :: map()
   def url(request, u) do
-    Map.put_new(request, :url, u)
+    Map.put_new(request, :url, "/restapi/#{u}")
   end
 
   @doc """
@@ -112,8 +112,36 @@ defmodule DocuSign.RequestBuilder do
     Map.update(request, location, [{key, value}], &(&1 ++ [{key, value}]))
   end
 
-  def decode(%OAuth2.Response{body: body, status_code: 200} = response, struct) do
-    struct(struct, DocuSign.Util.map_keys_to_atoms(body))
+  # def decode(%OAuth2.Response{body: body, status_code: 200} = _response, struct) do
+  #   struct(struct, DocuSign.Util.map_keys_to_atoms(body))
+  # end
+
+  # def decode(response, _struct), do: {:error, response}
+
+  @doc """
+  Handle the response for a Tesla request
+
+  ## Parameters
+
+  - arg1 (Tesla.Env.t | term) - The response object
+  - arg2 (:false | struct | [struct]) - The shape of the struct to deserialize into
+
+  ## Returns
+
+  {:ok, struct} on success
+  {:error, term} on failure
+  """
+  @spec decode(Tesla.Env.t() | term()) ::
+          {:ok, struct()} | {:error, Tesla.Env.t()} | {:error, term()}
+  def decode(%Tesla.Env{status: 200, body: body}), do: Poison.decode(body)
+  def decode(response), do: {:error, response}
+
+  @spec decode(Tesla.Env.t() | term(), false | struct() | [struct()]) ::
+          {:ok, struct()} | {:error, Tesla.Env.t()} | {:error, term()}
+  def decode(%Tesla.Env{status: 200} = env, false), do: {:ok, env}
+
+  def decode(%Tesla.Env{status: 200, body: body}, struct) do
+    Poison.decode(body, as: struct)
   end
 
   def decode(response, _struct), do: {:error, response}

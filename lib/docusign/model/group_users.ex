@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.GroupUsers do
   @moduledoc """
-  Groups&#39; users
+  Groups users
   """
 
   @derive [Poison.Encoder]
