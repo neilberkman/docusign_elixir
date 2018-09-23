@@ -12,8 +12,6 @@ defmodule DocuSign.Api.ChunkedUploads do
 
   @doc """
   Delete an existing ChunkedUpload.
-
-
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server
@@ -48,8 +46,6 @@ defmodule DocuSign.Api.ChunkedUploads do
 
   @doc """
   Retrieves the current metadata of a ChunkedUpload.
-
-
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server
@@ -81,8 +77,6 @@ defmodule DocuSign.Api.ChunkedUploads do
 
   @doc """
   Initiate a new ChunkedUpload.
-
-
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server
@@ -113,8 +107,6 @@ defmodule DocuSign.Api.ChunkedUploads do
 
   @doc """
   Add a chunk, a chunk &#39;part&#39;, to an existing ChunkedUpload.
-
-
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server
@@ -160,8 +152,6 @@ defmodule DocuSign.Api.ChunkedUploads do
 
   @doc """
   Integrity-Check and Commit a ChunkedUpload, readying it for use elsewhere.
-
-
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server

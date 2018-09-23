@@ -12,8 +12,6 @@ defmodule DocuSign.Api.AccountPermissionProfiles do
 
   @doc """
   Deletes a permissions profile within the specified account.
-
-
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server
@@ -48,8 +46,6 @@ defmodule DocuSign.Api.AccountPermissionProfiles do
 
   @doc """
   Returns a permissions profile in the specified account.
-
-
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server
@@ -122,8 +118,6 @@ defmodule DocuSign.Api.AccountPermissionProfiles do
 
   @doc """
   Creates a new permission profile in the specified account.
-
-
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server
@@ -156,8 +150,6 @@ defmodule DocuSign.Api.AccountPermissionProfiles do
 
   @doc """
   Updates a permission profile within the specified account.
-
-
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server

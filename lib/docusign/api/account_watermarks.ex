@@ -12,8 +12,6 @@ defmodule DocuSign.Api.AccountWatermarks do
 
   @doc """
   Get watermark information.
-
-
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server
@@ -38,8 +36,6 @@ defmodule DocuSign.Api.AccountWatermarks do
 
   @doc """
   Get watermark preview.
-
-
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server
@@ -70,8 +66,6 @@ defmodule DocuSign.Api.AccountWatermarks do
 
   @doc """
   Update watermark information.
-
-
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server

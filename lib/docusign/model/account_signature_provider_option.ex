@@ -3,9 +3,7 @@
 # Do not edit the class manually.
 
 defmodule DocuSign.Model.AccountSignatureProviderOption do
-  @moduledoc """
-
-  """
+  @moduledoc false
 
   @derive [Poison.Encoder]
   defstruct [

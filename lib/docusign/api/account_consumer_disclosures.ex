@@ -80,8 +80,6 @@ defmodule DocuSign.Api.AccountConsumerDisclosures do
 
   @doc """
   Update Consumer Disclosure.
-
-
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server

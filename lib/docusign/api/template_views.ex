@@ -12,8 +12,6 @@ defmodule DocuSign.Api.TemplateViews do
 
   @doc """
   Provides a URL to start an edit view of the Template UI
-
-
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server

@@ -146,8 +146,6 @@ defmodule DocuSign.Api.Users do
 
   @doc """
   Updates the specified user information.
-
-
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server
@@ -355,8 +353,6 @@ defmodule DocuSign.Api.Users do
 
   @doc """
   Change one or more user in the specified account.
-
-
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server

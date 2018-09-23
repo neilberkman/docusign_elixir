@@ -200,8 +200,6 @@ defmodule DocuSign.Api.Templates do
 
   @doc """
   Returns document page image(s) based on input.
-
-
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server

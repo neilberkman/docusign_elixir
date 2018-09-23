@@ -12,8 +12,6 @@ defmodule DocuSign.Api.AccountBrands do
 
   @doc """
   Removes a brand.
-
-
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server
@@ -39,8 +37,6 @@ defmodule DocuSign.Api.AccountBrands do
 
   @doc """
   Export a specific brand.
-
-
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server
@@ -66,8 +62,6 @@ defmodule DocuSign.Api.AccountBrands do
 
   @doc """
   Get information for a specific brand.
-
-
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server
@@ -101,8 +95,6 @@ defmodule DocuSign.Api.AccountBrands do
 
   @doc """
   Delete one branding logo.
-
-
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server
@@ -134,8 +126,6 @@ defmodule DocuSign.Api.AccountBrands do
 
   @doc """
   Obtains the specified image for a brand.
-
-
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server
@@ -167,8 +157,6 @@ defmodule DocuSign.Api.AccountBrands do
 
   @doc """
   Put one branding logo.
-
-
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server
@@ -200,8 +188,6 @@ defmodule DocuSign.Api.AccountBrands do
 
   @doc """
   Updates an existing brand.
-
-
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server
@@ -233,8 +219,6 @@ defmodule DocuSign.Api.AccountBrands do
 
   @doc """
   Returns the specified branding resource file.
-
-
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server
@@ -280,8 +264,6 @@ defmodule DocuSign.Api.AccountBrands do
 
   @doc """
   Returns the specified account&#39;s list of branding resources (metadata).
-
-
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server
@@ -311,8 +293,6 @@ defmodule DocuSign.Api.AccountBrands do
 
   @doc """
   Uploads a branding resource file.
-
-
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server

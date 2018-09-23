@@ -12,8 +12,6 @@ defmodule DocuSign.Api.TemplateDocumentTabs do
 
   @doc """
   Returns tabs on the document.
-
-
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server
@@ -57,8 +55,6 @@ defmodule DocuSign.Api.TemplateDocumentTabs do
 
   @doc """
   Returns tabs on the specified page.
-
-
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server

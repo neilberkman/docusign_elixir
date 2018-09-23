@@ -12,8 +12,6 @@ defmodule DocuSign.Api.ENoteConfigurations do
 
   @doc """
   Deletes configuration information for the eNote eOriginal integration.
-
-
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server
@@ -41,8 +39,6 @@ defmodule DocuSign.Api.ENoteConfigurations do
 
   @doc """
   Returns the configuration information for the eNote eOriginal integration.
-
-
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server
@@ -67,8 +63,6 @@ defmodule DocuSign.Api.ENoteConfigurations do
 
   @doc """
   Updates configuration information for the eNote eOriginal integration.
-
-
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server

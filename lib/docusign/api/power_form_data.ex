@@ -12,8 +12,6 @@ defmodule DocuSign.Api.PowerFormData do
 
   @doc """
   Returns the form data associated with the usage of a PowerForm.
-
-
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server

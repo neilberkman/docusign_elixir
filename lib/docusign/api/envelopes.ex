@@ -283,8 +283,6 @@ defmodule DocuSign.Api.Envelopes do
 
   @doc """
   Sets envelope notification (Reminders/Expirations) structure for an existing envelope.
-
-
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server
@@ -429,8 +427,6 @@ defmodule DocuSign.Api.Envelopes do
 
   @doc """
   Returns document page image(s) based on input.
-
-
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server

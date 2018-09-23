@@ -12,8 +12,6 @@ defmodule DocuSign.Api.AccountTabSettings do
 
   @doc """
   Returns tab settings list for specified account
-
-
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server
@@ -38,8 +36,6 @@ defmodule DocuSign.Api.AccountTabSettings do
 
   @doc """
   Modifies tab settings for specified account
-
-
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server
