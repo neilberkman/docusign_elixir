@@ -250,8 +250,6 @@ defmodule DocuSign.Api.UserSignatures do
 
   @doc """
   Adds/updates a user signature.
-
-
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server

@@ -12,8 +12,6 @@ defmodule DocuSign.Api.AccountSignatureProviders do
 
   @doc """
   Returns Account available signature providers for specified account.
-
-
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server

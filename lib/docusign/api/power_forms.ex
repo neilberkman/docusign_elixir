@@ -12,8 +12,6 @@ defmodule DocuSign.Api.PowerForms do
 
   @doc """
   Delete a PowerForm.
-
-
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server
@@ -39,8 +37,6 @@ defmodule DocuSign.Api.PowerForms do
 
   @doc """
   Deletes one or more PowerForms
-
-
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server
@@ -71,8 +67,6 @@ defmodule DocuSign.Api.PowerForms do
 
   @doc """
   Returns a single PowerForm.
-
-
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server
@@ -98,8 +92,6 @@ defmodule DocuSign.Api.PowerForms do
 
   @doc """
   Returns the list of PowerForms available to the user.
-
-
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server
@@ -136,8 +128,6 @@ defmodule DocuSign.Api.PowerForms do
 
   @doc """
   Returns the list of PowerForms available to the user.
-
-
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server
@@ -168,8 +158,6 @@ defmodule DocuSign.Api.PowerForms do
 
   @doc """
   Creates a new PowerForm.
-
-
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server
@@ -200,8 +188,6 @@ defmodule DocuSign.Api.PowerForms do
 
   @doc """
   Creates a new PowerForm.
-
-
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server

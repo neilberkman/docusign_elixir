@@ -48,8 +48,6 @@ defmodule DocuSign.Api.BillingPlans do
 
   @doc """
   Get metadata for a given credit card.
-
-
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server

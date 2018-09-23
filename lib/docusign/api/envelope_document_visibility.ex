@@ -12,8 +12,6 @@ defmodule DocuSign.Api.EnvelopeDocumentVisibility do
 
   @doc """
   Returns document visibility for the recipients
-
-
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server
@@ -53,8 +51,6 @@ defmodule DocuSign.Api.EnvelopeDocumentVisibility do
 
   @doc """
   Updates document visibility for the recipients
-
-
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server
@@ -100,8 +96,6 @@ defmodule DocuSign.Api.EnvelopeDocumentVisibility do
 
   @doc """
   Updates document visibility for the recipients
-
-
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server

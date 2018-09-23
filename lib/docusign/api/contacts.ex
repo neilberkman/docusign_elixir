@@ -12,8 +12,6 @@ defmodule DocuSign.Api.Contacts do
 
   @doc """
   Replaces a particular contact associated with an account for the DocuSign service.
-
-
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server
@@ -39,8 +37,6 @@ defmodule DocuSign.Api.Contacts do
 
   @doc """
   Delete contacts associated with an account for the DocuSign service.
-
-
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server
@@ -71,8 +67,6 @@ defmodule DocuSign.Api.Contacts do
 
   @doc """
   Gets a particular contact associated with the user&#39;s account.
-
-
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server
@@ -98,8 +92,6 @@ defmodule DocuSign.Api.Contacts do
 
   @doc """
   Imports multiple new contacts into the contacts collection from CSV, JSON, or XML (based on content type).
-
-
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server
@@ -130,8 +122,6 @@ defmodule DocuSign.Api.Contacts do
 
   @doc """
   Replaces contacts associated with an account for the DocuSign service.
-
-
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server

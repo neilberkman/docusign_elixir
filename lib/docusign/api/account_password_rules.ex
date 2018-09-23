@@ -12,8 +12,6 @@ defmodule DocuSign.Api.AccountPasswordRules do
 
   @doc """
   Get the password rules
-
-
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server
@@ -41,8 +39,6 @@ defmodule DocuSign.Api.AccountPasswordRules do
 
   @doc """
   Update the password rules
-
-
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server
@@ -76,8 +72,6 @@ defmodule DocuSign.Api.AccountPasswordRules do
 
   @doc """
   Get membership account password rules
-
-
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server

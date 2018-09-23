@@ -12,8 +12,6 @@ defmodule DocuSign.Api.EnvelopeFormData do
 
   @doc """
   Returns envelope form data for an existing envelope.
-
-
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server

@@ -122,8 +122,6 @@ defmodule DocuSign.Api.WorkspaceItems do
 
   @doc """
   Creates a workspace file.
-
-
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server
@@ -205,8 +203,6 @@ defmodule DocuSign.Api.WorkspaceItems do
 
   @doc """
   Deletes workspace one or more specific files/folders from the given folder or root.
-
-
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server

@@ -12,8 +12,6 @@ defmodule DocuSign.Api.NotaryJournals do
 
   @doc """
 
-
-
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server

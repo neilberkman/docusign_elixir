@@ -12,8 +12,6 @@ defmodule DocuSign.Api.EnvelopeAttachments do
 
   @doc """
   Delete one or more attachments from a DRAFT envelope.
-
-
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server
@@ -45,8 +43,6 @@ defmodule DocuSign.Api.EnvelopeAttachments do
 
   @doc """
   Retrieves an attachment from the envelope.
-
-
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server
@@ -78,8 +74,6 @@ defmodule DocuSign.Api.EnvelopeAttachments do
 
   @doc """
   Returns a list of attachments associated with the specified envelope
-
-
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server
@@ -105,8 +99,6 @@ defmodule DocuSign.Api.EnvelopeAttachments do
 
   @doc """
   Add an attachment to a DRAFT or IN-PROCESS envelope.
-
-
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server

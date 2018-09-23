@@ -12,8 +12,6 @@ defmodule DocuSign.Api.AccountCustomFields do
 
   @doc """
   Delete an existing account custom field.
-
-
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server
@@ -80,8 +78,6 @@ defmodule DocuSign.Api.AccountCustomFields do
 
   @doc """
   Creates an acount custom field.
-
-
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server
@@ -117,8 +113,6 @@ defmodule DocuSign.Api.AccountCustomFields do
 
   @doc """
   Updates an existing account custom field.
-
-
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server
