@@ -3,9 +3,7 @@
 # Do not edit the class manually.
 
 defmodule DocuSign.Model.ConnectLog do
-  @moduledoc """
-
-  """
+  @moduledoc false
 
   @derive [Poison.Encoder]
   defstruct [
