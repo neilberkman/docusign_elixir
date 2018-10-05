@@ -133,14 +133,16 @@ defmodule DocuSign.RequestBuilder do
   """
   @spec decode(Tesla.Env.t() | term()) ::
           {:ok, struct()} | {:error, Tesla.Env.t()} | {:error, term()}
-  def decode(%Tesla.Env{status: 200, body: body}), do: Poison.decode(body)
+  def decode(%Tesla.Env{status: status, body: body}) when status in 200..299,
+    do: Poison.decode(body)
+
   def decode(response), do: {:error, response}
 
   @spec decode(Tesla.Env.t() | term(), false | struct() | [struct()]) ::
           {:ok, struct()} | {:error, Tesla.Env.t()} | {:error, term()}
-  def decode(%Tesla.Env{status: 200} = env, false), do: {:ok, env}
+  def decode(%Tesla.Env{status: status} = env, false) when status in 200..299, do: {:ok, env}
 
-  def decode(%Tesla.Env{status: 200, body: body}, struct) do
+  def decode(%Tesla.Env{status: status, body: body}, struct) when status in 200..299 do
     Poison.decode(body, as: struct)
   end
 
