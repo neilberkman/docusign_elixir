@@ -10,8 +10,11 @@ defmodule DocuSign.Api.EnvelopeAttachments do
   alias DocuSign.Connection
   import DocuSign.RequestBuilder
 
+
   @doc """
   Delete one or more attachments from a DRAFT envelope.
+  
+
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server
@@ -25,13 +28,11 @@ defmodule DocuSign.Api.EnvelopeAttachments do
   {:ok, %DocuSign.Model.EnvelopeAttachmentsResult{}} on success
   {:error, info} on failure
   """
-  @spec attachments_delete_attachments(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.EnvelopeAttachmentsResult.t()} | {:error, Tesla.Env.t()}
+  @spec attachments_delete_attachments(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeAttachmentsResult.t} | {:error, Tesla.Env.t}
   def attachments_delete_attachments(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
-      :envelopeAttachmentsRequest => :body
+      :"envelopeAttachmentsRequest" => :body
     }
-
     %{}
     |> method(:delete)
     |> url("/v2/accounts/#{account_id}/envelopes/#{envelope_id}/attachments")
@@ -43,6 +44,8 @@ defmodule DocuSign.Api.EnvelopeAttachments do
 
   @doc """
   Retrieves an attachment from the envelope.
+  
+
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server
@@ -56,13 +59,7 @@ defmodule DocuSign.Api.EnvelopeAttachments do
   {:ok, %{}} on success
   {:error, info} on failure
   """
-  @spec attachments_get_attachment(
-          Tesla.Env.client(),
-          String.t(),
-          String.t(),
-          String.t(),
-          keyword()
-        ) :: {:ok, nil} | {:error, Tesla.Env.t()}
+  @spec attachments_get_attachment(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, nil} | {:error, Tesla.Env.t}
   def attachments_get_attachment(connection, account_id, attachment_id, envelope_id, _opts \\ []) do
     %{}
     |> method(:get)
@@ -74,6 +71,8 @@ defmodule DocuSign.Api.EnvelopeAttachments do
 
   @doc """
   Returns a list of attachments associated with the specified envelope
+  
+
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server
@@ -86,8 +85,7 @@ defmodule DocuSign.Api.EnvelopeAttachments do
   {:ok, %DocuSign.Model.EnvelopeAttachmentsResult{}} on success
   {:error, info} on failure
   """
-  @spec attachments_get_attachments(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.EnvelopeAttachmentsResult.t()} | {:error, Tesla.Env.t()}
+  @spec attachments_get_attachments(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeAttachmentsResult.t} | {:error, Tesla.Env.t}
   def attachments_get_attachments(connection, account_id, envelope_id, _opts \\ []) do
     %{}
     |> method(:get)
@@ -99,6 +97,8 @@ defmodule DocuSign.Api.EnvelopeAttachments do
 
   @doc """
   Add an attachment to a DRAFT or IN-PROCESS envelope.
+  
+
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server
@@ -113,18 +113,11 @@ defmodule DocuSign.Api.EnvelopeAttachments do
   {:ok, %DocuSign.Model.EnvelopeAttachmentsResult{}} on success
   {:error, info} on failure
   """
-  @spec attachments_put_attachment(
-          Tesla.Env.client(),
-          String.t(),
-          String.t(),
-          String.t(),
-          keyword()
-        ) :: {:ok, DocuSign.Model.EnvelopeAttachmentsResult.t()} | {:error, Tesla.Env.t()}
+  @spec attachments_put_attachment(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeAttachmentsResult.t} | {:error, Tesla.Env.t}
   def attachments_put_attachment(connection, account_id, attachment_id, envelope_id, opts \\ []) do
     optional_params = %{
-      :attachment => :body
+      :"attachment" => :body
     }
-
     %{}
     |> method(:put)
     |> url("/v2/accounts/#{account_id}/envelopes/#{envelope_id}/attachments/#{attachment_id}")
@@ -151,13 +144,11 @@ defmodule DocuSign.Api.EnvelopeAttachments do
   {:ok, %DocuSign.Model.EnvelopeAttachmentsResult{}} on success
   {:error, info} on failure
   """
-  @spec attachments_put_attachments(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.EnvelopeAttachmentsResult.t()} | {:error, Tesla.Env.t()}
+  @spec attachments_put_attachments(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeAttachmentsResult.t} | {:error, Tesla.Env.t}
   def attachments_put_attachments(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
-      :envelopeAttachmentsRequest => :body
+      :"envelopeAttachmentsRequest" => :body
     }
-
     %{}
     |> method(:put)
     |> url("/v2/accounts/#{account_id}/envelopes/#{envelope_id}/attachments")

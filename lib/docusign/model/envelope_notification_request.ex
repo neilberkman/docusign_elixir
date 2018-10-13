@@ -3,7 +3,9 @@
 # Do not edit the class manually.
 
 defmodule DocuSign.Model.EnvelopeNotificationRequest do
-  @moduledoc false
+  @moduledoc """
+  
+  """
 
   @derive [Poison.Encoder]
   defstruct [
@@ -13,15 +15,14 @@ defmodule DocuSign.Model.EnvelopeNotificationRequest do
   ]
 
   @type t :: %__MODULE__{
-          :expirations => Expirations,
-          :reminders => Reminders,
-          :useAccountDefaults => String.t()
-        }
+    :expirations => Expirations,
+    :reminders => Reminders,
+    :useAccountDefaults => String.t
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.EnvelopeNotificationRequest do
   import DocuSign.Deserializer
-
   def decode(value, options) do
     value
     |> deserialize(:expirations, :struct, DocuSign.Model.Expirations, options)

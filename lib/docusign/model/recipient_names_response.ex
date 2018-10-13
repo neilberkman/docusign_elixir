@@ -3,7 +3,9 @@
 # Do not edit the class manually.
 
 defmodule DocuSign.Model.RecipientNamesResponse do
-  @moduledoc false
+  @moduledoc """
+  
+  """
 
   @derive [Poison.Encoder]
   defstruct [
@@ -13,10 +15,10 @@ defmodule DocuSign.Model.RecipientNamesResponse do
   ]
 
   @type t :: %__MODULE__{
-          :multipleUsers => String.t(),
-          :recipientNames => [String.t()],
-          :reservedRecipientEmail => String.t()
-        }
+    :multipleUsers => String.t,
+    :recipientNames => [String.t],
+    :reservedRecipientEmail => String.t
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.RecipientNamesResponse do

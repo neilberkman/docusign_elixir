@@ -3,7 +3,9 @@
 # Do not edit the class manually.
 
 defmodule DocuSign.Model.RecipientViewRequest do
-  @moduledoc false
+  @moduledoc """
+  
+  """
 
   @derive [Poison.Encoder]
   defstruct [
@@ -24,21 +26,21 @@ defmodule DocuSign.Model.RecipientViewRequest do
   ]
 
   @type t :: %__MODULE__{
-          :assertionId => String.t(),
-          :authenticationInstant => String.t(),
-          :authenticationMethod => String.t(),
-          :clientUserId => String.t(),
-          :email => String.t(),
-          :pingFrequency => String.t(),
-          :pingUrl => String.t(),
-          :recipientId => String.t(),
-          :returnUrl => String.t(),
-          :securityDomain => String.t(),
-          :userId => String.t(),
-          :userName => String.t(),
-          :xFrameOptions => String.t(),
-          :xFrameOptionsAllowFromUrl => String.t()
-        }
+    :assertionId => String.t,
+    :authenticationInstant => String.t,
+    :authenticationMethod => String.t,
+    :clientUserId => String.t,
+    :email => String.t,
+    :pingFrequency => String.t,
+    :pingUrl => String.t,
+    :recipientId => String.t,
+    :returnUrl => String.t,
+    :securityDomain => String.t,
+    :userId => String.t,
+    :userName => String.t,
+    :xFrameOptions => String.t,
+    :xFrameOptionsAllowFromUrl => String.t
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.RecipientViewRequest do

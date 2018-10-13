@@ -3,7 +3,9 @@
 # Do not edit the class manually.
 
 defmodule DocuSign.Model.TemplateMatch do
-  @moduledoc false
+  @moduledoc """
+  
+  """
 
   @derive [Poison.Encoder]
   defstruct [
@@ -13,10 +15,10 @@ defmodule DocuSign.Model.TemplateMatch do
   ]
 
   @type t :: %__MODULE__{
-          :documentEndPage => String.t(),
-          :documentStartPage => String.t(),
-          :matchPercentage => String.t()
-        }
+    :documentEndPage => String.t,
+    :documentStartPage => String.t,
+    :matchPercentage => String.t
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.TemplateMatch do

@@ -3,7 +3,9 @@
 # Do not edit the class manually.
 
 defmodule DocuSign.Model.Filter do
-  @moduledoc false
+  @moduledoc """
+  
+  """
 
   @derive [Poison.Encoder]
   defstruct [
@@ -21,18 +23,18 @@ defmodule DocuSign.Model.Filter do
   ]
 
   @type t :: %__MODULE__{
-          :actionRequired => String.t(),
-          :expires => String.t(),
-          :folderIds => String.t(),
-          :fromDateTime => String.t(),
-          :isTemplate => String.t(),
-          :order => String.t(),
-          :orderBy => String.t(),
-          :searchTarget => String.t(),
-          :searchText => String.t(),
-          :status => String.t(),
-          :toDateTime => String.t()
-        }
+    :actionRequired => String.t,
+    :expires => String.t,
+    :folderIds => String.t,
+    :fromDateTime => String.t,
+    :isTemplate => String.t,
+    :order => String.t,
+    :orderBy => String.t,
+    :searchTarget => String.t,
+    :searchText => String.t,
+    :status => String.t,
+    :toDateTime => String.t
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.Filter do

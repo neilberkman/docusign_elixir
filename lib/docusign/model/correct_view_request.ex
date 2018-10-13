@@ -3,7 +3,9 @@
 # Do not edit the class manually.
 
 defmodule DocuSign.Model.CorrectViewRequest do
-  @moduledoc false
+  @moduledoc """
+  
+  """
 
   @derive [Poison.Encoder]
   defstruct [
@@ -12,9 +14,9 @@ defmodule DocuSign.Model.CorrectViewRequest do
   ]
 
   @type t :: %__MODULE__{
-          :returnUrl => String.t(),
-          :suppressNavigation => String.t()
-        }
+    :returnUrl => String.t,
+    :suppressNavigation => String.t
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.CorrectViewRequest do

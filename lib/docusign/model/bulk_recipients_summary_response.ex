@@ -3,7 +3,9 @@
 # Do not edit the class manually.
 
 defmodule DocuSign.Model.BulkRecipientsSummaryResponse do
-  @moduledoc false
+  @moduledoc """
+  
+  """
 
   @derive [Poison.Encoder]
   defstruct [
@@ -14,16 +16,15 @@ defmodule DocuSign.Model.BulkRecipientsSummaryResponse do
   ]
 
   @type t :: %__MODULE__{
-          :bulkRecipients => [BulkRecipient],
-          :bulkRecipientsCount => String.t(),
-          :bulkRecipientsUri => String.t(),
-          :errorDetails => [ErrorDetails]
-        }
+    :bulkRecipients => [BulkRecipient],
+    :bulkRecipientsCount => String.t,
+    :bulkRecipientsUri => String.t,
+    :errorDetails => [ErrorDetails]
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.BulkRecipientsSummaryResponse do
   import DocuSign.Deserializer
-
   def decode(value, options) do
     value
     |> deserialize(:bulkRecipients, :list, DocuSign.Model.BulkRecipient, options)

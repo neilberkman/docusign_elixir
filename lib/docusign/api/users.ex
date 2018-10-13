@@ -10,6 +10,7 @@ defmodule DocuSign.Api.Users do
   alias DocuSign.Connection
   import DocuSign.RequestBuilder
 
+
   @doc """
   Gets the user information for a specified user.
   Retrieves the user information for the specified user.   To return additional user information that details the last login date, login status, and the user&#39;s password expiration date, set the optional &#x60;additional_info&#x60; query string parameter to **true**.
@@ -28,14 +29,12 @@ defmodule DocuSign.Api.Users do
   {:ok, %DocuSign.Model.Users{}} on success
   {:error, info} on failure
   """
-  @spec user_get_user(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.Users.t()} | {:error, Tesla.Env.t()}
+  @spec user_get_user(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.Users.t} | {:error, Tesla.Env.t}
   def user_get_user(connection, account_id, user_id, opts \\ []) do
     optional_params = %{
-      :additional_info => :query,
-      :email => :query
+      :"additional_info" => :query,
+      :"email" => :query
     }
-
     %{}
     |> method(:get)
     |> url("/v2/accounts/#{account_id}/users/#{user_id}")
@@ -61,12 +60,7 @@ defmodule DocuSign.Api.Users do
   {:ok, %{}} on success
   {:error, info} on failure
   """
-  @spec user_profile_image_delete_user_profile_image(
-          Tesla.Env.client(),
-          String.t(),
-          String.t(),
-          keyword()
-        ) :: {:ok, nil} | {:error, Tesla.Env.t()}
+  @spec user_profile_image_delete_user_profile_image(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, nil} | {:error, Tesla.Env.t}
   def user_profile_image_delete_user_profile_image(connection, account_id, user_id, _opts \\ []) do
     %{}
     |> method(:delete)
@@ -93,17 +87,11 @@ defmodule DocuSign.Api.Users do
   {:ok, %DocuSign.Model.String.t{}} on success
   {:error, info} on failure
   """
-  @spec user_profile_image_get_user_profile_image(
-          Tesla.Env.client(),
-          String.t(),
-          String.t(),
-          keyword()
-        ) :: {:ok, String.t()} | {:error, Tesla.Env.t()}
+  @spec user_profile_image_get_user_profile_image(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, String.t} | {:error, Tesla.Env.t}
   def user_profile_image_get_user_profile_image(connection, account_id, user_id, opts \\ []) do
     optional_params = %{
-      :encoding => :query
+      :"encoding" => :query
     }
-
     %{}
     |> method(:get)
     |> url("/v2/accounts/#{account_id}/users/#{user_id}/profile/image")
@@ -129,12 +117,7 @@ defmodule DocuSign.Api.Users do
   {:ok, %{}} on success
   {:error, info} on failure
   """
-  @spec user_profile_image_put_user_profile_image(
-          Tesla.Env.client(),
-          String.t(),
-          String.t(),
-          keyword()
-        ) :: {:ok, nil} | {:error, Tesla.Env.t()}
+  @spec user_profile_image_put_user_profile_image(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, nil} | {:error, Tesla.Env.t}
   def user_profile_image_put_user_profile_image(connection, account_id, user_id, _opts \\ []) do
     %{}
     |> method(:put)
@@ -146,6 +129,8 @@ defmodule DocuSign.Api.Users do
 
   @doc """
   Updates the specified user information.
+  
+
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server
@@ -159,13 +144,11 @@ defmodule DocuSign.Api.Users do
   {:ok, %DocuSign.Model.Users{}} on success
   {:error, info} on failure
   """
-  @spec user_put_user(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.Users.t()} | {:error, Tesla.Env.t()}
+  @spec user_put_user(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.Users.t} | {:error, Tesla.Env.t}
   def user_put_user(connection, account_id, user_id, opts \\ []) do
     optional_params = %{
-      :Users => :body
+      :"Users" => :body
     }
-
     %{}
     |> method(:put)
     |> url("/v2/accounts/#{account_id}/users/#{user_id}")
@@ -191,8 +174,7 @@ defmodule DocuSign.Api.Users do
   {:ok, %DocuSign.Model.UserSettingsInformation{}} on success
   {:error, info} on failure
   """
-  @spec user_settings_get_user_settings(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.UserSettingsInformation.t()} | {:error, Tesla.Env.t()}
+  @spec user_settings_get_user_settings(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.UserSettingsInformation.t} | {:error, Tesla.Env.t}
   def user_settings_get_user_settings(connection, account_id, user_id, _opts \\ []) do
     %{}
     |> method(:get)
@@ -219,13 +201,11 @@ defmodule DocuSign.Api.Users do
   {:ok, %{}} on success
   {:error, info} on failure
   """
-  @spec user_settings_put_user_settings(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, nil} | {:error, Tesla.Env.t()}
+  @spec user_settings_put_user_settings(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, nil} | {:error, Tesla.Env.t}
   def user_settings_put_user_settings(connection, account_id, user_id, opts \\ []) do
     optional_params = %{
-      :userSettingsInformation => :body
+      :"userSettingsInformation" => :body
     }
-
     %{}
     |> method(:put)
     |> url("/v2/accounts/#{account_id}/users/#{user_id}/settings")
@@ -252,14 +232,12 @@ defmodule DocuSign.Api.Users do
   {:ok, %DocuSign.Model.GroupUsers{}} on success
   {:error, info} on failure
   """
-  @spec users_delete_users(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.GroupUsers.t()} | {:error, Tesla.Env.t()}
+  @spec users_delete_users(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.GroupUsers.t} | {:error, Tesla.Env.t}
   def users_delete_users(connection, account_id, opts \\ []) do
     optional_params = %{
-      :delete => :query,
-      :userInfoList => :body
+      :"delete" => :query,
+      :"userInfoList" => :body
     }
-
     %{}
     |> method(:delete)
     |> url("/v2/accounts/#{account_id}/users")
@@ -286,7 +264,7 @@ defmodule DocuSign.Api.Users do
     - :login_status (String.t): 
     - :not_group_id (String.t): 
     - :start_position (String.t): Starting value for the list. 
-    - :status (String.t): Filters the user records by account status. One of:  * ActivationRequired * ActivationSent * Active * Closed * Disabled 
+    - :status (String.t): Indicates the envelope status. Valid values are:   * completed - The envelope has been completed and all tags have been signed. * created - The envelope is created as a draft. It can be modified and sent later. * declined - The envelope has been declined by the recipients. * delivered - The envelope has been delivered to the recipients. * sent - The envelope is sent to the recipients. * signed - The envelope has been signed by the recipients. * voided - The envelope is no longer valid and recipients cannot access or sign the envelope. 
     - :user_name_substring (String.t): Filters the user records returned by the user name or a sub-string of user name.
 
   ## Returns
@@ -294,22 +272,20 @@ defmodule DocuSign.Api.Users do
   {:ok, %DocuSign.Model.UserInformationList{}} on success
   {:error, info} on failure
   """
-  @spec users_get_users(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.UserInformationList.t()} | {:error, Tesla.Env.t()}
+  @spec users_get_users(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.UserInformationList.t} | {:error, Tesla.Env.t}
   def users_get_users(connection, account_id, opts \\ []) do
     optional_params = %{
-      :additional_info => :query,
-      :count => :query,
-      :email => :query,
-      :email_substring => :query,
-      :group_id => :query,
-      :login_status => :query,
-      :not_group_id => :query,
-      :start_position => :query,
-      :status => :query,
-      :user_name_substring => :query
+      :"additional_info" => :query,
+      :"count" => :query,
+      :"email" => :query,
+      :"email_substring" => :query,
+      :"group_id" => :query,
+      :"login_status" => :query,
+      :"not_group_id" => :query,
+      :"start_position" => :query,
+      :"status" => :query,
+      :"user_name_substring" => :query
     }
-
     %{}
     |> method(:get)
     |> url("/v2/accounts/#{account_id}/users")
@@ -335,13 +311,11 @@ defmodule DocuSign.Api.Users do
   {:ok, %DocuSign.Model.NewUsersSummary{}} on success
   {:error, info} on failure
   """
-  @spec users_post_users(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.NewUsersSummary.t()} | {:error, Tesla.Env.t()}
+  @spec users_post_users(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.NewUsersSummary.t} | {:error, Tesla.Env.t}
   def users_post_users(connection, account_id, opts \\ []) do
     optional_params = %{
-      :newUsersDefinition => :body
+      :"newUsersDefinition" => :body
     }
-
     %{}
     |> method(:post)
     |> url("/v2/accounts/#{account_id}/users")
@@ -353,6 +327,8 @@ defmodule DocuSign.Api.Users do
 
   @doc """
   Change one or more user in the specified account.
+  
+
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server
@@ -365,13 +341,11 @@ defmodule DocuSign.Api.Users do
   {:ok, %DocuSign.Model.UserInformationList{}} on success
   {:error, info} on failure
   """
-  @spec users_put_users(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.UserInformationList.t()} | {:error, Tesla.Env.t()}
+  @spec users_put_users(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.UserInformationList.t} | {:error, Tesla.Env.t}
   def users_put_users(connection, account_id, opts \\ []) do
     optional_params = %{
-      :userInformationList => :body
+      :"userInformationList" => :body
     }
-
     %{}
     |> method(:put)
     |> url("/v2/accounts/#{account_id}/users")

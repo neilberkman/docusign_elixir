@@ -3,7 +3,9 @@
 # Do not edit the class manually.
 
 defmodule DocuSign.Model.ExternalFile do
-  @moduledoc false
+  @moduledoc """
+  
+  """
 
   @derive [Poison.Encoder]
   defstruct [
@@ -18,15 +20,15 @@ defmodule DocuSign.Model.ExternalFile do
   ]
 
   @type t :: %__MODULE__{
-          :date => String.t(),
-          :id => String.t(),
-          :img => String.t(),
-          :name => String.t(),
-          :size => String.t(),
-          :supported => String.t(),
-          :type => String.t(),
-          :uri => String.t()
-        }
+    :date => String.t,
+    :id => String.t,
+    :img => String.t,
+    :name => String.t,
+    :size => String.t,
+    :supported => String.t,
+    :type => String.t,
+    :uri => String.t
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.ExternalFile do

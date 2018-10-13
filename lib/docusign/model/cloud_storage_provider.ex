@@ -3,7 +3,9 @@
 # Do not edit the class manually.
 
 defmodule DocuSign.Model.CloudStorageProvider do
-  @moduledoc false
+  @moduledoc """
+  
+  """
 
   @derive [Poison.Encoder]
   defstruct [
@@ -15,17 +17,16 @@ defmodule DocuSign.Model.CloudStorageProvider do
   ]
 
   @type t :: %__MODULE__{
-          :authenticationUrl => String.t(),
-          :errorDetails => ErrorDetails,
-          :redirectUrl => String.t(),
-          :service => String.t(),
-          :serviceId => String.t()
-        }
+    :authenticationUrl => String.t,
+    :errorDetails => ErrorDetails,
+    :redirectUrl => String.t,
+    :service => String.t,
+    :serviceId => String.t
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.CloudStorageProvider do
   import DocuSign.Deserializer
-
   def decode(value, options) do
     value
     |> deserialize(:errorDetails, :struct, DocuSign.Model.ErrorDetails, options)

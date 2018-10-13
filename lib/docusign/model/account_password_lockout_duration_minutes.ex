@@ -3,7 +3,9 @@
 # Do not edit the class manually.
 
 defmodule DocuSign.Model.AccountPasswordLockoutDurationMinutes do
-  @moduledoc false
+  @moduledoc """
+  
+  """
 
   @derive [Poison.Encoder]
   defstruct [
@@ -12,9 +14,9 @@ defmodule DocuSign.Model.AccountPasswordLockoutDurationMinutes do
   ]
 
   @type t :: %__MODULE__{
-          :maximumMinutes => String.t(),
-          :minimumMinutes => String.t()
-        }
+    :maximumMinutes => String.t,
+    :minimumMinutes => String.t
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.AccountPasswordLockoutDurationMinutes do

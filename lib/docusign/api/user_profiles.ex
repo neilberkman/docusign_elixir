@@ -10,6 +10,7 @@ defmodule DocuSign.Api.UserProfiles do
   alias DocuSign.Connection
   import DocuSign.RequestBuilder
 
+
   @doc """
   Retrieves the user profile for a specified user.
   Retrieves the user profile information, the privacy settings and personal information (address, phone number, etc.) for the specified user.  The userId parameter specified in the endpoint must match the authenticated user&#39;s user ID and the user must be a member of the specified account.
@@ -26,8 +27,7 @@ defmodule DocuSign.Api.UserProfiles do
   {:ok, %DocuSign.Model.UserProfiles{}} on success
   {:error, info} on failure
   """
-  @spec user_profile_get_profile(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.UserProfiles.t()} | {:error, Tesla.Env.t()}
+  @spec user_profile_get_profile(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.UserProfiles.t} | {:error, Tesla.Env.t}
   def user_profile_get_profile(connection, account_id, user_id, _opts \\ []) do
     %{}
     |> method(:get)
@@ -54,13 +54,11 @@ defmodule DocuSign.Api.UserProfiles do
   {:ok, %{}} on success
   {:error, info} on failure
   """
-  @spec user_profile_put_profile(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, nil} | {:error, Tesla.Env.t()}
+  @spec user_profile_put_profile(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, nil} | {:error, Tesla.Env.t}
   def user_profile_put_profile(connection, account_id, user_id, opts \\ []) do
     optional_params = %{
-      :UserProfiles => :body
+      :"UserProfiles" => :body
     }
-
     %{}
     |> method(:put)
     |> url("/v2/accounts/#{account_id}/users/#{user_id}/profile")

@@ -10,6 +10,7 @@ defmodule DocuSign.Api.EnvelopeCustomFields do
   alias DocuSign.Connection
   import DocuSign.RequestBuilder
 
+
   @doc """
   Deletes envelope custom fields for draft and in-process envelopes.
   Deletes envelope custom fields for draft and in-process envelopes.
@@ -27,13 +28,11 @@ defmodule DocuSign.Api.EnvelopeCustomFields do
   {:ok, %DocuSign.Model.EnvelopeCustomFields{}} on success
   {:error, info} on failure
   """
-  @spec custom_fields_delete_custom_fields(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.EnvelopeCustomFields.t()} | {:error, Tesla.Env.t()}
+  @spec custom_fields_delete_custom_fields(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeCustomFields.t} | {:error, Tesla.Env.t}
   def custom_fields_delete_custom_fields(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
-      :EnvelopeCustomFields => :body
+      :"EnvelopeCustomFields" => :body
     }
-
     %{}
     |> method(:delete)
     |> url("/v2/accounts/#{account_id}/envelopes/#{envelope_id}/custom_fields")
@@ -59,8 +58,7 @@ defmodule DocuSign.Api.EnvelopeCustomFields do
   {:ok, %DocuSign.Model.CustomFieldsEnvelope{}} on success
   {:error, info} on failure
   """
-  @spec custom_fields_get_custom_fields(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.CustomFieldsEnvelope.t()} | {:error, Tesla.Env.t()}
+  @spec custom_fields_get_custom_fields(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.CustomFieldsEnvelope.t} | {:error, Tesla.Env.t}
   def custom_fields_get_custom_fields(connection, account_id, envelope_id, _opts \\ []) do
     %{}
     |> method(:get)
@@ -87,13 +85,11 @@ defmodule DocuSign.Api.EnvelopeCustomFields do
   {:ok, %DocuSign.Model.EnvelopeCustomFields{}} on success
   {:error, info} on failure
   """
-  @spec custom_fields_post_custom_fields(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.EnvelopeCustomFields.t()} | {:error, Tesla.Env.t()}
+  @spec custom_fields_post_custom_fields(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeCustomFields.t} | {:error, Tesla.Env.t}
   def custom_fields_post_custom_fields(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
-      :EnvelopeCustomFields => :body
+      :"EnvelopeCustomFields" => :body
     }
-
     %{}
     |> method(:post)
     |> url("/v2/accounts/#{account_id}/envelopes/#{envelope_id}/custom_fields")
@@ -120,13 +116,11 @@ defmodule DocuSign.Api.EnvelopeCustomFields do
   {:ok, %DocuSign.Model.EnvelopeCustomFields{}} on success
   {:error, info} on failure
   """
-  @spec custom_fields_put_custom_fields(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.EnvelopeCustomFields.t()} | {:error, Tesla.Env.t()}
+  @spec custom_fields_put_custom_fields(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeCustomFields.t} | {:error, Tesla.Env.t}
   def custom_fields_put_custom_fields(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
-      :EnvelopeCustomFields => :body
+      :"EnvelopeCustomFields" => :body
     }
-
     %{}
     |> method(:put)
     |> url("/v2/accounts/#{account_id}/envelopes/#{envelope_id}/custom_fields")

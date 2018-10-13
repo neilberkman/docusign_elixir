@@ -3,7 +3,9 @@
 # Do not edit the class manually.
 
 defmodule DocuSign.Model.EnvelopeAttachmentsRequest do
-  @moduledoc false
+  @moduledoc """
+  
+  """
 
   @derive [Poison.Encoder]
   defstruct [
@@ -11,13 +13,12 @@ defmodule DocuSign.Model.EnvelopeAttachmentsRequest do
   ]
 
   @type t :: %__MODULE__{
-          :attachments => [Attachment]
-        }
+    :attachments => [Attachment]
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.EnvelopeAttachmentsRequest do
   import DocuSign.Deserializer
-
   def decode(value, options) do
     value
     |> deserialize(:attachments, :list, DocuSign.Model.Attachment, options)

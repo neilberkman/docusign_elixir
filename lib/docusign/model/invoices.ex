@@ -22,22 +22,21 @@ defmodule DocuSign.Model.Invoices do
   ]
 
   @type t :: %__MODULE__{
-          :amount => String.t(),
-          :balance => String.t(),
-          :dueDate => String.t(),
-          :invoiceId => String.t(),
-          :invoiceItems => [BillingInvoiceItem],
-          :invoiceNumber => String.t(),
-          :invoiceUri => String.t(),
-          :nonTaxableAmount => String.t(),
-          :pdfAvailable => String.t(),
-          :taxableAmount => String.t()
-        }
+    :amount => String.t,
+    :balance => String.t,
+    :dueDate => String.t,
+    :invoiceId => String.t,
+    :invoiceItems => [BillingInvoiceItem],
+    :invoiceNumber => String.t,
+    :invoiceUri => String.t,
+    :nonTaxableAmount => String.t,
+    :pdfAvailable => String.t,
+    :taxableAmount => String.t
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.Invoices do
   import DocuSign.Deserializer
-
   def decode(value, options) do
     value
     |> deserialize(:invoiceItems, :list, DocuSign.Model.BillingInvoiceItem, options)

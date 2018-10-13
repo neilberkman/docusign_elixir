@@ -19,19 +19,18 @@ defmodule DocuSign.Model.BulkEnvelopes do
   ]
 
   @type t :: %__MODULE__{
-          :bulkEnvelopeStatuses => [BulkEnvelopeStatus],
-          :endPosition => String.t(),
-          :nextUri => String.t(),
-          :previousUri => String.t(),
-          :resultSetSize => String.t(),
-          :startPosition => String.t(),
-          :totalSetSize => String.t()
-        }
+    :bulkEnvelopeStatuses => [BulkEnvelopeStatus],
+    :endPosition => String.t,
+    :nextUri => String.t,
+    :previousUri => String.t,
+    :resultSetSize => String.t,
+    :startPosition => String.t,
+    :totalSetSize => String.t
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.BulkEnvelopes do
   import DocuSign.Deserializer
-
   def decode(value, options) do
     value
     |> deserialize(:bulkEnvelopeStatuses, :list, DocuSign.Model.BulkEnvelopeStatus, options)

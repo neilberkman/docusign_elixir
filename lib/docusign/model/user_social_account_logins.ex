@@ -17,17 +17,16 @@ defmodule DocuSign.Model.UserSocialAccountLogins do
   ]
 
   @type t :: %__MODULE__{
-          :email => String.t(),
-          :errorDetails => ErrorDetails,
-          :provider => String.t(),
-          :socialId => String.t(),
-          :userName => String.t()
-        }
+    :email => String.t,
+    :errorDetails => ErrorDetails,
+    :provider => String.t,
+    :socialId => String.t,
+    :userName => String.t
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.UserSocialAccountLogins do
   import DocuSign.Deserializer
-
   def decode(value, options) do
     value
     |> deserialize(:errorDetails, :struct, DocuSign.Model.ErrorDetails, options)

@@ -3,7 +3,9 @@
 # Do not edit the class manually.
 
 defmodule DocuSign.Model.ContactPhoneNumber do
-  @moduledoc false
+  @moduledoc """
+  
+  """
 
   @derive [Poison.Encoder]
   defstruct [
@@ -12,9 +14,9 @@ defmodule DocuSign.Model.ContactPhoneNumber do
   ]
 
   @type t :: %__MODULE__{
-          :phoneNumber => String.t(),
-          :phoneType => String.t()
-        }
+    :phoneNumber => String.t,
+    :phoneType => String.t
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.ContactPhoneNumber do

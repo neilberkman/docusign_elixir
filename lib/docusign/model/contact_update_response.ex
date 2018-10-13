@@ -3,7 +3,9 @@
 # Do not edit the class manually.
 
 defmodule DocuSign.Model.ContactUpdateResponse do
-  @moduledoc false
+  @moduledoc """
+  
+  """
 
   @derive [Poison.Encoder]
   defstruct [
@@ -11,13 +13,12 @@ defmodule DocuSign.Model.ContactUpdateResponse do
   ]
 
   @type t :: %__MODULE__{
-          :contacts => [Contacts]
-        }
+    :contacts => [Contacts]
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.ContactUpdateResponse do
   import DocuSign.Deserializer
-
   def decode(value, options) do
     value
     |> deserialize(:contacts, :list, DocuSign.Model.Contacts, options)

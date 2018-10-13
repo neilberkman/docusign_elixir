@@ -3,7 +3,9 @@
 # Do not edit the class manually.
 
 defmodule DocuSign.Model.AccountPermissionProfiles do
-  @moduledoc false
+  @moduledoc """
+  
+  """
 
   @derive [Poison.Encoder]
   defstruct [
@@ -17,19 +19,18 @@ defmodule DocuSign.Model.AccountPermissionProfiles do
   ]
 
   @type t :: %__MODULE__{
-          :modifiedByUsername => String.t(),
-          :modifiedDateTime => String.t(),
-          :permissionProfileId => String.t(),
-          :permissionProfileName => String.t(),
-          :settings => AccountRoleSettings,
-          :userCount => String.t(),
-          :users => [Users]
-        }
+    :modifiedByUsername => String.t,
+    :modifiedDateTime => String.t,
+    :permissionProfileId => String.t,
+    :permissionProfileName => String.t,
+    :settings => AccountRoleSettings,
+    :userCount => String.t,
+    :users => [Users]
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.AccountPermissionProfiles do
   import DocuSign.Deserializer
-
   def decode(value, options) do
     value
     |> deserialize(:settings, :struct, DocuSign.Model.AccountRoleSettings, options)

@@ -3,7 +3,9 @@
 # Do not edit the class manually.
 
 defmodule DocuSign.Model.TemplateDocumentTabs do
-  @moduledoc false
+  @moduledoc """
+  
+  """
 
   @derive [Poison.Encoder]
   defstruct [
@@ -29,6 +31,7 @@ defmodule DocuSign.Model.TemplateDocumentTabs do
     :signerAttachmentTabs,
     :signHereTabs,
     :ssnTabs,
+    :tabGroups,
     :textTabs,
     :titleTabs,
     :viewTabs,
@@ -36,38 +39,38 @@ defmodule DocuSign.Model.TemplateDocumentTabs do
   ]
 
   @type t :: %__MODULE__{
-          :approveTabs => [Approve],
-          :checkboxTabs => [Checkbox],
-          :companyTabs => [Company],
-          :dateSignedTabs => [DateSigned],
-          :dateTabs => [DateTime],
-          :declineTabs => [Decline],
-          :emailAddressTabs => [EmailAddress],
-          :emailTabs => [Email],
-          :envelopeIdTabs => [EnvelopeId],
-          :firstNameTabs => [FirstName],
-          :formulaTabs => [FormulaTab],
-          :fullNameTabs => [FullName],
-          :initialHereTabs => [InitialHere],
-          :lastNameTabs => [LastName],
-          :listTabs => [List],
-          :notarizeTabs => [Notarize],
-          :noteTabs => [Note],
-          :numberTabs => [Float],
-          :radioGroupTabs => [RadioGroup],
-          :signerAttachmentTabs => [SignerAttachment],
-          :signHereTabs => [SignHere],
-          :ssnTabs => [Ssn],
-          :textTabs => [Text],
-          :titleTabs => [Title],
-          :viewTabs => [View],
-          :zipTabs => [Zip]
-        }
+    :approveTabs => [Approve],
+    :checkboxTabs => [Checkbox],
+    :companyTabs => [Company],
+    :dateSignedTabs => [DateSigned],
+    :dateTabs => [DateTime],
+    :declineTabs => [Decline],
+    :emailAddressTabs => [EmailAddress],
+    :emailTabs => [Email],
+    :envelopeIdTabs => [EnvelopeId],
+    :firstNameTabs => [FirstName],
+    :formulaTabs => [FormulaTab],
+    :fullNameTabs => [FullName],
+    :initialHereTabs => [InitialHere],
+    :lastNameTabs => [LastName],
+    :listTabs => [List],
+    :notarizeTabs => [Notarize],
+    :noteTabs => [Note],
+    :numberTabs => [Float],
+    :radioGroupTabs => [RadioGroup],
+    :signerAttachmentTabs => [SignerAttachment],
+    :signHereTabs => [SignHere],
+    :ssnTabs => [Ssn],
+    :tabGroups => [TabGroup],
+    :textTabs => [Text],
+    :titleTabs => [Title],
+    :viewTabs => [View],
+    :zipTabs => [Zip]
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.TemplateDocumentTabs do
   import DocuSign.Deserializer
-
   def decode(value, options) do
     value
     |> deserialize(:approveTabs, :list, DocuSign.Model.Approve, options)
@@ -90,6 +93,7 @@ defimpl Poison.Decoder, for: DocuSign.Model.TemplateDocumentTabs do
     |> deserialize(:signerAttachmentTabs, :list, DocuSign.Model.SignerAttachment, options)
     |> deserialize(:signHereTabs, :list, DocuSign.Model.SignHere, options)
     |> deserialize(:ssnTabs, :list, DocuSign.Model.Ssn, options)
+    |> deserialize(:tabGroups, :list, DocuSign.Model.TabGroup, options)
     |> deserialize(:textTabs, :list, DocuSign.Model.Text, options)
     |> deserialize(:titleTabs, :list, DocuSign.Model.Title, options)
     |> deserialize(:viewTabs, :list, DocuSign.Model.View, options)

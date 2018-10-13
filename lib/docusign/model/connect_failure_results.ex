@@ -3,7 +3,9 @@
 # Do not edit the class manually.
 
 defmodule DocuSign.Model.ConnectFailureResults do
-  @moduledoc false
+  @moduledoc """
+  
+  """
 
   @derive [Poison.Encoder]
   defstruct [
@@ -11,13 +13,12 @@ defmodule DocuSign.Model.ConnectFailureResults do
   ]
 
   @type t :: %__MODULE__{
-          :retryQueue => [ConnectFailureResult]
-        }
+    :retryQueue => [ConnectFailureResult]
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.ConnectFailureResults do
   import DocuSign.Deserializer
-
   def decode(value, options) do
     value
     |> deserialize(:retryQueue, :list, DocuSign.Model.ConnectFailureResult, options)

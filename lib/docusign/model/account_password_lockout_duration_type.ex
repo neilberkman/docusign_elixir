@@ -3,7 +3,9 @@
 # Do not edit the class manually.
 
 defmodule DocuSign.Model.AccountPasswordLockoutDurationType do
-  @moduledoc false
+  @moduledoc """
+  
+  """
 
   @derive [Poison.Encoder]
   defstruct [
@@ -11,8 +13,8 @@ defmodule DocuSign.Model.AccountPasswordLockoutDurationType do
   ]
 
   @type t :: %__MODULE__{
-          :options => [String.t()]
-        }
+    :options => [String.t]
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.AccountPasswordLockoutDurationType do

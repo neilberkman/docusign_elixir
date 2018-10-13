@@ -3,7 +3,9 @@
 # Do not edit the class manually.
 
 defmodule DocuSign.Model.FolderItem do
-  @moduledoc false
+  @moduledoc """
+  
+  """
 
   @derive [Poison.Encoder]
   defstruct [
@@ -31,33 +33,32 @@ defmodule DocuSign.Model.FolderItem do
   ]
 
   @type t :: %__MODULE__{
-          :completedDateTime => String.t(),
-          :createdDateTime => String.t(),
-          :customFields => [CustomFieldV2],
-          :description => String.t(),
-          :envelopeId => String.t(),
-          :envelopeUri => String.t(),
-          :is21CFRPart11 => String.t(),
-          :isSignatureProviderEnvelope => String.t(),
-          :lastModified => String.t(),
-          :name => String.t(),
-          :ownerName => String.t(),
-          :pageCount => integer(),
-          :password => String.t(),
-          :senderEmail => String.t(),
-          :senderName => String.t(),
-          :sentDateTime => String.t(),
-          :shared => String.t(),
-          :status => String.t(),
-          :subject => String.t(),
-          :templateId => String.t(),
-          :uri => String.t()
-        }
+    :completedDateTime => String.t,
+    :createdDateTime => String.t,
+    :customFields => [CustomFieldV2],
+    :description => String.t,
+    :envelopeId => String.t,
+    :envelopeUri => String.t,
+    :is21CFRPart11 => String.t,
+    :isSignatureProviderEnvelope => String.t,
+    :lastModified => String.t,
+    :name => String.t,
+    :ownerName => String.t,
+    :pageCount => integer(),
+    :password => String.t,
+    :senderEmail => String.t,
+    :senderName => String.t,
+    :sentDateTime => String.t,
+    :shared => String.t,
+    :status => String.t,
+    :subject => String.t,
+    :templateId => String.t,
+    :uri => String.t
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.FolderItem do
   import DocuSign.Deserializer
-
   def decode(value, options) do
     value
     |> deserialize(:customFields, :list, DocuSign.Model.CustomFieldV2, options)

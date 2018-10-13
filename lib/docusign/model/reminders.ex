@@ -15,10 +15,10 @@ defmodule DocuSign.Model.Reminders do
   ]
 
   @type t :: %__MODULE__{
-          :reminderDelay => String.t(),
-          :reminderEnabled => String.t(),
-          :reminderFrequency => String.t()
-        }
+    :reminderDelay => String.t,
+    :reminderEnabled => String.t,
+    :reminderFrequency => String.t
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.Reminders do

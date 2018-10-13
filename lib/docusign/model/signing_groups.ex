@@ -22,22 +22,21 @@ defmodule DocuSign.Model.SigningGroups do
   ]
 
   @type t :: %__MODULE__{
-          :created => String.t(),
-          :createdBy => String.t(),
-          :errorDetails => ErrorDetails,
-          :groupEmail => String.t(),
-          :groupName => String.t(),
-          :groupType => String.t(),
-          :modified => String.t(),
-          :modifiedBy => String.t(),
-          :signingGroupId => String.t(),
-          :users => [SigningGroupUser]
-        }
+    :created => String.t,
+    :createdBy => String.t,
+    :errorDetails => ErrorDetails,
+    :groupEmail => String.t,
+    :groupName => String.t,
+    :groupType => String.t,
+    :modified => String.t,
+    :modifiedBy => String.t,
+    :signingGroupId => String.t,
+    :users => [SigningGroupUser]
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.SigningGroups do
   import DocuSign.Deserializer
-
   def decode(value, options) do
     value
     |> deserialize(:errorDetails, :struct, DocuSign.Model.ErrorDetails, options)

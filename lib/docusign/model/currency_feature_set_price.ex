@@ -3,7 +3,9 @@
 # Do not edit the class manually.
 
 defmodule DocuSign.Model.CurrencyFeatureSetPrice do
-  @moduledoc false
+  @moduledoc """
+  
+  """
 
   @derive [Poison.Encoder]
   defstruct [
@@ -15,12 +17,12 @@ defmodule DocuSign.Model.CurrencyFeatureSetPrice do
   ]
 
   @type t :: %__MODULE__{
-          :currencyCode => String.t(),
-          :currencySymbol => String.t(),
-          :envelopeFee => String.t(),
-          :fixedFee => String.t(),
-          :seatFee => String.t()
-        }
+    :currencyCode => String.t,
+    :currencySymbol => String.t,
+    :envelopeFee => String.t,
+    :fixedFee => String.t,
+    :seatFee => String.t
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.CurrencyFeatureSetPrice do

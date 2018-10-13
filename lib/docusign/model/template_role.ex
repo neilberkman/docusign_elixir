@@ -3,7 +3,9 @@
 # Do not edit the class manually.
 
 defmodule DocuSign.Model.TemplateRole do
-  @moduledoc false
+  @moduledoc """
+  
+  """
 
   @derive [Poison.Encoder]
   defstruct [
@@ -23,39 +25,28 @@ defmodule DocuSign.Model.TemplateRole do
   ]
 
   @type t :: %__MODULE__{
-          :accessCode => String.t(),
-          :clientUserId => String.t(),
-          :defaultRecipient => String.t(),
-          :email => String.t(),
-          :emailNotification => RecipientEmailNotification,
-          :embeddedRecipientStartURL => String.t(),
-          :inPersonSignerName => String.t(),
-          :name => String.t(),
-          :recipientSignatureProviders => [RecipientSignatureProvider],
-          :roleName => String.t(),
-          :routingOrder => String.t(),
-          :signingGroupId => String.t(),
-          :tabs => EnvelopeRecipientTabs
-        }
+    :accessCode => String.t,
+    :clientUserId => String.t,
+    :defaultRecipient => String.t,
+    :email => String.t,
+    :emailNotification => RecipientEmailNotification,
+    :embeddedRecipientStartURL => String.t,
+    :inPersonSignerName => String.t,
+    :name => String.t,
+    :recipientSignatureProviders => [RecipientSignatureProvider],
+    :roleName => String.t,
+    :routingOrder => String.t,
+    :signingGroupId => String.t,
+    :tabs => EnvelopeRecipientTabs
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.TemplateRole do
   import DocuSign.Deserializer
-
   def decode(value, options) do
     value
-    |> deserialize(
-      :emailNotification,
-      :struct,
-      DocuSign.Model.RecipientEmailNotification,
-      options
-    )
-    |> deserialize(
-      :recipientSignatureProviders,
-      :list,
-      DocuSign.Model.RecipientSignatureProvider,
-      options
-    )
+    |> deserialize(:emailNotification, :struct, DocuSign.Model.RecipientEmailNotification, options)
+    |> deserialize(:recipientSignatureProviders, :list, DocuSign.Model.RecipientSignatureProvider, options)
     |> deserialize(:tabs, :struct, DocuSign.Model.EnvelopeRecipientTabs, options)
   end
 end
