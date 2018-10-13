@@ -3,7 +3,9 @@
 # Do not edit the class manually.
 
 defmodule DocuSign.Model.OauthAccess do
-  @moduledoc false
+  @moduledoc """
+  
+  """
 
   @derive [Poison.Encoder]
   defstruct [
@@ -16,18 +18,17 @@ defmodule DocuSign.Model.OauthAccess do
   ]
 
   @type t :: %__MODULE__{
-          :access_token => String.t(),
-          :data => [NameValue],
-          :expires_in => String.t(),
-          :refresh_token => String.t(),
-          :scope => String.t(),
-          :token_type => String.t()
-        }
+    :access_token => String.t,
+    :data => [NameValue],
+    :expires_in => String.t,
+    :refresh_token => String.t,
+    :scope => String.t,
+    :token_type => String.t
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.OauthAccess do
   import DocuSign.Deserializer
-
   def decode(value, options) do
     value
     |> deserialize(:data, :list, DocuSign.Model.NameValue, options)

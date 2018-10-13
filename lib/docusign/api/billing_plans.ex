@@ -10,6 +10,7 @@ defmodule DocuSign.Api.BillingPlans do
   alias DocuSign.Connection
   import DocuSign.RequestBuilder
 
+
   @doc """
   Get Account Billing Plan
   Retrieves the billing plan information for the specified account, including the current billing plan, successor plans, billing address, and billing credit card.  By default the successor plan and credit card information is included in the response. This information can be excluded from the response by adding the appropriate optional query string with the &#x60;setting&#x60; set to **false**.   Response  The response returns the billing plan information, including the currency code, for the plan. The &#x60;billingPlan&#x60; and &#x60;succesorPlans&#x60; property values are the same as those shown in the [ML:Get Billing Plan Details] reference. the &#x60;billingAddress&#x60; and &#x60;creditCardInformation&#x60; property values are the same as those shown in the [ML:Update Billing Plan] reference.  ###### Note: When credit card number information is shown, a mask is applied to the response so that only the last 4 digits of the card number are visible. 
@@ -28,15 +29,13 @@ defmodule DocuSign.Api.BillingPlans do
   {:ok, %DocuSign.Model.BillingPlans{}} on success
   {:error, info} on failure
   """
-  @spec billing_plan_get_billing_plan(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.BillingPlans.t()} | {:error, Tesla.Env.t()}
+  @spec billing_plan_get_billing_plan(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.BillingPlans.t} | {:error, Tesla.Env.t}
   def billing_plan_get_billing_plan(connection, account_id, opts \\ []) do
     optional_params = %{
-      :include_credit_card_information => :query,
-      :include_metadata => :query,
-      :include_successor_plans => :query
+      :"include_credit_card_information" => :query,
+      :"include_metadata" => :query,
+      :"include_successor_plans" => :query
     }
-
     %{}
     |> method(:get)
     |> url("/v2/accounts/#{account_id}/billing_plan")
@@ -48,6 +47,8 @@ defmodule DocuSign.Api.BillingPlans do
 
   @doc """
   Get metadata for a given credit card.
+  
+
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server
@@ -59,8 +60,7 @@ defmodule DocuSign.Api.BillingPlans do
   {:ok, %DocuSign.Model.CreditCardInformation{}} on success
   {:error, info} on failure
   """
-  @spec billing_plan_get_credit_card_info(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.CreditCardInformation.t()} | {:error, Tesla.Env.t()}
+  @spec billing_plan_get_credit_card_info(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.CreditCardInformation.t} | {:error, Tesla.Env.t}
   def billing_plan_get_credit_card_info(connection, account_id, _opts \\ []) do
     %{}
     |> method(:get)
@@ -87,14 +87,12 @@ defmodule DocuSign.Api.BillingPlans do
   {:ok, %DocuSign.Model.BillingPlanUpdateResponse{}} on success
   {:error, info} on failure
   """
-  @spec billing_plan_put_billing_plan(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.BillingPlanUpdateResponse.t()} | {:error, Tesla.Env.t()}
+  @spec billing_plan_put_billing_plan(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.BillingPlanUpdateResponse.t} | {:error, Tesla.Env.t}
   def billing_plan_put_billing_plan(connection, account_id, opts \\ []) do
     optional_params = %{
-      :preview_billing_plan => :query,
-      :billingPlanInformation => :body
+      :"preview_billing_plan" => :query,
+      :"billingPlanInformation" => :body
     }
-
     %{}
     |> method(:put)
     |> url("/v2/accounts/#{account_id}/billing_plan")
@@ -119,8 +117,7 @@ defmodule DocuSign.Api.BillingPlans do
   {:ok, %DocuSign.Model.BillingPlanResponse{}} on success
   {:error, info} on failure
   """
-  @spec billing_plans_get_billing_plan(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.BillingPlanResponse.t()} | {:error, Tesla.Env.t()}
+  @spec billing_plans_get_billing_plan(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.BillingPlanResponse.t} | {:error, Tesla.Env.t}
   def billing_plans_get_billing_plan(connection, billing_plan_id, _opts \\ []) do
     %{}
     |> method(:get)
@@ -144,8 +141,7 @@ defmodule DocuSign.Api.BillingPlans do
   {:ok, %DocuSign.Model.BillingPlansResponse{}} on success
   {:error, info} on failure
   """
-  @spec billing_plans_get_billing_plans(Tesla.Env.client(), keyword()) ::
-          {:ok, DocuSign.Model.BillingPlansResponse.t()} | {:error, Tesla.Env.t()}
+  @spec billing_plans_get_billing_plans(Tesla.Env.client, keyword()) :: {:ok, DocuSign.Model.BillingPlansResponse.t} | {:error, Tesla.Env.t}
   def billing_plans_get_billing_plans(connection, _opts \\ []) do
     %{}
     |> method(:get)
@@ -171,13 +167,11 @@ defmodule DocuSign.Api.BillingPlans do
   {:ok, %{}} on success
   {:error, info} on failure
   """
-  @spec purchased_envelopes_put_purchased_envelopes(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, nil} | {:error, Tesla.Env.t()}
+  @spec purchased_envelopes_put_purchased_envelopes(Tesla.Env.client, String.t, keyword()) :: {:ok, nil} | {:error, Tesla.Env.t}
   def purchased_envelopes_put_purchased_envelopes(connection, account_id, opts \\ []) do
     optional_params = %{
-      :purchasedEnvelopesInformation => :body
+      :"purchasedEnvelopesInformation" => :body
     }
-
     %{}
     |> method(:put)
     |> url("/v2/accounts/#{account_id}/billing_plan/purchased_envelopes")

@@ -3,10 +3,14 @@
 # Do not edit the class manually.
 
 defmodule DocuSign.Model.Jurisdiction do
-  @moduledoc false
+  @moduledoc """
+  
+  """
 
   @derive [Poison.Encoder]
   defstruct [
+    :allowSystemCreatedSeal,
+    :allowUserUploadedSeal,
     :commissionIdInSeal,
     :county,
     :countyInSeal,
@@ -18,15 +22,17 @@ defmodule DocuSign.Model.Jurisdiction do
   ]
 
   @type t :: %__MODULE__{
-          :commissionIdInSeal => String.t(),
-          :county => String.t(),
-          :countyInSeal => String.t(),
-          :enabled => String.t(),
-          :jurisdictionId => String.t(),
-          :name => String.t(),
-          :notaryPublicInSeal => String.t(),
-          :stateNameInSeal => String.t()
-        }
+    :allowSystemCreatedSeal => String.t,
+    :allowUserUploadedSeal => String.t,
+    :commissionIdInSeal => String.t,
+    :county => String.t,
+    :countyInSeal => String.t,
+    :enabled => String.t,
+    :jurisdictionId => String.t,
+    :name => String.t,
+    :notaryPublicInSeal => String.t,
+    :stateNameInSeal => String.t
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.Jurisdiction do

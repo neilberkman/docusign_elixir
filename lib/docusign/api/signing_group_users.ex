@@ -10,6 +10,7 @@ defmodule DocuSign.Api.SigningGroupUsers do
   alias DocuSign.Connection
   import DocuSign.RequestBuilder
 
+
   @doc """
   Deletes  one or more members from a signing group.
   Deletes  one or more members from the specified signing group. 
@@ -27,22 +28,11 @@ defmodule DocuSign.Api.SigningGroupUsers do
   {:ok, %DocuSign.Model.SigningGroupUsers{}} on success
   {:error, info} on failure
   """
-  @spec signing_groups_delete_signing_group_users(
-          Tesla.Env.client(),
-          String.t(),
-          String.t(),
-          keyword()
-        ) :: {:ok, DocuSign.Model.SigningGroupUsers.t()} | {:error, Tesla.Env.t()}
-  def signing_groups_delete_signing_group_users(
-        connection,
-        account_id,
-        signing_group_id,
-        opts \\ []
-      ) do
+  @spec signing_groups_delete_signing_group_users(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.SigningGroupUsers.t} | {:error, Tesla.Env.t}
+  def signing_groups_delete_signing_group_users(connection, account_id, signing_group_id, opts \\ []) do
     optional_params = %{
-      :SigningGroupUsers => :body
+      :"SigningGroupUsers" => :body
     }
-
     %{}
     |> method(:delete)
     |> url("/v2/accounts/#{account_id}/signing_groups/#{signing_group_id}/users")
@@ -68,18 +58,8 @@ defmodule DocuSign.Api.SigningGroupUsers do
   {:ok, %DocuSign.Model.SigningGroupUsers{}} on success
   {:error, info} on failure
   """
-  @spec signing_groups_get_signing_group_users(
-          Tesla.Env.client(),
-          String.t(),
-          String.t(),
-          keyword()
-        ) :: {:ok, DocuSign.Model.SigningGroupUsers.t()} | {:error, Tesla.Env.t()}
-  def signing_groups_get_signing_group_users(
-        connection,
-        account_id,
-        signing_group_id,
-        _opts \\ []
-      ) do
+  @spec signing_groups_get_signing_group_users(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.SigningGroupUsers.t} | {:error, Tesla.Env.t}
+  def signing_groups_get_signing_group_users(connection, account_id, signing_group_id, _opts \\ []) do
     %{}
     |> method(:get)
     |> url("/v2/accounts/#{account_id}/signing_groups/#{signing_group_id}/users")
@@ -105,17 +85,11 @@ defmodule DocuSign.Api.SigningGroupUsers do
   {:ok, %DocuSign.Model.SigningGroupUsers{}} on success
   {:error, info} on failure
   """
-  @spec signing_groups_put_signing_group_users(
-          Tesla.Env.client(),
-          String.t(),
-          String.t(),
-          keyword()
-        ) :: {:ok, DocuSign.Model.SigningGroupUsers.t()} | {:error, Tesla.Env.t()}
+  @spec signing_groups_put_signing_group_users(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.SigningGroupUsers.t} | {:error, Tesla.Env.t}
   def signing_groups_put_signing_group_users(connection, account_id, signing_group_id, opts \\ []) do
     optional_params = %{
-      :SigningGroupUsers => :body
+      :"SigningGroupUsers" => :body
     }
-
     %{}
     |> method(:put)
     |> url("/v2/accounts/#{account_id}/signing_groups/#{signing_group_id}/users")

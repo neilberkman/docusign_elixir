@@ -3,7 +3,9 @@
 # Do not edit the class manually.
 
 defmodule DocuSign.Model.Ssn9InformationInput do
-  @moduledoc false
+  @moduledoc """
+  
+  """
 
   @derive [Poison.Encoder]
   defstruct [
@@ -12,9 +14,9 @@ defmodule DocuSign.Model.Ssn9InformationInput do
   ]
 
   @type t :: %__MODULE__{
-          :displayLevelCode => String.t(),
-          :ssn9 => String.t()
-        }
+    :displayLevelCode => String.t,
+    :ssn9 => String.t
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.Ssn9InformationInput do

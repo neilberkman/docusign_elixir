@@ -13,13 +13,12 @@ defmodule DocuSign.Model.CloudStorageProviders do
   ]
 
   @type t :: %__MODULE__{
-          :storageProviders => [CloudStorageProvider]
-        }
+    :storageProviders => [CloudStorageProvider]
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.CloudStorageProviders do
   import DocuSign.Deserializer
-
   def decode(value, options) do
     value
     |> deserialize(:storageProviders, :list, DocuSign.Model.CloudStorageProvider, options)

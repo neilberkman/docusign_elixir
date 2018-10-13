@@ -3,7 +3,9 @@
 # Do not edit the class manually.
 
 defmodule DocuSign.Model.FileTypeList do
-  @moduledoc false
+  @moduledoc """
+  
+  """
 
   @derive [Poison.Encoder]
   defstruct [
@@ -11,13 +13,12 @@ defmodule DocuSign.Model.FileTypeList do
   ]
 
   @type t :: %__MODULE__{
-          :fileTypes => [FileType]
-        }
+    :fileTypes => [FileType]
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.FileTypeList do
   import DocuSign.Deserializer
-
   def decode(value, options) do
     value
     |> deserialize(:fileTypes, :list, DocuSign.Model.FileType, options)

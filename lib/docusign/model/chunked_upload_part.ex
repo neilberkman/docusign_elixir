@@ -3,7 +3,9 @@
 # Do not edit the class manually.
 
 defmodule DocuSign.Model.ChunkedUploadPart do
-  @moduledoc false
+  @moduledoc """
+  
+  """
 
   @derive [Poison.Encoder]
   defstruct [
@@ -12,9 +14,9 @@ defmodule DocuSign.Model.ChunkedUploadPart do
   ]
 
   @type t :: %__MODULE__{
-          :sequence => String.t(),
-          :size => String.t()
-        }
+    :sequence => String.t,
+    :size => String.t
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.ChunkedUploadPart do

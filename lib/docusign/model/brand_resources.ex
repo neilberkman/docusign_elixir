@@ -3,7 +3,9 @@
 # Do not edit the class manually.
 
 defmodule DocuSign.Model.BrandResources do
-  @moduledoc false
+  @moduledoc """
+  
+  """
 
   @derive [Poison.Encoder]
   defstruct [
@@ -17,19 +19,18 @@ defmodule DocuSign.Model.BrandResources do
   ]
 
   @type t :: %__MODULE__{
-          :createdByUserInfo => UserInfo,
-          :createdDate => String.t(),
-          :modifiedByUserInfo => UserInfo,
-          :modifiedDate => String.t(),
-          :modifiedTemplates => [String.t()],
-          :resourcesContentType => String.t(),
-          :resourcesContentUri => String.t()
-        }
+    :createdByUserInfo => UserInfo,
+    :createdDate => String.t,
+    :modifiedByUserInfo => UserInfo,
+    :modifiedDate => String.t,
+    :modifiedTemplates => [String.t],
+    :resourcesContentType => String.t,
+    :resourcesContentUri => String.t
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.BrandResources do
   import DocuSign.Deserializer
-
   def decode(value, options) do
     value
     |> deserialize(:createdByUserInfo, :struct, DocuSign.Model.UserInfo, options)

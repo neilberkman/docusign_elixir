@@ -24,24 +24,23 @@ defmodule DocuSign.Model.UserProfiles do
   ]
 
   @type t :: %__MODULE__{
-          :address => AddressInformationV2,
-          :authenticationMethods => [AuthenticationMethod],
-          :companyName => String.t(),
-          :displayOrganizationInfo => String.t(),
-          :displayPersonalInfo => String.t(),
-          :displayProfile => String.t(),
-          :displayUsageHistory => String.t(),
-          :profileImageUri => String.t(),
-          :title => String.t(),
-          :usageHistory => UsageHistory,
-          :userDetails => Users,
-          :userProfileLastModifiedDate => String.t()
-        }
+    :address => AddressInformationV2,
+    :authenticationMethods => [AuthenticationMethod],
+    :companyName => String.t,
+    :displayOrganizationInfo => String.t,
+    :displayPersonalInfo => String.t,
+    :displayProfile => String.t,
+    :displayUsageHistory => String.t,
+    :profileImageUri => String.t,
+    :title => String.t,
+    :usageHistory => UsageHistory,
+    :userDetails => Users,
+    :userProfileLastModifiedDate => String.t
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.UserProfiles do
   import DocuSign.Deserializer
-
   def decode(value, options) do
     value
     |> deserialize(:address, :struct, DocuSign.Model.AddressInformationV2, options)

@@ -3,7 +3,9 @@
 # Do not edit the class manually.
 
 defmodule DocuSign.Model.TemplateDocumentVisibility do
-  @moduledoc false
+  @moduledoc """
+  
+  """
 
   @derive [Poison.Encoder]
   defstruct [
@@ -11,13 +13,12 @@ defmodule DocuSign.Model.TemplateDocumentVisibility do
   ]
 
   @type t :: %__MODULE__{
-          :documentVisibility => [DocumentVisibility]
-        }
+    :documentVisibility => [DocumentVisibility]
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.TemplateDocumentVisibility do
   import DocuSign.Deserializer
-
   def decode(value, options) do
     value
     |> deserialize(:documentVisibility, :list, DocuSign.Model.DocumentVisibility, options)

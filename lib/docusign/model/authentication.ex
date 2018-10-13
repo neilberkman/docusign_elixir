@@ -14,14 +14,13 @@ defmodule DocuSign.Model.Authentication do
   ]
 
   @type t :: %__MODULE__{
-          :apiPassword => String.t(),
-          :loginAccounts => [LoginAccount]
-        }
+    :apiPassword => String.t,
+    :loginAccounts => [LoginAccount]
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.Authentication do
   import DocuSign.Deserializer
-
   def decode(value, options) do
     value
     |> deserialize(:loginAccounts, :list, DocuSign.Model.LoginAccount, options)

@@ -3,7 +3,9 @@
 # Do not edit the class manually.
 
 defmodule DocuSign.Model.CurrencyPlanPrice do
-  @moduledoc false
+  @moduledoc """
+  
+  """
 
   @derive [Poison.Encoder]
   defstruct [
@@ -16,18 +18,17 @@ defmodule DocuSign.Model.CurrencyPlanPrice do
   ]
 
   @type t :: %__MODULE__{
-          :currencyCode => String.t(),
-          :currencySymbol => String.t(),
-          :perSeatPrice => String.t(),
-          :supportedCardTypes => CreditCardTypes,
-          :supportIncidentFee => String.t(),
-          :supportPlanFee => String.t()
-        }
+    :currencyCode => String.t,
+    :currencySymbol => String.t,
+    :perSeatPrice => String.t,
+    :supportedCardTypes => CreditCardTypes,
+    :supportIncidentFee => String.t,
+    :supportPlanFee => String.t
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.CurrencyPlanPrice do
   import DocuSign.Deserializer
-
   def decode(value, options) do
     value
     |> deserialize(:supportedCardTypes, :struct, DocuSign.Model.CreditCardTypes, options)

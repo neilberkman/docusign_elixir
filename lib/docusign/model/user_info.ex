@@ -3,7 +3,9 @@
 # Do not edit the class manually.
 
 defmodule DocuSign.Model.UserInfo do
-  @moduledoc false
+  @moduledoc """
+  
+  """
 
   @derive [Poison.Encoder]
   defstruct [
@@ -20,22 +22,21 @@ defmodule DocuSign.Model.UserInfo do
   ]
 
   @type t :: %__MODULE__{
-          :activationAccessCode => String.t(),
-          :email => String.t(),
-          :errorDetails => ErrorDetails,
-          :loginStatus => String.t(),
-          :sendActivationEmail => String.t(),
-          :uri => String.t(),
-          :userId => String.t(),
-          :userName => String.t(),
-          :userStatus => String.t(),
-          :userType => String.t()
-        }
+    :activationAccessCode => String.t,
+    :email => String.t,
+    :errorDetails => ErrorDetails,
+    :loginStatus => String.t,
+    :sendActivationEmail => String.t,
+    :uri => String.t,
+    :userId => String.t,
+    :userName => String.t,
+    :userStatus => String.t,
+    :userType => String.t
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.UserInfo do
   import DocuSign.Deserializer
-
   def decode(value, options) do
     value
     |> deserialize(:errorDetails, :struct, DocuSign.Model.ErrorDetails, options)

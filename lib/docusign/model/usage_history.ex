@@ -16,11 +16,11 @@ defmodule DocuSign.Model.UsageHistory do
   ]
 
   @type t :: %__MODULE__{
-          :lastSentDateTime => String.t(),
-          :lastSignedDateTime => String.t(),
-          :sentCount => integer(),
-          :signedCount => integer()
-        }
+    :lastSentDateTime => String.t,
+    :lastSignedDateTime => String.t,
+    :sentCount => integer(),
+    :signedCount => integer()
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.UsageHistory do

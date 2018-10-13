@@ -10,6 +10,7 @@ defmodule DocuSign.Api.EnvelopeLocks do
   alias DocuSign.Connection
   import DocuSign.RequestBuilder
 
+
   @doc """
   Deletes an envelope lock.
   Deletes the lock from the specified envelope. The &#x60;X-DocuSign-Edit&#x60; header must be included in the request.
@@ -26,8 +27,7 @@ defmodule DocuSign.Api.EnvelopeLocks do
   {:ok, %DocuSign.Model.EnvelopeLocks{}} on success
   {:error, info} on failure
   """
-  @spec lock_delete_envelope_lock(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.EnvelopeLocks.t()} | {:error, Tesla.Env.t()}
+  @spec lock_delete_envelope_lock(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeLocks.t} | {:error, Tesla.Env.t}
   def lock_delete_envelope_lock(connection, account_id, envelope_id, _opts \\ []) do
     %{}
     |> method(:delete)
@@ -53,8 +53,7 @@ defmodule DocuSign.Api.EnvelopeLocks do
   {:ok, %DocuSign.Model.EnvelopeLocks{}} on success
   {:error, info} on failure
   """
-  @spec lock_get_envelope_lock(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.EnvelopeLocks.t()} | {:error, Tesla.Env.t()}
+  @spec lock_get_envelope_lock(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeLocks.t} | {:error, Tesla.Env.t}
   def lock_get_envelope_lock(connection, account_id, envelope_id, _opts \\ []) do
     %{}
     |> method(:get)
@@ -81,13 +80,11 @@ defmodule DocuSign.Api.EnvelopeLocks do
   {:ok, %DocuSign.Model.EnvelopeLocks{}} on success
   {:error, info} on failure
   """
-  @spec lock_post_envelope_lock(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.EnvelopeLocks.t()} | {:error, Tesla.Env.t()}
+  @spec lock_post_envelope_lock(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeLocks.t} | {:error, Tesla.Env.t}
   def lock_post_envelope_lock(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
-      :lockRequest => :body
+      :"lockRequest" => :body
     }
-
     %{}
     |> method(:post)
     |> url("/v2/accounts/#{account_id}/envelopes/#{envelope_id}/lock")
@@ -114,13 +111,11 @@ defmodule DocuSign.Api.EnvelopeLocks do
   {:ok, %DocuSign.Model.EnvelopeLocks{}} on success
   {:error, info} on failure
   """
-  @spec lock_put_envelope_lock(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.EnvelopeLocks.t()} | {:error, Tesla.Env.t()}
+  @spec lock_put_envelope_lock(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeLocks.t} | {:error, Tesla.Env.t}
   def lock_put_envelope_lock(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
-      :lockRequest => :body
+      :"lockRequest" => :body
     }
-
     %{}
     |> method(:put)
     |> url("/v2/accounts/#{account_id}/envelopes/#{envelope_id}/lock")

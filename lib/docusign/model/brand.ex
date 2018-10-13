@@ -3,7 +3,9 @@
 # Do not edit the class manually.
 
 defmodule DocuSign.Model.Brand do
-  @moduledoc false
+  @moduledoc """
+  
+  """
 
   @derive [Poison.Encoder]
   defstruct [
@@ -23,25 +25,24 @@ defmodule DocuSign.Model.Brand do
   ]
 
   @type t :: %__MODULE__{
-          :brandCompany => String.t(),
-          :brandId => String.t(),
-          :brandName => String.t(),
-          :colors => [NameValue],
-          :emailContent => [BrandEmailContent],
-          :errorDetails => ErrorDetails,
-          :isOverridingCompanyName => String.t(),
-          :isSendingDefault => String.t(),
-          :isSigningDefault => String.t(),
-          :landingPages => [NameValue],
-          :links => [BrandLink],
-          :logos => BrandLogos,
-          :resources => BrandResourceUrls
-        }
+    :brandCompany => String.t,
+    :brandId => String.t,
+    :brandName => String.t,
+    :colors => [NameValue],
+    :emailContent => [BrandEmailContent],
+    :errorDetails => ErrorDetails,
+    :isOverridingCompanyName => String.t,
+    :isSendingDefault => String.t,
+    :isSigningDefault => String.t,
+    :landingPages => [NameValue],
+    :links => [BrandLink],
+    :logos => BrandLogos,
+    :resources => BrandResourceUrls
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.Brand do
   import DocuSign.Deserializer
-
   def decode(value, options) do
     value
     |> deserialize(:colors, :list, DocuSign.Model.NameValue, options)

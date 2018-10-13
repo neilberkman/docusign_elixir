@@ -3,7 +3,9 @@
 # Do not edit the class manually.
 
 defmodule DocuSign.Model.UserSocialIdResult do
-  @moduledoc false
+  @moduledoc """
+  
+  """
 
   @derive [Poison.Encoder]
   defstruct [
@@ -12,21 +14,15 @@ defmodule DocuSign.Model.UserSocialIdResult do
   ]
 
   @type t :: %__MODULE__{
-          :socialAccountInformation => [UserSocialAccountLogins],
-          :userId => String.t()
-        }
+    :socialAccountInformation => [UserSocialAccountLogins],
+    :userId => String.t
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.UserSocialIdResult do
   import DocuSign.Deserializer
-
   def decode(value, options) do
     value
-    |> deserialize(
-      :socialAccountInformation,
-      :list,
-      DocuSign.Model.UserSocialAccountLogins,
-      options
-    )
+    |> deserialize(:socialAccountInformation, :list, DocuSign.Model.UserSocialAccountLogins, options)
   end
 end

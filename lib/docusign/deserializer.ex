@@ -10,20 +10,22 @@ defmodule DocuSign.Deserializer do
   @doc """
   Update the provided model with a deserialization of a nested value
   """
-  @spec deserialize(struct(), :atom, :atom, struct(), keyword()) :: struct()
+  @spec deserialize(struct(), atom(), atom(), module(), keyword()) :: struct()
   def deserialize(model, field, :list, mod, options) do
-    model
-    |> Map.update!(field, &Poison.Decode.decode(&1, Keyword.merge(options, as: [struct(mod)])))
+    Map.update!(
+      model,
+      field,
+      &Poison.Decode.decode(&1, Keyword.merge(options, as: [struct(mod)]))
+    )
   end
 
   def deserialize(model, field, :struct, mod, options) do
-    model
-    |> Map.update!(field, &Poison.Decode.decode(&1, Keyword.merge(options, as: struct(mod))))
+    Map.update!(model, field, &Poison.Decode.decode(&1, Keyword.merge(options, as: struct(mod))))
   end
 
   def deserialize(model, field, :map, mod, options) do
-    model
-    |> Map.update!(
+    Map.update!(
+      model,
       field,
       &Map.new(&1, fn {key, val} ->
         {key, Poison.Decode.decode(val, Keyword.merge(options, as: struct(mod)))}
@@ -32,11 +34,19 @@ defmodule DocuSign.Deserializer do
   end
 
   def deserialize(model, field, :date, _, _options) do
-    case DateTime.from_iso8601(Map.get(model, field)) do
-      {:ok, datetime} ->
-        Map.put(model, field, datetime)
+    value = Map.get(model, field)
 
-      _ ->
+    case is_binary(value) do
+      true ->
+        case DateTime.from_iso8601(value) do
+          {:ok, datetime, _offset} ->
+            Map.put(model, field, datetime)
+
+          _ ->
+            model
+        end
+
+      false ->
         model
     end
   end

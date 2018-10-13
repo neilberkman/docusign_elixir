@@ -10,6 +10,7 @@ defmodule DocuSign.Api.TemplateDocumentFields do
   alias DocuSign.Connection
   import DocuSign.RequestBuilder
 
+
   @doc """
   Deletes custom document fields from an existing template document.
   Deletes custom document fields from an existing template document.
@@ -28,24 +29,11 @@ defmodule DocuSign.Api.TemplateDocumentFields do
   {:ok, %DocuSign.Model.TemplateDocumentFields{}} on success
   {:error, info} on failure
   """
-  @spec document_fields_delete_template_document_fields(
-          Tesla.Env.client(),
-          String.t(),
-          String.t(),
-          String.t(),
-          keyword()
-        ) :: {:ok, DocuSign.Model.TemplateDocumentFields.t()} | {:error, Tesla.Env.t()}
-  def document_fields_delete_template_document_fields(
-        connection,
-        account_id,
-        document_id,
-        template_id,
-        opts \\ []
-      ) do
+  @spec document_fields_delete_template_document_fields(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.TemplateDocumentFields.t} | {:error, Tesla.Env.t}
+  def document_fields_delete_template_document_fields(connection, account_id, document_id, template_id, opts \\ []) do
     optional_params = %{
-      :TemplateDocumentFields => :body
+      :"TemplateDocumentFields" => :body
     }
-
     %{}
     |> method(:delete)
     |> url("/v2/accounts/#{account_id}/templates/#{template_id}/documents/#{document_id}/fields")
@@ -72,20 +60,8 @@ defmodule DocuSign.Api.TemplateDocumentFields do
   {:ok, %DocuSign.Model.TemplateDocumentFields{}} on success
   {:error, info} on failure
   """
-  @spec document_fields_get_template_document_fields(
-          Tesla.Env.client(),
-          String.t(),
-          String.t(),
-          String.t(),
-          keyword()
-        ) :: {:ok, DocuSign.Model.TemplateDocumentFields.t()} | {:error, Tesla.Env.t()}
-  def document_fields_get_template_document_fields(
-        connection,
-        account_id,
-        document_id,
-        template_id,
-        _opts \\ []
-      ) do
+  @spec document_fields_get_template_document_fields(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.TemplateDocumentFields.t} | {:error, Tesla.Env.t}
+  def document_fields_get_template_document_fields(connection, account_id, document_id, template_id, _opts \\ []) do
     %{}
     |> method(:get)
     |> url("/v2/accounts/#{account_id}/templates/#{template_id}/documents/#{document_id}/fields")
@@ -112,24 +88,11 @@ defmodule DocuSign.Api.TemplateDocumentFields do
   {:ok, %DocuSign.Model.TemplateDocumentFields{}} on success
   {:error, info} on failure
   """
-  @spec document_fields_post_template_document_fields(
-          Tesla.Env.client(),
-          String.t(),
-          String.t(),
-          String.t(),
-          keyword()
-        ) :: {:ok, DocuSign.Model.TemplateDocumentFields.t()} | {:error, Tesla.Env.t()}
-  def document_fields_post_template_document_fields(
-        connection,
-        account_id,
-        document_id,
-        template_id,
-        opts \\ []
-      ) do
+  @spec document_fields_post_template_document_fields(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.TemplateDocumentFields.t} | {:error, Tesla.Env.t}
+  def document_fields_post_template_document_fields(connection, account_id, document_id, template_id, opts \\ []) do
     optional_params = %{
-      :TemplateDocumentFields => :body
+      :"TemplateDocumentFields" => :body
     }
-
     %{}
     |> method(:post)
     |> url("/v2/accounts/#{account_id}/templates/#{template_id}/documents/#{document_id}/fields")
@@ -157,24 +120,11 @@ defmodule DocuSign.Api.TemplateDocumentFields do
   {:ok, %DocuSign.Model.TemplateDocumentFields{}} on success
   {:error, info} on failure
   """
-  @spec document_fields_put_template_document_fields(
-          Tesla.Env.client(),
-          String.t(),
-          String.t(),
-          String.t(),
-          keyword()
-        ) :: {:ok, DocuSign.Model.TemplateDocumentFields.t()} | {:error, Tesla.Env.t()}
-  def document_fields_put_template_document_fields(
-        connection,
-        account_id,
-        document_id,
-        template_id,
-        opts \\ []
-      ) do
+  @spec document_fields_put_template_document_fields(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.TemplateDocumentFields.t} | {:error, Tesla.Env.t}
+  def document_fields_put_template_document_fields(connection, account_id, document_id, template_id, opts \\ []) do
     optional_params = %{
-      :TemplateDocumentFields => :body
+      :"TemplateDocumentFields" => :body
     }
-
     %{}
     |> method(:put)
     |> url("/v2/accounts/#{account_id}/templates/#{template_id}/documents/#{document_id}/fields")

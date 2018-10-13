@@ -3,7 +3,9 @@
 # Do not edit the class manually.
 
 defmodule DocuSign.Model.EnvelopeTransactionStatus do
-  @moduledoc false
+  @moduledoc """
+  
+  """
 
   @derive [Poison.Encoder]
   defstruct [
@@ -14,16 +16,15 @@ defmodule DocuSign.Model.EnvelopeTransactionStatus do
   ]
 
   @type t :: %__MODULE__{
-          :envelopeId => String.t(),
-          :errorDetails => ErrorDetails,
-          :status => String.t(),
-          :transactionId => String.t()
-        }
+    :envelopeId => String.t,
+    :errorDetails => ErrorDetails,
+    :status => String.t,
+    :transactionId => String.t
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.EnvelopeTransactionStatus do
   import DocuSign.Deserializer
-
   def decode(value, options) do
     value
     |> deserialize(:errorDetails, :struct, DocuSign.Model.ErrorDetails, options)

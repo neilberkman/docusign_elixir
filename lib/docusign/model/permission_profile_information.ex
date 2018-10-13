@@ -3,7 +3,9 @@
 # Do not edit the class manually.
 
 defmodule DocuSign.Model.PermissionProfileInformation do
-  @moduledoc false
+  @moduledoc """
+  
+  """
 
   @derive [Poison.Encoder]
   defstruct [
@@ -11,13 +13,12 @@ defmodule DocuSign.Model.PermissionProfileInformation do
   ]
 
   @type t :: %__MODULE__{
-          :permissionProfiles => [AccountPermissionProfiles]
-        }
+    :permissionProfiles => [AccountPermissionProfiles]
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.PermissionProfileInformation do
   import DocuSign.Deserializer
-
   def decode(value, options) do
     value
     |> deserialize(:permissionProfiles, :list, DocuSign.Model.AccountPermissionProfiles, options)

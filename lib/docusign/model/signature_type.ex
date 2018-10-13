@@ -3,7 +3,9 @@
 # Do not edit the class manually.
 
 defmodule DocuSign.Model.SignatureType do
-  @moduledoc false
+  @moduledoc """
+  
+  """
 
   @derive [Poison.Encoder]
   defstruct [
@@ -12,9 +14,9 @@ defmodule DocuSign.Model.SignatureType do
   ]
 
   @type t :: %__MODULE__{
-          :isDefault => String.t(),
-          :type => String.t()
-        }
+    :isDefault => String.t,
+    :type => String.t
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.SignatureType do

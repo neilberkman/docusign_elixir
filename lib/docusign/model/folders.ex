@@ -13,13 +13,12 @@ defmodule DocuSign.Model.Folders do
   ]
 
   @type t :: %__MODULE__{
-          :folders => [Folder]
-        }
+    :folders => [Folder]
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.Folders do
   import DocuSign.Deserializer
-
   def decode(value, options) do
     value
     |> deserialize(:folders, :list, DocuSign.Model.Folder, options)

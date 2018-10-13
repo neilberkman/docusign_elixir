@@ -9,6 +9,7 @@ defmodule DocuSign.Model.EnvelopeTemplateDefinition do
 
   @derive [Poison.Encoder]
   defstruct [
+    :created,
     :description,
     :folderId,
     :folderName,
@@ -27,27 +28,27 @@ defmodule DocuSign.Model.EnvelopeTemplateDefinition do
   ]
 
   @type t :: %__MODULE__{
-          :description => String.t(),
-          :folderId => String.t(),
-          :folderName => String.t(),
-          :folderUri => String.t(),
-          :lastModified => String.t(),
-          :lastModifiedBy => UserInfo,
-          :name => String.t(),
-          :newPassword => String.t(),
-          :owner => UserInfo,
-          :pageCount => integer(),
-          :parentFolderUri => String.t(),
-          :password => String.t(),
-          :shared => String.t(),
-          :templateId => String.t(),
-          :uri => String.t()
-        }
+    :created => String.t,
+    :description => String.t,
+    :folderId => String.t,
+    :folderName => String.t,
+    :folderUri => String.t,
+    :lastModified => String.t,
+    :lastModifiedBy => UserInfo,
+    :name => String.t,
+    :newPassword => String.t,
+    :owner => UserInfo,
+    :pageCount => integer(),
+    :parentFolderUri => String.t,
+    :password => String.t,
+    :shared => String.t,
+    :templateId => String.t,
+    :uri => String.t
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.EnvelopeTemplateDefinition do
   import DocuSign.Deserializer
-
   def decode(value, options) do
     value
     |> deserialize(:lastModifiedBy, :struct, DocuSign.Model.UserInfo, options)

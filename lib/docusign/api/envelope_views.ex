@@ -10,6 +10,7 @@ defmodule DocuSign.Api.EnvelopeViews do
   alias DocuSign.Connection
   import DocuSign.RequestBuilder
 
+
   @doc """
   Returns a URL to the authentication view UI.
   Returns a URL that allows you to embed the authentication view of the DocuSign UI in your applications.
@@ -26,13 +27,11 @@ defmodule DocuSign.Api.EnvelopeViews do
   {:ok, %DocuSign.Model.EnvelopeViews{}} on success
   {:error, info} on failure
   """
-  @spec views_post_account_console_view(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.EnvelopeViews.t()} | {:error, Tesla.Env.t()}
+  @spec views_post_account_console_view(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeViews.t} | {:error, Tesla.Env.t}
   def views_post_account_console_view(connection, account_id, opts \\ []) do
     optional_params = %{
-      :consoleViewRequest => :body
+      :"consoleViewRequest" => :body
     }
-
     %{}
     |> method(:post)
     |> url("/v2/accounts/#{account_id}/views/console")
@@ -59,13 +58,11 @@ defmodule DocuSign.Api.EnvelopeViews do
   {:ok, %DocuSign.Model.EnvelopeViews{}} on success
   {:error, info} on failure
   """
-  @spec views_post_envelope_correct_view(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.EnvelopeViews.t()} | {:error, Tesla.Env.t()}
+  @spec views_post_envelope_correct_view(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeViews.t} | {:error, Tesla.Env.t}
   def views_post_envelope_correct_view(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
-      :correctViewRequest => :body
+      :"correctViewRequest" => :body
     }
-
     %{}
     |> method(:post)
     |> url("/v2/accounts/#{account_id}/envelopes/#{envelope_id}/views/correct")
@@ -92,13 +89,11 @@ defmodule DocuSign.Api.EnvelopeViews do
   {:ok, %DocuSign.Model.EnvelopeViews{}} on success
   {:error, info} on failure
   """
-  @spec views_post_envelope_edit_view(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.EnvelopeViews.t()} | {:error, Tesla.Env.t()}
+  @spec views_post_envelope_edit_view(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeViews.t} | {:error, Tesla.Env.t}
   def views_post_envelope_edit_view(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
-      :returnUrlRequest => :body
+      :"returnUrlRequest" => :body
     }
-
     %{}
     |> method(:post)
     |> url("/v2/accounts/#{account_id}/envelopes/#{envelope_id}/views/edit")
@@ -106,6 +101,37 @@ defmodule DocuSign.Api.EnvelopeViews do
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> decode(%DocuSign.Model.EnvelopeViews{})
+  end
+
+  @doc """
+  
+  
+
+  ## Parameters
+
+  - connection (DocuSign.Connection): Connection to server
+  - account_id (String.t): The external account number (int) or account ID Guid.
+  - envelope_id (String.t): The envelope&#39;s GUID. Eg 93be49ab-afa0-4adf-933c-f752070d71ec 
+  - opts (KeywordList): [optional] Optional parameters
+    - :recipient_view_request (RecipientViewRequest): 
+
+  ## Returns
+
+  {:ok, %DocuSign.Model.TemplateViews{}} on success
+  {:error, info} on failure
+  """
+  @spec views_post_envelope_recipient_shared_view(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.TemplateViews.t} | {:error, Tesla.Env.t}
+  def views_post_envelope_recipient_shared_view(connection, account_id, envelope_id, opts \\ []) do
+    optional_params = %{
+      :"recipientViewRequest" => :body
+    }
+    %{}
+    |> method(:post)
+    |> url("/v2/accounts/#{account_id}/envelopes/#{envelope_id}/views/shared")
+    |> add_optional_params(optional_params, opts)
+    |> Enum.into([])
+    |> (&Connection.request(connection, &1)).()
+    |> decode(%DocuSign.Model.TemplateViews{})
   end
 
   @doc """
@@ -125,13 +151,11 @@ defmodule DocuSign.Api.EnvelopeViews do
   {:ok, %DocuSign.Model.EnvelopeViews{}} on success
   {:error, info} on failure
   """
-  @spec views_post_envelope_recipient_view(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.EnvelopeViews.t()} | {:error, Tesla.Env.t()}
+  @spec views_post_envelope_recipient_view(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeViews.t} | {:error, Tesla.Env.t}
   def views_post_envelope_recipient_view(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
-      :recipientViewRequest => :body
+      :"recipientViewRequest" => :body
     }
-
     %{}
     |> method(:post)
     |> url("/v2/accounts/#{account_id}/envelopes/#{envelope_id}/views/recipient")
@@ -143,7 +167,7 @@ defmodule DocuSign.Api.EnvelopeViews do
 
   @doc """
   Returns a URL to the sender view UI.
-  Returns a URL that enables you to embed the sender view of the DocuSign UI in your applications.   The returned URL can only be redirected to immediately after it is generated. It can only be used once. Therefore, request the URL immediately before you redirect your user to it.  For the best user experience, don&#39;t use an iFrame. For iOS devices DocuSign recommends using a WebView.  Multiple solutions are available for maintaining your client state. See the **Maintaining State** section of the [Embedded Signing introduction.](https://developers.docusign.com/esign-rest-api/guides/embedded-signing)  After the user has completed the sending view, the browser is redirected to the &#x60;returnUrl&#x60; you supplied.  By default, if the envelope already contains one or more documents, DocuSign will initially show the document tagging view when you redirect to the URL.   To start with the envelope&#39;s recipients and documents view instead, examine the URL in the method&#39;s response.  Then change the query parameter from &#x60;send&#x3D;1&#x60; to &#x60;send&#x3D;0&#x60; to start with the recipients/documents view.
+  Returns a URL that enables you to embed the sender view of the DocuSign UI in your applications.   The returned URL can only be redirected to immediately after it is generated. It can only be used once. Therefore, request the URL immediately before you redirect your user to it.  For the best user experience, don&#39;t use an iFrame. For iOS devices DocuSign recommends using a WebView.  Multiple solutions are available for maintaining your client state. See the \&quot;Maintaining State\&quot; section of the [Embedded Signing introduction.](https://developers.docusign.com/esign-rest-api/guides/embedded-signing)  After the user has completed the sending view, their browser is redirected to the &#x60;returnUrl&#x60; you supplied.  By default, if the envelope already contains one or more documents, DocuSign will initially show the document tagging view when you redirect to the URL.   To start with the envelope&#39;s recipients and documents view instead, examine the URL in the method&#39;s response.  Then change the query parameter from &#x60;send&#x3D;1&#x60; to &#x60;send&#x3D;0&#x60; to start with the recipients/documents view.
 
   ## Parameters
 
@@ -158,13 +182,11 @@ defmodule DocuSign.Api.EnvelopeViews do
   {:ok, %DocuSign.Model.EnvelopeViews{}} on success
   {:error, info} on failure
   """
-  @spec views_post_envelope_sender_view(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.EnvelopeViews.t()} | {:error, Tesla.Env.t()}
+  @spec views_post_envelope_sender_view(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeViews.t} | {:error, Tesla.Env.t}
   def views_post_envelope_sender_view(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
-      :returnUrlRequest => :body
+      :"returnUrlRequest" => :body
     }
-
     %{}
     |> method(:post)
     |> url("/v2/accounts/#{account_id}/envelopes/#{envelope_id}/views/sender")

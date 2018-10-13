@@ -20,20 +20,19 @@ defmodule DocuSign.Model.BillingPlanUpdateResponse do
   ]
 
   @type t :: %__MODULE__{
-          :accountPaymentMethod => String.t(),
-          :billingPlanPreview => BillingPlanPreview,
-          :currencyCode => String.t(),
-          :includedSeats => String.t(),
-          :paymentCycle => String.t(),
-          :paymentMethod => String.t(),
-          :planId => String.t(),
-          :planName => String.t()
-        }
+    :accountPaymentMethod => String.t,
+    :billingPlanPreview => BillingPlanPreview,
+    :currencyCode => String.t,
+    :includedSeats => String.t,
+    :paymentCycle => String.t,
+    :paymentMethod => String.t,
+    :planId => String.t,
+    :planName => String.t
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.BillingPlanUpdateResponse do
   import DocuSign.Deserializer
-
   def decode(value, options) do
     value
     |> deserialize(:billingPlanPreview, :struct, DocuSign.Model.BillingPlanPreview, options)

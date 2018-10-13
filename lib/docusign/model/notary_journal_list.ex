@@ -3,7 +3,9 @@
 # Do not edit the class manually.
 
 defmodule DocuSign.Model.NotaryJournalList do
-  @moduledoc false
+  @moduledoc """
+  
+  """
 
   @derive [Poison.Encoder]
   defstruct [
@@ -17,19 +19,18 @@ defmodule DocuSign.Model.NotaryJournalList do
   ]
 
   @type t :: %__MODULE__{
-          :endPosition => String.t(),
-          :nextUri => String.t(),
-          :notaryJournals => [NotaryJournals],
-          :previousUri => String.t(),
-          :resultSetSize => String.t(),
-          :startPosition => String.t(),
-          :totalSetSize => String.t()
-        }
+    :endPosition => String.t,
+    :nextUri => String.t,
+    :notaryJournals => [NotaryJournals],
+    :previousUri => String.t,
+    :resultSetSize => String.t,
+    :startPosition => String.t,
+    :totalSetSize => String.t
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.NotaryJournalList do
   import DocuSign.Deserializer
-
   def decode(value, options) do
     value
     |> deserialize(:notaryJournals, :list, DocuSign.Model.NotaryJournals, options)

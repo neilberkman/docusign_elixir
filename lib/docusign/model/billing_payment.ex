@@ -15,10 +15,10 @@ defmodule DocuSign.Model.BillingPayment do
   ]
 
   @type t :: %__MODULE__{
-          :amount => String.t(),
-          :invoiceId => String.t(),
-          :paymentId => String.t()
-        }
+    :amount => String.t,
+    :invoiceId => String.t,
+    :paymentId => String.t
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.BillingPayment do
