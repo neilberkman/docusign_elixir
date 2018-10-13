@@ -10,7 +10,6 @@ defmodule DocuSign.Api.AccountCustomFields do
   alias DocuSign.Connection
   import DocuSign.RequestBuilder
 
-
   @doc """
   Delete an existing account custom field.
   
@@ -31,7 +30,7 @@ defmodule DocuSign.Api.AccountCustomFields do
   @spec account_custom_fields_delete_account_custom_fields(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, nil} | {:error, Tesla.Env.t}
   def account_custom_fields_delete_account_custom_fields(connection, account_id, custom_field_id, opts \\ []) do
     optional_params = %{
-      :"apply_to_templates" => :query
+      apply_to_templates: :query
     }
     %{}
     |> method(:delete)
@@ -87,8 +86,8 @@ defmodule DocuSign.Api.AccountCustomFields do
   @spec account_custom_fields_post_account_custom_fields(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.AccountCustomFields.t} | {:error, Tesla.Env.t}
   def account_custom_fields_post_account_custom_fields(connection, account_id, opts \\ []) do
     optional_params = %{
-      :"apply_to_templates" => :query,
-      :"customField" => :body
+      apply_to_templates: :query,
+      customField: :body
     }
     %{}
     |> method(:post)
@@ -120,8 +119,8 @@ defmodule DocuSign.Api.AccountCustomFields do
   @spec account_custom_fields_put_account_custom_fields(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.AccountCustomFields.t} | {:error, Tesla.Env.t}
   def account_custom_fields_put_account_custom_fields(connection, account_id, custom_field_id, opts \\ []) do
     optional_params = %{
-      :"apply_to_templates" => :query,
-      :"customField" => :body
+      apply_to_templates: :query,
+      customField: :body
     }
     %{}
     |> method(:put)

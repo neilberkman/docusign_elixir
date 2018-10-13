@@ -10,7 +10,6 @@ defmodule DocuSign.Api.CustomTabs do
   alias DocuSign.Connection
   import DocuSign.RequestBuilder
 
-
   @doc """
   Deletes custom tab information.
   Deletes the custom from the specified account.
@@ -83,7 +82,7 @@ defmodule DocuSign.Api.CustomTabs do
   @spec tab_put_custom_tab(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.CustomTabs.t} | {:error, Tesla.Env.t}
   def tab_put_custom_tab(connection, account_id, custom_tab_id, opts \\ []) do
     optional_params = %{
-      :"CustomTabs" => :body
+      CustomTabs: :body
     }
     %{}
     |> method(:put)
@@ -113,7 +112,7 @@ defmodule DocuSign.Api.CustomTabs do
   @spec tabs_get_tab_definitions(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.TabMetadataList.t} | {:error, Tesla.Env.t}
   def tabs_get_tab_definitions(connection, account_id, opts \\ []) do
     optional_params = %{
-      :"custom_tab_only" => :query
+      custom_tab_only: :query
     }
     %{}
     |> method(:get)
@@ -143,7 +142,7 @@ defmodule DocuSign.Api.CustomTabs do
   @spec tabs_post_tab_definitions(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.CustomTabs.t} | {:error, Tesla.Env.t}
   def tabs_post_tab_definitions(connection, account_id, opts \\ []) do
     optional_params = %{
-      :"CustomTabs" => :body
+      CustomTabs: :body
     }
     %{}
     |> method(:post)

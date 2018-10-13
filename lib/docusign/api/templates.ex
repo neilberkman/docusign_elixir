@@ -10,7 +10,6 @@ defmodule DocuSign.Api.Templates do
   alias DocuSign.Connection
   import DocuSign.RequestBuilder
 
-
   @doc """
   Gets template notification information.
   Retrieves the envelope notification, reminders and expirations, information for an existing template.
@@ -57,7 +56,7 @@ defmodule DocuSign.Api.Templates do
   @spec notification_put_templates_template_id_notification(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.Notification.t} | {:error, Tesla.Env.t}
   def notification_put_templates_template_id_notification(connection, account_id, template_id, opts \\ []) do
     optional_params = %{
-      :"templateNotificationRequest" => :body
+      templateNotificationRequest: :body
     }
     %{}
     |> method(:put)
@@ -90,7 +89,7 @@ defmodule DocuSign.Api.Templates do
   @spec pages_delete_template_page(Tesla.Env.client, String.t, String.t, String.t, String.t, keyword()) :: {:ok, nil} | {:error, Tesla.Env.t}
   def pages_delete_template_page(connection, account_id, document_id, page_number, template_id, opts \\ []) do
     optional_params = %{
-      :"pageRequest" => :body
+      pageRequest: :body
     }
     %{}
     |> method(:delete)
@@ -126,10 +125,10 @@ defmodule DocuSign.Api.Templates do
   @spec pages_get_template_page_image(Tesla.Env.client, String.t, String.t, String.t, String.t, keyword()) :: {:ok, String.t} | {:error, Tesla.Env.t}
   def pages_get_template_page_image(connection, account_id, document_id, page_number, template_id, opts \\ []) do
     optional_params = %{
-      :"dpi" => :query,
-      :"max_height" => :query,
-      :"max_width" => :query,
-      :"show_changes" => :query
+      dpi: :query,
+      max_height: :query,
+      max_width: :query,
+      show_changes: :query
     }
     %{}
     |> method(:get)
@@ -167,13 +166,13 @@ defmodule DocuSign.Api.Templates do
   @spec pages_get_template_page_images(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.PageImages.t} | {:error, Tesla.Env.t}
   def pages_get_template_page_images(connection, account_id, document_id, template_id, opts \\ []) do
     optional_params = %{
-      :"count" => :query,
-      :"dpi" => :query,
-      :"max_height" => :query,
-      :"max_width" => :query,
-      :"nocache" => :query,
-      :"show_changes" => :query,
-      :"start_position" => :query
+      count: :query,
+      dpi: :query,
+      max_height: :query,
+      max_width: :query,
+      nocache: :query,
+      show_changes: :query,
+      start_position: :query
     }
     %{}
     |> method(:get)
@@ -206,7 +205,7 @@ defmodule DocuSign.Api.Templates do
   @spec pages_put_template_page_image(Tesla.Env.client, String.t, String.t, String.t, String.t, keyword()) :: {:ok, nil} | {:error, Tesla.Env.t}
   def pages_put_template_page_image(connection, account_id, document_id, page_number, template_id, opts \\ []) do
     optional_params = %{
-      :"pageRequest" => :body
+      pageRequest: :body
     }
     %{}
     |> method(:put)
@@ -238,7 +237,7 @@ defmodule DocuSign.Api.Templates do
   @spec templates_delete_template_part(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.Groups.t} | {:error, Tesla.Env.t}
   def templates_delete_template_part(connection, account_id, template_id, template_part, opts \\ []) do
     optional_params = %{
-      :"Groups" => :body
+      Groups: :body
     }
     %{}
     |> method(:delete)
@@ -269,7 +268,7 @@ defmodule DocuSign.Api.Templates do
   @spec templates_get_template(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.Templates.t} | {:error, Tesla.Env.t}
   def templates_get_template(connection, account_id, template_id, opts \\ []) do
     optional_params = %{
-      :"include" => :query
+      include: :query
     }
     %{}
     |> method(:get)
@@ -315,23 +314,23 @@ defmodule DocuSign.Api.Templates do
   @spec templates_get_templates(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeTemplateResults.t} | {:error, Tesla.Env.t}
   def templates_get_templates(connection, account_id, opts \\ []) do
     optional_params = %{
-      :"count" => :query,
-      :"folder" => :query,
-      :"folder_ids" => :query,
-      :"from_date" => :query,
-      :"include" => :query,
-      :"modified_from_date" => :query,
-      :"modified_to_date" => :query,
-      :"order" => :query,
-      :"order_by" => :query,
-      :"search_text" => :query,
-      :"shared_by_me" => :query,
-      :"start_position" => :query,
-      :"to_date" => :query,
-      :"used_from_date" => :query,
-      :"used_to_date" => :query,
-      :"user_filter" => :query,
-      :"user_id" => :query
+      count: :query,
+      folder: :query,
+      folder_ids: :query,
+      from_date: :query,
+      include: :query,
+      modified_from_date: :query,
+      modified_to_date: :query,
+      order: :query,
+      order_by: :query,
+      search_text: :query,
+      shared_by_me: :query,
+      start_position: :query,
+      to_date: :query,
+      used_from_date: :query,
+      used_to_date: :query,
+      user_filter: :query,
+      user_id: :query
     }
     %{}
     |> method(:get)
@@ -361,7 +360,7 @@ defmodule DocuSign.Api.Templates do
   @spec templates_post_templates(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.TemplateSummary.t} | {:error, Tesla.Env.t}
   def templates_post_templates(connection, account_id, opts \\ []) do
     optional_params = %{
-      :"Templates" => :body
+      Templates: :body
     }
     %{}
     |> method(:post)
@@ -392,7 +391,7 @@ defmodule DocuSign.Api.Templates do
   @spec templates_put_template(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.TemplateUpdateSummary.t} | {:error, Tesla.Env.t}
   def templates_put_template(connection, account_id, template_id, opts \\ []) do
     optional_params = %{
-      :"Templates" => :body
+      Templates: :body
     }
     %{}
     |> method(:put)
@@ -424,7 +423,7 @@ defmodule DocuSign.Api.Templates do
   @spec templates_put_template_part(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.Groups.t} | {:error, Tesla.Env.t}
   def templates_put_template_part(connection, account_id, template_id, template_part, opts \\ []) do
     optional_params = %{
-      :"Groups" => :body
+      Groups: :body
     }
     %{}
     |> method(:put)

@@ -10,7 +10,6 @@ defmodule DocuSign.Api.EnvelopeRecipientTabs do
   alias DocuSign.Connection
   import DocuSign.RequestBuilder
 
-
   @doc """
   Deletes the tabs associated with a recipient.
   Deletes one or more tabs associated with a recipient in a draft envelope.
@@ -32,7 +31,7 @@ defmodule DocuSign.Api.EnvelopeRecipientTabs do
   @spec recipients_delete_recipient_tabs(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeRecipientTabs.t} | {:error, Tesla.Env.t}
   def recipients_delete_recipient_tabs(connection, account_id, envelope_id, recipient_id, opts \\ []) do
     optional_params = %{
-      :"EnvelopeRecipientTabs" => :body
+      EnvelopeRecipientTabs: :body
     }
     %{}
     |> method(:delete)
@@ -65,8 +64,8 @@ defmodule DocuSign.Api.EnvelopeRecipientTabs do
   @spec recipients_get_recipient_tabs(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeRecipientTabs.t} | {:error, Tesla.Env.t}
   def recipients_get_recipient_tabs(connection, account_id, envelope_id, recipient_id, opts \\ []) do
     optional_params = %{
-      :"include_anchor_tab_locations" => :query,
-      :"include_metadata" => :query
+      include_anchor_tab_locations: :query,
+      include_metadata: :query
     }
     %{}
     |> method(:get)
@@ -98,7 +97,7 @@ defmodule DocuSign.Api.EnvelopeRecipientTabs do
   @spec recipients_post_recipient_tabs(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeRecipientTabs.t} | {:error, Tesla.Env.t}
   def recipients_post_recipient_tabs(connection, account_id, envelope_id, recipient_id, opts \\ []) do
     optional_params = %{
-      :"EnvelopeRecipientTabs" => :body
+      EnvelopeRecipientTabs: :body
     }
     %{}
     |> method(:post)
@@ -130,7 +129,7 @@ defmodule DocuSign.Api.EnvelopeRecipientTabs do
   @spec recipients_put_recipient_tabs(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeRecipientTabs.t} | {:error, Tesla.Env.t}
   def recipients_put_recipient_tabs(connection, account_id, envelope_id, recipient_id, opts \\ []) do
     optional_params = %{
-      :"EnvelopeRecipientTabs" => :body
+      EnvelopeRecipientTabs: :body
     }
     %{}
     |> method(:put)

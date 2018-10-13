@@ -10,7 +10,6 @@ defmodule DocuSign.Api.TemplateDocumentFields do
   alias DocuSign.Connection
   import DocuSign.RequestBuilder
 
-
   @doc """
   Deletes custom document fields from an existing template document.
   Deletes custom document fields from an existing template document.
@@ -32,7 +31,7 @@ defmodule DocuSign.Api.TemplateDocumentFields do
   @spec document_fields_delete_template_document_fields(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.TemplateDocumentFields.t} | {:error, Tesla.Env.t}
   def document_fields_delete_template_document_fields(connection, account_id, document_id, template_id, opts \\ []) do
     optional_params = %{
-      :"TemplateDocumentFields" => :body
+      TemplateDocumentFields: :body
     }
     %{}
     |> method(:delete)
@@ -91,7 +90,7 @@ defmodule DocuSign.Api.TemplateDocumentFields do
   @spec document_fields_post_template_document_fields(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.TemplateDocumentFields.t} | {:error, Tesla.Env.t}
   def document_fields_post_template_document_fields(connection, account_id, document_id, template_id, opts \\ []) do
     optional_params = %{
-      :"TemplateDocumentFields" => :body
+      TemplateDocumentFields: :body
     }
     %{}
     |> method(:post)
@@ -123,7 +122,7 @@ defmodule DocuSign.Api.TemplateDocumentFields do
   @spec document_fields_put_template_document_fields(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.TemplateDocumentFields.t} | {:error, Tesla.Env.t}
   def document_fields_put_template_document_fields(connection, account_id, document_id, template_id, opts \\ []) do
     optional_params = %{
-      :"TemplateDocumentFields" => :body
+      TemplateDocumentFields: :body
     }
     %{}
     |> method(:put)

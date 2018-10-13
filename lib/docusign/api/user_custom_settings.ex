@@ -10,7 +10,6 @@ defmodule DocuSign.Api.UserCustomSettings do
   alias DocuSign.Connection
   import DocuSign.RequestBuilder
 
-
   @doc """
   Deletes custom user settings for a specified user.
   Deletes the specified custom user settings for a single user.  ###Deleting Grouped Custom User Settings###  If the custom user settings you want to delete are grouped, you must include the following information in the header, after Content-Type, in the request:  &#x60;X-DocuSign-User-Settings-Key:group_name&#x60;  Where the &#x60;group_name&#x60; is your designated name for the group of customer user settings.  If the extra header information is not included, only the custom user settings that were added without a group are deleted.
@@ -31,7 +30,7 @@ defmodule DocuSign.Api.UserCustomSettings do
   @spec user_custom_settings_delete_custom_settings(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.UserCustomSettings.t} | {:error, Tesla.Env.t}
   def user_custom_settings_delete_custom_settings(connection, account_id, user_id, opts \\ []) do
     optional_params = %{
-      :"UserCustomSettings" => :body
+      UserCustomSettings: :body
     }
     %{}
     |> method(:delete)
@@ -88,7 +87,7 @@ defmodule DocuSign.Api.UserCustomSettings do
   @spec user_custom_settings_put_custom_settings(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.UserCustomSettings.t} | {:error, Tesla.Env.t}
   def user_custom_settings_put_custom_settings(connection, account_id, user_id, opts \\ []) do
     optional_params = %{
-      :"UserCustomSettings" => :body
+      UserCustomSettings: :body
     }
     %{}
     |> method(:put)

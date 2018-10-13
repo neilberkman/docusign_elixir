@@ -10,7 +10,6 @@ defmodule DocuSign.Api.Envelopes do
   alias DocuSign.Connection
   import DocuSign.RequestBuilder
 
-
   @doc """
   Gets the envelope audit events for an envelope.
   Gets the envelope audit events for the specified envelope.
@@ -58,8 +57,8 @@ defmodule DocuSign.Api.Envelopes do
   @spec envelopes_get_envelope(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.Envelopes.t} | {:error, Tesla.Env.t}
   def envelopes_get_envelope(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
-      :"advanced_update" => :query,
-      :"include" => :query
+      advanced_update: :query,
+      include: :query
     }
     %{}
     |> method(:get)
@@ -101,19 +100,19 @@ defmodule DocuSign.Api.Envelopes do
   @spec envelopes_get_envelopes(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopesInformation.t} | {:error, Tesla.Env.t}
   def envelopes_get_envelopes(connection, account_id, opts \\ []) do
     optional_params = %{
-      :"ac_status" => :query,
-      :"block" => :query,
-      :"count" => :query,
-      :"custom_field" => :query,
-      :"email" => :query,
-      :"envelope_ids" => :query,
-      :"from_date" => :query,
-      :"from_to_status" => :query,
-      :"start_position" => :query,
-      :"status" => :query,
-      :"to_date" => :query,
-      :"transaction_ids" => :query,
-      :"user_name" => :query
+      ac_status: :query,
+      block: :query,
+      count: :query,
+      custom_field: :query,
+      email: :query,
+      envelope_ids: :query,
+      from_date: :query,
+      from_to_status: :query,
+      start_position: :query,
+      status: :query,
+      to_date: :query,
+      transaction_ids: :query,
+      user_name: :query
     }
     %{}
     |> method(:get)
@@ -148,12 +147,12 @@ defmodule DocuSign.Api.Envelopes do
   @spec envelopes_post_envelopes(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeSummary.t} | {:error, Tesla.Env.t}
   def envelopes_post_envelopes(connection, account_id, opts \\ []) do
     optional_params = %{
-      :"cdse_mode" => :query,
-      :"change_routing_order" => :query,
-      :"completed_documents_only" => :query,
-      :"merge_roles_on_draft" => :query,
-      :"preserve_template_recipientids" => :query,
-      :"envelopeDefinition" => :body
+      cdse_mode: :query,
+      change_routing_order: :query,
+      completed_documents_only: :query,
+      merge_roles_on_draft: :query,
+      preserve_template_recipientids: :query,
+      envelopeDefinition: :body
     }
     %{}
     |> method(:post)
@@ -186,9 +185,9 @@ defmodule DocuSign.Api.Envelopes do
   @spec envelopes_put_envelope(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeUpdateSummary.t} | {:error, Tesla.Env.t}
   def envelopes_put_envelope(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
-      :"advanced_update" => :query,
-      :"resend_envelope" => :query,
-      :"Envelopes" => :body
+      advanced_update: :query,
+      resend_envelope: :query,
+      Envelopes: :body
     }
     %{}
     |> method(:put)
@@ -222,11 +221,11 @@ defmodule DocuSign.Api.Envelopes do
   @spec envelopes_put_status(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopesInformation.t} | {:error, Tesla.Env.t}
   def envelopes_put_status(connection, account_id, opts \\ []) do
     optional_params = %{
-      :"email" => :query,
-      :"from_date" => :query,
-      :"start_position" => :query,
-      :"to_date" => :query,
-      :"envelopeIdsRequest" => :body
+      email: :query,
+      from_date: :query,
+      start_position: :query,
+      to_date: :query,
+      envelopeIdsRequest: :body
     }
     %{}
     |> method(:put)
@@ -283,7 +282,7 @@ defmodule DocuSign.Api.Envelopes do
   @spec notification_put_envelopes_envelope_id_notification(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.Notification.t} | {:error, Tesla.Env.t}
   def notification_put_envelopes_envelope_id_notification(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
-      :"envelopeNotificationRequest" => :body
+      envelopeNotificationRequest: :body
     }
     %{}
     |> method(:put)
@@ -347,10 +346,10 @@ defmodule DocuSign.Api.Envelopes do
   @spec pages_get_page_image(Tesla.Env.client, String.t, String.t, String.t, String.t, keyword()) :: {:ok, String.t} | {:error, Tesla.Env.t}
   def pages_get_page_image(connection, account_id, document_id, envelope_id, page_number, opts \\ []) do
     optional_params = %{
-      :"dpi" => :query,
-      :"max_height" => :query,
-      :"max_width" => :query,
-      :"show_changes" => :query
+      dpi: :query,
+      max_height: :query,
+      max_width: :query,
+      show_changes: :query
     }
     %{}
     |> method(:get)
@@ -388,13 +387,13 @@ defmodule DocuSign.Api.Envelopes do
   @spec pages_get_page_images(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.PageImages.t} | {:error, Tesla.Env.t}
   def pages_get_page_images(connection, account_id, document_id, envelope_id, opts \\ []) do
     optional_params = %{
-      :"count" => :query,
-      :"dpi" => :query,
-      :"max_height" => :query,
-      :"max_width" => :query,
-      :"nocache" => :query,
-      :"show_changes" => :query,
-      :"start_position" => :query
+      count: :query,
+      dpi: :query,
+      max_height: :query,
+      max_width: :query,
+      nocache: :query,
+      show_changes: :query,
+      start_position: :query
     }
     %{}
     |> method(:get)
@@ -427,7 +426,7 @@ defmodule DocuSign.Api.Envelopes do
   @spec pages_put_page_image(Tesla.Env.client, String.t, String.t, String.t, String.t, keyword()) :: {:ok, nil} | {:error, Tesla.Env.t}
   def pages_put_page_image(connection, account_id, document_id, envelope_id, page_number, opts \\ []) do
     optional_params = %{
-      :"pageRequest" => :body
+      pageRequest: :body
     }
     %{}
     |> method(:put)
@@ -459,7 +458,7 @@ defmodule DocuSign.Api.Envelopes do
   @spec recipients_get_recipient_initials_image(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, String.t} | {:error, Tesla.Env.t}
   def recipients_get_recipient_initials_image(connection, account_id, envelope_id, recipient_id, opts \\ []) do
     optional_params = %{
-      :"include_chrome" => :query
+      include_chrome: :query
     }
     %{}
     |> method(:get)
@@ -518,7 +517,7 @@ defmodule DocuSign.Api.Envelopes do
   @spec recipients_get_recipient_signature_image(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, String.t} | {:error, Tesla.Env.t}
   def recipients_get_recipient_signature_image(connection, account_id, envelope_id, recipient_id, opts \\ []) do
     optional_params = %{
-      :"include_chrome" => :query
+      include_chrome: :query
     }
     %{}
     |> method(:get)

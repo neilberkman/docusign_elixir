@@ -10,7 +10,6 @@ defmodule DocuSign.Api.SigningGroups do
   alias DocuSign.Connection
   import DocuSign.RequestBuilder
 
-
   @doc """
   Deletes one or more signing groups.
   Deletes one or more signing groups in the specified account.
@@ -30,7 +29,7 @@ defmodule DocuSign.Api.SigningGroups do
   @spec signing_groups_delete_signing_groups(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.SigningGroupInformation.t} | {:error, Tesla.Env.t}
   def signing_groups_delete_signing_groups(connection, account_id, opts \\ []) do
     optional_params = %{
-      :"signingGroupInformation" => :body
+      signingGroupInformation: :body
     }
     %{}
     |> method(:delete)
@@ -87,8 +86,8 @@ defmodule DocuSign.Api.SigningGroups do
   @spec signing_groups_get_signing_groups(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.SigningGroupInformation.t} | {:error, Tesla.Env.t}
   def signing_groups_get_signing_groups(connection, account_id, opts \\ []) do
     optional_params = %{
-      :"group_type" => :query,
-      :"include_users" => :query
+      group_type: :query,
+      include_users: :query
     }
     %{}
     |> method(:get)
@@ -118,7 +117,7 @@ defmodule DocuSign.Api.SigningGroups do
   @spec signing_groups_post_signing_groups(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.SigningGroupInformation.t} | {:error, Tesla.Env.t}
   def signing_groups_post_signing_groups(connection, account_id, opts \\ []) do
     optional_params = %{
-      :"signingGroupInformation" => :body
+      signingGroupInformation: :body
     }
     %{}
     |> method(:post)
@@ -149,7 +148,7 @@ defmodule DocuSign.Api.SigningGroups do
   @spec signing_groups_put_signing_group(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.SigningGroups.t} | {:error, Tesla.Env.t}
   def signing_groups_put_signing_group(connection, account_id, signing_group_id, opts \\ []) do
     optional_params = %{
-      :"SigningGroups" => :body
+      SigningGroups: :body
     }
     %{}
     |> method(:put)
@@ -179,7 +178,7 @@ defmodule DocuSign.Api.SigningGroups do
   @spec signing_groups_put_signing_groups(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.SigningGroupInformation.t} | {:error, Tesla.Env.t}
   def signing_groups_put_signing_groups(connection, account_id, opts \\ []) do
     optional_params = %{
-      :"signingGroupInformation" => :body
+      signingGroupInformation: :body
     }
     %{}
     |> method(:put)

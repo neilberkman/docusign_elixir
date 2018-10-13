@@ -10,7 +10,6 @@ defmodule DocuSign.Api.PaymentGatewayAccounts do
   alias DocuSign.Connection
   import DocuSign.RequestBuilder
 
-
   @doc """
   List payment gateway account information
   List payment gateway account information

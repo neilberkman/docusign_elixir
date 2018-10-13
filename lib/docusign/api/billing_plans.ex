@@ -10,7 +10,6 @@ defmodule DocuSign.Api.BillingPlans do
   alias DocuSign.Connection
   import DocuSign.RequestBuilder
 
-
   @doc """
   Get Account Billing Plan
   Retrieves the billing plan information for the specified account, including the current billing plan, successor plans, billing address, and billing credit card.  By default the successor plan and credit card information is included in the response. This information can be excluded from the response by adding the appropriate optional query string with the &#x60;setting&#x60; set to **false**.   Response  The response returns the billing plan information, including the currency code, for the plan. The &#x60;billingPlan&#x60; and &#x60;succesorPlans&#x60; property values are the same as those shown in the [ML:Get Billing Plan Details] reference. the &#x60;billingAddress&#x60; and &#x60;creditCardInformation&#x60; property values are the same as those shown in the [ML:Update Billing Plan] reference.  ###### Note: When credit card number information is shown, a mask is applied to the response so that only the last 4 digits of the card number are visible. 
@@ -32,9 +31,9 @@ defmodule DocuSign.Api.BillingPlans do
   @spec billing_plan_get_billing_plan(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.BillingPlans.t} | {:error, Tesla.Env.t}
   def billing_plan_get_billing_plan(connection, account_id, opts \\ []) do
     optional_params = %{
-      :"include_credit_card_information" => :query,
-      :"include_metadata" => :query,
-      :"include_successor_plans" => :query
+      include_credit_card_information: :query,
+      include_metadata: :query,
+      include_successor_plans: :query
     }
     %{}
     |> method(:get)
@@ -90,8 +89,8 @@ defmodule DocuSign.Api.BillingPlans do
   @spec billing_plan_put_billing_plan(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.BillingPlanUpdateResponse.t} | {:error, Tesla.Env.t}
   def billing_plan_put_billing_plan(connection, account_id, opts \\ []) do
     optional_params = %{
-      :"preview_billing_plan" => :query,
-      :"billingPlanInformation" => :body
+      preview_billing_plan: :query,
+      billingPlanInformation: :body
     }
     %{}
     |> method(:put)
@@ -170,7 +169,7 @@ defmodule DocuSign.Api.BillingPlans do
   @spec purchased_envelopes_put_purchased_envelopes(Tesla.Env.client, String.t, keyword()) :: {:ok, nil} | {:error, Tesla.Env.t}
   def purchased_envelopes_put_purchased_envelopes(connection, account_id, opts \\ []) do
     optional_params = %{
-      :"purchasedEnvelopesInformation" => :body
+      purchasedEnvelopesInformation: :body
     }
     %{}
     |> method(:put)

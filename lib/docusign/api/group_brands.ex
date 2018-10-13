@@ -10,7 +10,6 @@ defmodule DocuSign.Api.GroupBrands do
   alias DocuSign.Connection
   import DocuSign.RequestBuilder
 
-
   @doc """
   Deletes brand information from the requested group.
   Deletes brand information from the requested group.
@@ -31,7 +30,7 @@ defmodule DocuSign.Api.GroupBrands do
   @spec brands_delete_group_brands(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.GroupBrands.t} | {:error, Tesla.Env.t}
   def brands_delete_group_brands(connection, account_id, group_id, opts \\ []) do
     optional_params = %{
-      :"brandsRequest" => :body
+      brandsRequest: :body
     }
     %{}
     |> method(:delete)
@@ -88,7 +87,7 @@ defmodule DocuSign.Api.GroupBrands do
   @spec brands_put_group_brands(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.GroupBrands.t} | {:error, Tesla.Env.t}
   def brands_put_group_brands(connection, account_id, group_id, opts \\ []) do
     optional_params = %{
-      :"brandsRequest" => :body
+      brandsRequest: :body
     }
     %{}
     |> method(:put)

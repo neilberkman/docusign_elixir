@@ -10,7 +10,6 @@ defmodule DocuSign.Api.Invoices do
   alias DocuSign.Connection
   import DocuSign.RequestBuilder
 
-
   @doc """
   Retrieves a billing invoice.
   Retrieves the specified invoice.   ###### Note: If the &#x60;pdfAvailable&#x60; property in the response is set to *true*, you can download a PDF version of the invoice. To download the PDF, make the call again and change the value of the &#x60;Accept&#x60; property in the header to &#x60;Accept: application/pdf&#x60;.  Privileges required: account administrator  The response returns a list of charges and information about the charges. Quantities are usually shown as &#39;unlimited&#39; or an integer. Amounts are shown in the currency set for the account.  **Response** The following table provides a description of the different &#x60;chargeName&#x60; property values. The information will grow as more chargeable items are added to the system.  | chargeName | Description | | --- | --- | | id_check | ID Check Charge | | in_person_signing | In Person Signing charge | | envelopes Included | Sent Envelopes for the account | | age_verify | Age verification check | | ofac | OFAC Check | | id_confirm | ID confirmation check | | student_authentication | STAN PIN authentication check | | wet_sign_fax | Pages for returning signed documents by fax | | attachment_fax | Pages for returning attachments by fax | | phone_authentication | Phone authentication charge | | powerforms | PowerForm envelopes sent | | signer_payments | Payment processing charge | | outbound_fax | Send by fax charge | | bulk_recipient_envelopes | Bulk Recipient Envelopes sent | | sms_authentications | SMS authentication charge | | saml_authentications | SAML authentication charge | | express_signer_certificate | DocuSign Express Certificate charge | | personal_signer_certificate | Personal Signer Certificate charge | | safe_certificate | SAFE BioPharma Signer Certificate charge | | seats | Included active seats charge | | open_trust_certificate | OpenTrust Signer Certificate charge | 
@@ -57,8 +56,8 @@ defmodule DocuSign.Api.Invoices do
   @spec billing_invoices_get_billing_invoices(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.BillingInvoicesResponse.t} | {:error, Tesla.Env.t}
   def billing_invoices_get_billing_invoices(connection, account_id, opts \\ []) do
     optional_params = %{
-      :"from_date" => :query,
-      :"to_date" => :query
+      from_date: :query,
+      to_date: :query
     }
     %{}
     |> method(:get)

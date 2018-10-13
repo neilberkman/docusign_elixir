@@ -10,7 +10,6 @@ defmodule DocuSign.Api.Contacts do
   alias DocuSign.Connection
   import DocuSign.RequestBuilder
 
-
   @doc """
   Replaces a particular contact associated with an account for the DocuSign service.
   
@@ -56,7 +55,7 @@ defmodule DocuSign.Api.Contacts do
   @spec contacts_delete_contacts(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.ContactUpdateResponse.t} | {:error, Tesla.Env.t}
   def contacts_delete_contacts(connection, account_id, opts \\ []) do
     optional_params = %{
-      :"contactModRequest" => :body
+      contactModRequest: :body
     }
     %{}
     |> method(:delete)
@@ -112,7 +111,7 @@ defmodule DocuSign.Api.Contacts do
   @spec contacts_post_contacts(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.ContactUpdateResponse.t} | {:error, Tesla.Env.t}
   def contacts_post_contacts(connection, account_id, opts \\ []) do
     optional_params = %{
-      :"contactModRequest" => :body
+      contactModRequest: :body
     }
     %{}
     |> method(:post)
@@ -142,7 +141,7 @@ defmodule DocuSign.Api.Contacts do
   @spec contacts_put_contacts(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.ContactUpdateResponse.t} | {:error, Tesla.Env.t}
   def contacts_put_contacts(connection, account_id, opts \\ []) do
     optional_params = %{
-      :"contactModRequest" => :body
+      contactModRequest: :body
     }
     %{}
     |> method(:put)

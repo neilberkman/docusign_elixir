@@ -10,7 +10,6 @@ defmodule DocuSign.Api.GroupUsers do
   alias DocuSign.Connection
   import DocuSign.RequestBuilder
 
-
   @doc """
   Deletes one or more users from a gro
   Deletes one or more users from a group. 
@@ -31,7 +30,7 @@ defmodule DocuSign.Api.GroupUsers do
   @spec groups_delete_group_users(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.GroupUsers.t} | {:error, Tesla.Env.t}
   def groups_delete_group_users(connection, account_id, group_id, opts \\ []) do
     optional_params = %{
-      :"userInfoList" => :body
+      userInfoList: :body
     }
     %{}
     |> method(:delete)
@@ -63,8 +62,8 @@ defmodule DocuSign.Api.GroupUsers do
   @spec groups_get_group_users(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.GroupUsers.t} | {:error, Tesla.Env.t}
   def groups_get_group_users(connection, account_id, group_id, opts \\ []) do
     optional_params = %{
-      :"count" => :query,
-      :"start_position" => :query
+      count: :query,
+      start_position: :query
     }
     %{}
     |> method(:get)
@@ -95,7 +94,7 @@ defmodule DocuSign.Api.GroupUsers do
   @spec groups_put_group_users(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.GroupUsers.t} | {:error, Tesla.Env.t}
   def groups_put_group_users(connection, account_id, group_id, opts \\ []) do
     optional_params = %{
-      :"userInfoList" => :body
+      userInfoList: :body
     }
     %{}
     |> method(:put)

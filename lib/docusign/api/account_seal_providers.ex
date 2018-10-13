@@ -10,7 +10,6 @@ defmodule DocuSign.Api.AccountSealProviders do
   alias DocuSign.Connection
   import DocuSign.RequestBuilder
 
-
   @doc """
   
   

@@ -10,7 +10,6 @@ defmodule DocuSign.Api.EnvelopeFormData do
   alias DocuSign.Connection
   import DocuSign.RequestBuilder
 
-
   @doc """
   Returns envelope form data for an existing envelope.
   

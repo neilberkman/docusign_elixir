@@ -10,7 +10,6 @@ defmodule DocuSign.Api.AccountSignatureProviders do
   alias DocuSign.Connection
   import DocuSign.RequestBuilder
 
-
   @doc """
   Returns Account available signature providers for specified account.
   

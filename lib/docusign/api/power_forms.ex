@@ -10,7 +10,6 @@ defmodule DocuSign.Api.PowerForms do
   alias DocuSign.Connection
   import DocuSign.RequestBuilder
 
-
   @doc """
   Delete a PowerForm.
   
@@ -56,7 +55,7 @@ defmodule DocuSign.Api.PowerForms do
   @spec power_forms_delete_power_forms_list(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.PowerFormsResponse.t} | {:error, Tesla.Env.t}
   def power_forms_delete_power_forms_list(connection, account_id, opts \\ []) do
     optional_params = %{
-      :"powerFormsRequest" => :body
+      powerFormsRequest: :body
     }
     %{}
     |> method(:delete)
@@ -115,10 +114,10 @@ defmodule DocuSign.Api.PowerForms do
   @spec power_forms_get_power_forms_list(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.PowerFormsResponse.t} | {:error, Tesla.Env.t}
   def power_forms_get_power_forms_list(connection, account_id, opts \\ []) do
     optional_params = %{
-      :"from_date" => :query,
-      :"order" => :query,
-      :"order_by" => :query,
-      :"to_date" => :query
+      from_date: :query,
+      order: :query,
+      order_by: :query,
+      to_date: :query
     }
     %{}
     |> method(:get)
@@ -148,7 +147,7 @@ defmodule DocuSign.Api.PowerForms do
   @spec power_forms_get_power_forms_senders(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.PowerFormSendersResponse.t} | {:error, Tesla.Env.t}
   def power_forms_get_power_forms_senders(connection, account_id, opts \\ []) do
     optional_params = %{
-      :"start_position" => :query
+      start_position: :query
     }
     %{}
     |> method(:get)
@@ -178,7 +177,7 @@ defmodule DocuSign.Api.PowerForms do
   @spec power_forms_post_power_form(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.PowerForms.t} | {:error, Tesla.Env.t}
   def power_forms_post_power_form(connection, account_id, opts \\ []) do
     optional_params = %{
-      :"PowerForms" => :body
+      PowerForms: :body
     }
     %{}
     |> method(:post)
@@ -209,7 +208,7 @@ defmodule DocuSign.Api.PowerForms do
   @spec power_forms_put_power_form(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.PowerForms.t} | {:error, Tesla.Env.t}
   def power_forms_put_power_form(connection, account_id, power_form_id, opts \\ []) do
     optional_params = %{
-      :"PowerForms" => :body
+      PowerForms: :body
     }
     %{}
     |> method(:put)

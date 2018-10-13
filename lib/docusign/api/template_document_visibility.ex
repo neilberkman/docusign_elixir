@@ -10,7 +10,6 @@ defmodule DocuSign.Api.TemplateDocumentVisibility do
   alias DocuSign.Connection
   import DocuSign.RequestBuilder
 
-
   @doc """
   Returns document visibility for the recipients
   
@@ -59,7 +58,7 @@ defmodule DocuSign.Api.TemplateDocumentVisibility do
   @spec recipients_put_template_recipient_document_visibility(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.TemplateDocumentVisibility.t} | {:error, Tesla.Env.t}
   def recipients_put_template_recipient_document_visibility(connection, account_id, recipient_id, template_id, opts \\ []) do
     optional_params = %{
-      :"TemplateDocumentVisibility" => :body
+      TemplateDocumentVisibility: :body
     }
     %{}
     |> method(:put)
@@ -90,7 +89,7 @@ defmodule DocuSign.Api.TemplateDocumentVisibility do
   @spec recipients_put_template_recipients_document_visibility(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.TemplateDocumentVisibility.t} | {:error, Tesla.Env.t}
   def recipients_put_template_recipients_document_visibility(connection, account_id, template_id, opts \\ []) do
     optional_params = %{
-      :"TemplateDocumentVisibility" => :body
+      TemplateDocumentVisibility: :body
     }
     %{}
     |> method(:put)

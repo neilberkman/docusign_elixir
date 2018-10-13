@@ -10,7 +10,6 @@ defmodule DocuSign.Api.EnvelopeViews do
   alias DocuSign.Connection
   import DocuSign.RequestBuilder
 
-
   @doc """
   Returns a URL to the authentication view UI.
   Returns a URL that allows you to embed the authentication view of the DocuSign UI in your applications.
@@ -30,7 +29,7 @@ defmodule DocuSign.Api.EnvelopeViews do
   @spec views_post_account_console_view(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeViews.t} | {:error, Tesla.Env.t}
   def views_post_account_console_view(connection, account_id, opts \\ []) do
     optional_params = %{
-      :"consoleViewRequest" => :body
+      consoleViewRequest: :body
     }
     %{}
     |> method(:post)
@@ -61,7 +60,7 @@ defmodule DocuSign.Api.EnvelopeViews do
   @spec views_post_envelope_correct_view(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeViews.t} | {:error, Tesla.Env.t}
   def views_post_envelope_correct_view(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
-      :"correctViewRequest" => :body
+      correctViewRequest: :body
     }
     %{}
     |> method(:post)
@@ -92,7 +91,7 @@ defmodule DocuSign.Api.EnvelopeViews do
   @spec views_post_envelope_edit_view(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeViews.t} | {:error, Tesla.Env.t}
   def views_post_envelope_edit_view(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
-      :"returnUrlRequest" => :body
+      returnUrlRequest: :body
     }
     %{}
     |> method(:post)
@@ -123,7 +122,7 @@ defmodule DocuSign.Api.EnvelopeViews do
   @spec views_post_envelope_recipient_shared_view(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.TemplateViews.t} | {:error, Tesla.Env.t}
   def views_post_envelope_recipient_shared_view(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
-      :"recipientViewRequest" => :body
+      recipientViewRequest: :body
     }
     %{}
     |> method(:post)
@@ -154,7 +153,7 @@ defmodule DocuSign.Api.EnvelopeViews do
   @spec views_post_envelope_recipient_view(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeViews.t} | {:error, Tesla.Env.t}
   def views_post_envelope_recipient_view(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
-      :"recipientViewRequest" => :body
+      recipientViewRequest: :body
     }
     %{}
     |> method(:post)
@@ -185,7 +184,7 @@ defmodule DocuSign.Api.EnvelopeViews do
   @spec views_post_envelope_sender_view(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeViews.t} | {:error, Tesla.Env.t}
   def views_post_envelope_sender_view(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
-      :"returnUrlRequest" => :body
+      returnUrlRequest: :body
     }
     %{}
     |> method(:post)

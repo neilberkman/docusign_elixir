@@ -10,7 +10,6 @@ defmodule DocuSign.Api.UserSignatures do
   alias DocuSign.Connection
   import DocuSign.RequestBuilder
 
-
   @doc """
   Removes removes signature information for the specified user.
   Removes the signature information for the user.  The userId parameter specified in the endpoint must match the authenticated user&#39;s user ID and the user must be a member of the account.  The &#x60;signatureId&#x60; accepts a signature ID or a signature name. DocuSign recommends you use signature ID (&#x60;signatureId&#x60;), since some names contain characters that do not properly encode into a URL. If you use the user name, it is likely that the name includes spaces. In that case, URL encode the name before using it in the endpoint.   For example encode \&quot;Bob Smith\&quot; as \&quot;Bob%20Smith\&quot;.
@@ -115,7 +114,7 @@ defmodule DocuSign.Api.UserSignatures do
   @spec user_signatures_get_user_signature_image(Tesla.Env.client, String.t, String.t, String.t, String.t, keyword()) :: {:ok, String.t} | {:error, Tesla.Env.t}
   def user_signatures_get_user_signature_image(connection, account_id, image_type, signature_id, user_id, opts \\ []) do
     optional_params = %{
-      :"include_chrome" => :query
+      include_chrome: :query
     }
     %{}
     |> method(:get)
@@ -146,7 +145,7 @@ defmodule DocuSign.Api.UserSignatures do
   @spec user_signatures_get_user_signatures(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.UserSignaturesInformation.t} | {:error, Tesla.Env.t}
   def user_signatures_get_user_signatures(connection, account_id, user_id, opts \\ []) do
     optional_params = %{
-      :"stamp_type" => :query
+      stamp_type: :query
     }
     %{}
     |> method(:get)
@@ -177,7 +176,7 @@ defmodule DocuSign.Api.UserSignatures do
   @spec user_signatures_post_user_signatures(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.UserSignaturesInformation.t} | {:error, Tesla.Env.t}
   def user_signatures_post_user_signatures(connection, account_id, user_id, opts \\ []) do
     optional_params = %{
-      :"userSignaturesInformation" => :body
+      userSignaturesInformation: :body
     }
     %{}
     |> method(:post)
@@ -208,7 +207,7 @@ defmodule DocuSign.Api.UserSignatures do
   @spec user_signatures_put_user_signature(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.UserSignaturesInformation.t} | {:error, Tesla.Env.t}
   def user_signatures_put_user_signature(connection, account_id, user_id, opts \\ []) do
     optional_params = %{
-      :"userSignaturesInformation" => :body
+      userSignaturesInformation: :body
     }
     %{}
     |> method(:put)
@@ -241,8 +240,8 @@ defmodule DocuSign.Api.UserSignatures do
   @spec user_signatures_put_user_signature_by_id(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.UserSignatures.t} | {:error, Tesla.Env.t}
   def user_signatures_put_user_signature_by_id(connection, account_id, signature_id, user_id, opts \\ []) do
     optional_params = %{
-      :"close_existing_signature" => :query,
-      :"userSignatureDefinition" => :body
+      close_existing_signature: :query,
+      userSignatureDefinition: :body
     }
     %{}
     |> method(:put)

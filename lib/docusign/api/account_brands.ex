@@ -10,7 +10,6 @@ defmodule DocuSign.Api.AccountBrands do
   alias DocuSign.Connection
   import DocuSign.RequestBuilder
 
-
   @doc """
   Removes a brand.
   
@@ -84,8 +83,8 @@ defmodule DocuSign.Api.AccountBrands do
   @spec brand_get_brand(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.Brand.t} | {:error, Tesla.Env.t}
   def brand_get_brand(connection, account_id, brand_id, opts \\ []) do
     optional_params = %{
-      :"include_external_references" => :query,
-      :"include_logos" => :query
+      include_external_references: :query,
+      include_logos: :query
     }
     %{}
     |> method(:get)
@@ -197,7 +196,7 @@ defmodule DocuSign.Api.AccountBrands do
   @spec brand_put_brand(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.Brand.t} | {:error, Tesla.Env.t}
   def brand_put_brand(connection, account_id, brand_id, opts \\ []) do
     optional_params = %{
-      :"brand" => :body
+      brand: :body
     }
     %{}
     |> method(:put)
@@ -230,8 +229,8 @@ defmodule DocuSign.Api.AccountBrands do
   @spec brand_resources_get_brand_resources(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, nil} | {:error, Tesla.Env.t}
   def brand_resources_get_brand_resources(connection, account_id, brand_id, resource_content_type, opts \\ []) do
     optional_params = %{
-      :"langcode" => :query,
-      :"return_master" => :query
+      langcode: :query,
+      return_master: :query
     }
     %{}
     |> method(:get)
@@ -314,7 +313,7 @@ defmodule DocuSign.Api.AccountBrands do
   @spec brands_delete_brands(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.AccountBrands.t} | {:error, Tesla.Env.t}
   def brands_delete_brands(connection, account_id, opts \\ []) do
     optional_params = %{
-      :"brandsRequest" => :body
+      brandsRequest: :body
     }
     %{}
     |> method(:delete)
@@ -345,8 +344,8 @@ defmodule DocuSign.Api.AccountBrands do
   @spec brands_get_brands(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.AccountBrands.t} | {:error, Tesla.Env.t}
   def brands_get_brands(connection, account_id, opts \\ []) do
     optional_params = %{
-      :"exclude_distributor_brand" => :query,
-      :"include_logos" => :query
+      exclude_distributor_brand: :query,
+      include_logos: :query
     }
     %{}
     |> method(:get)
@@ -376,7 +375,7 @@ defmodule DocuSign.Api.AccountBrands do
   @spec brands_post_brands(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.AccountBrands.t} | {:error, Tesla.Env.t}
   def brands_post_brands(connection, account_id, opts \\ []) do
     optional_params = %{
-      :"brand" => :body
+      brand: :body
     }
     %{}
     |> method(:post)

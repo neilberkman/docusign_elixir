@@ -10,7 +10,6 @@ defmodule DocuSign.Api.Workspaces do
   alias DocuSign.Connection
   import DocuSign.RequestBuilder
 
-
   @doc """
   Delete Workspace
   Deletes an existing workspace (logically).
@@ -107,7 +106,7 @@ defmodule DocuSign.Api.Workspaces do
   @spec workspace_post_workspace(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.Workspaces.t} | {:error, Tesla.Env.t}
   def workspace_post_workspace(connection, account_id, opts \\ []) do
     optional_params = %{
-      :"Workspaces" => :body
+      Workspaces: :body
     }
     %{}
     |> method(:post)
@@ -138,7 +137,7 @@ defmodule DocuSign.Api.Workspaces do
   @spec workspace_put_workspace(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.Workspaces.t} | {:error, Tesla.Env.t}
   def workspace_put_workspace(connection, account_id, workspace_id, opts \\ []) do
     optional_params = %{
-      :"Workspaces" => :body
+      Workspaces: :body
     }
     %{}
     |> method(:put)
