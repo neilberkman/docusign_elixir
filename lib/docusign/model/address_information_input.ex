@@ -15,15 +15,14 @@ defmodule DocuSign.Model.AddressInformationInput do
   ]
 
   @type t :: %__MODULE__{
-          :addressInformation => AddressInformation,
-          :displayLevelCode => String.t(),
-          :receiveInResponse => String.t()
-        }
+    :addressInformation => AddressInformation,
+    :displayLevelCode => String.t,
+    :receiveInResponse => String.t
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.AddressInformationInput do
   import DocuSign.Deserializer
-
   def decode(value, options) do
     value
     |> deserialize(:addressInformation, :struct, DocuSign.Model.AddressInformation, options)

@@ -3,7 +3,9 @@
 # Do not edit the class manually.
 
 defmodule DocuSign.Model.ConnectFailureFilter do
-  @moduledoc false
+  @moduledoc """
+  
+  """
 
   @derive [Poison.Encoder]
   defstruct [
@@ -12,9 +14,9 @@ defmodule DocuSign.Model.ConnectFailureFilter do
   ]
 
   @type t :: %__MODULE__{
-          :envelopeIds => [String.t()],
-          :synchronous => String.t()
-        }
+    :envelopeIds => [String.t],
+    :synchronous => String.t
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.ConnectFailureFilter do

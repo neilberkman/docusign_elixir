@@ -3,7 +3,9 @@
 # Do not edit the class manually.
 
 defmodule DocuSign.Model.SignatureProviderRequiredOption do
-  @moduledoc false
+  @moduledoc """
+  
+  """
 
   @derive [Poison.Encoder]
   defstruct [
@@ -12,9 +14,9 @@ defmodule DocuSign.Model.SignatureProviderRequiredOption do
   ]
 
   @type t :: %__MODULE__{
-          :requiredSignatureProviderOptionIds => [String.t()],
-          :signerType => String.t()
-        }
+    :requiredSignatureProviderOptionIds => [String.t],
+    :signerType => String.t
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.SignatureProviderRequiredOption do

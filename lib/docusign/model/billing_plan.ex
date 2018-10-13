@@ -27,27 +27,26 @@ defmodule DocuSign.Model.BillingPlan do
   ]
 
   @type t :: %__MODULE__{
-          :appStoreProducts => [AppStoreProduct],
-          :currencyPlanPrices => [CurrencyPlanPrice],
-          :enableSupport => String.t(),
-          :includedSeats => String.t(),
-          :otherDiscountPercent => String.t(),
-          :paymentCycle => String.t(),
-          :paymentMethod => String.t(),
-          :perSeatPrice => String.t(),
-          :planClassification => String.t(),
-          :planFeatureSets => [FeatureSet],
-          :planId => String.t(),
-          :planName => String.t(),
-          :seatDiscounts => [SeatDiscount],
-          :supportIncidentFee => String.t(),
-          :supportPlanFee => String.t()
-        }
+    :appStoreProducts => [AppStoreProduct],
+    :currencyPlanPrices => [CurrencyPlanPrice],
+    :enableSupport => String.t,
+    :includedSeats => String.t,
+    :otherDiscountPercent => String.t,
+    :paymentCycle => String.t,
+    :paymentMethod => String.t,
+    :perSeatPrice => String.t,
+    :planClassification => String.t,
+    :planFeatureSets => [FeatureSet],
+    :planId => String.t,
+    :planName => String.t,
+    :seatDiscounts => [SeatDiscount],
+    :supportIncidentFee => String.t,
+    :supportPlanFee => String.t
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.BillingPlan do
   import DocuSign.Deserializer
-
   def decode(value, options) do
     value
     |> deserialize(:appStoreProducts, :list, DocuSign.Model.AppStoreProduct, options)

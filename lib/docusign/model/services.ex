@@ -18,18 +18,17 @@ defmodule DocuSign.Model.Services do
   ]
 
   @type t :: %__MODULE__{
-          :buildBranch => String.t(),
-          :buildBranchDeployedDateTime => String.t(),
-          :buildSHA => String.t(),
-          :buildVersion => String.t(),
-          :linkedSites => [String.t()],
-          :serviceVersions => [ServiceVersion]
-        }
+    :buildBranch => String.t,
+    :buildBranchDeployedDateTime => String.t,
+    :buildSHA => String.t,
+    :buildVersion => String.t,
+    :linkedSites => [String.t],
+    :serviceVersions => [ServiceVersion]
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.Services do
   import DocuSign.Deserializer
-
   def decode(value, options) do
     value
     |> deserialize(:serviceVersions, :list, DocuSign.Model.ServiceVersion, options)

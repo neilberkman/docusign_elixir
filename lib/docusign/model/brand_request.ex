@@ -3,7 +3,9 @@
 # Do not edit the class manually.
 
 defmodule DocuSign.Model.BrandRequest do
-  @moduledoc false
+  @moduledoc """
+  
+  """
 
   @derive [Poison.Encoder]
   defstruct [
@@ -11,8 +13,8 @@ defmodule DocuSign.Model.BrandRequest do
   ]
 
   @type t :: %__MODULE__{
-          :brandId => String.t()
-        }
+    :brandId => String.t
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.BrandRequest do

@@ -10,6 +10,7 @@ defmodule DocuSign.Api.Services do
   alias DocuSign.Connection
   import DocuSign.RequestBuilder
 
+
   @doc """
   Retrieves the available REST API versions.
   Retrieves the available REST API versions.  DocuSign Production system: https://www.docusign.net/restapi/service_information DocuSign Demo system: https://demo.docusign.net/restapi/service_information  You do not need an integrator key to view the REST API versions and resources.
@@ -24,8 +25,7 @@ defmodule DocuSign.Api.Services do
   {:ok, %DocuSign.Model.Services{}} on success
   {:error, info} on failure
   """
-  @spec service_information_get_service_information(Tesla.Env.client(), keyword()) ::
-          {:ok, DocuSign.Model.Services.t()} | {:error, Tesla.Env.t()}
+  @spec service_information_get_service_information(Tesla.Env.client, keyword()) :: {:ok, DocuSign.Model.Services.t} | {:error, Tesla.Env.t}
   def service_information_get_service_information(connection, _opts \\ []) do
     %{}
     |> method(:get)

@@ -3,7 +3,9 @@
 # Do not edit the class manually.
 
 defmodule DocuSign.Model.DateStampProperties do
-  @moduledoc false
+  @moduledoc """
+  
+  """
 
   @derive [Poison.Encoder]
   defstruct [
@@ -14,11 +16,11 @@ defmodule DocuSign.Model.DateStampProperties do
   ]
 
   @type t :: %__MODULE__{
-          :dateAreaHeight => String.t(),
-          :dateAreaWidth => String.t(),
-          :dateAreaX => String.t(),
-          :dateAreaY => String.t()
-        }
+    :dateAreaHeight => String.t,
+    :dateAreaWidth => String.t,
+    :dateAreaX => String.t,
+    :dateAreaY => String.t
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.DateStampProperties do

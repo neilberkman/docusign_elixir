@@ -23,23 +23,22 @@ defmodule DocuSign.Model.WorkspaceUserAuthorization do
   ]
 
   @type t :: %__MODULE__{
-          :canDelete => String.t(),
-          :canMove => String.t(),
-          :canTransact => String.t(),
-          :canView => String.t(),
-          :created => String.t(),
-          :createdById => String.t(),
-          :errorDetails => ErrorDetails,
-          :modified => String.t(),
-          :modifiedById => String.t(),
-          :workspaceUserId => String.t(),
-          :workspaceUserInformation => WorkspaceUser
-        }
+    :canDelete => String.t,
+    :canMove => String.t,
+    :canTransact => String.t,
+    :canView => String.t,
+    :created => String.t,
+    :createdById => String.t,
+    :errorDetails => ErrorDetails,
+    :modified => String.t,
+    :modifiedById => String.t,
+    :workspaceUserId => String.t,
+    :workspaceUserInformation => WorkspaceUser
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.WorkspaceUserAuthorization do
   import DocuSign.Deserializer
-
   def decode(value, options) do
     value
     |> deserialize(:errorDetails, :struct, DocuSign.Model.ErrorDetails, options)

@@ -10,8 +10,11 @@ defmodule DocuSign.Api.ChunkedUploads do
   alias DocuSign.Connection
   import DocuSign.RequestBuilder
 
+
   @doc """
   Delete an existing ChunkedUpload.
+  
+
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server
@@ -24,18 +27,8 @@ defmodule DocuSign.Api.ChunkedUploads do
   {:ok, %DocuSign.Model.ChunkedUploads{}} on success
   {:error, info} on failure
   """
-  @spec chunked_uploads_delete_chunked_upload(
-          Tesla.Env.client(),
-          String.t(),
-          String.t(),
-          keyword()
-        ) :: {:ok, DocuSign.Model.ChunkedUploads.t()} | {:error, Tesla.Env.t()}
-  def chunked_uploads_delete_chunked_upload(
-        connection,
-        account_id,
-        chunked_upload_id,
-        _opts \\ []
-      ) do
+  @spec chunked_uploads_delete_chunked_upload(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.ChunkedUploads.t} | {:error, Tesla.Env.t}
+  def chunked_uploads_delete_chunked_upload(connection, account_id, chunked_upload_id, _opts \\ []) do
     %{}
     |> method(:delete)
     |> url("/v2/accounts/#{account_id}/chunked_uploads/#{chunked_upload_id}")
@@ -46,6 +39,8 @@ defmodule DocuSign.Api.ChunkedUploads do
 
   @doc """
   Retrieves the current metadata of a ChunkedUpload.
+  
+
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server
@@ -59,13 +54,11 @@ defmodule DocuSign.Api.ChunkedUploads do
   {:ok, %DocuSign.Model.ChunkedUploads{}} on success
   {:error, info} on failure
   """
-  @spec chunked_uploads_get_chunked_upload(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ChunkedUploads.t()} | {:error, Tesla.Env.t()}
+  @spec chunked_uploads_get_chunked_upload(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.ChunkedUploads.t} | {:error, Tesla.Env.t}
   def chunked_uploads_get_chunked_upload(connection, account_id, chunked_upload_id, opts \\ []) do
     optional_params = %{
-      :include => :query
+      :"include" => :query
     }
-
     %{}
     |> method(:get)
     |> url("/v2/accounts/#{account_id}/chunked_uploads/#{chunked_upload_id}")
@@ -77,6 +70,8 @@ defmodule DocuSign.Api.ChunkedUploads do
 
   @doc """
   Initiate a new ChunkedUpload.
+  
+
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server
@@ -89,13 +84,11 @@ defmodule DocuSign.Api.ChunkedUploads do
   {:ok, %DocuSign.Model.ChunkedUploads{}} on success
   {:error, info} on failure
   """
-  @spec chunked_uploads_post_chunked_uploads(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ChunkedUploads.t()} | {:error, Tesla.Env.t()}
+  @spec chunked_uploads_post_chunked_uploads(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.ChunkedUploads.t} | {:error, Tesla.Env.t}
   def chunked_uploads_post_chunked_uploads(connection, account_id, opts \\ []) do
     optional_params = %{
-      :chunkedUploadRequest => :body
+      :"chunkedUploadRequest" => :body
     }
-
     %{}
     |> method(:post)
     |> url("/v2/accounts/#{account_id}/chunked_uploads")
@@ -107,6 +100,8 @@ defmodule DocuSign.Api.ChunkedUploads do
 
   @doc """
   Add a chunk, a chunk &#39;part&#39;, to an existing ChunkedUpload.
+  
+
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server
@@ -121,29 +116,14 @@ defmodule DocuSign.Api.ChunkedUploads do
   {:ok, %DocuSign.Model.ChunkedUploads{}} on success
   {:error, info} on failure
   """
-  @spec chunked_uploads_put_chunked_upload_part(
-          Tesla.Env.client(),
-          String.t(),
-          String.t(),
-          String.t(),
-          keyword()
-        ) :: {:ok, DocuSign.Model.ChunkedUploads.t()} | {:error, Tesla.Env.t()}
-  def chunked_uploads_put_chunked_upload_part(
-        connection,
-        account_id,
-        chunked_upload_id,
-        chunked_upload_part_seq,
-        opts \\ []
-      ) do
+  @spec chunked_uploads_put_chunked_upload_part(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.ChunkedUploads.t} | {:error, Tesla.Env.t}
+  def chunked_uploads_put_chunked_upload_part(connection, account_id, chunked_upload_id, chunked_upload_part_seq, opts \\ []) do
     optional_params = %{
-      :chunkedUploadRequest => :body
+      :"chunkedUploadRequest" => :body
     }
-
     %{}
     |> method(:put)
-    |> url(
-      "/v2/accounts/#{account_id}/chunked_uploads/#{chunked_upload_id}/#{chunked_upload_part_seq}"
-    )
+    |> url("/v2/accounts/#{account_id}/chunked_uploads/#{chunked_upload_id}/#{chunked_upload_part_seq}")
     |> add_optional_params(optional_params, opts)
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
@@ -152,6 +132,8 @@ defmodule DocuSign.Api.ChunkedUploads do
 
   @doc """
   Integrity-Check and Commit a ChunkedUpload, readying it for use elsewhere.
+  
+
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server
@@ -165,13 +147,11 @@ defmodule DocuSign.Api.ChunkedUploads do
   {:ok, %DocuSign.Model.ChunkedUploads{}} on success
   {:error, info} on failure
   """
-  @spec chunked_uploads_put_chunked_uploads(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ChunkedUploads.t()} | {:error, Tesla.Env.t()}
+  @spec chunked_uploads_put_chunked_uploads(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.ChunkedUploads.t} | {:error, Tesla.Env.t}
   def chunked_uploads_put_chunked_uploads(connection, account_id, chunked_upload_id, opts \\ []) do
     optional_params = %{
-      :action => :query
+      :"action" => :query
     }
-
     %{}
     |> method(:put)
     |> url("/v2/accounts/#{account_id}/chunked_uploads/#{chunked_upload_id}")

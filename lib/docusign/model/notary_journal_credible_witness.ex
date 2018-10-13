@@ -3,7 +3,9 @@
 # Do not edit the class manually.
 
 defmodule DocuSign.Model.NotaryJournalCredibleWitness do
-  @moduledoc false
+  @moduledoc """
+  
+  """
 
   @derive [Poison.Encoder]
   defstruct [
@@ -13,10 +15,10 @@ defmodule DocuSign.Model.NotaryJournalCredibleWitness do
   ]
 
   @type t :: %__MODULE__{
-          :address => String.t(),
-          :name => String.t(),
-          :signatureImage => String.t()
-        }
+    :address => String.t,
+    :name => String.t,
+    :signatureImage => String.t
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.NotaryJournalCredibleWitness do

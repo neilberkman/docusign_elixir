@@ -3,7 +3,9 @@
 # Do not edit the class manually.
 
 defmodule DocuSign.Model.SharedItem do
-  @moduledoc false
+  @moduledoc """
+  
+  """
 
   @derive [Poison.Encoder]
   defstruct [
@@ -13,15 +15,14 @@ defmodule DocuSign.Model.SharedItem do
   ]
 
   @type t :: %__MODULE__{
-          :errorDetails => ErrorDetails,
-          :shared => String.t(),
-          :user => UserInfo
-        }
+    :errorDetails => ErrorDetails,
+    :shared => String.t,
+    :user => UserInfo
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.SharedItem do
   import DocuSign.Deserializer
-
   def decode(value, options) do
     value
     |> deserialize(:errorDetails, :struct, DocuSign.Model.ErrorDetails, options)

@@ -3,7 +3,9 @@
 # Do not edit the class manually.
 
 defmodule DocuSign.Model.FoldersRequest do
-  @moduledoc false
+  @moduledoc """
+  
+  """
 
   @derive [Poison.Encoder]
   defstruct [
@@ -12,9 +14,9 @@ defmodule DocuSign.Model.FoldersRequest do
   ]
 
   @type t :: %__MODULE__{
-          :envelopeIds => [String.t()],
-          :fromFolderId => String.t()
-        }
+    :envelopeIds => [String.t],
+    :fromFolderId => String.t
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.FoldersRequest do

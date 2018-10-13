@@ -13,13 +13,12 @@ defmodule DocuSign.Model.SigningGroupUsers do
   ]
 
   @type t :: %__MODULE__{
-          :users => [SigningGroupUser]
-        }
+    :users => [SigningGroupUser]
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.SigningGroupUsers do
   import DocuSign.Deserializer
-
   def decode(value, options) do
     value
     |> deserialize(:users, :list, DocuSign.Model.SigningGroupUser, options)

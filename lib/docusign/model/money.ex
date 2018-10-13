@@ -15,10 +15,10 @@ defmodule DocuSign.Model.Money do
   ]
 
   @type t :: %__MODULE__{
-          :amountInBaseUnit => String.t(),
-          :currency => String.t(),
-          :displayAmount => String.t()
-        }
+    :amountInBaseUnit => String.t,
+    :currency => String.t,
+    :displayAmount => String.t
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.Money do

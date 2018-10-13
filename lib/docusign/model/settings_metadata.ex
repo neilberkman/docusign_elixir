@@ -3,7 +3,9 @@
 # Do not edit the class manually.
 
 defmodule DocuSign.Model.SettingsMetadata do
-  @moduledoc false
+  @moduledoc """
+  
+  """
 
   @derive [Poison.Encoder]
   defstruct [
@@ -16,13 +18,13 @@ defmodule DocuSign.Model.SettingsMetadata do
   ]
 
   @type t :: %__MODULE__{
-          :is21CFRPart11 => String.t(),
-          :options => [String.t()],
-          :rights => String.t(),
-          :uiHint => String.t(),
-          :uiOrder => String.t(),
-          :uiType => String.t()
-        }
+    :is21CFRPart11 => String.t,
+    :options => [String.t],
+    :rights => String.t,
+    :uiHint => String.t,
+    :uiOrder => String.t,
+    :uiType => String.t
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.SettingsMetadata do

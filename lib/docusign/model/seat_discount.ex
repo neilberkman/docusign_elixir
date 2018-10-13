@@ -3,7 +3,9 @@
 # Do not edit the class manually.
 
 defmodule DocuSign.Model.SeatDiscount do
-  @moduledoc false
+  @moduledoc """
+  
+  """
 
   @derive [Poison.Encoder]
   defstruct [
@@ -13,10 +15,10 @@ defmodule DocuSign.Model.SeatDiscount do
   ]
 
   @type t :: %__MODULE__{
-          :beginSeatCount => String.t(),
-          :discountPercent => String.t(),
-          :endSeatCount => String.t()
-        }
+    :beginSeatCount => String.t,
+    :discountPercent => String.t,
+    :endSeatCount => String.t
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.SeatDiscount do

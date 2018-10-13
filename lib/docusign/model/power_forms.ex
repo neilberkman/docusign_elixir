@@ -3,10 +3,13 @@
 # Do not edit the class manually.
 
 defmodule DocuSign.Model.PowerForms do
-  @moduledoc false
+  @moduledoc """
+  
+  """
 
   @derive [Poison.Encoder]
   defstruct [
+    :createdBy,
     :createdDateTime,
     :emailBody,
     :emailSubject,
@@ -34,36 +37,36 @@ defmodule DocuSign.Model.PowerForms do
   ]
 
   @type t :: %__MODULE__{
-          :createdDateTime => String.t(),
-          :emailBody => String.t(),
-          :emailSubject => String.t(),
-          :envelopes => [Envelopes],
-          :errorDetails => ErrorDetails,
-          :instructions => String.t(),
-          :isActive => String.t(),
-          :lastUsed => String.t(),
-          :limitUseInterval => String.t(),
-          :limitUseIntervalEnabled => String.t(),
-          :limitUseIntervalUnits => String.t(),
-          :maxUseEnabled => String.t(),
-          :name => String.t(),
-          :powerFormId => String.t(),
-          :powerFormUrl => String.t(),
-          :recipients => [PowerFormRecipient],
-          :senderName => String.t(),
-          :senderUserId => String.t(),
-          :signingMode => String.t(),
-          :templateId => String.t(),
-          :templateName => String.t(),
-          :timesUsed => String.t(),
-          :uri => String.t(),
-          :usesRemaining => String.t()
-        }
+    :createdBy => String.t,
+    :createdDateTime => String.t,
+    :emailBody => String.t,
+    :emailSubject => String.t,
+    :envelopes => [Envelopes],
+    :errorDetails => ErrorDetails,
+    :instructions => String.t,
+    :isActive => String.t,
+    :lastUsed => String.t,
+    :limitUseInterval => String.t,
+    :limitUseIntervalEnabled => String.t,
+    :limitUseIntervalUnits => String.t,
+    :maxUseEnabled => String.t,
+    :name => String.t,
+    :powerFormId => String.t,
+    :powerFormUrl => String.t,
+    :recipients => [PowerFormRecipient],
+    :senderName => String.t,
+    :senderUserId => String.t,
+    :signingMode => String.t,
+    :templateId => String.t,
+    :templateName => String.t,
+    :timesUsed => String.t,
+    :uri => String.t,
+    :usesRemaining => String.t
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.PowerForms do
   import DocuSign.Deserializer
-
   def decode(value, options) do
     value
     |> deserialize(:envelopes, :list, DocuSign.Model.Envelopes, options)

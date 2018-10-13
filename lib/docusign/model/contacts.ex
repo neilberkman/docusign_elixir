@@ -3,7 +3,9 @@
 # Do not edit the class manually.
 
 defmodule DocuSign.Model.Contacts do
-  @moduledoc false
+  @moduledoc """
+  
+  """
 
   @derive [Poison.Encoder]
   defstruct [
@@ -20,22 +22,21 @@ defmodule DocuSign.Model.Contacts do
   ]
 
   @type t :: %__MODULE__{
-          :contactId => String.t(),
-          :contactPhoneNumbers => [ContactPhoneNumber],
-          :contactUri => String.t(),
-          :emails => [String.t()],
-          :errorDetails => ErrorDetails,
-          :name => String.t(),
-          :organization => String.t(),
-          :shared => String.t(),
-          :signingGroup => String.t(),
-          :signingGroupName => String.t()
-        }
+    :contactId => String.t,
+    :contactPhoneNumbers => [ContactPhoneNumber],
+    :contactUri => String.t,
+    :emails => [String.t],
+    :errorDetails => ErrorDetails,
+    :name => String.t,
+    :organization => String.t,
+    :shared => String.t,
+    :signingGroup => String.t,
+    :signingGroupName => String.t
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.Contacts do
   import DocuSign.Deserializer
-
   def decode(value, options) do
     value
     |> deserialize(:contactPhoneNumbers, :list, DocuSign.Model.ContactPhoneNumber, options)

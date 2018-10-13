@@ -3,7 +3,9 @@
 # Do not edit the class manually.
 
 defmodule DocuSign.Model.ConnectFailureResult do
-  @moduledoc false
+  @moduledoc """
+  
+  """
 
   @derive [Poison.Encoder]
   defstruct [
@@ -15,12 +17,12 @@ defmodule DocuSign.Model.ConnectFailureResult do
   ]
 
   @type t :: %__MODULE__{
-          :configId => String.t(),
-          :configUrl => String.t(),
-          :envelopeId => String.t(),
-          :status => String.t(),
-          :statusMessage => String.t()
-        }
+    :configId => String.t,
+    :configUrl => String.t,
+    :envelopeId => String.t,
+    :status => String.t,
+    :statusMessage => String.t
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.ConnectFailureResult do

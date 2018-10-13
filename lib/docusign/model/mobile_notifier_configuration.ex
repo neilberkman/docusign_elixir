@@ -3,7 +3,9 @@
 # Do not edit the class manually.
 
 defmodule DocuSign.Model.MobileNotifierConfiguration do
-  @moduledoc false
+  @moduledoc """
+  
+  """
 
   @derive [Poison.Encoder]
   defstruct [
@@ -13,16 +15,16 @@ defmodule DocuSign.Model.MobileNotifierConfiguration do
   ]
 
   @type t :: %__MODULE__{
-          :deviceId => String.t(),
-          :errorDetails => ErrorDetails,
-          :platform => String.t()
-        }
+    :deviceId => String.t,
+    :errorDetails => ErrorDetails,
+    :platform => String.t
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.MobileNotifierConfiguration do
   import DocuSign.Deserializer
-
   def decode(value, options) do
-    deserialize(value, :errorDetails, :struct, DocuSign.Model.ErrorDetails, options)
+    value
+    |> deserialize(:errorDetails, :struct, DocuSign.Model.ErrorDetails, options)
   end
 end

@@ -3,7 +3,9 @@
 # Do not edit the class manually.
 
 defmodule DocuSign.Model.CreditCardTypes do
-  @moduledoc false
+  @moduledoc """
+  
+  """
 
   @derive [Poison.Encoder]
   defstruct [
@@ -11,8 +13,8 @@ defmodule DocuSign.Model.CreditCardTypes do
   ]
 
   @type t :: %__MODULE__{
-          :cardTypes => [String.t()]
-        }
+    :cardTypes => [String.t]
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.CreditCardTypes do

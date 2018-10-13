@@ -27,3 +27,5 @@ docusign_key.*
 
 # Ignore Secret config
 config/*.secret.exs
+
+/.elixir_ls/

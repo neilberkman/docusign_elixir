@@ -3,7 +3,9 @@
 # Do not edit the class manually.
 
 defmodule DocuSign.Model.LockRequest do
-  @moduledoc false
+  @moduledoc """
+  
+  """
 
   @derive [Poison.Encoder]
   defstruct [
@@ -15,12 +17,12 @@ defmodule DocuSign.Model.LockRequest do
   ]
 
   @type t :: %__MODULE__{
-          :lockDurationInSeconds => String.t(),
-          :lockedByApp => String.t(),
-          :lockType => String.t(),
-          :templatePassword => String.t(),
-          :useScratchPad => String.t()
-        }
+    :lockDurationInSeconds => String.t,
+    :lockedByApp => String.t,
+    :lockType => String.t,
+    :templatePassword => String.t,
+    :useScratchPad => String.t
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.LockRequest do

@@ -10,6 +10,7 @@ defmodule DocuSign.Api.EnvelopeRecipientTabs do
   alias DocuSign.Connection
   import DocuSign.RequestBuilder
 
+
   @doc """
   Deletes the tabs associated with a recipient.
   Deletes one or more tabs associated with a recipient in a draft envelope.
@@ -28,24 +29,11 @@ defmodule DocuSign.Api.EnvelopeRecipientTabs do
   {:ok, %DocuSign.Model.EnvelopeRecipientTabs{}} on success
   {:error, info} on failure
   """
-  @spec recipients_delete_recipient_tabs(
-          Tesla.Env.client(),
-          String.t(),
-          String.t(),
-          String.t(),
-          keyword()
-        ) :: {:ok, DocuSign.Model.EnvelopeRecipientTabs.t()} | {:error, Tesla.Env.t()}
-  def recipients_delete_recipient_tabs(
-        connection,
-        account_id,
-        envelope_id,
-        recipient_id,
-        opts \\ []
-      ) do
+  @spec recipients_delete_recipient_tabs(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeRecipientTabs.t} | {:error, Tesla.Env.t}
+  def recipients_delete_recipient_tabs(connection, account_id, envelope_id, recipient_id, opts \\ []) do
     optional_params = %{
-      :EnvelopeRecipientTabs => :body
+      :"EnvelopeRecipientTabs" => :body
     }
-
     %{}
     |> method(:delete)
     |> url("/v2/accounts/#{account_id}/envelopes/#{envelope_id}/recipients/#{recipient_id}/tabs")
@@ -57,7 +45,7 @@ defmodule DocuSign.Api.EnvelopeRecipientTabs do
 
   @doc """
   Gets the tabs information for a signer or sign-in-person recipient in an envelope.
-  Retrieves information about the tabs associated with a recipient. You can make a single API call to get all the tab values and information from a given, completed envelope in addition to draft ones.  Tab values can be retrieved by using the [EnvelopeRecipients:list method](https://docs.docusign.com/esign/restapi/Envelopes/EnvelopeRecipients/list/) with query parameter include_tabs set to \&quot;true\&quot;.
+  Retrieves information about the tabs associated with a recipient in a draft envelope.
 
   ## Parameters
 
@@ -74,19 +62,12 @@ defmodule DocuSign.Api.EnvelopeRecipientTabs do
   {:ok, %DocuSign.Model.EnvelopeRecipientTabs{}} on success
   {:error, info} on failure
   """
-  @spec recipients_get_recipient_tabs(
-          Tesla.Env.client(),
-          String.t(),
-          String.t(),
-          String.t(),
-          keyword()
-        ) :: {:ok, DocuSign.Model.EnvelopeRecipientTabs.t()} | {:error, Tesla.Env.t()}
+  @spec recipients_get_recipient_tabs(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeRecipientTabs.t} | {:error, Tesla.Env.t}
   def recipients_get_recipient_tabs(connection, account_id, envelope_id, recipient_id, opts \\ []) do
     optional_params = %{
-      :include_anchor_tab_locations => :query,
-      :include_metadata => :query
+      :"include_anchor_tab_locations" => :query,
+      :"include_metadata" => :query
     }
-
     %{}
     |> method(:get)
     |> url("/v2/accounts/#{account_id}/envelopes/#{envelope_id}/recipients/#{recipient_id}/tabs")
@@ -114,24 +95,11 @@ defmodule DocuSign.Api.EnvelopeRecipientTabs do
   {:ok, %DocuSign.Model.EnvelopeRecipientTabs{}} on success
   {:error, info} on failure
   """
-  @spec recipients_post_recipient_tabs(
-          Tesla.Env.client(),
-          String.t(),
-          String.t(),
-          String.t(),
-          keyword()
-        ) :: {:ok, DocuSign.Model.EnvelopeRecipientTabs.t()} | {:error, Tesla.Env.t()}
-  def recipients_post_recipient_tabs(
-        connection,
-        account_id,
-        envelope_id,
-        recipient_id,
-        opts \\ []
-      ) do
+  @spec recipients_post_recipient_tabs(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeRecipientTabs.t} | {:error, Tesla.Env.t}
+  def recipients_post_recipient_tabs(connection, account_id, envelope_id, recipient_id, opts \\ []) do
     optional_params = %{
-      :EnvelopeRecipientTabs => :body
+      :"EnvelopeRecipientTabs" => :body
     }
-
     %{}
     |> method(:post)
     |> url("/v2/accounts/#{account_id}/envelopes/#{envelope_id}/recipients/#{recipient_id}/tabs")
@@ -159,18 +127,11 @@ defmodule DocuSign.Api.EnvelopeRecipientTabs do
   {:ok, %DocuSign.Model.EnvelopeRecipientTabs{}} on success
   {:error, info} on failure
   """
-  @spec recipients_put_recipient_tabs(
-          Tesla.Env.client(),
-          String.t(),
-          String.t(),
-          String.t(),
-          keyword()
-        ) :: {:ok, DocuSign.Model.EnvelopeRecipientTabs.t()} | {:error, Tesla.Env.t()}
+  @spec recipients_put_recipient_tabs(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeRecipientTabs.t} | {:error, Tesla.Env.t}
   def recipients_put_recipient_tabs(connection, account_id, envelope_id, recipient_id, opts \\ []) do
     optional_params = %{
-      :EnvelopeRecipientTabs => :body
+      :"EnvelopeRecipientTabs" => :body
     }
-
     %{}
     |> method(:put)
     |> url("/v2/accounts/#{account_id}/envelopes/#{envelope_id}/recipients/#{recipient_id}/tabs")

@@ -13,13 +13,12 @@ defmodule DocuSign.Model.AccountSignatureProviders do
   ]
 
   @type t :: %__MODULE__{
-          :signatureProviders => [AccountSignatureProvider]
-        }
+    :signatureProviders => [AccountSignatureProvider]
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.AccountSignatureProviders do
   import DocuSign.Deserializer
-
   def decode(value, options) do
     value
     |> deserialize(:signatureProviders, :list, DocuSign.Model.AccountSignatureProvider, options)

@@ -3,7 +3,9 @@
 # Do not edit the class manually.
 
 defmodule DocuSign.Model.ExternalDocServiceErrorDetails do
-  @moduledoc false
+  @moduledoc """
+  
+  """
 
   @derive [Poison.Encoder]
   defstruct [
@@ -13,10 +15,10 @@ defmodule DocuSign.Model.ExternalDocServiceErrorDetails do
   ]
 
   @type t :: %__MODULE__{
-          :authenticationUrl => String.t(),
-          :errorCode => String.t(),
-          :message => String.t()
-        }
+    :authenticationUrl => String.t,
+    :errorCode => String.t,
+    :message => String.t
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.ExternalDocServiceErrorDetails do

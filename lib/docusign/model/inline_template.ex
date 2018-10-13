@@ -3,7 +3,9 @@
 # Do not edit the class manually.
 
 defmodule DocuSign.Model.InlineTemplate do
-  @moduledoc false
+  @moduledoc """
+  
+  """
 
   @derive [Poison.Encoder]
   defstruct [
@@ -15,17 +17,16 @@ defmodule DocuSign.Model.InlineTemplate do
   ]
 
   @type t :: %__MODULE__{
-          :customFields => AccountCustomFields,
-          :documents => [Document],
-          :envelope => Envelopes,
-          :recipients => EnvelopeRecipients,
-          :sequence => String.t()
-        }
+    :customFields => AccountCustomFields,
+    :documents => [Document],
+    :envelope => Envelopes,
+    :recipients => EnvelopeRecipients,
+    :sequence => String.t
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.InlineTemplate do
   import DocuSign.Deserializer
-
   def decode(value, options) do
     value
     |> deserialize(:customFields, :struct, DocuSign.Model.AccountCustomFields, options)

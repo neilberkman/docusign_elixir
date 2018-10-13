@@ -10,6 +10,7 @@ defmodule DocuSign.Api.CloudStorage do
   alias DocuSign.Connection
   import DocuSign.RequestBuilder
 
+
   @doc """
   Gets a list of all the items from the specified cloud storage provider.
   Retrieves a list of all the items in all  the folders associated with the user from the specified cloud storage provider. You can limit the scope of the returned items by providing a comma separated list of folder IDs in the request.
@@ -34,38 +35,19 @@ defmodule DocuSign.Api.CloudStorage do
   {:ok, %DocuSign.Model.CloudStorage{}} on success
   {:error, info} on failure
   """
-  @spec cloud_storage_folder_get_cloud_storage_folder(
-          Tesla.Env.client(),
-          String.t(),
-          String.t(),
-          String.t(),
-          String.t(),
-          keyword()
-        ) :: {:ok, DocuSign.Model.CloudStorage.t()} | {:error, Tesla.Env.t()}
-  def cloud_storage_folder_get_cloud_storage_folder(
-        connection,
-        account_id,
-        folder_id,
-        service_id,
-        user_id,
-        opts \\ []
-      ) do
+  @spec cloud_storage_folder_get_cloud_storage_folder(Tesla.Env.client, String.t, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.CloudStorage.t} | {:error, Tesla.Env.t}
+  def cloud_storage_folder_get_cloud_storage_folder(connection, account_id, folder_id, service_id, user_id, opts \\ []) do
     optional_params = %{
-      :cloud_storage_folder_path => :query,
-      :count => :query,
-      :order => :query,
-      :order_by => :query,
-      :search_text => :query,
-      :start_position => :query
+      :"cloud_storage_folder_path" => :query,
+      :"count" => :query,
+      :"order" => :query,
+      :"order_by" => :query,
+      :"search_text" => :query,
+      :"start_position" => :query
     }
-
     %{}
     |> method(:get)
-    |> url(
-      "/v2/accounts/#{account_id}/users/#{user_id}/cloud_storage/#{service_id}/folders/#{
-        folder_id
-      }"
-    )
+    |> url("/v2/accounts/#{account_id}/users/#{user_id}/cloud_storage/#{service_id}/folders/#{folder_id}")
     |> add_optional_params(optional_params, opts)
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
@@ -95,29 +77,16 @@ defmodule DocuSign.Api.CloudStorage do
   {:ok, %DocuSign.Model.CloudStorage{}} on success
   {:error, info} on failure
   """
-  @spec cloud_storage_folder_get_cloud_storage_folder_all(
-          Tesla.Env.client(),
-          String.t(),
-          String.t(),
-          String.t(),
-          keyword()
-        ) :: {:ok, DocuSign.Model.CloudStorage.t()} | {:error, Tesla.Env.t()}
-  def cloud_storage_folder_get_cloud_storage_folder_all(
-        connection,
-        account_id,
-        service_id,
-        user_id,
-        opts \\ []
-      ) do
+  @spec cloud_storage_folder_get_cloud_storage_folder_all(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.CloudStorage.t} | {:error, Tesla.Env.t}
+  def cloud_storage_folder_get_cloud_storage_folder_all(connection, account_id, service_id, user_id, opts \\ []) do
     optional_params = %{
-      :cloud_storage_folder_path => :query,
-      :count => :query,
-      :order => :query,
-      :order_by => :query,
-      :search_text => :query,
-      :start_position => :query
+      :"cloud_storage_folder_path" => :query,
+      :"count" => :query,
+      :"order" => :query,
+      :"order_by" => :query,
+      :"search_text" => :query,
+      :"start_position" => :query
     }
-
     %{}
     |> method(:get)
     |> url("/v2/accounts/#{account_id}/users/#{user_id}/cloud_storage/#{service_id}/folders")

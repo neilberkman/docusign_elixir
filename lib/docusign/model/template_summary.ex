@@ -3,7 +3,9 @@
 # Do not edit the class manually.
 
 defmodule DocuSign.Model.TemplateSummary do
-  @moduledoc false
+  @moduledoc """
+  
+  """
 
   @derive [Poison.Encoder]
   defstruct [
@@ -17,19 +19,18 @@ defmodule DocuSign.Model.TemplateSummary do
   ]
 
   @type t :: %__MODULE__{
-          :applied => String.t(),
-          :documentId => String.t(),
-          :documentName => String.t(),
-          :name => String.t(),
-          :templateId => String.t(),
-          :templateMatch => TemplateMatch,
-          :uri => String.t()
-        }
+    :applied => String.t,
+    :documentId => String.t,
+    :documentName => String.t,
+    :name => String.t,
+    :templateId => String.t,
+    :templateMatch => TemplateMatch,
+    :uri => String.t
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.TemplateSummary do
   import DocuSign.Deserializer
-
   def decode(value, options) do
     value
     |> deserialize(:templateMatch, :struct, DocuSign.Model.TemplateMatch, options)
