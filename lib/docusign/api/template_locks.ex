@@ -10,7 +10,6 @@ defmodule DocuSign.Api.TemplateLocks do
   alias DocuSign.Connection
   import DocuSign.RequestBuilder
 
-
   @doc """
   Deletes a template lock.
   Deletes the lock from the specified template. The &#x60;X-DocuSign-Edit&#x60; header must be included in the request.
@@ -31,7 +30,7 @@ defmodule DocuSign.Api.TemplateLocks do
   @spec lock_delete_template_lock(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.TemplateLocks.t} | {:error, Tesla.Env.t}
   def lock_delete_template_lock(connection, account_id, template_id, opts \\ []) do
     optional_params = %{
-      :"lockRequest" => :body
+      lockRequest: :body
     }
     %{}
     |> method(:delete)
@@ -88,7 +87,7 @@ defmodule DocuSign.Api.TemplateLocks do
   @spec lock_post_template_lock(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.TemplateLocks.t} | {:error, Tesla.Env.t}
   def lock_post_template_lock(connection, account_id, template_id, opts \\ []) do
     optional_params = %{
-      :"lockRequest" => :body
+      lockRequest: :body
     }
     %{}
     |> method(:post)
@@ -119,7 +118,7 @@ defmodule DocuSign.Api.TemplateLocks do
   @spec lock_put_template_lock(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.TemplateLocks.t} | {:error, Tesla.Env.t}
   def lock_put_template_lock(connection, account_id, template_id, opts \\ []) do
     optional_params = %{
-      :"lockRequest" => :body
+      lockRequest: :body
     }
     %{}
     |> method(:put)

@@ -10,7 +10,6 @@ defmodule DocuSign.Api.IdentityVerifications do
   alias DocuSign.Connection
   import DocuSign.RequestBuilder
 
-
   @doc """
   
   

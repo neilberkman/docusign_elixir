@@ -10,7 +10,6 @@ defmodule DocuSign.Api.Users do
   alias DocuSign.Connection
   import DocuSign.RequestBuilder
 
-
   @doc """
   Gets the user information for a specified user.
   Retrieves the user information for the specified user.   To return additional user information that details the last login date, login status, and the user&#39;s password expiration date, set the optional &#x60;additional_info&#x60; query string parameter to **true**.
@@ -32,8 +31,8 @@ defmodule DocuSign.Api.Users do
   @spec user_get_user(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.Users.t} | {:error, Tesla.Env.t}
   def user_get_user(connection, account_id, user_id, opts \\ []) do
     optional_params = %{
-      :"additional_info" => :query,
-      :"email" => :query
+      additional_info: :query,
+      email: :query
     }
     %{}
     |> method(:get)
@@ -90,7 +89,7 @@ defmodule DocuSign.Api.Users do
   @spec user_profile_image_get_user_profile_image(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, String.t} | {:error, Tesla.Env.t}
   def user_profile_image_get_user_profile_image(connection, account_id, user_id, opts \\ []) do
     optional_params = %{
-      :"encoding" => :query
+      encoding: :query
     }
     %{}
     |> method(:get)
@@ -147,7 +146,7 @@ defmodule DocuSign.Api.Users do
   @spec user_put_user(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.Users.t} | {:error, Tesla.Env.t}
   def user_put_user(connection, account_id, user_id, opts \\ []) do
     optional_params = %{
-      :"Users" => :body
+      Users: :body
     }
     %{}
     |> method(:put)
@@ -204,7 +203,7 @@ defmodule DocuSign.Api.Users do
   @spec user_settings_put_user_settings(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, nil} | {:error, Tesla.Env.t}
   def user_settings_put_user_settings(connection, account_id, user_id, opts \\ []) do
     optional_params = %{
-      :"userSettingsInformation" => :body
+      userSettingsInformation: :body
     }
     %{}
     |> method(:put)
@@ -235,8 +234,8 @@ defmodule DocuSign.Api.Users do
   @spec users_delete_users(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.GroupUsers.t} | {:error, Tesla.Env.t}
   def users_delete_users(connection, account_id, opts \\ []) do
     optional_params = %{
-      :"delete" => :query,
-      :"userInfoList" => :body
+      delete: :query,
+      userInfoList: :body
     }
     %{}
     |> method(:delete)
@@ -275,16 +274,16 @@ defmodule DocuSign.Api.Users do
   @spec users_get_users(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.UserInformationList.t} | {:error, Tesla.Env.t}
   def users_get_users(connection, account_id, opts \\ []) do
     optional_params = %{
-      :"additional_info" => :query,
-      :"count" => :query,
-      :"email" => :query,
-      :"email_substring" => :query,
-      :"group_id" => :query,
-      :"login_status" => :query,
-      :"not_group_id" => :query,
-      :"start_position" => :query,
-      :"status" => :query,
-      :"user_name_substring" => :query
+      additional_info: :query,
+      count: :query,
+      email: :query,
+      email_substring: :query,
+      group_id: :query,
+      login_status: :query,
+      not_group_id: :query,
+      start_position: :query,
+      status: :query,
+      user_name_substring: :query
     }
     %{}
     |> method(:get)
@@ -314,7 +313,7 @@ defmodule DocuSign.Api.Users do
   @spec users_post_users(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.NewUsersSummary.t} | {:error, Tesla.Env.t}
   def users_post_users(connection, account_id, opts \\ []) do
     optional_params = %{
-      :"newUsersDefinition" => :body
+      newUsersDefinition: :body
     }
     %{}
     |> method(:post)
@@ -344,7 +343,7 @@ defmodule DocuSign.Api.Users do
   @spec users_put_users(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.UserInformationList.t} | {:error, Tesla.Env.t}
   def users_put_users(connection, account_id, opts \\ []) do
     optional_params = %{
-      :"userInformationList" => :body
+      userInformationList: :body
     }
     %{}
     |> method(:put)

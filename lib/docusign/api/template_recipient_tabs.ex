@@ -10,7 +10,6 @@ defmodule DocuSign.Api.TemplateRecipientTabs do
   alias DocuSign.Connection
   import DocuSign.RequestBuilder
 
-
   @doc """
   Deletes the tabs associated with a recipient in a template.
   Deletes one or more tabs associated with a recipient in a template.
@@ -32,7 +31,7 @@ defmodule DocuSign.Api.TemplateRecipientTabs do
   @spec recipients_delete_template_recipient_tabs(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.TemplateRecipientTabs.t} | {:error, Tesla.Env.t}
   def recipients_delete_template_recipient_tabs(connection, account_id, recipient_id, template_id, opts \\ []) do
     optional_params = %{
-      :"templateTabs" => :body
+      templateTabs: :body
     }
     %{}
     |> method(:delete)
@@ -65,8 +64,8 @@ defmodule DocuSign.Api.TemplateRecipientTabs do
   @spec recipients_get_template_recipient_tabs(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.TemplateRecipientTabs.t} | {:error, Tesla.Env.t}
   def recipients_get_template_recipient_tabs(connection, account_id, recipient_id, template_id, opts \\ []) do
     optional_params = %{
-      :"include_anchor_tab_locations" => :query,
-      :"include_metadata" => :query
+      include_anchor_tab_locations: :query,
+      include_metadata: :query
     }
     %{}
     |> method(:get)
@@ -98,7 +97,7 @@ defmodule DocuSign.Api.TemplateRecipientTabs do
   @spec recipients_post_template_recipient_tabs(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.TemplateRecipientTabs.t} | {:error, Tesla.Env.t}
   def recipients_post_template_recipient_tabs(connection, account_id, recipient_id, template_id, opts \\ []) do
     optional_params = %{
-      :"templateTabs" => :body
+      templateTabs: :body
     }
     %{}
     |> method(:post)
@@ -130,7 +129,7 @@ defmodule DocuSign.Api.TemplateRecipientTabs do
   @spec recipients_put_template_recipient_tabs(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.TemplateRecipientTabs.t} | {:error, Tesla.Env.t}
   def recipients_put_template_recipient_tabs(connection, account_id, recipient_id, template_id, opts \\ []) do
     optional_params = %{
-      :"templateTabs" => :body
+      templateTabs: :body
     }
     %{}
     |> method(:put)

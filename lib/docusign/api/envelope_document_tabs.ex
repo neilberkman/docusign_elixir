@@ -10,7 +10,6 @@ defmodule DocuSign.Api.EnvelopeDocumentTabs do
   alias DocuSign.Connection
   import DocuSign.RequestBuilder
 
-
   @doc """
   Returns tabs on the document.
   
@@ -32,7 +31,7 @@ defmodule DocuSign.Api.EnvelopeDocumentTabs do
   @spec tabs_get_document_tabs(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeDocumentTabs.t} | {:error, Tesla.Env.t}
   def tabs_get_document_tabs(connection, account_id, document_id, envelope_id, opts \\ []) do
     optional_params = %{
-      :"page_numbers" => :query
+      page_numbers: :query
     }
     %{}
     |> method(:get)

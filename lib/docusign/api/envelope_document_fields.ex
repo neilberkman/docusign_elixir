@@ -10,7 +10,6 @@ defmodule DocuSign.Api.EnvelopeDocumentFields do
   alias DocuSign.Connection
   import DocuSign.RequestBuilder
 
-
   @doc """
   Deletes custom document fields from an existing envelope document.
   Deletes custom document fields from an existing envelope document.
@@ -32,7 +31,7 @@ defmodule DocuSign.Api.EnvelopeDocumentFields do
   @spec document_fields_delete_document_fields(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeDocumentFields.t} | {:error, Tesla.Env.t}
   def document_fields_delete_document_fields(connection, account_id, document_id, envelope_id, opts \\ []) do
     optional_params = %{
-      :"EnvelopeDocumentFields" => :body
+      EnvelopeDocumentFields: :body
     }
     %{}
     |> method(:delete)
@@ -91,7 +90,7 @@ defmodule DocuSign.Api.EnvelopeDocumentFields do
   @spec document_fields_post_document_fields(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeDocumentFields.t} | {:error, Tesla.Env.t}
   def document_fields_post_document_fields(connection, account_id, document_id, envelope_id, opts \\ []) do
     optional_params = %{
-      :"EnvelopeDocumentFields" => :body
+      EnvelopeDocumentFields: :body
     }
     %{}
     |> method(:post)
@@ -123,7 +122,7 @@ defmodule DocuSign.Api.EnvelopeDocumentFields do
   @spec document_fields_put_document_fields(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeDocumentFields.t} | {:error, Tesla.Env.t}
   def document_fields_put_document_fields(connection, account_id, document_id, envelope_id, opts \\ []) do
     optional_params = %{
-      :"EnvelopeDocumentFields" => :body
+      EnvelopeDocumentFields: :body
     }
     %{}
     |> method(:put)

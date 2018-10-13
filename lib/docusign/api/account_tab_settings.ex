@@ -10,7 +10,6 @@ defmodule DocuSign.Api.AccountTabSettings do
   alias DocuSign.Connection
   import DocuSign.RequestBuilder
 
-
   @doc """
   Returns tab settings list for specified account
   
@@ -55,7 +54,7 @@ defmodule DocuSign.Api.AccountTabSettings do
   @spec tab_settings_put_settings(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.AccountTabSettings.t} | {:error, Tesla.Env.t}
   def tab_settings_put_settings(connection, account_id, opts \\ []) do
     optional_params = %{
-      :"AccountTabSettings" => :body
+      AccountTabSettings: :body
     }
     %{}
     |> method(:put)

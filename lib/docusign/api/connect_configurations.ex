@@ -10,7 +10,6 @@ defmodule DocuSign.Api.ConnectConfigurations do
   alias DocuSign.Connection
   import DocuSign.RequestBuilder
 
-
   @doc """
   Deletes the specified connect configuration.
   Deletes the specified DocuSign Connect configuration.  ###### Note: Connect must be enabled for your account to use this function.    
@@ -113,12 +112,12 @@ defmodule DocuSign.Api.ConnectConfigurations do
   @spec connect_get_connect_users(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.IntegratedUserInfoList.t} | {:error, Tesla.Env.t}
   def connect_get_connect_users(connection, account_id, connect_id, opts \\ []) do
     optional_params = %{
-      :"count" => :query,
-      :"email_substring" => :query,
-      :"list_included_users" => :query,
-      :"start_position" => :query,
-      :"status" => :query,
-      :"user_name_substring" => :query
+      count: :query,
+      email_substring: :query,
+      list_included_users: :query,
+      start_position: :query,
+      status: :query,
+      user_name_substring: :query
     }
     %{}
     |> method(:get)
@@ -148,7 +147,7 @@ defmodule DocuSign.Api.ConnectConfigurations do
   @spec connect_post_connect_configuration(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.ConnectConfigurations.t} | {:error, Tesla.Env.t}
   def connect_post_connect_configuration(connection, account_id, opts \\ []) do
     optional_params = %{
-      :"ConnectConfigurations" => :body
+      ConnectConfigurations: :body
     }
     %{}
     |> method(:post)
@@ -178,7 +177,7 @@ defmodule DocuSign.Api.ConnectConfigurations do
   @spec connect_put_connect_configuration(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.ConnectConfigurations.t} | {:error, Tesla.Env.t}
   def connect_put_connect_configuration(connection, account_id, opts \\ []) do
     optional_params = %{
-      :"ConnectConfigurations" => :body
+      ConnectConfigurations: :body
     }
     %{}
     |> method(:put)

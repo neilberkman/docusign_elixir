@@ -10,7 +10,6 @@ defmodule DocuSign.Api.TemplateBulkRecipients do
   alias DocuSign.Connection
   import DocuSign.RequestBuilder
 
-
   @doc """
   Deletes the bulk recipient list on a template.
   Deletes the bulk recipient list on a template.
@@ -60,8 +59,8 @@ defmodule DocuSign.Api.TemplateBulkRecipients do
   @spec recipients_get_template_bulk_recipients(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.TemplateBulkRecipients.t} | {:error, Tesla.Env.t}
   def recipients_get_template_bulk_recipients(connection, account_id, recipient_id, template_id, opts \\ []) do
     optional_params = %{
-      :"include_tabs" => :query,
-      :"start_position" => :query
+      include_tabs: :query,
+      start_position: :query
     }
     %{}
     |> method(:get)
@@ -93,7 +92,7 @@ defmodule DocuSign.Api.TemplateBulkRecipients do
   @spec recipients_put_template_bulk_recipients(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.BulkRecipientsSummaryResponse.t} | {:error, Tesla.Env.t}
   def recipients_put_template_bulk_recipients(connection, account_id, recipient_id, template_id, opts \\ []) do
     optional_params = %{
-      :"bulkRecipientsRequest" => :body
+      bulkRecipientsRequest: :body
     }
     %{}
     |> method(:put)

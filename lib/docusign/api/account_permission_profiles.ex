@@ -10,7 +10,6 @@ defmodule DocuSign.Api.AccountPermissionProfiles do
   alias DocuSign.Connection
   import DocuSign.RequestBuilder
 
-
   @doc """
   Deletes a permissions profile within the specified account.
   
@@ -57,7 +56,7 @@ defmodule DocuSign.Api.AccountPermissionProfiles do
   @spec permission_profiles_get_permission_profile(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.AccountPermissionProfiles.t} | {:error, Tesla.Env.t}
   def permission_profiles_get_permission_profile(connection, account_id, permission_profile_id, opts \\ []) do
     optional_params = %{
-      :"include" => :query
+      include: :query
     }
     %{}
     |> method(:get)
@@ -87,7 +86,7 @@ defmodule DocuSign.Api.AccountPermissionProfiles do
   @spec permission_profiles_get_permission_profiles(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.PermissionProfileInformation.t} | {:error, Tesla.Env.t}
   def permission_profiles_get_permission_profiles(connection, account_id, opts \\ []) do
     optional_params = %{
-      :"include" => :query
+      include: :query
     }
     %{}
     |> method(:get)
@@ -118,8 +117,8 @@ defmodule DocuSign.Api.AccountPermissionProfiles do
   @spec permission_profiles_post_permission_profiles(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.AccountPermissionProfiles.t} | {:error, Tesla.Env.t}
   def permission_profiles_post_permission_profiles(connection, account_id, opts \\ []) do
     optional_params = %{
-      :"include" => :query,
-      :"AccountPermissionProfiles" => :body
+      include: :query,
+      AccountPermissionProfiles: :body
     }
     %{}
     |> method(:post)
@@ -151,8 +150,8 @@ defmodule DocuSign.Api.AccountPermissionProfiles do
   @spec permission_profiles_put_permission_profiles(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.AccountPermissionProfiles.t} | {:error, Tesla.Env.t}
   def permission_profiles_put_permission_profiles(connection, account_id, permission_profile_id, opts \\ []) do
     optional_params = %{
-      :"include" => :query,
-      :"AccountPermissionProfiles" => :body
+      include: :query,
+      AccountPermissionProfiles: :body
     }
     %{}
     |> method(:put)

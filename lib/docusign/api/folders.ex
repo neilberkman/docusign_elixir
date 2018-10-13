@@ -10,7 +10,6 @@ defmodule DocuSign.Api.Folders do
   alias DocuSign.Connection
   import DocuSign.RequestBuilder
 
-
   @doc """
   Gets a list of the envelopes in the specified folder.
   Retrieves a list of the envelopes in the specified folder. You can narrow the query by specifying search criteria in the query string parameters.
@@ -37,13 +36,13 @@ defmodule DocuSign.Api.Folders do
   @spec folders_get_folder_items(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.FolderItemsResponse.t} | {:error, Tesla.Env.t}
   def folders_get_folder_items(connection, account_id, folder_id, opts \\ []) do
     optional_params = %{
-      :"from_date" => :query,
-      :"owner_email" => :query,
-      :"owner_name" => :query,
-      :"search_text" => :query,
-      :"start_position" => :query,
-      :"status" => :query,
-      :"to_date" => :query
+      from_date: :query,
+      owner_email: :query,
+      owner_name: :query,
+      search_text: :query,
+      start_position: :query,
+      status: :query,
+      to_date: :query
     }
     %{}
     |> method(:get)
@@ -76,10 +75,10 @@ defmodule DocuSign.Api.Folders do
   @spec folders_get_folders(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.Folders.t} | {:error, Tesla.Env.t}
   def folders_get_folders(connection, account_id, opts \\ []) do
     optional_params = %{
-      :"include" => :query,
-      :"start_position" => :query,
-      :"template" => :query,
-      :"user_filter" => :query
+      include: :query,
+      start_position: :query,
+      template: :query,
+      user_filter: :query
     }
     %{}
     |> method(:get)
@@ -110,7 +109,7 @@ defmodule DocuSign.Api.Folders do
   @spec folders_put_folder_by_id(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.Folders.t} | {:error, Tesla.Env.t}
   def folders_put_folder_by_id(connection, account_id, folder_id, opts \\ []) do
     optional_params = %{
-      :"foldersRequest" => :body
+      foldersRequest: :body
     }
     %{}
     |> method(:put)
@@ -148,14 +147,14 @@ defmodule DocuSign.Api.Folders do
   @spec search_folders_get_search_folder_contents(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.FolderItemResponse.t} | {:error, Tesla.Env.t}
   def search_folders_get_search_folder_contents(connection, account_id, search_folder_id, opts \\ []) do
     optional_params = %{
-      :"all" => :query,
-      :"count" => :query,
-      :"from_date" => :query,
-      :"include_recipients" => :query,
-      :"order" => :query,
-      :"order_by" => :query,
-      :"start_position" => :query,
-      :"to_date" => :query
+      all: :query,
+      count: :query,
+      from_date: :query,
+      include_recipients: :query,
+      order: :query,
+      order_by: :query,
+      start_position: :query,
+      to_date: :query
     }
     %{}
     |> method(:get)

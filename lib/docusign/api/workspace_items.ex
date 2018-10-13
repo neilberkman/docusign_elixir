@@ -10,7 +10,6 @@ defmodule DocuSign.Api.WorkspaceItems do
   alias DocuSign.Connection
   import DocuSign.RequestBuilder
 
-
   @doc """
   Get Workspace File
   Retrieves a workspace file (the binary).
@@ -34,8 +33,8 @@ defmodule DocuSign.Api.WorkspaceItems do
   @spec workspace_file_get_workspace_file(Tesla.Env.client, String.t, String.t, String.t, String.t, keyword()) :: {:ok, nil} | {:error, Tesla.Env.t}
   def workspace_file_get_workspace_file(connection, account_id, file_id, folder_id, workspace_id, opts \\ []) do
     optional_params = %{
-      :"is_download" => :query,
-      :"pdf_version" => :query
+      is_download: :query,
+      pdf_version: :query
     }
     %{}
     |> method(:get)
@@ -72,11 +71,11 @@ defmodule DocuSign.Api.WorkspaceItems do
   @spec workspace_file_pages_get_workspace_file_pages(Tesla.Env.client, String.t, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.PageImages.t} | {:error, Tesla.Env.t}
   def workspace_file_pages_get_workspace_file_pages(connection, account_id, file_id, folder_id, workspace_id, opts \\ []) do
     optional_params = %{
-      :"count" => :query,
-      :"dpi" => :query,
-      :"max_height" => :query,
-      :"max_width" => :query,
-      :"start_position" => :query
+      count: :query,
+      dpi: :query,
+      max_height: :query,
+      max_width: :query,
+      start_position: :query
     }
     %{}
     |> method(:get)
@@ -163,7 +162,7 @@ defmodule DocuSign.Api.WorkspaceItems do
   @spec workspace_folder_delete_workspace_items(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, nil} | {:error, Tesla.Env.t}
   def workspace_folder_delete_workspace_items(connection, account_id, folder_id, workspace_id, opts \\ []) do
     optional_params = %{
-      :"workspaceItemList" => :body
+      workspaceItemList: :body
     }
     %{}
     |> method(:delete)
@@ -201,13 +200,13 @@ defmodule DocuSign.Api.WorkspaceItems do
   @spec workspace_folder_get_workspace_folder(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.WorkspaceFolderContents.t} | {:error, Tesla.Env.t}
   def workspace_folder_get_workspace_folder(connection, account_id, folder_id, workspace_id, opts \\ []) do
     optional_params = %{
-      :"count" => :query,
-      :"include_files" => :query,
-      :"include_sub_folders" => :query,
-      :"include_thumbnails" => :query,
-      :"include_user_detail" => :query,
-      :"start_position" => :query,
-      :"workspace_user_id" => :query
+      count: :query,
+      include_files: :query,
+      include_sub_folders: :query,
+      include_thumbnails: :query,
+      include_user_detail: :query,
+      start_position: :query,
+      workspace_user_id: :query
     }
     %{}
     |> method(:get)

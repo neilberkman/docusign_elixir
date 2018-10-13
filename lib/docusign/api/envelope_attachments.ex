@@ -10,7 +10,6 @@ defmodule DocuSign.Api.EnvelopeAttachments do
   alias DocuSign.Connection
   import DocuSign.RequestBuilder
 
-
   @doc """
   Delete one or more attachments from a DRAFT envelope.
   
@@ -31,7 +30,7 @@ defmodule DocuSign.Api.EnvelopeAttachments do
   @spec attachments_delete_attachments(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeAttachmentsResult.t} | {:error, Tesla.Env.t}
   def attachments_delete_attachments(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
-      :"envelopeAttachmentsRequest" => :body
+      envelopeAttachmentsRequest: :body
     }
     %{}
     |> method(:delete)
@@ -116,7 +115,7 @@ defmodule DocuSign.Api.EnvelopeAttachments do
   @spec attachments_put_attachment(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeAttachmentsResult.t} | {:error, Tesla.Env.t}
   def attachments_put_attachment(connection, account_id, attachment_id, envelope_id, opts \\ []) do
     optional_params = %{
-      :"attachment" => :body
+      attachment: :body
     }
     %{}
     |> method(:put)
@@ -147,7 +146,7 @@ defmodule DocuSign.Api.EnvelopeAttachments do
   @spec attachments_put_attachments(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeAttachmentsResult.t} | {:error, Tesla.Env.t}
   def attachments_put_attachments(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
-      :"envelopeAttachmentsRequest" => :body
+      envelopeAttachmentsRequest: :body
     }
     %{}
     |> method(:put)

@@ -10,7 +10,6 @@ defmodule DocuSign.Api.UserSocialAccountLogins do
   alias DocuSign.Connection
   import DocuSign.RequestBuilder
 
-
   @doc """
   Deletes user&#39;s social account.
   Deletes a social account from a use&#39;s account.
@@ -31,7 +30,7 @@ defmodule DocuSign.Api.UserSocialAccountLogins do
   @spec user_social_login_delete_user_social_login(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, nil} | {:error, Tesla.Env.t}
   def user_social_login_delete_user_social_login(connection, account_id, user_id, opts \\ []) do
     optional_params = %{
-      :"UserSocialAccountLogins" => :body
+      UserSocialAccountLogins: :body
     }
     %{}
     |> method(:delete)
@@ -88,7 +87,7 @@ defmodule DocuSign.Api.UserSocialAccountLogins do
   @spec user_social_login_put_user_social_login(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, nil} | {:error, Tesla.Env.t}
   def user_social_login_put_user_social_login(connection, account_id, user_id, opts \\ []) do
     optional_params = %{
-      :"UserSocialAccountLogins" => :body
+      UserSocialAccountLogins: :body
     }
     %{}
     |> method(:put)

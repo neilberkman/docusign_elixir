@@ -10,7 +10,6 @@ defmodule DocuSign.Api.EnvelopeBulkRecipients do
   alias DocuSign.Connection
   import DocuSign.RequestBuilder
 
-
   @doc """
   Deletes the bulk recipient file from an envelope.
   Deletes the bulk recipient file from an envelope. This cannot be used if the envelope has been sent.  After using this, the &#x60;bulkRecipientsUri&#x60; property is not returned in subsequent GET calls for the envelope, but the recipient will remain as a bulk recipient.
@@ -60,8 +59,8 @@ defmodule DocuSign.Api.EnvelopeBulkRecipients do
   @spec recipients_get_bulk_recipients(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeBulkRecipients.t} | {:error, Tesla.Env.t}
   def recipients_get_bulk_recipients(connection, account_id, envelope_id, recipient_id, opts \\ []) do
     optional_params = %{
-      :"include_tabs" => :query,
-      :"start_position" => :query
+      include_tabs: :query,
+      start_position: :query
     }
     %{}
     |> method(:get)
@@ -93,7 +92,7 @@ defmodule DocuSign.Api.EnvelopeBulkRecipients do
   @spec recipients_put_bulk_recipients(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.BulkRecipientsSummaryResponse.t} | {:error, Tesla.Env.t}
   def recipients_put_bulk_recipients(connection, account_id, envelope_id, recipient_id, opts \\ []) do
     optional_params = %{
-      :"bulkRecipientsRequest" => :body
+      bulkRecipientsRequest: :body
     }
     %{}
     |> method(:put)

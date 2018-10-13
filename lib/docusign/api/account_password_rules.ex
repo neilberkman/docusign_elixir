@@ -10,7 +10,6 @@ defmodule DocuSign.Api.AccountPasswordRules do
   alias DocuSign.Connection
   import DocuSign.RequestBuilder
 
-
   @doc """
   Get the password rules
   
@@ -55,7 +54,7 @@ defmodule DocuSign.Api.AccountPasswordRules do
   @spec account_password_rules_put_account_password_rules(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.AccountPasswordRules.t} | {:error, Tesla.Env.t}
   def account_password_rules_put_account_password_rules(connection, account_id, opts \\ []) do
     optional_params = %{
-      :"AccountPasswordRules" => :body
+      AccountPasswordRules: :body
     }
     %{}
     |> method(:put)

@@ -10,7 +10,6 @@ defmodule DocuSign.Api.ConnectEvents do
   alias DocuSign.Connection
   import DocuSign.RequestBuilder
 
-
   @doc """
   Deletes a Connect failure log entry.
   Deletes the Connect failure log information for the specified entry.
@@ -57,8 +56,8 @@ defmodule DocuSign.Api.ConnectEvents do
   @spec connect_failures_get_connect_logs(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.ConnectEvents.t} | {:error, Tesla.Env.t}
   def connect_failures_get_connect_logs(connection, account_id, opts \\ []) do
     optional_params = %{
-      :"from_date" => :query,
-      :"to_date" => :query
+      from_date: :query,
+      to_date: :query
     }
     %{}
     |> method(:get)
@@ -140,7 +139,7 @@ defmodule DocuSign.Api.ConnectEvents do
   @spec connect_log_get_connect_log(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.ConnectLog.t} | {:error, Tesla.Env.t}
   def connect_log_get_connect_log(connection, account_id, log_id, opts \\ []) do
     optional_params = %{
-      :"additional_info" => :query
+      additional_info: :query
     }
     %{}
     |> method(:get)
@@ -171,8 +170,8 @@ defmodule DocuSign.Api.ConnectEvents do
   @spec connect_log_get_connect_logs(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.ConnectEvents.t} | {:error, Tesla.Env.t}
   def connect_log_get_connect_logs(connection, account_id, opts \\ []) do
     optional_params = %{
-      :"from_date" => :query,
-      :"to_date" => :query
+      from_date: :query,
+      to_date: :query
     }
     %{}
     |> method(:get)
@@ -202,7 +201,7 @@ defmodule DocuSign.Api.ConnectEvents do
   @spec connect_publish_put_connect_retry(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.ConnectFailureResults.t} | {:error, Tesla.Env.t}
   def connect_publish_put_connect_retry(connection, account_id, opts \\ []) do
     optional_params = %{
-      :"connectFailureFilter" => :body
+      connectFailureFilter: :body
     }
     %{}
     |> method(:put)

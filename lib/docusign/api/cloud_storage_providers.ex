@@ -10,7 +10,6 @@ defmodule DocuSign.Api.CloudStorageProviders do
   alias DocuSign.Connection
   import DocuSign.RequestBuilder
 
-
   @doc """
   Deletes the user authentication information for the specified cloud storage provider.
   Deletes the user authentication information for the specified cloud storage provider. The next time the user tries to access the cloud storage provider, they must pass normal authentication for this cloud storage provider.
@@ -58,7 +57,7 @@ defmodule DocuSign.Api.CloudStorageProviders do
   @spec cloud_storage_delete_cloud_storage_providers(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.CloudStorageProviders.t} | {:error, Tesla.Env.t}
   def cloud_storage_delete_cloud_storage_providers(connection, account_id, user_id, opts \\ []) do
     optional_params = %{
-      :"CloudStorageProviders" => :body
+      CloudStorageProviders: :body
     }
     %{}
     |> method(:delete)
@@ -90,7 +89,7 @@ defmodule DocuSign.Api.CloudStorageProviders do
   @spec cloud_storage_get_cloud_storage(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.CloudStorageProviders.t} | {:error, Tesla.Env.t}
   def cloud_storage_get_cloud_storage(connection, account_id, service_id, user_id, opts \\ []) do
     optional_params = %{
-      :"redirectUrl" => :query
+      redirectUrl: :query
     }
     %{}
     |> method(:get)
@@ -121,7 +120,7 @@ defmodule DocuSign.Api.CloudStorageProviders do
   @spec cloud_storage_get_cloud_storage_providers(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.CloudStorageProviders.t} | {:error, Tesla.Env.t}
   def cloud_storage_get_cloud_storage_providers(connection, account_id, user_id, opts \\ []) do
     optional_params = %{
-      :"redirectUrl" => :query
+      redirectUrl: :query
     }
     %{}
     |> method(:get)
@@ -152,7 +151,7 @@ defmodule DocuSign.Api.CloudStorageProviders do
   @spec cloud_storage_post_cloud_storage(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.CloudStorageProviders.t} | {:error, Tesla.Env.t}
   def cloud_storage_post_cloud_storage(connection, account_id, user_id, opts \\ []) do
     optional_params = %{
-      :"CloudStorageProviders" => :body
+      CloudStorageProviders: :body
     }
     %{}
     |> method(:post)

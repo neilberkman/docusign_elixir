@@ -10,7 +10,6 @@ defmodule DocuSign.Api.Accounts do
   alias DocuSign.Connection
   import DocuSign.RequestBuilder
 
-
   @doc """
   Deletes the specified account.
   This closes the specified account. You must be an account admin to close your account. Once closed, an account must be reopened by DocuSign.
@@ -55,7 +54,7 @@ defmodule DocuSign.Api.Accounts do
   @spec accounts_get_account(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.Accounts.t} | {:error, Tesla.Env.t}
   def accounts_get_account(connection, account_id, opts \\ []) do
     optional_params = %{
-      :"include_account_settings" => :query
+      include_account_settings: :query
     }
     %{}
     |> method(:get)
@@ -109,8 +108,8 @@ defmodule DocuSign.Api.Accounts do
   @spec accounts_post_accounts(Tesla.Env.client, keyword()) :: {:ok, DocuSign.Model.NewAccountSummary.t} | {:error, Tesla.Env.t}
   def accounts_post_accounts(connection, opts \\ []) do
     optional_params = %{
-      :"preview_billing_plan" => :query,
-      :"newAccountDefinition" => :body
+      preview_billing_plan: :query,
+      newAccountDefinition: :body
     }
     %{}
     |> method(:post)
@@ -140,7 +139,7 @@ defmodule DocuSign.Api.Accounts do
   @spec billing_charges_get_account_billing_charges(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.BillingChargeResponse.t} | {:error, Tesla.Env.t}
   def billing_charges_get_account_billing_charges(connection, account_id, opts \\ []) do
     optional_params = %{
-      :"include_charges" => :query
+      include_charges: :query
     }
     %{}
     |> method(:get)
@@ -171,7 +170,7 @@ defmodule DocuSign.Api.Accounts do
   @spec captive_recipients_delete_captive_recipients_part(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.CaptiveRecipientInformation.t} | {:error, Tesla.Env.t}
   def captive_recipients_delete_captive_recipients_part(connection, account_id, recipient_part, opts \\ []) do
     optional_params = %{
-      :"captiveRecipientInformation" => :body
+      captiveRecipientInformation: :body
     }
     %{}
     |> method(:delete)
@@ -201,7 +200,7 @@ defmodule DocuSign.Api.Accounts do
   @spec recipient_names_get_recipient_names(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.RecipientNamesResponse.t} | {:error, Tesla.Env.t}
   def recipient_names_get_recipient_names(connection, account_id, opts \\ []) do
     optional_params = %{
-      :"email" => :query
+      email: :query
     }
     %{}
     |> method(:get)
@@ -256,7 +255,7 @@ defmodule DocuSign.Api.Accounts do
   @spec settings_put_settings(Tesla.Env.client, String.t, keyword()) :: {:ok, nil} | {:error, Tesla.Env.t}
   def settings_put_settings(connection, account_id, opts \\ []) do
     optional_params = %{
-      :"accountSettingsInformation" => :body
+      accountSettingsInformation: :body
     }
     %{}
     |> method(:put)
@@ -293,14 +292,14 @@ defmodule DocuSign.Api.Accounts do
   @spec shared_access_get_shared_access(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.AccountSharedAccess.t} | {:error, Tesla.Env.t}
   def shared_access_get_shared_access(connection, account_id, opts \\ []) do
     optional_params = %{
-      :"count" => :query,
-      :"envelopes_not_shared_user_status" => :query,
-      :"folder_ids" => :query,
-      :"item_type" => :query,
-      :"search_text" => :query,
-      :"shared" => :query,
-      :"start_position" => :query,
-      :"user_ids" => :query
+      count: :query,
+      envelopes_not_shared_user_status: :query,
+      folder_ids: :query,
+      item_type: :query,
+      search_text: :query,
+      shared: :query,
+      start_position: :query,
+      user_ids: :query
     }
     %{}
     |> method(:get)
@@ -332,9 +331,9 @@ defmodule DocuSign.Api.Accounts do
   @spec shared_access_put_shared_access(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.AccountSharedAccess.t} | {:error, Tesla.Env.t}
   def shared_access_put_shared_access(connection, account_id, opts \\ []) do
     optional_params = %{
-      :"item_type" => :query,
-      :"user_ids" => :query,
-      :"accountSharedAccess" => :body
+      item_type: :query,
+      user_ids: :query,
+      accountSharedAccess: :body
     }
     %{}
     |> method(:put)

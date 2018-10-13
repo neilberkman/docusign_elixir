@@ -10,7 +10,6 @@ defmodule DocuSign.Api.AccountWatermarks do
   alias DocuSign.Connection
   import DocuSign.RequestBuilder
 
-
   @doc """
   Get watermark information.
   
@@ -55,7 +54,7 @@ defmodule DocuSign.Api.AccountWatermarks do
   @spec watermark_preview_put_watermark_preview(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.AccountWatermarks.t} | {:error, Tesla.Env.t}
   def watermark_preview_put_watermark_preview(connection, account_id, opts \\ []) do
     optional_params = %{
-      :"AccountWatermarks" => :body
+      AccountWatermarks: :body
     }
     %{}
     |> method(:put)
@@ -85,7 +84,7 @@ defmodule DocuSign.Api.AccountWatermarks do
   @spec watermark_put_watermark(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.AccountWatermarks.t} | {:error, Tesla.Env.t}
   def watermark_put_watermark(connection, account_id, opts \\ []) do
     optional_params = %{
-      :"AccountWatermarks" => :body
+      AccountWatermarks: :body
     }
     %{}
     |> method(:put)

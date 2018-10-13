@@ -10,7 +10,6 @@ defmodule DocuSign.Api.EnvelopeDocumentVisibility do
   alias DocuSign.Connection
   import DocuSign.RequestBuilder
 
-
   @doc """
   Returns document visibility for the recipients
   
@@ -59,7 +58,7 @@ defmodule DocuSign.Api.EnvelopeDocumentVisibility do
   @spec recipients_put_recipient_document_visibility(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeDocumentVisibility.t} | {:error, Tesla.Env.t}
   def recipients_put_recipient_document_visibility(connection, account_id, envelope_id, recipient_id, opts \\ []) do
     optional_params = %{
-      :"EnvelopeDocumentVisibility" => :body
+      EnvelopeDocumentVisibility: :body
     }
     %{}
     |> method(:put)
@@ -90,7 +89,7 @@ defmodule DocuSign.Api.EnvelopeDocumentVisibility do
   @spec recipients_put_recipients_document_visibility(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeDocumentVisibility.t} | {:error, Tesla.Env.t}
   def recipients_put_recipients_document_visibility(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
-      :"EnvelopeDocumentVisibility" => :body
+      EnvelopeDocumentVisibility: :body
     }
     %{}
     |> method(:put)

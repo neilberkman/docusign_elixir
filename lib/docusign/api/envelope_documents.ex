@@ -10,7 +10,6 @@ defmodule DocuSign.Api.EnvelopeDocuments do
   alias DocuSign.Connection
   import DocuSign.RequestBuilder
 
-
   @doc """
   Deletes documents from a draft envelope.
   Deletes one or more documents from an existing draft envelope. &lt;p&gt;**Note**: Only relevant parts of an object are needed to delete a document.
@@ -31,7 +30,7 @@ defmodule DocuSign.Api.EnvelopeDocuments do
   @spec documents_delete_documents(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeDocuments.t} | {:error, Tesla.Env.t}
   def documents_delete_documents(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
-      :"envelopeDefinition" => :body
+      envelopeDefinition: :body
     }
     %{}
     |> method(:delete)
@@ -69,13 +68,13 @@ defmodule DocuSign.Api.EnvelopeDocuments do
   @spec documents_get_document(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, String.t} | {:error, Tesla.Env.t}
   def documents_get_document(connection, account_id, document_id, envelope_id, opts \\ []) do
     optional_params = %{
-      :"certificate" => :query,
-      :"encoding" => :query,
-      :"encrypt" => :query,
-      :"language" => :query,
-      :"recipient_id" => :query,
-      :"show_changes" => :query,
-      :"watermark" => :query
+      certificate: :query,
+      encoding: :query,
+      encrypt: :query,
+      language: :query,
+      recipient_id: :query,
+      show_changes: :query,
+      watermark: :query
     }
     %{}
     |> method(:get)
@@ -133,7 +132,7 @@ defmodule DocuSign.Api.EnvelopeDocuments do
   @spec documents_put_document(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, nil} | {:error, Tesla.Env.t}
   def documents_put_document(connection, account_id, document_id, envelope_id, opts \\ []) do
     optional_params = %{
-      :"apply_document_fields" => :query
+      apply_document_fields: :query
     }
     %{}
     |> method(:put)
@@ -166,9 +165,9 @@ defmodule DocuSign.Api.EnvelopeDocuments do
   @spec documents_put_documents(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeDocuments.t} | {:error, Tesla.Env.t}
   def documents_put_documents(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
-      :"apply_document_fields" => :query,
-      :"persist_tabs" => :query,
-      :"envelopeDefinition" => :body
+      apply_document_fields: :query,
+      persist_tabs: :query,
+      envelopeDefinition: :body
     }
     %{}
     |> method(:put)

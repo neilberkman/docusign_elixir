@@ -10,7 +10,6 @@ defmodule DocuSign.Api.EnvelopeEmailSettings do
   alias DocuSign.Connection
   import DocuSign.RequestBuilder
 
-
   @doc """
   Deletes the email setting overrides for an envelope.
   Deletes all existing email override settings for the envelope. If you want to delete an individual email override setting, use the PUT and set the value to an empty string. Note that deleting email settings will only affect email communications that occur after the deletion and the normal account email settings are used for future email communications.
@@ -83,7 +82,7 @@ defmodule DocuSign.Api.EnvelopeEmailSettings do
   @spec email_settings_post_email_settings(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeEmailSettings.t} | {:error, Tesla.Env.t}
   def email_settings_post_email_settings(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
-      :"EnvelopeEmailSettings" => :body
+      EnvelopeEmailSettings: :body
     }
     %{}
     |> method(:post)
@@ -114,7 +113,7 @@ defmodule DocuSign.Api.EnvelopeEmailSettings do
   @spec email_settings_put_email_settings(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeEmailSettings.t} | {:error, Tesla.Env.t}
   def email_settings_put_email_settings(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
-      :"EnvelopeEmailSettings" => :body
+      EnvelopeEmailSettings: :body
     }
     %{}
     |> method(:put)

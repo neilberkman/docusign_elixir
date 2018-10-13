@@ -10,7 +10,6 @@ defmodule DocuSign.Api.Resources do
   alias DocuSign.Connection
   import DocuSign.RequestBuilder
 
-
   @doc """
   Lists resources for REST version specified
   Retrieves the base resources available for the DocuSign REST APIs.  You do not need an integrator key to view the REST API versions and resources.  Example: https://demo.docusign.net/restapi/v2 lists all of the base resources available in version 2 of the REST API on the DocuSign Demo system.  To view descriptions and samples of the service operations for all versions, remove the version number and add /help to the URL.  Example: https://demo.docusign.net/restapi/help lists the REST API operations on the DocuSign Demo system with XML and JSON request and response samples.

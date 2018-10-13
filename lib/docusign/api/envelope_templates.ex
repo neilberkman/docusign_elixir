@@ -10,7 +10,6 @@ defmodule DocuSign.Api.EnvelopeTemplates do
   alias DocuSign.Connection
   import DocuSign.RequestBuilder
 
-
   @doc """
   Deletes a template from a document in an existing envelope.
   Deletes the specified template from a document in an existing envelope.
@@ -60,7 +59,7 @@ defmodule DocuSign.Api.EnvelopeTemplates do
   @spec templates_get_document_templates(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeTemplates.t} | {:error, Tesla.Env.t}
   def templates_get_document_templates(connection, account_id, document_id, envelope_id, opts \\ []) do
     optional_params = %{
-      :"include" => :query
+      include: :query
     }
     %{}
     |> method(:get)
@@ -91,7 +90,7 @@ defmodule DocuSign.Api.EnvelopeTemplates do
   @spec templates_get_envelope_templates(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeTemplates.t} | {:error, Tesla.Env.t}
   def templates_get_envelope_templates(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
-      :"include" => :query
+      include: :query
     }
     %{}
     |> method(:get)
@@ -123,7 +122,7 @@ defmodule DocuSign.Api.EnvelopeTemplates do
   @spec templates_post_document_templates(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.DocumentTemplateList.t} | {:error, Tesla.Env.t}
   def templates_post_document_templates(connection, account_id, document_id, envelope_id, opts \\ []) do
     optional_params = %{
-      :"documentTemplateList" => :body
+      documentTemplateList: :body
     }
     %{}
     |> method(:post)
@@ -154,7 +153,7 @@ defmodule DocuSign.Api.EnvelopeTemplates do
   @spec templates_post_envelope_templates(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.DocumentTemplateList.t} | {:error, Tesla.Env.t}
   def templates_post_envelope_templates(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
-      :"documentTemplateList" => :body
+      documentTemplateList: :body
     }
     %{}
     |> method(:post)

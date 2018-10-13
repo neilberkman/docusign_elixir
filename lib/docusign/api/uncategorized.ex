@@ -10,7 +10,6 @@ defmodule DocuSign.Api.Uncategorized do
   alias DocuSign.Connection
   import DocuSign.RequestBuilder
 
-
   @doc """
   
   
@@ -31,7 +30,7 @@ defmodule DocuSign.Api.Uncategorized do
   @spec comments_get_comments_transcript(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, String.t} | {:error, Tesla.Env.t}
   def comments_get_comments_transcript(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
-      :"encoding" => :query
+      encoding: :query
     }
     %{}
     |> method(:get)
@@ -138,7 +137,7 @@ defmodule DocuSign.Api.Uncategorized do
   @spec envelope_publish_post_envelope_publish_transaction(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopePublishTransaction.t} | {:error, Tesla.Env.t}
   def envelope_publish_post_envelope_publish_transaction(connection, account_id, opts \\ []) do
     optional_params = %{
-      :"envelopePublishRequest" => :body
+      envelopePublishRequest: :body
     }
     %{}
     |> method(:post)
@@ -196,7 +195,7 @@ defmodule DocuSign.Api.Uncategorized do
   @spec responsive_html_post_document_responsive_html_preview(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.DocumentHtmlDefinitions.t} | {:error, Tesla.Env.t}
   def responsive_html_post_document_responsive_html_preview(connection, account_id, document_id, envelope_id, opts \\ []) do
     optional_params = %{
-      :"documentHtmlDefinition" => :body
+      documentHtmlDefinition: :body
     }
     %{}
     |> method(:post)
@@ -227,7 +226,7 @@ defmodule DocuSign.Api.Uncategorized do
   @spec responsive_html_post_responsive_html_preview(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.DocumentHtmlDefinitions.t} | {:error, Tesla.Env.t}
   def responsive_html_post_responsive_html_preview(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
-      :"documentHtmlDefinition" => :body
+      documentHtmlDefinition: :body
     }
     %{}
     |> method(:post)
@@ -259,7 +258,7 @@ defmodule DocuSign.Api.Uncategorized do
   @spec responsive_html_post_template_document_responsive_html_preview(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.DocumentHtmlDefinitions.t} | {:error, Tesla.Env.t}
   def responsive_html_post_template_document_responsive_html_preview(connection, account_id, document_id, template_id, opts \\ []) do
     optional_params = %{
-      :"documentHtmlDefinition" => :body
+      documentHtmlDefinition: :body
     }
     %{}
     |> method(:post)
@@ -290,7 +289,7 @@ defmodule DocuSign.Api.Uncategorized do
   @spec responsive_html_post_template_responsive_html_preview(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.DocumentHtmlDefinitions.t} | {:error, Tesla.Env.t}
   def responsive_html_post_template_responsive_html_preview(connection, account_id, template_id, opts \\ []) do
     optional_params = %{
-      :"documentHtmlDefinition" => :body
+      documentHtmlDefinition: :body
     }
     %{}
     |> method(:post)

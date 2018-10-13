@@ -10,7 +10,6 @@ defmodule DocuSign.Api.ChunkedUploads do
   alias DocuSign.Connection
   import DocuSign.RequestBuilder
 
-
   @doc """
   Delete an existing ChunkedUpload.
   
@@ -57,7 +56,7 @@ defmodule DocuSign.Api.ChunkedUploads do
   @spec chunked_uploads_get_chunked_upload(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.ChunkedUploads.t} | {:error, Tesla.Env.t}
   def chunked_uploads_get_chunked_upload(connection, account_id, chunked_upload_id, opts \\ []) do
     optional_params = %{
-      :"include" => :query
+      include: :query
     }
     %{}
     |> method(:get)
@@ -87,7 +86,7 @@ defmodule DocuSign.Api.ChunkedUploads do
   @spec chunked_uploads_post_chunked_uploads(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.ChunkedUploads.t} | {:error, Tesla.Env.t}
   def chunked_uploads_post_chunked_uploads(connection, account_id, opts \\ []) do
     optional_params = %{
-      :"chunkedUploadRequest" => :body
+      chunkedUploadRequest: :body
     }
     %{}
     |> method(:post)
@@ -119,7 +118,7 @@ defmodule DocuSign.Api.ChunkedUploads do
   @spec chunked_uploads_put_chunked_upload_part(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.ChunkedUploads.t} | {:error, Tesla.Env.t}
   def chunked_uploads_put_chunked_upload_part(connection, account_id, chunked_upload_id, chunked_upload_part_seq, opts \\ []) do
     optional_params = %{
-      :"chunkedUploadRequest" => :body
+      chunkedUploadRequest: :body
     }
     %{}
     |> method(:put)
@@ -150,7 +149,7 @@ defmodule DocuSign.Api.ChunkedUploads do
   @spec chunked_uploads_put_chunked_uploads(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.ChunkedUploads.t} | {:error, Tesla.Env.t}
   def chunked_uploads_put_chunked_uploads(connection, account_id, chunked_upload_id, opts \\ []) do
     optional_params = %{
-      :"action" => :query
+      action: :query
     }
     %{}
     |> method(:put)

@@ -10,7 +10,6 @@ defmodule DocuSign.Api.EnvelopeRecipients do
   alias DocuSign.Connection
   import DocuSign.RequestBuilder
 
-
   @doc """
   Deletes a recipient from an envelope.
   Deletes a recipient from a &#x60;draft&#x60; or &#x60;sent&#x60; envelope.  If the envelope is \&quot;In Process\&quot; (has been sent and is not completed or voided), recipients that have completed their actions cannot be deleted.
@@ -58,7 +57,7 @@ defmodule DocuSign.Api.EnvelopeRecipients do
   @spec recipients_delete_recipients(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeRecipients.t} | {:error, Tesla.Env.t}
   def recipients_delete_recipients(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
-      :"EnvelopeRecipients" => :body
+      EnvelopeRecipients: :body
     }
     %{}
     |> method(:delete)
@@ -91,9 +90,9 @@ defmodule DocuSign.Api.EnvelopeRecipients do
   @spec recipients_get_recipients(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeRecipients.t} | {:error, Tesla.Env.t}
   def recipients_get_recipients(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
-      :"include_anchor_tab_locations" => :query,
-      :"include_extended" => :query,
-      :"include_tabs" => :query
+      include_anchor_tab_locations: :query,
+      include_extended: :query,
+      include_tabs: :query
     }
     %{}
     |> method(:get)
@@ -125,8 +124,8 @@ defmodule DocuSign.Api.EnvelopeRecipients do
   @spec recipients_post_recipients(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeRecipients.t} | {:error, Tesla.Env.t}
   def recipients_post_recipients(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
-      :"resend_envelope" => :query,
-      :"EnvelopeRecipients" => :body
+      resend_envelope: :query,
+      EnvelopeRecipients: :body
     }
     %{}
     |> method(:post)
@@ -159,9 +158,9 @@ defmodule DocuSign.Api.EnvelopeRecipients do
   @spec recipients_put_recipients(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.RecipientsUpdateSummary.t} | {:error, Tesla.Env.t}
   def recipients_put_recipients(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
-      :"offline_signing" => :query,
-      :"resend_envelope" => :query,
-      :"EnvelopeRecipients" => :body
+      offline_signing: :query,
+      resend_envelope: :query,
+      EnvelopeRecipients: :body
     }
     %{}
     |> method(:put)

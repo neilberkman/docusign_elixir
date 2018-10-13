@@ -10,7 +10,6 @@ defmodule DocuSign.Api.EnvelopeConsumerDisclosures do
   alias DocuSign.Connection
   import DocuSign.RequestBuilder
 
-
   @doc """
   Gets the Electronic Record and Signature Disclosure associated with the account.
   Retrieves the Electronic Record and Signature Disclosure, with html formatting, associated with the account. You can use an optional query string to set the language for the disclosure.
@@ -32,7 +31,7 @@ defmodule DocuSign.Api.EnvelopeConsumerDisclosures do
   @spec consumer_disclosure_get_consumer_disclosure_envelope_id_recipient_id(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeConsumerDisclosures.t} | {:error, Tesla.Env.t}
   def consumer_disclosure_get_consumer_disclosure_envelope_id_recipient_id(connection, account_id, envelope_id, recipient_id, opts \\ []) do
     optional_params = %{
-      :"langCode" => :query
+      langCode: :query
     }
     %{}
     |> method(:get)
@@ -65,7 +64,7 @@ defmodule DocuSign.Api.EnvelopeConsumerDisclosures do
   @spec consumer_disclosure_get_consumer_disclosure_envelope_id_recipient_id_lang_code(Tesla.Env.client, String.t, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeConsumerDisclosures.t} | {:error, Tesla.Env.t}
   def consumer_disclosure_get_consumer_disclosure_envelope_id_recipient_id_lang_code(connection, account_id, envelope_id, lang_code, recipient_id, opts \\ []) do
     optional_params = %{
-      :"langCode" => :query
+      langCode: :query
     }
     %{}
     |> method(:get)

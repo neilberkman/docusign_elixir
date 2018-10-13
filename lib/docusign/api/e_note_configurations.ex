@@ -10,7 +10,6 @@ defmodule DocuSign.Api.ENoteConfigurations do
   alias DocuSign.Connection
   import DocuSign.RequestBuilder
 
-
   @doc """
   Deletes configuration information for the eNote eOriginal integration.
   
@@ -80,7 +79,7 @@ defmodule DocuSign.Api.ENoteConfigurations do
   @spec e_note_configuration_put_e_note_configuration(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.ENoteConfigurations.t} | {:error, Tesla.Env.t}
   def e_note_configuration_put_e_note_configuration(connection, account_id, opts \\ []) do
     optional_params = %{
-      :"ENoteConfigurations" => :body
+      ENoteConfigurations: :body
     }
     %{}
     |> method(:put)

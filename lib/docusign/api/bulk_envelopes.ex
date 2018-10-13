@@ -10,7 +10,6 @@ defmodule DocuSign.Api.BulkEnvelopes do
   alias DocuSign.Connection
   import DocuSign.RequestBuilder
 
-
   @doc """
   Gets the status of a specified bulk send operation.
   Retrieves the status information of a single bulk recipient batch. A bulk recipient batch is the set of envelopes sent from a single bulk recipient file. 
@@ -33,9 +32,9 @@ defmodule DocuSign.Api.BulkEnvelopes do
   @spec bulk_envelopes_get_bulk_envelopes_batch_id(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.BulkEnvelopeStatus.t} | {:error, Tesla.Env.t}
   def bulk_envelopes_get_bulk_envelopes_batch_id(connection, account_id, batch_id, opts \\ []) do
     optional_params = %{
-      :"count" => :query,
-      :"include" => :query,
-      :"start_position" => :query
+      count: :query,
+      include: :query,
+      start_position: :query
     }
     %{}
     |> method(:get)
@@ -67,9 +66,9 @@ defmodule DocuSign.Api.BulkEnvelopes do
   @spec bulk_envelopes_get_envelopes_bulk(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.BulkEnvelopes.t} | {:error, Tesla.Env.t}
   def bulk_envelopes_get_envelopes_bulk(connection, account_id, opts \\ []) do
     optional_params = %{
-      :"count" => :query,
-      :"include" => :query,
-      :"start_position" => :query
+      count: :query,
+      include: :query,
+      start_position: :query
     }
     %{}
     |> method(:get)

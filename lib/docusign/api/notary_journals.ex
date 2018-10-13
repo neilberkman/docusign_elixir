@@ -10,7 +10,6 @@ defmodule DocuSign.Api.NotaryJournals do
   alias DocuSign.Connection
   import DocuSign.RequestBuilder
 
-
   @doc """
   
   
@@ -31,9 +30,9 @@ defmodule DocuSign.Api.NotaryJournals do
   @spec notary_journals_get_notary_journals(Tesla.Env.client, keyword()) :: {:ok, DocuSign.Model.NotaryJournalList.t} | {:error, Tesla.Env.t}
   def notary_journals_get_notary_journals(connection, opts \\ []) do
     optional_params = %{
-      :"count" => :query,
-      :"search_text" => :query,
-      :"start_position" => :query
+      count: :query,
+      search_text: :query,
+      start_position: :query
     }
     %{}
     |> method(:get)

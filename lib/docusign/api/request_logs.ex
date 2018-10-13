@@ -10,7 +10,6 @@ defmodule DocuSign.Api.RequestLogs do
   alias DocuSign.Connection
   import DocuSign.RequestBuilder
 
-
   @doc """
   Deletes the request log files.
   Deletes the request log files.
@@ -102,7 +101,7 @@ defmodule DocuSign.Api.RequestLogs do
   @spec api_request_log_get_request_logs(Tesla.Env.client, keyword()) :: {:ok, DocuSign.Model.ApiRequestLogsResult.t} | {:error, Tesla.Env.t}
   def api_request_log_get_request_logs(connection, opts \\ []) do
     optional_params = %{
-      :"encoding" => :query
+      encoding: :query
     }
     %{}
     |> method(:get)
@@ -131,7 +130,7 @@ defmodule DocuSign.Api.RequestLogs do
   @spec api_request_log_put_request_log_settings(Tesla.Env.client, keyword()) :: {:ok, DocuSign.Model.RequestLogs.t} | {:error, Tesla.Env.t}
   def api_request_log_put_request_log_settings(connection, opts \\ []) do
     optional_params = %{
-      :"RequestLogs" => :body
+      RequestLogs: :body
     }
     %{}
     |> method(:put)
