@@ -21,20 +21,21 @@ defmodule DocuSign.Model.ChunkedUploads do
   ]
 
   @type t :: %__MODULE__{
-    :checksum => String.t,
-    :chunkedUploadId => String.t,
-    :chunkedUploadParts => [ChunkedUploadPart],
-    :chunkedUploadUri => String.t,
-    :committed => String.t,
-    :expirationDateTime => String.t,
-    :maxChunkedUploadParts => String.t,
-    :maxTotalSize => String.t,
-    :totalSize => String.t
-  }
+          :checksum => String.t(),
+          :chunkedUploadId => String.t(),
+          :chunkedUploadParts => [ChunkedUploadPart],
+          :chunkedUploadUri => String.t(),
+          :committed => String.t(),
+          :expirationDateTime => String.t(),
+          :maxChunkedUploadParts => String.t(),
+          :maxTotalSize => String.t(),
+          :totalSize => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.ChunkedUploads do
   import DocuSign.Deserializer
+
   def decode(value, options) do
     value
     |> deserialize(:chunkedUploadParts, :list, DocuSign.Model.ChunkedUploadPart, options)

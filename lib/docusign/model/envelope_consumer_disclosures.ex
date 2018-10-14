@@ -44,46 +44,52 @@ defmodule DocuSign.Model.EnvelopeConsumerDisclosures do
   ]
 
   @type t :: %__MODULE__{
-    :accountEsignId => String.t,
-    :allowCDWithdraw => String.t,
-    :allowCDWithdrawMetadata => SettingsMetadata,
-    :changeEmail => String.t,
-    :changeEmailOther => String.t,
-    :companyName => String.t,
-    :companyPhone => String.t,
-    :copyCostPerPage => String.t,
-    :copyFeeCollectionMethod => String.t,
-    :copyRequestEmail => String.t,
-    :custom => String.t,
-    :enableEsign => String.t,
-    :esignAgreement => String.t,
-    :esignText => String.t,
-    :languageCode => String.t,
-    :mustAgreeToEsign => String.t,
-    :pdfId => String.t,
-    :useBrand => String.t,
-    :useConsumerDisclosureWithinAccount => String.t,
-    :useConsumerDisclosureWithinAccountMetadata => SettingsMetadata,
-    :withdrawAddressLine1 => String.t,
-    :withdrawAddressLine2 => String.t,
-    :withdrawByEmail => String.t,
-    :withdrawByMail => String.t,
-    :withdrawByPhone => String.t,
-    :withdrawCity => String.t,
-    :withdrawConsequences => String.t,
-    :withdrawEmail => String.t,
-    :withdrawOther => String.t,
-    :withdrawPhone => String.t,
-    :withdrawPostalCode => String.t,
-    :withdrawState => String.t
-  }
+          :accountEsignId => String.t(),
+          :allowCDWithdraw => String.t(),
+          :allowCDWithdrawMetadata => SettingsMetadata,
+          :changeEmail => String.t(),
+          :changeEmailOther => String.t(),
+          :companyName => String.t(),
+          :companyPhone => String.t(),
+          :copyCostPerPage => String.t(),
+          :copyFeeCollectionMethod => String.t(),
+          :copyRequestEmail => String.t(),
+          :custom => String.t(),
+          :enableEsign => String.t(),
+          :esignAgreement => String.t(),
+          :esignText => String.t(),
+          :languageCode => String.t(),
+          :mustAgreeToEsign => String.t(),
+          :pdfId => String.t(),
+          :useBrand => String.t(),
+          :useConsumerDisclosureWithinAccount => String.t(),
+          :useConsumerDisclosureWithinAccountMetadata => SettingsMetadata,
+          :withdrawAddressLine1 => String.t(),
+          :withdrawAddressLine2 => String.t(),
+          :withdrawByEmail => String.t(),
+          :withdrawByMail => String.t(),
+          :withdrawByPhone => String.t(),
+          :withdrawCity => String.t(),
+          :withdrawConsequences => String.t(),
+          :withdrawEmail => String.t(),
+          :withdrawOther => String.t(),
+          :withdrawPhone => String.t(),
+          :withdrawPostalCode => String.t(),
+          :withdrawState => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.EnvelopeConsumerDisclosures do
   import DocuSign.Deserializer
+
   def decode(value, options) do
     value
     |> deserialize(:allowCDWithdrawMetadata, :struct, DocuSign.Model.SettingsMetadata, options)
-    |> deserialize(:useConsumerDisclosureWithinAccountMetadata, :struct, DocuSign.Model.SettingsMetadata, options)
+    |> deserialize(
+      :useConsumerDisclosureWithinAccountMetadata,
+      :struct,
+      DocuSign.Model.SettingsMetadata,
+      options
+    )
   end
 end

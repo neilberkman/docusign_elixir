@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.Ssn4InformationInput do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -15,10 +15,10 @@ defmodule DocuSign.Model.Ssn4InformationInput do
   ]
 
   @type t :: %__MODULE__{
-    :displayLevelCode => String.t,
-    :receiveInResponse => String.t,
-    :ssn4 => String.t
-  }
+          :displayLevelCode => String.t(),
+          :receiveInResponse => String.t(),
+          :ssn4 => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.Ssn4InformationInput do

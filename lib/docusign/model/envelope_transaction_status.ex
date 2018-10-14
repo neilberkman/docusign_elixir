@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.EnvelopeTransactionStatus do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -16,15 +16,16 @@ defmodule DocuSign.Model.EnvelopeTransactionStatus do
   ]
 
   @type t :: %__MODULE__{
-    :envelopeId => String.t,
-    :errorDetails => ErrorDetails,
-    :status => String.t,
-    :transactionId => String.t
-  }
+          :envelopeId => String.t(),
+          :errorDetails => ErrorDetails,
+          :status => String.t(),
+          :transactionId => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.EnvelopeTransactionStatus do
   import DocuSign.Deserializer
+
   def decode(value, options) do
     value
     |> deserialize(:errorDetails, :struct, DocuSign.Model.ErrorDetails, options)

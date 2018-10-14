@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.PageRequest do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -14,9 +14,9 @@ defmodule DocuSign.Model.PageRequest do
   ]
 
   @type t :: %__MODULE__{
-    :password => String.t,
-    :rotate => String.t
-  }
+          :password => String.t(),
+          :rotate => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.PageRequest do

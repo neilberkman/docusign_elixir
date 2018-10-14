@@ -12,7 +12,7 @@ defmodule DocuSign.Api.AccountCustomFields do
 
   @doc """
   Delete an existing account custom field.
-  
+
 
   ## Parameters
 
@@ -27,11 +27,22 @@ defmodule DocuSign.Api.AccountCustomFields do
   {:ok, %{}} on success
   {:error, info} on failure
   """
-  @spec account_custom_fields_delete_account_custom_fields(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, nil} | {:error, Tesla.Env.t}
-  def account_custom_fields_delete_account_custom_fields(connection, account_id, custom_field_id, opts \\ []) do
+  @spec account_custom_fields_delete_account_custom_fields(
+          Tesla.Env.client(),
+          String.t(),
+          String.t(),
+          keyword()
+        ) :: {:ok, nil} | {:error, Tesla.Env.t()}
+  def account_custom_fields_delete_account_custom_fields(
+        connection,
+        account_id,
+        custom_field_id,
+        opts \\ []
+      ) do
     optional_params = %{
       apply_to_templates: :query
     }
+
     %{}
     |> method(:delete)
     |> url("/v2/accounts/#{account_id}/custom_fields/#{custom_field_id}")
@@ -56,7 +67,8 @@ defmodule DocuSign.Api.AccountCustomFields do
   {:ok, %DocuSign.Model.AccountCustomFields{}} on success
   {:error, info} on failure
   """
-  @spec account_custom_fields_get_account_custom_fields(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.AccountCustomFields.t} | {:error, Tesla.Env.t}
+  @spec account_custom_fields_get_account_custom_fields(Tesla.Env.client(), String.t(), keyword()) ::
+          {:ok, DocuSign.Model.AccountCustomFields.t()} | {:error, Tesla.Env.t()}
   def account_custom_fields_get_account_custom_fields(connection, account_id, _opts \\ []) do
     %{}
     |> method(:get)
@@ -68,7 +80,7 @@ defmodule DocuSign.Api.AccountCustomFields do
 
   @doc """
   Creates an acount custom field.
-  
+
 
   ## Parameters
 
@@ -83,12 +95,17 @@ defmodule DocuSign.Api.AccountCustomFields do
   {:ok, %DocuSign.Model.AccountCustomFields{}} on success
   {:error, info} on failure
   """
-  @spec account_custom_fields_post_account_custom_fields(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.AccountCustomFields.t} | {:error, Tesla.Env.t}
+  @spec account_custom_fields_post_account_custom_fields(
+          Tesla.Env.client(),
+          String.t(),
+          keyword()
+        ) :: {:ok, DocuSign.Model.AccountCustomFields.t()} | {:error, Tesla.Env.t()}
   def account_custom_fields_post_account_custom_fields(connection, account_id, opts \\ []) do
     optional_params = %{
       apply_to_templates: :query,
       customField: :body
     }
+
     %{}
     |> method(:post)
     |> url("/v2/accounts/#{account_id}/custom_fields")
@@ -100,7 +117,7 @@ defmodule DocuSign.Api.AccountCustomFields do
 
   @doc """
   Updates an existing account custom field.
-  
+
 
   ## Parameters
 
@@ -116,12 +133,23 @@ defmodule DocuSign.Api.AccountCustomFields do
   {:ok, %DocuSign.Model.AccountCustomFields{}} on success
   {:error, info} on failure
   """
-  @spec account_custom_fields_put_account_custom_fields(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.AccountCustomFields.t} | {:error, Tesla.Env.t}
-  def account_custom_fields_put_account_custom_fields(connection, account_id, custom_field_id, opts \\ []) do
+  @spec account_custom_fields_put_account_custom_fields(
+          Tesla.Env.client(),
+          String.t(),
+          String.t(),
+          keyword()
+        ) :: {:ok, DocuSign.Model.AccountCustomFields.t()} | {:error, Tesla.Env.t()}
+  def account_custom_fields_put_account_custom_fields(
+        connection,
+        account_id,
+        custom_field_id,
+        opts \\ []
+      ) do
     optional_params = %{
       apply_to_templates: :query,
       customField: :body
     }
+
     %{}
     |> method(:put)
     |> url("/v2/accounts/#{account_id}/custom_fields/#{custom_field_id}")

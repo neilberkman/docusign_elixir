@@ -25,24 +25,25 @@ defmodule DocuSign.Model.BillingCharge do
   ]
 
   @type t :: %__MODULE__{
-    :allowedQuantity => String.t,
-    :blocked => String.t,
-    :chargeName => String.t,
-    :chargeType => String.t,
-    :chargeUnitOfMeasure => String.t,
-    :discounts => [BillingDiscount],
-    :firstEffectiveDate => String.t,
-    :includedQuantity => String.t,
-    :incrementalQuantity => String.t,
-    :lastEffectiveDate => String.t,
-    :prices => [BillingPrice],
-    :unitPrice => String.t,
-    :usedQuantity => String.t
-  }
+          :allowedQuantity => String.t(),
+          :blocked => String.t(),
+          :chargeName => String.t(),
+          :chargeType => String.t(),
+          :chargeUnitOfMeasure => String.t(),
+          :discounts => [BillingDiscount],
+          :firstEffectiveDate => String.t(),
+          :includedQuantity => String.t(),
+          :incrementalQuantity => String.t(),
+          :lastEffectiveDate => String.t(),
+          :prices => [BillingPrice],
+          :unitPrice => String.t(),
+          :usedQuantity => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.BillingCharge do
   import DocuSign.Deserializer
+
   def decode(value, options) do
     value
     |> deserialize(:discounts, :list, DocuSign.Model.BillingDiscount, options)

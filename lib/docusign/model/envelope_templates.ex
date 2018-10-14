@@ -13,12 +13,13 @@ defmodule DocuSign.Model.EnvelopeTemplates do
   ]
 
   @type t :: %__MODULE__{
-    :templates => [TemplateSummary]
-  }
+          :templates => [TemplateSummary]
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.EnvelopeTemplates do
   import DocuSign.Deserializer
+
   def decode(value, options) do
     value
     |> deserialize(:templates, :list, DocuSign.Model.TemplateSummary, options)

@@ -12,7 +12,7 @@ defmodule DocuSign.Api.TemplateViews do
 
   @doc """
   Provides a URL to start an edit view of the Template UI
-  
+
 
   ## Parameters
 
@@ -27,11 +27,13 @@ defmodule DocuSign.Api.TemplateViews do
   {:ok, %DocuSign.Model.TemplateViews{}} on success
   {:error, info} on failure
   """
-  @spec views_post_template_edit_view(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.TemplateViews.t} | {:error, Tesla.Env.t}
+  @spec views_post_template_edit_view(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+          {:ok, DocuSign.Model.TemplateViews.t()} | {:error, Tesla.Env.t()}
   def views_post_template_edit_view(connection, account_id, template_id, opts \\ []) do
     optional_params = %{
       returnUrlRequest: :body
     }
+
     %{}
     |> method(:post)
     |> url("/v2/accounts/#{account_id}/templates/#{template_id}/views/edit")

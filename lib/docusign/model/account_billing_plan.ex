@@ -32,31 +32,32 @@ defmodule DocuSign.Model.AccountBillingPlan do
   ]
 
   @type t :: %__MODULE__{
-    :addOns => [AddOn],
-    :canCancelRenewal => String.t,
-    :canUpgrade => String.t,
-    :currencyCode => String.t,
-    :enableSupport => String.t,
-    :includedSeats => String.t,
-    :incrementalSeats => String.t,
-    :isDowngrade => String.t,
-    :otherDiscountPercent => String.t,
-    :paymentCycle => String.t,
-    :paymentMethod => String.t,
-    :perSeatPrice => String.t,
-    :planClassification => String.t,
-    :planFeatureSets => [FeatureSet],
-    :planId => String.t,
-    :planName => String.t,
-    :renewalStatus => String.t,
-    :seatDiscounts => [SeatDiscount],
-    :supportIncidentFee => String.t,
-    :supportPlanFee => String.t
-  }
+          :addOns => [AddOn],
+          :canCancelRenewal => String.t(),
+          :canUpgrade => String.t(),
+          :currencyCode => String.t(),
+          :enableSupport => String.t(),
+          :includedSeats => String.t(),
+          :incrementalSeats => String.t(),
+          :isDowngrade => String.t(),
+          :otherDiscountPercent => String.t(),
+          :paymentCycle => String.t(),
+          :paymentMethod => String.t(),
+          :perSeatPrice => String.t(),
+          :planClassification => String.t(),
+          :planFeatureSets => [FeatureSet],
+          :planId => String.t(),
+          :planName => String.t(),
+          :renewalStatus => String.t(),
+          :seatDiscounts => [SeatDiscount],
+          :supportIncidentFee => String.t(),
+          :supportPlanFee => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.AccountBillingPlan do
   import DocuSign.Deserializer
+
   def decode(value, options) do
     value
     |> deserialize(:addOns, :list, DocuSign.Model.AddOn, options)

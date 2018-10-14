@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.Jurisdiction do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -22,17 +22,17 @@ defmodule DocuSign.Model.Jurisdiction do
   ]
 
   @type t :: %__MODULE__{
-    :allowSystemCreatedSeal => String.t,
-    :allowUserUploadedSeal => String.t,
-    :commissionIdInSeal => String.t,
-    :county => String.t,
-    :countyInSeal => String.t,
-    :enabled => String.t,
-    :jurisdictionId => String.t,
-    :name => String.t,
-    :notaryPublicInSeal => String.t,
-    :stateNameInSeal => String.t
-  }
+          :allowSystemCreatedSeal => String.t(),
+          :allowUserUploadedSeal => String.t(),
+          :commissionIdInSeal => String.t(),
+          :county => String.t(),
+          :countyInSeal => String.t(),
+          :enabled => String.t(),
+          :jurisdictionId => String.t(),
+          :name => String.t(),
+          :notaryPublicInSeal => String.t(),
+          :stateNameInSeal => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.Jurisdiction do

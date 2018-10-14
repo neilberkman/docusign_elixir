@@ -13,12 +13,13 @@ defmodule DocuSign.Model.AccountSettingsInformation do
   ]
 
   @type t :: %__MODULE__{
-    :accountSettings => [NameValue]
-  }
+          :accountSettings => [NameValue]
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.AccountSettingsInformation do
   import DocuSign.Deserializer
+
   def decode(value, options) do
     value
     |> deserialize(:accountSettings, :list, DocuSign.Model.NameValue, options)

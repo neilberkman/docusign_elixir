@@ -23,22 +23,23 @@ defmodule DocuSign.Model.EnvelopeRecipients do
   ]
 
   @type t :: %__MODULE__{
-    :agents => [Agent],
-    :carbonCopies => [CarbonCopy],
-    :certifiedDeliveries => [CertifiedDelivery],
-    :currentRoutingOrder => String.t,
-    :editors => [Editor],
-    :errorDetails => ErrorDetails,
-    :inPersonSigners => [InPersonSigner],
-    :intermediaries => [Intermediary],
-    :recipientCount => String.t,
-    :seals => [SealSign],
-    :signers => [Signer]
-  }
+          :agents => [Agent],
+          :carbonCopies => [CarbonCopy],
+          :certifiedDeliveries => [CertifiedDelivery],
+          :currentRoutingOrder => String.t(),
+          :editors => [Editor],
+          :errorDetails => ErrorDetails,
+          :inPersonSigners => [InPersonSigner],
+          :intermediaries => [Intermediary],
+          :recipientCount => String.t(),
+          :seals => [SealSign],
+          :signers => [Signer]
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.EnvelopeRecipients do
   import DocuSign.Deserializer
+
   def decode(value, options) do
     value
     |> deserialize(:agents, :list, DocuSign.Model.Agent, options)

@@ -11,8 +11,8 @@ defmodule DocuSign.Api.NotaryJournals do
   import DocuSign.RequestBuilder
 
   @doc """
-  
-  
+
+
 
   ## Parameters
 
@@ -27,13 +27,15 @@ defmodule DocuSign.Api.NotaryJournals do
   {:ok, %DocuSign.Model.NotaryJournalList{}} on success
   {:error, info} on failure
   """
-  @spec notary_journals_get_notary_journals(Tesla.Env.client, keyword()) :: {:ok, DocuSign.Model.NotaryJournalList.t} | {:error, Tesla.Env.t}
+  @spec notary_journals_get_notary_journals(Tesla.Env.client(), keyword()) ::
+          {:ok, DocuSign.Model.NotaryJournalList.t()} | {:error, Tesla.Env.t()}
   def notary_journals_get_notary_journals(connection, opts \\ []) do
     optional_params = %{
       count: :query,
       search_text: :query,
       start_position: :query
     }
+
     %{}
     |> method(:get)
     |> url("/v2/current_user/notary/journals")

@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.EnvelopePublishTransaction do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -25,27 +25,33 @@ defmodule DocuSign.Model.EnvelopePublishTransaction do
   ]
 
   @type t :: %__MODULE__{
-    :applyConnectSettings => String.t,
-    :envelopeCount => String.t,
-    :envelopeLevelErrorRollups => [EnvelopePublishTransactionErrorRollup],
-    :envelopePublishTransactionId => String.t,
-    :errorCount => String.t,
-    :fileLevelErrors => [String.t],
-    :noActionRequiredEnvelopeCount => String.t,
-    :processedEnvelopeCount => String.t,
-    :processingStatus => String.t,
-    :resultsUri => String.t,
-    :submissionDate => String.t,
-    :submittedByUserInfo => UserInfo,
-    :submittedForPublishingEnvelopeCount => String.t
-  }
+          :applyConnectSettings => String.t(),
+          :envelopeCount => String.t(),
+          :envelopeLevelErrorRollups => [EnvelopePublishTransactionErrorRollup],
+          :envelopePublishTransactionId => String.t(),
+          :errorCount => String.t(),
+          :fileLevelErrors => [String.t()],
+          :noActionRequiredEnvelopeCount => String.t(),
+          :processedEnvelopeCount => String.t(),
+          :processingStatus => String.t(),
+          :resultsUri => String.t(),
+          :submissionDate => String.t(),
+          :submittedByUserInfo => UserInfo,
+          :submittedForPublishingEnvelopeCount => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.EnvelopePublishTransaction do
   import DocuSign.Deserializer
+
   def decode(value, options) do
     value
-    |> deserialize(:envelopeLevelErrorRollups, :list, DocuSign.Model.EnvelopePublishTransactionErrorRollup, options)
+    |> deserialize(
+      :envelopeLevelErrorRollups,
+      :list,
+      DocuSign.Model.EnvelopePublishTransactionErrorRollup,
+      options
+    )
     |> deserialize(:submittedByUserInfo, :struct, DocuSign.Model.UserInfo, options)
   end
 end

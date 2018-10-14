@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.ENoteConfigurations do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -17,12 +17,12 @@ defmodule DocuSign.Model.ENoteConfigurations do
   ]
 
   @type t :: %__MODULE__{
-    :connectConfigured => String.t,
-    :eNoteConfigured => String.t,
-    :organization => String.t,
-    :password => String.t,
-    :userName => String.t
-  }
+          :connectConfigured => String.t(),
+          :eNoteConfigured => String.t(),
+          :organization => String.t(),
+          :password => String.t(),
+          :userName => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.ENoteConfigurations do

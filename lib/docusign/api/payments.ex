@@ -26,7 +26,8 @@ defmodule DocuSign.Api.Payments do
   {:ok, %DocuSign.Model.Payments{}} on success
   {:error, info} on failure
   """
-  @spec billing_payments_get_payment(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.Payments.t} | {:error, Tesla.Env.t}
+  @spec billing_payments_get_payment(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+          {:ok, DocuSign.Model.Payments.t()} | {:error, Tesla.Env.t()}
   def billing_payments_get_payment(connection, account_id, payment_id, _opts \\ []) do
     %{}
     |> method(:get)
@@ -53,12 +54,14 @@ defmodule DocuSign.Api.Payments do
   {:ok, %DocuSign.Model.BillingPaymentsResponse{}} on success
   {:error, info} on failure
   """
-  @spec billing_payments_get_payment_list(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.BillingPaymentsResponse.t} | {:error, Tesla.Env.t}
+  @spec billing_payments_get_payment_list(Tesla.Env.client(), String.t(), keyword()) ::
+          {:ok, DocuSign.Model.BillingPaymentsResponse.t()} | {:error, Tesla.Env.t()}
   def billing_payments_get_payment_list(connection, account_id, opts \\ []) do
     optional_params = %{
       from_date: :query,
       to_date: :query
     }
+
     %{}
     |> method(:get)
     |> url("/v2/accounts/#{account_id}/billing_payments")
@@ -84,11 +87,13 @@ defmodule DocuSign.Api.Payments do
   {:ok, %DocuSign.Model.BillingPaymentResponse{}} on success
   {:error, info} on failure
   """
-  @spec billing_payments_post_payment(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.BillingPaymentResponse.t} | {:error, Tesla.Env.t}
+  @spec billing_payments_post_payment(Tesla.Env.client(), String.t(), keyword()) ::
+          {:ok, DocuSign.Model.BillingPaymentResponse.t()} | {:error, Tesla.Env.t()}
   def billing_payments_post_payment(connection, account_id, opts \\ []) do
     optional_params = %{
       billingPaymentRequest: :body
     }
+
     %{}
     |> method(:post)
     |> url("/v2/accounts/#{account_id}/billing_payments")

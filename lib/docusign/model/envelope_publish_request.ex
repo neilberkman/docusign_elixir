@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.EnvelopePublishRequest do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -15,10 +15,10 @@ defmodule DocuSign.Model.EnvelopePublishRequest do
   ]
 
   @type t :: %__MODULE__{
-    :applyConnectSettings => String.t,
-    :envelopeIds => [String.t],
-    :envelopeIdsBase64 => String.t
-  }
+          :applyConnectSettings => String.t(),
+          :envelopeIds => [String.t()],
+          :envelopeIdsBase64 => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.EnvelopePublishRequest do

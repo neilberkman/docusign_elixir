@@ -12,7 +12,7 @@ defmodule DocuSign.Api.PowerFormData do
 
   @doc """
   Returns the form data associated with the usage of a PowerForm.
-  
+
 
   ## Parameters
 
@@ -29,13 +29,19 @@ defmodule DocuSign.Api.PowerFormData do
   {:ok, %DocuSign.Model.PowerFormsFormDataResponse{}} on success
   {:error, info} on failure
   """
-  @spec power_forms_get_power_form_form_data(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.PowerFormsFormDataResponse.t} | {:error, Tesla.Env.t}
+  @spec power_forms_get_power_form_form_data(
+          Tesla.Env.client(),
+          String.t(),
+          String.t(),
+          keyword()
+        ) :: {:ok, DocuSign.Model.PowerFormsFormDataResponse.t()} | {:error, Tesla.Env.t()}
   def power_forms_get_power_form_form_data(connection, account_id, power_form_id, opts \\ []) do
     optional_params = %{
       data_layout: :query,
       from_date: :query,
       to_date: :query
     }
+
     %{}
     |> method(:get)
     |> url("/v2/accounts/#{account_id}/powerforms/#{power_form_id}/form_data")

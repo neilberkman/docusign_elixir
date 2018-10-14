@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.BulkEnvelope do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -21,20 +21,21 @@ defmodule DocuSign.Model.BulkEnvelope do
   ]
 
   @type t :: %__MODULE__{
-    :bulkRecipientRow => String.t,
-    :bulkStatus => String.t,
-    :email => String.t,
-    :envelopeId => String.t,
-    :envelopeUri => String.t,
-    :errorDetails => ErrorDetails,
-    :name => String.t,
-    :submittedDateTime => String.t,
-    :transactionId => String.t
-  }
+          :bulkRecipientRow => String.t(),
+          :bulkStatus => String.t(),
+          :email => String.t(),
+          :envelopeId => String.t(),
+          :envelopeUri => String.t(),
+          :errorDetails => ErrorDetails,
+          :name => String.t(),
+          :submittedDateTime => String.t(),
+          :transactionId => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.BulkEnvelope do
   import DocuSign.Deserializer
+
   def decode(value, options) do
     value
     |> deserialize(:errorDetails, :struct, DocuSign.Model.ErrorDetails, options)

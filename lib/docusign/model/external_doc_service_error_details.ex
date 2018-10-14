@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.ExternalDocServiceErrorDetails do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -15,10 +15,10 @@ defmodule DocuSign.Model.ExternalDocServiceErrorDetails do
   ]
 
   @type t :: %__MODULE__{
-    :authenticationUrl => String.t,
-    :errorCode => String.t,
-    :message => String.t
-  }
+          :authenticationUrl => String.t(),
+          :errorCode => String.t(),
+          :message => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.ExternalDocServiceErrorDetails do

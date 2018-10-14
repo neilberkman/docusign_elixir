@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.BillingInvoicesSummary do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -15,14 +15,15 @@ defmodule DocuSign.Model.BillingInvoicesSummary do
   ]
 
   @type t :: %__MODULE__{
-    :billingInvoices => [Invoices],
-    :pastDueBalance => String.t,
-    :paymentAllowed => String.t
-  }
+          :billingInvoices => [Invoices],
+          :pastDueBalance => String.t(),
+          :paymentAllowed => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.BillingInvoicesSummary do
   import DocuSign.Deserializer
+
   def decode(value, options) do
     value
     |> deserialize(:billingInvoices, :list, DocuSign.Model.Invoices, options)

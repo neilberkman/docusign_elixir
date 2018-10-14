@@ -28,7 +28,8 @@ defmodule DocuSign.Api.Authentication do
   {:ok, %DocuSign.Model.Authentication{}} on success
   {:error, info} on failure
   """
-  @spec login_information_get_login_information(Tesla.Env.client, keyword()) :: {:ok, DocuSign.Model.Authentication.t} | {:error, Tesla.Env.t}
+  @spec login_information_get_login_information(Tesla.Env.client(), keyword()) ::
+          {:ok, DocuSign.Model.Authentication.t()} | {:error, Tesla.Env.t()}
   def login_information_get_login_information(connection, opts \\ []) do
     optional_params = %{
       api_password: :query,
@@ -36,6 +37,7 @@ defmodule DocuSign.Api.Authentication do
       include_account_id_guid: :query,
       login_settings: :query
     }
+
     %{}
     |> method(:get)
     |> url("/v2/login_information")
@@ -61,11 +63,13 @@ defmodule DocuSign.Api.Authentication do
   {:ok, %{}} on success
   {:error, info} on failure
   """
-  @spec login_information_put_login_information(Tesla.Env.client, String.t, keyword()) :: {:ok, nil} | {:error, Tesla.Env.t}
+  @spec login_information_put_login_information(Tesla.Env.client(), String.t(), keyword()) ::
+          {:ok, nil} | {:error, Tesla.Env.t()}
   def login_information_put_login_information(connection, login_part, opts \\ []) do
     optional_params = %{
       userPasswordInformation: :body
     }
+
     %{}
     |> method(:put)
     |> url("/v2/login_information/#{login_part}")
@@ -89,7 +93,7 @@ defmodule DocuSign.Api.Authentication do
   {:ok, %{}} on success
   {:error, info} on failure
   """
-  @spec o_auth2_post_revoke(Tesla.Env.client, keyword()) :: {:ok, nil} | {:error, Tesla.Env.t}
+  @spec o_auth2_post_revoke(Tesla.Env.client(), keyword()) :: {:ok, nil} | {:error, Tesla.Env.t()}
   def o_auth2_post_revoke(connection, _opts \\ []) do
     %{}
     |> method(:post)
@@ -113,7 +117,8 @@ defmodule DocuSign.Api.Authentication do
   {:ok, %DocuSign.Model.OauthAccess{}} on success
   {:error, info} on failure
   """
-  @spec o_auth2_post_token(Tesla.Env.client, keyword()) :: {:ok, DocuSign.Model.OauthAccess.t} | {:error, Tesla.Env.t}
+  @spec o_auth2_post_token(Tesla.Env.client(), keyword()) ::
+          {:ok, DocuSign.Model.OauthAccess.t()} | {:error, Tesla.Env.t()}
   def o_auth2_post_token(connection, _opts \\ []) do
     %{}
     |> method(:post)

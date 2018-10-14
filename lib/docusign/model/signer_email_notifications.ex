@@ -28,23 +28,23 @@ defmodule DocuSign.Model.SignerEmailNotifications do
   ]
 
   @type t :: %__MODULE__{
-    :agentNotification => String.t,
-    :carbonCopyNotification => String.t,
-    :certifiedDeliveryNotification => String.t,
-    :commentsOnlyPrivateAndMention => String.t,
-    :commentsReceiveAll => String.t,
-    :documentMarkupActivation => String.t,
-    :envelopeActivation => String.t,
-    :envelopeComplete => String.t,
-    :envelopeCorrected => String.t,
-    :envelopeDeclined => String.t,
-    :envelopeVoided => String.t,
-    :faxReceived => String.t,
-    :offlineSigningFailed => String.t,
-    :purgeDocuments => String.t,
-    :reassignedSigner => String.t,
-    :whenSigningGroupMember => String.t
-  }
+          :agentNotification => String.t(),
+          :carbonCopyNotification => String.t(),
+          :certifiedDeliveryNotification => String.t(),
+          :commentsOnlyPrivateAndMention => String.t(),
+          :commentsReceiveAll => String.t(),
+          :documentMarkupActivation => String.t(),
+          :envelopeActivation => String.t(),
+          :envelopeComplete => String.t(),
+          :envelopeCorrected => String.t(),
+          :envelopeDeclined => String.t(),
+          :envelopeVoided => String.t(),
+          :faxReceived => String.t(),
+          :offlineSigningFailed => String.t(),
+          :purgeDocuments => String.t(),
+          :reassignedSigner => String.t(),
+          :whenSigningGroupMember => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.SignerEmailNotifications do

@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.BrandLink do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -16,11 +16,11 @@ defmodule DocuSign.Model.BrandLink do
   ]
 
   @type t :: %__MODULE__{
-    :linkText => String.t,
-    :linkType => String.t,
-    :showLink => String.t,
-    :urlOrMailTo => String.t
-  }
+          :linkText => String.t(),
+          :linkType => String.t(),
+          :showLink => String.t(),
+          :urlOrMailTo => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.BrandLink do

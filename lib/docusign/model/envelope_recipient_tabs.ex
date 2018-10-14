@@ -39,38 +39,39 @@ defmodule DocuSign.Model.EnvelopeRecipientTabs do
   ]
 
   @type t :: %__MODULE__{
-    :approveTabs => [Approve],
-    :checkboxTabs => [Checkbox],
-    :companyTabs => [Company],
-    :dateSignedTabs => [DateSigned],
-    :dateTabs => [DateTime],
-    :declineTabs => [Decline],
-    :emailAddressTabs => [EmailAddress],
-    :emailTabs => [Email],
-    :envelopeIdTabs => [EnvelopeId],
-    :firstNameTabs => [FirstName],
-    :formulaTabs => [FormulaTab],
-    :fullNameTabs => [FullName],
-    :initialHereTabs => [InitialHere],
-    :lastNameTabs => [LastName],
-    :listTabs => [List],
-    :notarizeTabs => [Notarize],
-    :noteTabs => [Note],
-    :numberTabs => [Float],
-    :radioGroupTabs => [RadioGroup],
-    :signerAttachmentTabs => [SignerAttachment],
-    :signHereTabs => [SignHere],
-    :ssnTabs => [Ssn],
-    :tabGroups => [TabGroup],
-    :textTabs => [Text],
-    :titleTabs => [Title],
-    :viewTabs => [View],
-    :zipTabs => [Zip]
-  }
+          :approveTabs => [Approve],
+          :checkboxTabs => [Checkbox],
+          :companyTabs => [Company],
+          :dateSignedTabs => [DateSigned],
+          :dateTabs => [DateTime],
+          :declineTabs => [Decline],
+          :emailAddressTabs => [EmailAddress],
+          :emailTabs => [Email],
+          :envelopeIdTabs => [EnvelopeId],
+          :firstNameTabs => [FirstName],
+          :formulaTabs => [FormulaTab],
+          :fullNameTabs => [FullName],
+          :initialHereTabs => [InitialHere],
+          :lastNameTabs => [LastName],
+          :listTabs => [List],
+          :notarizeTabs => [Notarize],
+          :noteTabs => [Note],
+          :numberTabs => [Float],
+          :radioGroupTabs => [RadioGroup],
+          :signerAttachmentTabs => [SignerAttachment],
+          :signHereTabs => [SignHere],
+          :ssnTabs => [Ssn],
+          :tabGroups => [TabGroup],
+          :textTabs => [Text],
+          :titleTabs => [Title],
+          :viewTabs => [View],
+          :zipTabs => [Zip]
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.EnvelopeRecipientTabs do
   import DocuSign.Deserializer
+
   def decode(value, options) do
     value
     |> deserialize(:approveTabs, :list, DocuSign.Model.Approve, options)

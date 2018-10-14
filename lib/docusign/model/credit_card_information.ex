@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.CreditCardInformation do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -18,17 +18,18 @@ defmodule DocuSign.Model.CreditCardInformation do
   ]
 
   @type t :: %__MODULE__{
-    :address => AddressInformation,
-    :cardNumber => String.t,
-    :cardType => String.t,
-    :expirationMonth => String.t,
-    :expirationYear => String.t,
-    :nameOnCard => String.t
-  }
+          :address => AddressInformation,
+          :cardNumber => String.t(),
+          :cardType => String.t(),
+          :expirationMonth => String.t(),
+          :expirationYear => String.t(),
+          :nameOnCard => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.CreditCardInformation do
   import DocuSign.Deserializer
+
   def decode(value, options) do
     value
     |> deserialize(:address, :struct, DocuSign.Model.AddressInformation, options)

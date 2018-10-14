@@ -27,26 +27,27 @@ defmodule DocuSign.Model.EventNotification do
   ]
 
   @type t :: %__MODULE__{
-    :envelopeEvents => [EnvelopeEvent],
-    :includeCertificateOfCompletion => String.t,
-    :includeCertificateWithSoap => String.t,
-    :includeDocumentFields => String.t,
-    :includeDocuments => String.t,
-    :includeEnvelopeVoidReason => String.t,
-    :includeSenderAccountAsCustomField => String.t,
-    :includeTimeZone => String.t,
-    :loggingEnabled => String.t,
-    :recipientEvents => [RecipientEvent],
-    :requireAcknowledgment => String.t,
-    :signMessageWithX509Cert => String.t,
-    :soapNameSpace => String.t,
-    :url => String.t,
-    :useSoapInterface => String.t
-  }
+          :envelopeEvents => [EnvelopeEvent],
+          :includeCertificateOfCompletion => String.t(),
+          :includeCertificateWithSoap => String.t(),
+          :includeDocumentFields => String.t(),
+          :includeDocuments => String.t(),
+          :includeEnvelopeVoidReason => String.t(),
+          :includeSenderAccountAsCustomField => String.t(),
+          :includeTimeZone => String.t(),
+          :loggingEnabled => String.t(),
+          :recipientEvents => [RecipientEvent],
+          :requireAcknowledgment => String.t(),
+          :signMessageWithX509Cert => String.t(),
+          :soapNameSpace => String.t(),
+          :url => String.t(),
+          :useSoapInterface => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.EventNotification do
   import DocuSign.Deserializer
+
   def decode(value, options) do
     value
     |> deserialize(:envelopeEvents, :list, DocuSign.Model.EnvelopeEvent, options)

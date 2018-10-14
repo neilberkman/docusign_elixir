@@ -14,9 +14,9 @@ defmodule DocuSign.Model.BccEmailAddress do
   ]
 
   @type t :: %__MODULE__{
-    :bccEmailAddressId => String.t,
-    :email => String.t
-  }
+          :bccEmailAddressId => String.t(),
+          :email => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.BccEmailAddress do

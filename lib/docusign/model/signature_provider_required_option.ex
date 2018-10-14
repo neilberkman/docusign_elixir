@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.SignatureProviderRequiredOption do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -14,9 +14,9 @@ defmodule DocuSign.Model.SignatureProviderRequiredOption do
   ]
 
   @type t :: %__MODULE__{
-    :requiredSignatureProviderOptionIds => [String.t],
-    :signerType => String.t
-  }
+          :requiredSignatureProviderOptionIds => [String.t()],
+          :signerType => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.SignatureProviderRequiredOption do

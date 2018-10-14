@@ -12,7 +12,7 @@ defmodule DocuSign.Api.AccountPasswordRules do
 
   @doc """
   Get the password rules
-  
+
 
   ## Parameters
 
@@ -25,7 +25,11 @@ defmodule DocuSign.Api.AccountPasswordRules do
   {:ok, %DocuSign.Model.AccountPasswordRules{}} on success
   {:error, info} on failure
   """
-  @spec account_password_rules_get_account_password_rules(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.AccountPasswordRules.t} | {:error, Tesla.Env.t}
+  @spec account_password_rules_get_account_password_rules(
+          Tesla.Env.client(),
+          String.t(),
+          keyword()
+        ) :: {:ok, DocuSign.Model.AccountPasswordRules.t()} | {:error, Tesla.Env.t()}
   def account_password_rules_get_account_password_rules(connection, account_id, _opts \\ []) do
     %{}
     |> method(:get)
@@ -37,7 +41,7 @@ defmodule DocuSign.Api.AccountPasswordRules do
 
   @doc """
   Update the password rules
-  
+
 
   ## Parameters
 
@@ -51,11 +55,16 @@ defmodule DocuSign.Api.AccountPasswordRules do
   {:ok, %DocuSign.Model.AccountPasswordRules{}} on success
   {:error, info} on failure
   """
-  @spec account_password_rules_put_account_password_rules(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.AccountPasswordRules.t} | {:error, Tesla.Env.t}
+  @spec account_password_rules_put_account_password_rules(
+          Tesla.Env.client(),
+          String.t(),
+          keyword()
+        ) :: {:ok, DocuSign.Model.AccountPasswordRules.t()} | {:error, Tesla.Env.t()}
   def account_password_rules_put_account_password_rules(connection, account_id, opts \\ []) do
     optional_params = %{
       AccountPasswordRules: :body
     }
+
     %{}
     |> method(:put)
     |> url("/v2/accounts/#{account_id}/settings/password_rules")
@@ -67,7 +76,7 @@ defmodule DocuSign.Api.AccountPasswordRules do
 
   @doc """
   Get membership account password rules
-  
+
 
   ## Parameters
 
@@ -79,7 +88,8 @@ defmodule DocuSign.Api.AccountPasswordRules do
   {:ok, %DocuSign.Model.UserPasswordRules{}} on success
   {:error, info} on failure
   """
-  @spec password_rules_get_password_rules(Tesla.Env.client, keyword()) :: {:ok, DocuSign.Model.UserPasswordRules.t} | {:error, Tesla.Env.t}
+  @spec password_rules_get_password_rules(Tesla.Env.client(), keyword()) ::
+          {:ok, DocuSign.Model.UserPasswordRules.t()} | {:error, Tesla.Env.t()}
   def password_rules_get_password_rules(connection, _opts \\ []) do
     %{}
     |> method(:get)

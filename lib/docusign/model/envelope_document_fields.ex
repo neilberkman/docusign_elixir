@@ -13,12 +13,13 @@ defmodule DocuSign.Model.EnvelopeDocumentFields do
   ]
 
   @type t :: %__MODULE__{
-    :documentFields => [NameValue]
-  }
+          :documentFields => [NameValue]
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.EnvelopeDocumentFields do
   import DocuSign.Deserializer
+
   def decode(value, options) do
     value
     |> deserialize(:documentFields, :list, DocuSign.Model.NameValue, options)
