@@ -27,11 +27,13 @@ defmodule DocuSign.Api.EnvelopeDocuments do
   {:ok, %DocuSign.Model.EnvelopeDocuments{}} on success
   {:error, info} on failure
   """
-  @spec documents_delete_documents(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeDocuments.t} | {:error, Tesla.Env.t}
+  @spec documents_delete_documents(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+          {:ok, DocuSign.Model.EnvelopeDocuments.t()} | {:error, Tesla.Env.t()}
   def documents_delete_documents(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
       envelopeDefinition: :body
     }
+
     %{}
     |> method(:delete)
     |> url("/v2/accounts/#{account_id}/envelopes/#{envelope_id}/documents")
@@ -65,7 +67,8 @@ defmodule DocuSign.Api.EnvelopeDocuments do
   {:ok, %DocuSign.Model.String.t{}} on success
   {:error, info} on failure
   """
-  @spec documents_get_document(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, String.t} | {:error, Tesla.Env.t}
+  @spec documents_get_document(Tesla.Env.client(), String.t(), String.t(), String.t(), keyword()) ::
+          {:ok, String.t()} | {:error, Tesla.Env.t()}
   def documents_get_document(connection, account_id, document_id, envelope_id, opts \\ []) do
     optional_params = %{
       certificate: :query,
@@ -76,6 +79,7 @@ defmodule DocuSign.Api.EnvelopeDocuments do
       show_changes: :query,
       watermark: :query
     }
+
     %{}
     |> method(:get)
     |> url("/v2/accounts/#{account_id}/envelopes/#{envelope_id}/documents/#{document_id}")
@@ -101,7 +105,8 @@ defmodule DocuSign.Api.EnvelopeDocuments do
   {:ok, %DocuSign.Model.EnvelopeDocuments{}} on success
   {:error, info} on failure
   """
-  @spec documents_get_documents(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeDocuments.t} | {:error, Tesla.Env.t}
+  @spec documents_get_documents(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+          {:ok, DocuSign.Model.EnvelopeDocuments.t()} | {:error, Tesla.Env.t()}
   def documents_get_documents(connection, account_id, envelope_id, _opts \\ []) do
     %{}
     |> method(:get)
@@ -129,11 +134,13 @@ defmodule DocuSign.Api.EnvelopeDocuments do
   {:ok, %{}} on success
   {:error, info} on failure
   """
-  @spec documents_put_document(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, nil} | {:error, Tesla.Env.t}
+  @spec documents_put_document(Tesla.Env.client(), String.t(), String.t(), String.t(), keyword()) ::
+          {:ok, nil} | {:error, Tesla.Env.t()}
   def documents_put_document(connection, account_id, document_id, envelope_id, opts \\ []) do
     optional_params = %{
       apply_document_fields: :query
     }
+
     %{}
     |> method(:put)
     |> url("/v2/accounts/#{account_id}/envelopes/#{envelope_id}/documents/#{document_id}")
@@ -162,13 +169,15 @@ defmodule DocuSign.Api.EnvelopeDocuments do
   {:ok, %DocuSign.Model.EnvelopeDocuments{}} on success
   {:error, info} on failure
   """
-  @spec documents_put_documents(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeDocuments.t} | {:error, Tesla.Env.t}
+  @spec documents_put_documents(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+          {:ok, DocuSign.Model.EnvelopeDocuments.t()} | {:error, Tesla.Env.t()}
   def documents_put_documents(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
       apply_document_fields: :query,
       persist_tabs: :query,
       envelopeDefinition: :body
     }
+
     %{}
     |> method(:put)
     |> url("/v2/accounts/#{account_id}/envelopes/#{envelope_id}/documents")

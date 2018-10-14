@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.AccountSignatureProviderOption do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -15,10 +15,10 @@ defmodule DocuSign.Model.AccountSignatureProviderOption do
   ]
 
   @type t :: %__MODULE__{
-    :signatureProviderOptionDisplayName => String.t,
-    :signatureProviderOptionId => String.t,
-    :signatureProviderOptionName => String.t
-  }
+          :signatureProviderOptionDisplayName => String.t(),
+          :signatureProviderOptionId => String.t(),
+          :signatureProviderOptionName => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.AccountSignatureProviderOption do

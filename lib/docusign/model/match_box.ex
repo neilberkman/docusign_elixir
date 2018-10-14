@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.MatchBox do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -17,12 +17,12 @@ defmodule DocuSign.Model.MatchBox do
   ]
 
   @type t :: %__MODULE__{
-    :height => integer(),
-    :pageNumber => integer(),
-    :width => integer(),
-    :xPosition => integer(),
-    :yPosition => integer()
-  }
+          :height => integer(),
+          :pageNumber => integer(),
+          :width => integer(),
+          :xPosition => integer(),
+          :yPosition => integer()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.MatchBox do

@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.CustomFieldsEnvelope do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -14,13 +14,14 @@ defmodule DocuSign.Model.CustomFieldsEnvelope do
   ]
 
   @type t :: %__MODULE__{
-    :listCustomFields => [ListCustomField],
-    :textCustomFields => [TextCustomField]
-  }
+          :listCustomFields => [ListCustomField],
+          :textCustomFields => [TextCustomField]
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.CustomFieldsEnvelope do
   import DocuSign.Deserializer
+
   def decode(value, options) do
     value
     |> deserialize(:listCustomFields, :list, DocuSign.Model.ListCustomField, options)

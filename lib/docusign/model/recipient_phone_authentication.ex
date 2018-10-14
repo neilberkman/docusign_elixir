@@ -16,11 +16,11 @@ defmodule DocuSign.Model.RecipientPhoneAuthentication do
   ]
 
   @type t :: %__MODULE__{
-    :recipMayProvideNumber => String.t,
-    :recordVoicePrint => String.t,
-    :senderProvidedNumbers => [String.t],
-    :validateRecipProvidedNumber => String.t
-  }
+          :recipMayProvideNumber => String.t(),
+          :recordVoicePrint => String.t(),
+          :senderProvidedNumbers => [String.t()],
+          :validateRecipProvidedNumber => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.RecipientPhoneAuthentication do

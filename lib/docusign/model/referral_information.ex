@@ -30,25 +30,25 @@ defmodule DocuSign.Model.ReferralInformation do
   ]
 
   @type t :: %__MODULE__{
-    :advertisementId => String.t,
-    :enableSupport => String.t,
-    :externalOrgId => String.t,
-    :groupMemberId => String.t,
-    :idType => String.t,
-    :includedSeats => String.t,
-    :industry => String.t,
-    :planStartMonth => String.t,
-    :promoCode => String.t,
-    :publisherId => String.t,
-    :referralCode => String.t,
-    :referrerName => String.t,
-    :saleDiscountAmount => String.t,
-    :saleDiscountFixedAmount => String.t,
-    :saleDiscountPercent => String.t,
-    :saleDiscountPeriods => String.t,
-    :saleDiscountSeatPriceOverride => String.t,
-    :shopperId => String.t
-  }
+          :advertisementId => String.t(),
+          :enableSupport => String.t(),
+          :externalOrgId => String.t(),
+          :groupMemberId => String.t(),
+          :idType => String.t(),
+          :includedSeats => String.t(),
+          :industry => String.t(),
+          :planStartMonth => String.t(),
+          :promoCode => String.t(),
+          :publisherId => String.t(),
+          :referralCode => String.t(),
+          :referrerName => String.t(),
+          :saleDiscountAmount => String.t(),
+          :saleDiscountFixedAmount => String.t(),
+          :saleDiscountPercent => String.t(),
+          :saleDiscountPeriods => String.t(),
+          :saleDiscountSeatPriceOverride => String.t(),
+          :shopperId => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.ReferralInformation do

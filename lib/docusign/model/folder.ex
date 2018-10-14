@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.Folder do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -24,23 +24,24 @@ defmodule DocuSign.Model.Folder do
   ]
 
   @type t :: %__MODULE__{
-    :errorDetails => ErrorDetails,
-    :filter => Filter,
-    :folderId => String.t,
-    :folders => [Folder],
-    :name => String.t,
-    :ownerEmail => String.t,
-    :ownerUserId => String.t,
-    :ownerUserName => String.t,
-    :parentFolderId => String.t,
-    :parentFolderUri => String.t,
-    :type => String.t,
-    :uri => String.t
-  }
+          :errorDetails => ErrorDetails,
+          :filter => Filter,
+          :folderId => String.t(),
+          :folders => [Folder],
+          :name => String.t(),
+          :ownerEmail => String.t(),
+          :ownerUserId => String.t(),
+          :ownerUserName => String.t(),
+          :parentFolderId => String.t(),
+          :parentFolderUri => String.t(),
+          :type => String.t(),
+          :uri => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.Folder do
   import DocuSign.Deserializer
+
   def decode(value, options) do
     value
     |> deserialize(:errorDetails, :struct, DocuSign.Model.ErrorDetails, options)

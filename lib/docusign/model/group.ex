@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.Group do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -18,17 +18,18 @@ defmodule DocuSign.Model.Group do
   ]
 
   @type t :: %__MODULE__{
-    :errorDetails => ErrorDetails,
-    :groupId => String.t,
-    :groupName => String.t,
-    :groupType => String.t,
-    :permissionProfileId => String.t,
-    :users => [UserInfo]
-  }
+          :errorDetails => ErrorDetails,
+          :groupId => String.t(),
+          :groupName => String.t(),
+          :groupType => String.t(),
+          :permissionProfileId => String.t(),
+          :users => [UserInfo]
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.Group do
   import DocuSign.Deserializer
+
   def decode(value, options) do
     value
     |> deserialize(:errorDetails, :struct, DocuSign.Model.ErrorDetails, options)

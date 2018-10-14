@@ -28,11 +28,29 @@ defmodule DocuSign.Api.EnvelopeTemplates do
   {:ok, %{}} on success
   {:error, info} on failure
   """
-  @spec templates_delete_document_templates(Tesla.Env.client, String.t, String.t, String.t, String.t, keyword()) :: {:ok, nil} | {:error, Tesla.Env.t}
-  def templates_delete_document_templates(connection, account_id, document_id, envelope_id, template_id, _opts \\ []) do
+  @spec templates_delete_document_templates(
+          Tesla.Env.client(),
+          String.t(),
+          String.t(),
+          String.t(),
+          String.t(),
+          keyword()
+        ) :: {:ok, nil} | {:error, Tesla.Env.t()}
+  def templates_delete_document_templates(
+        connection,
+        account_id,
+        document_id,
+        envelope_id,
+        template_id,
+        _opts \\ []
+      ) do
     %{}
     |> method(:delete)
-    |> url("/v2/accounts/#{account_id}/envelopes/#{envelope_id}/documents/#{document_id}/templates/#{template_id}")
+    |> url(
+      "/v2/accounts/#{account_id}/envelopes/#{envelope_id}/documents/#{document_id}/templates/#{
+        template_id
+      }"
+    )
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> decode(false)
@@ -56,14 +74,29 @@ defmodule DocuSign.Api.EnvelopeTemplates do
   {:ok, %DocuSign.Model.EnvelopeTemplates{}} on success
   {:error, info} on failure
   """
-  @spec templates_get_document_templates(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeTemplates.t} | {:error, Tesla.Env.t}
-  def templates_get_document_templates(connection, account_id, document_id, envelope_id, opts \\ []) do
+  @spec templates_get_document_templates(
+          Tesla.Env.client(),
+          String.t(),
+          String.t(),
+          String.t(),
+          keyword()
+        ) :: {:ok, DocuSign.Model.EnvelopeTemplates.t()} | {:error, Tesla.Env.t()}
+  def templates_get_document_templates(
+        connection,
+        account_id,
+        document_id,
+        envelope_id,
+        opts \\ []
+      ) do
     optional_params = %{
       include: :query
     }
+
     %{}
     |> method(:get)
-    |> url("/v2/accounts/#{account_id}/envelopes/#{envelope_id}/documents/#{document_id}/templates")
+    |> url(
+      "/v2/accounts/#{account_id}/envelopes/#{envelope_id}/documents/#{document_id}/templates"
+    )
     |> add_optional_params(optional_params, opts)
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
@@ -87,11 +120,13 @@ defmodule DocuSign.Api.EnvelopeTemplates do
   {:ok, %DocuSign.Model.EnvelopeTemplates{}} on success
   {:error, info} on failure
   """
-  @spec templates_get_envelope_templates(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeTemplates.t} | {:error, Tesla.Env.t}
+  @spec templates_get_envelope_templates(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+          {:ok, DocuSign.Model.EnvelopeTemplates.t()} | {:error, Tesla.Env.t()}
   def templates_get_envelope_templates(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
       include: :query
     }
+
     %{}
     |> method(:get)
     |> url("/v2/accounts/#{account_id}/envelopes/#{envelope_id}/templates")
@@ -119,14 +154,29 @@ defmodule DocuSign.Api.EnvelopeTemplates do
   {:ok, %DocuSign.Model.DocumentTemplateList{}} on success
   {:error, info} on failure
   """
-  @spec templates_post_document_templates(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.DocumentTemplateList.t} | {:error, Tesla.Env.t}
-  def templates_post_document_templates(connection, account_id, document_id, envelope_id, opts \\ []) do
+  @spec templates_post_document_templates(
+          Tesla.Env.client(),
+          String.t(),
+          String.t(),
+          String.t(),
+          keyword()
+        ) :: {:ok, DocuSign.Model.DocumentTemplateList.t()} | {:error, Tesla.Env.t()}
+  def templates_post_document_templates(
+        connection,
+        account_id,
+        document_id,
+        envelope_id,
+        opts \\ []
+      ) do
     optional_params = %{
       documentTemplateList: :body
     }
+
     %{}
     |> method(:post)
-    |> url("/v2/accounts/#{account_id}/envelopes/#{envelope_id}/documents/#{document_id}/templates")
+    |> url(
+      "/v2/accounts/#{account_id}/envelopes/#{envelope_id}/documents/#{document_id}/templates"
+    )
     |> add_optional_params(optional_params, opts)
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
@@ -150,11 +200,13 @@ defmodule DocuSign.Api.EnvelopeTemplates do
   {:ok, %DocuSign.Model.DocumentTemplateList{}} on success
   {:error, info} on failure
   """
-  @spec templates_post_envelope_templates(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.DocumentTemplateList.t} | {:error, Tesla.Env.t}
+  @spec templates_post_envelope_templates(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+          {:ok, DocuSign.Model.DocumentTemplateList.t()} | {:error, Tesla.Env.t()}
   def templates_post_envelope_templates(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
       documentTemplateList: :body
     }
+
     %{}
     |> method(:post)
     |> url("/v2/accounts/#{account_id}/envelopes/#{envelope_id}/templates")

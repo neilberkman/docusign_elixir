@@ -26,8 +26,18 @@ defmodule DocuSign.Api.Templates do
   {:ok, %DocuSign.Model.Notification{}} on success
   {:error, info} on failure
   """
-  @spec notification_get_templates_template_id_notification(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.Notification.t} | {:error, Tesla.Env.t}
-  def notification_get_templates_template_id_notification(connection, account_id, template_id, _opts \\ []) do
+  @spec notification_get_templates_template_id_notification(
+          Tesla.Env.client(),
+          String.t(),
+          String.t(),
+          keyword()
+        ) :: {:ok, DocuSign.Model.Notification.t()} | {:error, Tesla.Env.t()}
+  def notification_get_templates_template_id_notification(
+        connection,
+        account_id,
+        template_id,
+        _opts \\ []
+      ) do
     %{}
     |> method(:get)
     |> url("/v2/accounts/#{account_id}/templates/#{template_id}/notification")
@@ -53,11 +63,22 @@ defmodule DocuSign.Api.Templates do
   {:ok, %DocuSign.Model.Notification{}} on success
   {:error, info} on failure
   """
-  @spec notification_put_templates_template_id_notification(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.Notification.t} | {:error, Tesla.Env.t}
-  def notification_put_templates_template_id_notification(connection, account_id, template_id, opts \\ []) do
+  @spec notification_put_templates_template_id_notification(
+          Tesla.Env.client(),
+          String.t(),
+          String.t(),
+          keyword()
+        ) :: {:ok, DocuSign.Model.Notification.t()} | {:error, Tesla.Env.t()}
+  def notification_put_templates_template_id_notification(
+        connection,
+        account_id,
+        template_id,
+        opts \\ []
+      ) do
     optional_params = %{
       templateNotificationRequest: :body
     }
+
     %{}
     |> method(:put)
     |> url("/v2/accounts/#{account_id}/templates/#{template_id}/notification")
@@ -86,14 +107,33 @@ defmodule DocuSign.Api.Templates do
   {:ok, %{}} on success
   {:error, info} on failure
   """
-  @spec pages_delete_template_page(Tesla.Env.client, String.t, String.t, String.t, String.t, keyword()) :: {:ok, nil} | {:error, Tesla.Env.t}
-  def pages_delete_template_page(connection, account_id, document_id, page_number, template_id, opts \\ []) do
+  @spec pages_delete_template_page(
+          Tesla.Env.client(),
+          String.t(),
+          String.t(),
+          String.t(),
+          String.t(),
+          keyword()
+        ) :: {:ok, nil} | {:error, Tesla.Env.t()}
+  def pages_delete_template_page(
+        connection,
+        account_id,
+        document_id,
+        page_number,
+        template_id,
+        opts \\ []
+      ) do
     optional_params = %{
       pageRequest: :body
     }
+
     %{}
     |> method(:delete)
-    |> url("/v2/accounts/#{account_id}/templates/#{template_id}/documents/#{document_id}/pages/#{page_number}")
+    |> url(
+      "/v2/accounts/#{account_id}/templates/#{template_id}/documents/#{document_id}/pages/#{
+        page_number
+      }"
+    )
     |> add_optional_params(optional_params, opts)
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
@@ -122,17 +162,36 @@ defmodule DocuSign.Api.Templates do
   {:ok, %DocuSign.Model.String.t{}} on success
   {:error, info} on failure
   """
-  @spec pages_get_template_page_image(Tesla.Env.client, String.t, String.t, String.t, String.t, keyword()) :: {:ok, String.t} | {:error, Tesla.Env.t}
-  def pages_get_template_page_image(connection, account_id, document_id, page_number, template_id, opts \\ []) do
+  @spec pages_get_template_page_image(
+          Tesla.Env.client(),
+          String.t(),
+          String.t(),
+          String.t(),
+          String.t(),
+          keyword()
+        ) :: {:ok, String.t()} | {:error, Tesla.Env.t()}
+  def pages_get_template_page_image(
+        connection,
+        account_id,
+        document_id,
+        page_number,
+        template_id,
+        opts \\ []
+      ) do
     optional_params = %{
       dpi: :query,
       max_height: :query,
       max_width: :query,
       show_changes: :query
     }
+
     %{}
     |> method(:get)
-    |> url("/v2/accounts/#{account_id}/templates/#{template_id}/documents/#{document_id}/pages/#{page_number}/page_image")
+    |> url(
+      "/v2/accounts/#{account_id}/templates/#{template_id}/documents/#{document_id}/pages/#{
+        page_number
+      }/page_image"
+    )
     |> add_optional_params(optional_params, opts)
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
@@ -141,7 +200,7 @@ defmodule DocuSign.Api.Templates do
 
   @doc """
   Returns document page image(s) based on input.
-  
+
 
   ## Parameters
 
@@ -163,7 +222,13 @@ defmodule DocuSign.Api.Templates do
   {:ok, %DocuSign.Model.PageImages{}} on success
   {:error, info} on failure
   """
-  @spec pages_get_template_page_images(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.PageImages.t} | {:error, Tesla.Env.t}
+  @spec pages_get_template_page_images(
+          Tesla.Env.client(),
+          String.t(),
+          String.t(),
+          String.t(),
+          keyword()
+        ) :: {:ok, DocuSign.Model.PageImages.t()} | {:error, Tesla.Env.t()}
   def pages_get_template_page_images(connection, account_id, document_id, template_id, opts \\ []) do
     optional_params = %{
       count: :query,
@@ -174,6 +239,7 @@ defmodule DocuSign.Api.Templates do
       show_changes: :query,
       start_position: :query
     }
+
     %{}
     |> method(:get)
     |> url("/v2/accounts/#{account_id}/templates/#{template_id}/documents/#{document_id}/pages")
@@ -202,14 +268,33 @@ defmodule DocuSign.Api.Templates do
   {:ok, %{}} on success
   {:error, info} on failure
   """
-  @spec pages_put_template_page_image(Tesla.Env.client, String.t, String.t, String.t, String.t, keyword()) :: {:ok, nil} | {:error, Tesla.Env.t}
-  def pages_put_template_page_image(connection, account_id, document_id, page_number, template_id, opts \\ []) do
+  @spec pages_put_template_page_image(
+          Tesla.Env.client(),
+          String.t(),
+          String.t(),
+          String.t(),
+          String.t(),
+          keyword()
+        ) :: {:ok, nil} | {:error, Tesla.Env.t()}
+  def pages_put_template_page_image(
+        connection,
+        account_id,
+        document_id,
+        page_number,
+        template_id,
+        opts \\ []
+      ) do
     optional_params = %{
       pageRequest: :body
     }
+
     %{}
     |> method(:put)
-    |> url("/v2/accounts/#{account_id}/templates/#{template_id}/documents/#{document_id}/pages/#{page_number}/page_image")
+    |> url(
+      "/v2/accounts/#{account_id}/templates/#{template_id}/documents/#{document_id}/pages/#{
+        page_number
+      }/page_image"
+    )
     |> add_optional_params(optional_params, opts)
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
@@ -234,11 +319,24 @@ defmodule DocuSign.Api.Templates do
   {:ok, %DocuSign.Model.Groups{}} on success
   {:error, info} on failure
   """
-  @spec templates_delete_template_part(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.Groups.t} | {:error, Tesla.Env.t}
-  def templates_delete_template_part(connection, account_id, template_id, template_part, opts \\ []) do
+  @spec templates_delete_template_part(
+          Tesla.Env.client(),
+          String.t(),
+          String.t(),
+          String.t(),
+          keyword()
+        ) :: {:ok, DocuSign.Model.Groups.t()} | {:error, Tesla.Env.t()}
+  def templates_delete_template_part(
+        connection,
+        account_id,
+        template_id,
+        template_part,
+        opts \\ []
+      ) do
     optional_params = %{
       Groups: :body
     }
+
     %{}
     |> method(:delete)
     |> url("/v2/accounts/#{account_id}/templates/#{template_id}/#{template_part}")
@@ -265,11 +363,13 @@ defmodule DocuSign.Api.Templates do
   {:ok, %DocuSign.Model.Templates{}} on success
   {:error, info} on failure
   """
-  @spec templates_get_template(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.Templates.t} | {:error, Tesla.Env.t}
+  @spec templates_get_template(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+          {:ok, DocuSign.Model.Templates.t()} | {:error, Tesla.Env.t()}
   def templates_get_template(connection, account_id, template_id, opts \\ []) do
     optional_params = %{
       include: :query
     }
+
     %{}
     |> method(:get)
     |> url("/v2/accounts/#{account_id}/templates/#{template_id}")
@@ -311,7 +411,8 @@ defmodule DocuSign.Api.Templates do
   {:ok, %DocuSign.Model.EnvelopeTemplateResults{}} on success
   {:error, info} on failure
   """
-  @spec templates_get_templates(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeTemplateResults.t} | {:error, Tesla.Env.t}
+  @spec templates_get_templates(Tesla.Env.client(), String.t(), keyword()) ::
+          {:ok, DocuSign.Model.EnvelopeTemplateResults.t()} | {:error, Tesla.Env.t()}
   def templates_get_templates(connection, account_id, opts \\ []) do
     optional_params = %{
       count: :query,
@@ -332,6 +433,7 @@ defmodule DocuSign.Api.Templates do
       user_filter: :query,
       user_id: :query
     }
+
     %{}
     |> method(:get)
     |> url("/v2/accounts/#{account_id}/templates")
@@ -357,11 +459,13 @@ defmodule DocuSign.Api.Templates do
   {:ok, %DocuSign.Model.TemplateSummary{}} on success
   {:error, info} on failure
   """
-  @spec templates_post_templates(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.TemplateSummary.t} | {:error, Tesla.Env.t}
+  @spec templates_post_templates(Tesla.Env.client(), String.t(), keyword()) ::
+          {:ok, DocuSign.Model.TemplateSummary.t()} | {:error, Tesla.Env.t()}
   def templates_post_templates(connection, account_id, opts \\ []) do
     optional_params = %{
       Templates: :body
     }
+
     %{}
     |> method(:post)
     |> url("/v2/accounts/#{account_id}/templates")
@@ -388,11 +492,13 @@ defmodule DocuSign.Api.Templates do
   {:ok, %DocuSign.Model.TemplateUpdateSummary{}} on success
   {:error, info} on failure
   """
-  @spec templates_put_template(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.TemplateUpdateSummary.t} | {:error, Tesla.Env.t}
+  @spec templates_put_template(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+          {:ok, DocuSign.Model.TemplateUpdateSummary.t()} | {:error, Tesla.Env.t()}
   def templates_put_template(connection, account_id, template_id, opts \\ []) do
     optional_params = %{
       Templates: :body
     }
+
     %{}
     |> method(:put)
     |> url("/v2/accounts/#{account_id}/templates/#{template_id}")
@@ -420,11 +526,18 @@ defmodule DocuSign.Api.Templates do
   {:ok, %DocuSign.Model.Groups{}} on success
   {:error, info} on failure
   """
-  @spec templates_put_template_part(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.Groups.t} | {:error, Tesla.Env.t}
+  @spec templates_put_template_part(
+          Tesla.Env.client(),
+          String.t(),
+          String.t(),
+          String.t(),
+          keyword()
+        ) :: {:ok, DocuSign.Model.Groups.t()} | {:error, Tesla.Env.t()}
   def templates_put_template_part(connection, account_id, template_id, template_part, opts \\ []) do
     optional_params = %{
       Groups: :body
     }
+
     %{}
     |> method(:put)
     |> url("/v2/accounts/#{account_id}/templates/#{template_id}/#{template_part}")

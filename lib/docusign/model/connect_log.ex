@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.ConnectLog do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -30,29 +30,30 @@ defmodule DocuSign.Model.ConnectLog do
   ]
 
   @type t :: %__MODULE__{
-    :accountId => String.t,
-    :configUrl => String.t,
-    :connectDebugLog => [ConnectDebugLog],
-    :connectId => String.t,
-    :created => String.t,
-    :email => String.t,
-    :envelopeId => String.t,
-    :error => String.t,
-    :failureId => String.t,
-    :failureUri => String.t,
-    :lastTry => String.t,
-    :logId => String.t,
-    :logUri => String.t,
-    :retryCount => String.t,
-    :retryUri => String.t,
-    :status => String.t,
-    :subject => String.t,
-    :userName => String.t
-  }
+          :accountId => String.t(),
+          :configUrl => String.t(),
+          :connectDebugLog => [ConnectDebugLog],
+          :connectId => String.t(),
+          :created => String.t(),
+          :email => String.t(),
+          :envelopeId => String.t(),
+          :error => String.t(),
+          :failureId => String.t(),
+          :failureUri => String.t(),
+          :lastTry => String.t(),
+          :logId => String.t(),
+          :logUri => String.t(),
+          :retryCount => String.t(),
+          :retryUri => String.t(),
+          :status => String.t(),
+          :subject => String.t(),
+          :userName => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.ConnectLog do
   import DocuSign.Deserializer
+
   def decode(value, options) do
     value
     |> deserialize(:connectDebugLog, :list, DocuSign.Model.ConnectDebugLog, options)

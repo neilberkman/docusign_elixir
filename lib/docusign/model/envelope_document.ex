@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.EnvelopeDocument do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -28,27 +28,28 @@ defmodule DocuSign.Model.EnvelopeDocument do
   ]
 
   @type t :: %__MODULE__{
-    :attachmentTabId => String.t,
-    :authoritativeCopy => String.t,
-    :availableDocumentTypes => [SignatureType],
-    :containsPdfFormFields => String.t,
-    :display => String.t,
-    :documentFields => [NameValue],
-    :documentGroup => String.t,
-    :documentId => String.t,
-    :errorDetails => ErrorDetails,
-    :includeInDownload => String.t,
-    :name => String.t,
-    :order => String.t,
-    :pages => String.t,
-    :signerMustAcknowledge => String.t,
-    :type => String.t,
-    :uri => String.t
-  }
+          :attachmentTabId => String.t(),
+          :authoritativeCopy => String.t(),
+          :availableDocumentTypes => [SignatureType],
+          :containsPdfFormFields => String.t(),
+          :display => String.t(),
+          :documentFields => [NameValue],
+          :documentGroup => String.t(),
+          :documentId => String.t(),
+          :errorDetails => ErrorDetails,
+          :includeInDownload => String.t(),
+          :name => String.t(),
+          :order => String.t(),
+          :pages => String.t(),
+          :signerMustAcknowledge => String.t(),
+          :type => String.t(),
+          :uri => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.EnvelopeDocument do
   import DocuSign.Deserializer
+
   def decode(value, options) do
     value
     |> deserialize(:availableDocumentTypes, :list, DocuSign.Model.SignatureType, options)

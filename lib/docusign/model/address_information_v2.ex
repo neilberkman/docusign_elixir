@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.AddressInformationV2 do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -20,15 +20,15 @@ defmodule DocuSign.Model.AddressInformationV2 do
   ]
 
   @type t :: %__MODULE__{
-    :address1 => String.t,
-    :address2 => String.t,
-    :city => String.t,
-    :country => String.t,
-    :fax => String.t,
-    :phone => String.t,
-    :postalCode => String.t,
-    :stateOrProvince => String.t
-  }
+          :address1 => String.t(),
+          :address2 => String.t(),
+          :city => String.t(),
+          :country => String.t(),
+          :fax => String.t(),
+          :phone => String.t(),
+          :postalCode => String.t(),
+          :stateOrProvince => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.AddressInformationV2 do

@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.AccountPasswordMinimumPasswordAgeDays do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -14,9 +14,9 @@ defmodule DocuSign.Model.AccountPasswordMinimumPasswordAgeDays do
   ]
 
   @type t :: %__MODULE__{
-    :maximumAge => String.t,
-    :minimumAge => String.t
-  }
+          :maximumAge => String.t(),
+          :minimumAge => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.AccountPasswordMinimumPasswordAgeDays do

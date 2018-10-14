@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.UserSettingsInformation do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -16,20 +16,36 @@ defmodule DocuSign.Model.UserSettingsInformation do
   ]
 
   @type t :: %__MODULE__{
-    :accountManagementGranular => UserAccountManagementGranularInformation,
-    :senderEmailNotifications => SenderEmailNotifications,
-    :signerEmailNotifications => SignerEmailNotifications,
-    :userSettings => [NameValue]
-  }
+          :accountManagementGranular => UserAccountManagementGranularInformation,
+          :senderEmailNotifications => SenderEmailNotifications,
+          :signerEmailNotifications => SignerEmailNotifications,
+          :userSettings => [NameValue]
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.UserSettingsInformation do
   import DocuSign.Deserializer
+
   def decode(value, options) do
     value
-    |> deserialize(:accountManagementGranular, :struct, DocuSign.Model.UserAccountManagementGranularInformation, options)
-    |> deserialize(:senderEmailNotifications, :struct, DocuSign.Model.SenderEmailNotifications, options)
-    |> deserialize(:signerEmailNotifications, :struct, DocuSign.Model.SignerEmailNotifications, options)
+    |> deserialize(
+      :accountManagementGranular,
+      :struct,
+      DocuSign.Model.UserAccountManagementGranularInformation,
+      options
+    )
+    |> deserialize(
+      :senderEmailNotifications,
+      :struct,
+      DocuSign.Model.SenderEmailNotifications,
+      options
+    )
+    |> deserialize(
+      :signerEmailNotifications,
+      :struct,
+      DocuSign.Model.SignerEmailNotifications,
+      options
+    )
     |> deserialize(:userSettings, :list, DocuSign.Model.NameValue, options)
   end
 end

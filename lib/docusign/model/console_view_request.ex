@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.ConsoleViewRequest do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -14,9 +14,9 @@ defmodule DocuSign.Model.ConsoleViewRequest do
   ]
 
   @type t :: %__MODULE__{
-    :envelopeId => String.t,
-    :returnUrl => String.t
-  }
+          :envelopeId => String.t(),
+          :returnUrl => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.ConsoleViewRequest do

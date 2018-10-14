@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.UserPasswordRules do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -14,13 +14,14 @@ defmodule DocuSign.Model.UserPasswordRules do
   ]
 
   @type t :: %__MODULE__{
-    :passwordRules => AccountPasswordRules,
-    :userId => String.t
-  }
+          :passwordRules => AccountPasswordRules,
+          :userId => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.UserPasswordRules do
   import DocuSign.Deserializer
+
   def decode(value, options) do
     value
     |> deserialize(:passwordRules, :struct, DocuSign.Model.AccountPasswordRules, options)

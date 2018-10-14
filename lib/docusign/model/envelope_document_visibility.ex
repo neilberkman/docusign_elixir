@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.EnvelopeDocumentVisibility do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -13,12 +13,13 @@ defmodule DocuSign.Model.EnvelopeDocumentVisibility do
   ]
 
   @type t :: %__MODULE__{
-    :documentVisibility => [DocumentVisibility]
-  }
+          :documentVisibility => [DocumentVisibility]
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.EnvelopeDocumentVisibility do
   import DocuSign.Deserializer
+
   def decode(value, options) do
     value
     |> deserialize(:documentVisibility, :list, DocuSign.Model.DocumentVisibility, options)

@@ -28,11 +28,24 @@ defmodule DocuSign.Api.EnvelopeDocumentFields do
   {:ok, %DocuSign.Model.EnvelopeDocumentFields{}} on success
   {:error, info} on failure
   """
-  @spec document_fields_delete_document_fields(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeDocumentFields.t} | {:error, Tesla.Env.t}
-  def document_fields_delete_document_fields(connection, account_id, document_id, envelope_id, opts \\ []) do
+  @spec document_fields_delete_document_fields(
+          Tesla.Env.client(),
+          String.t(),
+          String.t(),
+          String.t(),
+          keyword()
+        ) :: {:ok, DocuSign.Model.EnvelopeDocumentFields.t()} | {:error, Tesla.Env.t()}
+  def document_fields_delete_document_fields(
+        connection,
+        account_id,
+        document_id,
+        envelope_id,
+        opts \\ []
+      ) do
     optional_params = %{
       EnvelopeDocumentFields: :body
     }
+
     %{}
     |> method(:delete)
     |> url("/v2/accounts/#{account_id}/envelopes/#{envelope_id}/documents/#{document_id}/fields")
@@ -59,8 +72,20 @@ defmodule DocuSign.Api.EnvelopeDocumentFields do
   {:ok, %DocuSign.Model.EnvelopeDocumentFields{}} on success
   {:error, info} on failure
   """
-  @spec document_fields_get_document_fields(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeDocumentFields.t} | {:error, Tesla.Env.t}
-  def document_fields_get_document_fields(connection, account_id, document_id, envelope_id, _opts \\ []) do
+  @spec document_fields_get_document_fields(
+          Tesla.Env.client(),
+          String.t(),
+          String.t(),
+          String.t(),
+          keyword()
+        ) :: {:ok, DocuSign.Model.EnvelopeDocumentFields.t()} | {:error, Tesla.Env.t()}
+  def document_fields_get_document_fields(
+        connection,
+        account_id,
+        document_id,
+        envelope_id,
+        _opts \\ []
+      ) do
     %{}
     |> method(:get)
     |> url("/v2/accounts/#{account_id}/envelopes/#{envelope_id}/documents/#{document_id}/fields")
@@ -87,11 +112,24 @@ defmodule DocuSign.Api.EnvelopeDocumentFields do
   {:ok, %DocuSign.Model.EnvelopeDocumentFields{}} on success
   {:error, info} on failure
   """
-  @spec document_fields_post_document_fields(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeDocumentFields.t} | {:error, Tesla.Env.t}
-  def document_fields_post_document_fields(connection, account_id, document_id, envelope_id, opts \\ []) do
+  @spec document_fields_post_document_fields(
+          Tesla.Env.client(),
+          String.t(),
+          String.t(),
+          String.t(),
+          keyword()
+        ) :: {:ok, DocuSign.Model.EnvelopeDocumentFields.t()} | {:error, Tesla.Env.t()}
+  def document_fields_post_document_fields(
+        connection,
+        account_id,
+        document_id,
+        envelope_id,
+        opts \\ []
+      ) do
     optional_params = %{
       EnvelopeDocumentFields: :body
     }
+
     %{}
     |> method(:post)
     |> url("/v2/accounts/#{account_id}/envelopes/#{envelope_id}/documents/#{document_id}/fields")
@@ -119,11 +157,24 @@ defmodule DocuSign.Api.EnvelopeDocumentFields do
   {:ok, %DocuSign.Model.EnvelopeDocumentFields{}} on success
   {:error, info} on failure
   """
-  @spec document_fields_put_document_fields(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeDocumentFields.t} | {:error, Tesla.Env.t}
-  def document_fields_put_document_fields(connection, account_id, document_id, envelope_id, opts \\ []) do
+  @spec document_fields_put_document_fields(
+          Tesla.Env.client(),
+          String.t(),
+          String.t(),
+          String.t(),
+          keyword()
+        ) :: {:ok, DocuSign.Model.EnvelopeDocumentFields.t()} | {:error, Tesla.Env.t()}
+  def document_fields_put_document_fields(
+        connection,
+        account_id,
+        document_id,
+        envelope_id,
+        opts \\ []
+      ) do
     optional_params = %{
       EnvelopeDocumentFields: :body
     }
+
     %{}
     |> method(:put)
     |> url("/v2/accounts/#{account_id}/envelopes/#{envelope_id}/documents/#{document_id}/fields")

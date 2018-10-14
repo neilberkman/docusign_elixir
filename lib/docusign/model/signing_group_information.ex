@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.SigningGroupInformation do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -13,12 +13,13 @@ defmodule DocuSign.Model.SigningGroupInformation do
   ]
 
   @type t :: %__MODULE__{
-    :groups => [SigningGroups]
-  }
+          :groups => [SigningGroups]
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.SigningGroupInformation do
   import DocuSign.Deserializer
+
   def decode(value, options) do
     value
     |> deserialize(:groups, :list, DocuSign.Model.SigningGroups, options)

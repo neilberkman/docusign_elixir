@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.PowerFormRecipient do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -25,20 +25,20 @@ defmodule DocuSign.Model.PowerFormRecipient do
   ]
 
   @type t :: %__MODULE__{
-    :accessCode => String.t,
-    :accessCodeLocked => String.t,
-    :accessCodeRequired => String.t,
-    :email => String.t,
-    :emailLocked => String.t,
-    :idCheckConfigurationName => String.t,
-    :idCheckRequired => String.t,
-    :name => String.t,
-    :recipientType => String.t,
-    :roleName => String.t,
-    :routingOrder => String.t,
-    :templateRequiresIdLookup => String.t,
-    :userNameLocked => String.t
-  }
+          :accessCode => String.t(),
+          :accessCodeLocked => String.t(),
+          :accessCodeRequired => String.t(),
+          :email => String.t(),
+          :emailLocked => String.t(),
+          :idCheckConfigurationName => String.t(),
+          :idCheckRequired => String.t(),
+          :name => String.t(),
+          :recipientType => String.t(),
+          :roleName => String.t(),
+          :routingOrder => String.t(),
+          :templateRequiresIdLookup => String.t(),
+          :userNameLocked => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.PowerFormRecipient do

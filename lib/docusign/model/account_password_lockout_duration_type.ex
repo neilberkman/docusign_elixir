@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.AccountPasswordLockoutDurationType do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -13,8 +13,8 @@ defmodule DocuSign.Model.AccountPasswordLockoutDurationType do
   ]
 
   @type t :: %__MODULE__{
-    :options => [String.t]
-  }
+          :options => [String.t()]
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.AccountPasswordLockoutDurationType do

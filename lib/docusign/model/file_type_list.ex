@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.FileTypeList do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -13,12 +13,13 @@ defmodule DocuSign.Model.FileTypeList do
   ]
 
   @type t :: %__MODULE__{
-    :fileTypes => [FileType]
-  }
+          :fileTypes => [FileType]
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.FileTypeList do
   import DocuSign.Deserializer
+
   def decode(value, options) do
     value
     |> deserialize(:fileTypes, :list, DocuSign.Model.FileType, options)

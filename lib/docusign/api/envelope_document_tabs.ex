@@ -12,7 +12,7 @@ defmodule DocuSign.Api.EnvelopeDocumentTabs do
 
   @doc """
   Returns tabs on the document.
-  
+
 
   ## Parameters
 
@@ -28,11 +28,13 @@ defmodule DocuSign.Api.EnvelopeDocumentTabs do
   {:ok, %DocuSign.Model.EnvelopeDocumentTabs{}} on success
   {:error, info} on failure
   """
-  @spec tabs_get_document_tabs(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeDocumentTabs.t} | {:error, Tesla.Env.t}
+  @spec tabs_get_document_tabs(Tesla.Env.client(), String.t(), String.t(), String.t(), keyword()) ::
+          {:ok, DocuSign.Model.EnvelopeDocumentTabs.t()} | {:error, Tesla.Env.t()}
   def tabs_get_document_tabs(connection, account_id, document_id, envelope_id, opts \\ []) do
     optional_params = %{
       page_numbers: :query
     }
+
     %{}
     |> method(:get)
     |> url("/v2/accounts/#{account_id}/envelopes/#{envelope_id}/documents/#{document_id}/tabs")
@@ -44,7 +46,7 @@ defmodule DocuSign.Api.EnvelopeDocumentTabs do
 
   @doc """
   Returns tabs on the specified page.
-  
+
 
   ## Parameters
 
@@ -60,11 +62,29 @@ defmodule DocuSign.Api.EnvelopeDocumentTabs do
   {:ok, %DocuSign.Model.EnvelopeDocumentTabs{}} on success
   {:error, info} on failure
   """
-  @spec tabs_get_page_tabs(Tesla.Env.client, String.t, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeDocumentTabs.t} | {:error, Tesla.Env.t}
-  def tabs_get_page_tabs(connection, account_id, document_id, envelope_id, page_number, _opts \\ []) do
+  @spec tabs_get_page_tabs(
+          Tesla.Env.client(),
+          String.t(),
+          String.t(),
+          String.t(),
+          String.t(),
+          keyword()
+        ) :: {:ok, DocuSign.Model.EnvelopeDocumentTabs.t()} | {:error, Tesla.Env.t()}
+  def tabs_get_page_tabs(
+        connection,
+        account_id,
+        document_id,
+        envelope_id,
+        page_number,
+        _opts \\ []
+      ) do
     %{}
     |> method(:get)
-    |> url("/v2/accounts/#{account_id}/envelopes/#{envelope_id}/documents/#{document_id}/pages/#{page_number}/tabs")
+    |> url(
+      "/v2/accounts/#{account_id}/envelopes/#{envelope_id}/documents/#{document_id}/pages/#{
+        page_number
+      }/tabs"
+    )
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> decode(%DocuSign.Model.EnvelopeDocumentTabs{})

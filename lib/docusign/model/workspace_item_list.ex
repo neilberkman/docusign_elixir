@@ -13,12 +13,13 @@ defmodule DocuSign.Model.WorkspaceItemList do
   ]
 
   @type t :: %__MODULE__{
-    :items => [WorkspaceItems]
-  }
+          :items => [WorkspaceItems]
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.WorkspaceItemList do
   import DocuSign.Deserializer
+
   def decode(value, options) do
     value
     |> deserialize(:items, :list, DocuSign.Model.WorkspaceItems, options)

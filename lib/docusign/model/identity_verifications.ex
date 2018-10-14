@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.IdentityVerifications do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -13,14 +13,20 @@ defmodule DocuSign.Model.IdentityVerifications do
   ]
 
   @type t :: %__MODULE__{
-    :identityVerification => [AccountIdentityVerificationWorkflow]
-  }
+          :identityVerification => [AccountIdentityVerificationWorkflow]
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.IdentityVerifications do
   import DocuSign.Deserializer
+
   def decode(value, options) do
     value
-    |> deserialize(:identityVerification, :list, DocuSign.Model.AccountIdentityVerificationWorkflow, options)
+    |> deserialize(
+      :identityVerification,
+      :list,
+      DocuSign.Model.AccountIdentityVerificationWorkflow,
+      options
+    )
   end
 end

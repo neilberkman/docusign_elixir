@@ -12,7 +12,7 @@ defmodule DocuSign.Api.AccountWatermarks do
 
   @doc """
   Get watermark information.
-  
+
 
   ## Parameters
 
@@ -25,7 +25,8 @@ defmodule DocuSign.Api.AccountWatermarks do
   {:ok, %DocuSign.Model.AccountWatermarks{}} on success
   {:error, info} on failure
   """
-  @spec watermark_get_watermark(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.AccountWatermarks.t} | {:error, Tesla.Env.t}
+  @spec watermark_get_watermark(Tesla.Env.client(), String.t(), keyword()) ::
+          {:ok, DocuSign.Model.AccountWatermarks.t()} | {:error, Tesla.Env.t()}
   def watermark_get_watermark(connection, account_id, _opts \\ []) do
     %{}
     |> method(:get)
@@ -37,7 +38,7 @@ defmodule DocuSign.Api.AccountWatermarks do
 
   @doc """
   Get watermark preview.
-  
+
 
   ## Parameters
 
@@ -51,11 +52,13 @@ defmodule DocuSign.Api.AccountWatermarks do
   {:ok, %DocuSign.Model.AccountWatermarks{}} on success
   {:error, info} on failure
   """
-  @spec watermark_preview_put_watermark_preview(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.AccountWatermarks.t} | {:error, Tesla.Env.t}
+  @spec watermark_preview_put_watermark_preview(Tesla.Env.client(), String.t(), keyword()) ::
+          {:ok, DocuSign.Model.AccountWatermarks.t()} | {:error, Tesla.Env.t()}
   def watermark_preview_put_watermark_preview(connection, account_id, opts \\ []) do
     optional_params = %{
       AccountWatermarks: :body
     }
+
     %{}
     |> method(:put)
     |> url("/v2/accounts/#{account_id}/watermark/preview")
@@ -67,7 +70,7 @@ defmodule DocuSign.Api.AccountWatermarks do
 
   @doc """
   Update watermark information.
-  
+
 
   ## Parameters
 
@@ -81,11 +84,13 @@ defmodule DocuSign.Api.AccountWatermarks do
   {:ok, %DocuSign.Model.AccountWatermarks{}} on success
   {:error, info} on failure
   """
-  @spec watermark_put_watermark(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.AccountWatermarks.t} | {:error, Tesla.Env.t}
+  @spec watermark_put_watermark(Tesla.Env.client(), String.t(), keyword()) ::
+          {:ok, DocuSign.Model.AccountWatermarks.t()} | {:error, Tesla.Env.t()}
   def watermark_put_watermark(connection, account_id, opts \\ []) do
     optional_params = %{
       AccountWatermarks: :body
     }
+
     %{}
     |> method(:put)
     |> url("/v2/accounts/#{account_id}/watermark")

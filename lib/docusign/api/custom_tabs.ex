@@ -26,7 +26,8 @@ defmodule DocuSign.Api.CustomTabs do
   {:ok, %{}} on success
   {:error, info} on failure
   """
-  @spec tab_delete_custom_tab(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, nil} | {:error, Tesla.Env.t}
+  @spec tab_delete_custom_tab(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+          {:ok, nil} | {:error, Tesla.Env.t()}
   def tab_delete_custom_tab(connection, account_id, custom_tab_id, _opts \\ []) do
     %{}
     |> method(:delete)
@@ -52,7 +53,8 @@ defmodule DocuSign.Api.CustomTabs do
   {:ok, %DocuSign.Model.CustomTabs{}} on success
   {:error, info} on failure
   """
-  @spec tab_get_custom_tab(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.CustomTabs.t} | {:error, Tesla.Env.t}
+  @spec tab_get_custom_tab(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+          {:ok, DocuSign.Model.CustomTabs.t()} | {:error, Tesla.Env.t()}
   def tab_get_custom_tab(connection, account_id, custom_tab_id, _opts \\ []) do
     %{}
     |> method(:get)
@@ -79,11 +81,13 @@ defmodule DocuSign.Api.CustomTabs do
   {:ok, %DocuSign.Model.CustomTabs{}} on success
   {:error, info} on failure
   """
-  @spec tab_put_custom_tab(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.CustomTabs.t} | {:error, Tesla.Env.t}
+  @spec tab_put_custom_tab(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+          {:ok, DocuSign.Model.CustomTabs.t()} | {:error, Tesla.Env.t()}
   def tab_put_custom_tab(connection, account_id, custom_tab_id, opts \\ []) do
     optional_params = %{
       CustomTabs: :body
     }
+
     %{}
     |> method(:put)
     |> url("/v2/accounts/#{account_id}/tab_definitions/#{custom_tab_id}")
@@ -109,11 +113,13 @@ defmodule DocuSign.Api.CustomTabs do
   {:ok, %DocuSign.Model.TabMetadataList{}} on success
   {:error, info} on failure
   """
-  @spec tabs_get_tab_definitions(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.TabMetadataList.t} | {:error, Tesla.Env.t}
+  @spec tabs_get_tab_definitions(Tesla.Env.client(), String.t(), keyword()) ::
+          {:ok, DocuSign.Model.TabMetadataList.t()} | {:error, Tesla.Env.t()}
   def tabs_get_tab_definitions(connection, account_id, opts \\ []) do
     optional_params = %{
       custom_tab_only: :query
     }
+
     %{}
     |> method(:get)
     |> url("/v2/accounts/#{account_id}/tab_definitions")
@@ -139,11 +145,13 @@ defmodule DocuSign.Api.CustomTabs do
   {:ok, %DocuSign.Model.CustomTabs{}} on success
   {:error, info} on failure
   """
-  @spec tabs_post_tab_definitions(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.CustomTabs.t} | {:error, Tesla.Env.t}
+  @spec tabs_post_tab_definitions(Tesla.Env.client(), String.t(), keyword()) ::
+          {:ok, DocuSign.Model.CustomTabs.t()} | {:error, Tesla.Env.t()}
   def tabs_post_tab_definitions(connection, account_id, opts \\ []) do
     optional_params = %{
       CustomTabs: :body
     }
+
     %{}
     |> method(:post)
     |> url("/v2/accounts/#{account_id}/tab_definitions")

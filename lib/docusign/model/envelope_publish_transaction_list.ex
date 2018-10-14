@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.EnvelopePublishTransactionList do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -19,20 +19,26 @@ defmodule DocuSign.Model.EnvelopePublishTransactionList do
   ]
 
   @type t :: %__MODULE__{
-    :endPosition => String.t,
-    :envelopePublishTransactions => [EnvelopePublishTransaction],
-    :nextUri => String.t,
-    :previousUri => String.t,
-    :resultSetSize => String.t,
-    :startPosition => String.t,
-    :totalSetSize => String.t
-  }
+          :endPosition => String.t(),
+          :envelopePublishTransactions => [EnvelopePublishTransaction],
+          :nextUri => String.t(),
+          :previousUri => String.t(),
+          :resultSetSize => String.t(),
+          :startPosition => String.t(),
+          :totalSetSize => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.EnvelopePublishTransactionList do
   import DocuSign.Deserializer
+
   def decode(value, options) do
     value
-    |> deserialize(:envelopePublishTransactions, :list, DocuSign.Model.EnvelopePublishTransaction, options)
+    |> deserialize(
+      :envelopePublishTransactions,
+      :list,
+      DocuSign.Model.EnvelopePublishTransaction,
+      options
+    )
   end
 end

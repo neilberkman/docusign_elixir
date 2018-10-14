@@ -12,7 +12,7 @@ defmodule DocuSign.Api.TemplateDocumentTabs do
 
   @doc """
   Returns tabs on the document.
-  
+
 
   ## Parameters
 
@@ -28,11 +28,24 @@ defmodule DocuSign.Api.TemplateDocumentTabs do
   {:ok, %DocuSign.Model.TemplateDocumentTabs{}} on success
   {:error, info} on failure
   """
-  @spec tabs_get_template_document_tabs(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.TemplateDocumentTabs.t} | {:error, Tesla.Env.t}
-  def tabs_get_template_document_tabs(connection, account_id, document_id, template_id, opts \\ []) do
+  @spec tabs_get_template_document_tabs(
+          Tesla.Env.client(),
+          String.t(),
+          String.t(),
+          String.t(),
+          keyword()
+        ) :: {:ok, DocuSign.Model.TemplateDocumentTabs.t()} | {:error, Tesla.Env.t()}
+  def tabs_get_template_document_tabs(
+        connection,
+        account_id,
+        document_id,
+        template_id,
+        opts \\ []
+      ) do
     optional_params = %{
       page_numbers: :query
     }
+
     %{}
     |> method(:get)
     |> url("/v2/accounts/#{account_id}/templates/#{template_id}/documents/#{document_id}/tabs")
@@ -44,7 +57,7 @@ defmodule DocuSign.Api.TemplateDocumentTabs do
 
   @doc """
   Returns tabs on the specified page.
-  
+
 
   ## Parameters
 
@@ -60,11 +73,29 @@ defmodule DocuSign.Api.TemplateDocumentTabs do
   {:ok, %DocuSign.Model.TemplateDocumentTabs{}} on success
   {:error, info} on failure
   """
-  @spec tabs_get_template_page_tabs(Tesla.Env.client, String.t, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.TemplateDocumentTabs.t} | {:error, Tesla.Env.t}
-  def tabs_get_template_page_tabs(connection, account_id, document_id, page_number, template_id, _opts \\ []) do
+  @spec tabs_get_template_page_tabs(
+          Tesla.Env.client(),
+          String.t(),
+          String.t(),
+          String.t(),
+          String.t(),
+          keyword()
+        ) :: {:ok, DocuSign.Model.TemplateDocumentTabs.t()} | {:error, Tesla.Env.t()}
+  def tabs_get_template_page_tabs(
+        connection,
+        account_id,
+        document_id,
+        page_number,
+        template_id,
+        _opts \\ []
+      ) do
     %{}
     |> method(:get)
-    |> url("/v2/accounts/#{account_id}/templates/#{template_id}/documents/#{document_id}/pages/#{page_number}/tabs")
+    |> url(
+      "/v2/accounts/#{account_id}/templates/#{template_id}/documents/#{document_id}/pages/#{
+        page_number
+      }/tabs"
+    )
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> decode(%DocuSign.Model.TemplateDocumentTabs{})
