@@ -2,7 +2,7 @@ defmodule DocuSign.MixProject do
   @moduledoc false
   use Mix.Project
 
-  @version "0.1.1"
+  @version "0.1.2"
   @url "https://github.com/TandemEquity/docusign_elixir"
   @maintainers [
     "Neil Berkman",
@@ -45,6 +45,7 @@ defmodule DocuSign.MixProject do
       {:bypass, "~> 0.8.1"},
 
       # dev
+      {:ex_doc, ">= 0.0.0", only: :dev},
       {:credo, "~> 0.10.0", only: [:dev, :test], runtime: false}
     ]
   end
