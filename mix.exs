@@ -2,7 +2,7 @@ defmodule DocuSign.MixProject do
   @moduledoc false
   use Mix.Project
 
-  @version "0.1.2"
+  @version "0.1.3"
   @url "https://github.com/TandemEquity/docusign_elixir"
   @maintainers [
     "Neil Berkman",

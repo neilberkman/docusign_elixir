@@ -17,3 +17,7 @@ end
 ```
 
 The docs can be found at [https://hexdocs.pm/docusign](https://hexdocs.pm/docusign).
+
+## JWT Authorization Example
+
+See the [Elixir sample](https://github.com/tandemequity/docusign_elixir_sample_app) for an example Elixir SDK implementation that uses the JWT bearer grant to authenticate.
