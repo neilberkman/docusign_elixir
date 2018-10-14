@@ -3,7 +3,9 @@
 # Do not edit the class manually.
 
 defmodule DocuSign.Model.Province do
-  @moduledoc false
+  @moduledoc """
+  
+  """
 
   @derive [Poison.Encoder]
   defstruct [
@@ -12,9 +14,9 @@ defmodule DocuSign.Model.Province do
   ]
 
   @type t :: %__MODULE__{
-          :isoCode => String.t(),
-          :name => String.t()
-        }
+    :isoCode => String.t,
+    :name => String.t
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.Province do

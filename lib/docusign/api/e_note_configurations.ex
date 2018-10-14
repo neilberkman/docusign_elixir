@@ -12,6 +12,8 @@ defmodule DocuSign.Api.ENoteConfigurations do
 
   @doc """
   Deletes configuration information for the eNote eOriginal integration.
+  
+
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server
@@ -23,11 +25,7 @@ defmodule DocuSign.Api.ENoteConfigurations do
   {:ok, %{}} on success
   {:error, info} on failure
   """
-  @spec e_note_configuration_delete_e_note_configuration(
-          Tesla.Env.client(),
-          String.t(),
-          keyword()
-        ) :: {:ok, nil} | {:error, Tesla.Env.t()}
+  @spec e_note_configuration_delete_e_note_configuration(Tesla.Env.client, String.t, keyword()) :: {:ok, nil} | {:error, Tesla.Env.t}
   def e_note_configuration_delete_e_note_configuration(connection, account_id, _opts \\ []) do
     %{}
     |> method(:delete)
@@ -39,6 +37,8 @@ defmodule DocuSign.Api.ENoteConfigurations do
 
   @doc """
   Returns the configuration information for the eNote eOriginal integration.
+  
+
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server
@@ -50,8 +50,7 @@ defmodule DocuSign.Api.ENoteConfigurations do
   {:ok, %DocuSign.Model.ENoteConfigurations{}} on success
   {:error, info} on failure
   """
-  @spec e_note_configuration_get_e_note_configuration(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ENoteConfigurations.t()} | {:error, Tesla.Env.t()}
+  @spec e_note_configuration_get_e_note_configuration(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.ENoteConfigurations.t} | {:error, Tesla.Env.t}
   def e_note_configuration_get_e_note_configuration(connection, account_id, _opts \\ []) do
     %{}
     |> method(:get)
@@ -63,6 +62,8 @@ defmodule DocuSign.Api.ENoteConfigurations do
 
   @doc """
   Updates configuration information for the eNote eOriginal integration.
+  
+
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server
@@ -75,13 +76,11 @@ defmodule DocuSign.Api.ENoteConfigurations do
   {:ok, %DocuSign.Model.ENoteConfigurations{}} on success
   {:error, info} on failure
   """
-  @spec e_note_configuration_put_e_note_configuration(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ENoteConfigurations.t()} | {:error, Tesla.Env.t()}
+  @spec e_note_configuration_put_e_note_configuration(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.ENoteConfigurations.t} | {:error, Tesla.Env.t}
   def e_note_configuration_put_e_note_configuration(connection, account_id, opts \\ []) do
     optional_params = %{
-      :ENoteConfigurations => :body
+      ENoteConfigurations: :body
     }
-
     %{}
     |> method(:put)
     |> url("/v2/accounts/#{account_id}/settings/enote_configuration")

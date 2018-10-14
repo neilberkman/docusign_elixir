@@ -20,28 +20,22 @@ defmodule DocuSign.Model.EnvelopesInformation do
   ]
 
   @type t :: %__MODULE__{
-          :endPosition => String.t(),
-          :envelopes => [Envelopes],
-          :envelopeTransactionStatuses => [EnvelopeTransactionStatus],
-          :nextUri => String.t(),
-          :previousUri => String.t(),
-          :resultSetSize => String.t(),
-          :startPosition => String.t(),
-          :totalSetSize => String.t()
-        }
+    :endPosition => String.t,
+    :envelopes => [Envelopes],
+    :envelopeTransactionStatuses => [EnvelopeTransactionStatus],
+    :nextUri => String.t,
+    :previousUri => String.t,
+    :resultSetSize => String.t,
+    :startPosition => String.t,
+    :totalSetSize => String.t
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.EnvelopesInformation do
   import DocuSign.Deserializer
-
   def decode(value, options) do
     value
     |> deserialize(:envelopes, :list, DocuSign.Model.Envelopes, options)
-    |> deserialize(
-      :envelopeTransactionStatuses,
-      :list,
-      DocuSign.Model.EnvelopeTransactionStatus,
-      options
-    )
+    |> deserialize(:envelopeTransactionStatuses, :list, DocuSign.Model.EnvelopeTransactionStatus, options)
   end
 end

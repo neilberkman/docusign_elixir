@@ -27,13 +27,11 @@ defmodule DocuSign.Api.TemplateLocks do
   {:ok, %DocuSign.Model.TemplateLocks{}} on success
   {:error, info} on failure
   """
-  @spec lock_delete_template_lock(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.TemplateLocks.t()} | {:error, Tesla.Env.t()}
+  @spec lock_delete_template_lock(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.TemplateLocks.t} | {:error, Tesla.Env.t}
   def lock_delete_template_lock(connection, account_id, template_id, opts \\ []) do
     optional_params = %{
-      :lockRequest => :body
+      lockRequest: :body
     }
-
     %{}
     |> method(:delete)
     |> url("/v2/accounts/#{account_id}/templates/#{template_id}/lock")
@@ -59,8 +57,7 @@ defmodule DocuSign.Api.TemplateLocks do
   {:ok, %DocuSign.Model.TemplateLocks{}} on success
   {:error, info} on failure
   """
-  @spec lock_get_template_lock(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.TemplateLocks.t()} | {:error, Tesla.Env.t()}
+  @spec lock_get_template_lock(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.TemplateLocks.t} | {:error, Tesla.Env.t}
   def lock_get_template_lock(connection, account_id, template_id, _opts \\ []) do
     %{}
     |> method(:get)
@@ -87,13 +84,11 @@ defmodule DocuSign.Api.TemplateLocks do
   {:ok, %DocuSign.Model.TemplateLocks{}} on success
   {:error, info} on failure
   """
-  @spec lock_post_template_lock(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.TemplateLocks.t()} | {:error, Tesla.Env.t()}
+  @spec lock_post_template_lock(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.TemplateLocks.t} | {:error, Tesla.Env.t}
   def lock_post_template_lock(connection, account_id, template_id, opts \\ []) do
     optional_params = %{
-      :lockRequest => :body
+      lockRequest: :body
     }
-
     %{}
     |> method(:post)
     |> url("/v2/accounts/#{account_id}/templates/#{template_id}/lock")
@@ -120,13 +115,11 @@ defmodule DocuSign.Api.TemplateLocks do
   {:ok, %DocuSign.Model.TemplateLocks{}} on success
   {:error, info} on failure
   """
-  @spec lock_put_template_lock(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.TemplateLocks.t()} | {:error, Tesla.Env.t()}
+  @spec lock_put_template_lock(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.TemplateLocks.t} | {:error, Tesla.Env.t}
   def lock_put_template_lock(connection, account_id, template_id, opts \\ []) do
     optional_params = %{
-      :lockRequest => :body
+      lockRequest: :body
     }
-
     %{}
     |> method(:put)
     |> url("/v2/accounts/#{account_id}/templates/#{template_id}/lock")

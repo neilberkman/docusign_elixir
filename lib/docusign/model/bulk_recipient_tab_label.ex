@@ -3,7 +3,9 @@
 # Do not edit the class manually.
 
 defmodule DocuSign.Model.BulkRecipientTabLabel do
-  @moduledoc false
+  @moduledoc """
+  
+  """
 
   @derive [Poison.Encoder]
   defstruct [
@@ -12,9 +14,9 @@ defmodule DocuSign.Model.BulkRecipientTabLabel do
   ]
 
   @type t :: %__MODULE__{
-          :name => String.t(),
-          :value => String.t()
-        }
+    :name => String.t,
+    :value => String.t
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.BulkRecipientTabLabel do

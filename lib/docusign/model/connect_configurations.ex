@@ -33,28 +33,28 @@ defmodule DocuSign.Model.ConnectConfigurations do
   ]
 
   @type t :: %__MODULE__{
-          :allowEnvelopePublish => String.t(),
-          :allUsers => String.t(),
-          :configurationType => String.t(),
-          :connectId => String.t(),
-          :enableLog => String.t(),
-          :envelopeEvents => String.t(),
-          :includeCertificateOfCompletion => String.t(),
-          :includeCertSoapHeader => String.t(),
-          :includeDocumentFields => String.t(),
-          :includeDocuments => String.t(),
-          :includeEnvelopeVoidReason => String.t(),
-          :includeSenderAccountasCustomField => String.t(),
-          :includeTimeZoneInformation => String.t(),
-          :name => String.t(),
-          :recipientEvents => String.t(),
-          :requiresAcknowledgement => String.t(),
-          :signMessageWithX509Certificate => String.t(),
-          :soapNamespace => String.t(),
-          :urlToPublishTo => String.t(),
-          :userIds => String.t(),
-          :useSoapInterface => String.t()
-        }
+    :allowEnvelopePublish => String.t,
+    :allUsers => String.t,
+    :configurationType => String.t,
+    :connectId => String.t,
+    :enableLog => String.t,
+    :envelopeEvents => String.t,
+    :includeCertificateOfCompletion => String.t,
+    :includeCertSoapHeader => String.t,
+    :includeDocumentFields => String.t,
+    :includeDocuments => String.t,
+    :includeEnvelopeVoidReason => String.t,
+    :includeSenderAccountasCustomField => String.t,
+    :includeTimeZoneInformation => String.t,
+    :name => String.t,
+    :recipientEvents => String.t,
+    :requiresAcknowledgement => String.t,
+    :signMessageWithX509Certificate => String.t,
+    :soapNamespace => String.t,
+    :urlToPublishTo => String.t,
+    :userIds => String.t,
+    :useSoapInterface => String.t
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.ConnectConfigurations do

@@ -21,21 +21,20 @@ defmodule DocuSign.Model.PaymentDetails do
   ]
 
   @type t :: %__MODULE__{
-          :allowedPaymentMethods => [String.t()],
-          :chargeId => String.t(),
-          :currencyCode => String.t(),
-          :gatewayAccountId => String.t(),
-          :gatewayDisplayName => String.t(),
-          :gatewayName => String.t(),
-          :lineItems => [PaymentLineItem],
-          :status => String.t(),
-          :total => Money
-        }
+    :allowedPaymentMethods => [String.t],
+    :chargeId => String.t,
+    :currencyCode => String.t,
+    :gatewayAccountId => String.t,
+    :gatewayDisplayName => String.t,
+    :gatewayName => String.t,
+    :lineItems => [PaymentLineItem],
+    :status => String.t,
+    :total => Money
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.PaymentDetails do
   import DocuSign.Deserializer
-
   def decode(value, options) do
     value
     |> deserialize(:lineItems, :list, DocuSign.Model.PaymentLineItem, options)

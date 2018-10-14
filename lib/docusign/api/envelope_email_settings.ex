@@ -26,12 +26,7 @@ defmodule DocuSign.Api.EnvelopeEmailSettings do
   {:ok, %DocuSign.Model.EnvelopeEmailSettings{}} on success
   {:error, info} on failure
   """
-  @spec email_settings_delete_email_settings(
-          Tesla.Env.client(),
-          String.t(),
-          String.t(),
-          keyword()
-        ) :: {:ok, DocuSign.Model.EnvelopeEmailSettings.t()} | {:error, Tesla.Env.t()}
+  @spec email_settings_delete_email_settings(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeEmailSettings.t} | {:error, Tesla.Env.t}
   def email_settings_delete_email_settings(connection, account_id, envelope_id, _opts \\ []) do
     %{}
     |> method(:delete)
@@ -57,8 +52,7 @@ defmodule DocuSign.Api.EnvelopeEmailSettings do
   {:ok, %DocuSign.Model.EnvelopeEmailSettings{}} on success
   {:error, info} on failure
   """
-  @spec email_settings_get_email_settings(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.EnvelopeEmailSettings.t()} | {:error, Tesla.Env.t()}
+  @spec email_settings_get_email_settings(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeEmailSettings.t} | {:error, Tesla.Env.t}
   def email_settings_get_email_settings(connection, account_id, envelope_id, _opts \\ []) do
     %{}
     |> method(:get)
@@ -85,13 +79,11 @@ defmodule DocuSign.Api.EnvelopeEmailSettings do
   {:ok, %DocuSign.Model.EnvelopeEmailSettings{}} on success
   {:error, info} on failure
   """
-  @spec email_settings_post_email_settings(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.EnvelopeEmailSettings.t()} | {:error, Tesla.Env.t()}
+  @spec email_settings_post_email_settings(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeEmailSettings.t} | {:error, Tesla.Env.t}
   def email_settings_post_email_settings(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
-      :EnvelopeEmailSettings => :body
+      EnvelopeEmailSettings: :body
     }
-
     %{}
     |> method(:post)
     |> url("/v2/accounts/#{account_id}/envelopes/#{envelope_id}/email_settings")
@@ -118,13 +110,11 @@ defmodule DocuSign.Api.EnvelopeEmailSettings do
   {:ok, %DocuSign.Model.EnvelopeEmailSettings{}} on success
   {:error, info} on failure
   """
-  @spec email_settings_put_email_settings(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.EnvelopeEmailSettings.t()} | {:error, Tesla.Env.t()}
+  @spec email_settings_put_email_settings(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeEmailSettings.t} | {:error, Tesla.Env.t}
   def email_settings_put_email_settings(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
-      :EnvelopeEmailSettings => :body
+      EnvelopeEmailSettings: :body
     }
-
     %{}
     |> method(:put)
     |> url("/v2/accounts/#{account_id}/envelopes/#{envelope_id}/email_settings")

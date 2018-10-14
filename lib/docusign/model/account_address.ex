@@ -24,24 +24,23 @@ defmodule DocuSign.Model.AccountAddress do
   ]
 
   @type t :: %__MODULE__{
-          :address1 => String.t(),
-          :address2 => String.t(),
-          :city => String.t(),
-          :country => String.t(),
-          :email => String.t(),
-          :fax => String.t(),
-          :firstName => String.t(),
-          :lastName => String.t(),
-          :phone => String.t(),
-          :postalCode => String.t(),
-          :state => String.t(),
-          :supportedCountries => [Country]
-        }
+    :address1 => String.t,
+    :address2 => String.t,
+    :city => String.t,
+    :country => String.t,
+    :email => String.t,
+    :fax => String.t,
+    :firstName => String.t,
+    :lastName => String.t,
+    :phone => String.t,
+    :postalCode => String.t,
+    :state => String.t,
+    :supportedCountries => [Country]
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.AccountAddress do
   import DocuSign.Deserializer
-
   def decode(value, options) do
     value
     |> deserialize(:supportedCountries, :list, DocuSign.Model.Country, options)

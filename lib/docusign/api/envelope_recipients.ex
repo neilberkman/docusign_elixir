@@ -27,13 +27,7 @@ defmodule DocuSign.Api.EnvelopeRecipients do
   {:ok, %DocuSign.Model.EnvelopeRecipients{}} on success
   {:error, info} on failure
   """
-  @spec recipients_delete_recipient(
-          Tesla.Env.client(),
-          String.t(),
-          String.t(),
-          String.t(),
-          keyword()
-        ) :: {:ok, DocuSign.Model.EnvelopeRecipients.t()} | {:error, Tesla.Env.t()}
+  @spec recipients_delete_recipient(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeRecipients.t} | {:error, Tesla.Env.t}
   def recipients_delete_recipient(connection, account_id, envelope_id, recipient_id, _opts \\ []) do
     %{}
     |> method(:delete)
@@ -60,13 +54,11 @@ defmodule DocuSign.Api.EnvelopeRecipients do
   {:ok, %DocuSign.Model.EnvelopeRecipients{}} on success
   {:error, info} on failure
   """
-  @spec recipients_delete_recipients(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.EnvelopeRecipients.t()} | {:error, Tesla.Env.t()}
+  @spec recipients_delete_recipients(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeRecipients.t} | {:error, Tesla.Env.t}
   def recipients_delete_recipients(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
-      :EnvelopeRecipients => :body
+      EnvelopeRecipients: :body
     }
-
     %{}
     |> method(:delete)
     |> url("/v2/accounts/#{account_id}/envelopes/#{envelope_id}/recipients")
@@ -78,7 +70,7 @@ defmodule DocuSign.Api.EnvelopeRecipients do
 
   @doc """
   Gets the status of recipients for an envelope.
-  Retrieves the status of all recipients in a single envelope and identifies the current recipient in the routing list. This method can also be used to retrieve the tab values.  The &#x60;currentRoutingOrder&#x60; property of the response contains the &#x60;routingOrder&#x60; value of the current recipient indicating that the envelope has been sent to the recipient, but the recipient has not completed their actions.
+  Retrieves the status of all recipients in a single envelope and identifies the current recipient in the routing list.   The &#x60;currentRoutingOrder&#x60; property of the response contains the &#x60;routingOrder&#x60; value of the current recipient indicating that the envelope has been sent to the recipient, but the recipient has not completed their actions.
 
   ## Parameters
 
@@ -86,7 +78,7 @@ defmodule DocuSign.Api.EnvelopeRecipients do
   - account_id (String.t): The external account number (int) or account ID Guid.
   - envelope_id (String.t): The envelope&#39;s GUID. Eg 93be49ab-afa0-4adf-933c-f752070d71ec 
   - opts (KeywordList): [optional] Optional parameters
-    - :include_anchor_tab_locations (String.t):  When set to **true** and &#x60;include_tabs&#x60; value is set to **true**, all tabs with anchor tab properties are included in the response. 
+    - :include_anchor_tab_locations (String.t):  When set to **true** and &#x60;include_tabs&#x60; is set to **true**, all tabs with anchor tab properties are included in the response. 
     - :include_extended (String.t):  When set to **true**, the extended properties are included in the response. 
     - :include_tabs (String.t): When set to **true**, the tab information associated with the recipient is included in the response.
 
@@ -95,15 +87,13 @@ defmodule DocuSign.Api.EnvelopeRecipients do
   {:ok, %DocuSign.Model.EnvelopeRecipients{}} on success
   {:error, info} on failure
   """
-  @spec recipients_get_recipients(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.EnvelopeRecipients.t()} | {:error, Tesla.Env.t()}
+  @spec recipients_get_recipients(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeRecipients.t} | {:error, Tesla.Env.t}
   def recipients_get_recipients(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
-      :include_anchor_tab_locations => :query,
-      :include_extended => :query,
-      :include_tabs => :query
+      include_anchor_tab_locations: :query,
+      include_extended: :query,
+      include_tabs: :query
     }
-
     %{}
     |> method(:get)
     |> url("/v2/accounts/#{account_id}/envelopes/#{envelope_id}/recipients")
@@ -131,14 +121,12 @@ defmodule DocuSign.Api.EnvelopeRecipients do
   {:ok, %DocuSign.Model.EnvelopeRecipients{}} on success
   {:error, info} on failure
   """
-  @spec recipients_post_recipients(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.EnvelopeRecipients.t()} | {:error, Tesla.Env.t()}
+  @spec recipients_post_recipients(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeRecipients.t} | {:error, Tesla.Env.t}
   def recipients_post_recipients(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
-      :resend_envelope => :query,
-      :EnvelopeRecipients => :body
+      resend_envelope: :query,
+      EnvelopeRecipients: :body
     }
-
     %{}
     |> method(:post)
     |> url("/v2/accounts/#{account_id}/envelopes/#{envelope_id}/recipients")
@@ -150,7 +138,7 @@ defmodule DocuSign.Api.EnvelopeRecipients do
 
   @doc """
   Updates recipients in a draft envelope or corrects recipient information for an in process envelope.
-  Updates recipients in a draft envelope or corrects recipient information for an in process envelope.   For draft envelopes, you can edit the following properties: &#x60;email&#x60;, &#x60;userName&#x60;, &#x60;routingOrder&#x60;, &#x60;faxNumber&#x60;, &#x60;deliveryMethod&#x60;, &#x60;accessCode&#x60;, and &#x60;requireIdLookup&#x60;.  Once an envelope has been sent, you can only edit: &#x60;email&#x60;, &#x60;userName&#x60;, &#x60;signerName&#x60;, &#x60;signingGroupId&#x60;, &#x60;routingOrder&#x60;, &#x60;faxNumber&#x60;, and &#x60;deliveryMethod&#x60;. You can also select to resend an envelope by using the &#x60;resend_envelope&#x60; option.  If you send information for a recipient that does not already exist in a draft envelope, the recipient is added to the envelope (similar to the POST).
+  Updates recipients in a draft envelope or corrects recipient information for an in process envelope.   For draft envelopes, you can edit the following properties: &#x60;email&#x60;, &#x60;userName&#x60;, &#x60;routingOrder&#x60;, &#x60;faxNumber&#x60;, &#x60;deliveryMethod&#x60;, &#x60;accessCode&#x60;, and &#x60;requireIdLookup&#x60;.  Once an envelope has been sent, you can only edit: &#x60;email&#x60;, &#x60;userName&#x60;, &#x60;signerName&#x60;, &#x60;routingOrder&#x60;, &#x60;faxNumber&#x60;, and &#x60;deliveryMethod&#x60;. You can also select to resend an envelope by using the &#x60;resend_envelope&#x60; option.  If you send information for a recipient that does not already exist in a draft envelope, the recipient is added to the envelope (similar to the POST).
 
   ## Parameters
 
@@ -158,6 +146,7 @@ defmodule DocuSign.Api.EnvelopeRecipients do
   - account_id (String.t): The external account number (int) or account ID Guid.
   - envelope_id (String.t): The envelope&#39;s GUID. Eg 93be49ab-afa0-4adf-933c-f752070d71ec 
   - opts (KeywordList): [optional] Optional parameters
+    - :offline_signing (String.t): 
     - :resend_envelope (String.t): When set to **true**, resends the   envelope if the new recipient&#39;s routing order is before or the same as the envelope&#39;s next recipient.
     - :envelope_recipients (EnvelopeRecipients): 
 
@@ -166,14 +155,13 @@ defmodule DocuSign.Api.EnvelopeRecipients do
   {:ok, %DocuSign.Model.RecipientsUpdateSummary{}} on success
   {:error, info} on failure
   """
-  @spec recipients_put_recipients(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.RecipientsUpdateSummary.t()} | {:error, Tesla.Env.t()}
+  @spec recipients_put_recipients(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.RecipientsUpdateSummary.t} | {:error, Tesla.Env.t}
   def recipients_put_recipients(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
-      :resend_envelope => :query,
-      :EnvelopeRecipients => :body
+      offline_signing: :query,
+      resend_envelope: :query,
+      EnvelopeRecipients: :body
     }
-
     %{}
     |> method(:put)
     |> url("/v2/accounts/#{account_id}/envelopes/#{envelope_id}/recipients")

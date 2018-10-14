@@ -33,19 +33,17 @@ defmodule DocuSign.Api.Folders do
   {:ok, %DocuSign.Model.FolderItemsResponse{}} on success
   {:error, info} on failure
   """
-  @spec folders_get_folder_items(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.FolderItemsResponse.t()} | {:error, Tesla.Env.t()}
+  @spec folders_get_folder_items(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.FolderItemsResponse.t} | {:error, Tesla.Env.t}
   def folders_get_folder_items(connection, account_id, folder_id, opts \\ []) do
     optional_params = %{
-      :from_date => :query,
-      :owner_email => :query,
-      :owner_name => :query,
-      :search_text => :query,
-      :start_position => :query,
-      :status => :query,
-      :to_date => :query
+      from_date: :query,
+      owner_email: :query,
+      owner_name: :query,
+      search_text: :query,
+      start_position: :query,
+      status: :query,
+      to_date: :query
     }
-
     %{}
     |> method(:get)
     |> url("/v2/accounts/#{account_id}/folders/#{folder_id}")
@@ -74,16 +72,14 @@ defmodule DocuSign.Api.Folders do
   {:ok, %DocuSign.Model.Folders{}} on success
   {:error, info} on failure
   """
-  @spec folders_get_folders(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.Folders.t()} | {:error, Tesla.Env.t()}
+  @spec folders_get_folders(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.Folders.t} | {:error, Tesla.Env.t}
   def folders_get_folders(connection, account_id, opts \\ []) do
     optional_params = %{
-      :include => :query,
-      :start_position => :query,
-      :template => :query,
-      :user_filter => :query
+      include: :query,
+      start_position: :query,
+      template: :query,
+      user_filter: :query
     }
-
     %{}
     |> method(:get)
     |> url("/v2/accounts/#{account_id}/folders")
@@ -110,13 +106,11 @@ defmodule DocuSign.Api.Folders do
   {:ok, %DocuSign.Model.Folders{}} on success
   {:error, info} on failure
   """
-  @spec folders_put_folder_by_id(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.Folders.t()} | {:error, Tesla.Env.t()}
+  @spec folders_put_folder_by_id(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.Folders.t} | {:error, Tesla.Env.t}
   def folders_put_folder_by_id(connection, account_id, folder_id, opts \\ []) do
     optional_params = %{
-      :foldersRequest => :body
+      foldersRequest: :body
     }
-
     %{}
     |> method(:put)
     |> url("/v2/accounts/#{account_id}/folders/#{folder_id}")
@@ -150,29 +144,18 @@ defmodule DocuSign.Api.Folders do
   {:ok, %DocuSign.Model.FolderItemResponse{}} on success
   {:error, info} on failure
   """
-  @spec search_folders_get_search_folder_contents(
-          Tesla.Env.client(),
-          String.t(),
-          String.t(),
-          keyword()
-        ) :: {:ok, DocuSign.Model.FolderItemResponse.t()} | {:error, Tesla.Env.t()}
-  def search_folders_get_search_folder_contents(
-        connection,
-        account_id,
-        search_folder_id,
-        opts \\ []
-      ) do
+  @spec search_folders_get_search_folder_contents(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.FolderItemResponse.t} | {:error, Tesla.Env.t}
+  def search_folders_get_search_folder_contents(connection, account_id, search_folder_id, opts \\ []) do
     optional_params = %{
-      :all => :query,
-      :count => :query,
-      :from_date => :query,
-      :include_recipients => :query,
-      :order => :query,
-      :order_by => :query,
-      :start_position => :query,
-      :to_date => :query
+      all: :query,
+      count: :query,
+      from_date: :query,
+      include_recipients: :query,
+      order: :query,
+      order_by: :query,
+      start_position: :query,
+      to_date: :query
     }
-
     %{}
     |> method(:get)
     |> url("/v2/accounts/#{account_id}/search_folders/#{search_folder_id}")

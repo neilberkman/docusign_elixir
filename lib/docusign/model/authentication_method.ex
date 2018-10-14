@@ -16,11 +16,11 @@ defmodule DocuSign.Model.AuthenticationMethod do
   ]
 
   @type t :: %__MODULE__{
-          :authenticationType => String.t(),
-          :lastProvider => String.t(),
-          :lastTimestamp => String.t(),
-          :totalCount => integer()
-        }
+    :authenticationType => String.t,
+    :lastProvider => String.t,
+    :lastTimestamp => String.t,
+    :totalCount => integer()
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.AuthenticationMethod do

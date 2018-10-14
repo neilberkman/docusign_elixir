@@ -13,13 +13,12 @@ defmodule DocuSign.Model.ApiRequestLogsResult do
   ]
 
   @type t :: %__MODULE__{
-          :apiRequestLogs => [ApiRequestLog]
-        }
+    :apiRequestLogs => [ApiRequestLog]
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.ApiRequestLogsResult do
   import DocuSign.Deserializer
-
   def decode(value, options) do
     value
     |> deserialize(:apiRequestLogs, :list, DocuSign.Model.ApiRequestLog, options)

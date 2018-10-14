@@ -9,28 +9,24 @@ defmodule DocuSign.Model.RecipientSignatureProvider do
 
   @derive [Poison.Encoder]
   defstruct [
+    :sealDocumentsWithTabsOnly,
     :sealName,
     :signatureProviderName,
     :signatureProviderOptions
   ]
 
   @type t :: %__MODULE__{
-          :sealName => String.t(),
-          :signatureProviderName => String.t(),
-          :signatureProviderOptions => RecipientSignatureProviderOptions
-        }
+    :sealDocumentsWithTabsOnly => String.t,
+    :sealName => String.t,
+    :signatureProviderName => String.t,
+    :signatureProviderOptions => RecipientSignatureProviderOptions
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.RecipientSignatureProvider do
   import DocuSign.Deserializer
-
   def decode(value, options) do
     value
-    |> deserialize(
-      :signatureProviderOptions,
-      :struct,
-      DocuSign.Model.RecipientSignatureProviderOptions,
-      options
-    )
+    |> deserialize(:signatureProviderOptions, :struct, DocuSign.Model.RecipientSignatureProviderOptions, options)
   end
 end

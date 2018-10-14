@@ -3,7 +3,9 @@
 # Do not edit the class manually.
 
 defmodule DocuSign.Model.PowerFormsFormDataResponse do
-  @moduledoc false
+  @moduledoc """
+  
+  """
 
   @derive [Poison.Encoder]
   defstruct [
@@ -11,13 +13,12 @@ defmodule DocuSign.Model.PowerFormsFormDataResponse do
   ]
 
   @type t :: %__MODULE__{
-          :envelopes => [PowerFormData]
-        }
+    :envelopes => [PowerFormData]
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.PowerFormsFormDataResponse do
   import DocuSign.Deserializer
-
   def decode(value, options) do
     value
     |> deserialize(:envelopes, :list, DocuSign.Model.PowerFormData, options)

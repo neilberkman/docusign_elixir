@@ -27,17 +27,11 @@ defmodule DocuSign.Api.UserSocialAccountLogins do
   {:ok, %{}} on success
   {:error, info} on failure
   """
-  @spec user_social_login_delete_user_social_login(
-          Tesla.Env.client(),
-          String.t(),
-          String.t(),
-          keyword()
-        ) :: {:ok, nil} | {:error, Tesla.Env.t()}
+  @spec user_social_login_delete_user_social_login(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, nil} | {:error, Tesla.Env.t}
   def user_social_login_delete_user_social_login(connection, account_id, user_id, opts \\ []) do
     optional_params = %{
-      :UserSocialAccountLogins => :body
+      UserSocialAccountLogins: :body
     }
-
     %{}
     |> method(:delete)
     |> url("/v2/accounts/#{account_id}/users/#{user_id}/social")
@@ -63,12 +57,7 @@ defmodule DocuSign.Api.UserSocialAccountLogins do
   {:ok, %DocuSign.Model.UserSocialIdResult{}} on success
   {:error, info} on failure
   """
-  @spec user_social_login_get_user_social_login(
-          Tesla.Env.client(),
-          String.t(),
-          String.t(),
-          keyword()
-        ) :: {:ok, DocuSign.Model.UserSocialIdResult.t()} | {:error, Tesla.Env.t()}
+  @spec user_social_login_get_user_social_login(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.UserSocialIdResult.t} | {:error, Tesla.Env.t}
   def user_social_login_get_user_social_login(connection, account_id, user_id, _opts \\ []) do
     %{}
     |> method(:get)
@@ -95,17 +84,11 @@ defmodule DocuSign.Api.UserSocialAccountLogins do
   {:ok, %{}} on success
   {:error, info} on failure
   """
-  @spec user_social_login_put_user_social_login(
-          Tesla.Env.client(),
-          String.t(),
-          String.t(),
-          keyword()
-        ) :: {:ok, nil} | {:error, Tesla.Env.t()}
+  @spec user_social_login_put_user_social_login(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, nil} | {:error, Tesla.Env.t}
   def user_social_login_put_user_social_login(connection, account_id, user_id, opts \\ []) do
     optional_params = %{
-      :UserSocialAccountLogins => :body
+      UserSocialAccountLogins: :body
     }
-
     %{}
     |> method(:put)
     |> url("/v2/accounts/#{account_id}/users/#{user_id}/social")

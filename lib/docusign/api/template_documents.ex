@@ -27,13 +27,11 @@ defmodule DocuSign.Api.TemplateDocuments do
   {:ok, %DocuSign.Model.TemplateDocuments{}} on success
   {:error, info} on failure
   """
-  @spec documents_delete_template_documents(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.TemplateDocuments.t()} | {:error, Tesla.Env.t()}
+  @spec documents_delete_template_documents(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.TemplateDocuments.t} | {:error, Tesla.Env.t}
   def documents_delete_template_documents(connection, account_id, template_id, opts \\ []) do
     optional_params = %{
-      :envelopeDefinition => :body
+      envelopeDefinition: :body
     }
-
     %{}
     |> method(:delete)
     |> url("/v2/accounts/#{account_id}/templates/#{template_id}/documents")
@@ -62,25 +60,12 @@ defmodule DocuSign.Api.TemplateDocuments do
   {:ok, %DocuSign.Model.String.t{}} on success
   {:error, info} on failure
   """
-  @spec documents_get_template_document(
-          Tesla.Env.client(),
-          String.t(),
-          String.t(),
-          String.t(),
-          keyword()
-        ) :: {:ok, String.t()} | {:error, Tesla.Env.t()}
-  def documents_get_template_document(
-        connection,
-        account_id,
-        document_id,
-        template_id,
-        opts \\ []
-      ) do
+  @spec documents_get_template_document(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, String.t} | {:error, Tesla.Env.t}
+  def documents_get_template_document(connection, account_id, document_id, template_id, opts \\ []) do
     optional_params = %{
-      :encrypt => :query,
-      :show_changes => :query
+      encrypt: :query,
+      show_changes: :query
     }
-
     %{}
     |> method(:get)
     |> url("/v2/accounts/#{account_id}/templates/#{template_id}/documents/#{document_id}")
@@ -106,8 +91,7 @@ defmodule DocuSign.Api.TemplateDocuments do
   {:ok, %DocuSign.Model.TemplateDocuments{}} on success
   {:error, info} on failure
   """
-  @spec documents_get_template_documents(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.TemplateDocuments.t()} | {:error, Tesla.Env.t()}
+  @spec documents_get_template_documents(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.TemplateDocuments.t} | {:error, Tesla.Env.t}
   def documents_get_template_documents(connection, account_id, template_id, _opts \\ []) do
     %{}
     |> method(:get)
@@ -137,26 +121,13 @@ defmodule DocuSign.Api.TemplateDocuments do
   {:ok, %DocuSign.Model.EnvelopeDocument{}} on success
   {:error, info} on failure
   """
-  @spec documents_put_template_document(
-          Tesla.Env.client(),
-          String.t(),
-          String.t(),
-          String.t(),
-          keyword()
-        ) :: {:ok, DocuSign.Model.EnvelopeDocument.t()} | {:error, Tesla.Env.t()}
-  def documents_put_template_document(
-        connection,
-        account_id,
-        document_id,
-        template_id,
-        opts \\ []
-      ) do
+  @spec documents_put_template_document(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeDocument.t} | {:error, Tesla.Env.t}
+  def documents_put_template_document(connection, account_id, document_id, template_id, opts \\ []) do
     optional_params = %{
-      :apply_document_fields => :query,
-      :is_envelope_definition => :query,
-      :envelopeDefinition => :body
+      apply_document_fields: :query,
+      is_envelope_definition: :query,
+      envelopeDefinition: :body
     }
-
     %{}
     |> method(:put)
     |> url("/v2/accounts/#{account_id}/templates/#{template_id}/documents/#{document_id}")
@@ -185,15 +156,13 @@ defmodule DocuSign.Api.TemplateDocuments do
   {:ok, %DocuSign.Model.TemplateDocuments{}} on success
   {:error, info} on failure
   """
-  @spec documents_put_template_documents(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.TemplateDocuments.t()} | {:error, Tesla.Env.t()}
+  @spec documents_put_template_documents(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.TemplateDocuments.t} | {:error, Tesla.Env.t}
   def documents_put_template_documents(connection, account_id, template_id, opts \\ []) do
     optional_params = %{
-      :apply_document_fields => :query,
-      :persist_tabs => :query,
-      :envelopeDefinition => :body
+      apply_document_fields: :query,
+      persist_tabs: :query,
+      envelopeDefinition: :body
     }
-
     %{}
     |> method(:put)
     |> url("/v2/accounts/#{account_id}/templates/#{template_id}/documents")

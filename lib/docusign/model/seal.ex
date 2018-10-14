@@ -3,7 +3,9 @@
 # Do not edit the class manually.
 
 defmodule DocuSign.Model.Seal do
-  @moduledoc false
+  @moduledoc """
+  
+  """
 
   @derive [Poison.Encoder]
   defstruct [
@@ -12,9 +14,9 @@ defmodule DocuSign.Model.Seal do
   ]
 
   @type t :: %__MODULE__{
-          :configuration => %{optional(String.t()) => String.t()},
-          :sealIdentifier => String.t()
-        }
+    :configuration => %{optional(String.t) => String.t},
+    :sealIdentifier => String.t
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.Seal do

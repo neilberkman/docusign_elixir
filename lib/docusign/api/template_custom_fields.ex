@@ -27,17 +27,11 @@ defmodule DocuSign.Api.TemplateCustomFields do
   {:ok, %DocuSign.Model.TemplateCustomFields{}} on success
   {:error, info} on failure
   """
-  @spec custom_fields_delete_template_custom_fields(
-          Tesla.Env.client(),
-          String.t(),
-          String.t(),
-          keyword()
-        ) :: {:ok, DocuSign.Model.TemplateCustomFields.t()} | {:error, Tesla.Env.t()}
+  @spec custom_fields_delete_template_custom_fields(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.TemplateCustomFields.t} | {:error, Tesla.Env.t}
   def custom_fields_delete_template_custom_fields(connection, account_id, template_id, opts \\ []) do
     optional_params = %{
-      :templateCustomFields => :body
+      templateCustomFields: :body
     }
-
     %{}
     |> method(:delete)
     |> url("/v2/accounts/#{account_id}/templates/#{template_id}/custom_fields")
@@ -63,12 +57,7 @@ defmodule DocuSign.Api.TemplateCustomFields do
   {:ok, %DocuSign.Model.TemplateCustomFields{}} on success
   {:error, info} on failure
   """
-  @spec custom_fields_get_template_custom_fields(
-          Tesla.Env.client(),
-          String.t(),
-          String.t(),
-          keyword()
-        ) :: {:ok, DocuSign.Model.TemplateCustomFields.t()} | {:error, Tesla.Env.t()}
+  @spec custom_fields_get_template_custom_fields(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.TemplateCustomFields.t} | {:error, Tesla.Env.t}
   def custom_fields_get_template_custom_fields(connection, account_id, template_id, _opts \\ []) do
     %{}
     |> method(:get)
@@ -95,17 +84,11 @@ defmodule DocuSign.Api.TemplateCustomFields do
   {:ok, %DocuSign.Model.TemplateCustomFields{}} on success
   {:error, info} on failure
   """
-  @spec custom_fields_post_template_custom_fields(
-          Tesla.Env.client(),
-          String.t(),
-          String.t(),
-          keyword()
-        ) :: {:ok, DocuSign.Model.TemplateCustomFields.t()} | {:error, Tesla.Env.t()}
+  @spec custom_fields_post_template_custom_fields(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.TemplateCustomFields.t} | {:error, Tesla.Env.t}
   def custom_fields_post_template_custom_fields(connection, account_id, template_id, opts \\ []) do
     optional_params = %{
-      :templateCustomFields => :body
+      templateCustomFields: :body
     }
-
     %{}
     |> method(:post)
     |> url("/v2/accounts/#{account_id}/templates/#{template_id}/custom_fields")
@@ -132,17 +115,11 @@ defmodule DocuSign.Api.TemplateCustomFields do
   {:ok, %DocuSign.Model.TemplateCustomFields{}} on success
   {:error, info} on failure
   """
-  @spec custom_fields_put_template_custom_fields(
-          Tesla.Env.client(),
-          String.t(),
-          String.t(),
-          keyword()
-        ) :: {:ok, DocuSign.Model.TemplateCustomFields.t()} | {:error, Tesla.Env.t()}
+  @spec custom_fields_put_template_custom_fields(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.TemplateCustomFields.t} | {:error, Tesla.Env.t}
   def custom_fields_put_template_custom_fields(connection, account_id, template_id, opts \\ []) do
     optional_params = %{
-      :templateCustomFields => :body
+      templateCustomFields: :body
     }
-
     %{}
     |> method(:put)
     |> url("/v2/accounts/#{account_id}/templates/#{template_id}/custom_fields")

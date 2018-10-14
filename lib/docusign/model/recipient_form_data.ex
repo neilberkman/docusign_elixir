@@ -3,7 +3,9 @@
 # Do not edit the class manually.
 
 defmodule DocuSign.Model.RecipientFormData do
-  @moduledoc false
+  @moduledoc """
+  
+  """
 
   @derive [Poison.Encoder]
   defstruct [
@@ -18,20 +20,19 @@ defmodule DocuSign.Model.RecipientFormData do
   ]
 
   @type t :: %__MODULE__{
-          :declinedTime => String.t(),
-          :deliveredTime => String.t(),
-          :email => String.t(),
-          :formData => [NameValue],
-          :name => String.t(),
-          :recipientId => String.t(),
-          :sentTime => String.t(),
-          :signedTime => String.t()
-        }
+    :declinedTime => String.t,
+    :deliveredTime => String.t,
+    :email => String.t,
+    :formData => [NameValue],
+    :name => String.t,
+    :recipientId => String.t,
+    :sentTime => String.t,
+    :signedTime => String.t
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.RecipientFormData do
   import DocuSign.Deserializer
-
   def decode(value, options) do
     value
     |> deserialize(:formData, :list, DocuSign.Model.NameValue, options)

@@ -27,25 +27,11 @@ defmodule DocuSign.Api.TemplateBulkRecipients do
   {:ok, %DocuSign.Model.BulkRecipientsUpdateResponse{}} on success
   {:error, info} on failure
   """
-  @spec recipients_delete_template_bulk_recipients_file(
-          Tesla.Env.client(),
-          String.t(),
-          String.t(),
-          String.t(),
-          keyword()
-        ) :: {:ok, DocuSign.Model.BulkRecipientsUpdateResponse.t()} | {:error, Tesla.Env.t()}
-  def recipients_delete_template_bulk_recipients_file(
-        connection,
-        account_id,
-        recipient_id,
-        template_id,
-        _opts \\ []
-      ) do
+  @spec recipients_delete_template_bulk_recipients_file(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.BulkRecipientsUpdateResponse.t} | {:error, Tesla.Env.t}
+  def recipients_delete_template_bulk_recipients_file(connection, account_id, recipient_id, template_id, _opts \\ []) do
     %{}
     |> method(:delete)
-    |> url(
-      "/v2/accounts/#{account_id}/templates/#{template_id}/recipients/#{recipient_id}/bulk_recipients"
-    )
+    |> url("/v2/accounts/#{account_id}/templates/#{template_id}/recipients/#{recipient_id}/bulk_recipients")
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> decode(%DocuSign.Model.BulkRecipientsUpdateResponse{})
@@ -70,30 +56,15 @@ defmodule DocuSign.Api.TemplateBulkRecipients do
   {:ok, %DocuSign.Model.TemplateBulkRecipients{}} on success
   {:error, info} on failure
   """
-  @spec recipients_get_template_bulk_recipients(
-          Tesla.Env.client(),
-          String.t(),
-          String.t(),
-          String.t(),
-          keyword()
-        ) :: {:ok, DocuSign.Model.TemplateBulkRecipients.t()} | {:error, Tesla.Env.t()}
-  def recipients_get_template_bulk_recipients(
-        connection,
-        account_id,
-        recipient_id,
-        template_id,
-        opts \\ []
-      ) do
+  @spec recipients_get_template_bulk_recipients(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.TemplateBulkRecipients.t} | {:error, Tesla.Env.t}
+  def recipients_get_template_bulk_recipients(connection, account_id, recipient_id, template_id, opts \\ []) do
     optional_params = %{
-      :include_tabs => :query,
-      :start_position => :query
+      include_tabs: :query,
+      start_position: :query
     }
-
     %{}
     |> method(:get)
-    |> url(
-      "/v2/accounts/#{account_id}/templates/#{template_id}/recipients/#{recipient_id}/bulk_recipients"
-    )
+    |> url("/v2/accounts/#{account_id}/templates/#{template_id}/recipients/#{recipient_id}/bulk_recipients")
     |> add_optional_params(optional_params, opts)
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
@@ -118,29 +89,14 @@ defmodule DocuSign.Api.TemplateBulkRecipients do
   {:ok, %DocuSign.Model.BulkRecipientsSummaryResponse{}} on success
   {:error, info} on failure
   """
-  @spec recipients_put_template_bulk_recipients(
-          Tesla.Env.client(),
-          String.t(),
-          String.t(),
-          String.t(),
-          keyword()
-        ) :: {:ok, DocuSign.Model.BulkRecipientsSummaryResponse.t()} | {:error, Tesla.Env.t()}
-  def recipients_put_template_bulk_recipients(
-        connection,
-        account_id,
-        recipient_id,
-        template_id,
-        opts \\ []
-      ) do
+  @spec recipients_put_template_bulk_recipients(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.BulkRecipientsSummaryResponse.t} | {:error, Tesla.Env.t}
+  def recipients_put_template_bulk_recipients(connection, account_id, recipient_id, template_id, opts \\ []) do
     optional_params = %{
-      :bulkRecipientsRequest => :body
+      bulkRecipientsRequest: :body
     }
-
     %{}
     |> method(:put)
-    |> url(
-      "/v2/accounts/#{account_id}/templates/#{template_id}/recipients/#{recipient_id}/bulk_recipients"
-    )
+    |> url("/v2/accounts/#{account_id}/templates/#{template_id}/recipients/#{recipient_id}/bulk_recipients")
     |> add_optional_params(optional_params, opts)
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()

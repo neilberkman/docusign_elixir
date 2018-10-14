@@ -3,7 +3,9 @@
 # Do not edit the class manually.
 
 defmodule DocuSign.Model.TabMetadataList do
-  @moduledoc false
+  @moduledoc """
+  
+  """
 
   @derive [Poison.Encoder]
   defstruct [
@@ -11,13 +13,12 @@ defmodule DocuSign.Model.TabMetadataList do
   ]
 
   @type t :: %__MODULE__{
-          :tabs => [CustomTabs]
-        }
+    :tabs => [CustomTabs]
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.TabMetadataList do
   import DocuSign.Deserializer
-
   def decode(value, options) do
     value
     |> deserialize(:tabs, :list, DocuSign.Model.CustomTabs, options)

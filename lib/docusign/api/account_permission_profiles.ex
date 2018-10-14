@@ -12,6 +12,8 @@ defmodule DocuSign.Api.AccountPermissionProfiles do
 
   @doc """
   Deletes a permissions profile within the specified account.
+  
+
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server
@@ -24,18 +26,8 @@ defmodule DocuSign.Api.AccountPermissionProfiles do
   {:ok, %{}} on success
   {:error, info} on failure
   """
-  @spec permission_profiles_delete_permission_profiles(
-          Tesla.Env.client(),
-          String.t(),
-          String.t(),
-          keyword()
-        ) :: {:ok, nil} | {:error, Tesla.Env.t()}
-  def permission_profiles_delete_permission_profiles(
-        connection,
-        account_id,
-        permission_profile_id,
-        _opts \\ []
-      ) do
+  @spec permission_profiles_delete_permission_profiles(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, nil} | {:error, Tesla.Env.t}
+  def permission_profiles_delete_permission_profiles(connection, account_id, permission_profile_id, _opts \\ []) do
     %{}
     |> method(:delete)
     |> url("/v2/accounts/#{account_id}/permission_profiles/#{permission_profile_id}")
@@ -46,6 +38,8 @@ defmodule DocuSign.Api.AccountPermissionProfiles do
 
   @doc """
   Returns a permissions profile in the specified account.
+  
+
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server
@@ -59,22 +53,11 @@ defmodule DocuSign.Api.AccountPermissionProfiles do
   {:ok, %DocuSign.Model.AccountPermissionProfiles{}} on success
   {:error, info} on failure
   """
-  @spec permission_profiles_get_permission_profile(
-          Tesla.Env.client(),
-          String.t(),
-          String.t(),
-          keyword()
-        ) :: {:ok, DocuSign.Model.AccountPermissionProfiles.t()} | {:error, Tesla.Env.t()}
-  def permission_profiles_get_permission_profile(
-        connection,
-        account_id,
-        permission_profile_id,
-        opts \\ []
-      ) do
+  @spec permission_profiles_get_permission_profile(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.AccountPermissionProfiles.t} | {:error, Tesla.Env.t}
+  def permission_profiles_get_permission_profile(connection, account_id, permission_profile_id, opts \\ []) do
     optional_params = %{
-      :include => :query
+      include: :query
     }
-
     %{}
     |> method(:get)
     |> url("/v2/accounts/#{account_id}/permission_profiles/#{permission_profile_id}")
@@ -100,13 +83,11 @@ defmodule DocuSign.Api.AccountPermissionProfiles do
   {:ok, %DocuSign.Model.PermissionProfileInformation{}} on success
   {:error, info} on failure
   """
-  @spec permission_profiles_get_permission_profiles(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.PermissionProfileInformation.t()} | {:error, Tesla.Env.t()}
+  @spec permission_profiles_get_permission_profiles(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.PermissionProfileInformation.t} | {:error, Tesla.Env.t}
   def permission_profiles_get_permission_profiles(connection, account_id, opts \\ []) do
     optional_params = %{
-      :include => :query
+      include: :query
     }
-
     %{}
     |> method(:get)
     |> url("/v2/accounts/#{account_id}/permission_profiles")
@@ -118,6 +99,8 @@ defmodule DocuSign.Api.AccountPermissionProfiles do
 
   @doc """
   Creates a new permission profile in the specified account.
+  
+
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server
@@ -131,14 +114,12 @@ defmodule DocuSign.Api.AccountPermissionProfiles do
   {:ok, %DocuSign.Model.AccountPermissionProfiles{}} on success
   {:error, info} on failure
   """
-  @spec permission_profiles_post_permission_profiles(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.AccountPermissionProfiles.t()} | {:error, Tesla.Env.t()}
+  @spec permission_profiles_post_permission_profiles(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.AccountPermissionProfiles.t} | {:error, Tesla.Env.t}
   def permission_profiles_post_permission_profiles(connection, account_id, opts \\ []) do
     optional_params = %{
-      :include => :query,
-      :AccountPermissionProfiles => :body
+      include: :query,
+      AccountPermissionProfiles: :body
     }
-
     %{}
     |> method(:post)
     |> url("/v2/accounts/#{account_id}/permission_profiles")
@@ -150,6 +131,8 @@ defmodule DocuSign.Api.AccountPermissionProfiles do
 
   @doc """
   Updates a permission profile within the specified account.
+  
+
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server
@@ -164,23 +147,12 @@ defmodule DocuSign.Api.AccountPermissionProfiles do
   {:ok, %DocuSign.Model.AccountPermissionProfiles{}} on success
   {:error, info} on failure
   """
-  @spec permission_profiles_put_permission_profiles(
-          Tesla.Env.client(),
-          String.t(),
-          String.t(),
-          keyword()
-        ) :: {:ok, DocuSign.Model.AccountPermissionProfiles.t()} | {:error, Tesla.Env.t()}
-  def permission_profiles_put_permission_profiles(
-        connection,
-        account_id,
-        permission_profile_id,
-        opts \\ []
-      ) do
+  @spec permission_profiles_put_permission_profiles(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.AccountPermissionProfiles.t} | {:error, Tesla.Env.t}
+  def permission_profiles_put_permission_profiles(connection, account_id, permission_profile_id, opts \\ []) do
     optional_params = %{
-      :include => :query,
-      :AccountPermissionProfiles => :body
+      include: :query,
+      AccountPermissionProfiles: :body
     }
-
     %{}
     |> method(:put)
     |> url("/v2/accounts/#{account_id}/permission_profiles/#{permission_profile_id}")

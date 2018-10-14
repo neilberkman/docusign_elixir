@@ -3,7 +3,9 @@
 # Do not edit the class manually.
 
 defmodule DocuSign.Model.AccountPasswordQuestionsRequired do
-  @moduledoc false
+  @moduledoc """
+  
+  """
 
   @derive [Poison.Encoder]
   defstruct [
@@ -12,9 +14,9 @@ defmodule DocuSign.Model.AccountPasswordQuestionsRequired do
   ]
 
   @type t :: %__MODULE__{
-          :maximumQuestions => String.t(),
-          :minimumQuestions => String.t()
-        }
+    :maximumQuestions => String.t,
+    :minimumQuestions => String.t
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.AccountPasswordQuestionsRequired do

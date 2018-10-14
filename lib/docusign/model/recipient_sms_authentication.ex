@@ -13,8 +13,8 @@ defmodule DocuSign.Model.RecipientSmsAuthentication do
   ]
 
   @type t :: %__MODULE__{
-          :senderProvidedNumbers => [String.t()]
-        }
+    :senderProvidedNumbers => [String.t]
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.RecipientSmsAuthentication do

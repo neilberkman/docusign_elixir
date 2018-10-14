@@ -3,7 +3,9 @@
 # Do not edit the class manually.
 
 defmodule DocuSign.Model.RecipientDomain do
-  @moduledoc false
+  @moduledoc """
+  
+  """
 
   @derive [Poison.Encoder]
   defstruct [
@@ -14,11 +16,11 @@ defmodule DocuSign.Model.RecipientDomain do
   ]
 
   @type t :: %__MODULE__{
-          :active => String.t(),
-          :domainCode => String.t(),
-          :domainName => String.t(),
-          :recipientDomainId => String.t()
-        }
+    :active => String.t,
+    :domainCode => String.t,
+    :domainName => String.t,
+    :recipientDomainId => String.t
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.RecipientDomain do

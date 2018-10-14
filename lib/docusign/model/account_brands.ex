@@ -15,15 +15,14 @@ defmodule DocuSign.Model.AccountBrands do
   ]
 
   @type t :: %__MODULE__{
-          :brands => [Brand],
-          :recipientBrandIdDefault => String.t(),
-          :senderBrandIdDefault => String.t()
-        }
+    :brands => [Brand],
+    :recipientBrandIdDefault => String.t,
+    :senderBrandIdDefault => String.t
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.AccountBrands do
   import DocuSign.Deserializer
-
   def decode(value, options) do
     value
     |> deserialize(:brands, :list, DocuSign.Model.Brand, options)

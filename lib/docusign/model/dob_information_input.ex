@@ -15,10 +15,10 @@ defmodule DocuSign.Model.DobInformationInput do
   ]
 
   @type t :: %__MODULE__{
-          :dateOfBirth => String.t(),
-          :displayLevelCode => String.t(),
-          :receiveInResponse => String.t()
-        }
+    :dateOfBirth => String.t,
+    :displayLevelCode => String.t,
+    :receiveInResponse => String.t
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.DobInformationInput do
