@@ -27,11 +27,13 @@ defmodule DocuSign.Api.GroupUsers do
   {:ok, %DocuSign.Model.GroupUsers{}} on success
   {:error, info} on failure
   """
-  @spec groups_delete_group_users(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.GroupUsers.t} | {:error, Tesla.Env.t}
+  @spec groups_delete_group_users(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+          {:ok, DocuSign.Model.GroupUsers.t()} | {:error, Tesla.Env.t()}
   def groups_delete_group_users(connection, account_id, group_id, opts \\ []) do
     optional_params = %{
       userInfoList: :body
     }
+
     %{}
     |> method(:delete)
     |> url("/v2/accounts/#{account_id}/groups/#{group_id}/users")
@@ -59,12 +61,14 @@ defmodule DocuSign.Api.GroupUsers do
   {:ok, %DocuSign.Model.GroupUsers{}} on success
   {:error, info} on failure
   """
-  @spec groups_get_group_users(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.GroupUsers.t} | {:error, Tesla.Env.t}
+  @spec groups_get_group_users(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+          {:ok, DocuSign.Model.GroupUsers.t()} | {:error, Tesla.Env.t()}
   def groups_get_group_users(connection, account_id, group_id, opts \\ []) do
     optional_params = %{
       count: :query,
       start_position: :query
     }
+
     %{}
     |> method(:get)
     |> url("/v2/accounts/#{account_id}/groups/#{group_id}/users")
@@ -91,11 +95,13 @@ defmodule DocuSign.Api.GroupUsers do
   {:ok, %DocuSign.Model.GroupUsers{}} on success
   {:error, info} on failure
   """
-  @spec groups_put_group_users(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.GroupUsers.t} | {:error, Tesla.Env.t}
+  @spec groups_put_group_users(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+          {:ok, DocuSign.Model.GroupUsers.t()} | {:error, Tesla.Env.t()}
   def groups_put_group_users(connection, account_id, group_id, opts \\ []) do
     optional_params = %{
       userInfoList: :body
     }
+
     %{}
     |> method(:put)
     |> url("/v2/accounts/#{account_id}/groups/#{group_id}/users")

@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.AccountSealProviders do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -13,12 +13,13 @@ defmodule DocuSign.Model.AccountSealProviders do
   ]
 
   @type t :: %__MODULE__{
-    :seals => [SealIdentifier]
-  }
+          :seals => [SealIdentifier]
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.AccountSealProviders do
   import DocuSign.Deserializer
+
   def decode(value, options) do
     value
     |> deserialize(:seals, :list, DocuSign.Model.SealIdentifier, options)

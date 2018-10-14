@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.EnvelopeAuditEvent do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -13,12 +13,13 @@ defmodule DocuSign.Model.EnvelopeAuditEvent do
   ]
 
   @type t :: %__MODULE__{
-    :eventFields => [NameValue]
-  }
+          :eventFields => [NameValue]
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.EnvelopeAuditEvent do
   import DocuSign.Deserializer
+
   def decode(value, options) do
     value
     |> deserialize(:eventFields, :list, DocuSign.Model.NameValue, options)

@@ -16,11 +16,11 @@ defmodule DocuSign.Model.ApiRequestLog do
   ]
 
   @type t :: %__MODULE__{
-    :createdDateTime => String.t,
-    :description => String.t,
-    :requestLogId => String.t,
-    :status => String.t
-  }
+          :createdDateTime => String.t(),
+          :description => String.t(),
+          :requestLogId => String.t(),
+          :status => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.ApiRequestLog do

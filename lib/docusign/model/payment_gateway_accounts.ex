@@ -16,11 +16,11 @@ defmodule DocuSign.Model.PaymentGatewayAccounts do
   ]
 
   @type t :: %__MODULE__{
-    :displayName => String.t,
-    :paymentGateway => String.t,
-    :paymentGatewayAccountId => String.t,
-    :paymentGatewayDisplayName => String.t
-  }
+          :displayName => String.t(),
+          :paymentGateway => String.t(),
+          :paymentGatewayAccountId => String.t(),
+          :paymentGatewayDisplayName => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.PaymentGatewayAccounts do

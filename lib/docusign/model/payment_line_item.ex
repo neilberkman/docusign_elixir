@@ -16,11 +16,11 @@ defmodule DocuSign.Model.PaymentLineItem do
   ]
 
   @type t :: %__MODULE__{
-    :amountReference => String.t,
-    :description => String.t,
-    :itemCode => String.t,
-    :name => String.t
-  }
+          :amountReference => String.t(),
+          :description => String.t(),
+          :itemCode => String.t(),
+          :name => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.PaymentLineItem do

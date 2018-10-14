@@ -24,7 +24,8 @@ defmodule DocuSign.Api.RequestLogs do
   {:ok, %{}} on success
   {:error, info} on failure
   """
-  @spec api_request_log_delete_request_logs(Tesla.Env.client, keyword()) :: {:ok, nil} | {:error, Tesla.Env.t}
+  @spec api_request_log_delete_request_logs(Tesla.Env.client(), keyword()) ::
+          {:ok, nil} | {:error, Tesla.Env.t()}
   def api_request_log_delete_request_logs(connection, _opts \\ []) do
     %{}
     |> method(:delete)
@@ -49,7 +50,8 @@ defmodule DocuSign.Api.RequestLogs do
   {:ok, %DocuSign.Model.String.t{}} on success
   {:error, info} on failure
   """
-  @spec api_request_log_get_request_log(Tesla.Env.client, String.t, keyword()) :: {:ok, String.t} | {:error, Tesla.Env.t}
+  @spec api_request_log_get_request_log(Tesla.Env.client(), String.t(), keyword()) ::
+          {:ok, String.t()} | {:error, Tesla.Env.t()}
   def api_request_log_get_request_log(connection, request_log_id, _opts \\ []) do
     %{}
     |> method(:get)
@@ -73,7 +75,8 @@ defmodule DocuSign.Api.RequestLogs do
   {:ok, %DocuSign.Model.RequestLogs{}} on success
   {:error, info} on failure
   """
-  @spec api_request_log_get_request_log_settings(Tesla.Env.client, keyword()) :: {:ok, DocuSign.Model.RequestLogs.t} | {:error, Tesla.Env.t}
+  @spec api_request_log_get_request_log_settings(Tesla.Env.client(), keyword()) ::
+          {:ok, DocuSign.Model.RequestLogs.t()} | {:error, Tesla.Env.t()}
   def api_request_log_get_request_log_settings(connection, _opts \\ []) do
     %{}
     |> method(:get)
@@ -98,11 +101,13 @@ defmodule DocuSign.Api.RequestLogs do
   {:ok, %DocuSign.Model.ApiRequestLogsResult{}} on success
   {:error, info} on failure
   """
-  @spec api_request_log_get_request_logs(Tesla.Env.client, keyword()) :: {:ok, DocuSign.Model.ApiRequestLogsResult.t} | {:error, Tesla.Env.t}
+  @spec api_request_log_get_request_logs(Tesla.Env.client(), keyword()) ::
+          {:ok, DocuSign.Model.ApiRequestLogsResult.t()} | {:error, Tesla.Env.t()}
   def api_request_log_get_request_logs(connection, opts \\ []) do
     optional_params = %{
       encoding: :query
     }
+
     %{}
     |> method(:get)
     |> url("/v2/diagnostics/request_logs")
@@ -127,11 +132,13 @@ defmodule DocuSign.Api.RequestLogs do
   {:ok, %DocuSign.Model.RequestLogs{}} on success
   {:error, info} on failure
   """
-  @spec api_request_log_put_request_log_settings(Tesla.Env.client, keyword()) :: {:ok, DocuSign.Model.RequestLogs.t} | {:error, Tesla.Env.t}
+  @spec api_request_log_put_request_log_settings(Tesla.Env.client(), keyword()) ::
+          {:ok, DocuSign.Model.RequestLogs.t()} | {:error, Tesla.Env.t()}
   def api_request_log_put_request_log_settings(connection, opts \\ []) do
     optional_params = %{
       RequestLogs: :body
     }
+
     %{}
     |> method(:put)
     |> url("/v2/diagnostics/settings")

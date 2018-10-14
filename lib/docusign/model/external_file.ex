@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.ExternalFile do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -20,15 +20,15 @@ defmodule DocuSign.Model.ExternalFile do
   ]
 
   @type t :: %__MODULE__{
-    :date => String.t,
-    :id => String.t,
-    :img => String.t,
-    :name => String.t,
-    :size => String.t,
-    :supported => String.t,
-    :type => String.t,
-    :uri => String.t
-  }
+          :date => String.t(),
+          :id => String.t(),
+          :img => String.t(),
+          :name => String.t(),
+          :size => String.t(),
+          :supported => String.t(),
+          :type => String.t(),
+          :uri => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.ExternalFile do

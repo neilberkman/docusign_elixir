@@ -14,13 +14,14 @@ defmodule DocuSign.Model.BillingPlanResponse do
   ]
 
   @type t :: %__MODULE__{
-    :billingPlan => BillingPlan,
-    :successorPlans => [BillingPlan]
-  }
+          :billingPlan => BillingPlan,
+          :successorPlans => [BillingPlan]
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.BillingPlanResponse do
   import DocuSign.Deserializer
+
   def decode(value, options) do
     value
     |> deserialize(:billingPlan, :struct, DocuSign.Model.BillingPlan, options)

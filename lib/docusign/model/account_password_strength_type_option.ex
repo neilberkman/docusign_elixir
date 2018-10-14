@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.AccountPasswordStrengthTypeOption do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -19,14 +19,14 @@ defmodule DocuSign.Model.AccountPasswordStrengthTypeOption do
   ]
 
   @type t :: %__MODULE__{
-    :minimumLength => String.t,
-    :name => String.t,
-    :passwordIncludeDigit => String.t,
-    :passwordIncludeDigitOrSpecialCharacter => String.t,
-    :passwordIncludeLowerCase => String.t,
-    :passwordIncludeSpecialCharacter => String.t,
-    :passwordIncludeUpperCase => String.t
-  }
+          :minimumLength => String.t(),
+          :name => String.t(),
+          :passwordIncludeDigit => String.t(),
+          :passwordIncludeDigitOrSpecialCharacter => String.t(),
+          :passwordIncludeLowerCase => String.t(),
+          :passwordIncludeSpecialCharacter => String.t(),
+          :passwordIncludeUpperCase => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.AccountPasswordStrengthTypeOption do

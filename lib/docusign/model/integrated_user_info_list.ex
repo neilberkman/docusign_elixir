@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.IntegratedUserInfoList do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -20,19 +20,20 @@ defmodule DocuSign.Model.IntegratedUserInfoList do
   ]
 
   @type t :: %__MODULE__{
-    :allUsersSelected => String.t,
-    :endPosition => String.t,
-    :nextUri => String.t,
-    :previousUri => String.t,
-    :resultSetSize => String.t,
-    :startPosition => String.t,
-    :totalSetSize => String.t,
-    :users => [UserInfo]
-  }
+          :allUsersSelected => String.t(),
+          :endPosition => String.t(),
+          :nextUri => String.t(),
+          :previousUri => String.t(),
+          :resultSetSize => String.t(),
+          :startPosition => String.t(),
+          :totalSetSize => String.t(),
+          :users => [UserInfo]
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.IntegratedUserInfoList do
   import DocuSign.Deserializer
+
   def decode(value, options) do
     value
     |> deserialize(:users, :list, DocuSign.Model.UserInfo, options)

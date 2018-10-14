@@ -17,12 +17,12 @@ defmodule DocuSign.Model.Payments do
   ]
 
   @type t :: %__MODULE__{
-    :amount => String.t,
-    :description => String.t,
-    :paymentDate => String.t,
-    :paymentId => String.t,
-    :paymentNumber => String.t
-  }
+          :amount => String.t(),
+          :description => String.t(),
+          :paymentDate => String.t(),
+          :paymentId => String.t(),
+          :paymentNumber => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.Payments do

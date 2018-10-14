@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.FolderItemV2 do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -32,31 +32,32 @@ defmodule DocuSign.Model.FolderItemV2 do
   ]
 
   @type t :: %__MODULE__{
-    :completedDateTime => String.t,
-    :createdDateTime => String.t,
-    :envelopeId => String.t,
-    :envelopeUri => String.t,
-    :expireDateTime => String.t,
-    :folderId => String.t,
-    :folderUri => String.t,
-    :is21CFRPart11 => String.t,
-    :isSignatureProviderEnvelope => String.t,
-    :lastModifiedDateTime => String.t,
-    :ownerName => String.t,
-    :recipients => EnvelopeRecipients,
-    :recipientsUri => String.t,
-    :senderCompany => String.t,
-    :senderEmail => String.t,
-    :senderName => String.t,
-    :senderUserId => String.t,
-    :sentDateTime => String.t,
-    :status => String.t,
-    :subject => String.t
-  }
+          :completedDateTime => String.t(),
+          :createdDateTime => String.t(),
+          :envelopeId => String.t(),
+          :envelopeUri => String.t(),
+          :expireDateTime => String.t(),
+          :folderId => String.t(),
+          :folderUri => String.t(),
+          :is21CFRPart11 => String.t(),
+          :isSignatureProviderEnvelope => String.t(),
+          :lastModifiedDateTime => String.t(),
+          :ownerName => String.t(),
+          :recipients => EnvelopeRecipients,
+          :recipientsUri => String.t(),
+          :senderCompany => String.t(),
+          :senderEmail => String.t(),
+          :senderName => String.t(),
+          :senderUserId => String.t(),
+          :sentDateTime => String.t(),
+          :status => String.t(),
+          :subject => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.FolderItemV2 do
   import DocuSign.Deserializer
+
   def decode(value, options) do
     value
     |> deserialize(:recipients, :struct, DocuSign.Model.EnvelopeRecipients, options)

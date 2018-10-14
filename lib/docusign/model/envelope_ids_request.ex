@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.EnvelopeIdsRequest do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -14,9 +14,9 @@ defmodule DocuSign.Model.EnvelopeIdsRequest do
   ]
 
   @type t :: %__MODULE__{
-    :envelopeIds => [String.t],
-    :transactionIds => [String.t]
-  }
+          :envelopeIds => [String.t()],
+          :transactionIds => [String.t()]
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.EnvelopeIdsRequest do

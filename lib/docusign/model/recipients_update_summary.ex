@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.RecipientsUpdateSummary do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -13,14 +13,20 @@ defmodule DocuSign.Model.RecipientsUpdateSummary do
   ]
 
   @type t :: %__MODULE__{
-    :recipientUpdateResults => [RecipientUpdateResponse]
-  }
+          :recipientUpdateResults => [RecipientUpdateResponse]
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.RecipientsUpdateSummary do
   import DocuSign.Deserializer
+
   def decode(value, options) do
     value
-    |> deserialize(:recipientUpdateResults, :list, DocuSign.Model.RecipientUpdateResponse, options)
+    |> deserialize(
+      :recipientUpdateResults,
+      :list,
+      DocuSign.Model.RecipientUpdateResponse,
+      options
+    )
   end
 end

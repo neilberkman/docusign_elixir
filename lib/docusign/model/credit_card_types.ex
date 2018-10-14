@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.CreditCardTypes do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -13,8 +13,8 @@ defmodule DocuSign.Model.CreditCardTypes do
   ]
 
   @type t :: %__MODULE__{
-    :cardTypes => [String.t]
-  }
+          :cardTypes => [String.t()]
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.CreditCardTypes do

@@ -27,7 +27,13 @@ defmodule DocuSign.Api.EnvelopeRecipients do
   {:ok, %DocuSign.Model.EnvelopeRecipients{}} on success
   {:error, info} on failure
   """
-  @spec recipients_delete_recipient(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeRecipients.t} | {:error, Tesla.Env.t}
+  @spec recipients_delete_recipient(
+          Tesla.Env.client(),
+          String.t(),
+          String.t(),
+          String.t(),
+          keyword()
+        ) :: {:ok, DocuSign.Model.EnvelopeRecipients.t()} | {:error, Tesla.Env.t()}
   def recipients_delete_recipient(connection, account_id, envelope_id, recipient_id, _opts \\ []) do
     %{}
     |> method(:delete)
@@ -54,11 +60,13 @@ defmodule DocuSign.Api.EnvelopeRecipients do
   {:ok, %DocuSign.Model.EnvelopeRecipients{}} on success
   {:error, info} on failure
   """
-  @spec recipients_delete_recipients(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeRecipients.t} | {:error, Tesla.Env.t}
+  @spec recipients_delete_recipients(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+          {:ok, DocuSign.Model.EnvelopeRecipients.t()} | {:error, Tesla.Env.t()}
   def recipients_delete_recipients(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
       EnvelopeRecipients: :body
     }
+
     %{}
     |> method(:delete)
     |> url("/v2/accounts/#{account_id}/envelopes/#{envelope_id}/recipients")
@@ -87,13 +95,15 @@ defmodule DocuSign.Api.EnvelopeRecipients do
   {:ok, %DocuSign.Model.EnvelopeRecipients{}} on success
   {:error, info} on failure
   """
-  @spec recipients_get_recipients(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeRecipients.t} | {:error, Tesla.Env.t}
+  @spec recipients_get_recipients(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+          {:ok, DocuSign.Model.EnvelopeRecipients.t()} | {:error, Tesla.Env.t()}
   def recipients_get_recipients(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
       include_anchor_tab_locations: :query,
       include_extended: :query,
       include_tabs: :query
     }
+
     %{}
     |> method(:get)
     |> url("/v2/accounts/#{account_id}/envelopes/#{envelope_id}/recipients")
@@ -121,12 +131,14 @@ defmodule DocuSign.Api.EnvelopeRecipients do
   {:ok, %DocuSign.Model.EnvelopeRecipients{}} on success
   {:error, info} on failure
   """
-  @spec recipients_post_recipients(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeRecipients.t} | {:error, Tesla.Env.t}
+  @spec recipients_post_recipients(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+          {:ok, DocuSign.Model.EnvelopeRecipients.t()} | {:error, Tesla.Env.t()}
   def recipients_post_recipients(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
       resend_envelope: :query,
       EnvelopeRecipients: :body
     }
+
     %{}
     |> method(:post)
     |> url("/v2/accounts/#{account_id}/envelopes/#{envelope_id}/recipients")
@@ -155,13 +167,15 @@ defmodule DocuSign.Api.EnvelopeRecipients do
   {:ok, %DocuSign.Model.RecipientsUpdateSummary{}} on success
   {:error, info} on failure
   """
-  @spec recipients_put_recipients(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.RecipientsUpdateSummary.t} | {:error, Tesla.Env.t}
+  @spec recipients_put_recipients(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+          {:ok, DocuSign.Model.RecipientsUpdateSummary.t()} | {:error, Tesla.Env.t()}
   def recipients_put_recipients(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
       offline_signing: :query,
       resend_envelope: :query,
       EnvelopeRecipients: :body
     }
+
     %{}
     |> method(:put)
     |> url("/v2/accounts/#{account_id}/envelopes/#{envelope_id}/recipients")

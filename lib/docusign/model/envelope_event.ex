@@ -14,9 +14,9 @@ defmodule DocuSign.Model.EnvelopeEvent do
   ]
 
   @type t :: %__MODULE__{
-    :envelopeEventStatusCode => String.t,
-    :includeDocuments => String.t
-  }
+          :envelopeEventStatusCode => String.t(),
+          :includeDocuments => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.EnvelopeEvent do

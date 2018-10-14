@@ -27,11 +27,25 @@ defmodule DocuSign.Api.EnvelopeBulkRecipients do
   {:ok, %DocuSign.Model.BulkRecipientsUpdateResponse{}} on success
   {:error, info} on failure
   """
-  @spec recipients_delete_bulk_recipients_file(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.BulkRecipientsUpdateResponse.t} | {:error, Tesla.Env.t}
-  def recipients_delete_bulk_recipients_file(connection, account_id, envelope_id, recipient_id, _opts \\ []) do
+  @spec recipients_delete_bulk_recipients_file(
+          Tesla.Env.client(),
+          String.t(),
+          String.t(),
+          String.t(),
+          keyword()
+        ) :: {:ok, DocuSign.Model.BulkRecipientsUpdateResponse.t()} | {:error, Tesla.Env.t()}
+  def recipients_delete_bulk_recipients_file(
+        connection,
+        account_id,
+        envelope_id,
+        recipient_id,
+        _opts \\ []
+      ) do
     %{}
     |> method(:delete)
-    |> url("/v2/accounts/#{account_id}/envelopes/#{envelope_id}/recipients/#{recipient_id}/bulk_recipients")
+    |> url(
+      "/v2/accounts/#{account_id}/envelopes/#{envelope_id}/recipients/#{recipient_id}/bulk_recipients"
+    )
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> decode(%DocuSign.Model.BulkRecipientsUpdateResponse{})
@@ -56,15 +70,30 @@ defmodule DocuSign.Api.EnvelopeBulkRecipients do
   {:ok, %DocuSign.Model.EnvelopeBulkRecipients{}} on success
   {:error, info} on failure
   """
-  @spec recipients_get_bulk_recipients(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeBulkRecipients.t} | {:error, Tesla.Env.t}
-  def recipients_get_bulk_recipients(connection, account_id, envelope_id, recipient_id, opts \\ []) do
+  @spec recipients_get_bulk_recipients(
+          Tesla.Env.client(),
+          String.t(),
+          String.t(),
+          String.t(),
+          keyword()
+        ) :: {:ok, DocuSign.Model.EnvelopeBulkRecipients.t()} | {:error, Tesla.Env.t()}
+  def recipients_get_bulk_recipients(
+        connection,
+        account_id,
+        envelope_id,
+        recipient_id,
+        opts \\ []
+      ) do
     optional_params = %{
       include_tabs: :query,
       start_position: :query
     }
+
     %{}
     |> method(:get)
-    |> url("/v2/accounts/#{account_id}/envelopes/#{envelope_id}/recipients/#{recipient_id}/bulk_recipients")
+    |> url(
+      "/v2/accounts/#{account_id}/envelopes/#{envelope_id}/recipients/#{recipient_id}/bulk_recipients"
+    )
     |> add_optional_params(optional_params, opts)
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
@@ -89,14 +118,29 @@ defmodule DocuSign.Api.EnvelopeBulkRecipients do
   {:ok, %DocuSign.Model.BulkRecipientsSummaryResponse{}} on success
   {:error, info} on failure
   """
-  @spec recipients_put_bulk_recipients(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.BulkRecipientsSummaryResponse.t} | {:error, Tesla.Env.t}
-  def recipients_put_bulk_recipients(connection, account_id, envelope_id, recipient_id, opts \\ []) do
+  @spec recipients_put_bulk_recipients(
+          Tesla.Env.client(),
+          String.t(),
+          String.t(),
+          String.t(),
+          keyword()
+        ) :: {:ok, DocuSign.Model.BulkRecipientsSummaryResponse.t()} | {:error, Tesla.Env.t()}
+  def recipients_put_bulk_recipients(
+        connection,
+        account_id,
+        envelope_id,
+        recipient_id,
+        opts \\ []
+      ) do
     optional_params = %{
       bulkRecipientsRequest: :body
     }
+
     %{}
     |> method(:put)
-    |> url("/v2/accounts/#{account_id}/envelopes/#{envelope_id}/recipients/#{recipient_id}/bulk_recipients")
+    |> url(
+      "/v2/accounts/#{account_id}/envelopes/#{envelope_id}/recipients/#{recipient_id}/bulk_recipients"
+    )
     |> add_optional_params(optional_params, opts)
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()

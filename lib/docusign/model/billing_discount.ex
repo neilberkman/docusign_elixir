@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.BillingDiscount do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -15,10 +15,10 @@ defmodule DocuSign.Model.BillingDiscount do
   ]
 
   @type t :: %__MODULE__{
-    :beginQuantity => String.t,
-    :discount => String.t,
-    :endQuantity => String.t
-  }
+          :beginQuantity => String.t(),
+          :discount => String.t(),
+          :endQuantity => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.BillingDiscount do

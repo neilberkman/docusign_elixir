@@ -12,7 +12,7 @@ defmodule DocuSign.Api.AccountTabSettings do
 
   @doc """
   Returns tab settings list for specified account
-  
+
 
   ## Parameters
 
@@ -25,7 +25,8 @@ defmodule DocuSign.Api.AccountTabSettings do
   {:ok, %DocuSign.Model.AccountTabSettings{}} on success
   {:error, info} on failure
   """
-  @spec tab_settings_get_tab_settings(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.AccountTabSettings.t} | {:error, Tesla.Env.t}
+  @spec tab_settings_get_tab_settings(Tesla.Env.client(), String.t(), keyword()) ::
+          {:ok, DocuSign.Model.AccountTabSettings.t()} | {:error, Tesla.Env.t()}
   def tab_settings_get_tab_settings(connection, account_id, _opts \\ []) do
     %{}
     |> method(:get)
@@ -37,7 +38,7 @@ defmodule DocuSign.Api.AccountTabSettings do
 
   @doc """
   Modifies tab settings for specified account
-  
+
 
   ## Parameters
 
@@ -51,11 +52,13 @@ defmodule DocuSign.Api.AccountTabSettings do
   {:ok, %DocuSign.Model.AccountTabSettings{}} on success
   {:error, info} on failure
   """
-  @spec tab_settings_put_settings(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.AccountTabSettings.t} | {:error, Tesla.Env.t}
+  @spec tab_settings_put_settings(Tesla.Env.client(), String.t(), keyword()) ::
+          {:ok, DocuSign.Model.AccountTabSettings.t()} | {:error, Tesla.Env.t()}
   def tab_settings_put_settings(connection, account_id, opts \\ []) do
     optional_params = %{
       AccountTabSettings: :body
     }
+
     %{}
     |> method(:put)
     |> url("/v2/accounts/#{account_id}/settings/tabs")

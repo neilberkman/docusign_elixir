@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.ConnectFailureFilter do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -14,9 +14,9 @@ defmodule DocuSign.Model.ConnectFailureFilter do
   ]
 
   @type t :: %__MODULE__{
-    :envelopeIds => [String.t],
-    :synchronous => String.t
-  }
+          :envelopeIds => [String.t()],
+          :synchronous => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.ConnectFailureFilter do

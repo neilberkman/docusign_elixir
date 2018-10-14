@@ -13,12 +13,13 @@ defmodule DocuSign.Model.Resources do
   ]
 
   @type t :: %__MODULE__{
-    :resources => [NameValue]
-  }
+          :resources => [NameValue]
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.Resources do
   import DocuSign.Deserializer
+
   def decode(value, options) do
     value
     |> deserialize(:resources, :list, DocuSign.Model.NameValue, options)

@@ -34,33 +34,34 @@ defmodule DocuSign.Model.Document do
   ]
 
   @type t :: %__MODULE__{
-    :applyAnchorTabs => String.t,
-    :authoritativeCopy => boolean(),
-    :display => String.t,
-    :documentBase64 => String.t,
-    :documentFields => [NameValue],
-    :documentGroup => String.t,
-    :documentId => String.t,
-    :encryptedWithKeyManager => String.t,
-    :fileExtension => String.t,
-    :fileFormatHint => String.t,
-    :includeInDownload => String.t,
-    :matchBoxes => [MatchBox],
-    :name => String.t,
-    :order => String.t,
-    :pages => String.t,
-    :password => String.t,
-    :remoteUrl => String.t,
-    :signerMustAcknowledge => String.t,
-    :templateLocked => String.t,
-    :templateRequired => String.t,
-    :transformPdfFields => String.t,
-    :uri => String.t
-  }
+          :applyAnchorTabs => String.t(),
+          :authoritativeCopy => boolean(),
+          :display => String.t(),
+          :documentBase64 => String.t(),
+          :documentFields => [NameValue],
+          :documentGroup => String.t(),
+          :documentId => String.t(),
+          :encryptedWithKeyManager => String.t(),
+          :fileExtension => String.t(),
+          :fileFormatHint => String.t(),
+          :includeInDownload => String.t(),
+          :matchBoxes => [MatchBox],
+          :name => String.t(),
+          :order => String.t(),
+          :pages => String.t(),
+          :password => String.t(),
+          :remoteUrl => String.t(),
+          :signerMustAcknowledge => String.t(),
+          :templateLocked => String.t(),
+          :templateRequired => String.t(),
+          :transformPdfFields => String.t(),
+          :uri => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.Document do
   import DocuSign.Deserializer
+
   def decode(value, options) do
     value
     |> deserialize(:documentFields, :list, DocuSign.Model.NameValue, options)
