@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.ConnectDebugLog do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -17,16 +17,17 @@ defmodule DocuSign.Model.ConnectDebugLog do
   ]
 
   @type t :: %__MODULE__{
-    :connectConfig => String.t,
-    :errorDetails => ErrorDetails,
-    :eventDateTime => String.t,
-    :eventDescription => String.t,
-    :payload => String.t
-  }
+          :connectConfig => String.t(),
+          :errorDetails => ErrorDetails,
+          :eventDateTime => String.t(),
+          :eventDescription => String.t(),
+          :payload => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.ConnectDebugLog do
   import DocuSign.Deserializer
+
   def decode(value, options) do
     value
     |> deserialize(:errorDetails, :struct, DocuSign.Model.ErrorDetails, options)

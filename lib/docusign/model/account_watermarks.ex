@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.AccountWatermarks do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -21,16 +21,16 @@ defmodule DocuSign.Model.AccountWatermarks do
   ]
 
   @type t :: %__MODULE__{
-    :displayAngle => String.t,
-    :enabled => String.t,
-    :font => String.t,
-    :fontColor => String.t,
-    :fontSize => String.t,
-    :id => String.t,
-    :imageBase64 => String.t,
-    :transparency => String.t,
-    :watermarkText => String.t
-  }
+          :displayAngle => String.t(),
+          :enabled => String.t(),
+          :font => String.t(),
+          :fontColor => String.t(),
+          :fontSize => String.t(),
+          :id => String.t(),
+          :imageBase64 => String.t(),
+          :transparency => String.t(),
+          :watermarkText => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.AccountWatermarks do

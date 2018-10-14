@@ -7,6 +7,7 @@ defmodule DocuSign.MixProject do
       version: "0.1.0",
       elixir: "~> 1.7",
       start_permanent: Mix.env() == :prod,
+      package: package(),
       deps: deps()
     ]
   end
@@ -33,6 +34,17 @@ defmodule DocuSign.MixProject do
 
       # dev
       {:credo, "~> 0.10.0", only: [:dev, :test], runtime: false}
+    ]
+  end
+
+  defp package() do
+    [
+      files: ["lib", "mix.exs", "README*", "LICENSE"],
+      maintainers: ["Neil Berkman", "Pavel Herasimau"],
+      licenses: ["MIT"],
+      links: %{
+        "GitHub" => "https://github.com/TandemEquity/docusign_elixir"
+      }
     ]
   end
 end

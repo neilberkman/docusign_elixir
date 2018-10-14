@@ -26,11 +26,13 @@ defmodule DocuSign.Api.SigningGroups do
   {:ok, %DocuSign.Model.SigningGroupInformation{}} on success
   {:error, info} on failure
   """
-  @spec signing_groups_delete_signing_groups(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.SigningGroupInformation.t} | {:error, Tesla.Env.t}
+  @spec signing_groups_delete_signing_groups(Tesla.Env.client(), String.t(), keyword()) ::
+          {:ok, DocuSign.Model.SigningGroupInformation.t()} | {:error, Tesla.Env.t()}
   def signing_groups_delete_signing_groups(connection, account_id, opts \\ []) do
     optional_params = %{
       signingGroupInformation: :body
     }
+
     %{}
     |> method(:delete)
     |> url("/v2/accounts/#{account_id}/signing_groups")
@@ -56,7 +58,8 @@ defmodule DocuSign.Api.SigningGroups do
   {:ok, %DocuSign.Model.SigningGroups{}} on success
   {:error, info} on failure
   """
-  @spec signing_groups_get_signing_group(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.SigningGroups.t} | {:error, Tesla.Env.t}
+  @spec signing_groups_get_signing_group(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+          {:ok, DocuSign.Model.SigningGroups.t()} | {:error, Tesla.Env.t()}
   def signing_groups_get_signing_group(connection, account_id, signing_group_id, _opts \\ []) do
     %{}
     |> method(:get)
@@ -83,12 +86,14 @@ defmodule DocuSign.Api.SigningGroups do
   {:ok, %DocuSign.Model.SigningGroupInformation{}} on success
   {:error, info} on failure
   """
-  @spec signing_groups_get_signing_groups(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.SigningGroupInformation.t} | {:error, Tesla.Env.t}
+  @spec signing_groups_get_signing_groups(Tesla.Env.client(), String.t(), keyword()) ::
+          {:ok, DocuSign.Model.SigningGroupInformation.t()} | {:error, Tesla.Env.t()}
   def signing_groups_get_signing_groups(connection, account_id, opts \\ []) do
     optional_params = %{
       group_type: :query,
       include_users: :query
     }
+
     %{}
     |> method(:get)
     |> url("/v2/accounts/#{account_id}/signing_groups")
@@ -114,11 +119,13 @@ defmodule DocuSign.Api.SigningGroups do
   {:ok, %DocuSign.Model.SigningGroupInformation{}} on success
   {:error, info} on failure
   """
-  @spec signing_groups_post_signing_groups(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.SigningGroupInformation.t} | {:error, Tesla.Env.t}
+  @spec signing_groups_post_signing_groups(Tesla.Env.client(), String.t(), keyword()) ::
+          {:ok, DocuSign.Model.SigningGroupInformation.t()} | {:error, Tesla.Env.t()}
   def signing_groups_post_signing_groups(connection, account_id, opts \\ []) do
     optional_params = %{
       signingGroupInformation: :body
     }
+
     %{}
     |> method(:post)
     |> url("/v2/accounts/#{account_id}/signing_groups")
@@ -145,11 +152,13 @@ defmodule DocuSign.Api.SigningGroups do
   {:ok, %DocuSign.Model.SigningGroups{}} on success
   {:error, info} on failure
   """
-  @spec signing_groups_put_signing_group(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.SigningGroups.t} | {:error, Tesla.Env.t}
+  @spec signing_groups_put_signing_group(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+          {:ok, DocuSign.Model.SigningGroups.t()} | {:error, Tesla.Env.t()}
   def signing_groups_put_signing_group(connection, account_id, signing_group_id, opts \\ []) do
     optional_params = %{
       SigningGroups: :body
     }
+
     %{}
     |> method(:put)
     |> url("/v2/accounts/#{account_id}/signing_groups/#{signing_group_id}")
@@ -175,11 +184,13 @@ defmodule DocuSign.Api.SigningGroups do
   {:ok, %DocuSign.Model.SigningGroupInformation{}} on success
   {:error, info} on failure
   """
-  @spec signing_groups_put_signing_groups(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.SigningGroupInformation.t} | {:error, Tesla.Env.t}
+  @spec signing_groups_put_signing_groups(Tesla.Env.client(), String.t(), keyword()) ::
+          {:ok, DocuSign.Model.SigningGroupInformation.t()} | {:error, Tesla.Env.t()}
   def signing_groups_put_signing_groups(connection, account_id, opts \\ []) do
     optional_params = %{
       signingGroupInformation: :body
     }
+
     %{}
     |> method(:put)
     |> url("/v2/accounts/#{account_id}/signing_groups")

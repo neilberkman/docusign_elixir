@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.ConciergeQueryRequest do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -17,12 +17,12 @@ defmodule DocuSign.Model.ConciergeQueryRequest do
   ]
 
   @type t :: %__MODULE__{
-    :accountManagementRepCountry => String.t,
-    :contractCountry => String.t,
-    :planId => String.t,
-    :region => String.t,
-    :shippingCountry => String.t
-  }
+          :accountManagementRepCountry => String.t(),
+          :contractCountry => String.t(),
+          :planId => String.t(),
+          :region => String.t(),
+          :shippingCountry => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.ConciergeQueryRequest do

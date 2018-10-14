@@ -13,8 +13,8 @@ defmodule DocuSign.Model.EnvelopeViews do
   ]
 
   @type t :: %__MODULE__{
-    :url => String.t
-  }
+          :url => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.EnvelopeViews do

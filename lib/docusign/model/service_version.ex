@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.ServiceVersion do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -14,9 +14,9 @@ defmodule DocuSign.Model.ServiceVersion do
   ]
 
   @type t :: %__MODULE__{
-    :version => String.t,
-    :versionUrl => String.t
-  }
+          :version => String.t(),
+          :versionUrl => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.ServiceVersion do

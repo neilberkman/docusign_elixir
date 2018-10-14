@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.DocumentHtmlCollapsibleDisplaySettings do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -22,17 +22,17 @@ defmodule DocuSign.Model.DocumentHtmlCollapsibleDisplaySettings do
   ]
 
   @type t :: %__MODULE__{
-    :arrowClosed => String.t,
-    :arrowColor => String.t,
-    :arrowLocation => String.t,
-    :arrowOpen => String.t,
-    :arrowSize => String.t,
-    :arrowStyle => String.t,
-    :containerStyle => String.t,
-    :labelStyle => String.t,
-    :onlyArrowIsClickable => boolean(),
-    :outerLabelAndArrowStyle => String.t
-  }
+          :arrowClosed => String.t(),
+          :arrowColor => String.t(),
+          :arrowLocation => String.t(),
+          :arrowOpen => String.t(),
+          :arrowSize => String.t(),
+          :arrowStyle => String.t(),
+          :containerStyle => String.t(),
+          :labelStyle => String.t(),
+          :onlyArrowIsClickable => boolean(),
+          :outerLabelAndArrowStyle => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.DocumentHtmlCollapsibleDisplaySettings do

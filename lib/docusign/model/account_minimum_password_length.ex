@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.AccountMinimumPasswordLength do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -14,9 +14,9 @@ defmodule DocuSign.Model.AccountMinimumPasswordLength do
   ]
 
   @type t :: %__MODULE__{
-    :maximumLength => String.t,
-    :minimumLength => String.t
-  }
+          :maximumLength => String.t(),
+          :minimumLength => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.AccountMinimumPasswordLength do

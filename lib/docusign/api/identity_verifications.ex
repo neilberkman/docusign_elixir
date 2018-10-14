@@ -11,8 +11,8 @@ defmodule DocuSign.Api.IdentityVerifications do
   import DocuSign.RequestBuilder
 
   @doc """
-  
-  
+
+
 
   ## Parameters
 
@@ -25,8 +25,16 @@ defmodule DocuSign.Api.IdentityVerifications do
   {:ok, %DocuSign.Model.IdentityVerifications{}} on success
   {:error, info} on failure
   """
-  @spec account_identity_verification_get_account_identity_verification(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.IdentityVerifications.t} | {:error, Tesla.Env.t}
-  def account_identity_verification_get_account_identity_verification(connection, account_id, _opts \\ []) do
+  @spec account_identity_verification_get_account_identity_verification(
+          Tesla.Env.client(),
+          String.t(),
+          keyword()
+        ) :: {:ok, DocuSign.Model.IdentityVerifications.t()} | {:error, Tesla.Env.t()}
+  def account_identity_verification_get_account_identity_verification(
+        connection,
+        account_id,
+        _opts \\ []
+      ) do
     %{}
     |> method(:get)
     |> url("/v2/accounts/#{account_id}/identity_verification")

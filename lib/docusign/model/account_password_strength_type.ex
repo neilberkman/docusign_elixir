@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.AccountPasswordStrengthType do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -13,12 +13,13 @@ defmodule DocuSign.Model.AccountPasswordStrengthType do
   ]
 
   @type t :: %__MODULE__{
-    :options => [AccountPasswordStrengthTypeOption]
-  }
+          :options => [AccountPasswordStrengthTypeOption]
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.AccountPasswordStrengthType do
   import DocuSign.Deserializer
+
   def decode(value, options) do
     value
     |> deserialize(:options, :list, DocuSign.Model.AccountPasswordStrengthTypeOption, options)

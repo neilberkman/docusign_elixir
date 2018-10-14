@@ -26,7 +26,8 @@ defmodule DocuSign.Api.Envelopes do
   {:ok, %DocuSign.Model.EnvelopeAuditEventResponse{}} on success
   {:error, info} on failure
   """
-  @spec audit_events_get_audit_events(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeAuditEventResponse.t} | {:error, Tesla.Env.t}
+  @spec audit_events_get_audit_events(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+          {:ok, DocuSign.Model.EnvelopeAuditEventResponse.t()} | {:error, Tesla.Env.t()}
   def audit_events_get_audit_events(connection, account_id, envelope_id, _opts \\ []) do
     %{}
     |> method(:get)
@@ -54,12 +55,14 @@ defmodule DocuSign.Api.Envelopes do
   {:ok, %DocuSign.Model.Envelopes{}} on success
   {:error, info} on failure
   """
-  @spec envelopes_get_envelope(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.Envelopes.t} | {:error, Tesla.Env.t}
+  @spec envelopes_get_envelope(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+          {:ok, DocuSign.Model.Envelopes.t()} | {:error, Tesla.Env.t()}
   def envelopes_get_envelope(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
       advanced_update: :query,
       include: :query
     }
+
     %{}
     |> method(:get)
     |> url("/v2/accounts/#{account_id}/envelopes/#{envelope_id}")
@@ -97,7 +100,8 @@ defmodule DocuSign.Api.Envelopes do
   {:ok, %DocuSign.Model.EnvelopesInformation{}} on success
   {:error, info} on failure
   """
-  @spec envelopes_get_envelopes(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopesInformation.t} | {:error, Tesla.Env.t}
+  @spec envelopes_get_envelopes(Tesla.Env.client(), String.t(), keyword()) ::
+          {:ok, DocuSign.Model.EnvelopesInformation.t()} | {:error, Tesla.Env.t()}
   def envelopes_get_envelopes(connection, account_id, opts \\ []) do
     optional_params = %{
       ac_status: :query,
@@ -114,6 +118,7 @@ defmodule DocuSign.Api.Envelopes do
       transaction_ids: :query,
       user_name: :query
     }
+
     %{}
     |> method(:get)
     |> url("/v2/accounts/#{account_id}/envelopes")
@@ -144,7 +149,8 @@ defmodule DocuSign.Api.Envelopes do
   {:ok, %DocuSign.Model.EnvelopeSummary{}} on success
   {:error, info} on failure
   """
-  @spec envelopes_post_envelopes(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeSummary.t} | {:error, Tesla.Env.t}
+  @spec envelopes_post_envelopes(Tesla.Env.client(), String.t(), keyword()) ::
+          {:ok, DocuSign.Model.EnvelopeSummary.t()} | {:error, Tesla.Env.t()}
   def envelopes_post_envelopes(connection, account_id, opts \\ []) do
     optional_params = %{
       cdse_mode: :query,
@@ -154,6 +160,7 @@ defmodule DocuSign.Api.Envelopes do
       preserve_template_recipientids: :query,
       envelopeDefinition: :body
     }
+
     %{}
     |> method(:post)
     |> url("/v2/accounts/#{account_id}/envelopes")
@@ -182,13 +189,15 @@ defmodule DocuSign.Api.Envelopes do
   {:ok, %DocuSign.Model.EnvelopeUpdateSummary{}} on success
   {:error, info} on failure
   """
-  @spec envelopes_put_envelope(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeUpdateSummary.t} | {:error, Tesla.Env.t}
+  @spec envelopes_put_envelope(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+          {:ok, DocuSign.Model.EnvelopeUpdateSummary.t()} | {:error, Tesla.Env.t()}
   def envelopes_put_envelope(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
       advanced_update: :query,
       resend_envelope: :query,
       Envelopes: :body
     }
+
     %{}
     |> method(:put)
     |> url("/v2/accounts/#{account_id}/envelopes/#{envelope_id}")
@@ -218,7 +227,8 @@ defmodule DocuSign.Api.Envelopes do
   {:ok, %DocuSign.Model.EnvelopesInformation{}} on success
   {:error, info} on failure
   """
-  @spec envelopes_put_status(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopesInformation.t} | {:error, Tesla.Env.t}
+  @spec envelopes_put_status(Tesla.Env.client(), String.t(), keyword()) ::
+          {:ok, DocuSign.Model.EnvelopesInformation.t()} | {:error, Tesla.Env.t()}
   def envelopes_put_status(connection, account_id, opts \\ []) do
     optional_params = %{
       email: :query,
@@ -227,6 +237,7 @@ defmodule DocuSign.Api.Envelopes do
       to_date: :query,
       envelopeIdsRequest: :body
     }
+
     %{}
     |> method(:put)
     |> url("/v2/accounts/#{account_id}/envelopes/status")
@@ -252,8 +263,18 @@ defmodule DocuSign.Api.Envelopes do
   {:ok, %DocuSign.Model.Notification{}} on success
   {:error, info} on failure
   """
-  @spec notification_get_envelopes_envelope_id_notification(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.Notification.t} | {:error, Tesla.Env.t}
-  def notification_get_envelopes_envelope_id_notification(connection, account_id, envelope_id, _opts \\ []) do
+  @spec notification_get_envelopes_envelope_id_notification(
+          Tesla.Env.client(),
+          String.t(),
+          String.t(),
+          keyword()
+        ) :: {:ok, DocuSign.Model.Notification.t()} | {:error, Tesla.Env.t()}
+  def notification_get_envelopes_envelope_id_notification(
+        connection,
+        account_id,
+        envelope_id,
+        _opts \\ []
+      ) do
     %{}
     |> method(:get)
     |> url("/v2/accounts/#{account_id}/envelopes/#{envelope_id}/notification")
@@ -264,7 +285,7 @@ defmodule DocuSign.Api.Envelopes do
 
   @doc """
   Sets envelope notification (Reminders/Expirations) structure for an existing envelope.
-  
+
 
   ## Parameters
 
@@ -279,11 +300,22 @@ defmodule DocuSign.Api.Envelopes do
   {:ok, %DocuSign.Model.Notification{}} on success
   {:error, info} on failure
   """
-  @spec notification_put_envelopes_envelope_id_notification(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.Notification.t} | {:error, Tesla.Env.t}
-  def notification_put_envelopes_envelope_id_notification(connection, account_id, envelope_id, opts \\ []) do
+  @spec notification_put_envelopes_envelope_id_notification(
+          Tesla.Env.client(),
+          String.t(),
+          String.t(),
+          keyword()
+        ) :: {:ok, DocuSign.Model.Notification.t()} | {:error, Tesla.Env.t()}
+  def notification_put_envelopes_envelope_id_notification(
+        connection,
+        account_id,
+        envelope_id,
+        opts \\ []
+      ) do
     optional_params = %{
       envelopeNotificationRequest: :body
     }
+
     %{}
     |> method(:put)
     |> url("/v2/accounts/#{account_id}/envelopes/#{envelope_id}/notification")
@@ -311,11 +343,29 @@ defmodule DocuSign.Api.Envelopes do
   {:ok, %{}} on success
   {:error, info} on failure
   """
-  @spec pages_delete_page(Tesla.Env.client, String.t, String.t, String.t, String.t, keyword()) :: {:ok, nil} | {:error, Tesla.Env.t}
-  def pages_delete_page(connection, account_id, document_id, envelope_id, page_number, _opts \\ []) do
+  @spec pages_delete_page(
+          Tesla.Env.client(),
+          String.t(),
+          String.t(),
+          String.t(),
+          String.t(),
+          keyword()
+        ) :: {:ok, nil} | {:error, Tesla.Env.t()}
+  def pages_delete_page(
+        connection,
+        account_id,
+        document_id,
+        envelope_id,
+        page_number,
+        _opts \\ []
+      ) do
     %{}
     |> method(:delete)
-    |> url("/v2/accounts/#{account_id}/envelopes/#{envelope_id}/documents/#{document_id}/pages/#{page_number}")
+    |> url(
+      "/v2/accounts/#{account_id}/envelopes/#{envelope_id}/documents/#{document_id}/pages/#{
+        page_number
+      }"
+    )
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> decode(false)
@@ -343,17 +393,36 @@ defmodule DocuSign.Api.Envelopes do
   {:ok, %DocuSign.Model.String.t{}} on success
   {:error, info} on failure
   """
-  @spec pages_get_page_image(Tesla.Env.client, String.t, String.t, String.t, String.t, keyword()) :: {:ok, String.t} | {:error, Tesla.Env.t}
-  def pages_get_page_image(connection, account_id, document_id, envelope_id, page_number, opts \\ []) do
+  @spec pages_get_page_image(
+          Tesla.Env.client(),
+          String.t(),
+          String.t(),
+          String.t(),
+          String.t(),
+          keyword()
+        ) :: {:ok, String.t()} | {:error, Tesla.Env.t()}
+  def pages_get_page_image(
+        connection,
+        account_id,
+        document_id,
+        envelope_id,
+        page_number,
+        opts \\ []
+      ) do
     optional_params = %{
       dpi: :query,
       max_height: :query,
       max_width: :query,
       show_changes: :query
     }
+
     %{}
     |> method(:get)
-    |> url("/v2/accounts/#{account_id}/envelopes/#{envelope_id}/documents/#{document_id}/pages/#{page_number}/page_image")
+    |> url(
+      "/v2/accounts/#{account_id}/envelopes/#{envelope_id}/documents/#{document_id}/pages/#{
+        page_number
+      }/page_image"
+    )
     |> add_optional_params(optional_params, opts)
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
@@ -362,7 +431,7 @@ defmodule DocuSign.Api.Envelopes do
 
   @doc """
   Returns document page image(s) based on input.
-  
+
 
   ## Parameters
 
@@ -384,7 +453,8 @@ defmodule DocuSign.Api.Envelopes do
   {:ok, %DocuSign.Model.PageImages{}} on success
   {:error, info} on failure
   """
-  @spec pages_get_page_images(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.PageImages.t} | {:error, Tesla.Env.t}
+  @spec pages_get_page_images(Tesla.Env.client(), String.t(), String.t(), String.t(), keyword()) ::
+          {:ok, DocuSign.Model.PageImages.t()} | {:error, Tesla.Env.t()}
   def pages_get_page_images(connection, account_id, document_id, envelope_id, opts \\ []) do
     optional_params = %{
       count: :query,
@@ -395,6 +465,7 @@ defmodule DocuSign.Api.Envelopes do
       show_changes: :query,
       start_position: :query
     }
+
     %{}
     |> method(:get)
     |> url("/v2/accounts/#{account_id}/envelopes/#{envelope_id}/documents/#{document_id}/pages")
@@ -423,14 +494,33 @@ defmodule DocuSign.Api.Envelopes do
   {:ok, %{}} on success
   {:error, info} on failure
   """
-  @spec pages_put_page_image(Tesla.Env.client, String.t, String.t, String.t, String.t, keyword()) :: {:ok, nil} | {:error, Tesla.Env.t}
-  def pages_put_page_image(connection, account_id, document_id, envelope_id, page_number, opts \\ []) do
+  @spec pages_put_page_image(
+          Tesla.Env.client(),
+          String.t(),
+          String.t(),
+          String.t(),
+          String.t(),
+          keyword()
+        ) :: {:ok, nil} | {:error, Tesla.Env.t()}
+  def pages_put_page_image(
+        connection,
+        account_id,
+        document_id,
+        envelope_id,
+        page_number,
+        opts \\ []
+      ) do
     optional_params = %{
       pageRequest: :body
     }
+
     %{}
     |> method(:put)
-    |> url("/v2/accounts/#{account_id}/envelopes/#{envelope_id}/documents/#{document_id}/pages/#{page_number}/page_image")
+    |> url(
+      "/v2/accounts/#{account_id}/envelopes/#{envelope_id}/documents/#{document_id}/pages/#{
+        page_number
+      }/page_image"
+    )
     |> add_optional_params(optional_params, opts)
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
@@ -455,14 +545,29 @@ defmodule DocuSign.Api.Envelopes do
   {:ok, %DocuSign.Model.String.t{}} on success
   {:error, info} on failure
   """
-  @spec recipients_get_recipient_initials_image(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, String.t} | {:error, Tesla.Env.t}
-  def recipients_get_recipient_initials_image(connection, account_id, envelope_id, recipient_id, opts \\ []) do
+  @spec recipients_get_recipient_initials_image(
+          Tesla.Env.client(),
+          String.t(),
+          String.t(),
+          String.t(),
+          keyword()
+        ) :: {:ok, String.t()} | {:error, Tesla.Env.t()}
+  def recipients_get_recipient_initials_image(
+        connection,
+        account_id,
+        envelope_id,
+        recipient_id,
+        opts \\ []
+      ) do
     optional_params = %{
       include_chrome: :query
     }
+
     %{}
     |> method(:get)
-    |> url("/v2/accounts/#{account_id}/envelopes/#{envelope_id}/recipients/#{recipient_id}/initials_image")
+    |> url(
+      "/v2/accounts/#{account_id}/envelopes/#{envelope_id}/recipients/#{recipient_id}/initials_image"
+    )
     |> add_optional_params(optional_params, opts)
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
@@ -486,11 +591,25 @@ defmodule DocuSign.Api.Envelopes do
   {:ok, %DocuSign.Model.UserSignatures{}} on success
   {:error, info} on failure
   """
-  @spec recipients_get_recipient_signature(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.UserSignatures.t} | {:error, Tesla.Env.t}
-  def recipients_get_recipient_signature(connection, account_id, envelope_id, recipient_id, _opts \\ []) do
+  @spec recipients_get_recipient_signature(
+          Tesla.Env.client(),
+          String.t(),
+          String.t(),
+          String.t(),
+          keyword()
+        ) :: {:ok, DocuSign.Model.UserSignatures.t()} | {:error, Tesla.Env.t()}
+  def recipients_get_recipient_signature(
+        connection,
+        account_id,
+        envelope_id,
+        recipient_id,
+        _opts \\ []
+      ) do
     %{}
     |> method(:get)
-    |> url("/v2/accounts/#{account_id}/envelopes/#{envelope_id}/recipients/#{recipient_id}/signature")
+    |> url(
+      "/v2/accounts/#{account_id}/envelopes/#{envelope_id}/recipients/#{recipient_id}/signature"
+    )
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> decode(%DocuSign.Model.UserSignatures{})
@@ -514,14 +633,29 @@ defmodule DocuSign.Api.Envelopes do
   {:ok, %DocuSign.Model.String.t{}} on success
   {:error, info} on failure
   """
-  @spec recipients_get_recipient_signature_image(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, String.t} | {:error, Tesla.Env.t}
-  def recipients_get_recipient_signature_image(connection, account_id, envelope_id, recipient_id, opts \\ []) do
+  @spec recipients_get_recipient_signature_image(
+          Tesla.Env.client(),
+          String.t(),
+          String.t(),
+          String.t(),
+          keyword()
+        ) :: {:ok, String.t()} | {:error, Tesla.Env.t()}
+  def recipients_get_recipient_signature_image(
+        connection,
+        account_id,
+        envelope_id,
+        recipient_id,
+        opts \\ []
+      ) do
     optional_params = %{
       include_chrome: :query
     }
+
     %{}
     |> method(:get)
-    |> url("/v2/accounts/#{account_id}/envelopes/#{envelope_id}/recipients/#{recipient_id}/signature_image")
+    |> url(
+      "/v2/accounts/#{account_id}/envelopes/#{envelope_id}/recipients/#{recipient_id}/signature_image"
+    )
     |> add_optional_params(optional_params, opts)
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
@@ -545,11 +679,25 @@ defmodule DocuSign.Api.Envelopes do
   {:ok, %{}} on success
   {:error, info} on failure
   """
-  @spec recipients_put_recipient_initials_image(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, nil} | {:error, Tesla.Env.t}
-  def recipients_put_recipient_initials_image(connection, account_id, envelope_id, recipient_id, _opts \\ []) do
+  @spec recipients_put_recipient_initials_image(
+          Tesla.Env.client(),
+          String.t(),
+          String.t(),
+          String.t(),
+          keyword()
+        ) :: {:ok, nil} | {:error, Tesla.Env.t()}
+  def recipients_put_recipient_initials_image(
+        connection,
+        account_id,
+        envelope_id,
+        recipient_id,
+        _opts \\ []
+      ) do
     %{}
     |> method(:put)
-    |> url("/v2/accounts/#{account_id}/envelopes/#{envelope_id}/recipients/#{recipient_id}/initials_image")
+    |> url(
+      "/v2/accounts/#{account_id}/envelopes/#{envelope_id}/recipients/#{recipient_id}/initials_image"
+    )
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> decode(false)
@@ -572,11 +720,25 @@ defmodule DocuSign.Api.Envelopes do
   {:ok, %{}} on success
   {:error, info} on failure
   """
-  @spec recipients_put_recipient_signature_image(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, nil} | {:error, Tesla.Env.t}
-  def recipients_put_recipient_signature_image(connection, account_id, envelope_id, recipient_id, _opts \\ []) do
+  @spec recipients_put_recipient_signature_image(
+          Tesla.Env.client(),
+          String.t(),
+          String.t(),
+          String.t(),
+          keyword()
+        ) :: {:ok, nil} | {:error, Tesla.Env.t()}
+  def recipients_put_recipient_signature_image(
+        connection,
+        account_id,
+        envelope_id,
+        recipient_id,
+        _opts \\ []
+      ) do
     %{}
     |> method(:put)
-    |> url("/v2/accounts/#{account_id}/envelopes/#{envelope_id}/recipients/#{recipient_id}/signature_image")
+    |> url(
+      "/v2/accounts/#{account_id}/envelopes/#{envelope_id}/recipients/#{recipient_id}/signature_image"
+    )
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> decode(false)

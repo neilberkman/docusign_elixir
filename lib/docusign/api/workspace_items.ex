@@ -30,15 +30,32 @@ defmodule DocuSign.Api.WorkspaceItems do
   {:ok, %{}} on success
   {:error, info} on failure
   """
-  @spec workspace_file_get_workspace_file(Tesla.Env.client, String.t, String.t, String.t, String.t, keyword()) :: {:ok, nil} | {:error, Tesla.Env.t}
-  def workspace_file_get_workspace_file(connection, account_id, file_id, folder_id, workspace_id, opts \\ []) do
+  @spec workspace_file_get_workspace_file(
+          Tesla.Env.client(),
+          String.t(),
+          String.t(),
+          String.t(),
+          String.t(),
+          keyword()
+        ) :: {:ok, nil} | {:error, Tesla.Env.t()}
+  def workspace_file_get_workspace_file(
+        connection,
+        account_id,
+        file_id,
+        folder_id,
+        workspace_id,
+        opts \\ []
+      ) do
     optional_params = %{
       is_download: :query,
       pdf_version: :query
     }
+
     %{}
     |> method(:get)
-    |> url("/v2/accounts/#{account_id}/workspaces/#{workspace_id}/folders/#{folder_id}/files/#{file_id}")
+    |> url(
+      "/v2/accounts/#{account_id}/workspaces/#{workspace_id}/folders/#{folder_id}/files/#{file_id}"
+    )
     |> add_optional_params(optional_params, opts)
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
@@ -68,8 +85,22 @@ defmodule DocuSign.Api.WorkspaceItems do
   {:ok, %DocuSign.Model.PageImages{}} on success
   {:error, info} on failure
   """
-  @spec workspace_file_pages_get_workspace_file_pages(Tesla.Env.client, String.t, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.PageImages.t} | {:error, Tesla.Env.t}
-  def workspace_file_pages_get_workspace_file_pages(connection, account_id, file_id, folder_id, workspace_id, opts \\ []) do
+  @spec workspace_file_pages_get_workspace_file_pages(
+          Tesla.Env.client(),
+          String.t(),
+          String.t(),
+          String.t(),
+          String.t(),
+          keyword()
+        ) :: {:ok, DocuSign.Model.PageImages.t()} | {:error, Tesla.Env.t()}
+  def workspace_file_pages_get_workspace_file_pages(
+        connection,
+        account_id,
+        file_id,
+        folder_id,
+        workspace_id,
+        opts \\ []
+      ) do
     optional_params = %{
       count: :query,
       dpi: :query,
@@ -77,9 +108,12 @@ defmodule DocuSign.Api.WorkspaceItems do
       max_width: :query,
       start_position: :query
     }
+
     %{}
     |> method(:get)
-    |> url("/v2/accounts/#{account_id}/workspaces/#{workspace_id}/folders/#{folder_id}/files/#{file_id}/pages")
+    |> url(
+      "/v2/accounts/#{account_id}/workspaces/#{workspace_id}/folders/#{folder_id}/files/#{file_id}/pages"
+    )
     |> add_optional_params(optional_params, opts)
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
@@ -88,7 +122,7 @@ defmodule DocuSign.Api.WorkspaceItems do
 
   @doc """
   Creates a workspace file.
-  
+
 
   ## Parameters
 
@@ -103,8 +137,20 @@ defmodule DocuSign.Api.WorkspaceItems do
   {:ok, %DocuSign.Model.WorkspaceItems{}} on success
   {:error, info} on failure
   """
-  @spec workspace_file_post_workspace_files(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.WorkspaceItems.t} | {:error, Tesla.Env.t}
-  def workspace_file_post_workspace_files(connection, account_id, folder_id, workspace_id, _opts \\ []) do
+  @spec workspace_file_post_workspace_files(
+          Tesla.Env.client(),
+          String.t(),
+          String.t(),
+          String.t(),
+          keyword()
+        ) :: {:ok, DocuSign.Model.WorkspaceItems.t()} | {:error, Tesla.Env.t()}
+  def workspace_file_post_workspace_files(
+        connection,
+        account_id,
+        folder_id,
+        workspace_id,
+        _opts \\ []
+      ) do
     %{}
     |> method(:post)
     |> url("/v2/accounts/#{account_id}/workspaces/#{workspace_id}/folders/#{folder_id}/files")
@@ -131,11 +177,27 @@ defmodule DocuSign.Api.WorkspaceItems do
   {:ok, %DocuSign.Model.WorkspaceItems{}} on success
   {:error, info} on failure
   """
-  @spec workspace_file_put_workspace_file(Tesla.Env.client, String.t, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.WorkspaceItems.t} | {:error, Tesla.Env.t}
-  def workspace_file_put_workspace_file(connection, account_id, file_id, folder_id, workspace_id, _opts \\ []) do
+  @spec workspace_file_put_workspace_file(
+          Tesla.Env.client(),
+          String.t(),
+          String.t(),
+          String.t(),
+          String.t(),
+          keyword()
+        ) :: {:ok, DocuSign.Model.WorkspaceItems.t()} | {:error, Tesla.Env.t()}
+  def workspace_file_put_workspace_file(
+        connection,
+        account_id,
+        file_id,
+        folder_id,
+        workspace_id,
+        _opts \\ []
+      ) do
     %{}
     |> method(:put)
-    |> url("/v2/accounts/#{account_id}/workspaces/#{workspace_id}/folders/#{folder_id}/files/#{file_id}")
+    |> url(
+      "/v2/accounts/#{account_id}/workspaces/#{workspace_id}/folders/#{folder_id}/files/#{file_id}"
+    )
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> decode(%DocuSign.Model.WorkspaceItems{})
@@ -143,7 +205,7 @@ defmodule DocuSign.Api.WorkspaceItems do
 
   @doc """
   Deletes workspace one or more specific files/folders from the given folder or root.
-  
+
 
   ## Parameters
 
@@ -159,11 +221,24 @@ defmodule DocuSign.Api.WorkspaceItems do
   {:ok, %{}} on success
   {:error, info} on failure
   """
-  @spec workspace_folder_delete_workspace_items(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, nil} | {:error, Tesla.Env.t}
-  def workspace_folder_delete_workspace_items(connection, account_id, folder_id, workspace_id, opts \\ []) do
+  @spec workspace_folder_delete_workspace_items(
+          Tesla.Env.client(),
+          String.t(),
+          String.t(),
+          String.t(),
+          keyword()
+        ) :: {:ok, nil} | {:error, Tesla.Env.t()}
+  def workspace_folder_delete_workspace_items(
+        connection,
+        account_id,
+        folder_id,
+        workspace_id,
+        opts \\ []
+      ) do
     optional_params = %{
       workspaceItemList: :body
     }
+
     %{}
     |> method(:delete)
     |> url("/v2/accounts/#{account_id}/workspaces/#{workspace_id}/folders/#{folder_id}")
@@ -197,8 +272,20 @@ defmodule DocuSign.Api.WorkspaceItems do
   {:ok, %DocuSign.Model.WorkspaceFolderContents{}} on success
   {:error, info} on failure
   """
-  @spec workspace_folder_get_workspace_folder(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.WorkspaceFolderContents.t} | {:error, Tesla.Env.t}
-  def workspace_folder_get_workspace_folder(connection, account_id, folder_id, workspace_id, opts \\ []) do
+  @spec workspace_folder_get_workspace_folder(
+          Tesla.Env.client(),
+          String.t(),
+          String.t(),
+          String.t(),
+          keyword()
+        ) :: {:ok, DocuSign.Model.WorkspaceFolderContents.t()} | {:error, Tesla.Env.t()}
+  def workspace_folder_get_workspace_folder(
+        connection,
+        account_id,
+        folder_id,
+        workspace_id,
+        opts \\ []
+      ) do
     optional_params = %{
       count: :query,
       include_files: :query,
@@ -208,6 +295,7 @@ defmodule DocuSign.Api.WorkspaceItems do
       start_position: :query,
       workspace_user_id: :query
     }
+
     %{}
     |> method(:get)
     |> url("/v2/accounts/#{account_id}/workspaces/#{workspace_id}/folders/#{folder_id}")

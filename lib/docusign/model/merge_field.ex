@@ -17,12 +17,12 @@ defmodule DocuSign.Model.MergeField do
   ]
 
   @type t :: %__MODULE__{
-    :allowSenderToEdit => String.t,
-    :configurationType => String.t,
-    :path => String.t,
-    :row => String.t,
-    :writeBack => String.t
-  }
+          :allowSenderToEdit => String.t(),
+          :configurationType => String.t(),
+          :path => String.t(),
+          :row => String.t(),
+          :writeBack => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.MergeField do

@@ -13,12 +13,13 @@ defmodule DocuSign.Model.BillingChargeResponse do
   ]
 
   @type t :: %__MODULE__{
-    :billingChargeItems => [BillingCharge]
-  }
+          :billingChargeItems => [BillingCharge]
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.BillingChargeResponse do
   import DocuSign.Deserializer
+
   def decode(value, options) do
     value
     |> deserialize(:billingChargeItems, :list, DocuSign.Model.BillingCharge, options)

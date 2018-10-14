@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.CompositeTemplate do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -17,16 +17,17 @@ defmodule DocuSign.Model.CompositeTemplate do
   ]
 
   @type t :: %__MODULE__{
-    :compositeTemplateId => String.t,
-    :document => Document,
-    :inlineTemplates => [InlineTemplate],
-    :pdfMetaDataTemplateSequence => String.t,
-    :serverTemplates => [ServerTemplate]
-  }
+          :compositeTemplateId => String.t(),
+          :document => Document,
+          :inlineTemplates => [InlineTemplate],
+          :pdfMetaDataTemplateSequence => String.t(),
+          :serverTemplates => [ServerTemplate]
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.CompositeTemplate do
   import DocuSign.Deserializer
+
   def decode(value, options) do
     value
     |> deserialize(:document, :struct, DocuSign.Model.Document, options)

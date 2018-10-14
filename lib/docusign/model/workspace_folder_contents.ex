@@ -20,19 +20,20 @@ defmodule DocuSign.Model.WorkspaceFolderContents do
   ]
 
   @type t :: %__MODULE__{
-    :endPosition => String.t,
-    :folder => WorkspaceItems,
-    :items => [WorkspaceItems],
-    :parentFolders => [WorkspaceItems],
-    :resultSetSize => String.t,
-    :startPosition => String.t,
-    :totalSetSize => String.t,
-    :workspaceId => String.t
-  }
+          :endPosition => String.t(),
+          :folder => WorkspaceItems,
+          :items => [WorkspaceItems],
+          :parentFolders => [WorkspaceItems],
+          :resultSetSize => String.t(),
+          :startPosition => String.t(),
+          :totalSetSize => String.t(),
+          :workspaceId => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.WorkspaceFolderContents do
   import DocuSign.Deserializer
+
   def decode(value, options) do
     value
     |> deserialize(:folder, :struct, DocuSign.Model.WorkspaceItems, options)

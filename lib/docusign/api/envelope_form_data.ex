@@ -12,7 +12,7 @@ defmodule DocuSign.Api.EnvelopeFormData do
 
   @doc """
   Returns envelope form data for an existing envelope.
-  
+
 
   ## Parameters
 
@@ -26,7 +26,8 @@ defmodule DocuSign.Api.EnvelopeFormData do
   {:ok, %DocuSign.Model.EnvelopeFormData{}} on success
   {:error, info} on failure
   """
-  @spec form_data_get_form_data(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeFormData.t} | {:error, Tesla.Env.t}
+  @spec form_data_get_form_data(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+          {:ok, DocuSign.Model.EnvelopeFormData.t()} | {:error, Tesla.Env.t()}
   def form_data_get_form_data(connection, account_id, envelope_id, _opts \\ []) do
     %{}
     |> method(:get)

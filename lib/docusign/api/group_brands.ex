@@ -27,11 +27,13 @@ defmodule DocuSign.Api.GroupBrands do
   {:ok, %DocuSign.Model.GroupBrands{}} on success
   {:error, info} on failure
   """
-  @spec brands_delete_group_brands(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.GroupBrands.t} | {:error, Tesla.Env.t}
+  @spec brands_delete_group_brands(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+          {:ok, DocuSign.Model.GroupBrands.t()} | {:error, Tesla.Env.t()}
   def brands_delete_group_brands(connection, account_id, group_id, opts \\ []) do
     optional_params = %{
       brandsRequest: :body
     }
+
     %{}
     |> method(:delete)
     |> url("/v2/accounts/#{account_id}/groups/#{group_id}/brands")
@@ -57,7 +59,8 @@ defmodule DocuSign.Api.GroupBrands do
   {:ok, %DocuSign.Model.GroupBrands{}} on success
   {:error, info} on failure
   """
-  @spec brands_get_group_brands(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.GroupBrands.t} | {:error, Tesla.Env.t}
+  @spec brands_get_group_brands(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+          {:ok, DocuSign.Model.GroupBrands.t()} | {:error, Tesla.Env.t()}
   def brands_get_group_brands(connection, account_id, group_id, _opts \\ []) do
     %{}
     |> method(:get)
@@ -84,11 +87,13 @@ defmodule DocuSign.Api.GroupBrands do
   {:ok, %DocuSign.Model.GroupBrands{}} on success
   {:error, info} on failure
   """
-  @spec brands_put_group_brands(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.GroupBrands.t} | {:error, Tesla.Env.t}
+  @spec brands_put_group_brands(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+          {:ok, DocuSign.Model.GroupBrands.t()} | {:error, Tesla.Env.t()}
   def brands_put_group_brands(connection, account_id, group_id, opts \\ []) do
     optional_params = %{
       brandsRequest: :body
     }
+
     %{}
     |> method(:put)
     |> url("/v2/accounts/#{account_id}/groups/#{group_id}/brands")

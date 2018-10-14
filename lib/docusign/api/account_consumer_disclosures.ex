@@ -26,11 +26,13 @@ defmodule DocuSign.Api.AccountConsumerDisclosures do
   {:ok, %DocuSign.Model.AccountConsumerDisclosures{}} on success
   {:error, info} on failure
   """
-  @spec consumer_disclosure_get_consumer_disclosure(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.AccountConsumerDisclosures.t} | {:error, Tesla.Env.t}
+  @spec consumer_disclosure_get_consumer_disclosure(Tesla.Env.client(), String.t(), keyword()) ::
+          {:ok, DocuSign.Model.AccountConsumerDisclosures.t()} | {:error, Tesla.Env.t()}
   def consumer_disclosure_get_consumer_disclosure(connection, account_id, opts \\ []) do
     optional_params = %{
       langCode: :query
     }
+
     %{}
     |> method(:get)
     |> url("/v2/accounts/#{account_id}/consumer_disclosure")
@@ -56,8 +58,18 @@ defmodule DocuSign.Api.AccountConsumerDisclosures do
   {:ok, %DocuSign.Model.AccountConsumerDisclosures{}} on success
   {:error, info} on failure
   """
-  @spec consumer_disclosure_get_consumer_disclosure_lang_code(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.AccountConsumerDisclosures.t} | {:error, Tesla.Env.t}
-  def consumer_disclosure_get_consumer_disclosure_lang_code(connection, account_id, lang_code, _opts \\ []) do
+  @spec consumer_disclosure_get_consumer_disclosure_lang_code(
+          Tesla.Env.client(),
+          String.t(),
+          String.t(),
+          keyword()
+        ) :: {:ok, DocuSign.Model.AccountConsumerDisclosures.t()} | {:error, Tesla.Env.t()}
+  def consumer_disclosure_get_consumer_disclosure_lang_code(
+        connection,
+        account_id,
+        lang_code,
+        _opts \\ []
+      ) do
     %{}
     |> method(:get)
     |> url("/v2/accounts/#{account_id}/consumer_disclosure/#{lang_code}")
@@ -68,7 +80,7 @@ defmodule DocuSign.Api.AccountConsumerDisclosures do
 
   @doc """
   Update Consumer Disclosure.
-  
+
 
   ## Parameters
 
@@ -84,12 +96,18 @@ defmodule DocuSign.Api.AccountConsumerDisclosures do
   {:ok, %DocuSign.Model.EnvelopeConsumerDisclosures{}} on success
   {:error, info} on failure
   """
-  @spec consumer_disclosure_put_consumer_disclosure(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeConsumerDisclosures.t} | {:error, Tesla.Env.t}
+  @spec consumer_disclosure_put_consumer_disclosure(
+          Tesla.Env.client(),
+          String.t(),
+          String.t(),
+          keyword()
+        ) :: {:ok, DocuSign.Model.EnvelopeConsumerDisclosures.t()} | {:error, Tesla.Env.t()}
   def consumer_disclosure_put_consumer_disclosure(connection, account_id, lang_code, opts \\ []) do
     optional_params = %{
       include_metadata: :query,
       EnvelopeConsumerDisclosures: :body
     }
+
     %{}
     |> method(:put)
     |> url("/v2/accounts/#{account_id}/consumer_disclosure/#{lang_code}")

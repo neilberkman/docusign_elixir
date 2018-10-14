@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.NotaryJournalCredibleWitness do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -15,10 +15,10 @@ defmodule DocuSign.Model.NotaryJournalCredibleWitness do
   ]
 
   @type t :: %__MODULE__{
-    :address => String.t,
-    :name => String.t,
-    :signatureImage => String.t
-  }
+          :address => String.t(),
+          :name => String.t(),
+          :signatureImage => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.NotaryJournalCredibleWitness do

@@ -14,13 +14,14 @@ defmodule DocuSign.Model.EnvelopeDocuments do
   ]
 
   @type t :: %__MODULE__{
-    :envelopeDocuments => [EnvelopeDocument],
-    :envelopeId => String.t
-  }
+          :envelopeDocuments => [EnvelopeDocument],
+          :envelopeId => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.EnvelopeDocuments do
   import DocuSign.Deserializer
+
   def decode(value, options) do
     value
     |> deserialize(:envelopeDocuments, :list, DocuSign.Model.EnvelopeDocument, options)

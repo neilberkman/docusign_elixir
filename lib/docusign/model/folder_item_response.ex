@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.FolderItemResponse do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -19,18 +19,19 @@ defmodule DocuSign.Model.FolderItemResponse do
   ]
 
   @type t :: %__MODULE__{
-    :endPosition => String.t,
-    :folderItems => [FolderItemV2],
-    :nextUri => String.t,
-    :previousUri => String.t,
-    :resultSetSize => String.t,
-    :startPosition => String.t,
-    :totalRows => String.t
-  }
+          :endPosition => String.t(),
+          :folderItems => [FolderItemV2],
+          :nextUri => String.t(),
+          :previousUri => String.t(),
+          :resultSetSize => String.t(),
+          :startPosition => String.t(),
+          :totalRows => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.FolderItemResponse do
   import DocuSign.Deserializer
+
   def decode(value, options) do
     value
     |> deserialize(:folderItems, :list, DocuSign.Model.FolderItemV2, options)
