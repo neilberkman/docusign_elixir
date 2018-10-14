@@ -15,14 +15,15 @@ defmodule DocuSign.Model.Notification do
   ]
 
   @type t :: %__MODULE__{
-    :expirations => Expirations,
-    :reminders => Reminders,
-    :useAccountDefaults => String.t
-  }
+          :expirations => Expirations,
+          :reminders => Reminders,
+          :useAccountDefaults => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.Notification do
   import DocuSign.Deserializer
+
   def decode(value, options) do
     value
     |> deserialize(:expirations, :struct, DocuSign.Model.Expirations, options)

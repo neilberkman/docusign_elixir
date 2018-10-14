@@ -15,10 +15,10 @@ defmodule DocuSign.Model.ListItem do
   ]
 
   @type t :: %__MODULE__{
-    :selected => String.t,
-    :text => String.t,
-    :value => String.t
-  }
+          :selected => String.t(),
+          :text => String.t(),
+          :value => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.ListItem do

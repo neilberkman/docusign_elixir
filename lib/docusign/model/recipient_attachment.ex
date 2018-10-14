@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.RecipientAttachment do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -18,13 +18,13 @@ defmodule DocuSign.Model.RecipientAttachment do
   ]
 
   @type t :: %__MODULE__{
-    :attachmentId => String.t,
-    :attachmentType => String.t,
-    :data => String.t,
-    :label => String.t,
-    :name => String.t,
-    :remoteUrl => String.t
-  }
+          :attachmentId => String.t(),
+          :attachmentType => String.t(),
+          :data => String.t(),
+          :label => String.t(),
+          :name => String.t(),
+          :remoteUrl => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.RecipientAttachment do

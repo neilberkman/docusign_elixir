@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.TemplateMatch do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -15,10 +15,10 @@ defmodule DocuSign.Model.TemplateMatch do
   ]
 
   @type t :: %__MODULE__{
-    :documentEndPage => String.t,
-    :documentStartPage => String.t,
-    :matchPercentage => String.t
-  }
+          :documentEndPage => String.t(),
+          :documentStartPage => String.t(),
+          :matchPercentage => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.TemplateMatch do

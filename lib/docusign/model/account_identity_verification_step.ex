@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.AccountIdentityVerificationStep do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -14,9 +14,9 @@ defmodule DocuSign.Model.AccountIdentityVerificationStep do
   ]
 
   @type t :: %__MODULE__{
-    :name => String.t,
-    :type => String.t
-  }
+          :name => String.t(),
+          :type => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.AccountIdentityVerificationStep do

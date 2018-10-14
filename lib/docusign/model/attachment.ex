@@ -19,14 +19,14 @@ defmodule DocuSign.Model.Attachment do
   ]
 
   @type t :: %__MODULE__{
-    :accessControl => String.t,
-    :attachmentId => String.t,
-    :attachmentType => String.t,
-    :data => String.t,
-    :label => String.t,
-    :name => String.t,
-    :remoteUrl => String.t
-  }
+          :accessControl => String.t(),
+          :attachmentId => String.t(),
+          :attachmentType => String.t(),
+          :data => String.t(),
+          :label => String.t(),
+          :name => String.t(),
+          :remoteUrl => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.Attachment do

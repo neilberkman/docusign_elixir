@@ -15,14 +15,15 @@ defmodule DocuSign.Model.EnvelopeEmailSettings do
   ]
 
   @type t :: %__MODULE__{
-    :bccEmailAddresses => [BccEmailAddress],
-    :replyEmailAddressOverride => String.t,
-    :replyEmailNameOverride => String.t
-  }
+          :bccEmailAddresses => [BccEmailAddress],
+          :replyEmailAddressOverride => String.t(),
+          :replyEmailNameOverride => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.EnvelopeEmailSettings do
   import DocuSign.Deserializer
+
   def decode(value, options) do
     value
     |> deserialize(:bccEmailAddresses, :list, DocuSign.Model.BccEmailAddress, options)

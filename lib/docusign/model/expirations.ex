@@ -15,10 +15,10 @@ defmodule DocuSign.Model.Expirations do
   ]
 
   @type t :: %__MODULE__{
-    :expireAfter => String.t,
-    :expireEnabled => String.t,
-    :expireWarn => String.t
-  }
+          :expireAfter => String.t(),
+          :expireEnabled => String.t(),
+          :expireWarn => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.Expirations do

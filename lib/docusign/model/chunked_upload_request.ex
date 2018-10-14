@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.ChunkedUploadRequest do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -14,9 +14,9 @@ defmodule DocuSign.Model.ChunkedUploadRequest do
   ]
 
   @type t :: %__MODULE__{
-    :chunkedUploadId => String.t,
-    :data => String.t
-  }
+          :chunkedUploadId => String.t(),
+          :data => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.ChunkedUploadRequest do

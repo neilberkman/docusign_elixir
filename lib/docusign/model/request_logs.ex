@@ -15,10 +15,10 @@ defmodule DocuSign.Model.RequestLogs do
   ]
 
   @type t :: %__MODULE__{
-    :apiRequestLogging => String.t,
-    :apiRequestLogMaxEntries => String.t,
-    :apiRequestLogRemainingEntries => String.t
-  }
+          :apiRequestLogging => String.t(),
+          :apiRequestLogMaxEntries => String.t(),
+          :apiRequestLogRemainingEntries => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.RequestLogs do

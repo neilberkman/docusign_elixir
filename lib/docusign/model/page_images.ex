@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.PageImages do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -19,18 +19,19 @@ defmodule DocuSign.Model.PageImages do
   ]
 
   @type t :: %__MODULE__{
-    :endPosition => String.t,
-    :nextUri => String.t,
-    :pages => [Page],
-    :previousUri => String.t,
-    :resultSetSize => String.t,
-    :startPosition => String.t,
-    :totalSetSize => String.t
-  }
+          :endPosition => String.t(),
+          :nextUri => String.t(),
+          :pages => [Page],
+          :previousUri => String.t(),
+          :resultSetSize => String.t(),
+          :startPosition => String.t(),
+          :totalSetSize => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.PageImages do
   import DocuSign.Deserializer
+
   def decode(value, options) do
     value
     |> deserialize(:pages, :list, DocuSign.Model.Page, options)

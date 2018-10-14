@@ -19,24 +19,30 @@ defmodule DocuSign.Model.BillingPlans do
   ]
 
   @type t :: %__MODULE__{
-    :billingAddress => AccountAddress,
-    :billingAddressIsCreditCardAddress => String.t,
-    :billingPlan => AccountBillingPlan,
-    :creditCardInformation => CreditCardInformation,
-    :paymentProcessorInformation => PaymentProcessorInformation,
-    :referralInformation => ReferralInformation,
-    :successorPlans => [BillingPlan]
-  }
+          :billingAddress => AccountAddress,
+          :billingAddressIsCreditCardAddress => String.t(),
+          :billingPlan => AccountBillingPlan,
+          :creditCardInformation => CreditCardInformation,
+          :paymentProcessorInformation => PaymentProcessorInformation,
+          :referralInformation => ReferralInformation,
+          :successorPlans => [BillingPlan]
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.BillingPlans do
   import DocuSign.Deserializer
+
   def decode(value, options) do
     value
     |> deserialize(:billingAddress, :struct, DocuSign.Model.AccountAddress, options)
     |> deserialize(:billingPlan, :struct, DocuSign.Model.AccountBillingPlan, options)
     |> deserialize(:creditCardInformation, :struct, DocuSign.Model.CreditCardInformation, options)
-    |> deserialize(:paymentProcessorInformation, :struct, DocuSign.Model.PaymentProcessorInformation, options)
+    |> deserialize(
+      :paymentProcessorInformation,
+      :struct,
+      DocuSign.Model.PaymentProcessorInformation,
+      options
+    )
     |> deserialize(:referralInformation, :struct, DocuSign.Model.ReferralInformation, options)
     |> deserialize(:successorPlans, :list, DocuSign.Model.BillingPlan, options)
   end

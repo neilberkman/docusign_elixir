@@ -45,44 +45,45 @@ defmodule DocuSign.Model.Approve do
   ]
 
   @type t :: %__MODULE__{
-    :anchorCaseSensitive => String.t,
-    :anchorHorizontalAlignment => String.t,
-    :anchorIgnoreIfNotPresent => String.t,
-    :anchorMatchWholeWord => String.t,
-    :anchorString => String.t,
-    :anchorUnits => String.t,
-    :anchorXOffset => String.t,
-    :anchorYOffset => String.t,
-    :bold => String.t,
-    :buttonText => String.t,
-    :conditionalParentLabel => String.t,
-    :conditionalParentValue => String.t,
-    :customTabId => String.t,
-    :documentId => String.t,
-    :errorDetails => ErrorDetails,
-    :font => String.t,
-    :fontColor => String.t,
-    :fontSize => String.t,
-    :height => integer(),
-    :italic => String.t,
-    :mergeField => MergeField,
-    :pageNumber => String.t,
-    :recipientId => String.t,
-    :status => String.t,
-    :tabId => String.t,
-    :tabLabel => String.t,
-    :tabOrder => String.t,
-    :templateLocked => String.t,
-    :templateRequired => String.t,
-    :underline => String.t,
-    :width => integer(),
-    :xPosition => String.t,
-    :yPosition => String.t
-  }
+          :anchorCaseSensitive => String.t(),
+          :anchorHorizontalAlignment => String.t(),
+          :anchorIgnoreIfNotPresent => String.t(),
+          :anchorMatchWholeWord => String.t(),
+          :anchorString => String.t(),
+          :anchorUnits => String.t(),
+          :anchorXOffset => String.t(),
+          :anchorYOffset => String.t(),
+          :bold => String.t(),
+          :buttonText => String.t(),
+          :conditionalParentLabel => String.t(),
+          :conditionalParentValue => String.t(),
+          :customTabId => String.t(),
+          :documentId => String.t(),
+          :errorDetails => ErrorDetails,
+          :font => String.t(),
+          :fontColor => String.t(),
+          :fontSize => String.t(),
+          :height => integer(),
+          :italic => String.t(),
+          :mergeField => MergeField,
+          :pageNumber => String.t(),
+          :recipientId => String.t(),
+          :status => String.t(),
+          :tabId => String.t(),
+          :tabLabel => String.t(),
+          :tabOrder => String.t(),
+          :templateLocked => String.t(),
+          :templateRequired => String.t(),
+          :underline => String.t(),
+          :width => integer(),
+          :xPosition => String.t(),
+          :yPosition => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.Approve do
   import DocuSign.Deserializer
+
   def decode(value, options) do
     value
     |> deserialize(:errorDetails, :struct, DocuSign.Model.ErrorDetails, options)

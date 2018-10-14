@@ -16,11 +16,11 @@ defmodule DocuSign.Model.AddOn do
   ]
 
   @type t :: %__MODULE__{
-    :active => String.t,
-    :addOnId => String.t,
-    :id => String.t,
-    :name => String.t
-  }
+          :active => String.t(),
+          :addOnId => String.t(),
+          :id => String.t(),
+          :name => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.AddOn do

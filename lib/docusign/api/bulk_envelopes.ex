@@ -29,13 +29,19 @@ defmodule DocuSign.Api.BulkEnvelopes do
   {:ok, %DocuSign.Model.BulkEnvelopeStatus{}} on success
   {:error, info} on failure
   """
-  @spec bulk_envelopes_get_bulk_envelopes_batch_id(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.BulkEnvelopeStatus.t} | {:error, Tesla.Env.t}
+  @spec bulk_envelopes_get_bulk_envelopes_batch_id(
+          Tesla.Env.client(),
+          String.t(),
+          String.t(),
+          keyword()
+        ) :: {:ok, DocuSign.Model.BulkEnvelopeStatus.t()} | {:error, Tesla.Env.t()}
   def bulk_envelopes_get_bulk_envelopes_batch_id(connection, account_id, batch_id, opts \\ []) do
     optional_params = %{
       count: :query,
       include: :query,
       start_position: :query
     }
+
     %{}
     |> method(:get)
     |> url("/v2/accounts/#{account_id}/bulk_envelopes/#{batch_id}")
@@ -63,13 +69,15 @@ defmodule DocuSign.Api.BulkEnvelopes do
   {:ok, %DocuSign.Model.BulkEnvelopes{}} on success
   {:error, info} on failure
   """
-  @spec bulk_envelopes_get_envelopes_bulk(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.BulkEnvelopes.t} | {:error, Tesla.Env.t}
+  @spec bulk_envelopes_get_envelopes_bulk(Tesla.Env.client(), String.t(), keyword()) ::
+          {:ok, DocuSign.Model.BulkEnvelopes.t()} | {:error, Tesla.Env.t()}
   def bulk_envelopes_get_envelopes_bulk(connection, account_id, opts \\ []) do
     optional_params = %{
       count: :query,
       include: :query,
       start_position: :query
     }
+
     %{}
     |> method(:get)
     |> url("/v2/accounts/#{account_id}/bulk_envelopes")

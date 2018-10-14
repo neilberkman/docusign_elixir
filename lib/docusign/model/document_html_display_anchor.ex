@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.DocumentHtmlDisplayAnchor do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -18,17 +18,18 @@ defmodule DocuSign.Model.DocumentHtmlDisplayAnchor do
   ]
 
   @type t :: %__MODULE__{
-    :caseSensitive => boolean(),
-    :displaySettings => DocumentHtmlDisplaySettings,
-    :endAnchor => String.t,
-    :removeEndAnchor => boolean(),
-    :removeStartAnchor => boolean(),
-    :startAnchor => String.t
-  }
+          :caseSensitive => boolean(),
+          :displaySettings => DocumentHtmlDisplaySettings,
+          :endAnchor => String.t(),
+          :removeEndAnchor => boolean(),
+          :removeStartAnchor => boolean(),
+          :startAnchor => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.DocumentHtmlDisplayAnchor do
   import DocuSign.Deserializer
+
   def decode(value, options) do
     value
     |> deserialize(:displaySettings, :struct, DocuSign.Model.DocumentHtmlDisplaySettings, options)

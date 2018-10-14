@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.TextCustomField do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -19,18 +19,19 @@ defmodule DocuSign.Model.TextCustomField do
   ]
 
   @type t :: %__MODULE__{
-    :configurationType => String.t,
-    :errorDetails => ErrorDetails,
-    :fieldId => String.t,
-    :name => String.t,
-    :required => String.t,
-    :show => String.t,
-    :value => String.t
-  }
+          :configurationType => String.t(),
+          :errorDetails => ErrorDetails,
+          :fieldId => String.t(),
+          :name => String.t(),
+          :required => String.t(),
+          :show => String.t(),
+          :value => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.TextCustomField do
   import DocuSign.Deserializer
+
   def decode(value, options) do
     value
     |> deserialize(:errorDetails, :struct, DocuSign.Model.ErrorDetails, options)

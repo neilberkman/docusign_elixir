@@ -13,8 +13,8 @@ defmodule DocuSign.Model.ReturnUrlRequest do
   ]
 
   @type t :: %__MODULE__{
-    :returnUrl => String.t
-  }
+          :returnUrl => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.ReturnUrlRequest do

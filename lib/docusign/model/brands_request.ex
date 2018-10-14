@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.BrandsRequest do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -13,12 +13,13 @@ defmodule DocuSign.Model.BrandsRequest do
   ]
 
   @type t :: %__MODULE__{
-    :brands => [BrandRequest]
-  }
+          :brands => [BrandRequest]
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.BrandsRequest do
   import DocuSign.Deserializer
+
   def decode(value, options) do
     value
     |> deserialize(:brands, :list, DocuSign.Model.BrandRequest, options)

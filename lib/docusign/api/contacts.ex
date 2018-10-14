@@ -12,7 +12,7 @@ defmodule DocuSign.Api.Contacts do
 
   @doc """
   Replaces a particular contact associated with an account for the DocuSign service.
-  
+
 
   ## Parameters
 
@@ -26,7 +26,8 @@ defmodule DocuSign.Api.Contacts do
   {:ok, %DocuSign.Model.ContactUpdateResponse{}} on success
   {:error, info} on failure
   """
-  @spec contacts_delete_contact_with_id(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.ContactUpdateResponse.t} | {:error, Tesla.Env.t}
+  @spec contacts_delete_contact_with_id(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+          {:ok, DocuSign.Model.ContactUpdateResponse.t()} | {:error, Tesla.Env.t()}
   def contacts_delete_contact_with_id(connection, account_id, contact_id, _opts \\ []) do
     %{}
     |> method(:delete)
@@ -38,7 +39,7 @@ defmodule DocuSign.Api.Contacts do
 
   @doc """
   Delete contacts associated with an account for the DocuSign service.
-  
+
 
   ## Parameters
 
@@ -52,11 +53,13 @@ defmodule DocuSign.Api.Contacts do
   {:ok, %DocuSign.Model.ContactUpdateResponse{}} on success
   {:error, info} on failure
   """
-  @spec contacts_delete_contacts(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.ContactUpdateResponse.t} | {:error, Tesla.Env.t}
+  @spec contacts_delete_contacts(Tesla.Env.client(), String.t(), keyword()) ::
+          {:ok, DocuSign.Model.ContactUpdateResponse.t()} | {:error, Tesla.Env.t()}
   def contacts_delete_contacts(connection, account_id, opts \\ []) do
     optional_params = %{
       contactModRequest: :body
     }
+
     %{}
     |> method(:delete)
     |> url("/v2/accounts/#{account_id}/contacts")
@@ -68,7 +71,7 @@ defmodule DocuSign.Api.Contacts do
 
   @doc """
   Gets a particular contact associated with the user&#39;s account.
-  
+
 
   ## Parameters
 
@@ -82,7 +85,8 @@ defmodule DocuSign.Api.Contacts do
   {:ok, %DocuSign.Model.ContactGetResponse{}} on success
   {:error, info} on failure
   """
-  @spec contacts_get_contact_by_id(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.ContactGetResponse.t} | {:error, Tesla.Env.t}
+  @spec contacts_get_contact_by_id(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+          {:ok, DocuSign.Model.ContactGetResponse.t()} | {:error, Tesla.Env.t()}
   def contacts_get_contact_by_id(connection, account_id, contact_id, _opts \\ []) do
     %{}
     |> method(:get)
@@ -94,7 +98,7 @@ defmodule DocuSign.Api.Contacts do
 
   @doc """
   Imports multiple new contacts into the contacts collection from CSV, JSON, or XML (based on content type).
-  
+
 
   ## Parameters
 
@@ -108,11 +112,13 @@ defmodule DocuSign.Api.Contacts do
   {:ok, %DocuSign.Model.ContactUpdateResponse{}} on success
   {:error, info} on failure
   """
-  @spec contacts_post_contacts(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.ContactUpdateResponse.t} | {:error, Tesla.Env.t}
+  @spec contacts_post_contacts(Tesla.Env.client(), String.t(), keyword()) ::
+          {:ok, DocuSign.Model.ContactUpdateResponse.t()} | {:error, Tesla.Env.t()}
   def contacts_post_contacts(connection, account_id, opts \\ []) do
     optional_params = %{
       contactModRequest: :body
     }
+
     %{}
     |> method(:post)
     |> url("/v2/accounts/#{account_id}/contacts")
@@ -124,7 +130,7 @@ defmodule DocuSign.Api.Contacts do
 
   @doc """
   Replaces contacts associated with an account for the DocuSign service.
-  
+
 
   ## Parameters
 
@@ -138,11 +144,13 @@ defmodule DocuSign.Api.Contacts do
   {:ok, %DocuSign.Model.ContactUpdateResponse{}} on success
   {:error, info} on failure
   """
-  @spec contacts_put_contacts(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.ContactUpdateResponse.t} | {:error, Tesla.Env.t}
+  @spec contacts_put_contacts(Tesla.Env.client(), String.t(), keyword()) ::
+          {:ok, DocuSign.Model.ContactUpdateResponse.t()} | {:error, Tesla.Env.t()}
   def contacts_put_contacts(connection, account_id, opts \\ []) do
     optional_params = %{
       contactModRequest: :body
     }
+
     %{}
     |> method(:put)
     |> url("/v2/accounts/#{account_id}/contacts")

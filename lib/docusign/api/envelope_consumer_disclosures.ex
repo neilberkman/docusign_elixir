@@ -28,14 +28,29 @@ defmodule DocuSign.Api.EnvelopeConsumerDisclosures do
   {:ok, %DocuSign.Model.EnvelopeConsumerDisclosures{}} on success
   {:error, info} on failure
   """
-  @spec consumer_disclosure_get_consumer_disclosure_envelope_id_recipient_id(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeConsumerDisclosures.t} | {:error, Tesla.Env.t}
-  def consumer_disclosure_get_consumer_disclosure_envelope_id_recipient_id(connection, account_id, envelope_id, recipient_id, opts \\ []) do
+  @spec consumer_disclosure_get_consumer_disclosure_envelope_id_recipient_id(
+          Tesla.Env.client(),
+          String.t(),
+          String.t(),
+          String.t(),
+          keyword()
+        ) :: {:ok, DocuSign.Model.EnvelopeConsumerDisclosures.t()} | {:error, Tesla.Env.t()}
+  def consumer_disclosure_get_consumer_disclosure_envelope_id_recipient_id(
+        connection,
+        account_id,
+        envelope_id,
+        recipient_id,
+        opts \\ []
+      ) do
     optional_params = %{
       langCode: :query
     }
+
     %{}
     |> method(:get)
-    |> url("/v2/accounts/#{account_id}/envelopes/#{envelope_id}/recipients/#{recipient_id}/consumer_disclosure")
+    |> url(
+      "/v2/accounts/#{account_id}/envelopes/#{envelope_id}/recipients/#{recipient_id}/consumer_disclosure"
+    )
     |> add_optional_params(optional_params, opts)
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
@@ -61,14 +76,33 @@ defmodule DocuSign.Api.EnvelopeConsumerDisclosures do
   {:ok, %DocuSign.Model.EnvelopeConsumerDisclosures{}} on success
   {:error, info} on failure
   """
-  @spec consumer_disclosure_get_consumer_disclosure_envelope_id_recipient_id_lang_code(Tesla.Env.client, String.t, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeConsumerDisclosures.t} | {:error, Tesla.Env.t}
-  def consumer_disclosure_get_consumer_disclosure_envelope_id_recipient_id_lang_code(connection, account_id, envelope_id, lang_code, recipient_id, opts \\ []) do
+  @spec consumer_disclosure_get_consumer_disclosure_envelope_id_recipient_id_lang_code(
+          Tesla.Env.client(),
+          String.t(),
+          String.t(),
+          String.t(),
+          String.t(),
+          keyword()
+        ) :: {:ok, DocuSign.Model.EnvelopeConsumerDisclosures.t()} | {:error, Tesla.Env.t()}
+  def consumer_disclosure_get_consumer_disclosure_envelope_id_recipient_id_lang_code(
+        connection,
+        account_id,
+        envelope_id,
+        lang_code,
+        recipient_id,
+        opts \\ []
+      ) do
     optional_params = %{
       langCode: :query
     }
+
     %{}
     |> method(:get)
-    |> url("/v2/accounts/#{account_id}/envelopes/#{envelope_id}/recipients/#{recipient_id}/consumer_disclosure/#{lang_code}")
+    |> url(
+      "/v2/accounts/#{account_id}/envelopes/#{envelope_id}/recipients/#{recipient_id}/consumer_disclosure/#{
+        lang_code
+      }"
+    )
     |> add_optional_params(optional_params, opts)
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()

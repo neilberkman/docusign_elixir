@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.ServerTemplate do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -14,9 +14,9 @@ defmodule DocuSign.Model.ServerTemplate do
   ]
 
   @type t :: %__MODULE__{
-    :sequence => String.t,
-    :templateId => String.t
-  }
+          :sequence => String.t(),
+          :templateId => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.ServerTemplate do

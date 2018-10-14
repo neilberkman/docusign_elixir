@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.SeatDiscount do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -15,10 +15,10 @@ defmodule DocuSign.Model.SeatDiscount do
   ]
 
   @type t :: %__MODULE__{
-    :beginSeatCount => String.t,
-    :discountPercent => String.t,
-    :endSeatCount => String.t
-  }
+          :beginSeatCount => String.t(),
+          :discountPercent => String.t(),
+          :endSeatCount => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.SeatDiscount do

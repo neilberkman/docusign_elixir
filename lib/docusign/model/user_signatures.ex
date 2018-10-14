@@ -33,32 +33,33 @@ defmodule DocuSign.Model.UserSignatures do
   ]
 
   @type t :: %__MODULE__{
-    :adoptedDateTime => String.t,
-    :createdDateTime => String.t,
-    :dateStampProperties => DateStampProperties,
-    :errorDetails => ErrorDetails,
-    :externalID => String.t,
-    :imageType => String.t,
-    :initials150ImageId => String.t,
-    :initialsImageUri => String.t,
-    :isDefault => String.t,
-    :phoneticName => String.t,
-    :signature150ImageId => String.t,
-    :signatureFont => String.t,
-    :signatureId => String.t,
-    :signatureImageUri => String.t,
-    :signatureInitials => String.t,
-    :signatureName => String.t,
-    :signatureType => String.t,
-    :stampFormat => String.t,
-    :stampImageUri => String.t,
-    :stampSizeMM => String.t,
-    :stampType => String.t
-  }
+          :adoptedDateTime => String.t(),
+          :createdDateTime => String.t(),
+          :dateStampProperties => DateStampProperties,
+          :errorDetails => ErrorDetails,
+          :externalID => String.t(),
+          :imageType => String.t(),
+          :initials150ImageId => String.t(),
+          :initialsImageUri => String.t(),
+          :isDefault => String.t(),
+          :phoneticName => String.t(),
+          :signature150ImageId => String.t(),
+          :signatureFont => String.t(),
+          :signatureId => String.t(),
+          :signatureImageUri => String.t(),
+          :signatureInitials => String.t(),
+          :signatureName => String.t(),
+          :signatureType => String.t(),
+          :stampFormat => String.t(),
+          :stampImageUri => String.t(),
+          :stampSizeMM => String.t(),
+          :stampType => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.UserSignatures do
   import DocuSign.Deserializer
+
   def decode(value, options) do
     value
     |> deserialize(:dateStampProperties, :struct, DocuSign.Model.DateStampProperties, options)

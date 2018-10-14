@@ -14,9 +14,9 @@ defmodule DocuSign.Model.AppStoreReceipt do
   ]
 
   @type t :: %__MODULE__{
-    :productId => String.t,
-    :receiptData => String.t
-  }
+          :productId => String.t(),
+          :receiptData => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.AppStoreReceipt do

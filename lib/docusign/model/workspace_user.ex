@@ -28,27 +28,28 @@ defmodule DocuSign.Model.WorkspaceUser do
   ]
 
   @type t :: %__MODULE__{
-    :accountId => String.t,
-    :accountName => String.t,
-    :activeSince => String.t,
-    :created => String.t,
-    :createdById => String.t,
-    :email => String.t,
-    :errorDetails => ErrorDetails,
-    :lastModified => String.t,
-    :lastModifiedById => String.t,
-    :status => String.t,
-    :type => String.t,
-    :userId => String.t,
-    :userName => String.t,
-    :workspaceId => String.t,
-    :workspaceUserBaseUrl => String.t,
-    :workspaceUserId => String.t
-  }
+          :accountId => String.t(),
+          :accountName => String.t(),
+          :activeSince => String.t(),
+          :created => String.t(),
+          :createdById => String.t(),
+          :email => String.t(),
+          :errorDetails => ErrorDetails,
+          :lastModified => String.t(),
+          :lastModifiedById => String.t(),
+          :status => String.t(),
+          :type => String.t(),
+          :userId => String.t(),
+          :userName => String.t(),
+          :workspaceId => String.t(),
+          :workspaceUserBaseUrl => String.t(),
+          :workspaceUserId => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.WorkspaceUser do
   import DocuSign.Deserializer
+
   def decode(value, options) do
     value
     |> deserialize(:errorDetails, :struct, DocuSign.Model.ErrorDetails, options)

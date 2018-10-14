@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.BulkRecipient do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -22,25 +22,31 @@ defmodule DocuSign.Model.BulkRecipient do
   ]
 
   @type t :: %__MODULE__{
-    :accessCode => String.t,
-    :email => String.t,
-    :errorDetails => [ErrorDetails],
-    :identification => String.t,
-    :name => String.t,
-    :note => String.t,
-    :phoneNumber => String.t,
-    :recipientSignatureProviderInfo => [BulkRecipientSignatureProvider],
-    :rowNumber => String.t,
-    :tabLabels => [BulkRecipientTabLabel]
-  }
+          :accessCode => String.t(),
+          :email => String.t(),
+          :errorDetails => [ErrorDetails],
+          :identification => String.t(),
+          :name => String.t(),
+          :note => String.t(),
+          :phoneNumber => String.t(),
+          :recipientSignatureProviderInfo => [BulkRecipientSignatureProvider],
+          :rowNumber => String.t(),
+          :tabLabels => [BulkRecipientTabLabel]
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.BulkRecipient do
   import DocuSign.Deserializer
+
   def decode(value, options) do
     value
     |> deserialize(:errorDetails, :list, DocuSign.Model.ErrorDetails, options)
-    |> deserialize(:recipientSignatureProviderInfo, :list, DocuSign.Model.BulkRecipientSignatureProvider, options)
+    |> deserialize(
+      :recipientSignatureProviderInfo,
+      :list,
+      DocuSign.Model.BulkRecipientSignatureProvider,
+      options
+    )
     |> deserialize(:tabLabels, :list, DocuSign.Model.BulkRecipientTabLabel, options)
   end
 end

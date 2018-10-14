@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.ProvisioningInformation do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -19,14 +19,14 @@ defmodule DocuSign.Model.ProvisioningInformation do
   ]
 
   @type t :: %__MODULE__{
-    :defaultConnectionId => String.t,
-    :defaultPlanId => String.t,
-    :distributorCode => String.t,
-    :distributorPassword => String.t,
-    :passwordRuleText => String.t,
-    :planPromotionText => String.t,
-    :purchaseOrderOrPromAllowed => String.t
-  }
+          :defaultConnectionId => String.t(),
+          :defaultPlanId => String.t(),
+          :distributorCode => String.t(),
+          :distributorPassword => String.t(),
+          :passwordRuleText => String.t(),
+          :planPromotionText => String.t(),
+          :purchaseOrderOrPromAllowed => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.ProvisioningInformation do
