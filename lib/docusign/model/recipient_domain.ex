@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.RecipientDomain do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -16,11 +16,11 @@ defmodule DocuSign.Model.RecipientDomain do
   ]
 
   @type t :: %__MODULE__{
-    :active => String.t,
-    :domainCode => String.t,
-    :domainName => String.t,
-    :recipientDomainId => String.t
-  }
+          :active => String.t(),
+          :domainCode => String.t(),
+          :domainName => String.t(),
+          :recipientDomainId => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.RecipientDomain do

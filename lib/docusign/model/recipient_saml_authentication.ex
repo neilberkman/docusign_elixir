@@ -13,14 +13,20 @@ defmodule DocuSign.Model.RecipientSamlAuthentication do
   ]
 
   @type t :: %__MODULE__{
-    :samlAssertionAttributes => [SamlAssertionAttribute]
-  }
+          :samlAssertionAttributes => [SamlAssertionAttribute]
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.RecipientSamlAuthentication do
   import DocuSign.Deserializer
+
   def decode(value, options) do
     value
-    |> deserialize(:samlAssertionAttributes, :list, DocuSign.Model.SamlAssertionAttribute, options)
+    |> deserialize(
+      :samlAssertionAttributes,
+      :list,
+      DocuSign.Model.SamlAssertionAttribute,
+      options
+    )
   end
 end

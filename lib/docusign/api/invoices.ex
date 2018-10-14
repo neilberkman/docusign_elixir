@@ -26,7 +26,12 @@ defmodule DocuSign.Api.Invoices do
   {:ok, %DocuSign.Model.Invoices{}} on success
   {:error, info} on failure
   """
-  @spec billing_invoices_get_billing_invoice(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.Invoices.t} | {:error, Tesla.Env.t}
+  @spec billing_invoices_get_billing_invoice(
+          Tesla.Env.client(),
+          String.t(),
+          String.t(),
+          keyword()
+        ) :: {:ok, DocuSign.Model.Invoices.t()} | {:error, Tesla.Env.t()}
   def billing_invoices_get_billing_invoice(connection, account_id, invoice_id, _opts \\ []) do
     %{}
     |> method(:get)
@@ -53,12 +58,14 @@ defmodule DocuSign.Api.Invoices do
   {:ok, %DocuSign.Model.BillingInvoicesResponse{}} on success
   {:error, info} on failure
   """
-  @spec billing_invoices_get_billing_invoices(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.BillingInvoicesResponse.t} | {:error, Tesla.Env.t}
+  @spec billing_invoices_get_billing_invoices(Tesla.Env.client(), String.t(), keyword()) ::
+          {:ok, DocuSign.Model.BillingInvoicesResponse.t()} | {:error, Tesla.Env.t()}
   def billing_invoices_get_billing_invoices(connection, account_id, opts \\ []) do
     optional_params = %{
       from_date: :query,
       to_date: :query
     }
+
     %{}
     |> method(:get)
     |> url("/v2/accounts/#{account_id}/billing_invoices")
@@ -83,7 +90,8 @@ defmodule DocuSign.Api.Invoices do
   {:ok, %DocuSign.Model.BillingInvoicesSummary{}} on success
   {:error, info} on failure
   """
-  @spec billing_invoices_get_billing_invoices_past_due(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.BillingInvoicesSummary.t} | {:error, Tesla.Env.t}
+  @spec billing_invoices_get_billing_invoices_past_due(Tesla.Env.client(), String.t(), keyword()) ::
+          {:ok, DocuSign.Model.BillingInvoicesSummary.t()} | {:error, Tesla.Env.t()}
   def billing_invoices_get_billing_invoices_past_due(connection, account_id, _opts \\ []) do
     %{}
     |> method(:get)

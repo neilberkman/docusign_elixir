@@ -17,12 +17,12 @@ defmodule DocuSign.Model.BillingInvoiceItem do
   ]
 
   @type t :: %__MODULE__{
-    :chargeAmount => String.t,
-    :chargeName => String.t,
-    :invoiceItemId => String.t,
-    :quantity => String.t,
-    :unitPrice => String.t
-  }
+          :chargeAmount => String.t(),
+          :chargeName => String.t(),
+          :invoiceItemId => String.t(),
+          :quantity => String.t(),
+          :unitPrice => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.BillingInvoiceItem do

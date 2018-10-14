@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.SocialAuthentication do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -13,8 +13,8 @@ defmodule DocuSign.Model.SocialAuthentication do
   ]
 
   @type t :: %__MODULE__{
-    :authentication => String.t
-  }
+          :authentication => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.SocialAuthentication do

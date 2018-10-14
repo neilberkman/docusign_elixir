@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.SenderEmailNotifications do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -21,16 +21,16 @@ defmodule DocuSign.Model.SenderEmailNotifications do
   ]
 
   @type t :: %__MODULE__{
-    :changedSigner => String.t,
-    :commentsOnlyPrivateAndMention => String.t,
-    :commentsReceiveAll => String.t,
-    :deliveryFailed => String.t,
-    :envelopeComplete => String.t,
-    :offlineSigningFailed => String.t,
-    :recipientViewed => String.t,
-    :senderEnvelopeDeclined => String.t,
-    :withdrawnConsent => String.t
-  }
+          :changedSigner => String.t(),
+          :commentsOnlyPrivateAndMention => String.t(),
+          :commentsReceiveAll => String.t(),
+          :deliveryFailed => String.t(),
+          :envelopeComplete => String.t(),
+          :offlineSigningFailed => String.t(),
+          :recipientViewed => String.t(),
+          :senderEnvelopeDeclined => String.t(),
+          :withdrawnConsent => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.SenderEmailNotifications do

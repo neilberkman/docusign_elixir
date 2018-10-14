@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.ViewLinkRequest do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -14,9 +14,9 @@ defmodule DocuSign.Model.ViewLinkRequest do
   ]
 
   @type t :: %__MODULE__{
-    :email => String.t,
-    :returnUrl => String.t
-  }
+          :email => String.t(),
+          :returnUrl => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.ViewLinkRequest do

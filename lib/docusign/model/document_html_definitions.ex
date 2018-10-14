@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.DocumentHtmlDefinitions do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -13,8 +13,8 @@ defmodule DocuSign.Model.DocumentHtmlDefinitions do
   ]
 
   @type t :: %__MODULE__{
-    :htmlDefinitions => [String.t]
-  }
+          :htmlDefinitions => [String.t()]
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.DocumentHtmlDefinitions do

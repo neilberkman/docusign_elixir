@@ -14,9 +14,9 @@ defmodule DocuSign.Model.ErrorDetails do
   ]
 
   @type t :: %__MODULE__{
-    :errorCode => String.t,
-    :message => String.t
-  }
+          :errorCode => String.t(),
+          :message => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.ErrorDetails do

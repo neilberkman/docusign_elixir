@@ -11,8 +11,8 @@ defmodule DocuSign.Api.AccountSealProviders do
   import DocuSign.RequestBuilder
 
   @doc """
-  
-  
+
+
 
   ## Parameters
 
@@ -25,7 +25,8 @@ defmodule DocuSign.Api.AccountSealProviders do
   {:ok, %DocuSign.Model.AccountSealProviders{}} on success
   {:error, info} on failure
   """
-  @spec account_signature_providers_get_seal_providers(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.AccountSealProviders.t} | {:error, Tesla.Env.t}
+  @spec account_signature_providers_get_seal_providers(Tesla.Env.client(), String.t(), keyword()) ::
+          {:ok, DocuSign.Model.AccountSealProviders.t()} | {:error, Tesla.Env.t()}
   def account_signature_providers_get_seal_providers(connection, account_id, _opts \\ []) do
     %{}
     |> method(:get)

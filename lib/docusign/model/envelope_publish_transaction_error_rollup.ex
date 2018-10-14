@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.EnvelopePublishTransactionErrorRollup do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -14,9 +14,9 @@ defmodule DocuSign.Model.EnvelopePublishTransactionErrorRollup do
   ]
 
   @type t :: %__MODULE__{
-    :count => String.t,
-    :errorType => String.t
-  }
+          :count => String.t(),
+          :errorType => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.EnvelopePublishTransactionErrorRollup do

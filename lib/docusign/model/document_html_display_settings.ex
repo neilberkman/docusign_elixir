@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.DocumentHtmlDisplaySettings do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -23,24 +23,30 @@ defmodule DocuSign.Model.DocumentHtmlDisplaySettings do
   ]
 
   @type t :: %__MODULE__{
-    :cellStyle => String.t,
-    :collapsibleSettings => DocumentHtmlCollapsibleDisplaySettings,
-    :display => String.t,
-    :displayLabel => String.t,
-    :displayOrder => integer(),
-    :displayPageNumber => integer(),
-    :hideLabelWhenOpened => boolean(),
-    :inlineOuterStyle => String.t,
-    :labelWhenOpened => String.t,
-    :scrollToTopWhenOpened => boolean(),
-    :tableStyle => String.t
-  }
+          :cellStyle => String.t(),
+          :collapsibleSettings => DocumentHtmlCollapsibleDisplaySettings,
+          :display => String.t(),
+          :displayLabel => String.t(),
+          :displayOrder => integer(),
+          :displayPageNumber => integer(),
+          :hideLabelWhenOpened => boolean(),
+          :inlineOuterStyle => String.t(),
+          :labelWhenOpened => String.t(),
+          :scrollToTopWhenOpened => boolean(),
+          :tableStyle => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.DocumentHtmlDisplaySettings do
   import DocuSign.Deserializer
+
   def decode(value, options) do
     value
-    |> deserialize(:collapsibleSettings, :struct, DocuSign.Model.DocumentHtmlCollapsibleDisplaySettings, options)
+    |> deserialize(
+      :collapsibleSettings,
+      :struct,
+      DocuSign.Model.DocumentHtmlCollapsibleDisplaySettings,
+      options
+    )
   end
 end

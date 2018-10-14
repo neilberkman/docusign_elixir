@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.TemplateSharedItem do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -19,18 +19,19 @@ defmodule DocuSign.Model.TemplateSharedItem do
   ]
 
   @type t :: %__MODULE__{
-    :errorDetails => ErrorDetails,
-    :owner => UserInfo,
-    :shared => String.t,
-    :sharedGroups => [MemberGroupSharedItem],
-    :sharedUsers => [UserSharedItem],
-    :templateId => String.t,
-    :templateName => String.t
-  }
+          :errorDetails => ErrorDetails,
+          :owner => UserInfo,
+          :shared => String.t(),
+          :sharedGroups => [MemberGroupSharedItem],
+          :sharedUsers => [UserSharedItem],
+          :templateId => String.t(),
+          :templateName => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.TemplateSharedItem do
   import DocuSign.Deserializer
+
   def decode(value, options) do
     value
     |> deserialize(:errorDetails, :struct, DocuSign.Model.ErrorDetails, options)

@@ -18,17 +18,18 @@ defmodule DocuSign.Model.PlanInformation do
   ]
 
   @type t :: %__MODULE__{
-    :addOns => [AddOn],
-    :currencyCode => String.t,
-    :freeTrialDaysOverride => String.t,
-    :planFeatureSets => [FeatureSet],
-    :planId => String.t,
-    :recipientDomains => [RecipientDomain]
-  }
+          :addOns => [AddOn],
+          :currencyCode => String.t(),
+          :freeTrialDaysOverride => String.t(),
+          :planFeatureSets => [FeatureSet],
+          :planId => String.t(),
+          :recipientDomains => [RecipientDomain]
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.PlanInformation do
   import DocuSign.Deserializer
+
   def decode(value, options) do
     value
     |> deserialize(:addOns, :list, DocuSign.Model.AddOn, options)

@@ -26,7 +26,12 @@ defmodule DocuSign.Api.ConnectEvents do
   {:ok, %{}} on success
   {:error, info} on failure
   """
-  @spec connect_failures_delete_connect_failure_log(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, nil} | {:error, Tesla.Env.t}
+  @spec connect_failures_delete_connect_failure_log(
+          Tesla.Env.client(),
+          String.t(),
+          String.t(),
+          keyword()
+        ) :: {:ok, nil} | {:error, Tesla.Env.t()}
   def connect_failures_delete_connect_failure_log(connection, account_id, failure_id, _opts \\ []) do
     %{}
     |> method(:delete)
@@ -53,12 +58,14 @@ defmodule DocuSign.Api.ConnectEvents do
   {:ok, %DocuSign.Model.ConnectEvents{}} on success
   {:error, info} on failure
   """
-  @spec connect_failures_get_connect_logs(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.ConnectEvents.t} | {:error, Tesla.Env.t}
+  @spec connect_failures_get_connect_logs(Tesla.Env.client(), String.t(), keyword()) ::
+          {:ok, DocuSign.Model.ConnectEvents.t()} | {:error, Tesla.Env.t()}
   def connect_failures_get_connect_logs(connection, account_id, opts \\ []) do
     optional_params = %{
       from_date: :query,
       to_date: :query
     }
+
     %{}
     |> method(:get)
     |> url("/v2/accounts/#{account_id}/connect/failures")
@@ -84,7 +91,8 @@ defmodule DocuSign.Api.ConnectEvents do
   {:ok, %{}} on success
   {:error, info} on failure
   """
-  @spec connect_log_delete_connect_log(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, nil} | {:error, Tesla.Env.t}
+  @spec connect_log_delete_connect_log(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+          {:ok, nil} | {:error, Tesla.Env.t()}
   def connect_log_delete_connect_log(connection, account_id, log_id, _opts \\ []) do
     %{}
     |> method(:delete)
@@ -109,7 +117,8 @@ defmodule DocuSign.Api.ConnectEvents do
   {:ok, %{}} on success
   {:error, info} on failure
   """
-  @spec connect_log_delete_connect_logs(Tesla.Env.client, String.t, keyword()) :: {:ok, nil} | {:error, Tesla.Env.t}
+  @spec connect_log_delete_connect_logs(Tesla.Env.client(), String.t(), keyword()) ::
+          {:ok, nil} | {:error, Tesla.Env.t()}
   def connect_log_delete_connect_logs(connection, account_id, _opts \\ []) do
     %{}
     |> method(:delete)
@@ -136,11 +145,13 @@ defmodule DocuSign.Api.ConnectEvents do
   {:ok, %DocuSign.Model.ConnectLog{}} on success
   {:error, info} on failure
   """
-  @spec connect_log_get_connect_log(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.ConnectLog.t} | {:error, Tesla.Env.t}
+  @spec connect_log_get_connect_log(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+          {:ok, DocuSign.Model.ConnectLog.t()} | {:error, Tesla.Env.t()}
   def connect_log_get_connect_log(connection, account_id, log_id, opts \\ []) do
     optional_params = %{
       additional_info: :query
     }
+
     %{}
     |> method(:get)
     |> url("/v2/accounts/#{account_id}/connect/logs/#{log_id}")
@@ -167,12 +178,14 @@ defmodule DocuSign.Api.ConnectEvents do
   {:ok, %DocuSign.Model.ConnectEvents{}} on success
   {:error, info} on failure
   """
-  @spec connect_log_get_connect_logs(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.ConnectEvents.t} | {:error, Tesla.Env.t}
+  @spec connect_log_get_connect_logs(Tesla.Env.client(), String.t(), keyword()) ::
+          {:ok, DocuSign.Model.ConnectEvents.t()} | {:error, Tesla.Env.t()}
   def connect_log_get_connect_logs(connection, account_id, opts \\ []) do
     optional_params = %{
       from_date: :query,
       to_date: :query
     }
+
     %{}
     |> method(:get)
     |> url("/v2/accounts/#{account_id}/connect/logs")
@@ -198,11 +211,13 @@ defmodule DocuSign.Api.ConnectEvents do
   {:ok, %DocuSign.Model.ConnectFailureResults{}} on success
   {:error, info} on failure
   """
-  @spec connect_publish_put_connect_retry(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.ConnectFailureResults.t} | {:error, Tesla.Env.t}
+  @spec connect_publish_put_connect_retry(Tesla.Env.client(), String.t(), keyword()) ::
+          {:ok, DocuSign.Model.ConnectFailureResults.t()} | {:error, Tesla.Env.t()}
   def connect_publish_put_connect_retry(connection, account_id, opts \\ []) do
     optional_params = %{
       connectFailureFilter: :body
     }
+
     %{}
     |> method(:put)
     |> url("/v2/accounts/#{account_id}/connect/envelopes/retry_queue")
@@ -228,8 +243,18 @@ defmodule DocuSign.Api.ConnectEvents do
   {:ok, %DocuSign.Model.ConnectFailureResults{}} on success
   {:error, info} on failure
   """
-  @spec connect_publish_put_connect_retry_by_envelope(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.ConnectFailureResults.t} | {:error, Tesla.Env.t}
-  def connect_publish_put_connect_retry_by_envelope(connection, account_id, envelope_id, _opts \\ []) do
+  @spec connect_publish_put_connect_retry_by_envelope(
+          Tesla.Env.client(),
+          String.t(),
+          String.t(),
+          keyword()
+        ) :: {:ok, DocuSign.Model.ConnectFailureResults.t()} | {:error, Tesla.Env.t()}
+  def connect_publish_put_connect_retry_by_envelope(
+        connection,
+        account_id,
+        envelope_id,
+        _opts \\ []
+      ) do
     %{}
     |> method(:put)
     |> url("/v2/accounts/#{account_id}/connect/envelopes/#{envelope_id}/retry_queue")

@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.RecipientEmailNotification do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -15,10 +15,10 @@ defmodule DocuSign.Model.RecipientEmailNotification do
   ]
 
   @type t :: %__MODULE__{
-    :emailBody => String.t,
-    :emailSubject => String.t,
-    :supportedLanguage => String.t
-  }
+          :emailBody => String.t(),
+          :emailSubject => String.t(),
+          :supportedLanguage => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.RecipientEmailNotification do

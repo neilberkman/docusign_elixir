@@ -16,18 +16,24 @@ defmodule DocuSign.Model.IdCheckInformationInput do
   ]
 
   @type t :: %__MODULE__{
-    :addressInformationInput => AddressInformationInput,
-    :dobInformationInput => DobInformationInput,
-    :ssn4InformationInput => Ssn4InformationInput,
-    :ssn9InformationInput => Ssn9InformationInput
-  }
+          :addressInformationInput => AddressInformationInput,
+          :dobInformationInput => DobInformationInput,
+          :ssn4InformationInput => Ssn4InformationInput,
+          :ssn9InformationInput => Ssn9InformationInput
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.IdCheckInformationInput do
   import DocuSign.Deserializer
+
   def decode(value, options) do
     value
-    |> deserialize(:addressInformationInput, :struct, DocuSign.Model.AddressInformationInput, options)
+    |> deserialize(
+      :addressInformationInput,
+      :struct,
+      DocuSign.Model.AddressInformationInput,
+      options
+    )
     |> deserialize(:dobInformationInput, :struct, DocuSign.Model.DobInformationInput, options)
     |> deserialize(:ssn4InformationInput, :struct, DocuSign.Model.Ssn4InformationInput, options)
     |> deserialize(:ssn9InformationInput, :struct, DocuSign.Model.Ssn9InformationInput, options)

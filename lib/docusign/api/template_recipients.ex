@@ -28,11 +28,24 @@ defmodule DocuSign.Api.TemplateRecipients do
   {:ok, %DocuSign.Model.TemplateRecipients{}} on success
   {:error, info} on failure
   """
-  @spec recipients_delete_template_recipient(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.TemplateRecipients.t} | {:error, Tesla.Env.t}
-  def recipients_delete_template_recipient(connection, account_id, recipient_id, template_id, opts \\ []) do
+  @spec recipients_delete_template_recipient(
+          Tesla.Env.client(),
+          String.t(),
+          String.t(),
+          String.t(),
+          keyword()
+        ) :: {:ok, DocuSign.Model.TemplateRecipients.t()} | {:error, Tesla.Env.t()}
+  def recipients_delete_template_recipient(
+        connection,
+        account_id,
+        recipient_id,
+        template_id,
+        opts \\ []
+      ) do
     optional_params = %{
       templateRecipients: :body
     }
+
     %{}
     |> method(:delete)
     |> url("/v2/accounts/#{account_id}/templates/#{template_id}/recipients/#{recipient_id}")
@@ -59,11 +72,17 @@ defmodule DocuSign.Api.TemplateRecipients do
   {:ok, %DocuSign.Model.TemplateRecipients{}} on success
   {:error, info} on failure
   """
-  @spec recipients_delete_template_recipients(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.TemplateRecipients.t} | {:error, Tesla.Env.t}
+  @spec recipients_delete_template_recipients(
+          Tesla.Env.client(),
+          String.t(),
+          String.t(),
+          keyword()
+        ) :: {:ok, DocuSign.Model.TemplateRecipients.t()} | {:error, Tesla.Env.t()}
   def recipients_delete_template_recipients(connection, account_id, template_id, opts \\ []) do
     optional_params = %{
       templateRecipients: :body
     }
+
     %{}
     |> method(:delete)
     |> url("/v2/accounts/#{account_id}/templates/#{template_id}/recipients")
@@ -92,13 +111,15 @@ defmodule DocuSign.Api.TemplateRecipients do
   {:ok, %DocuSign.Model.TemplateRecipients{}} on success
   {:error, info} on failure
   """
-  @spec recipients_get_template_recipients(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.TemplateRecipients.t} | {:error, Tesla.Env.t}
+  @spec recipients_get_template_recipients(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+          {:ok, DocuSign.Model.TemplateRecipients.t()} | {:error, Tesla.Env.t()}
   def recipients_get_template_recipients(connection, account_id, template_id, opts \\ []) do
     optional_params = %{
       include_anchor_tab_locations: :query,
       include_extended: :query,
       include_tabs: :query
     }
+
     %{}
     |> method(:get)
     |> url("/v2/accounts/#{account_id}/templates/#{template_id}/recipients")
@@ -126,12 +147,14 @@ defmodule DocuSign.Api.TemplateRecipients do
   {:ok, %DocuSign.Model.TemplateRecipients{}} on success
   {:error, info} on failure
   """
-  @spec recipients_post_template_recipients(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.TemplateRecipients.t} | {:error, Tesla.Env.t}
+  @spec recipients_post_template_recipients(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+          {:ok, DocuSign.Model.TemplateRecipients.t()} | {:error, Tesla.Env.t()}
   def recipients_post_template_recipients(connection, account_id, template_id, opts \\ []) do
     optional_params = %{
       resend_envelope: :query,
       templateRecipients: :body
     }
+
     %{}
     |> method(:post)
     |> url("/v2/accounts/#{account_id}/templates/#{template_id}/recipients")
@@ -159,12 +182,14 @@ defmodule DocuSign.Api.TemplateRecipients do
   {:ok, %DocuSign.Model.RecipientsUpdateSummary{}} on success
   {:error, info} on failure
   """
-  @spec recipients_put_template_recipients(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.RecipientsUpdateSummary.t} | {:error, Tesla.Env.t}
+  @spec recipients_put_template_recipients(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+          {:ok, DocuSign.Model.RecipientsUpdateSummary.t()} | {:error, Tesla.Env.t()}
   def recipients_put_template_recipients(connection, account_id, template_id, opts \\ []) do
     optional_params = %{
       resend_envelope: :query,
       templateRecipients: :body
     }
+
     %{}
     |> method(:put)
     |> url("/v2/accounts/#{account_id}/templates/#{template_id}/recipients")

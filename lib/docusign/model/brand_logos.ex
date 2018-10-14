@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.BrandLogos do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -15,10 +15,10 @@ defmodule DocuSign.Model.BrandLogos do
   ]
 
   @type t :: %__MODULE__{
-    :email => String.t,
-    :primary => String.t,
-    :secondary => String.t
-  }
+          :email => String.t(),
+          :primary => String.t(),
+          :secondary => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.BrandLogos do

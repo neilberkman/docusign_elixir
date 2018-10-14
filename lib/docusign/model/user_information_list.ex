@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.UserInformationList do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -19,18 +19,19 @@ defmodule DocuSign.Model.UserInformationList do
   ]
 
   @type t :: %__MODULE__{
-    :endPosition => String.t,
-    :nextUri => String.t,
-    :previousUri => String.t,
-    :resultSetSize => String.t,
-    :startPosition => String.t,
-    :totalSetSize => String.t,
-    :users => [Users]
-  }
+          :endPosition => String.t(),
+          :nextUri => String.t(),
+          :previousUri => String.t(),
+          :resultSetSize => String.t(),
+          :startPosition => String.t(),
+          :totalSetSize => String.t(),
+          :users => [Users]
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.UserInformationList do
   import DocuSign.Deserializer
+
   def decode(value, options) do
     value
     |> deserialize(:users, :list, DocuSign.Model.Users, options)

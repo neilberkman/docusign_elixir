@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.SealIdentifier do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -14,9 +14,9 @@ defmodule DocuSign.Model.SealIdentifier do
   ]
 
   @type t :: %__MODULE__{
-    :sealDisplayName => String.t,
-    :sealName => String.t
-  }
+          :sealDisplayName => String.t(),
+          :sealName => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.SealIdentifier do
