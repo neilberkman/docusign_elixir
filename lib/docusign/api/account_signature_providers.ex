@@ -12,6 +12,8 @@ defmodule DocuSign.Api.AccountSignatureProviders do
 
   @doc """
   Returns Account available signature providers for specified account.
+  
+
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server
@@ -23,11 +25,7 @@ defmodule DocuSign.Api.AccountSignatureProviders do
   {:ok, %DocuSign.Model.AccountSignatureProviders{}} on success
   {:error, info} on failure
   """
-  @spec account_signature_providers_get_signature_providers(
-          Tesla.Env.client(),
-          String.t(),
-          keyword()
-        ) :: {:ok, DocuSign.Model.AccountSignatureProviders.t()} | {:error, Tesla.Env.t()}
+  @spec account_signature_providers_get_signature_providers(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.AccountSignatureProviders.t} | {:error, Tesla.Env.t}
   def account_signature_providers_get_signature_providers(connection, account_id, _opts \\ []) do
     %{}
     |> method(:get)

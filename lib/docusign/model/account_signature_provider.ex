@@ -3,7 +3,9 @@
 # Do not edit the class manually.
 
 defmodule DocuSign.Model.AccountSignatureProvider do
-  @moduledoc false
+  @moduledoc """
+  
+  """
 
   @derive [Poison.Encoder]
   defstruct [
@@ -17,32 +19,21 @@ defmodule DocuSign.Model.AccountSignatureProvider do
   ]
 
   @type t :: %__MODULE__{
-          :isRequired => String.t(),
-          :priority => String.t(),
-          :signatureProviderDisplayName => String.t(),
-          :signatureProviderId => String.t(),
-          :signatureProviderName => String.t(),
-          :signatureProviderOptionsMetadata => [AccountSignatureProviderOption],
-          :signatureProviderRequiredOptions => [SignatureProviderRequiredOption]
-        }
+    :isRequired => String.t,
+    :priority => String.t,
+    :signatureProviderDisplayName => String.t,
+    :signatureProviderId => String.t,
+    :signatureProviderName => String.t,
+    :signatureProviderOptionsMetadata => [AccountSignatureProviderOption],
+    :signatureProviderRequiredOptions => [SignatureProviderRequiredOption]
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.AccountSignatureProvider do
   import DocuSign.Deserializer
-
   def decode(value, options) do
     value
-    |> deserialize(
-      :signatureProviderOptionsMetadata,
-      :list,
-      DocuSign.Model.AccountSignatureProviderOption,
-      options
-    )
-    |> deserialize(
-      :signatureProviderRequiredOptions,
-      :list,
-      DocuSign.Model.SignatureProviderRequiredOption,
-      options
-    )
+    |> deserialize(:signatureProviderOptionsMetadata, :list, DocuSign.Model.AccountSignatureProviderOption, options)
+    |> deserialize(:signatureProviderRequiredOptions, :list, DocuSign.Model.SignatureProviderRequiredOption, options)
   end
 end

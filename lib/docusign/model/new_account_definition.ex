@@ -3,7 +3,9 @@
 # Do not edit the class manually.
 
 defmodule DocuSign.Model.NewAccountDefinition do
-  @moduledoc false
+  @moduledoc """
+  
+  """
 
   @derive [Poison.Encoder]
   defstruct [
@@ -21,42 +23,31 @@ defmodule DocuSign.Model.NewAccountDefinition do
   ]
 
   @type t :: %__MODULE__{
-          :accountName => String.t(),
-          :accountSettings => [NameValue],
-          :addressInformation => AccountAddress,
-          :creditCardInformation => CreditCardInformation,
-          :distributorCode => String.t(),
-          :distributorPassword => String.t(),
-          :initialUser => Users,
-          :PaymentProcessorInformation => PaymentProcessorInformation,
-          :planInformation => PlanInformation,
-          :referralInformation => ReferralInformation,
-          :socialAccountInformation => UserSocialAccountLogins
-        }
+    :accountName => String.t,
+    :accountSettings => [NameValue],
+    :addressInformation => AccountAddress,
+    :creditCardInformation => CreditCardInformation,
+    :distributorCode => String.t,
+    :distributorPassword => String.t,
+    :initialUser => Users,
+    :PaymentProcessorInformation => PaymentProcessorInformation,
+    :planInformation => PlanInformation,
+    :referralInformation => ReferralInformation,
+    :socialAccountInformation => UserSocialAccountLogins
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.NewAccountDefinition do
   import DocuSign.Deserializer
-
   def decode(value, options) do
     value
     |> deserialize(:accountSettings, :list, DocuSign.Model.NameValue, options)
     |> deserialize(:addressInformation, :struct, DocuSign.Model.AccountAddress, options)
     |> deserialize(:creditCardInformation, :struct, DocuSign.Model.CreditCardInformation, options)
     |> deserialize(:initialUser, :struct, DocuSign.Model.Users, options)
-    |> deserialize(
-      :PaymentProcessorInformation,
-      :struct,
-      DocuSign.Model.PaymentProcessorInformation,
-      options
-    )
+    |> deserialize(:PaymentProcessorInformation, :struct, DocuSign.Model.PaymentProcessorInformation, options)
     |> deserialize(:planInformation, :struct, DocuSign.Model.PlanInformation, options)
     |> deserialize(:referralInformation, :struct, DocuSign.Model.ReferralInformation, options)
-    |> deserialize(
-      :socialAccountInformation,
-      :struct,
-      DocuSign.Model.UserSocialAccountLogins,
-      options
-    )
+    |> deserialize(:socialAccountInformation, :struct, DocuSign.Model.UserSocialAccountLogins, options)
   end
 end

@@ -3,7 +3,9 @@
 # Do not edit the class manually.
 
 defmodule DocuSign.Model.CustomField do
-  @moduledoc false
+  @moduledoc """
+  
+  """
 
   @derive [Poison.Encoder]
   defstruct [
@@ -18,20 +20,19 @@ defmodule DocuSign.Model.CustomField do
   ]
 
   @type t :: %__MODULE__{
-          :customFieldType => String.t(),
-          :errorDetails => ErrorDetails,
-          :fieldId => String.t(),
-          :listItems => [String.t()],
-          :name => String.t(),
-          :required => String.t(),
-          :show => String.t(),
-          :value => String.t()
-        }
+    :customFieldType => String.t,
+    :errorDetails => ErrorDetails,
+    :fieldId => String.t,
+    :listItems => [String.t],
+    :name => String.t,
+    :required => String.t,
+    :show => String.t,
+    :value => String.t
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.CustomField do
   import DocuSign.Deserializer
-
   def decode(value, options) do
     value
     |> deserialize(:errorDetails, :struct, DocuSign.Model.ErrorDetails, options)

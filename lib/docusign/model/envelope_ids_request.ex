@@ -3,7 +3,9 @@
 # Do not edit the class manually.
 
 defmodule DocuSign.Model.EnvelopeIdsRequest do
-  @moduledoc false
+  @moduledoc """
+  
+  """
 
   @derive [Poison.Encoder]
   defstruct [
@@ -12,9 +14,9 @@ defmodule DocuSign.Model.EnvelopeIdsRequest do
   ]
 
   @type t :: %__MODULE__{
-          :envelopeIds => [String.t()],
-          :transactionIds => [String.t()]
-        }
+    :envelopeIds => [String.t],
+    :transactionIds => [String.t]
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.EnvelopeIdsRequest do

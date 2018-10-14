@@ -30,30 +30,29 @@ defmodule DocuSign.Model.AuthenticationStatus do
   ]
 
   @type t :: %__MODULE__{
-          :accessCodeResult => EventResult,
-          :ageVerifyResult => EventResult,
-          :anySocialIDResult => EventResult,
-          :facebookResult => EventResult,
-          :googleResult => EventResult,
-          :idLookupResult => EventResult,
-          :idQuestionsResult => EventResult,
-          :linkedinResult => EventResult,
-          :liveIDResult => EventResult,
-          :ofacResult => EventResult,
-          :openIDResult => EventResult,
-          :phoneAuthResult => EventResult,
-          :salesforceResult => EventResult,
-          :signatureProviderResult => EventResult,
-          :smsAuthResult => EventResult,
-          :sTANPinResult => EventResult,
-          :twitterResult => EventResult,
-          :yahooResult => EventResult
-        }
+    :accessCodeResult => EventResult,
+    :ageVerifyResult => EventResult,
+    :anySocialIDResult => EventResult,
+    :facebookResult => EventResult,
+    :googleResult => EventResult,
+    :idLookupResult => EventResult,
+    :idQuestionsResult => EventResult,
+    :linkedinResult => EventResult,
+    :liveIDResult => EventResult,
+    :ofacResult => EventResult,
+    :openIDResult => EventResult,
+    :phoneAuthResult => EventResult,
+    :salesforceResult => EventResult,
+    :signatureProviderResult => EventResult,
+    :smsAuthResult => EventResult,
+    :sTANPinResult => EventResult,
+    :twitterResult => EventResult,
+    :yahooResult => EventResult
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.AuthenticationStatus do
   import DocuSign.Deserializer
-
   def decode(value, options) do
     value
     |> deserialize(:accessCodeResult, :struct, DocuSign.Model.EventResult, options)

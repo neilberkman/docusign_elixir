@@ -3,7 +3,9 @@
 # Do not edit the class manually.
 
 defmodule DocuSign.Model.EnvelopeSummary do
-  @moduledoc false
+  @moduledoc """
+  
+  """
 
   @derive [Poison.Encoder]
   defstruct [
@@ -14,11 +16,11 @@ defmodule DocuSign.Model.EnvelopeSummary do
   ]
 
   @type t :: %__MODULE__{
-          :envelopeId => String.t(),
-          :status => String.t(),
-          :statusDateTime => String.t(),
-          :uri => String.t()
-        }
+    :envelopeId => String.t,
+    :status => String.t,
+    :statusDateTime => String.t,
+    :uri => String.t
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.EnvelopeSummary do

@@ -20,20 +20,19 @@ defmodule DocuSign.Model.Page do
   ]
 
   @type t :: %__MODULE__{
-          :dpi => String.t(),
-          :errorDetails => ErrorDetails,
-          :height => String.t(),
-          :imageBytes => String.t(),
-          :mimeType => String.t(),
-          :pageId => String.t(),
-          :sequence => String.t(),
-          :width => String.t()
-        }
+    :dpi => String.t,
+    :errorDetails => ErrorDetails,
+    :height => String.t,
+    :imageBytes => String.t,
+    :mimeType => String.t,
+    :pageId => String.t,
+    :sequence => String.t,
+    :width => String.t
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.Page do
   import DocuSign.Deserializer
-
   def decode(value, options) do
     value
     |> deserialize(:errorDetails, :struct, DocuSign.Model.ErrorDetails, options)

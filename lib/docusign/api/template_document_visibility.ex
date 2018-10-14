@@ -12,6 +12,8 @@ defmodule DocuSign.Api.TemplateDocumentVisibility do
 
   @doc """
   Returns document visibility for the recipients
+  
+
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server
@@ -25,25 +27,11 @@ defmodule DocuSign.Api.TemplateDocumentVisibility do
   {:ok, %DocuSign.Model.EnvelopeDocumentVisibility{}} on success
   {:error, info} on failure
   """
-  @spec recipients_get_template_recipient_document_visibility(
-          Tesla.Env.client(),
-          String.t(),
-          String.t(),
-          String.t(),
-          keyword()
-        ) :: {:ok, DocuSign.Model.EnvelopeDocumentVisibility.t()} | {:error, Tesla.Env.t()}
-  def recipients_get_template_recipient_document_visibility(
-        connection,
-        account_id,
-        recipient_id,
-        template_id,
-        _opts \\ []
-      ) do
+  @spec recipients_get_template_recipient_document_visibility(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeDocumentVisibility.t} | {:error, Tesla.Env.t}
+  def recipients_get_template_recipient_document_visibility(connection, account_id, recipient_id, template_id, _opts \\ []) do
     %{}
     |> method(:get)
-    |> url(
-      "/v2/accounts/#{account_id}/templates/#{template_id}/recipients/#{recipient_id}/document_visibility"
-    )
+    |> url("/v2/accounts/#{account_id}/templates/#{template_id}/recipients/#{recipient_id}/document_visibility")
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> decode(%DocuSign.Model.EnvelopeDocumentVisibility{})
@@ -51,6 +39,8 @@ defmodule DocuSign.Api.TemplateDocumentVisibility do
 
   @doc """
   Updates document visibility for the recipients
+  
+
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server
@@ -65,29 +55,14 @@ defmodule DocuSign.Api.TemplateDocumentVisibility do
   {:ok, %DocuSign.Model.TemplateDocumentVisibility{}} on success
   {:error, info} on failure
   """
-  @spec recipients_put_template_recipient_document_visibility(
-          Tesla.Env.client(),
-          String.t(),
-          String.t(),
-          String.t(),
-          keyword()
-        ) :: {:ok, DocuSign.Model.TemplateDocumentVisibility.t()} | {:error, Tesla.Env.t()}
-  def recipients_put_template_recipient_document_visibility(
-        connection,
-        account_id,
-        recipient_id,
-        template_id,
-        opts \\ []
-      ) do
+  @spec recipients_put_template_recipient_document_visibility(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.TemplateDocumentVisibility.t} | {:error, Tesla.Env.t}
+  def recipients_put_template_recipient_document_visibility(connection, account_id, recipient_id, template_id, opts \\ []) do
     optional_params = %{
-      :TemplateDocumentVisibility => :body
+      TemplateDocumentVisibility: :body
     }
-
     %{}
     |> method(:put)
-    |> url(
-      "/v2/accounts/#{account_id}/templates/#{template_id}/recipients/#{recipient_id}/document_visibility"
-    )
+    |> url("/v2/accounts/#{account_id}/templates/#{template_id}/recipients/#{recipient_id}/document_visibility")
     |> add_optional_params(optional_params, opts)
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
@@ -96,6 +71,8 @@ defmodule DocuSign.Api.TemplateDocumentVisibility do
 
   @doc """
   Updates document visibility for the recipients
+  
+
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server
@@ -109,22 +86,11 @@ defmodule DocuSign.Api.TemplateDocumentVisibility do
   {:ok, %DocuSign.Model.TemplateDocumentVisibility{}} on success
   {:error, info} on failure
   """
-  @spec recipients_put_template_recipients_document_visibility(
-          Tesla.Env.client(),
-          String.t(),
-          String.t(),
-          keyword()
-        ) :: {:ok, DocuSign.Model.TemplateDocumentVisibility.t()} | {:error, Tesla.Env.t()}
-  def recipients_put_template_recipients_document_visibility(
-        connection,
-        account_id,
-        template_id,
-        opts \\ []
-      ) do
+  @spec recipients_put_template_recipients_document_visibility(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.TemplateDocumentVisibility.t} | {:error, Tesla.Env.t}
+  def recipients_put_template_recipients_document_visibility(connection, account_id, template_id, opts \\ []) do
     optional_params = %{
-      :TemplateDocumentVisibility => :body
+      TemplateDocumentVisibility: :body
     }
-
     %{}
     |> method(:put)
     |> url("/v2/accounts/#{account_id}/templates/#{template_id}/recipients/document_visibility")

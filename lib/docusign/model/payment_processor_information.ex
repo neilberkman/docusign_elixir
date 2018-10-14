@@ -3,7 +3,9 @@
 # Do not edit the class manually.
 
 defmodule DocuSign.Model.PaymentProcessorInformation do
-  @moduledoc false
+  @moduledoc """
+  
+  """
 
   @derive [Poison.Encoder]
   defstruct [
@@ -13,15 +15,14 @@ defmodule DocuSign.Model.PaymentProcessorInformation do
   ]
 
   @type t :: %__MODULE__{
-          :address => AddressInformation,
-          :billingAgreementId => String.t(),
-          :email => String.t()
-        }
+    :address => AddressInformation,
+    :billingAgreementId => String.t,
+    :email => String.t
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.PaymentProcessorInformation do
   import DocuSign.Deserializer
-
   def decode(value, options) do
     value
     |> deserialize(:address, :struct, DocuSign.Model.AddressInformation, options)

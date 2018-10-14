@@ -3,7 +3,9 @@
 # Do not edit the class manually.
 
 defmodule DocuSign.Model.FeatureSet do
-  @moduledoc false
+  @moduledoc """
+  
+  """
 
   @derive [Poison.Encoder]
   defstruct [
@@ -19,28 +21,22 @@ defmodule DocuSign.Model.FeatureSet do
   ]
 
   @type t :: %__MODULE__{
-          :currencyFeatureSetPrices => [CurrencyFeatureSetPrice],
-          :envelopeFee => String.t(),
-          :featureSetId => String.t(),
-          :fixedFee => String.t(),
-          :is21CFRPart11 => String.t(),
-          :isActive => String.t(),
-          :isEnabled => String.t(),
-          :name => String.t(),
-          :seatFee => String.t()
-        }
+    :currencyFeatureSetPrices => [CurrencyFeatureSetPrice],
+    :envelopeFee => String.t,
+    :featureSetId => String.t,
+    :fixedFee => String.t,
+    :is21CFRPart11 => String.t,
+    :isActive => String.t,
+    :isEnabled => String.t,
+    :name => String.t,
+    :seatFee => String.t
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.FeatureSet do
   import DocuSign.Deserializer
-
   def decode(value, options) do
     value
-    |> deserialize(
-      :currencyFeatureSetPrices,
-      :list,
-      DocuSign.Model.CurrencyFeatureSetPrice,
-      options
-    )
+    |> deserialize(:currencyFeatureSetPrices, :list, DocuSign.Model.CurrencyFeatureSetPrice, options)
   end
 end

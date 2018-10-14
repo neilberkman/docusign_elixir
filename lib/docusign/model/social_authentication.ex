@@ -3,7 +3,9 @@
 # Do not edit the class manually.
 
 defmodule DocuSign.Model.SocialAuthentication do
-  @moduledoc false
+  @moduledoc """
+  
+  """
 
   @derive [Poison.Encoder]
   defstruct [
@@ -11,8 +13,8 @@ defmodule DocuSign.Model.SocialAuthentication do
   ]
 
   @type t :: %__MODULE__{
-          :authentication => String.t()
-        }
+    :authentication => String.t
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.SocialAuthentication do

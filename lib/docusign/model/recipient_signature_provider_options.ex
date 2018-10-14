@@ -16,11 +16,11 @@ defmodule DocuSign.Model.RecipientSignatureProviderOptions do
   ]
 
   @type t :: %__MODULE__{
-          :cpfNumber => String.t(),
-          :oneTimePassword => String.t(),
-          :signerRole => String.t(),
-          :sms => String.t()
-        }
+    :cpfNumber => String.t,
+    :oneTimePassword => String.t,
+    :signerRole => String.t,
+    :sms => String.t
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.RecipientSignatureProviderOptions do

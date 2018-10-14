@@ -20,15 +20,15 @@ defmodule DocuSign.Model.AddressInformation do
   ]
 
   @type t :: %__MODULE__{
-          :city => String.t(),
-          :country => String.t(),
-          :fax => String.t(),
-          :phone => String.t(),
-          :state => String.t(),
-          :street1 => String.t(),
-          :street2 => String.t(),
-          :zip => String.t()
-        }
+    :city => String.t,
+    :country => String.t,
+    :fax => String.t,
+    :phone => String.t,
+    :state => String.t,
+    :street1 => String.t,
+    :street2 => String.t,
+    :zip => String.t
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.AddressInformation do

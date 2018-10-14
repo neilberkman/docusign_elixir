@@ -3,7 +3,9 @@
 # Do not edit the class manually.
 
 defmodule DocuSign.Model.EventResult do
-  @moduledoc false
+  @moduledoc """
+  
+  """
 
   @derive [Poison.Encoder]
   defstruct [
@@ -14,11 +16,11 @@ defmodule DocuSign.Model.EventResult do
   ]
 
   @type t :: %__MODULE__{
-          :eventTimestamp => String.t(),
-          :failureDescription => String.t(),
-          :status => String.t(),
-          :vendorFailureStatusCode => String.t()
-        }
+    :eventTimestamp => String.t,
+    :failureDescription => String.t,
+    :status => String.t,
+    :vendorFailureStatusCode => String.t
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.EventResult do

@@ -23,23 +23,22 @@ defmodule DocuSign.Model.RadioGroup do
   ]
 
   @type t :: %__MODULE__{
-          :conditionalParentLabel => String.t(),
-          :conditionalParentValue => String.t(),
-          :documentId => String.t(),
-          :groupName => String.t(),
-          :radios => [Radio],
-          :recipientId => String.t(),
-          :requireAll => String.t(),
-          :requireInitialOnSharedChange => String.t(),
-          :shared => String.t(),
-          :templateLocked => String.t(),
-          :templateRequired => String.t()
-        }
+    :conditionalParentLabel => String.t,
+    :conditionalParentValue => String.t,
+    :documentId => String.t,
+    :groupName => String.t,
+    :radios => [Radio],
+    :recipientId => String.t,
+    :requireAll => String.t,
+    :requireInitialOnSharedChange => String.t,
+    :shared => String.t,
+    :templateLocked => String.t,
+    :templateRequired => String.t
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.RadioGroup do
   import DocuSign.Deserializer
-
   def decode(value, options) do
     value
     |> deserialize(:radios, :list, DocuSign.Model.Radio, options)

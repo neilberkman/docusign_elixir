@@ -3,7 +3,9 @@
 # Do not edit the class manually.
 
 defmodule DocuSign.Model.Group do
-  @moduledoc false
+  @moduledoc """
+  
+  """
 
   @derive [Poison.Encoder]
   defstruct [
@@ -16,18 +18,17 @@ defmodule DocuSign.Model.Group do
   ]
 
   @type t :: %__MODULE__{
-          :errorDetails => ErrorDetails,
-          :groupId => String.t(),
-          :groupName => String.t(),
-          :groupType => String.t(),
-          :permissionProfileId => String.t(),
-          :users => [UserInfo]
-        }
+    :errorDetails => ErrorDetails,
+    :groupId => String.t,
+    :groupName => String.t,
+    :groupType => String.t,
+    :permissionProfileId => String.t,
+    :users => [UserInfo]
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.Group do
   import DocuSign.Deserializer
-
   def decode(value, options) do
     value
     |> deserialize(:errorDetails, :struct, DocuSign.Model.ErrorDetails, options)

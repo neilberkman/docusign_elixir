@@ -3,7 +3,9 @@
 # Do not edit the class manually.
 
 defmodule DocuSign.Model.SupportedLanguages do
-  @moduledoc false
+  @moduledoc """
+  
+  """
 
   @derive [Poison.Encoder]
   defstruct [
@@ -11,13 +13,12 @@ defmodule DocuSign.Model.SupportedLanguages do
   ]
 
   @type t :: %__MODULE__{
-          :languages => [NameValue]
-        }
+    :languages => [NameValue]
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.SupportedLanguages do
   import DocuSign.Deserializer
-
   def decode(value, options) do
     value
     |> deserialize(:languages, :list, DocuSign.Model.NameValue, options)

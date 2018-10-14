@@ -26,13 +26,11 @@ defmodule DocuSign.Api.Groups do
   {:ok, %DocuSign.Model.Groups{}} on success
   {:error, info} on failure
   """
-  @spec groups_delete_groups(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.Groups.t()} | {:error, Tesla.Env.t()}
+  @spec groups_delete_groups(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.Groups.t} | {:error, Tesla.Env.t}
   def groups_delete_groups(connection, account_id, opts \\ []) do
     optional_params = %{
-      :Groups => :body
+      Groups: :body
     }
-
     %{}
     |> method(:delete)
     |> url("/v2/accounts/#{account_id}/groups")
@@ -61,16 +59,14 @@ defmodule DocuSign.Api.Groups do
   {:ok, %DocuSign.Model.Groups{}} on success
   {:error, info} on failure
   """
-  @spec groups_get_groups(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.Groups.t()} | {:error, Tesla.Env.t()}
+  @spec groups_get_groups(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.Groups.t} | {:error, Tesla.Env.t}
   def groups_get_groups(connection, account_id, opts \\ []) do
     optional_params = %{
-      :count => :query,
-      :group_type => :query,
-      :search_text => :query,
-      :start_position => :query
+      count: :query,
+      group_type: :query,
+      search_text: :query,
+      start_position: :query
     }
-
     %{}
     |> method(:get)
     |> url("/v2/accounts/#{account_id}/groups")
@@ -96,13 +92,11 @@ defmodule DocuSign.Api.Groups do
   {:ok, %DocuSign.Model.Groups{}} on success
   {:error, info} on failure
   """
-  @spec groups_post_groups(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.Groups.t()} | {:error, Tesla.Env.t()}
+  @spec groups_post_groups(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.Groups.t} | {:error, Tesla.Env.t}
   def groups_post_groups(connection, account_id, opts \\ []) do
     optional_params = %{
-      :Groups => :body
+      Groups: :body
     }
-
     %{}
     |> method(:post)
     |> url("/v2/accounts/#{account_id}/groups")
@@ -128,13 +122,11 @@ defmodule DocuSign.Api.Groups do
   {:ok, %DocuSign.Model.Groups{}} on success
   {:error, info} on failure
   """
-  @spec groups_put_groups(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.Groups.t()} | {:error, Tesla.Env.t()}
+  @spec groups_put_groups(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.Groups.t} | {:error, Tesla.Env.t}
   def groups_put_groups(connection, account_id, opts \\ []) do
     optional_params = %{
-      :Groups => :body
+      Groups: :body
     }
-
     %{}
     |> method(:put)
     |> url("/v2/accounts/#{account_id}/groups")

@@ -2,22 +2,22 @@
 # https://github.com/swagger-api/swagger-codegen.git
 # Do not edit the class manually.
 
-defmodule DocuSign.Model.PostTransactionsResponse do
-  @moduledoc false
+defmodule DocuSign.Model.DocumentHtmlDefinitions do
+  @moduledoc """
+  
+  """
 
   @derive [Poison.Encoder]
   defstruct [
-    :documentData,
-    :transactionSid
+    :htmlDefinitions
   ]
 
   @type t :: %__MODULE__{
-          :documentData => String.t(),
-          :transactionSid => String.t()
-        }
+    :htmlDefinitions => [String.t]
+  }
 end
 
-defimpl Poison.Decoder, for: DocuSign.Model.PostTransactionsResponse do
+defimpl Poison.Decoder, for: DocuSign.Model.DocumentHtmlDefinitions do
   def decode(value, _options) do
     value
   end

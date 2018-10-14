@@ -3,7 +3,9 @@
 # Do not edit the class manually.
 
 defmodule DocuSign.Model.AccountRoleSettings do
-  @moduledoc false
+  @moduledoc """
+  
+  """
 
   @derive [Poison.Encoder]
   defstruct [
@@ -29,6 +31,10 @@ defmodule DocuSign.Model.AccountRoleSettings do
     :allowedToBeEnvelopeTransferRecipientMetadata,
     :allowEnvelopeSending,
     :allowEnvelopeSendingMetadata,
+    :allowESealRecipients,
+    :allowESealRecipientsMetadata,
+    :allowPowerFormsAdminToAccessAllPowerFormEnvelopes,
+    :allowPowerFormsAdminToAccessAllPowerFormEnvelopesMetadata,
     :allowSendersToSetRecipientEmailLanguage,
     :allowSendersToSetRecipientEmailLanguageMetadata,
     :allowSignerAttachments,
@@ -74,244 +80,114 @@ defmodule DocuSign.Model.AccountRoleSettings do
   ]
 
   @type t :: %__MODULE__{
-          :allowAccountManagement => String.t(),
-          :allowAccountManagementMetadata => SettingsMetadata,
-          :allowApiAccess => String.t(),
-          :allowApiAccessMetadata => SettingsMetadata,
-          :allowApiAccessToAccount => String.t(),
-          :allowApiAccessToAccountMetadata => SettingsMetadata,
-          :allowApiSendingOnBehalfOfOthers => String.t(),
-          :allowApiSendingOnBehalfOfOthersMetadata => SettingsMetadata,
-          :allowApiSequentialSigning => String.t(),
-          :allowApiSequentialSigningMetadata => SettingsMetadata,
-          :allowBulkSending => String.t(),
-          :allowBulkSendingMetadata => SettingsMetadata,
-          :allowDocuSignDesktopClient => String.t(),
-          :allowDocuSignDesktopClientMetadata => SettingsMetadata,
-          :allowedAddressBookAccess => String.t(),
-          :allowedAddressBookAccessMetadata => SettingsMetadata,
-          :allowedTemplateAccess => String.t(),
-          :allowedTemplateAccessMetadata => SettingsMetadata,
-          :allowedToBeEnvelopeTransferRecipient => String.t(),
-          :allowedToBeEnvelopeTransferRecipientMetadata => SettingsMetadata,
-          :allowEnvelopeSending => String.t(),
-          :allowEnvelopeSendingMetadata => SettingsMetadata,
-          :allowSendersToSetRecipientEmailLanguage => String.t(),
-          :allowSendersToSetRecipientEmailLanguageMetadata => SettingsMetadata,
-          :allowSignerAttachments => String.t(),
-          :allowSignerAttachmentsMetadata => SettingsMetadata,
-          :allowSupplementalDocuments => String.t(),
-          :allowSupplementalDocumentsMetadata => SettingsMetadata,
-          :allowTaggingInSendAndCorrect => String.t(),
-          :allowTaggingInSendAndCorrectMetadata => SettingsMetadata,
-          :allowVaulting => String.t(),
-          :allowVaultingMetadata => SettingsMetadata,
-          :allowWetSigningOverride => String.t(),
-          :allowWetSigningOverrideMetadata => SettingsMetadata,
-          :canCreateWorkspaces => String.t(),
-          :canCreateWorkspacesMetadata => SettingsMetadata,
-          :disableDocumentUpload => String.t(),
-          :disableDocumentUploadMetadata => SettingsMetadata,
-          :disableOtherActions => String.t(),
-          :disableOtherActionsMetadata => SettingsMetadata,
-          :enableApiRequestLogging => String.t(),
-          :enableApiRequestLoggingMetadata => SettingsMetadata,
-          :enableRecipientViewingNotifications => String.t(),
-          :enableRecipientViewingNotificationsMetadata => SettingsMetadata,
-          :enableSequentialSigningInterface => String.t(),
-          :enableSequentialSigningInterfaceMetadata => SettingsMetadata,
-          :enableTransactionPointIntegration => String.t(),
-          :enableTransactionPointIntegrationMetadata => SettingsMetadata,
-          :powerFormRole => String.t(),
-          :powerFormRoleMetadata => SettingsMetadata,
-          :receiveCompletedSelfSignedDocumentsAsEmailLinks => String.t(),
-          :receiveCompletedSelfSignedDocumentsAsEmailLinksMetadata => SettingsMetadata,
-          :supplementalDocumentsMustAccept => String.t(),
-          :supplementalDocumentsMustAcceptMetadata => SettingsMetadata,
-          :supplementalDocumentsMustRead => String.t(),
-          :supplementalDocumentsMustReadMetadata => SettingsMetadata,
-          :supplementalDocumentsMustView => String.t(),
-          :supplementalDocumentsMustViewMetadata => SettingsMetadata,
-          :useNewDocuSignExperienceInterface => String.t(),
-          :useNewDocuSignExperienceInterfaceMetadata => SettingsMetadata,
-          :useNewSendingInterface => String.t(),
-          :useNewSendingInterfaceMetadata => SettingsMetadata,
-          :vaultingMode => String.t(),
-          :vaultingModeMetadata => SettingsMetadata
-        }
+    :allowAccountManagement => String.t,
+    :allowAccountManagementMetadata => SettingsMetadata,
+    :allowApiAccess => String.t,
+    :allowApiAccessMetadata => SettingsMetadata,
+    :allowApiAccessToAccount => String.t,
+    :allowApiAccessToAccountMetadata => SettingsMetadata,
+    :allowApiSendingOnBehalfOfOthers => String.t,
+    :allowApiSendingOnBehalfOfOthersMetadata => SettingsMetadata,
+    :allowApiSequentialSigning => String.t,
+    :allowApiSequentialSigningMetadata => SettingsMetadata,
+    :allowBulkSending => String.t,
+    :allowBulkSendingMetadata => SettingsMetadata,
+    :allowDocuSignDesktopClient => String.t,
+    :allowDocuSignDesktopClientMetadata => SettingsMetadata,
+    :allowedAddressBookAccess => String.t,
+    :allowedAddressBookAccessMetadata => SettingsMetadata,
+    :allowedTemplateAccess => String.t,
+    :allowedTemplateAccessMetadata => SettingsMetadata,
+    :allowedToBeEnvelopeTransferRecipient => String.t,
+    :allowedToBeEnvelopeTransferRecipientMetadata => SettingsMetadata,
+    :allowEnvelopeSending => String.t,
+    :allowEnvelopeSendingMetadata => SettingsMetadata,
+    :allowESealRecipients => String.t,
+    :allowESealRecipientsMetadata => SettingsMetadata,
+    :allowPowerFormsAdminToAccessAllPowerFormEnvelopes => String.t,
+    :allowPowerFormsAdminToAccessAllPowerFormEnvelopesMetadata => SettingsMetadata,
+    :allowSendersToSetRecipientEmailLanguage => String.t,
+    :allowSendersToSetRecipientEmailLanguageMetadata => SettingsMetadata,
+    :allowSignerAttachments => String.t,
+    :allowSignerAttachmentsMetadata => SettingsMetadata,
+    :allowSupplementalDocuments => String.t,
+    :allowSupplementalDocumentsMetadata => SettingsMetadata,
+    :allowTaggingInSendAndCorrect => String.t,
+    :allowTaggingInSendAndCorrectMetadata => SettingsMetadata,
+    :allowVaulting => String.t,
+    :allowVaultingMetadata => SettingsMetadata,
+    :allowWetSigningOverride => String.t,
+    :allowWetSigningOverrideMetadata => SettingsMetadata,
+    :canCreateWorkspaces => String.t,
+    :canCreateWorkspacesMetadata => SettingsMetadata,
+    :disableDocumentUpload => String.t,
+    :disableDocumentUploadMetadata => SettingsMetadata,
+    :disableOtherActions => String.t,
+    :disableOtherActionsMetadata => SettingsMetadata,
+    :enableApiRequestLogging => String.t,
+    :enableApiRequestLoggingMetadata => SettingsMetadata,
+    :enableRecipientViewingNotifications => String.t,
+    :enableRecipientViewingNotificationsMetadata => SettingsMetadata,
+    :enableSequentialSigningInterface => String.t,
+    :enableSequentialSigningInterfaceMetadata => SettingsMetadata,
+    :enableTransactionPointIntegration => String.t,
+    :enableTransactionPointIntegrationMetadata => SettingsMetadata,
+    :powerFormRole => String.t,
+    :powerFormRoleMetadata => SettingsMetadata,
+    :receiveCompletedSelfSignedDocumentsAsEmailLinks => String.t,
+    :receiveCompletedSelfSignedDocumentsAsEmailLinksMetadata => SettingsMetadata,
+    :supplementalDocumentsMustAccept => String.t,
+    :supplementalDocumentsMustAcceptMetadata => SettingsMetadata,
+    :supplementalDocumentsMustRead => String.t,
+    :supplementalDocumentsMustReadMetadata => SettingsMetadata,
+    :supplementalDocumentsMustView => String.t,
+    :supplementalDocumentsMustViewMetadata => SettingsMetadata,
+    :useNewDocuSignExperienceInterface => String.t,
+    :useNewDocuSignExperienceInterfaceMetadata => SettingsMetadata,
+    :useNewSendingInterface => String.t,
+    :useNewSendingInterfaceMetadata => SettingsMetadata,
+    :vaultingMode => String.t,
+    :vaultingModeMetadata => SettingsMetadata
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.AccountRoleSettings do
   import DocuSign.Deserializer
-
   def decode(value, options) do
     value
-    |> deserialize(
-      :allowAccountManagementMetadata,
-      :struct,
-      DocuSign.Model.SettingsMetadata,
-      options
-    )
+    |> deserialize(:allowAccountManagementMetadata, :struct, DocuSign.Model.SettingsMetadata, options)
     |> deserialize(:allowApiAccessMetadata, :struct, DocuSign.Model.SettingsMetadata, options)
-    |> deserialize(
-      :allowApiAccessToAccountMetadata,
-      :struct,
-      DocuSign.Model.SettingsMetadata,
-      options
-    )
-    |> deserialize(
-      :allowApiSendingOnBehalfOfOthersMetadata,
-      :struct,
-      DocuSign.Model.SettingsMetadata,
-      options
-    )
-    |> deserialize(
-      :allowApiSequentialSigningMetadata,
-      :struct,
-      DocuSign.Model.SettingsMetadata,
-      options
-    )
+    |> deserialize(:allowApiAccessToAccountMetadata, :struct, DocuSign.Model.SettingsMetadata, options)
+    |> deserialize(:allowApiSendingOnBehalfOfOthersMetadata, :struct, DocuSign.Model.SettingsMetadata, options)
+    |> deserialize(:allowApiSequentialSigningMetadata, :struct, DocuSign.Model.SettingsMetadata, options)
     |> deserialize(:allowBulkSendingMetadata, :struct, DocuSign.Model.SettingsMetadata, options)
-    |> deserialize(
-      :allowDocuSignDesktopClientMetadata,
-      :struct,
-      DocuSign.Model.SettingsMetadata,
-      options
-    )
-    |> deserialize(
-      :allowedAddressBookAccessMetadata,
-      :struct,
-      DocuSign.Model.SettingsMetadata,
-      options
-    )
-    |> deserialize(
-      :allowedTemplateAccessMetadata,
-      :struct,
-      DocuSign.Model.SettingsMetadata,
-      options
-    )
-    |> deserialize(
-      :allowedToBeEnvelopeTransferRecipientMetadata,
-      :struct,
-      DocuSign.Model.SettingsMetadata,
-      options
-    )
-    |> deserialize(
-      :allowEnvelopeSendingMetadata,
-      :struct,
-      DocuSign.Model.SettingsMetadata,
-      options
-    )
-    |> deserialize(
-      :allowSendersToSetRecipientEmailLanguageMetadata,
-      :struct,
-      DocuSign.Model.SettingsMetadata,
-      options
-    )
-    |> deserialize(
-      :allowSignerAttachmentsMetadata,
-      :struct,
-      DocuSign.Model.SettingsMetadata,
-      options
-    )
-    |> deserialize(
-      :allowSupplementalDocumentsMetadata,
-      :struct,
-      DocuSign.Model.SettingsMetadata,
-      options
-    )
-    |> deserialize(
-      :allowTaggingInSendAndCorrectMetadata,
-      :struct,
-      DocuSign.Model.SettingsMetadata,
-      options
-    )
+    |> deserialize(:allowDocuSignDesktopClientMetadata, :struct, DocuSign.Model.SettingsMetadata, options)
+    |> deserialize(:allowedAddressBookAccessMetadata, :struct, DocuSign.Model.SettingsMetadata, options)
+    |> deserialize(:allowedTemplateAccessMetadata, :struct, DocuSign.Model.SettingsMetadata, options)
+    |> deserialize(:allowedToBeEnvelopeTransferRecipientMetadata, :struct, DocuSign.Model.SettingsMetadata, options)
+    |> deserialize(:allowEnvelopeSendingMetadata, :struct, DocuSign.Model.SettingsMetadata, options)
+    |> deserialize(:allowESealRecipientsMetadata, :struct, DocuSign.Model.SettingsMetadata, options)
+    |> deserialize(:allowPowerFormsAdminToAccessAllPowerFormEnvelopesMetadata, :struct, DocuSign.Model.SettingsMetadata, options)
+    |> deserialize(:allowSendersToSetRecipientEmailLanguageMetadata, :struct, DocuSign.Model.SettingsMetadata, options)
+    |> deserialize(:allowSignerAttachmentsMetadata, :struct, DocuSign.Model.SettingsMetadata, options)
+    |> deserialize(:allowSupplementalDocumentsMetadata, :struct, DocuSign.Model.SettingsMetadata, options)
+    |> deserialize(:allowTaggingInSendAndCorrectMetadata, :struct, DocuSign.Model.SettingsMetadata, options)
     |> deserialize(:allowVaultingMetadata, :struct, DocuSign.Model.SettingsMetadata, options)
-    |> deserialize(
-      :allowWetSigningOverrideMetadata,
-      :struct,
-      DocuSign.Model.SettingsMetadata,
-      options
-    )
-    |> deserialize(
-      :canCreateWorkspacesMetadata,
-      :struct,
-      DocuSign.Model.SettingsMetadata,
-      options
-    )
-    |> deserialize(
-      :disableDocumentUploadMetadata,
-      :struct,
-      DocuSign.Model.SettingsMetadata,
-      options
-    )
-    |> deserialize(
-      :disableOtherActionsMetadata,
-      :struct,
-      DocuSign.Model.SettingsMetadata,
-      options
-    )
-    |> deserialize(
-      :enableApiRequestLoggingMetadata,
-      :struct,
-      DocuSign.Model.SettingsMetadata,
-      options
-    )
-    |> deserialize(
-      :enableRecipientViewingNotificationsMetadata,
-      :struct,
-      DocuSign.Model.SettingsMetadata,
-      options
-    )
-    |> deserialize(
-      :enableSequentialSigningInterfaceMetadata,
-      :struct,
-      DocuSign.Model.SettingsMetadata,
-      options
-    )
-    |> deserialize(
-      :enableTransactionPointIntegrationMetadata,
-      :struct,
-      DocuSign.Model.SettingsMetadata,
-      options
-    )
+    |> deserialize(:allowWetSigningOverrideMetadata, :struct, DocuSign.Model.SettingsMetadata, options)
+    |> deserialize(:canCreateWorkspacesMetadata, :struct, DocuSign.Model.SettingsMetadata, options)
+    |> deserialize(:disableDocumentUploadMetadata, :struct, DocuSign.Model.SettingsMetadata, options)
+    |> deserialize(:disableOtherActionsMetadata, :struct, DocuSign.Model.SettingsMetadata, options)
+    |> deserialize(:enableApiRequestLoggingMetadata, :struct, DocuSign.Model.SettingsMetadata, options)
+    |> deserialize(:enableRecipientViewingNotificationsMetadata, :struct, DocuSign.Model.SettingsMetadata, options)
+    |> deserialize(:enableSequentialSigningInterfaceMetadata, :struct, DocuSign.Model.SettingsMetadata, options)
+    |> deserialize(:enableTransactionPointIntegrationMetadata, :struct, DocuSign.Model.SettingsMetadata, options)
     |> deserialize(:powerFormRoleMetadata, :struct, DocuSign.Model.SettingsMetadata, options)
-    |> deserialize(
-      :receiveCompletedSelfSignedDocumentsAsEmailLinksMetadata,
-      :struct,
-      DocuSign.Model.SettingsMetadata,
-      options
-    )
-    |> deserialize(
-      :supplementalDocumentsMustAcceptMetadata,
-      :struct,
-      DocuSign.Model.SettingsMetadata,
-      options
-    )
-    |> deserialize(
-      :supplementalDocumentsMustReadMetadata,
-      :struct,
-      DocuSign.Model.SettingsMetadata,
-      options
-    )
-    |> deserialize(
-      :supplementalDocumentsMustViewMetadata,
-      :struct,
-      DocuSign.Model.SettingsMetadata,
-      options
-    )
-    |> deserialize(
-      :useNewDocuSignExperienceInterfaceMetadata,
-      :struct,
-      DocuSign.Model.SettingsMetadata,
-      options
-    )
-    |> deserialize(
-      :useNewSendingInterfaceMetadata,
-      :struct,
-      DocuSign.Model.SettingsMetadata,
-      options
-    )
+    |> deserialize(:receiveCompletedSelfSignedDocumentsAsEmailLinksMetadata, :struct, DocuSign.Model.SettingsMetadata, options)
+    |> deserialize(:supplementalDocumentsMustAcceptMetadata, :struct, DocuSign.Model.SettingsMetadata, options)
+    |> deserialize(:supplementalDocumentsMustReadMetadata, :struct, DocuSign.Model.SettingsMetadata, options)
+    |> deserialize(:supplementalDocumentsMustViewMetadata, :struct, DocuSign.Model.SettingsMetadata, options)
+    |> deserialize(:useNewDocuSignExperienceInterfaceMetadata, :struct, DocuSign.Model.SettingsMetadata, options)
+    |> deserialize(:useNewSendingInterfaceMetadata, :struct, DocuSign.Model.SettingsMetadata, options)
     |> deserialize(:vaultingModeMetadata, :struct, DocuSign.Model.SettingsMetadata, options)
   end
 end

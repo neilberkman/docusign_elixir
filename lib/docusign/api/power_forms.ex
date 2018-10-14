@@ -12,6 +12,8 @@ defmodule DocuSign.Api.PowerForms do
 
   @doc """
   Delete a PowerForm.
+  
+
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server
@@ -24,8 +26,7 @@ defmodule DocuSign.Api.PowerForms do
   {:ok, %{}} on success
   {:error, info} on failure
   """
-  @spec power_forms_delete_power_form(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, nil} | {:error, Tesla.Env.t()}
+  @spec power_forms_delete_power_form(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, nil} | {:error, Tesla.Env.t}
   def power_forms_delete_power_form(connection, account_id, power_form_id, _opts \\ []) do
     %{}
     |> method(:delete)
@@ -37,6 +38,8 @@ defmodule DocuSign.Api.PowerForms do
 
   @doc """
   Deletes one or more PowerForms
+  
+
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server
@@ -49,13 +52,11 @@ defmodule DocuSign.Api.PowerForms do
   {:ok, %DocuSign.Model.PowerFormsResponse{}} on success
   {:error, info} on failure
   """
-  @spec power_forms_delete_power_forms_list(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.PowerFormsResponse.t()} | {:error, Tesla.Env.t()}
+  @spec power_forms_delete_power_forms_list(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.PowerFormsResponse.t} | {:error, Tesla.Env.t}
   def power_forms_delete_power_forms_list(connection, account_id, opts \\ []) do
     optional_params = %{
-      :powerFormsRequest => :body
+      powerFormsRequest: :body
     }
-
     %{}
     |> method(:delete)
     |> url("/v2/accounts/#{account_id}/powerforms")
@@ -67,6 +68,8 @@ defmodule DocuSign.Api.PowerForms do
 
   @doc """
   Returns a single PowerForm.
+  
+
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server
@@ -79,8 +82,7 @@ defmodule DocuSign.Api.PowerForms do
   {:ok, %DocuSign.Model.PowerForms{}} on success
   {:error, info} on failure
   """
-  @spec power_forms_get_power_form(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.PowerForms.t()} | {:error, Tesla.Env.t()}
+  @spec power_forms_get_power_form(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.PowerForms.t} | {:error, Tesla.Env.t}
   def power_forms_get_power_form(connection, account_id, power_form_id, _opts \\ []) do
     %{}
     |> method(:get)
@@ -92,6 +94,8 @@ defmodule DocuSign.Api.PowerForms do
 
   @doc """
   Returns the list of PowerForms available to the user.
+  
+
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server
@@ -107,16 +111,14 @@ defmodule DocuSign.Api.PowerForms do
   {:ok, %DocuSign.Model.PowerFormsResponse{}} on success
   {:error, info} on failure
   """
-  @spec power_forms_get_power_forms_list(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.PowerFormsResponse.t()} | {:error, Tesla.Env.t()}
+  @spec power_forms_get_power_forms_list(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.PowerFormsResponse.t} | {:error, Tesla.Env.t}
   def power_forms_get_power_forms_list(connection, account_id, opts \\ []) do
     optional_params = %{
-      :from_date => :query,
-      :order => :query,
-      :order_by => :query,
-      :to_date => :query
+      from_date: :query,
+      order: :query,
+      order_by: :query,
+      to_date: :query
     }
-
     %{}
     |> method(:get)
     |> url("/v2/accounts/#{account_id}/powerforms")
@@ -128,6 +130,8 @@ defmodule DocuSign.Api.PowerForms do
 
   @doc """
   Returns the list of PowerForms available to the user.
+  
+
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server
@@ -140,13 +144,11 @@ defmodule DocuSign.Api.PowerForms do
   {:ok, %DocuSign.Model.PowerFormSendersResponse{}} on success
   {:error, info} on failure
   """
-  @spec power_forms_get_power_forms_senders(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.PowerFormSendersResponse.t()} | {:error, Tesla.Env.t()}
+  @spec power_forms_get_power_forms_senders(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.PowerFormSendersResponse.t} | {:error, Tesla.Env.t}
   def power_forms_get_power_forms_senders(connection, account_id, opts \\ []) do
     optional_params = %{
-      :start_position => :query
+      start_position: :query
     }
-
     %{}
     |> method(:get)
     |> url("/v2/accounts/#{account_id}/powerforms/senders")
@@ -158,6 +160,8 @@ defmodule DocuSign.Api.PowerForms do
 
   @doc """
   Creates a new PowerForm.
+  
+
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server
@@ -170,13 +174,11 @@ defmodule DocuSign.Api.PowerForms do
   {:ok, %DocuSign.Model.PowerForms{}} on success
   {:error, info} on failure
   """
-  @spec power_forms_post_power_form(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.PowerForms.t()} | {:error, Tesla.Env.t()}
+  @spec power_forms_post_power_form(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.PowerForms.t} | {:error, Tesla.Env.t}
   def power_forms_post_power_form(connection, account_id, opts \\ []) do
     optional_params = %{
-      :PowerForms => :body
+      PowerForms: :body
     }
-
     %{}
     |> method(:post)
     |> url("/v2/accounts/#{account_id}/powerforms")
@@ -188,6 +190,8 @@ defmodule DocuSign.Api.PowerForms do
 
   @doc """
   Creates a new PowerForm.
+  
+
   ## Parameters
 
   - connection (DocuSign.Connection): Connection to server
@@ -201,13 +205,11 @@ defmodule DocuSign.Api.PowerForms do
   {:ok, %DocuSign.Model.PowerForms{}} on success
   {:error, info} on failure
   """
-  @spec power_forms_put_power_form(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.PowerForms.t()} | {:error, Tesla.Env.t()}
+  @spec power_forms_put_power_form(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.PowerForms.t} | {:error, Tesla.Env.t}
   def power_forms_put_power_form(connection, account_id, power_form_id, opts \\ []) do
     optional_params = %{
-      :PowerForms => :body
+      PowerForms: :body
     }
-
     %{}
     |> method(:put)
     |> url("/v2/accounts/#{account_id}/powerforms/#{power_form_id}")

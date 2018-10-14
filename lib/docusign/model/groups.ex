@@ -19,19 +19,18 @@ defmodule DocuSign.Model.Groups do
   ]
 
   @type t :: %__MODULE__{
-          :endPosition => String.t(),
-          :groups => [Group],
-          :nextUri => String.t(),
-          :previousUri => String.t(),
-          :resultSetSize => String.t(),
-          :startPosition => String.t(),
-          :totalSetSize => String.t()
-        }
+    :endPosition => String.t,
+    :groups => [Group],
+    :nextUri => String.t,
+    :previousUri => String.t,
+    :resultSetSize => String.t,
+    :startPosition => String.t,
+    :totalSetSize => String.t
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.Groups do
   import DocuSign.Deserializer
-
   def decode(value, options) do
     value
     |> deserialize(:groups, :list, DocuSign.Model.Group, options)

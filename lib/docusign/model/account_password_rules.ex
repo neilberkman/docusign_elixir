@@ -3,7 +3,9 @@
 # Do not edit the class manually.
 
 defmodule DocuSign.Model.AccountPasswordRules do
-  @moduledoc false
+  @moduledoc """
+  
+  """
 
   @derive [Poison.Encoder]
   defstruct [
@@ -30,75 +32,39 @@ defmodule DocuSign.Model.AccountPasswordRules do
   ]
 
   @type t :: %__MODULE__{
-          :expirePassword => String.t(),
-          :expirePasswordDays => String.t(),
-          :expirePasswordDaysMetadata => AccountPasswordExpirePasswordDays,
-          :lockoutDurationMinutes => String.t(),
-          :lockoutDurationMinutesMetadata => AccountPasswordLockoutDurationMinutes,
-          :lockoutDurationType => String.t(),
-          :lockoutDurationTypeMetadata => AccountPasswordLockoutDurationType,
-          :minimumPasswordAgeDays => String.t(),
-          :minimumPasswordAgeDaysMetadata => AccountPasswordMinimumPasswordAgeDays,
-          :minimumPasswordLength => String.t(),
-          :minimumPasswordLengthMetadata => AccountMinimumPasswordLength,
-          :passwordIncludeDigit => String.t(),
-          :passwordIncludeDigitOrSpecialCharacter => String.t(),
-          :passwordIncludeLowerCase => String.t(),
-          :passwordIncludeSpecialCharacter => String.t(),
-          :passwordIncludeUpperCase => String.t(),
-          :passwordStrengthType => String.t(),
-          :passwordStrengthTypeMetadata => AccountPasswordStrengthType,
-          :questionsRequired => String.t(),
-          :questionsRequiredMetadata => AccountPasswordQuestionsRequired
-        }
+    :expirePassword => String.t,
+    :expirePasswordDays => String.t,
+    :expirePasswordDaysMetadata => AccountPasswordExpirePasswordDays,
+    :lockoutDurationMinutes => String.t,
+    :lockoutDurationMinutesMetadata => AccountPasswordLockoutDurationMinutes,
+    :lockoutDurationType => String.t,
+    :lockoutDurationTypeMetadata => AccountPasswordLockoutDurationType,
+    :minimumPasswordAgeDays => String.t,
+    :minimumPasswordAgeDaysMetadata => AccountPasswordMinimumPasswordAgeDays,
+    :minimumPasswordLength => String.t,
+    :minimumPasswordLengthMetadata => AccountMinimumPasswordLength,
+    :passwordIncludeDigit => String.t,
+    :passwordIncludeDigitOrSpecialCharacter => String.t,
+    :passwordIncludeLowerCase => String.t,
+    :passwordIncludeSpecialCharacter => String.t,
+    :passwordIncludeUpperCase => String.t,
+    :passwordStrengthType => String.t,
+    :passwordStrengthTypeMetadata => AccountPasswordStrengthType,
+    :questionsRequired => String.t,
+    :questionsRequiredMetadata => AccountPasswordQuestionsRequired
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.AccountPasswordRules do
   import DocuSign.Deserializer
-
   def decode(value, options) do
     value
-    |> deserialize(
-      :expirePasswordDaysMetadata,
-      :struct,
-      DocuSign.Model.AccountPasswordExpirePasswordDays,
-      options
-    )
-    |> deserialize(
-      :lockoutDurationMinutesMetadata,
-      :struct,
-      DocuSign.Model.AccountPasswordLockoutDurationMinutes,
-      options
-    )
-    |> deserialize(
-      :lockoutDurationTypeMetadata,
-      :struct,
-      DocuSign.Model.AccountPasswordLockoutDurationType,
-      options
-    )
-    |> deserialize(
-      :minimumPasswordAgeDaysMetadata,
-      :struct,
-      DocuSign.Model.AccountPasswordMinimumPasswordAgeDays,
-      options
-    )
-    |> deserialize(
-      :minimumPasswordLengthMetadata,
-      :struct,
-      DocuSign.Model.AccountMinimumPasswordLength,
-      options
-    )
-    |> deserialize(
-      :passwordStrengthTypeMetadata,
-      :struct,
-      DocuSign.Model.AccountPasswordStrengthType,
-      options
-    )
-    |> deserialize(
-      :questionsRequiredMetadata,
-      :struct,
-      DocuSign.Model.AccountPasswordQuestionsRequired,
-      options
-    )
+    |> deserialize(:expirePasswordDaysMetadata, :struct, DocuSign.Model.AccountPasswordExpirePasswordDays, options)
+    |> deserialize(:lockoutDurationMinutesMetadata, :struct, DocuSign.Model.AccountPasswordLockoutDurationMinutes, options)
+    |> deserialize(:lockoutDurationTypeMetadata, :struct, DocuSign.Model.AccountPasswordLockoutDurationType, options)
+    |> deserialize(:minimumPasswordAgeDaysMetadata, :struct, DocuSign.Model.AccountPasswordMinimumPasswordAgeDays, options)
+    |> deserialize(:minimumPasswordLengthMetadata, :struct, DocuSign.Model.AccountMinimumPasswordLength, options)
+    |> deserialize(:passwordStrengthTypeMetadata, :struct, DocuSign.Model.AccountPasswordStrengthType, options)
+    |> deserialize(:questionsRequiredMetadata, :struct, DocuSign.Model.AccountPasswordQuestionsRequired, options)
   end
 end

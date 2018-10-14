@@ -3,7 +3,9 @@
 # Do not edit the class manually.
 
 defmodule DocuSign.Model.BrandLink do
-  @moduledoc false
+  @moduledoc """
+  
+  """
 
   @derive [Poison.Encoder]
   defstruct [
@@ -14,11 +16,11 @@ defmodule DocuSign.Model.BrandLink do
   ]
 
   @type t :: %__MODULE__{
-          :linkText => String.t(),
-          :linkType => String.t(),
-          :showLink => String.t(),
-          :urlOrMailTo => String.t()
-        }
+    :linkText => String.t,
+    :linkType => String.t,
+    :showLink => String.t,
+    :urlOrMailTo => String.t
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.BrandLink do

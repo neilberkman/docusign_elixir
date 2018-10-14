@@ -22,22 +22,21 @@ defmodule DocuSign.Model.CloudStorage do
   ]
 
   @type t :: %__MODULE__{
-          :endPosition => String.t(),
-          :errorDetails => ExternalDocServiceErrorDetails,
-          :id => String.t(),
-          :items => [ExternalFile],
-          :name => String.t(),
-          :nextUri => String.t(),
-          :previousUri => String.t(),
-          :resultSetSize => String.t(),
-          :startPosition => String.t(),
-          :totalSetSize => String.t()
-        }
+    :endPosition => String.t,
+    :errorDetails => ExternalDocServiceErrorDetails,
+    :id => String.t,
+    :items => [ExternalFile],
+    :name => String.t,
+    :nextUri => String.t,
+    :previousUri => String.t,
+    :resultSetSize => String.t,
+    :startPosition => String.t,
+    :totalSetSize => String.t
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.CloudStorage do
   import DocuSign.Deserializer
-
   def decode(value, options) do
     value
     |> deserialize(:errorDetails, :struct, DocuSign.Model.ExternalDocServiceErrorDetails, options)

@@ -3,7 +3,9 @@
 # Do not edit the class manually.
 
 defmodule DocuSign.Model.ServiceVersion do
-  @moduledoc false
+  @moduledoc """
+  
+  """
 
   @derive [Poison.Encoder]
   defstruct [
@@ -12,9 +14,9 @@ defmodule DocuSign.Model.ServiceVersion do
   ]
 
   @type t :: %__MODULE__{
-          :version => String.t(),
-          :versionUrl => String.t()
-        }
+    :version => String.t,
+    :versionUrl => String.t
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.ServiceVersion do

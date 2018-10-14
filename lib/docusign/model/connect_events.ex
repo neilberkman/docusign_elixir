@@ -16,16 +16,15 @@ defmodule DocuSign.Model.ConnectEvents do
   ]
 
   @type t :: %__MODULE__{
-          :failures => [ConnectLog],
-          :logs => [ConnectLog],
-          :totalRecords => String.t(),
-          :type => String.t()
-        }
+    :failures => [ConnectLog],
+    :logs => [ConnectLog],
+    :totalRecords => String.t,
+    :type => String.t
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.ConnectEvents do
   import DocuSign.Deserializer
-
   def decode(value, options) do
     value
     |> deserialize(:failures, :list, DocuSign.Model.ConnectLog, options)

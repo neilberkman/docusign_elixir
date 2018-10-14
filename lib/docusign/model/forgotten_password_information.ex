@@ -20,15 +20,15 @@ defmodule DocuSign.Model.ForgottenPasswordInformation do
   ]
 
   @type t :: %__MODULE__{
-          :forgottenPasswordAnswer1 => String.t(),
-          :forgottenPasswordAnswer2 => String.t(),
-          :forgottenPasswordAnswer3 => String.t(),
-          :forgottenPasswordAnswer4 => String.t(),
-          :forgottenPasswordQuestion1 => String.t(),
-          :forgottenPasswordQuestion2 => String.t(),
-          :forgottenPasswordQuestion3 => String.t(),
-          :forgottenPasswordQuestion4 => String.t()
-        }
+    :forgottenPasswordAnswer1 => String.t,
+    :forgottenPasswordAnswer2 => String.t,
+    :forgottenPasswordAnswer3 => String.t,
+    :forgottenPasswordAnswer4 => String.t,
+    :forgottenPasswordQuestion1 => String.t,
+    :forgottenPasswordQuestion2 => String.t,
+    :forgottenPasswordQuestion3 => String.t,
+    :forgottenPasswordQuestion4 => String.t
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.ForgottenPasswordInformation do

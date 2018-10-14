@@ -3,7 +3,9 @@
 # Do not edit the class manually.
 
 defmodule DocuSign.Model.ConsoleViewRequest do
-  @moduledoc false
+  @moduledoc """
+  
+  """
 
   @derive [Poison.Encoder]
   defstruct [
@@ -12,9 +14,9 @@ defmodule DocuSign.Model.ConsoleViewRequest do
   ]
 
   @type t :: %__MODULE__{
-          :envelopeId => String.t(),
-          :returnUrl => String.t()
-        }
+    :envelopeId => String.t,
+    :returnUrl => String.t
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.ConsoleViewRequest do

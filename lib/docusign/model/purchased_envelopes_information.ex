@@ -3,7 +3,9 @@
 # Do not edit the class manually.
 
 defmodule DocuSign.Model.PurchasedEnvelopesInformation do
-  @moduledoc false
+  @moduledoc """
+  
+  """
 
   @derive [Poison.Encoder]
   defstruct [
@@ -19,16 +21,16 @@ defmodule DocuSign.Model.PurchasedEnvelopesInformation do
   ]
 
   @type t :: %__MODULE__{
-          :amount => String.t(),
-          :appName => String.t(),
-          :currencyCode => String.t(),
-          :platform => String.t(),
-          :productId => String.t(),
-          :quantity => String.t(),
-          :receiptData => String.t(),
-          :storeName => String.t(),
-          :transactionId => String.t()
-        }
+    :amount => String.t,
+    :appName => String.t,
+    :currencyCode => String.t,
+    :platform => String.t,
+    :productId => String.t,
+    :quantity => String.t,
+    :receiptData => String.t,
+    :storeName => String.t,
+    :transactionId => String.t
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.PurchasedEnvelopesInformation do

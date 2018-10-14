@@ -17,17 +17,16 @@ defmodule DocuSign.Model.WorkspaceList do
   ]
 
   @type t :: %__MODULE__{
-          :endPosition => String.t(),
-          :resultSetSize => String.t(),
-          :startPosition => String.t(),
-          :totalSetSize => String.t(),
-          :workspaces => [Workspaces]
-        }
+    :endPosition => String.t,
+    :resultSetSize => String.t,
+    :startPosition => String.t,
+    :totalSetSize => String.t,
+    :workspaces => [Workspaces]
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.WorkspaceList do
   import DocuSign.Deserializer
-
   def decode(value, options) do
     value
     |> deserialize(:workspaces, :list, DocuSign.Model.Workspaces, options)

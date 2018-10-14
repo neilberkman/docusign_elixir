@@ -14,9 +14,9 @@ defmodule DocuSign.Model.AppStoreProduct do
   ]
 
   @type t :: %__MODULE__{
-          :marketPlace => String.t(),
-          :productId => String.t()
-        }
+    :marketPlace => String.t,
+    :productId => String.t
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.AppStoreProduct do

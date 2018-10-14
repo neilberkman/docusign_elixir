@@ -27,13 +27,7 @@ defmodule DocuSign.Api.CloudStorageProviders do
   {:ok, %DocuSign.Model.CloudStorageProviders{}} on success
   {:error, info} on failure
   """
-  @spec cloud_storage_delete_cloud_storage(
-          Tesla.Env.client(),
-          String.t(),
-          String.t(),
-          String.t(),
-          keyword()
-        ) :: {:ok, DocuSign.Model.CloudStorageProviders.t()} | {:error, Tesla.Env.t()}
+  @spec cloud_storage_delete_cloud_storage(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.CloudStorageProviders.t} | {:error, Tesla.Env.t}
   def cloud_storage_delete_cloud_storage(connection, account_id, service_id, user_id, _opts \\ []) do
     %{}
     |> method(:delete)
@@ -60,17 +54,11 @@ defmodule DocuSign.Api.CloudStorageProviders do
   {:ok, %DocuSign.Model.CloudStorageProviders{}} on success
   {:error, info} on failure
   """
-  @spec cloud_storage_delete_cloud_storage_providers(
-          Tesla.Env.client(),
-          String.t(),
-          String.t(),
-          keyword()
-        ) :: {:ok, DocuSign.Model.CloudStorageProviders.t()} | {:error, Tesla.Env.t()}
+  @spec cloud_storage_delete_cloud_storage_providers(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.CloudStorageProviders.t} | {:error, Tesla.Env.t}
   def cloud_storage_delete_cloud_storage_providers(connection, account_id, user_id, opts \\ []) do
     optional_params = %{
-      :CloudStorageProviders => :body
+      CloudStorageProviders: :body
     }
-
     %{}
     |> method(:delete)
     |> url("/v2/accounts/#{account_id}/users/#{user_id}/cloud_storage")
@@ -98,18 +86,11 @@ defmodule DocuSign.Api.CloudStorageProviders do
   {:ok, %DocuSign.Model.CloudStorageProviders{}} on success
   {:error, info} on failure
   """
-  @spec cloud_storage_get_cloud_storage(
-          Tesla.Env.client(),
-          String.t(),
-          String.t(),
-          String.t(),
-          keyword()
-        ) :: {:ok, DocuSign.Model.CloudStorageProviders.t()} | {:error, Tesla.Env.t()}
+  @spec cloud_storage_get_cloud_storage(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.CloudStorageProviders.t} | {:error, Tesla.Env.t}
   def cloud_storage_get_cloud_storage(connection, account_id, service_id, user_id, opts \\ []) do
     optional_params = %{
-      :redirectUrl => :query
+      redirectUrl: :query
     }
-
     %{}
     |> method(:get)
     |> url("/v2/accounts/#{account_id}/users/#{user_id}/cloud_storage/#{service_id}")
@@ -136,17 +117,11 @@ defmodule DocuSign.Api.CloudStorageProviders do
   {:ok, %DocuSign.Model.CloudStorageProviders{}} on success
   {:error, info} on failure
   """
-  @spec cloud_storage_get_cloud_storage_providers(
-          Tesla.Env.client(),
-          String.t(),
-          String.t(),
-          keyword()
-        ) :: {:ok, DocuSign.Model.CloudStorageProviders.t()} | {:error, Tesla.Env.t()}
+  @spec cloud_storage_get_cloud_storage_providers(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.CloudStorageProviders.t} | {:error, Tesla.Env.t}
   def cloud_storage_get_cloud_storage_providers(connection, account_id, user_id, opts \\ []) do
     optional_params = %{
-      :redirectUrl => :query
+      redirectUrl: :query
     }
-
     %{}
     |> method(:get)
     |> url("/v2/accounts/#{account_id}/users/#{user_id}/cloud_storage")
@@ -173,13 +148,11 @@ defmodule DocuSign.Api.CloudStorageProviders do
   {:ok, %DocuSign.Model.CloudStorageProviders{}} on success
   {:error, info} on failure
   """
-  @spec cloud_storage_post_cloud_storage(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.CloudStorageProviders.t()} | {:error, Tesla.Env.t()}
+  @spec cloud_storage_post_cloud_storage(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.CloudStorageProviders.t} | {:error, Tesla.Env.t}
   def cloud_storage_post_cloud_storage(connection, account_id, user_id, opts \\ []) do
     optional_params = %{
-      :CloudStorageProviders => :body
+      CloudStorageProviders: :body
     }
-
     %{}
     |> method(:post)
     |> url("/v2/accounts/#{account_id}/users/#{user_id}/cloud_storage")

@@ -3,7 +3,9 @@
 # Do not edit the class manually.
 
 defmodule DocuSign.Model.Workspaces do
-  @moduledoc false
+  @moduledoc """
+  
+  """
 
   @derive [Poison.Encoder]
   defstruct [
@@ -21,23 +23,22 @@ defmodule DocuSign.Model.Workspaces do
   ]
 
   @type t :: %__MODULE__{
-          :billableAccountId => String.t(),
-          :created => String.t(),
-          :createdByInformation => WorkspaceUser,
-          :lastModified => String.t(),
-          :lastModifiedByInformation => WorkspaceUser,
-          :status => String.t(),
-          :workspaceBaseUrl => String.t(),
-          :workspaceDescription => String.t(),
-          :workspaceId => String.t(),
-          :workspaceName => String.t(),
-          :workspaceUri => String.t()
-        }
+    :billableAccountId => String.t,
+    :created => String.t,
+    :createdByInformation => WorkspaceUser,
+    :lastModified => String.t,
+    :lastModifiedByInformation => WorkspaceUser,
+    :status => String.t,
+    :workspaceBaseUrl => String.t,
+    :workspaceDescription => String.t,
+    :workspaceId => String.t,
+    :workspaceName => String.t,
+    :workspaceUri => String.t
+  }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.Workspaces do
   import DocuSign.Deserializer
-
   def decode(value, options) do
     value
     |> deserialize(:createdByInformation, :struct, DocuSign.Model.WorkspaceUser, options)
