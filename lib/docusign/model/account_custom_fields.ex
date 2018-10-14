@@ -14,13 +14,14 @@ defmodule DocuSign.Model.AccountCustomFields do
   ]
 
   @type t :: %__MODULE__{
-    :listCustomFields => [ListCustomField],
-    :textCustomFields => [TextCustomField]
-  }
+          :listCustomFields => [ListCustomField],
+          :textCustomFields => [TextCustomField]
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.AccountCustomFields do
   import DocuSign.Deserializer
+
   def decode(value, options) do
     value
     |> deserialize(:listCustomFields, :list, DocuSign.Model.ListCustomField, options)

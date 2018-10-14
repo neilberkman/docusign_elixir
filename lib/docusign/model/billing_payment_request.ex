@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.BillingPaymentRequest do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -13,8 +13,8 @@ defmodule DocuSign.Model.BillingPaymentRequest do
   ]
 
   @type t :: %__MODULE__{
-    :paymentAmount => String.t
-  }
+          :paymentAmount => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.BillingPaymentRequest do

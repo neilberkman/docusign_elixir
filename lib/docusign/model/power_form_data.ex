@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.PowerFormData do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -14,13 +14,14 @@ defmodule DocuSign.Model.PowerFormData do
   ]
 
   @type t :: %__MODULE__{
-    :envelopeId => String.t,
-    :recipients => [PowerFormFormDataRecipient]
-  }
+          :envelopeId => String.t(),
+          :recipients => [PowerFormFormDataRecipient]
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.PowerFormData do
   import DocuSign.Deserializer
+
   def decode(value, options) do
     value
     |> deserialize(:recipients, :list, DocuSign.Model.PowerFormFormDataRecipient, options)

@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.UserSignaturesInformation do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -13,12 +13,13 @@ defmodule DocuSign.Model.UserSignaturesInformation do
   ]
 
   @type t :: %__MODULE__{
-    :userSignatures => [UserSignatures]
-  }
+          :userSignatures => [UserSignatures]
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.UserSignaturesInformation do
   import DocuSign.Deserializer
+
   def decode(value, options) do
     value
     |> deserialize(:userSignatures, :list, DocuSign.Model.UserSignatures, options)

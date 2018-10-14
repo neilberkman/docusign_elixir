@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.TabGroup do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -33,32 +33,33 @@ defmodule DocuSign.Model.TabGroup do
   ]
 
   @type t :: %__MODULE__{
-    :childTabLabels => [String.t],
-    :childTabLabelsMetadata => PropertyMetadata,
-    :errorDetails => ErrorDetails,
-    :groupLabel => String.t,
-    :groupLabelMetadata => PropertyMetadata,
-    :groupRule => String.t,
-    :groupRuleMetadata => PropertyMetadata,
-    :maximumAllowed => String.t,
-    :maximumAllowedMetadata => PropertyMetadata,
-    :minimumRequired => String.t,
-    :minimumRequiredMetadata => PropertyMetadata,
-    :recipientId => String.t,
-    :recipientIdMetadata => PropertyMetadata,
-    :tabId => String.t,
-    :tabIdMetadata => PropertyMetadata,
-    :templateLocked => String.t,
-    :templateLockedMetadata => PropertyMetadata,
-    :templateRequired => String.t,
-    :templateRequiredMetadata => PropertyMetadata,
-    :validationMessage => String.t,
-    :validationMessageMetadata => PropertyMetadata
-  }
+          :childTabLabels => [String.t()],
+          :childTabLabelsMetadata => PropertyMetadata,
+          :errorDetails => ErrorDetails,
+          :groupLabel => String.t(),
+          :groupLabelMetadata => PropertyMetadata,
+          :groupRule => String.t(),
+          :groupRuleMetadata => PropertyMetadata,
+          :maximumAllowed => String.t(),
+          :maximumAllowedMetadata => PropertyMetadata,
+          :minimumRequired => String.t(),
+          :minimumRequiredMetadata => PropertyMetadata,
+          :recipientId => String.t(),
+          :recipientIdMetadata => PropertyMetadata,
+          :tabId => String.t(),
+          :tabIdMetadata => PropertyMetadata,
+          :templateLocked => String.t(),
+          :templateLockedMetadata => PropertyMetadata,
+          :templateRequired => String.t(),
+          :templateRequiredMetadata => PropertyMetadata,
+          :validationMessage => String.t(),
+          :validationMessageMetadata => PropertyMetadata
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.TabGroup do
   import DocuSign.Deserializer
+
   def decode(value, options) do
     value
     |> deserialize(:childTabLabelsMetadata, :struct, DocuSign.Model.PropertyMetadata, options)

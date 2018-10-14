@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.RecipientNamesResponse do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -15,10 +15,10 @@ defmodule DocuSign.Model.RecipientNamesResponse do
   ]
 
   @type t :: %__MODULE__{
-    :multipleUsers => String.t,
-    :recipientNames => [String.t],
-    :reservedRecipientEmail => String.t
-  }
+          :multipleUsers => String.t(),
+          :recipientNames => [String.t()],
+          :reservedRecipientEmail => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.RecipientNamesResponse do

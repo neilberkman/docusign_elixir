@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.EnvelopeSummary do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -16,11 +16,11 @@ defmodule DocuSign.Model.EnvelopeSummary do
   ]
 
   @type t :: %__MODULE__{
-    :envelopeId => String.t,
-    :status => String.t,
-    :statusDateTime => String.t,
-    :uri => String.t
-  }
+          :envelopeId => String.t(),
+          :status => String.t(),
+          :statusDateTime => String.t(),
+          :uri => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.EnvelopeSummary do

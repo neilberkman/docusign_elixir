@@ -26,11 +26,13 @@ defmodule DocuSign.Api.EnvelopeViews do
   {:ok, %DocuSign.Model.EnvelopeViews{}} on success
   {:error, info} on failure
   """
-  @spec views_post_account_console_view(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeViews.t} | {:error, Tesla.Env.t}
+  @spec views_post_account_console_view(Tesla.Env.client(), String.t(), keyword()) ::
+          {:ok, DocuSign.Model.EnvelopeViews.t()} | {:error, Tesla.Env.t()}
   def views_post_account_console_view(connection, account_id, opts \\ []) do
     optional_params = %{
       consoleViewRequest: :body
     }
+
     %{}
     |> method(:post)
     |> url("/v2/accounts/#{account_id}/views/console")
@@ -57,11 +59,13 @@ defmodule DocuSign.Api.EnvelopeViews do
   {:ok, %DocuSign.Model.EnvelopeViews{}} on success
   {:error, info} on failure
   """
-  @spec views_post_envelope_correct_view(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeViews.t} | {:error, Tesla.Env.t}
+  @spec views_post_envelope_correct_view(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+          {:ok, DocuSign.Model.EnvelopeViews.t()} | {:error, Tesla.Env.t()}
   def views_post_envelope_correct_view(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
       correctViewRequest: :body
     }
+
     %{}
     |> method(:post)
     |> url("/v2/accounts/#{account_id}/envelopes/#{envelope_id}/views/correct")
@@ -88,11 +92,13 @@ defmodule DocuSign.Api.EnvelopeViews do
   {:ok, %DocuSign.Model.EnvelopeViews{}} on success
   {:error, info} on failure
   """
-  @spec views_post_envelope_edit_view(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeViews.t} | {:error, Tesla.Env.t}
+  @spec views_post_envelope_edit_view(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+          {:ok, DocuSign.Model.EnvelopeViews.t()} | {:error, Tesla.Env.t()}
   def views_post_envelope_edit_view(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
       returnUrlRequest: :body
     }
+
     %{}
     |> method(:post)
     |> url("/v2/accounts/#{account_id}/envelopes/#{envelope_id}/views/edit")
@@ -103,8 +109,8 @@ defmodule DocuSign.Api.EnvelopeViews do
   end
 
   @doc """
-  
-  
+
+
 
   ## Parameters
 
@@ -119,11 +125,17 @@ defmodule DocuSign.Api.EnvelopeViews do
   {:ok, %DocuSign.Model.TemplateViews{}} on success
   {:error, info} on failure
   """
-  @spec views_post_envelope_recipient_shared_view(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.TemplateViews.t} | {:error, Tesla.Env.t}
+  @spec views_post_envelope_recipient_shared_view(
+          Tesla.Env.client(),
+          String.t(),
+          String.t(),
+          keyword()
+        ) :: {:ok, DocuSign.Model.TemplateViews.t()} | {:error, Tesla.Env.t()}
   def views_post_envelope_recipient_shared_view(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
       recipientViewRequest: :body
     }
+
     %{}
     |> method(:post)
     |> url("/v2/accounts/#{account_id}/envelopes/#{envelope_id}/views/shared")
@@ -150,11 +162,13 @@ defmodule DocuSign.Api.EnvelopeViews do
   {:ok, %DocuSign.Model.EnvelopeViews{}} on success
   {:error, info} on failure
   """
-  @spec views_post_envelope_recipient_view(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeViews.t} | {:error, Tesla.Env.t}
+  @spec views_post_envelope_recipient_view(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+          {:ok, DocuSign.Model.EnvelopeViews.t()} | {:error, Tesla.Env.t()}
   def views_post_envelope_recipient_view(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
       recipientViewRequest: :body
     }
+
     %{}
     |> method(:post)
     |> url("/v2/accounts/#{account_id}/envelopes/#{envelope_id}/views/recipient")
@@ -181,11 +195,13 @@ defmodule DocuSign.Api.EnvelopeViews do
   {:ok, %DocuSign.Model.EnvelopeViews{}} on success
   {:error, info} on failure
   """
-  @spec views_post_envelope_sender_view(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopeViews.t} | {:error, Tesla.Env.t}
+  @spec views_post_envelope_sender_view(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+          {:ok, DocuSign.Model.EnvelopeViews.t()} | {:error, Tesla.Env.t()}
   def views_post_envelope_sender_view(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
       returnUrlRequest: :body
     }
+
     %{}
     |> method(:post)
     |> url("/v2/accounts/#{account_id}/envelopes/#{envelope_id}/views/sender")

@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.EnvelopeAttachments do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -18,17 +18,18 @@ defmodule DocuSign.Model.EnvelopeAttachments do
   ]
 
   @type t :: %__MODULE__{
-    :accessControl => String.t,
-    :attachmentId => String.t,
-    :attachmentType => String.t,
-    :errorDetails => ErrorDetails,
-    :label => String.t,
-    :name => String.t
-  }
+          :accessControl => String.t(),
+          :attachmentId => String.t(),
+          :attachmentType => String.t(),
+          :errorDetails => ErrorDetails,
+          :label => String.t(),
+          :name => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.EnvelopeAttachments do
   import DocuSign.Deserializer
+
   def decode(value, options) do
     value
     |> deserialize(:errorDetails, :struct, DocuSign.Model.ErrorDetails, options)

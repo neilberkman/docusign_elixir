@@ -11,8 +11,8 @@ defmodule DocuSign.Api.Uncategorized do
   import DocuSign.RequestBuilder
 
   @doc """
-  
-  
+
+
 
   ## Parameters
 
@@ -27,11 +27,13 @@ defmodule DocuSign.Api.Uncategorized do
   {:ok, %DocuSign.Model.String.t{}} on success
   {:error, info} on failure
   """
-  @spec comments_get_comments_transcript(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, String.t} | {:error, Tesla.Env.t}
+  @spec comments_get_comments_transcript(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+          {:ok, String.t()} | {:error, Tesla.Env.t()}
   def comments_get_comments_transcript(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
       encoding: :query
     }
+
     %{}
     |> method(:get)
     |> url("/v2/accounts/#{account_id}/envelopes/#{envelope_id}/comments/transcript")
@@ -42,8 +44,8 @@ defmodule DocuSign.Api.Uncategorized do
   end
 
   @doc """
-  
-  
+
+
 
   ## Parameters
 
@@ -56,7 +58,11 @@ defmodule DocuSign.Api.Uncategorized do
   {:ok, %DocuSign.Model.EnvelopePublishTransactionList{}} on success
   {:error, info} on failure
   """
-  @spec envelope_publish_get_envelope_publish_transaction_list(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopePublishTransactionList.t} | {:error, Tesla.Env.t}
+  @spec envelope_publish_get_envelope_publish_transaction_list(
+          Tesla.Env.client(),
+          String.t(),
+          keyword()
+        ) :: {:ok, DocuSign.Model.EnvelopePublishTransactionList.t()} | {:error, Tesla.Env.t()}
   def envelope_publish_get_envelope_publish_transaction_list(connection, account_id, _opts \\ []) do
     %{}
     |> method(:get)
@@ -67,8 +73,8 @@ defmodule DocuSign.Api.Uncategorized do
   end
 
   @doc """
-  
-  
+
+
 
   ## Parameters
 
@@ -82,8 +88,18 @@ defmodule DocuSign.Api.Uncategorized do
   {:ok, %DocuSign.Model.EnvelopePublishTransaction{}} on success
   {:error, info} on failure
   """
-  @spec envelope_publish_get_envelope_publish_transaction_meta_data(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopePublishTransaction.t} | {:error, Tesla.Env.t}
-  def envelope_publish_get_envelope_publish_transaction_meta_data(connection, account_id, transaction_id, _opts \\ []) do
+  @spec envelope_publish_get_envelope_publish_transaction_meta_data(
+          Tesla.Env.client(),
+          String.t(),
+          String.t(),
+          keyword()
+        ) :: {:ok, DocuSign.Model.EnvelopePublishTransaction.t()} | {:error, Tesla.Env.t()}
+  def envelope_publish_get_envelope_publish_transaction_meta_data(
+        connection,
+        account_id,
+        transaction_id,
+        _opts \\ []
+      ) do
     %{}
     |> method(:get)
     |> url("/v2/accounts/#{account_id}/connect/envelopes/publish/#{transaction_id}")
@@ -93,8 +109,8 @@ defmodule DocuSign.Api.Uncategorized do
   end
 
   @doc """
-  
-  
+
+
 
   ## Parameters
 
@@ -108,8 +124,18 @@ defmodule DocuSign.Api.Uncategorized do
   {:ok, %{}} on success
   {:error, info} on failure
   """
-  @spec envelope_publish_get_envelope_publish_transaction_results(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, nil} | {:error, Tesla.Env.t}
-  def envelope_publish_get_envelope_publish_transaction_results(connection, account_id, transaction_id, _opts \\ []) do
+  @spec envelope_publish_get_envelope_publish_transaction_results(
+          Tesla.Env.client(),
+          String.t(),
+          String.t(),
+          keyword()
+        ) :: {:ok, nil} | {:error, Tesla.Env.t()}
+  def envelope_publish_get_envelope_publish_transaction_results(
+        connection,
+        account_id,
+        transaction_id,
+        _opts \\ []
+      ) do
     %{}
     |> method(:get)
     |> url("/v2/accounts/#{account_id}/connect/envelopes/publish/#{transaction_id}/results_csv")
@@ -119,8 +145,8 @@ defmodule DocuSign.Api.Uncategorized do
   end
 
   @doc """
-  
-  
+
+
 
   ## Parameters
 
@@ -134,11 +160,16 @@ defmodule DocuSign.Api.Uncategorized do
   {:ok, %DocuSign.Model.EnvelopePublishTransaction{}} on success
   {:error, info} on failure
   """
-  @spec envelope_publish_post_envelope_publish_transaction(Tesla.Env.client, String.t, keyword()) :: {:ok, DocuSign.Model.EnvelopePublishTransaction.t} | {:error, Tesla.Env.t}
+  @spec envelope_publish_post_envelope_publish_transaction(
+          Tesla.Env.client(),
+          String.t(),
+          keyword()
+        ) :: {:ok, DocuSign.Model.EnvelopePublishTransaction.t()} | {:error, Tesla.Env.t()}
   def envelope_publish_post_envelope_publish_transaction(connection, account_id, opts \\ []) do
     optional_params = %{
       envelopePublishRequest: :body
     }
+
     %{}
     |> method(:post)
     |> url("/v2/accounts/#{account_id}/connect/envelopes/publish")
@@ -149,8 +180,8 @@ defmodule DocuSign.Api.Uncategorized do
   end
 
   @doc """
-  
-  
+
+
 
   ## Parameters
 
@@ -164,8 +195,18 @@ defmodule DocuSign.Api.Uncategorized do
   {:ok, %{}} on success
   {:error, info} on failure
   """
-  @spec organization_exports_get_account_settings_export(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, nil} | {:error, Tesla.Env.t}
-  def organization_exports_get_account_settings_export(connection, organization_id, result_id, _opts \\ []) do
+  @spec organization_exports_get_account_settings_export(
+          Tesla.Env.client(),
+          String.t(),
+          String.t(),
+          keyword()
+        ) :: {:ok, nil} | {:error, Tesla.Env.t()}
+  def organization_exports_get_account_settings_export(
+        connection,
+        organization_id,
+        result_id,
+        _opts \\ []
+      ) do
     %{}
     |> method(:get)
     |> url("/v2/organization_exports/#{organization_id}/account_settings/#{result_id}")
@@ -175,8 +216,8 @@ defmodule DocuSign.Api.Uncategorized do
   end
 
   @doc """
-  
-  
+
+
 
   ## Parameters
 
@@ -192,14 +233,29 @@ defmodule DocuSign.Api.Uncategorized do
   {:ok, %DocuSign.Model.DocumentHtmlDefinitions{}} on success
   {:error, info} on failure
   """
-  @spec responsive_html_post_document_responsive_html_preview(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.DocumentHtmlDefinitions.t} | {:error, Tesla.Env.t}
-  def responsive_html_post_document_responsive_html_preview(connection, account_id, document_id, envelope_id, opts \\ []) do
+  @spec responsive_html_post_document_responsive_html_preview(
+          Tesla.Env.client(),
+          String.t(),
+          String.t(),
+          String.t(),
+          keyword()
+        ) :: {:ok, DocuSign.Model.DocumentHtmlDefinitions.t()} | {:error, Tesla.Env.t()}
+  def responsive_html_post_document_responsive_html_preview(
+        connection,
+        account_id,
+        document_id,
+        envelope_id,
+        opts \\ []
+      ) do
     optional_params = %{
       documentHtmlDefinition: :body
     }
+
     %{}
     |> method(:post)
-    |> url("/v2/accounts/#{account_id}/envelopes/#{envelope_id}/documents/#{document_id}/responsive_html_preview")
+    |> url(
+      "/v2/accounts/#{account_id}/envelopes/#{envelope_id}/documents/#{document_id}/responsive_html_preview"
+    )
     |> add_optional_params(optional_params, opts)
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
@@ -207,8 +263,8 @@ defmodule DocuSign.Api.Uncategorized do
   end
 
   @doc """
-  
-  
+
+
 
   ## Parameters
 
@@ -223,11 +279,22 @@ defmodule DocuSign.Api.Uncategorized do
   {:ok, %DocuSign.Model.DocumentHtmlDefinitions{}} on success
   {:error, info} on failure
   """
-  @spec responsive_html_post_responsive_html_preview(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.DocumentHtmlDefinitions.t} | {:error, Tesla.Env.t}
-  def responsive_html_post_responsive_html_preview(connection, account_id, envelope_id, opts \\ []) do
+  @spec responsive_html_post_responsive_html_preview(
+          Tesla.Env.client(),
+          String.t(),
+          String.t(),
+          keyword()
+        ) :: {:ok, DocuSign.Model.DocumentHtmlDefinitions.t()} | {:error, Tesla.Env.t()}
+  def responsive_html_post_responsive_html_preview(
+        connection,
+        account_id,
+        envelope_id,
+        opts \\ []
+      ) do
     optional_params = %{
       documentHtmlDefinition: :body
     }
+
     %{}
     |> method(:post)
     |> url("/v2/accounts/#{account_id}/envelopes/#{envelope_id}/responsive_html_preview")
@@ -238,8 +305,8 @@ defmodule DocuSign.Api.Uncategorized do
   end
 
   @doc """
-  
-  
+
+
 
   ## Parameters
 
@@ -255,14 +322,29 @@ defmodule DocuSign.Api.Uncategorized do
   {:ok, %DocuSign.Model.DocumentHtmlDefinitions{}} on success
   {:error, info} on failure
   """
-  @spec responsive_html_post_template_document_responsive_html_preview(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.DocumentHtmlDefinitions.t} | {:error, Tesla.Env.t}
-  def responsive_html_post_template_document_responsive_html_preview(connection, account_id, document_id, template_id, opts \\ []) do
+  @spec responsive_html_post_template_document_responsive_html_preview(
+          Tesla.Env.client(),
+          String.t(),
+          String.t(),
+          String.t(),
+          keyword()
+        ) :: {:ok, DocuSign.Model.DocumentHtmlDefinitions.t()} | {:error, Tesla.Env.t()}
+  def responsive_html_post_template_document_responsive_html_preview(
+        connection,
+        account_id,
+        document_id,
+        template_id,
+        opts \\ []
+      ) do
     optional_params = %{
       documentHtmlDefinition: :body
     }
+
     %{}
     |> method(:post)
-    |> url("/v2/accounts/#{account_id}/templates/#{template_id}/documents/#{document_id}/responsive_html_preview")
+    |> url(
+      "/v2/accounts/#{account_id}/templates/#{template_id}/documents/#{document_id}/responsive_html_preview"
+    )
     |> add_optional_params(optional_params, opts)
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
@@ -270,8 +352,8 @@ defmodule DocuSign.Api.Uncategorized do
   end
 
   @doc """
-  
-  
+
+
 
   ## Parameters
 
@@ -286,11 +368,22 @@ defmodule DocuSign.Api.Uncategorized do
   {:ok, %DocuSign.Model.DocumentHtmlDefinitions{}} on success
   {:error, info} on failure
   """
-  @spec responsive_html_post_template_responsive_html_preview(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.DocumentHtmlDefinitions.t} | {:error, Tesla.Env.t}
-  def responsive_html_post_template_responsive_html_preview(connection, account_id, template_id, opts \\ []) do
+  @spec responsive_html_post_template_responsive_html_preview(
+          Tesla.Env.client(),
+          String.t(),
+          String.t(),
+          keyword()
+        ) :: {:ok, DocuSign.Model.DocumentHtmlDefinitions.t()} | {:error, Tesla.Env.t()}
+  def responsive_html_post_template_responsive_html_preview(
+        connection,
+        account_id,
+        template_id,
+        opts \\ []
+      ) do
     optional_params = %{
       documentHtmlDefinition: :body
     }
+
     %{}
     |> method(:post)
     |> url("/v2/accounts/#{account_id}/templates/#{template_id}/responsive_html_preview")

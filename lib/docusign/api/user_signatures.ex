@@ -27,8 +27,20 @@ defmodule DocuSign.Api.UserSignatures do
   {:ok, %{}} on success
   {:error, info} on failure
   """
-  @spec user_signatures_delete_user_signature(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, nil} | {:error, Tesla.Env.t}
-  def user_signatures_delete_user_signature(connection, account_id, signature_id, user_id, _opts \\ []) do
+  @spec user_signatures_delete_user_signature(
+          Tesla.Env.client(),
+          String.t(),
+          String.t(),
+          String.t(),
+          keyword()
+        ) :: {:ok, nil} | {:error, Tesla.Env.t()}
+  def user_signatures_delete_user_signature(
+        connection,
+        account_id,
+        signature_id,
+        user_id,
+        _opts \\ []
+      ) do
     %{}
     |> method(:delete)
     |> url("/v2/accounts/#{account_id}/users/#{user_id}/signatures/#{signature_id}")
@@ -55,8 +67,22 @@ defmodule DocuSign.Api.UserSignatures do
   {:ok, %DocuSign.Model.UserSignatures{}} on success
   {:error, info} on failure
   """
-  @spec user_signatures_delete_user_signature_image(Tesla.Env.client, String.t, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.UserSignatures.t} | {:error, Tesla.Env.t}
-  def user_signatures_delete_user_signature_image(connection, account_id, image_type, signature_id, user_id, _opts \\ []) do
+  @spec user_signatures_delete_user_signature_image(
+          Tesla.Env.client(),
+          String.t(),
+          String.t(),
+          String.t(),
+          String.t(),
+          keyword()
+        ) :: {:ok, DocuSign.Model.UserSignatures.t()} | {:error, Tesla.Env.t()}
+  def user_signatures_delete_user_signature_image(
+        connection,
+        account_id,
+        image_type,
+        signature_id,
+        user_id,
+        _opts \\ []
+      ) do
     %{}
     |> method(:delete)
     |> url("/v2/accounts/#{account_id}/users/#{user_id}/signatures/#{signature_id}/#{image_type}")
@@ -82,8 +108,20 @@ defmodule DocuSign.Api.UserSignatures do
   {:ok, %DocuSign.Model.UserSignatures{}} on success
   {:error, info} on failure
   """
-  @spec user_signatures_get_user_signature(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.UserSignatures.t} | {:error, Tesla.Env.t}
-  def user_signatures_get_user_signature(connection, account_id, signature_id, user_id, _opts \\ []) do
+  @spec user_signatures_get_user_signature(
+          Tesla.Env.client(),
+          String.t(),
+          String.t(),
+          String.t(),
+          keyword()
+        ) :: {:ok, DocuSign.Model.UserSignatures.t()} | {:error, Tesla.Env.t()}
+  def user_signatures_get_user_signature(
+        connection,
+        account_id,
+        signature_id,
+        user_id,
+        _opts \\ []
+      ) do
     %{}
     |> method(:get)
     |> url("/v2/accounts/#{account_id}/users/#{user_id}/signatures/#{signature_id}")
@@ -111,11 +149,26 @@ defmodule DocuSign.Api.UserSignatures do
   {:ok, %DocuSign.Model.String.t{}} on success
   {:error, info} on failure
   """
-  @spec user_signatures_get_user_signature_image(Tesla.Env.client, String.t, String.t, String.t, String.t, keyword()) :: {:ok, String.t} | {:error, Tesla.Env.t}
-  def user_signatures_get_user_signature_image(connection, account_id, image_type, signature_id, user_id, opts \\ []) do
+  @spec user_signatures_get_user_signature_image(
+          Tesla.Env.client(),
+          String.t(),
+          String.t(),
+          String.t(),
+          String.t(),
+          keyword()
+        ) :: {:ok, String.t()} | {:error, Tesla.Env.t()}
+  def user_signatures_get_user_signature_image(
+        connection,
+        account_id,
+        image_type,
+        signature_id,
+        user_id,
+        opts \\ []
+      ) do
     optional_params = %{
       include_chrome: :query
     }
+
     %{}
     |> method(:get)
     |> url("/v2/accounts/#{account_id}/users/#{user_id}/signatures/#{signature_id}/#{image_type}")
@@ -142,11 +195,13 @@ defmodule DocuSign.Api.UserSignatures do
   {:ok, %DocuSign.Model.UserSignaturesInformation{}} on success
   {:error, info} on failure
   """
-  @spec user_signatures_get_user_signatures(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.UserSignaturesInformation.t} | {:error, Tesla.Env.t}
+  @spec user_signatures_get_user_signatures(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+          {:ok, DocuSign.Model.UserSignaturesInformation.t()} | {:error, Tesla.Env.t()}
   def user_signatures_get_user_signatures(connection, account_id, user_id, opts \\ []) do
     optional_params = %{
       stamp_type: :query
     }
+
     %{}
     |> method(:get)
     |> url("/v2/accounts/#{account_id}/users/#{user_id}/signatures")
@@ -173,11 +228,17 @@ defmodule DocuSign.Api.UserSignatures do
   {:ok, %DocuSign.Model.UserSignaturesInformation{}} on success
   {:error, info} on failure
   """
-  @spec user_signatures_post_user_signatures(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.UserSignaturesInformation.t} | {:error, Tesla.Env.t}
+  @spec user_signatures_post_user_signatures(
+          Tesla.Env.client(),
+          String.t(),
+          String.t(),
+          keyword()
+        ) :: {:ok, DocuSign.Model.UserSignaturesInformation.t()} | {:error, Tesla.Env.t()}
   def user_signatures_post_user_signatures(connection, account_id, user_id, opts \\ []) do
     optional_params = %{
       userSignaturesInformation: :body
     }
+
     %{}
     |> method(:post)
     |> url("/v2/accounts/#{account_id}/users/#{user_id}/signatures")
@@ -189,7 +250,7 @@ defmodule DocuSign.Api.UserSignatures do
 
   @doc """
   Adds/updates a user signature.
-  
+
 
   ## Parameters
 
@@ -204,11 +265,13 @@ defmodule DocuSign.Api.UserSignatures do
   {:ok, %DocuSign.Model.UserSignaturesInformation{}} on success
   {:error, info} on failure
   """
-  @spec user_signatures_put_user_signature(Tesla.Env.client, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.UserSignaturesInformation.t} | {:error, Tesla.Env.t}
+  @spec user_signatures_put_user_signature(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+          {:ok, DocuSign.Model.UserSignaturesInformation.t()} | {:error, Tesla.Env.t()}
   def user_signatures_put_user_signature(connection, account_id, user_id, opts \\ []) do
     optional_params = %{
       userSignaturesInformation: :body
     }
+
     %{}
     |> method(:put)
     |> url("/v2/accounts/#{account_id}/users/#{user_id}/signatures")
@@ -237,12 +300,25 @@ defmodule DocuSign.Api.UserSignatures do
   {:ok, %DocuSign.Model.UserSignatures{}} on success
   {:error, info} on failure
   """
-  @spec user_signatures_put_user_signature_by_id(Tesla.Env.client, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.UserSignatures.t} | {:error, Tesla.Env.t}
-  def user_signatures_put_user_signature_by_id(connection, account_id, signature_id, user_id, opts \\ []) do
+  @spec user_signatures_put_user_signature_by_id(
+          Tesla.Env.client(),
+          String.t(),
+          String.t(),
+          String.t(),
+          keyword()
+        ) :: {:ok, DocuSign.Model.UserSignatures.t()} | {:error, Tesla.Env.t()}
+  def user_signatures_put_user_signature_by_id(
+        connection,
+        account_id,
+        signature_id,
+        user_id,
+        opts \\ []
+      ) do
     optional_params = %{
       close_existing_signature: :query,
       userSignatureDefinition: :body
     }
+
     %{}
     |> method(:put)
     |> url("/v2/accounts/#{account_id}/users/#{user_id}/signatures/#{signature_id}")
@@ -270,8 +346,22 @@ defmodule DocuSign.Api.UserSignatures do
   {:ok, %DocuSign.Model.UserSignatures{}} on success
   {:error, info} on failure
   """
-  @spec user_signatures_put_user_signature_image(Tesla.Env.client, String.t, String.t, String.t, String.t, keyword()) :: {:ok, DocuSign.Model.UserSignatures.t} | {:error, Tesla.Env.t}
-  def user_signatures_put_user_signature_image(connection, account_id, image_type, signature_id, user_id, _opts \\ []) do
+  @spec user_signatures_put_user_signature_image(
+          Tesla.Env.client(),
+          String.t(),
+          String.t(),
+          String.t(),
+          String.t(),
+          keyword()
+        ) :: {:ok, DocuSign.Model.UserSignatures.t()} | {:error, Tesla.Env.t()}
+  def user_signatures_put_user_signature_image(
+        connection,
+        account_id,
+        image_type,
+        signature_id,
+        user_id,
+        _opts \\ []
+      ) do
     %{}
     |> method(:put)
     |> url("/v2/accounts/#{account_id}/users/#{user_id}/signatures/#{signature_id}/#{image_type}")

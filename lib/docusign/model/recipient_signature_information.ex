@@ -15,10 +15,10 @@ defmodule DocuSign.Model.RecipientSignatureInformation do
   ]
 
   @type t :: %__MODULE__{
-    :fontStyle => String.t,
-    :signatureInitials => String.t,
-    :signatureName => String.t
-  }
+          :fontStyle => String.t(),
+          :signatureInitials => String.t(),
+          :signatureName => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.RecipientSignatureInformation do

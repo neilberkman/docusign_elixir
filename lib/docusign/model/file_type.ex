@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.FileType do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -14,9 +14,9 @@ defmodule DocuSign.Model.FileType do
   ]
 
   @type t :: %__MODULE__{
-    :fileExtension => String.t,
-    :mimeType => String.t
-  }
+          :fileExtension => String.t(),
+          :mimeType => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.FileType do

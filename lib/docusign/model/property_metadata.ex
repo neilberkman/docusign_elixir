@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.PropertyMetadata do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -14,9 +14,9 @@ defmodule DocuSign.Model.PropertyMetadata do
   ]
 
   @type t :: %__MODULE__{
-    :options => [String.t],
-    :rights => String.t
-  }
+          :options => [String.t()],
+          :rights => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: DocuSign.Model.PropertyMetadata do
