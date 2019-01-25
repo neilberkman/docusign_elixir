@@ -18,6 +18,16 @@ end
 
 The docs can be found at [https://hexdocs.pm/docusign](https://hexdocs.pm/docusign).
 
+## Regenerating stubs 
+
+Grab the latest [swagger codegen jar](https://swagger.io/docs/open-source-tools/swagger-codegen/#installation-from-maven-central-14) and:
+
+```
+java -jar swagger-codegen-cli.jar generate \
+  -i https://raw.githubusercontent.com/docusign/eSign-OpenAPI-Specification/master/esignature.rest.swagger.json \
+  -l elixir -o /tmp/elixir_api_client
+```
+
 ## JWT Authorization Example
 
 See the [Elixir sample](https://github.com/tandemequity/docusign_elixir_sample_app) for an example Elixir SDK implementation that uses the JWT bearer grant to authenticate.
