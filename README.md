@@ -20,7 +20,7 @@ The docs can be found at [https://hexdocs.pm/docusign](https://hexdocs.pm/docusi
 
 ## Regenerating stubs 
 
-Grab the latest [swagger codegen jar](https://swagger.io/docs/open-source-tools/swagger-codegen/#installation-from-maven-central-14) and:
+Grab the latest [swagger codegen jar](https://github.com/swagger-api/swagger-codegen#prerequisites) and:
 
 ```
 java -jar swagger-codegen-cli.jar generate \
