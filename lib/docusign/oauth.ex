@@ -49,7 +49,7 @@ defmodule DocuSign.OAuth do
   """
   @spec interval_refresh_token(Client.t()) :: integer
   def interval_refresh_token(client),
-    do: client.token.expires_at - :os.system_time(:seconds) - 10
+    do: client.token.expires_at - :erlang.system_time(:second) - 10
 
   @doc """
   Check expiration of token
