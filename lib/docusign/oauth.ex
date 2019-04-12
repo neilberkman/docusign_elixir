@@ -88,7 +88,7 @@ defmodule DocuSign.OAuth do
   #
   @spec assertion() :: binary | no_return()
   def assertion do
-    claims() |> generate_and_sign!()
+    generate_and_sign!(claims())
   end
 
   # Signed payload use token key
