@@ -2,7 +2,7 @@ defmodule DocuSign.MixProject do
   @moduledoc false
   use Mix.Project
 
-  @version "0.1.3"
+  @version "0.2.0"
   @url "https://github.com/TandemEquity/docusign_elixir"
   @maintainers [
     "Neil Berkman",
@@ -20,7 +20,7 @@ defmodule DocuSign.MixProject do
       maintainers: @maintainers,
       description: "Unofficial DocuSign Elixir Library used to interact with the eSign REST API.",
       homepage_url: @url,
-      deps: deps(),
+      deps: deps()
     ]
   end
 
@@ -35,18 +35,19 @@ defmodule DocuSign.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:poison, "~> 3.0"},
-      {:joken, "~> 1.5"},
-      {:oauth2, "~> 0.9.3"},
+      {:poison, "~> 4.0"},
+      {:joken, "~> 2.0"},
+      {:oauth2, "~> 1.0"},
       {:tesla, "~> 1.1"},
+      {:plug_cowboy, "~> 2.0"},
 
       # test
       {:mock, "~> 0.3.2"},
-      {:bypass, "~> 0.8.1"},
+      {:bypass, "~> 1.0"},
 
       # dev
       {:ex_doc, ">= 0.0.0", only: :dev},
-      {:credo, "~> 0.10.0", only: [:dev, :test], runtime: false}
+      {:credo, "~> 1.0", only: [:dev, :test], runtime: false}
     ]
   end
 

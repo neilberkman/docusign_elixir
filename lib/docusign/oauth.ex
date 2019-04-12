@@ -10,17 +10,10 @@ defmodule DocuSign.OAuth do
   """
   use OAuth2.Strategy
 
-  alias JOSE.JWK
   alias OAuth2.{AccessToken, Client, Error}
   @type param :: binary | %{binary => param} | [param]
   @type params :: %{binary => param} | Keyword.t()
   @type headers :: [{binary, binary}]
-
-  @private_key Application.get_env(:docusign, :private_key)
-  @token_expires_in Application.get_env(:docusign, :token_expires_in)
-  @hostname Application.get_env(:docusign, :hostname)
-  @client_id Application.get_env(:docusign, :client_id)
-  @user_id Application.get_env(:docusign, :user_id)
 
   @grant_type "urn:ietf:params:oauth:grant-type:jwt-bearer"
 
@@ -49,7 +42,7 @@ defmodule DocuSign.OAuth do
   """
   @spec interval_refresh_token(Client.t()) :: integer
   def interval_refresh_token(client),
-    do: client.token.expires_at - :os.system_time(:seconds) - 10
+    do: client.token.expires_at - :erlang.system_time(:second) - 10
 
   @doc """
   Check expiration of token
@@ -68,16 +61,17 @@ defmodule DocuSign.OAuth do
   def client(opts \\ []) do
     [
       strategy: __MODULE__,
-      client_id: @client_id,
-      site: "https://#{@hostname}"
+      client_id: Application.fetch_env!(:docusign, :client_id),
+      site: "https://#{Application.fetch_env!(:docusign, :hostname)}"
     ]
     |> Keyword.merge(opts)
     |> Client.new()
+    |> Client.put_serializer("application/json", Poison)
   end
 
   # OAuth2.Strategy callback
   #
-  @spec get_token(Client.t(), Keyword.t(), Keyword.t()) :: binary
+  @spec get_token(Client.t(), Keyword.t(), Keyword.t()) :: binary | no_return()
   def get_token(client, _params, _headers) do
     client
     |> put_param(:grant_type, @grant_type)
@@ -90,38 +84,59 @@ defmodule DocuSign.OAuth do
     raise Error, reason: "This strategy does not implement `authorize_url`."
   end
 
-  # Take token_key from pem file
+  # Create claim and sign with private key
   #
-  @spec token_key() :: binary
-  defp token_key do
-    @private_key
-    |> JWK.from_pem_file()
-    |> Joken.rs256()
+  @spec assertion() :: binary | no_return()
+  def assertion do
+    generate_and_sign!(claims())
   end
 
   # Signed payload use token key
   #
-  @spec signed(map) :: binary
-  defp signed(payload) do
-    payload
-    |> Joken.token()
-    |> Joken.sign(token_key())
-    |> Joken.get_compact()
+  @spec generate_and_sign!(map) :: binary | no_return()
+  defp generate_and_sign!(claims) do
+    Joken.generate_and_sign!(%{}, claims, token_signer())
   end
 
-  # Create claim and sign with private key
-  #
-  @spec assertion() :: binary
-  defp assertion do
-    now_unix = :os.system_time(:seconds)
+  defp claims do
+    now_unix = :erlang.system_time(:second)
 
-    signed(%{
-      iss: @client_id,
-      sub: @user_id,
-      aud: @hostname,
-      iat: now_unix,
-      exp: now_unix + @token_expires_in,
-      scope: "signature"
-    })
+    %{
+      "iss" => Application.fetch_env!(:docusign, :client_id),
+      "sub" => Application.fetch_env!(:docusign, :user_id),
+      "aud" => Application.fetch_env!(:docusign, :hostname),
+      "iat" => now_unix,
+      "exp" => now_unix + Application.get_env(:docusign, :token_expires_in, 2 * 60 * 60),
+      "scope" => "signature"
+    }
+  end
+
+  # Take token signer from application env and if it doesn't exist, create it.
+  #
+  @spec token_signer(pem_key :: String.t()) :: Joken.Signer.t()
+  defp token_signer(pem_key \\ nil) do
+    case Application.fetch_env(:docusign, :token_signer) do
+      {:ok, token_signer} ->
+        token_signer
+
+      :error ->
+        token_signer = create_token_signer(pem_key)
+        Application.put_env(:docusign, :token_signer, token_signer)
+        token_signer
+    end
+  end
+
+  # Create token signer based on PEM-encoded key. If the provided `pem_key` is
+  # `nil`, load it from the application environment.
+  #
+  @spec create_token_signer(pem_key :: String.t()) :: Joken.Signer.t()
+  defp create_token_signer(pem_key) do
+    Joken.Signer.create("RS256", %{"pem" => pem_key || token_key()})
+  end
+
+  defp token_key do
+    :docusign
+    |> Application.fetch_env!(:private_key)
+    |> File.read!()
   end
 end
