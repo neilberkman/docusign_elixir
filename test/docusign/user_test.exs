@@ -19,7 +19,7 @@ defmodule DocuSign.UserTest do
     "given_name": "Neil",
     "name": "Neil Test1",
     "sub": "84a39dd2-b972-48b2-929a-cf743466a4d5"
-      })
+  })
 
   setup do
     bypass = Bypass.open()

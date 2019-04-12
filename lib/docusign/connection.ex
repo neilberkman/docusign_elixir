@@ -34,7 +34,7 @@ defmodule DocuSign.Connection do
     """
     @spec new(DocuSign.Connection.t()) :: Tesla.Env.client()
     def new(%{client: %{token: token} = _client, app_account: app} = _conn) do
-      Tesla.build_client([
+      Tesla.client([
         {Tesla.Middleware.BaseUrl, app.base_uri},
         {Tesla.Middleware.Headers,
          [{"authorization", "#{token.token_type} #{token.access_token}"}]},
