@@ -63,7 +63,8 @@ defmodule DocuSign.User do
     with api_client <- client || APIClient.client(),
          {:ok, %{body: body}} <- Client.get(api_client, @path),
          attrs <- Util.map_keys_to_atoms(body) do
-      struct(__MODULE__, attrs)
+      __MODULE__
+      |> struct(attrs)
       |> Map.update!(:accounts, fn accounts ->
         accounts
         |> Enum.map(&struct(AppAccount, Util.map_keys_to_atoms(&1)))
