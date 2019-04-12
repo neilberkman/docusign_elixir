@@ -20,7 +20,7 @@ defmodule DocuSign.MixProject do
       maintainers: @maintainers,
       description: "Unofficial DocuSign Elixir Library used to interact with the eSign REST API.",
       homepage_url: @url,
-      deps: deps(),
+      deps: deps()
     ]
   end
 
