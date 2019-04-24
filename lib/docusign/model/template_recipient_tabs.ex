@@ -78,7 +78,7 @@ defimpl Poison.Decoder, for: DocuSign.Model.TemplateRecipientTabs do
     |> deserialize(:checkboxTabs, :list, DocuSign.Model.Checkbox, options)
     |> deserialize(:companyTabs, :list, DocuSign.Model.Company, options)
     |> deserialize(:dateSignedTabs, :list, DocuSign.Model.DateSigned, options)
-    |> deserialize(:dateTabs, :list, DocuSign.Model.DateTime, options)
+    |> deserialize(:dateTabs, :list, DocuSign.Model.Date, options)
     |> deserialize(:declineTabs, :list, DocuSign.Model.Decline, options)
     |> deserialize(:emailAddressTabs, :list, DocuSign.Model.EmailAddress, options)
     |> deserialize(:emailTabs, :list, DocuSign.Model.Email, options)
