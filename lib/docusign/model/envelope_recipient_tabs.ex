@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.EnvelopeRecipientTabs do
   @moduledoc """
-  All of the tabs associated with a recipient. Each property is a list of a type of tab. 
+  All of the tabs associated with a recipient. Each property is a list of a type of tab.
   """
 
   @derive [Poison.Encoder]
@@ -78,7 +78,7 @@ defimpl Poison.Decoder, for: DocuSign.Model.EnvelopeRecipientTabs do
     |> deserialize(:checkboxTabs, :list, DocuSign.Model.Checkbox, options)
     |> deserialize(:companyTabs, :list, DocuSign.Model.Company, options)
     |> deserialize(:dateSignedTabs, :list, DocuSign.Model.DateSigned, options)
-    |> deserialize(:dateTabs, :list, DocuSign.Model.DateTime, options)
+    |> deserialize(:dateTabs, :list, DocuSign.Model.Date, options)
     |> deserialize(:declineTabs, :list, DocuSign.Model.Decline, options)
     |> deserialize(:emailAddressTabs, :list, DocuSign.Model.EmailAddress, options)
     |> deserialize(:emailTabs, :list, DocuSign.Model.Email, options)
