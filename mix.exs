@@ -37,7 +37,7 @@ defmodule DocuSign.MixProject do
     [
       {:poison, "~> 4.0"},
       {:joken, "~> 2.0"},
-      {:oauth2, "~> 1.0"},
+      {:oauth2, "~> 2.0"},
       {:tesla, "~> 1.1"},
       {:plug_cowboy, "~> 2.0"},
 
