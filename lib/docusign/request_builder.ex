@@ -143,7 +143,17 @@ defmodule DocuSign.RequestBuilder do
   def decode(%Tesla.Env{status: status} = env, false) when status in 200..299, do: {:ok, env}
 
   def decode(%Tesla.Env{status: status, body: body}, struct) when status in 200..299 do
-    Poison.decode(body, as: struct)
+    options = %{as: struct}
+
+    value =
+      body
+      |> Poison.Parser.parse!(options)
+      |> Poison.Decode.transform(options)
+
+    {:ok, value}
+  rescue
+    exception in [Poison.ParseError, Poison.DecodeError] ->
+      {:error, exception}
   end
 
   def decode(response, _struct), do: {:error, response}
