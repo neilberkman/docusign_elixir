@@ -55,17 +55,33 @@ defmodule DocuSign.RequestBuilder do
   Map
   """
   @spec add_optional_params(map(), %{optional(atom) => atom}, keyword()) :: map()
-  def add_optional_params(request, _, []), do: request
+  def add_optional_params(request, definitions, [{key, value}] = values) do
+    case definitions do
+      %{^key => :body} when map_size(definitions) == 1 ->
+        # If there is a single entity to send in the body there is no need to
+        # enclose it in a multipart request.
+        add_param(request, :body, :body, Poison.encode!(value))
 
-  def add_optional_params(request, definitions, [{key, value} | tail]) do
+      _ ->
+        do_add_optional_params(request, definitions, values)
+    end
+  end
+
+  def add_optional_params(request, definitions, values) do
+    do_add_optional_params(request, definitions, values)
+  end
+
+  defp do_add_optional_params(request, _, []), do: request
+
+  defp do_add_optional_params(request, definitions, [{key, value} | tail]) do
     case definitions do
       %{^key => location} ->
         request
         |> add_param(location, key, value)
-        |> add_optional_params(definitions, tail)
+        |> do_add_optional_params(definitions, tail)
 
       _ ->
-        add_optional_params(request, definitions, tail)
+        do_add_optional_params(request, definitions, tail)
     end
   end
 
