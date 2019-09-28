@@ -60,7 +60,7 @@ defmodule DocuSign.RequestBuilder do
       %{^key => :body} when map_size(definitions) == 1 ->
         # If there is a single entity to send in the body there is no need to
         # enclose it in a multipart request.
-        add_param(request, :body, :body, Poison.encode!(value))
+        add_param(request, :body, :body, Map.from_struct(value))
 
       _ ->
         do_add_optional_params(request, definitions, values)
