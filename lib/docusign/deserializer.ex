@@ -20,7 +20,11 @@ defmodule DocuSign.Deserializer do
   end
 
   def deserialize(model, field, :struct, mod, options) do
-    Map.update!(model, field, &Poison.Decode.transform(&1, Map.merge(options, %{as: struct(mod)})))
+    Map.update!(
+      model,
+      field,
+      &Poison.Decode.transform(&1, Map.merge(options, %{as: struct(mod)}))
+    )
   end
 
   def deserialize(model, field, :map, mod, options) do
