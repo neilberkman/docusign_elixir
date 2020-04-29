@@ -62,7 +62,8 @@ defmodule DocuSign.OAuth do
     [
       strategy: __MODULE__,
       client_id: Application.fetch_env!(:docusign, :client_id),
-      site: "https://#{Application.fetch_env!(:docusign, :hostname)}"
+      site: "https://#{Application.fetch_env!(:docusign, :hostname)}",
+      authorize_url: "oauth/auth?response_type=code&scope=signature%20impersonation"
     ]
     |> Keyword.merge(opts)
     |> Client.new()
