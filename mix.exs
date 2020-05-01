@@ -39,6 +39,8 @@ defmodule DocuSign.MixProject do
       {:oauth2, "~> 2.0"},
       {:tesla, "~> 1.1"},
       {:plug_cowboy, "~> 2.0"},
+      {:castore, "~> 0.1.0"},
+      {:mint, "~> 1.0"},
 
       # test
       {:mock, "~> 0.3.2", only: :test},
