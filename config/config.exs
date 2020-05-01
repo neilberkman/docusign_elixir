@@ -13,6 +13,8 @@ config :docusign,
 
 import_config "#{Mix.env()}.exs"
 
+config :tesla, adapter: Tesla.Adapter.Mint
+
 if File.exists?("config/#{Mix.env()}.secret.exs") do
   import_config "#{Mix.env()}.secret.exs"
 end
