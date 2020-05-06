@@ -2,13 +2,10 @@ defmodule DocuSign.APIClient do
   @moduledoc ~S"""
   GenServer to store API client and refresh access token by schedule.
   """
-
   use GenServer
   alias DocuSign.OAuth
-
   #####
   # External API
-
   def start_link(opts \\ []) do
     GenServer.start_link(__MODULE__, opts, name: __MODULE__)
   end
@@ -31,11 +28,14 @@ defmodule DocuSign.APIClient do
 
   #####
   # GenServer implementation
-
   def init(_opts) do
-    client = OAuth.client()
-    send(self(), :refresh_token)
-    {:ok, client}
+    {:ok, nil}
+  end
+
+  def handle_call(:get_client, _from, nil) do
+    client = OAuth.refresh_token!(OAuth.client(), true)
+    client |> OAuth.interval_refresh_token() |> schedule_refresh_token
+    {:reply, client, client}
   end
 
   def handle_call(:get_client, _from, client) do
