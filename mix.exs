@@ -41,8 +41,8 @@ defmodule DocuSign.MixProject do
       {:plug_cowboy, "~> 2.0"},
 
       # test
-      {:mock, "~> 0.3.2"},
-      {:bypass, "~> 1.0"},
+      {:mock, "~> 0.3.2", only: :test},
+      {:bypass, "~> 2.1", only: :test},
 
       # dev
       {:ex_doc, ">= 0.0.0", only: :dev},
