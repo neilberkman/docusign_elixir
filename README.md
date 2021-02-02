@@ -16,7 +16,7 @@ end
 
 The docs can be found at [https://hexdocs.pm/docusign](https://hexdocs.pm/docusign).
 
-## Regenerating stubs 
+## Regenerating stubs
 
 Grab the latest [swagger codegen jar](https://github.com/swagger-api/swagger-codegen#prerequisites) and:
 
