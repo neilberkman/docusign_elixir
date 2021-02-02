@@ -9,7 +9,7 @@ The package can be installed by adding `docusign` to your list of dependencies i
 ```elixir
 def deps do
   [
-    {:docusign, "~> 0.2.8"}
+    {:docusign, "~> 0.3.0"}
   ]
 end
 ```
@@ -20,10 +20,13 @@ The docs can be found at [https://hexdocs.pm/docusign](https://hexdocs.pm/docusi
 
 Grab the latest [swagger codegen jar](https://github.com/swagger-api/swagger-codegen#prerequisites) and:
 
-```
+```bash
 java -jar swagger-codegen-cli.jar generate \
-  -i https://raw.githubusercontent.com/docusign/eSign-OpenAPI-Specification/master/esignature.rest.swagger.json \
+  -i https://raw.githubusercontent.com/docusign/eSign-OpenAPI-Specification/master/esignature.rest.swagger-v2.1.json \
   -l elixir -o /tmp/elixir_api_client
+rm -rf lib/docusign/*
+cp -r /tmp/elixir_api_client/lib/docu_sign_restapi/* lib/docusign
+mix format
 ```
 
 ## JWT Authorization Example
