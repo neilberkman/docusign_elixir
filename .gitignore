@@ -29,3 +29,6 @@ docusign_key.*
 config/*.secret.exs
 
 /.elixir_ls/
+
+# Ignore codegen jar
+swagger-codegen-cli.jar
