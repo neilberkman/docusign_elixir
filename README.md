@@ -9,7 +9,7 @@ The package can be installed by adding `docusign` to your list of dependencies i
 ```elixir
 def deps do
   [
-    {:docusign, "~> 0.3.0"}
+    {:docusign, "~> 0.3.1"}
   ]
 end
 ```
@@ -25,7 +25,7 @@ java -jar swagger-codegen-cli.jar generate \
   -i https://raw.githubusercontent.com/docusign/eSign-OpenAPI-Specification/master/esignature.rest.swagger-v2.1.json \
   -l elixir -o /tmp/elixir_api_client
 rm -rf lib/docusign/*
-cp -r /tmp/elixir_api_client/lib/docu_sign_restapi/* lib/docusign
+cp -rf /tmp/elixir_api_client/lib/docu_sign_restapi/* lib/docusign
 mix format
 ```
 
