@@ -29,6 +29,8 @@ cp -rf /tmp/elixir_api_client/lib/docu_sign_restapi/* lib/docusign
 mix format
 ```
 
+Note: consider swtiching to [OpenAPI Generator](https://github.com/OpenAPITools/openapi-generator/blob/master/docs/qna.md).
+
 ## JWT Authorization Example
 
 See the [Elixir sample](https://github.com/neilberkman/docusign_elixir_sample_app) for an example Elixir SDK implementation that uses the JWT bearer grant to authenticate.
