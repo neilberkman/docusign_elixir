@@ -17,6 +17,8 @@ defmodule DocuSign.Connection do
 
   @type t :: %__MODULE__{}
 
+  @timeout 30_000
+
   defmodule Request do
     @moduledoc """
     Handle Tesla connections.
@@ -39,8 +41,7 @@ defmodule DocuSign.Connection do
           {Tesla.Middleware.BaseUrl, app.base_uri},
           {Tesla.Middleware.Headers,
            [{"authorization", "#{token.token_type} #{token.access_token}"}]},
-          Tesla.Middleware.EncodeJson,
-          {Tesla.Middleware.Timeout, timeout: 15_000}
+          Tesla.Middleware.EncodeJson
         ],
         Tesla.Adapter.Mint
       )
@@ -52,6 +53,8 @@ defmodule DocuSign.Connection do
   """
   @spec request(t(), Keyword.t()) :: %OAuth2.Response{}
   def request(conn, opts \\ []) do
+    opts = opts |> Keyword.merge(adapter: [timeout: @timeout])
+
     {_, res} =
       conn
       |> Request.new()
