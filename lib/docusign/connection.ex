@@ -25,7 +25,7 @@ defmodule DocuSign.Connection do
     """
 
     use Tesla
-    plug(Tesla.Middleware.EncodeJson)
+    plug(Tesla.Middleware.EncodeJson, engine: Poison)
 
     @doc """
     Configure an authless client connection
@@ -41,7 +41,7 @@ defmodule DocuSign.Connection do
           {Tesla.Middleware.BaseUrl, app.base_uri},
           {Tesla.Middleware.Headers,
            [{"authorization", "#{token.token_type} #{token.access_token}"}]},
-          Tesla.Middleware.EncodeJson
+          {Tesla.Middleware.EncodeJson, engine: Poison}
         ],
         Tesla.Adapter.Mint
       )
