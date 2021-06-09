@@ -6,11 +6,12 @@ defmodule DocuSign.RequestBuilderTest do
   describe "adding optional params to request" do
     test "struct with nil values returns a map with nil values excluded" do
       request = %{}
+
       optional_params = %{
         EnvelopeRecipientTabs: :body
       }
 
-      tab =  %DocuSign.Model.Text{tabId: ":id:", value: ":value:", status: nil}
+      tab = %DocuSign.Model.Text{tabId: ":id:", value: ":value:", status: nil}
       tabs = %DocuSign.Model.EnvelopeRecipientTabs{textTabs: [tab], approveTabs: nil}
       opts = [EnvelopeRecipientTabs: tabs]
 
