@@ -60,7 +60,12 @@ defmodule DocuSign.RequestBuilder do
       %{^key => :body} when map_size(definitions) == 1 ->
         # If there is a single entity to send in the body there is no need to
         # enclose it in a multipart request.
-        add_param(request, :body, :body, Map.from_struct(value))
+        map_for_body =
+          value
+          |> Map.from_struct()
+          |> prune_nils()
+
+        add_param(request, :body, :body, map_for_body)
 
       _ ->
         do_add_optional_params(request, definitions, values)
@@ -173,4 +178,18 @@ defmodule DocuSign.RequestBuilder do
   end
 
   def decode(response, _struct), do: {:error, response}
+
+  @spec prune_nils(map) :: map
+  def prune_nils(s) when is_struct(s), do: s |> Map.from_struct() |> Enum.reduce(%{}, &reducer/2)
+  def prune_nils(m) when is_map(m), do: Enum.reduce(m, %{}, &reducer/2)
+
+  @spec reducer({any, any}, map) :: map
+  defp reducer({k, v}, map) when is_list(v) do
+    pruned_list = Enum.map(v, &prune_nils/1)
+    Map.put(map, k, pruned_list)
+  end
+
+  defp reducer({k, v}, map) when is_map(v), do: Map.put(map, k, prune_nils(v))
+  defp reducer({_k, v}, map) when is_nil(v), do: map
+  defp reducer({k, v}, map), do: Map.put(map, k, v)
 end
