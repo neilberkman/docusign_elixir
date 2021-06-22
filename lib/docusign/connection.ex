@@ -53,7 +53,8 @@ defmodule DocuSign.Connection do
   """
   @spec request(t(), Keyword.t()) :: %OAuth2.Response{}
   def request(conn, opts \\ []) do
-    opts = opts |> Keyword.merge(adapter: [timeout: @timeout])
+    timeout = Application.get_env(:docusign, :timeout, @timeout)
+    opts = opts |> Keyword.merge(opts: [adapter: [timeout: timeout]])
 
     {_, res} =
       conn
