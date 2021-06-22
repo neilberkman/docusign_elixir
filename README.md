@@ -16,6 +16,14 @@ end
 
 The docs can be found at [https://hexdocs.pm/docusign](https://hexdocs.pm/docusign).
 
+## Timeout configuration
+
+By default, the HTTP requests will timeout after 30_000 ms. You can configure the timeout:
+
+```elixir
+config :docusign, timeout: 60_000
+```
+
 ## Regenerating stubs
 
 Grab the latest [swagger codegen jar](https://github.com/swagger-api/swagger-codegen#prerequisites) and:
