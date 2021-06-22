@@ -30,7 +30,8 @@ defmodule DocuSign.MixProject do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      applications: [:logger, :poison, :joken, :oauth2, :tesla, :plug_cowboy],
+      # applications: [:logger, :poison, :joken, :oauth2, :tesla, :plug_cowboy],
+      extra_applications: [:logger],
       mod: {DocuSign.Application, []}
     ]
   end
