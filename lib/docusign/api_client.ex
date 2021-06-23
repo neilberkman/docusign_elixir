@@ -4,8 +4,10 @@ defmodule DocuSign.APIClient do
   """
   use GenServer
   alias DocuSign.OAuth
+
   #####
   # External API
+
   def start_link(opts \\ []) do
     GenServer.start_link(__MODULE__, opts, name: __MODULE__)
   end
@@ -33,13 +35,13 @@ defmodule DocuSign.APIClient do
   end
 
   def handle_call(:get_client, _from, nil) do
-    client = OAuth.refresh_token!(OAuth.client(), true)
-    client |> OAuth.interval_refresh_token() |> schedule_refresh_token
+    client = OAuth.Impl.refresh_token!(OAuth.Impl.client(), true)
+    client |> OAuth.Impl.interval_refresh_token() |> schedule_refresh_token
     {:reply, client, client}
   end
 
   def handle_call(:get_client, _from, client) do
-    refresh_client = OAuth.refresh_token!(client)
+    refresh_client = OAuth.Impl.refresh_token!(client)
     {:reply, refresh_client, refresh_client}
   end
 
@@ -47,7 +49,7 @@ defmodule DocuSign.APIClient do
   Sync refreshes a token.
   """
   def handle_call(:refresh_token, _from, client) do
-    new_client = OAuth.refresh_token!(client, true)
+    new_client = OAuth.Impl.refresh_token!(client, true)
     {:reply, new_client, new_client}
   end
 
@@ -55,10 +57,10 @@ defmodule DocuSign.APIClient do
   Async refreshes a token.
   """
   def handle_info(:refresh_token, client) do
-    new_client = OAuth.refresh_token!(client, true)
+    new_client = OAuth.Impl.refresh_token!(client, true)
 
     new_client
-    |> OAuth.interval_refresh_token()
+    |> OAuth.Impl.interval_refresh_token()
     |> schedule_refresh_token
 
     {:noreply, new_client}
