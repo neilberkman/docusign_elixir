@@ -59,10 +59,21 @@ defmodule DocuSign.OAuth do
   """
   @spec client(Keyword.t()) :: Client.t()
   def client(opts \\ []) do
+    client_id = Application.fetch_env!(:docusign, :client_id)
+    user_id = Application.fetch_env!(:docusign, :user_id)
+    hostname = Application.fetch_env!(:docusign, :hostname)
+    token_expires_in = Application.get_env(:docusign, :token_expires_in, 2 * 60 * 60)
+
     [
       strategy: __MODULE__,
       client_id: Application.fetch_env!(:docusign, :client_id),
-      site: "https://#{Application.fetch_env!(:docusign, :hostname)}",
+      ref: %{
+        client_id: client_id,
+        user_id: user_id,
+        hostname: hostname,
+        token_expires_in: token_expires_in
+      },
+      site: "https://#{hostname}",
       authorize_url: "oauth/auth?response_type=code&scope=signature%20impersonation"
     ]
     |> Keyword.merge(opts)
@@ -76,7 +87,7 @@ defmodule DocuSign.OAuth do
   def get_token(client, _params, _headers) do
     client
     |> put_param(:grant_type, @grant_type)
-    |> put_param(:assertion, assertion())
+    |> put_param(:assertion, assertion(client))
   end
 
   # OAuth2.Strategy callback
@@ -87,9 +98,24 @@ defmodule DocuSign.OAuth do
 
   # Create claim and sign with private key
   #
-  @spec assertion() :: binary | no_return()
-  def assertion do
-    generate_and_sign!(claims())
+  @spec assertion(Client.t()) :: binary | no_return()
+  def assertion(client) do
+    client
+    |> claims()
+    |> generate_and_sign!()
+  end
+
+  defp claims(client) do
+    now_unix = :erlang.system_time(:second)
+
+    %{
+      "iss" => client.ref.client_id,
+      "sub" => client.ref.user_id,
+      "aud" => client.ref.hostname,
+      "iat" => now_unix,
+      "exp" => now_unix + client.ref.token_expires_in,
+      "scope" => "signature"
+    }
   end
 
   # Signed payload use token key
@@ -97,19 +123,6 @@ defmodule DocuSign.OAuth do
   @spec generate_and_sign!(map) :: binary | no_return()
   defp generate_and_sign!(claims) do
     Joken.generate_and_sign!(%{}, claims, token_signer())
-  end
-
-  defp claims do
-    now_unix = :erlang.system_time(:second)
-
-    %{
-      "iss" => Application.fetch_env!(:docusign, :client_id),
-      "sub" => Application.fetch_env!(:docusign, :user_id),
-      "aud" => Application.fetch_env!(:docusign, :hostname),
-      "iat" => now_unix,
-      "exp" => now_unix + Application.get_env(:docusign, :token_expires_in, 2 * 60 * 60),
-      "scope" => "signature"
-    }
   end
 
   # Take token signer from application env and if it doesn't exist, create it.
