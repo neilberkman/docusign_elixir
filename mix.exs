@@ -53,7 +53,8 @@ defmodule DocuSign.MixProject do
       # dev
       {:ex_doc, ">= 0.0.0", only: :dev},
       {:credo, "~> 1.0", only: [:dev, :test], runtime: false},
-      {:mix_test_watch, "~> 1.0", only: :dev}
+      {:mix_test_watch, "~> 1.0", only: :dev},
+      {:dialyxir, "~> 1.1", only: [:dev], runtime: false}
     ]
   end
 
