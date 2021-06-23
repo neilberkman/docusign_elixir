@@ -5,7 +5,7 @@ defmodule DocuSign.ConnectionTest do
 
   import DocuSign.EnvHelper
 
-  describe "timing out after configured delay" do
+  describe "requesting with a configured timeout" do
     setup do
       bypass = Bypass.open()
 
