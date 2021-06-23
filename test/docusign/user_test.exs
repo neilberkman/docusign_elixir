@@ -31,7 +31,7 @@ defmodule DocuSign.UserTest do
       Conn.resp(conn, 200, @user_info)
     end)
 
-    client = OAuth.client(site: "http://localhost:#{bypass.port}")
+    client = OAuth.Impl.client(site: "http://localhost:#{bypass.port}")
 
     assert %User{
              created: "2018-09-07T23:49:34.163",
