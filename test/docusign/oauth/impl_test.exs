@@ -1,4 +1,4 @@
-defmodule DocuSign.OAuthTest do
+defmodule DocuSign.OAuth.ImplTest do
   use ExUnit.Case, async: true
 
   alias DocuSign.OAuth
@@ -21,7 +21,7 @@ defmodule DocuSign.OAuthTest do
       Conn.resp(conn, 200, @token)
     end)
 
-    client = OAuth.get_token!(OAuth.client(site: "http://localhost:#{bypass.port}"))
+    client = OAuth.Impl.get_token!(OAuth.Impl.client(site: "http://localhost:#{bypass.port}"))
 
     assert %OAuth2.AccessToken{
              access_token: "ISSUED_ACCESS_TOKEN",
@@ -34,23 +34,23 @@ defmodule DocuSign.OAuthTest do
   test "token_expired?" do
     expired_token = %AccessToken{expires_at: :erlang.system_time(:second) - 30}
     actual_token = %AccessToken{expires_at: :erlang.system_time(:second) + 3600}
-    assert OAuth.token_expired?(nil)
-    assert OAuth.token_expired?(expired_token)
-    assert OAuth.token_expired?(%Client{token: expired_token})
+    assert OAuth.Impl.token_expired?(nil)
+    assert OAuth.Impl.token_expired?(expired_token)
+    assert OAuth.Impl.token_expired?(%Client{token: expired_token})
 
-    refute OAuth.token_expired?(actual_token)
-    refute OAuth.token_expired?(%Client{token: actual_token})
+    refute OAuth.Impl.token_expired?(actual_token)
+    refute OAuth.Impl.token_expired?(%Client{token: actual_token})
   end
 
   test "create new api client" do
     assert %Client{
              request_opts: [],
              site: "http://localhost",
-             strategy: DocuSign.OAuth,
+             strategy: DocuSign.OAuth.Impl,
              token: nil,
              token_method: :post,
              token_url: "/oauth/token"
-           } = OAuth.client(site: "http://localhost")
+           } = OAuth.Impl.client(site: "http://localhost")
   end
 
   test "get_token" do
@@ -59,14 +59,14 @@ defmodule DocuSign.OAuthTest do
                "assertion" => _,
                "grant_type" => "urn:ietf:params:oauth:grant-type:jwt-bearer"
              }
-           } = OAuth.get_token(OAuth.client(site: "http://localhost"), [], [])
+           } = OAuth.Impl.get_token(OAuth.Impl.client(site: "http://localhost"), [], [])
   end
 
   test "refresh_token!", %{bypass: bypass} do
     now = :erlang.system_time(:second)
 
     client =
-      OAuth.client(
+      OAuth.Impl.client(
         site: "http://localhost:#{bypass.port}",
         token: %AccessToken{
           expires_at: now + 3600,
@@ -78,21 +78,21 @@ defmodule DocuSign.OAuthTest do
       Conn.resp(conn, 200, @token)
     end)
 
-    assert %AccessToken{access_token: "TEST_TOKEN"} = OAuth.refresh_token!(client).token
+    assert %AccessToken{access_token: "TEST_TOKEN"} = OAuth.Impl.refresh_token!(client).token
 
     assert %AccessToken{access_token: "ISSUED_ACCESS_TOKEN"} =
-             OAuth.refresh_token!(client, true).token
+             OAuth.Impl.refresh_token!(client, true).token
 
     expired_client = %Client{client | token: %AccessToken{expires_at: now - 3600}}
 
     assert %AccessToken{access_token: "ISSUED_ACCESS_TOKEN"} =
-             OAuth.refresh_token!(expired_client).token
+             OAuth.Impl.refresh_token!(expired_client).token
   end
 
   test "interval_refresh_token" do
     now = :erlang.system_time(:second)
     token = %AccessToken{expires_at: now + 3600}
     client = %Client{token: token}
-    assert OAuth.interval_refresh_token(client) == 3590
+    assert OAuth.Impl.interval_refresh_token(client) == 3590
   end
 end
