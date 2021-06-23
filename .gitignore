@@ -32,3 +32,6 @@ config/*.secret.exs
 
 # Ignore codegen jar
 swagger-codegen-cli.jar
+
+# Ignore vscode config
+.vscode
