@@ -3,6 +3,7 @@ defmodule DocuSign.APIClientTest do
 
   alias DocuSign.APIClient
 
+  import DocuSign.ProcessHelper
   import Mox
 
   setup :set_mox_from_context
@@ -41,10 +42,5 @@ defmodule DocuSign.APIClientTest do
 
       APIClient.client(user_id: ":another-user-id:", oauth_impl: @oauth_mock)
     end
-  end
-
-  defp assert_down(pid) do
-    ref = Process.monitor(pid)
-    assert_receive {:DOWN, ^ref, _, _, _}
   end
 end

@@ -4,6 +4,20 @@ defmodule DocuSign.ConnectionTest do
   alias DocuSign.Connection
 
   import DocuSign.EnvHelper
+  import DocuSign.ProcessHelper
+
+  describe "creating a connection" do
+    setup do
+      {:ok, pid} = DocuSign.APIClient.start_link()
+      on_exit(fn -> assert_down(pid) end)
+    end
+
+    test "returns connection using default user ID" do
+      connection = Connection.new()
+
+      assert connection.client.ref.user_id == ":user-id:"
+    end
+  end
 
   describe "requesting with a configured timeout" do
     setup do

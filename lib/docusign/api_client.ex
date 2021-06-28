@@ -36,14 +36,14 @@ defmodule DocuSign.APIClient do
   end
 
   def handle_call({:get_client, user_id, opts}, _from, nil) do
-    oauth_impl = Keyword.get(opts, :oauth_impl, OAuth.Impl)
+    oauth_impl = Keyword.get(opts, :oauth_impl, oauth_implementation())
     client = oauth_impl.refresh_token!(oauth_impl.client(user_id: user_id), true)
     client |> oauth_impl.interval_refresh_token() |> schedule_refresh_token
     {:reply, client, client}
   end
 
   def handle_call({:get_client, _user_id, opts}, _from, client) do
-    oauth_impl = Keyword.get(opts, :oauth_impl, OAuth.Impl)
+    oauth_impl = Keyword.get(opts, :oauth_impl, oauth_implementation())
     refresh_client = oauth_impl.refresh_token!(client)
     {:reply, refresh_client, refresh_client}
   end
@@ -75,5 +75,9 @@ defmodule DocuSign.APIClient do
 
   defp default_user_id do
     Application.fetch_env!(:docusign, :user_id)
+  end
+
+  defp oauth_implementation do
+    Application.get_env(:docusign, :oauth_implementation, OAuth.Impl)
   end
 end

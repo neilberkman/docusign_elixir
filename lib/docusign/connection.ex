@@ -58,10 +58,24 @@ defmodule DocuSign.Connection do
   """
   @spec new(Keyword.t()) :: t()
   def new(opts \\ []) do
-    with client <- Keyword.get(opts, :client, APIClient.client()),
-         account <- Keyword.get(opts, :account, default_account()) do
-      %__MODULE__{client: client, app_account: account}
-    end
+    client = Keyword.get(opts, :client, get_default_client())
+    account = Keyword.get(opts, :account, get_default_account_for_client(client))
+
+    __MODULE__
+    |> struct(
+      client: client,
+      app_account: account
+    )
+  end
+
+  defp get_default_client do
+    APIClient.client()
+  end
+
+  defp get_default_account_for_client(client) do
+    client
+    |> User.info()
+    |> User.default_account()
   end
 
   @doc """
@@ -81,8 +95,11 @@ defmodule DocuSign.Connection do
   end
 
   @doc """
-  Retrieves the default account of current user
+  Retrieves the default account of default user configured
   """
   @spec default_account() :: User.AppAccount.t()
-  def default_account, do: User.default_account(User.info())
+  def default_account() do
+    get_default_client()
+    |> get_default_account_for_client()
+  end
 end

@@ -18,6 +18,7 @@ defmodule DocuSign.OAuth.Impl do
   @type headers :: [{binary, binary}]
 
   @grant_type "urn:ietf:params:oauth:grant-type:jwt-bearer"
+  @client_info_path "/oauth/userinfo"
 
   @impl DocuSign.OAuth
   def client(opts \\ []) do
@@ -28,9 +29,8 @@ defmodule DocuSign.OAuth.Impl do
 
     [
       strategy: __MODULE__,
-      client_id: Application.fetch_env!(:docusign, :client_id),
+      client_id: client_id,
       ref: %{
-        client_id: client_id,
         user_id: user_id,
         hostname: hostname,
         token_expires_in: token_expires_in
@@ -67,7 +67,16 @@ defmodule DocuSign.OAuth.Impl do
   def token_expired?(%Client{token: nil}), do: true
   def token_expired?(%Client{token: token}), do: token_expired?(token)
 
+  @impl DocuSign.OAuth
+  def get_client_info(client) do
+    case Client.get(client, @client_info_path) do
+      {:ok, %{body: body}} -> body
+      _error -> nil
+    end
+  end
+
   @impl OAuth2.Strategy
+  @spec get_token(OAuth2.Client.t(), any, any) :: OAuth2.Client.t()
   def get_token(client, _params, _headers) do
     client
     |> put_param(:grant_type, @grant_type)
@@ -94,7 +103,7 @@ defmodule DocuSign.OAuth.Impl do
     now_unix = :erlang.system_time(:second)
 
     %{
-      "iss" => client.ref.client_id,
+      "iss" => client.client_id,
       "sub" => client.ref.user_id,
       "aud" => client.ref.hostname,
       "iat" => now_unix,
