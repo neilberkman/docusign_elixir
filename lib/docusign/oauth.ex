@@ -41,4 +41,9 @@ defmodule DocuSign.OAuth do
   return true if token is expired
   """
   @callback token_expired?(access_token | nil | client) :: boolean
+
+  @doc """
+  Returns a map of user information (docusign-specific)
+  """
+  @callback get_client_info(client) :: map | nil
 end

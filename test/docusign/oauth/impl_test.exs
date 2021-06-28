@@ -95,4 +95,51 @@ defmodule DocuSign.OAuth.ImplTest do
     client = %Client{token: token}
     assert OAuth.Impl.interval_refresh_token(client) == 3590
   end
+
+  test "get_client_info", %{bypass: bypass} do
+    user_info = ~s({
+      "accounts": [
+        {
+          "account_id": "61ac4bd1-c83c-4aa6-8654-d3b44a252f42",
+          "account_name": "Tandem Equity LLC",
+          "base_uri": "https://demo.docusign.net",
+          "is_default": true
+        }
+      ],
+      "created": "2018-09-07T23:49:34.163",
+      "email": "neil@test.com",
+      "family_name": "Test",
+      "given_name": "Neil",
+      "name": "Neil Test1",
+      "sub": "84a39dd2-b972-48b2-929a-cf743466a4d5"
+    })
+
+    Bypass.expect_once(bypass, "GET", "/oauth/userinfo", fn conn ->
+      conn
+      |> Conn.put_resp_header("content-type", "application/json")
+      |> Conn.resp(200, user_info)
+    end)
+
+    client = OAuth.Impl.client(site: "http://localhost:#{bypass.port}")
+
+    info = OAuth.Impl.get_client_info(client)
+
+    # == DocuSign.Util.map_keys_to_atoms(user_info)
+    assert info == %{
+             "accounts" => [
+               %{
+                 "account_id" => "61ac4bd1-c83c-4aa6-8654-d3b44a252f42",
+                 "account_name" => "Tandem Equity LLC",
+                 "base_uri" => "https://demo.docusign.net",
+                 "is_default" => true
+               }
+             ],
+             "created" => "2018-09-07T23:49:34.163",
+             "email" => "neil@test.com",
+             "family_name" => "Test",
+             "given_name" => "Neil",
+             "name" => "Neil Test1",
+             "sub" => "84a39dd2-b972-48b2-929a-cf743466a4d5"
+           }
+  end
 end
