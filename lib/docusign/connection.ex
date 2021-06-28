@@ -49,22 +49,6 @@ defmodule DocuSign.Connection do
   end
 
   @doc """
-  Makes a request.
-  """
-  @spec request(t(), Keyword.t()) :: %OAuth2.Response{}
-  def request(conn, opts \\ []) do
-    timeout = Application.get_env(:docusign, :timeout, @timeout)
-    opts = opts |> Keyword.merge(opts: [adapter: [timeout: timeout]])
-
-    {_, res} =
-      conn
-      |> Request.new()
-      |> Request.request(opts)
-
-    res
-  end
-
-  @doc """
   Create new conn
 
   opts:
@@ -78,6 +62,22 @@ defmodule DocuSign.Connection do
          account <- Keyword.get(opts, :account, default_account()) do
       %__MODULE__{client: client, app_account: account}
     end
+  end
+
+  @doc """
+  Makes a request.
+  """
+  @spec request(t(), Keyword.t()) :: %OAuth2.Response{}
+  def request(conn, opts \\ []) do
+    timeout = Application.get_env(:docusign, :timeout, @timeout)
+    opts = opts |> Keyword.merge(opts: [adapter: [timeout: timeout]])
+
+    {_, res} =
+      conn
+      |> Request.new()
+      |> Request.request(opts)
+
+    res
   end
 
   @doc """
