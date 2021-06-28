@@ -40,20 +40,19 @@ defmodule DocuSign.APIClient do
   #####
   # GenServer implementation
   def init(_opts) do
-    {:ok, nil}
+    {:ok, %{}}
   end
 
-  def handle_call({:get_client, user_id, opts}, _from, nil) do
-    oauth_impl = Keyword.get(opts, :oauth_impl, oauth_implementation())
-    client = oauth_impl.refresh_token!(oauth_impl.client(user_id: user_id), true)
-    client |> oauth_impl.interval_refresh_token() |> schedule_refresh_token
-    {:reply, client, client}
-  end
+  def handle_call({:get_client, user_id, opts}, _from, client_registry) do
+    client =
+      case Map.get(client_registry, user_id) do
+        nil -> create_client(user_id, opts)
+        {client, _opts} -> refresh_client(client, opts)
+      end
 
-  def handle_call({:get_client, _user_id, opts}, _from, client) do
-    oauth_impl = Keyword.get(opts, :oauth_impl, oauth_implementation())
-    refresh_client = oauth_impl.refresh_token!(client)
-    {:reply, refresh_client, refresh_client}
+    updated_registry = Map.put(client_registry, user_id, {client, opts})
+
+    {:reply, client, updated_registry}
   end
 
   @doc """
@@ -67,18 +66,33 @@ defmodule DocuSign.APIClient do
   @doc """
   Async refreshes a token.
   """
-  def handle_info(:refresh_token, client) do
-    new_client = OAuth.Impl.refresh_token!(client, true)
+  def handle_info({:refresh_token, user_id}, client_registry) do
+    {client, opts} = Map.get(client_registry, user_id)
+    oauth_impl = Keyword.get(opts, :oauth_impl, oauth_implementation())
+    new_client = oauth_impl.refresh_token!(client, true)
+    updated_registry = Map.put(client_registry, user_id, {new_client, opts})
 
-    new_client
-    |> OAuth.Impl.interval_refresh_token()
-    |> schedule_refresh_token
+    delay = oauth_impl.interval_refresh_token(client)
+    schedule_refresh_token(user_id, delay)
 
-    {:noreply, new_client}
+    {:noreply, updated_registry}
   end
 
-  defp schedule_refresh_token(seconds) do
-    Process.send_after(self(), :refresh_token, seconds * 1000)
+  defp create_client(user_id, opts) do
+    oauth_impl = Keyword.get(opts, :oauth_impl, oauth_implementation())
+    client = oauth_impl.refresh_token!(oauth_impl.client(user_id: user_id), true)
+    delay = oauth_impl.interval_refresh_token(client)
+    schedule_refresh_token(user_id, delay)
+    client
+  end
+
+  defp refresh_client(client, opts) do
+    oauth_impl = Keyword.get(opts, :oauth_impl, oauth_implementation())
+    oauth_impl.refresh_token!(client)
+  end
+
+  defp schedule_refresh_token(user_id, seconds) do
+    Process.send_after(self(), {:refresh_token, user_id}, seconds * 1000)
   end
 
   defp default_user_id do
