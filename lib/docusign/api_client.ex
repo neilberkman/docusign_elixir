@@ -15,9 +15,17 @@ defmodule DocuSign.APIClient do
   @doc """
   Get Api Client
   """
-  @spec client(Keyword.t()) :: OAuth2.Client.t()
-  def client(opts \\ []) do
+  @type opts :: Keyword.t()
+  @type user_id_or_opts :: String.t() | opts
+  @spec client(user_id_or_opts, opts) :: OAuth2.Client.t()
+  def client(user_id \\ [], opts \\ [])
+
+  def client(opts, _) when is_list(opts) do
     user_id = Keyword.get(opts, :user_id, default_user_id())
+    client(user_id, opts)
+  end
+
+  def client(user_id, opts) when is_binary(user_id) do
     GenServer.call(__MODULE__, {:get_client, user_id, opts}, 10_000)
   end
 
