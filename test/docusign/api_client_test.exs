@@ -60,7 +60,7 @@ defmodule DocuSign.APIClientTest do
     end
   end
 
-  describe "refreshing access token" do
+  describe "automatically refreshing access token" do
     test "client access token is refreshed after delay" do
       # 2 refreshes when clients are created, and 1 when a client gets refreshed
       expected_force_token_refresh_count = 3

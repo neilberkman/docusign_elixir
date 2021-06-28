@@ -29,14 +29,6 @@ defmodule DocuSign.APIClient do
     GenServer.call(__MODULE__, {:get_client, user_id, opts}, 10_000)
   end
 
-  @doc """
-  Forces an access token refresh.
-  """
-  @spec refresh_token() :: OAuth2.Client.t()
-  def refresh_token do
-    GenServer.call(__MODULE__, :refresh_token, 10_000)
-  end
-
   #####
   # GenServer implementation
   def init(_opts) do
@@ -53,14 +45,6 @@ defmodule DocuSign.APIClient do
     updated_registry = Map.put(client_registry, user_id, {client, opts})
 
     {:reply, client, updated_registry}
-  end
-
-  @doc """
-  Sync refreshes a token.
-  """
-  def handle_call(:refresh_token, _from, client) do
-    new_client = OAuth.Impl.refresh_token!(client, true)
-    {:reply, new_client, new_client}
   end
 
   @doc """
