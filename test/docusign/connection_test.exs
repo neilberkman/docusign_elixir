@@ -6,16 +6,40 @@ defmodule DocuSign.ConnectionTest do
   import DocuSign.EnvHelper
   import DocuSign.ProcessHelper
 
+  import Mox
+
+  setup :set_mox_from_context
+  setup :verify_on_exit!
+
+  @oauth_mock __MODULE__.DocuSign.OAuth
+
+  defmock(@oauth_mock, for: DocuSign.OAuth)
+
   describe "creating a connection" do
     setup do
       {:ok, pid} = DocuSign.APIClient.start_link()
       on_exit(fn -> assert_down(pid) end)
     end
 
-    test "returns connection using default user ID" do
+    test "no user ID returns connection using default user ID" do
       connection = Connection.new()
 
+      # Returns user id provided by OAuth.Fake
       assert connection.client.ref.user_id == ":user-id:"
+    end
+
+    test "user ID returns connection for that user" do
+      @oauth_mock
+      |> expect(:client, fn opts ->
+        assert opts[:user_id] == ":other-user-id:"
+        %OAuth2.Client{ref: %{user_id: opts[:user_id]}}
+      end)
+      |> expect(:refresh_token!, fn client, _force -> client end)
+      |> expect(:interval_refresh_token, fn _client -> 1000 end)
+
+      connection = Connection.new(":other-user-id:", oauth_impl: @oauth_mock)
+
+      assert connection.client.ref.user_id == ":other-user-id:"
     end
   end
 

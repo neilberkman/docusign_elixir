@@ -22,8 +22,8 @@ defmodule DocuSign.OAuth.Impl do
 
   @impl DocuSign.OAuth
   def client(opts \\ []) do
+    user_id = Keyword.get(opts, :user_id, get_default_user_id())
     client_id = Application.fetch_env!(:docusign, :client_id)
-    user_id = Application.fetch_env!(:docusign, :user_id)
     hostname = Application.fetch_env!(:docusign, :hostname)
     token_expires_in = Application.get_env(:docusign, :token_expires_in, 2 * 60 * 60)
 
@@ -41,6 +41,10 @@ defmodule DocuSign.OAuth.Impl do
     |> Keyword.merge(opts)
     |> Client.new()
     |> Client.put_serializer("application/json", Poison)
+  end
+
+  defp get_default_user_id do
+    Application.fetch_env!(:docusign, :user_id)
   end
 
   @impl DocuSign.OAuth

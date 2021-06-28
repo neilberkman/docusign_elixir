@@ -42,15 +42,34 @@ defmodule DocuSign.OAuth.ImplTest do
     refute OAuth.Impl.token_expired?(%Client{token: actual_token})
   end
 
-  test "create new api client" do
-    assert %Client{
-             request_opts: [],
-             site: "http://localhost",
-             strategy: DocuSign.OAuth.Impl,
-             token: nil,
-             token_method: :post,
-             token_url: "/oauth/token"
-           } = OAuth.Impl.client(site: "http://localhost")
+  describe "creating new API client" do
+    test "create new api client for default user ID" do
+      assert %Client{
+               request_opts: [],
+               site: "http://localhost",
+               strategy: DocuSign.OAuth.Impl,
+               token: nil,
+               token_method: :post,
+               token_url: "/oauth/token",
+               ref: %{
+                 user_id: ":user-id:"
+               }
+             } = OAuth.Impl.client(site: "http://localhost")
+    end
+
+    test "create new api client for given user ID" do
+      assert %Client{
+               request_opts: [],
+               site: "http://localhost",
+               strategy: DocuSign.OAuth.Impl,
+               token: nil,
+               token_method: :post,
+               token_url: "/oauth/token",
+               ref: %{
+                 user_id: ":other-user-id:"
+               }
+             } = OAuth.Impl.client(user_id: ":other-user-id:", site: "http://localhost")
+    end
   end
 
   test "get_token" do
