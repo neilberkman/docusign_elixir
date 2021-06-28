@@ -46,10 +46,7 @@ defmodule DocuSign.User do
     :links
   ]
 
-  alias OAuth2.Client
   alias DocuSign.{APIClient, Util}
-
-  @path "/oauth/userinfo"
 
   defmodule AppAccount do
     defstruct [:account_id, :account_name, :base_uri, :is_default]
@@ -60,16 +57,19 @@ defmodule DocuSign.User do
   Retrieve the user info
   """
   def info(client \\ nil) do
-    with api_client <- client || APIClient.client(),
-         {:ok, %{body: body}} <- Client.get(api_client, @path),
-         attrs <- Util.map_keys_to_atoms(body) do
-      __MODULE__
-      |> struct(attrs)
-      |> Map.update!(:accounts, fn accounts ->
-        accounts
-        |> Enum.map(&struct(AppAccount, Util.map_keys_to_atoms(&1)))
-      end)
-    end
+    api_client = client || get_default_client()
+    body = oauth_implementation().get_client_info(api_client)
+    attrs = Util.map_keys_to_atoms(body)
+
+    __MODULE__
+    |> struct(attrs)
+    |> Map.update!(:accounts, fn accounts ->
+      Enum.map(accounts, &struct(AppAccount, Util.map_keys_to_atoms(&1)))
+    end)
+  end
+
+  defp get_default_client do
+    APIClient.client()
   end
 
   @doc """
@@ -80,4 +80,8 @@ defmodule DocuSign.User do
   end
 
   def default_account(accounts), do: Enum.find(accounts, & &1.is_default)
+
+  defp oauth_implementation do
+    Application.get_env(:docusign, :oauth_implementation, DocuSign.OAuth.Impl)
+  end
 end
