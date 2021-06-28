@@ -27,8 +27,9 @@ defmodule DocuSign.OAuth do
   @doc """
   Refresh token
   """
+  @type force :: boolean
   @callback refresh_token!(client) :: client
-  @callback refresh_token!(client, boolean) :: client
+  @callback refresh_token!(client, force) :: client
 
   @doc """
   Retrieve a new time to auto refresh token.
