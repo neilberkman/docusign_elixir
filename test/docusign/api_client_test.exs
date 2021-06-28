@@ -40,7 +40,7 @@ defmodule DocuSign.APIClientTest do
       |> expect(:refresh_token!, fn client, _force -> client end)
       |> expect(:interval_refresh_token, fn _client -> 1000 end)
 
-      APIClient.client(user_id: ":another-user-id:", oauth_impl: @oauth_mock)
+      APIClient.client(":another-user-id:", oauth_impl: @oauth_mock)
     end
   end
 end

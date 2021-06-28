@@ -49,17 +49,25 @@ defmodule DocuSign.Connection do
   end
 
   @doc """
-  Create new conn
-
-  opts:
-  - client \\ APIClient.client()
-  - account \\ User.default_account
-
+  Create new conn for given user ID, or for default configured user ID if not provided.
   """
-  @spec new(Keyword.t()) :: t()
-  def new(opts \\ []) do
-    client = Keyword.get(opts, :client, get_default_client())
-    account = Keyword.get(opts, :account, get_default_account_for_client(client))
+  @spec new(String.t(), Keyword.t()) :: t()
+  def new(user_id \\ nil, opts \\ [])
+
+  def new(user_id, _opts) when is_nil(user_id) do
+    client = get_default_client()
+    account = get_default_account_for_client(client)
+
+    __MODULE__
+    |> struct(
+      client: client,
+      app_account: account
+    )
+  end
+
+  def new(user_id, opts) do
+    client = APIClient.client(user_id, opts)
+    account = get_default_account_for_client(client)
 
     __MODULE__
     |> struct(
