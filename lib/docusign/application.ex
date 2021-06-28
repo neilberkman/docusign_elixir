@@ -6,9 +6,17 @@ defmodule DocuSign.Application do
   use Application
 
   def start(_type, _args) do
-    children = [{DocuSign.APIClient, []}]
+    children = children(Mix.env())
 
     opts = [strategy: :one_for_one, name: DocuSign.Supervisor]
     Supervisor.start_link(children, opts)
+  end
+
+  defp children(:test), do: []
+
+  defp children(_env) do
+    [
+      {DocuSign.APIClient, []}
+    ]
   end
 end
