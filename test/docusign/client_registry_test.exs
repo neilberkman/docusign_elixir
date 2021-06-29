@@ -14,7 +14,7 @@ defmodule DocuSign.ClientRegistryTest do
   defmock(@oauth_mock, for: DocuSign.OAuth)
 
   setup do
-    {:ok, pid} = DocuSign.ClientRegistry.start_link()
+    {:ok, pid} = DocuSign.ClientRegistry.start_link(oauth_impl: @oauth_mock)
     on_exit(fn -> assert_down(pid) end)
   end
 
@@ -28,7 +28,7 @@ defmodule DocuSign.ClientRegistryTest do
       |> expect(:refresh_token!, fn client, _force -> client end)
       |> expect(:interval_refresh_token, fn _client -> 1000 end)
 
-      ClientRegistry.client(":other-user-id:", oauth_impl: @oauth_mock)
+      ClientRegistry.client(":other-user-id:")
     end
 
     test "2 user IDs returns 2 clients" do
@@ -40,8 +40,8 @@ defmodule DocuSign.ClientRegistryTest do
       |> expect(:refresh_token!, 2, fn client, _force -> client end)
       |> expect(:interval_refresh_token, 2, fn _client -> 1000 end)
 
-      client_1 = ClientRegistry.client(":user-id:", oauth_impl: @oauth_mock)
-      client_2 = ClientRegistry.client(":other-user-id:", oauth_impl: @oauth_mock)
+      client_1 = ClientRegistry.client(":user-id:")
+      client_2 = ClientRegistry.client(":other-user-id:")
 
       assert %OAuth2.Client{ref: %{user_id: ":user-id:"}} = client_1
       assert %OAuth2.Client{ref: %{user_id: ":other-user-id:"}} = client_2
@@ -63,8 +63,8 @@ defmodule DocuSign.ClientRegistryTest do
         end
       end)
 
-      _client_to_refresh = ClientRegistry.client(":user-id:", oauth_impl: @oauth_mock)
-      _client_not_to_refresh = ClientRegistry.client(":other-user-id:", oauth_impl: @oauth_mock)
+      _client_to_refresh = ClientRegistry.client(":user-id:")
+      _client_not_to_refresh = ClientRegistry.client(":other-user-id:")
 
       # Wait for refresh to occur (1sec)
       Process.sleep(1_500)

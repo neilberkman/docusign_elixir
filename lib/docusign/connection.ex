@@ -79,9 +79,9 @@ defmodule DocuSign.Connection do
   @doc """
   Create new conn for provided user ID.
   """
-  @spec get(String.t(), Keyword.t()) :: t()
-  def get(user_id, opts \\ []) do
-    client = ClientRegistry.client(user_id, opts)
+  @spec get(String.t()) :: t()
+  def get(user_id) do
+    client = ClientRegistry.client(user_id)
     account = get_default_account_for_client(client)
 
     __MODULE__
