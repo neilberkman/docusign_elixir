@@ -68,8 +68,14 @@ defmodule DocuSign.User do
     end)
   end
 
+  # Note: to delete once all deprecated functions have been removed.
   defp get_default_client do
-    ClientRegistry.client()
+    ClientRegistry.client(default_user_id())
+  end
+
+  # Note: to delete once all deprecated functions have been removed.
+  defp default_user_id do
+    Application.fetch_env!(:docusign, :user_id)
   end
 
   @doc """

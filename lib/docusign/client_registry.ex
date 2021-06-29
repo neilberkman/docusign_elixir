@@ -19,16 +19,9 @@ defmodule DocuSign.ClientRegistry do
   Get API Client
   """
   @type opts :: Keyword.t()
-  @type user_id_or_opts :: String.t() | opts
-  @spec client(user_id_or_opts, opts) :: OAuth2.Client.t()
-  def client(user_id \\ [], opts \\ [])
-
-  def client(opts, _) when is_list(opts) do
-    user_id = Keyword.get(opts, :user_id, default_user_id())
-    client(user_id, opts)
-  end
-
-  def client(user_id, opts) when is_binary(user_id) do
+  @type user_id :: String.t()
+  @spec client(user_id, opts) :: OAuth2.Client.t()
+  def client(user_id, opts \\ []) do
     GenServer.call(__MODULE__, {:get_client, user_id, opts}, 10_000)
   end
 
@@ -80,10 +73,6 @@ defmodule DocuSign.ClientRegistry do
 
   defp schedule_refresh_token(user_id, seconds) do
     Process.send_after(self(), {:refresh_token, user_id}, seconds * 1000)
-  end
-
-  defp default_user_id do
-    Application.fetch_env!(:docusign, :user_id)
   end
 
   defp oauth_implementation do

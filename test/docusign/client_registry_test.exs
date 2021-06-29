@@ -19,18 +19,6 @@ defmodule DocuSign.ClientRegistryTest do
   end
 
   describe "creating a new client" do
-    test "returns client for default user ID in app configuration" do
-      @oauth_mock
-      |> expect(:client, fn opts ->
-        assert opts[:user_id] == ":user-id:"
-        %OAuth2.Client{}
-      end)
-      |> expect(:refresh_token!, fn client, _force -> client end)
-      |> expect(:interval_refresh_token, fn _client -> 1000 end)
-
-      ClientRegistry.client(oauth_impl: @oauth_mock)
-    end
-
     test "returns client for given user ID" do
       @oauth_mock
       |> expect(:client, fn opts ->
@@ -43,7 +31,7 @@ defmodule DocuSign.ClientRegistryTest do
       ClientRegistry.client(":other-user-id:", oauth_impl: @oauth_mock)
     end
 
-    test "2 user_id returns 2 clients" do
+    test "2 user IDs returns 2 clients" do
       @oauth_mock
       |> expect(:client, 2, fn opts ->
         assert opts[:user_id] in [":user-id:", ":other-user-id:"]
