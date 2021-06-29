@@ -5,36 +5,42 @@ defmodule DocuSign.OAuth.Fake do
 
   @behaviour DocuSign.OAuth
 
+  @impl DocuSign.OAuth
   def client(_opts \\ []) do
     client_id = Application.fetch_env!(:docusign, :client_id)
     user_id = Application.fetch_env!(:docusign, :user_id)
     hostname = Application.fetch_env!(:docusign, :hostname)
     token_expires_in = Application.get_env(:docusign, :token_expires_in, 2 * 60 * 60)
 
-    %OAuth2.Client{
+    OAuth2.Client.new(
       client_id: client_id,
       ref: %{
         user_id: user_id,
         hostname: hostname,
         token_expires_in: token_expires_in
       }
-    }
+    )
   end
 
+  @impl DocuSign.OAuth
   def get_token!(client, _params \\ [], _headers \\ [], _opts \\ []) do
-    %{client | token: ":token:"}
+    %{client | token: OAuth2.AccessToken.new(":token:")}
   end
 
+  @impl DocuSign.OAuth
   def interval_refresh_token(_client) do
     1_000
   end
 
+  @impl DocuSign.OAuth
   def refresh_token!(client, _force \\ false) do
-    %{client | token: ":refreshed-token:"}
+    %{client | token: OAuth2.AccessToken.new(":refreshed-token:")}
   end
 
+  @impl DocuSign.OAuth
   def token_expired?(_access_token_or_client), do: false
 
+  @impl DocuSign.OAuth
   def get_client_info(_client) do
     %{
       "accounts" => [
