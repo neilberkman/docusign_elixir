@@ -33,8 +33,8 @@ The default configuration expects these environment variables:
 - DOCUSIGN_PRIVATE_KEY
 - DOCUSIGN_CLIENT_ID
 
-Note that you can also store the private key is a file on disk. The file name expected by 
-the default configuration is `docusign_key.pem`.
+Note that you can also store the private key in a file on disk. The file name expected by 
+the default configuration is `docusign_key.pem` in the root folder of your app.
 
 The `Account ID` is required when you call API functions. It is up to you to decide on how
 you want to configure your application. Same thing with the User IDs.
@@ -46,28 +46,47 @@ Access DocuSign using an administrator account and go in `Settings`.
 1. Under `Apps & Keys`, note the `API Account ID`. This is the `Account ID` mentionned above.
 2. Create a new app:
    1. Provide a name. 
-   2. Then in the section `Authentication`, click on `+ GENERATE RSA`. Store securely the information provided. The private key will have to be provided in the config files of your app.
-   3. Add a redirect URL for: `http://localhost`. Important, otherwise you won't be able to have users
-     provide consent.
-3. Under `Apps & Keys`, note the `Integration key`. This is the `Client ID` mentionned above.
+   2. In section `Authentication`, click on `+ GENERATE RSA`. Store securely the information provided. The private key will have to be provided in the config files of your app (or in a file).
+   3. Add a redirect URI for: `http://localhost`. Important for users to consent the impersonation of your app.
+3. Under `Apps & Keys`, note the `Integration key` of the app you just added. This is the `Client ID` mentionned above.
 
-If you want, you can use your administrator user for the API. The user ID is displayed in the
-`My account information` frame on the `Apps & Keys` page.
+If you want, you can use your administrator user with the API. The user ID is displayed in the
+`My account information` frame on the `Apps & Keys` page. But it would most likely be safer to create
+a user for it (see below).
 
 ### Impersonate another user through the API
 
-If you want to use the API through other DocuSign users, you first need to create the user in 
+If you want to use the API through other DocuSign users (impersonation), you first need to create the user in 
 DocuSign, then you have to ask the user to `consent` the impersonation that your app will do.
 To do so, after you created the user, send them the following link (replace `DOCUSIGN_CLIENT_ID` with the ID configured above):
 
-Sandbox: https://account-d.docusign.com/oauth/auth?response_type=code&scope=signature impersonation&client_id=DOCUSIGN_CLIENT_ID&redirect_uri=http://localhost
+Sandbox: 
+`https://account-d.docusign.com/oauth/auth?response_type=code&scope=signature%20impersonation&client_id=DOCUSIGN_CLIENT_ID&redirect_uri=http://localhost`
 
-Production: https://account.docusign.com/oauth/auth?response_type=code&scope=signature impersonation&client_id=DOCUSIGN_CLIENT_ID&redirect_uri=http://localhost
+Production: 
+`https://account.docusign.com/oauth/auth?response_type=code&scope=signature%20impersonation&client_id=DOCUSIGN_CLIENT_ID&redirect_uri=http://localhost`
 
 The user will then have to sign in and approve your application to use their credentials.
 
 The `user ID` to use with `Connection` and `ClientRegistry` is the `API Username` on the user's profile
 page in DocuSign.
+
+### Using the API
+
+Before calling API functions (`DocuSign.API.xxx`), you must first establish a connection to the 
+DocuSign API:
+
+```
+user_id = "USER_ID"
+conn = DocuSign.Connection.get(user_id)
+```
+
+You can then use any function from the `DocuSign.API` namespace. For instance:
+
+```
+account_id = "ACCOUNT_ID"
+{:ok, users} = DocuSign.Api.Users.users_get_users(conn, account_id)
+```
 
 ## Timeout configuration
 
