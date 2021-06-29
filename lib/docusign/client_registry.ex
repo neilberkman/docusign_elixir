@@ -8,6 +8,10 @@ defmodule DocuSign.ClientRegistry do
   use GenServer
   alias DocuSign.OAuth
 
+  defmodule State do
+    defstruct clients: %{}, oauth_impl: nil
+  end
+
   #####
   # External API
 
@@ -28,34 +32,34 @@ defmodule DocuSign.ClientRegistry do
   #####
   # GenServer implementation
   def init(_opts) do
-    {:ok, %{}}
+    {:ok, %State{}}
   end
 
-  def handle_call({:get_client, user_id, opts}, _from, clients) do
+  def handle_call({:get_client, user_id, opts}, _from, state) do
     client =
-      case Map.get(clients, user_id) do
+      case Map.get(state.clients, user_id) do
         nil -> create_client(user_id, opts)
         {client, _opts} -> refresh_client(client, opts)
       end
 
-    updated_registry = Map.put(clients, user_id, {client, opts})
+    updated_clients = Map.put(state.clients, user_id, {client, opts})
 
-    {:reply, client, updated_registry}
+    {:reply, client, %{state | clients: updated_clients}}
   end
 
   @doc """
   Async refreshes a token.
   """
-  def handle_info({:refresh_token, user_id}, clients) do
-    {client, opts} = Map.get(clients, user_id)
+  def handle_info({:refresh_token, user_id}, state) do
+    {client, opts} = Map.get(state.clients, user_id)
     oauth_impl = Keyword.get(opts, :oauth_impl, oauth_implementation())
     new_client = oauth_impl.refresh_token!(client, true)
-    updated_registry = Map.put(clients, user_id, {new_client, opts})
+    updated_clients = Map.put(state.clients, user_id, {new_client, opts})
 
     delay = oauth_impl.interval_refresh_token(client)
     schedule_refresh_token(user_id, delay)
 
-    {:noreply, updated_registry}
+    {:noreply, %{state | clients: updated_clients}}
   end
 
   defp create_client(user_id, opts) do
