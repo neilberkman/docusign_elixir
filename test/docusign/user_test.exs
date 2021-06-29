@@ -33,7 +33,7 @@ defmodule DocuSign.UserTest do
     end
 
     test "client returns user info" do
-      client = DocuSign.ClientRegistry.client()
+      client = DocuSign.ClientRegistry.client(":user-id:")
 
       result = User.info(client)
 
