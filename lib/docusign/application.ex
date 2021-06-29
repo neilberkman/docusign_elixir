@@ -6,7 +6,7 @@ defmodule DocuSign.Application do
   use Application
 
   def start(_type, _args) do
-    children = children(Mix.env())
+    children = children(get_app_env())
 
     opts = [strategy: :one_for_one, name: DocuSign.Supervisor]
     Supervisor.start_link(children, opts)
@@ -18,5 +18,9 @@ defmodule DocuSign.Application do
     [
       {DocuSign.ClientRegistry, []}
     ]
+  end
+
+  defp get_app_env do
+    Application.fetch_env!(:docusign, :app_env)
   end
 end
