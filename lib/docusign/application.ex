@@ -16,7 +16,7 @@ defmodule DocuSign.Application do
 
   defp children(_env) do
     [
-      {DocuSign.APIClient, []}
+      {DocuSign.ClientRegistry, []}
     ]
   end
 end

@@ -6,7 +6,7 @@ defmodule DocuSign.UserTest do
   import DocuSign.ProcessHelper
 
   setup do
-    {:ok, pid} = DocuSign.APIClient.start_link()
+    {:ok, pid} = DocuSign.ClientRegistry.start_link()
     on_exit(fn -> assert_down(pid) end)
   end
 
@@ -33,7 +33,7 @@ defmodule DocuSign.UserTest do
     end
 
     test "client returns user info" do
-      client = DocuSign.APIClient.client()
+      client = DocuSign.ClientRegistry.client()
 
       result = User.info(client)
 
