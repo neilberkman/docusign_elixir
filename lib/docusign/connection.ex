@@ -66,6 +66,14 @@ defmodule DocuSign.Connection do
     )
   end
 
+  defp get_default_client do
+    ClientRegistry.client(default_user_id())
+  end
+
+  defp default_user_id do
+    Application.fetch_env!(:docusign, :user_id)
+  end
+
   @doc """
   Create new conn for provided user ID.
   """
@@ -79,10 +87,6 @@ defmodule DocuSign.Connection do
       client: client,
       app_account: account
     )
-  end
-
-  defp get_default_client do
-    ClientRegistry.client()
   end
 
   defp get_default_account_for_client(client) do
