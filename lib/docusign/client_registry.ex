@@ -1,6 +1,9 @@
 defmodule DocuSign.ClientRegistry do
   @moduledoc ~S"""
-  GenServer to store API client and refresh access token by schedule.
+  GenServer to store API clients and automatically refresh JWT access tokens.
+
+  The registry keeps track of API clients using the user ID (which is the API Username
+  in the user's profile on DocuSign).
   """
   use GenServer
   alias DocuSign.OAuth
@@ -13,7 +16,7 @@ defmodule DocuSign.ClientRegistry do
   end
 
   @doc """
-  Get Api Client
+  Get API Client
   """
   @type opts :: Keyword.t()
   @type user_id_or_opts :: String.t() | opts
