@@ -20,7 +20,8 @@ defmodule DocuSign.MixProject do
       description: "Unofficial DocuSign Elixir Library used to interact with the eSign REST API.",
       homepage_url: @url,
       deps: deps(),
-      elixirc_paths: elixirc_paths(Mix.env())
+      elixirc_paths: elixirc_paths(Mix.env()),
+      docs: docs()
     ]
   end
 
@@ -56,6 +57,15 @@ defmodule DocuSign.MixProject do
       {:credo, "~> 1.0", only: [:dev, :test], runtime: false},
       {:dialyxir, "~> 1.1", only: [:dev], runtime: false},
       {:mix_test_watch, "~> 1.0", only: :dev, runtime: false}
+    ]
+  end
+
+  defp docs do
+    [
+      extras: ["README.md"],
+      main: "readme",
+      source_ref: "v#{@version}",
+      source_url: @url
     ]
   end
 
