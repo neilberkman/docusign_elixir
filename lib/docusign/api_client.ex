@@ -22,6 +22,7 @@ defmodule DocuSign.APIClient do
   def refresh_token do
     # TO BE IMPLEMENTED
     # ClientRegistry.refresh_token(default_user_id())
+    ClientRegistry.client(default_user_id())
   end
 
   defp default_user_id do
