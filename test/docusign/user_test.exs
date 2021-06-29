@@ -6,7 +6,7 @@ defmodule DocuSign.UserTest do
   import DocuSign.ProcessHelper
 
   setup do
-    {:ok, pid} = DocuSign.ClientRegistry.start_link()
+    {:ok, pid} = DocuSign.ClientRegistry.start_link(oauth_impl: DocuSign.OAuth.Fake)
     on_exit(fn -> assert_down(pid) end)
   end
 
