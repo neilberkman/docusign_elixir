@@ -6,7 +6,6 @@ defmodule DocuSign.ClientRegistry do
   in the user's profile on DocuSign).
   """
   use GenServer
-  alias DocuSign.OAuth
 
   defmodule State do
     defstruct clients: %{}, oauth_impl: nil
@@ -81,6 +80,6 @@ defmodule DocuSign.ClientRegistry do
   end
 
   defp oauth_implementation do
-    Application.get_env(:docusign, :oauth_implementation, OAuth.Impl)
+    Application.fetch_env!(:docusign, DocuSign.ClientRegistry)[:oauth_implementation]
   end
 end
