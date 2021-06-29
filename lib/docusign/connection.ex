@@ -1,13 +1,15 @@
 defmodule DocuSign.Connection do
   @moduledoc """
-  The module is intended for to make and perform request to DocuSign API.
+  The module is intended to be used to establish a connection with
+  DocuSign eSignature API and then perform requests to it.
 
   ### Example
 
-   iex> conn = DocuSign.Connection.new
-   {:ok, users} = DocuSign.Api.Users.users_get_users(
-     conn, "61ac4bd1-c83c-4aa6-8654-d3b44a252f42"[account_id]
-   )
+  iex> user_id = "74830914-547328-5432-5432543"
+  iex> account_id = "61ac4bd1-c83c-4aa6-8654-ddf3tg5"
+  iex> conn = DocuSign.Connection.get(user_id)
+  iex> {:ok, users} = DocuSign.Api.Users.users_get_users(conn, account_id)
+  {:ok, %DocuSign.Model.UserInformationList{...}}
   """
 
   alias OAuth2.Request
@@ -49,12 +51,11 @@ defmodule DocuSign.Connection do
   end
 
   @doc """
-  Create new conn for given user ID, or for default configured user ID if not provided.
+  Create new conn for default configured user ID
   """
-  @spec new(String.t(), Keyword.t()) :: t()
-  def new(user_id \\ nil, opts \\ [])
-
-  def new(user_id, _opts) when is_nil(user_id) do
+  @deprecated "Use DocuSign.Connection.get/1 instead."
+  @spec new() :: t()
+  def new() do
     client = get_default_client()
     account = get_default_account_for_client(client)
 
@@ -65,7 +66,11 @@ defmodule DocuSign.Connection do
     )
   end
 
-  def new(user_id, opts) do
+  @doc """
+  Create new conn for provided user ID.
+  """
+  @spec get(String.t(), Keyword.t()) :: t()
+  def get(user_id, opts \\ []) do
     client = ClientRegistry.client(user_id, opts)
     account = get_default_account_for_client(client)
 
