@@ -46,7 +46,7 @@ defmodule DocuSign.User do
     :links
   ]
 
-  alias DocuSign.{APIClient, Util}
+  alias DocuSign.{ClientRegistry, Util}
 
   defmodule AppAccount do
     defstruct [:account_id, :account_name, :base_uri, :is_default]
@@ -69,7 +69,7 @@ defmodule DocuSign.User do
   end
 
   defp get_default_client do
-    APIClient.client()
+    ClientRegistry.client()
   end
 
   @doc """

@@ -1,4 +1,4 @@
-defmodule DocuSign.APIClient do
+defmodule DocuSign.ClientRegistry do
   @moduledoc ~S"""
   GenServer to store API client and refresh access token by schedule.
   """
@@ -35,14 +35,14 @@ defmodule DocuSign.APIClient do
     {:ok, %{}}
   end
 
-  def handle_call({:get_client, user_id, opts}, _from, client_registry) do
+  def handle_call({:get_client, user_id, opts}, _from, clients) do
     client =
-      case Map.get(client_registry, user_id) do
+      case Map.get(clients, user_id) do
         nil -> create_client(user_id, opts)
         {client, _opts} -> refresh_client(client, opts)
       end
 
-    updated_registry = Map.put(client_registry, user_id, {client, opts})
+    updated_registry = Map.put(clients, user_id, {client, opts})
 
     {:reply, client, updated_registry}
   end
@@ -50,11 +50,11 @@ defmodule DocuSign.APIClient do
   @doc """
   Async refreshes a token.
   """
-  def handle_info({:refresh_token, user_id}, client_registry) do
-    {client, opts} = Map.get(client_registry, user_id)
+  def handle_info({:refresh_token, user_id}, clients) do
+    {client, opts} = Map.get(clients, user_id)
     oauth_impl = Keyword.get(opts, :oauth_impl, oauth_implementation())
     new_client = oauth_impl.refresh_token!(client, true)
-    updated_registry = Map.put(client_registry, user_id, {new_client, opts})
+    updated_registry = Map.put(clients, user_id, {new_client, opts})
 
     delay = oauth_impl.interval_refresh_token(client)
     schedule_refresh_token(user_id, delay)

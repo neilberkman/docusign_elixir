@@ -17,7 +17,7 @@ defmodule DocuSign.ConnectionTest do
 
   describe "creating a connection" do
     setup do
-      {:ok, pid} = DocuSign.APIClient.start_link()
+      {:ok, pid} = DocuSign.ClientRegistry.start_link()
       on_exit(fn -> assert_down(pid) end)
     end
 

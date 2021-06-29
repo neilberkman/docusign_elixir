@@ -11,7 +11,7 @@ defmodule DocuSign.Connection do
   """
 
   alias OAuth2.Request
-  alias DocuSign.{APIClient, User}
+  alias DocuSign.{ClientRegistry, User}
 
   defstruct [:client, :app_account]
 
@@ -66,7 +66,7 @@ defmodule DocuSign.Connection do
   end
 
   def new(user_id, opts) do
-    client = APIClient.client(user_id, opts)
+    client = ClientRegistry.client(user_id, opts)
     account = get_default_account_for_client(client)
 
     __MODULE__
@@ -77,7 +77,7 @@ defmodule DocuSign.Connection do
   end
 
   defp get_default_client do
-    APIClient.client()
+    ClientRegistry.client()
   end
 
   defp get_default_account_for_client(client) do

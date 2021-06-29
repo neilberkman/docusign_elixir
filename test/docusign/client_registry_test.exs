@@ -1,7 +1,7 @@
-defmodule DocuSign.APIClientTest do
+defmodule DocuSign.ClientRegistryTest do
   use ExUnit.Case, async: false
 
-  alias DocuSign.APIClient
+  alias DocuSign.ClientRegistry
 
   import DocuSign.ProcessHelper
   import Mox
@@ -14,7 +14,7 @@ defmodule DocuSign.APIClientTest do
   defmock(@oauth_mock, for: DocuSign.OAuth)
 
   setup do
-    {:ok, pid} = DocuSign.APIClient.start_link()
+    {:ok, pid} = DocuSign.ClientRegistry.start_link()
     on_exit(fn -> assert_down(pid) end)
   end
 
@@ -28,7 +28,7 @@ defmodule DocuSign.APIClientTest do
       |> expect(:refresh_token!, fn client, _force -> client end)
       |> expect(:interval_refresh_token, fn _client -> 1000 end)
 
-      APIClient.client(oauth_impl: @oauth_mock)
+      ClientRegistry.client(oauth_impl: @oauth_mock)
     end
 
     test "returns client for given user ID" do
@@ -40,7 +40,7 @@ defmodule DocuSign.APIClientTest do
       |> expect(:refresh_token!, fn client, _force -> client end)
       |> expect(:interval_refresh_token, fn _client -> 1000 end)
 
-      APIClient.client(":other-user-id:", oauth_impl: @oauth_mock)
+      ClientRegistry.client(":other-user-id:", oauth_impl: @oauth_mock)
     end
 
     test "2 user_id returns 2 clients" do
@@ -52,8 +52,8 @@ defmodule DocuSign.APIClientTest do
       |> expect(:refresh_token!, 2, fn client, _force -> client end)
       |> expect(:interval_refresh_token, 2, fn _client -> 1000 end)
 
-      client_1 = APIClient.client(":user-id:", oauth_impl: @oauth_mock)
-      client_2 = APIClient.client(":other-user-id:", oauth_impl: @oauth_mock)
+      client_1 = ClientRegistry.client(":user-id:", oauth_impl: @oauth_mock)
+      client_2 = ClientRegistry.client(":other-user-id:", oauth_impl: @oauth_mock)
 
       assert %OAuth2.Client{ref: %{user_id: ":user-id:"}} = client_1
       assert %OAuth2.Client{ref: %{user_id: ":other-user-id:"}} = client_2
@@ -75,8 +75,8 @@ defmodule DocuSign.APIClientTest do
         end
       end)
 
-      _client_to_refresh = APIClient.client(":user-id:", oauth_impl: @oauth_mock)
-      _client_not_to_refresh = APIClient.client(":other-user-id:", oauth_impl: @oauth_mock)
+      _client_to_refresh = ClientRegistry.client(":user-id:", oauth_impl: @oauth_mock)
+      _client_not_to_refresh = ClientRegistry.client(":other-user-id:", oauth_impl: @oauth_mock)
 
       # Wait for refresh to occur (1sec)
       Process.sleep(1_500)
