@@ -9,12 +9,65 @@ The package can be installed by adding `docusign` to your list of dependencies i
 ```elixir
 def deps do
   [
-    {:docusign, "~> 0.3.4"}
+    {:docusign, "~> 0.4.0"}
   ]
 end
 ```
 
 The docs can be found at [https://hexdocs.pm/docusign](https://hexdocs.pm/docusign).
+
+## Usage
+
+In order to use this library with DocuSign, you need the following configured in your app:
+
+- RSA Private key
+- DocuSign client ID (integration key)
+- DocuSign account ID
+- One or more DocuSign user IDs
+
+Note that you can test your integration with the full-featured sandbox environment provided
+by [DocuSign](https://appdemo.docusign.com).
+
+The default configuration expects these environment variables:
+
+- DOCUSIGN_PRIVATE_KEY
+- DOCUSIGN_CLIENT_ID
+
+Note that you can also store the private key is a file on disk. The file name expected by 
+the default configuration is `docusign_key.pem`.
+
+The `Account ID` is required when you call API functions. It is up to you to decide on how
+you want to configure your application. Same thing with the User IDs.
+
+### Configuring DocuSign
+
+Access DocuSign using an administrator account and go in `Settings`. 
+
+1. Under `Apps & Keys`, note the `API Account ID`. This is the `Account ID` mentionned above.
+2. Create a new app:
+   1. Provide a name. 
+   2. Then in the section `Authentication`, click on `+ GENERATE RSA`. Store securely the information provided. The private key will have to be provided in the config files of your app.
+   3. Add a redirect URL for: `http://localhost`. Important, otherwise you won't be able to have users
+     provide consent.
+3. Under `Apps & Keys`, note the `Integration key`. This is the `Client ID` mentionned above.
+
+If you want, you can use your administrator user for the API. The user ID is displayed in the
+`My account information` frame on the `Apps & Keys` page.
+
+### Impersonate another user through the API
+
+If you want to use the API through other DocuSign users, you first need to create the user in 
+DocuSign, then you have to ask the user to `consent` the impersonation that your app will do.
+To do so, after you created the user, send them the following link (replace `DOCUSIGN_CLIENT_ID` with the ID configured above):
+
+Sandbox: https://account-d.docusign.com/oauth/auth?response_type=code&scope=signature impersonation&client_id=DOCUSIGN_CLIENT_ID&redirect_uri=http://localhost
+
+Production: https://account.docusign.com/oauth/auth?response_type=code&scope=signature impersonation&client_id=DOCUSIGN_CLIENT_ID&redirect_uri=http://localhost
+
+The user will then have to sign in and approve your application to use their credentials.
+
+The `user ID` to use with `Connection` and `ClientRegistry` is the `API Username` on the user's profile
+page in DocuSign.
 
 ## Timeout configuration
 
@@ -23,6 +76,16 @@ By default, the HTTP requests will timeout after 30_000 ms. You can configure th
 ```elixir
 config :docusign, timeout: 60_000
 ```
+
+## Migrating from 0.3.x to 0.4.0
+
+Version 0.4.0 brings the ability to call DocuSign API with different user IDs. This is useful if your
+users have different security restrictions in DocuSign. The `ClientRegistry` takes care or tracking
+the API client for those users and refresh the access tokens.
+
+`Connection.new/0` has been deprecated. You should replace calls to `Connection.new/0` with `Connection.get/1` and provide a user ID.
+
+`APIClient` functions have been deprecated. Please use corresponding functions in `ClientRegistry`.
 
 ## Regenerating stubs
 

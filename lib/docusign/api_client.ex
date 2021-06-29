@@ -20,6 +20,7 @@ defmodule DocuSign.APIClient do
   @deprecated "Use DocuSign.ClientRegistry.refresh_token/1 instead."
   @spec refresh_token() :: OAuth2.Client.t()
   def refresh_token do
+    # TO BE IMPLEMENTED
     # ClientRegistry.refresh_token(default_user_id())
   end
 
