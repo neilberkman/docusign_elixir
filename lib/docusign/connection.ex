@@ -66,10 +66,12 @@ defmodule DocuSign.Connection do
     )
   end
 
+  # Note: to delete once all deprecated functions have been removed.
   defp get_default_client do
     ClientRegistry.client(default_user_id())
   end
 
+  # Note: to delete once all deprecated functions have been removed.
   defp default_user_id do
     Application.fetch_env!(:docusign, :user_id)
   end
@@ -115,6 +117,9 @@ defmodule DocuSign.Connection do
   Retrieves the default account of default user configured
   """
   @spec default_account() :: User.AppAccount.t()
+  @deprecated """
+  Please use `Docusign.Connection.get/1`. The returned structs includes `app_account`, which is the default account.
+  """
   def default_account() do
     get_default_client()
     |> get_default_account_for_client()
