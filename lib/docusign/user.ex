@@ -75,7 +75,7 @@ defmodule DocuSign.User do
 
   # Note: to delete once all deprecated functions have been removed.
   defp default_user_id do
-    Application.fetch_env!(:docusign, :user_id)
+    Application.get_env(:docusign, :user_id)
   end
 
   @doc """
