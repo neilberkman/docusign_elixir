@@ -8,7 +8,7 @@ defmodule DocuSign.OAuth.Fake do
   @impl DocuSign.OAuth
   def client(_opts \\ []) do
     client_id = Application.fetch_env!(:docusign, :client_id)
-    user_id = Application.fetch_env!(:docusign, :user_id)
+    user_id = Application.get_env(:docusign, :user_id)
     hostname = Application.fetch_env!(:docusign, :hostname)
     token_expires_in = Application.get_env(:docusign, :token_expires_in, 2 * 60 * 60)
 
