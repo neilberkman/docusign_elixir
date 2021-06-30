@@ -38,7 +38,7 @@ defmodule DocuSign.ClientRegistry do
     client =
       case Map.get(state.clients, user_id) do
         nil -> create_client(user_id, state.oauth_impl)
-        {client, _opts} -> refresh_client(client, state.oauth_impl)
+        client -> refresh_client(client, state.oauth_impl)
       end
 
     updated_clients = Map.put(state.clients, user_id, client)

@@ -19,19 +19,19 @@ defmodule DocuSign.ClientRegistryTest do
   end
 
   describe "creating a new client" do
-    test "returns client for given user ID" do
+    test "user ID returns new client" do
       @oauth_mock
       |> expect(:client, fn opts ->
-        assert opts[:user_id] == ":other-user-id:"
+        assert opts[:user_id] == ":user-id:"
         %OAuth2.Client{}
       end)
       |> expect(:refresh_token!, fn client, _force -> client end)
       |> expect(:interval_refresh_token, fn _client -> 1000 end)
 
-      ClientRegistry.client(":other-user-id:")
+      ClientRegistry.client(":user-id:")
     end
 
-    test "2 user IDs returns 2 clients" do
+    test "2 user IDs creates 2 clients" do
       @oauth_mock
       |> expect(:client, 2, fn opts ->
         assert opts[:user_id] in [":user-id:", ":other-user-id:"]
@@ -45,6 +45,22 @@ defmodule DocuSign.ClientRegistryTest do
 
       assert %OAuth2.Client{ref: %{user_id: ":user-id:"}} = client_1
       assert %OAuth2.Client{ref: %{user_id: ":other-user-id:"}} = client_2
+    end
+  end
+
+  describe "getting a client" do
+    test "user ID returns cached client" do
+      @oauth_mock
+      |> expect(:client, fn opts ->
+        assert opts[:user_id] == ":user-id:"
+        %OAuth2.Client{}
+      end)
+      |> expect(:refresh_token!, fn client, _force -> client end)
+      |> expect(:interval_refresh_token, fn _client -> 1000 end)
+      |> expect(:refresh_token!, fn client -> client end)
+
+      _created_client = ClientRegistry.client(":user-id:")
+      _cached_client = ClientRegistry.client(":user-id:")
     end
   end
 
