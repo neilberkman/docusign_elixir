@@ -80,6 +80,6 @@ defmodule DocuSign.ClientRegistry do
   end
 
   defp oauth_implementation do
-    Application.fetch_env!(:docusign, DocuSign.ClientRegistry)[:oauth_implementation]
+    Application.get_env(:docusign, :oauth_implementation, DocuSign.OAuth.Impl)
   end
 end
