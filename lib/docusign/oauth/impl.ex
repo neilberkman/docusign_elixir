@@ -44,7 +44,7 @@ defmodule DocuSign.OAuth.Impl do
   end
 
   defp get_default_user_id do
-    Application.fetch_env!(:docusign, :user_id)
+    Application.get_env(:docusign, :user_id)
   end
 
   @impl DocuSign.OAuth
