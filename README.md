@@ -21,23 +21,56 @@ The docs can be found at [https://hexdocs.pm/docusign](https://hexdocs.pm/docusi
 In order to use this library with DocuSign, you need the following configured in your app:
 
 - RSA Private key
-- DocuSign client ID (integration key)
-- DocuSign account ID
-- One or more DocuSign user IDs
+- DocuSign Client ID (integration key)
+- DocuSign Account ID
+- One or more DocuSign User IDs
 
 Note that you can test your integration with the full-featured sandbox environment provided
 by [DocuSign](https://appdemo.docusign.com).
 
-The default configuration expects these environment variables:
+### Application configuration
 
-- DOCUSIGN_PRIVATE_KEY
-- DOCUSIGN_CLIENT_ID
+You will need to set the following configuration variables in your config file:
 
-Note that you can also store the private key in a file on disk. The file name expected by 
-the default configuration is `docusign_key.pem` in the root folder of your app.
+```
+config :docusign, 
+  hostname: "account-d.docusign.com",
+  client_id: "?????-?????-???????",
+  private_key: "docusign_key.pem"
+```
+
+Notes:
+
+- the hostname should be set to `account.docusign.com` for the production environment
+- the path for the private key file can be relative or absolute
+
+Optional configuration with default values:
+
+```
+config :docusign, 
+  timeout: 30_000, # 30 seconds
+  token_expires_in: 7_200 # 2 hours
+```
 
 The `Account ID` is required when you call API functions. It is up to you to decide on how
-you want to configure your application. Same thing with the User IDs.
+you want to configure your application. Same thing with the `User ID`.
+
+For security, we recommend that you use environment variables rather than hard coding your credentials. If you don't already have an environment variable manager, you can create a .env file in your project with the following content:
+
+```
+export DOCUSIGN_CLIENT_ID=<client id here>
+export DOCUSIGN_PRIVATE_KEY=<private key file path here>
+```
+
+And the corresponding config file:
+
+```
+config :docusign, 
+  client_id: System.fetch_env!("DOCUSIGN_CLIENT_ID"),
+  private_key: System.fetch_env!("DOCUSIGN_PRIVATE_KEY")
+```
+
+Then, just be sure to run `source .env` in your shell before compiling your project.
 
 ### Configuring DocuSign
 
