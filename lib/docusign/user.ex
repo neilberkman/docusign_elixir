@@ -88,6 +88,6 @@ defmodule DocuSign.User do
   def default_account(accounts), do: Enum.find(accounts, & &1.is_default)
 
   defp oauth_implementation do
-    Application.fetch_env!(:docusign, DocuSign.ClientRegistry)[:oauth_implementation]
+    Application.get_env(:docusign, :oauth_implementation, DocuSign.OAuth.Impl)
   end
 end
