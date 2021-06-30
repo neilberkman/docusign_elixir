@@ -11,8 +11,6 @@ config :docusign,
 config :docusign,
   user_id: System.get_env("DOCUSIGN_USER_ID")
 
-config :docusign, DocuSign.ClientRegistry, oauth_implementation: OAuth.Impl
-
 import_config "#{Mix.env()}.exs"
 
 config :tesla, adapter: Tesla.Adapter.Mint

@@ -21,6 +21,6 @@ defmodule DocuSign.Application do
   end
 
   defp get_app_env do
-    Application.fetch_env!(:docusign, :app_env)
+    Application.get_env(:docusign, :app_env, :prod)
   end
 end
