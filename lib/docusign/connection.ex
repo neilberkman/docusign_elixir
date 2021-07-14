@@ -56,14 +56,17 @@ defmodule DocuSign.Connection do
   @deprecated "Use DocuSign.Connection.get/1 instead."
   @spec new() :: t()
   def new() do
-    client = get_default_client()
-    account = get_default_account_for_client(client)
+    with {:ok, client} <- get_default_client() do
+      account = get_default_account_for_client(client)
 
-    __MODULE__
-    |> struct(
-      client: client,
-      app_account: account
-    )
+      __MODULE__
+      |> struct(
+        client: client,
+        app_account: account
+      )
+    else
+      {:error, error} -> raise error
+    end
   end
 
   # Note: to delete once all deprecated functions have been removed.
@@ -79,13 +82,10 @@ defmodule DocuSign.Connection do
   @doc """
   Create new conn for provided user ID.
   """
-  @spec get(String.t()) ::
-          {:ok, t()}
-          | {:error, OAuth2.Response.t()}
-          | {:error, OAuth2.Error.t()}
+  @type oauth_error :: OAuth2.Response.t() | OAuth2.Error.t()
+  @spec get(String.t()) :: {:ok, t()} | {:error, oauth_error}
   def get(user_id) do
-    try do
-      client = ClientRegistry.client(user_id)
+    with {:ok, client} <- ClientRegistry.client(user_id) do
       account = get_default_account_for_client(client)
 
       connection =
@@ -96,8 +96,6 @@ defmodule DocuSign.Connection do
         )
 
       {:ok, connection}
-    rescue
-      e -> e
     end
   end
 

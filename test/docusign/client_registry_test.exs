@@ -28,7 +28,7 @@ defmodule DocuSign.ClientRegistryTest do
       |> expect(:refresh_token!, fn client, _force -> client end)
       |> expect(:interval_refresh_token, fn _client -> 1000 end)
 
-      ClientRegistry.client(":user-id:")
+      {:ok, _client} = ClientRegistry.client(":user-id:")
     end
 
     test "2 user IDs creates 2 clients" do
@@ -40,11 +40,24 @@ defmodule DocuSign.ClientRegistryTest do
       |> expect(:refresh_token!, 2, fn client, _force -> client end)
       |> expect(:interval_refresh_token, 2, fn _client -> 1000 end)
 
-      client_1 = ClientRegistry.client(":user-id:")
-      client_2 = ClientRegistry.client(":other-user-id:")
+      {:ok, client_1} = ClientRegistry.client(":user-id:")
+      {:ok, client_2} = ClientRegistry.client(":other-user-id:")
 
       assert %OAuth2.Client{ref: %{user_id: ":user-id:"}} = client_1
       assert %OAuth2.Client{ref: %{user_id: ":other-user-id:"}} = client_2
+    end
+
+    test "OAuth2 exception is returned in an error tuple" do
+      @oauth_mock
+      |> expect(:client, fn opts ->
+        assert opts[:user_id] == ":user-id:"
+        %OAuth2.Client{}
+      end)
+      |> expect(:refresh_token!, fn _client, _force -> raise %OAuth2.Error{} end)
+
+      {:error, error} = ClientRegistry.client(":user-id:")
+
+      assert %OAuth2.Error{} = error
     end
   end
 
@@ -59,8 +72,8 @@ defmodule DocuSign.ClientRegistryTest do
       |> expect(:interval_refresh_token, fn _client -> 1000 end)
       |> expect(:refresh_token!, fn client -> client end)
 
-      _created_client = ClientRegistry.client(":user-id:")
-      _cached_client = ClientRegistry.client(":user-id:")
+      {:ok, _created_client} = ClientRegistry.client(":user-id:")
+      {:ok, _cached_client} = ClientRegistry.client(":user-id:")
     end
   end
 
@@ -79,8 +92,8 @@ defmodule DocuSign.ClientRegistryTest do
         end
       end)
 
-      _client_to_refresh = ClientRegistry.client(":user-id:")
-      _client_not_to_refresh = ClientRegistry.client(":other-user-id:")
+      {:ok, _client_to_refresh} = ClientRegistry.client(":user-id:")
+      {:ok, _client_not_to_refresh} = ClientRegistry.client(":other-user-id:")
 
       # Wait for refresh to occur (1sec)
       Process.sleep(1_500)

@@ -16,16 +16,29 @@ defmodule DocuSign.ConnectionTest do
   defmock(@oauth_mock, for: DocuSign.OAuth)
 
   describe "creating a connection for default user" do
-    setup do
+    test "no user ID returns connection using default user ID" do
       {:ok, pid} = DocuSign.ClientRegistry.start_link(oauth_impl: DocuSign.OAuth.Fake)
       on_exit(fn -> assert_down(pid) end)
-    end
 
-    test "no user ID returns connection using default user ID" do
       connection = Connection.new()
 
       # Returns user id provided by OAuth.Fake
       assert connection.client.ref.user_id == ":user-id:"
+    end
+
+    test "OAuth error raises an exception" do
+      {:ok, pid} = DocuSign.ClientRegistry.start_link(oauth_impl: @oauth_mock)
+      on_exit(fn -> assert_down(pid) end)
+
+      @oauth_mock
+      |> expect(:client, fn opts ->
+        %OAuth2.Client{ref: %{user_id: opts[:user_id]}}
+      end)
+      |> expect(:refresh_token!, fn _client, _force -> raise %OAuth2.Error{} end)
+
+      assert_raise OAuth2.Error, fn ->
+        Connection.new()
+      end
     end
   end
 
