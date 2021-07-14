@@ -22,7 +22,8 @@ defmodule DocuSign.ClientRegistry do
   Get API Client
   """
   @type user_id :: String.t()
-  @spec client(user_id) :: OAuth2.Client.t()
+  @type oauth_error :: OAuth2.Response.t() | OAuth2.Error.t()
+  @spec client(user_id) :: {:ok, OAuth2.Client.t()} | {:error, oauth_error}
   def client(user_id) do
     GenServer.call(__MODULE__, {:get_client, user_id}, 10_000)
   end
@@ -35,15 +36,19 @@ defmodule DocuSign.ClientRegistry do
   end
 
   def handle_call({:get_client, user_id}, _from, state) do
-    client =
-      case Map.get(state.clients, user_id) do
-        nil -> create_client(user_id, state.oauth_impl)
-        client -> refresh_client(client, state.oauth_impl)
-      end
+    try do
+      client =
+        case Map.get(state.clients, user_id) do
+          nil -> create_client(user_id, state.oauth_impl)
+          client -> refresh_client(client, state.oauth_impl)
+        end
 
-    updated_clients = Map.put(state.clients, user_id, client)
+      updated_clients = Map.put(state.clients, user_id, client)
 
-    {:reply, client, %{state | clients: updated_clients}}
+      {:reply, {:ok, client}, %{state | clients: updated_clients}}
+    rescue
+      error -> {:reply, {:error, error}, state}
+    end
   end
 
   @doc """
