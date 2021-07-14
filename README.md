@@ -111,7 +111,7 @@ DocuSign API:
 
 ```
 user_id = "USER_ID"
-conn = DocuSign.Connection.get(user_id)
+{:ok, conn} = DocuSign.Connection.get(user_id)
 ```
 
 You can then use any function from the `DocuSign.API` namespace. For instance:

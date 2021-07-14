@@ -38,15 +38,15 @@ defmodule DocuSign.ConnectionTest do
     test "user ID returns connection for that user" do
       @oauth_mock
       |> expect(:client, fn opts ->
-        assert opts[:user_id] == ":other-user-id:"
+        assert opts[:user_id] == ":user-id:"
         %OAuth2.Client{ref: %{user_id: opts[:user_id]}}
       end)
       |> expect(:refresh_token!, fn client, _force -> client end)
       |> expect(:interval_refresh_token, fn _client -> 1000 end)
 
-      connection = Connection.get(":other-user-id:")
+      {:ok, connection} = Connection.get(":user-id:")
 
-      assert connection.client.ref.user_id == ":other-user-id:"
+      assert connection.client.ref.user_id == ":user-id:"
     end
   end
 

@@ -7,7 +7,7 @@ defmodule DocuSign.Connection do
 
       iex> user_id = "74830914-547328-5432-5432543"
       iex> account_id = "61ac4bd1-c83c-4aa6-8654-ddf3tg5"
-      iex> conn = DocuSign.Connection.get(user_id)
+      iex> {:ok, conn} = DocuSign.Connection.get(user_id)
       iex> {:ok, users} = DocuSign.Api.Users.users_get_users(conn, account_id)
       {:ok, %DocuSign.Model.UserInformationList{...}}
   """
@@ -79,16 +79,26 @@ defmodule DocuSign.Connection do
   @doc """
   Create new conn for provided user ID.
   """
-  @spec get(String.t()) :: t()
+  @spec get(String.t()) ::
+          {:ok, t()}
+          | {:error, OAuth2.Response.t()}
+          | {:error, OAuth2.Error.t()}
   def get(user_id) do
-    client = ClientRegistry.client(user_id)
-    account = get_default_account_for_client(client)
+    try do
+      client = ClientRegistry.client(user_id)
+      account = get_default_account_for_client(client)
 
-    __MODULE__
-    |> struct(
-      client: client,
-      app_account: account
-    )
+      connection =
+        __MODULE__
+        |> struct(
+          client: client,
+          app_account: account
+        )
+
+      {:ok, connection}
+    rescue
+      e -> e
+    end
   end
 
   defp get_default_account_for_client(client) do
