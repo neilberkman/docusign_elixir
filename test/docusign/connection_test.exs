@@ -15,7 +15,7 @@ defmodule DocuSign.ConnectionTest do
 
   defmock(@oauth_mock, for: DocuSign.OAuth)
 
-  describe "creating a connection for default user" do
+  describe "(deprecated) creating a connection for default user" do
     test "no user ID returns connection using default user ID" do
       {:ok, pid} = DocuSign.ClientRegistry.start_link(oauth_impl: DocuSign.OAuth.Fake)
       on_exit(fn -> assert_down(pid) end)
@@ -60,6 +60,35 @@ defmodule DocuSign.ConnectionTest do
       {:ok, connection} = Connection.get(":user-id:")
 
       assert connection.client.ref.user_id == ":user-id:"
+    end
+
+    test "consent required OAuth error returns error :consent_required" do
+      @oauth_mock
+      |> expect(:client, fn opts ->
+        %OAuth2.Client{ref: %{user_id: opts[:user_id]}}
+      end)
+      |> expect(:refresh_token!, fn _client, _force ->
+        raise %OAuth2.Error{reason: "...\"consent_required\"..."}
+      end)
+
+      {:error, error} = Connection.get(":user-id:")
+
+      assert {:consent_required, _message} = error
+
+      {:consent_required, message} = error
+      assert message =~ "Ask user to visit this URL to consent impersonation: https://"
+    end
+
+    test "unrecoverable OAuth error returns error" do
+      @oauth_mock
+      |> expect(:client, fn opts ->
+        %OAuth2.Client{ref: %{user_id: opts[:user_id]}}
+      end)
+      |> expect(:refresh_token!, fn _client, _force -> raise %OAuth2.Error{} end)
+
+      result = Connection.get(":user-id:")
+
+      assert {:error, %OAuth2.Error{}} = result
     end
   end
 

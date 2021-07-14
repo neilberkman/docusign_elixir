@@ -80,7 +80,7 @@ Access DocuSign using an administrator account and go in `Settings`.
 2. Create a new app:
    1. Provide a name. 
    2. In section `Authentication`, click on `+ GENERATE RSA`. Store securely the information provided. The private key will have to be provided in the config files of your app (or in a file).
-   3. Add a redirect URI for: `http://localhost`. Important for users to consent the impersonation of your app.
+   3. Add a redirect URI for: `https://account-d.docusign.com/me` (or `https://account.docusign.com/me` if on the DocuSign production site). Important for users to consent the impersonation of your app.
 3. Under `Apps & Keys`, note the `Integration key` of the app you just added. This is the `Client ID` mentionned above.
 
 If you want, you can use your administrator user with the API. The user ID is displayed in the
@@ -94,10 +94,10 @@ DocuSign, then you have to ask the user to `consent` the impersonation that your
 To do so, after you created the user, send them the following link (replace `DOCUSIGN_CLIENT_ID` with the ID configured above):
 
 Sandbox: 
-`https://account-d.docusign.com/oauth/auth?response_type=code&scope=signature%20impersonation&client_id=DOCUSIGN_CLIENT_ID&redirect_uri=http://localhost`
+`https://account-d.docusign.com/oauth/auth?response_type=code&scope=signature%20impersonation&client_id=DOCUSIGN_CLIENT_ID&redirect_uri=https://account-d.docusign.com/me`
 
 Production: 
-`https://account.docusign.com/oauth/auth?response_type=code&scope=signature%20impersonation&client_id=DOCUSIGN_CLIENT_ID&redirect_uri=http://localhost`
+`https://account.docusign.com/oauth/auth?response_type=code&scope=signature%20impersonation&client_id=DOCUSIGN_CLIENT_ID&redirect_uri=https://account.docusign.com/me`
 
 The user will then have to sign in and approve your application to use their credentials.
 
