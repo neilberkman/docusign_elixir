@@ -87,16 +87,34 @@ defmodule DocuSign.Connection do
   def get(user_id) do
     with {:ok, client} <- ClientRegistry.client(user_id) do
       account = get_default_account_for_client(client)
-
-      connection =
-        __MODULE__
-        |> struct(
-          client: client,
-          app_account: account
-        )
+      connection = struct(__MODULE__, client: client, app_account: account)
 
       {:ok, connection}
+    else
+      {:error, error} ->
+        if consent_required_error?(error) do
+          url = build_consent_url()
+          message = "Ask user to visit this URL to consent impersonation: #{url}"
+
+          {:error, {:consent_required, message}}
+        else
+          {:error, error}
+        end
     end
+  end
+
+  defp consent_required_error?(error) do
+    reason = Map.get(error, :reason)
+    reason && reason =~ "consent_required"
+  end
+
+  defp build_consent_url() do
+    client_id = Application.fetch_env!(:docusign, :client_id)
+    hostname = Application.fetch_env!(:docusign, :hostname)
+
+    "https://#{hostname}/oauth/auth?response_type=code&scope=signature%20impersonation&client_id=#{
+      client_id
+    }&redirect_uri=https://#{hostname}/me"
   end
 
   defp get_default_account_for_client(client) do
