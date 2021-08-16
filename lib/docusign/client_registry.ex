@@ -57,10 +57,11 @@ defmodule DocuSign.ClientRegistry do
   def handle_info({:refresh_token, user_id}, state) do
     client = Map.get(state.clients, user_id)
     refreshed_client = state.oauth_impl.refresh_token!(client, true)
-    updated_clients = Map.put(state.clients, user_id, refreshed_client)
 
-    delay = state.oauth_impl.interval_refresh_token(client)
+    delay = state.oauth_impl.interval_refresh_token(refreshed_client)
     schedule_refresh_token(user_id, delay)
+
+    updated_clients = Map.put(state.clients, user_id, refreshed_client)
 
     {:noreply, %{state | clients: updated_clients}}
   end
@@ -73,6 +74,7 @@ defmodule DocuSign.ClientRegistry do
 
     delay = oauth_impl.interval_refresh_token(client)
     schedule_refresh_token(user_id, delay)
+
     client
   end
 
