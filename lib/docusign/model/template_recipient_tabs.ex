@@ -56,7 +56,7 @@ defmodule DocuSign.Model.TemplateRecipientTabs do
           :listTabs => [List],
           :notarizeTabs => [Notarize],
           :noteTabs => [Note],
-          :numberTabs => [Float],
+          :numberTabs => [Number],
           :radioGroupTabs => [RadioGroup],
           :signerAttachmentTabs => [SignerAttachment],
           :signHereTabs => [SignHere],
@@ -90,6 +90,7 @@ defimpl Poison.Decoder, for: DocuSign.Model.TemplateRecipientTabs do
     |> deserialize(:lastNameTabs, :list, DocuSign.Model.LastName, options)
     |> deserialize(:notarizeTabs, :list, DocuSign.Model.Notarize, options)
     |> deserialize(:noteTabs, :list, DocuSign.Model.Note, options)
+    |> deserialize(:numberTabs, :list, DocuSign.Model.Number, options)
     |> deserialize(:radioGroupTabs, :list, DocuSign.Model.RadioGroup, options)
     |> deserialize(:signerAttachmentTabs, :list, DocuSign.Model.SignerAttachment, options)
     |> deserialize(:signHereTabs, :list, DocuSign.Model.SignHere, options)
