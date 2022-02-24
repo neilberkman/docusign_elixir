@@ -1,4 +1,4 @@
-use Mix.Config
+import Config
 
 config :docusign, app_env: :dev
 
