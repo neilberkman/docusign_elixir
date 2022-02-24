@@ -1,6 +1,6 @@
 # This file is responsible for configuring your application
-# and its dependencies with the aid of the Mix.Config module.
-use Mix.Config
+# and its dependencies with the aid of the Config module.
+import Config
 
 config :docusign, private_key: System.get_env("DOCUSIGN_PRIVATE_KEY") || "docusign_key.pem"
 config :docusign, token_expires_in: 3600
