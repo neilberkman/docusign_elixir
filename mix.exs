@@ -2,7 +2,7 @@ defmodule DocuSign.MixProject do
   @moduledoc false
   use Mix.Project
 
-  @version "0.4.4"
+  @version "0.5.1"
   @url "https://github.com/neilberkman/docusign_elixir"
   @maintainers [
     "Neil Berkman"
@@ -39,10 +39,11 @@ defmodule DocuSign.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:poison, "~> 5.0"},
+      {:tesla, "~> 1.4"},
+      {:poison, "~> 3.0"},
+
       {:joken, "~> 2.0"},
       {:oauth2, "~> 2.0"},
-      {:tesla, "~> 1.1"},
       {:plug_cowboy, "~> 2.0"},
       {:castore, "~> 0.1.0"},
       {:mint, "~> 1.0"},
@@ -53,7 +54,7 @@ defmodule DocuSign.MixProject do
       {:mox, "~> 1.0", only: :test},
 
       # dev
-      {:ex_doc, ">= 0.0.0", only: :dev},
+      {:ex_doc, "~> 0.28", only: :dev},
       {:credo, "~> 1.0", only: [:dev, :test], runtime: false},
       {:dialyxir, "~> 1.1", only: [:dev], runtime: false},
       {:mix_test_watch, "~> 1.0", only: :dev, runtime: false}
