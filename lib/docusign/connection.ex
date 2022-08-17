@@ -58,6 +58,7 @@ defmodule DocuSign.Connection do
   def new() do
     with {:ok, client} <- get_default_client() do
       account = get_default_account_for_client(client)
+      account = %{account | base_uri: "#{account.base_uri}/restapi"}
 
       __MODULE__
       |> struct(

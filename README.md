@@ -141,18 +141,16 @@ the API client for those users and refresh the access tokens.
 
 ## Regenerating stubs
 
-Grab the latest [swagger codegen jar](https://github.com/swagger-api/swagger-codegen#prerequisites) and:
+Grab the latest [OpenAPI Generator](https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/6.0.1/openapi-generator-cli-6.0.1.jar) and:
 
 ```bash
-java -jar swagger-codegen-cli.jar generate \
+java -jar openapi-generator-cli.jar generate \
   -i https://raw.githubusercontent.com/docusign/eSign-OpenAPI-Specification/master/esignature.rest.swagger-v2.1.json \
   -l elixir -o /tmp/elixir_api_client
 rm -rf lib/docusign/*
 cp -rf /tmp/elixir_api_client/lib/docu_sign_restapi/* lib/docusign
 mix format
 ```
-
-Note: consider swtiching to [OpenAPI Generator](https://github.com/OpenAPITools/openapi-generator/blob/master/docs/qna.md).
 
 ## JWT Authorization Example
 

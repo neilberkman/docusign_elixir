@@ -187,11 +187,11 @@ defmodule DocuSign.RequestBuilder do
   def decode(%Tesla.Env{} = env, false), do: {:ok, env}
   def decode(%Tesla.Env{body: body}, struct), do: Poison.decode(body, as: struct)
 
-  def evaluate_response({:ok, %Tesla.Env{} = env}, mapping) do
+  def evaluate_response(%Tesla.Env{} = env, mapping) do
     resolve_mapping(env, mapping)
   end
 
-  def evaluate_response({:error, _} = error, _), do: error
+  def evaluate_response(_ = error, _), do: error
 
   def resolve_mapping(env, mapping, default \\ nil)
 
