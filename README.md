@@ -145,7 +145,7 @@ Grab the latest [OpenAPI Generator](https://repo1.maven.org/maven2/org/openapito
 
 ```bash
 java -jar openapi-generator-cli.jar generate \
-  -i https://raw.githubusercontent.com/docusign/eSign-OpenAPI-Specification/master/esignature.rest.swagger-v2.1.json \
+  -i esignature.rest.swagger-v2.1.json \
   -l elixir -o /tmp/elixir_api_client
 rm -rf lib/docusign/*
 cp -rf /tmp/elixir_api_client/lib/docu_sign_restapi/* lib/docusign

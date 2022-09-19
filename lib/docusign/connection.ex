@@ -88,6 +88,8 @@ defmodule DocuSign.Connection do
   def get(user_id) do
     with {:ok, client} <- ClientRegistry.client(user_id) do
       account = get_default_account_for_client(client)
+      account = %{account | base_uri: "#{account.base_uri}/restapi"}
+
       connection = struct(__MODULE__, client: client, app_account: account)
 
       {:ok, connection}
@@ -106,7 +108,7 @@ defmodule DocuSign.Connection do
 
   defp consent_required_error?(error) do
     reason = Map.get(error, :reason)
-    reason && reason =~ "consent_required"
+    is_binary(reason) && reason =~ "consent_required"
   end
 
   defp build_consent_url() do
