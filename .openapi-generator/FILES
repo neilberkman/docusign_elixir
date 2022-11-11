@@ -252,6 +252,7 @@ lib/docu_sign/model/connect_failure_results.ex
 lib/docu_sign/model/connect_historical_envelope_republish.ex
 lib/docu_sign/model/connect_log.ex
 lib/docu_sign/model/connect_logs.ex
+lib/docu_sign/model/connect_o_auth_config.ex
 lib/docu_sign/model/connect_salesforce_field.ex
 lib/docu_sign/model/connect_salesforce_object.ex
 lib/docu_sign/model/connect_secret.ex

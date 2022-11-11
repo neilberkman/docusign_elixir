@@ -141,14 +141,14 @@ the API client for those users and refresh the access tokens.
 
 ## Regenerating stubs
 
-Grab the latest [OpenAPI Generator](https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/6.0.1/openapi-generator-cli-6.0.1.jar) and:
+Grab the latest [OpenAPI Generator](https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/6.2.1/openapi-generator-cli-6.2.1.jar), the latest [DocuSign OpenAPI Specification](https://raw.githubusercontent.com/docusign/eSign-OpenAPI-Specification/master/esignature.rest.swagger-v2.1.json) and:
 
 ```bash
-java -jar openapi-generator-cli.jar generate \
-  -i esignature.rest.swagger-v2.1.json \
-  -l elixir -o /tmp/elixir_api_client
-rm -rf lib/docusign/*
-cp -rf /tmp/elixir_api_client/lib/docu_sign_restapi/* lib/docusign
+java -jar "openapi-generator-cli-6.2.1.jar" generate -i ".openapi-generator/esignature.rest.swagger-v2.1.json" -g "elixir" -o "/tmp/elixir_api_client"
+rm -rf lib/docusign/api/*
+rm -rf lib/docusign/model/*
+cp -rf /tmp/elixir_api_client/lib/docu_sign/api/* lib/docusign/api
+cp -rf /tmp/elixir_api_client/lib/docu_sign/model/* lib/docusign/model
 mix format
 ```
 
