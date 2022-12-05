@@ -199,15 +199,18 @@ defmodule DocuSign.RequestBuilder do
   @spec decode(Tesla.Env.t() | term(), false | struct() | [struct()]) ::
           {:ok, struct()} | {:ok, Tesla.Env.t()} | {:error, any}
   def decode(%Tesla.Env{} = env, false), do: {:ok, env}
+
   def decode(%Tesla.Env{body: body}, struct) do
+    options = %{as: struct}
+
     value =
       body
-      |> Poison.Parser.parse!(%{as: struct})
-      |> Poison.Decode.transform(%{as: struct})
+      |> Poison.Parser.parse!(options)
+      |> Poison.Decode.transform(options)
 
     {:ok, value}
   rescue
-    exception in [ParseError, DecodeError] ->
+    exception in [Poison.ParseError, Poison.DecodeError] ->
       {:error, exception}
   end
 
