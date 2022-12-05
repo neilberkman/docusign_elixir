@@ -14,7 +14,7 @@ defmodule DocuSign.Deserializer do
     Map.update!(
       model,
       field,
-      &Poison.Decode.decode(&1, Keyword.merge(options, as: [struct(mod)]))
+      &Poison.Decode.transform(&1, Map.merge(options, %{as: [struct(mod)]}))
     )
   end
 
@@ -22,7 +22,7 @@ defmodule DocuSign.Deserializer do
     Map.update!(
       model,
       field,
-      &Poison.Decode.decode(&1, Keyword.merge(options, as: struct(mod)))
+      &Poison.Decode.transform(&1, Map.merge(options, %{as: struct(mod)}))
     )
   end
 
@@ -31,7 +31,7 @@ defmodule DocuSign.Deserializer do
       model,
       field,
       &Map.new(&1, fn {key, val} ->
-        {key, Poison.Decode.decode(val, Keyword.merge(options, as: struct(mod)))}
+        {key, Poison.Decode.transform(val, Map.merge(options, %{as: struct(mod)}))}
       end)
     )
   end
