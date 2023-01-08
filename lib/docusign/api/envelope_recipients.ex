@@ -284,7 +284,7 @@ defmodule DocuSign.Api.EnvelopeRecipients do
 
   @doc """
   Creates an envelope recipient preview.
-  This method returns a URL for an envelope recipient preview  in the DocuSign UI that you can embed in your application. You use this method to enable the sender to preview the recipients' experience.  For more information, see [Preview and Send](https://support.docusign.com/en/guides/ndse-user-guide-send-your-documents).
+  Returns a URL to preview the recipients' view of a draft envelope or template. You can embed this view in your application to enable the sender to preview the recipients' experience.  For more information, see [Preview and Send](https://support.docusign.com/en/guides/ndse-user-guide-send-your-documents).
 
   ### Parameters
 

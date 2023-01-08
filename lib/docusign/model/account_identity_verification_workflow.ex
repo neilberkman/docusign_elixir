@@ -13,6 +13,7 @@ defmodule DocuSign.Model.AccountIdentityVerificationWorkflow do
     :inputOptions,
     :signatureProvider,
     :workflowId,
+    :workflowLabel,
     :workflowResourceKey
   ]
 
@@ -22,6 +23,7 @@ defmodule DocuSign.Model.AccountIdentityVerificationWorkflow do
           :inputOptions => [DocuSign.Model.AccountIdentityInputOption.t()] | nil,
           :signatureProvider => DocuSign.Model.AccountSignatureProvider.t() | nil,
           :workflowId => String.t() | nil,
+          :workflowLabel => String.t() | nil,
           :workflowResourceKey => String.t() | nil
         }
 end

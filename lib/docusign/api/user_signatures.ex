@@ -17,7 +17,7 @@ defmodule DocuSign.Api.UserSignatures do
 
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
-  - `signature_id` (String.t): The ID of the signature being accessed.
+  - `signature_id` (String.t): The ID of the account stamp.
   - `user_id` (String.t): The ID of the user to access.  **Note:** Users can only access their own information. A user, even one with Admin rights, cannot access another user's settings.
   - `opts` (keyword): Optional parameters
 
@@ -62,8 +62,8 @@ defmodule DocuSign.Api.UserSignatures do
 
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
-  - `image_type` (String.t): Specificies the type of image. Valid values are:  - `signature_image` - `initials_image`
-  - `signature_id` (String.t): The ID of the signature being accessed.
+  - `image_type` (String.t): Specificies the type of image. Valid values:  - `stamp_image` - `signature_image` - `initials_image`
+  - `signature_id` (String.t): The ID of the account stamp.
   - `user_id` (String.t): The ID of the user to access.  **Note:** Users can only access their own information. A user, even one with Admin rights, cannot access another user's settings.
   - `opts` (keyword): Optional parameters
 
@@ -115,7 +115,7 @@ defmodule DocuSign.Api.UserSignatures do
 
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
-  - `signature_id` (String.t): The ID of the signature being accessed.
+  - `signature_id` (String.t): The ID of the account stamp.
   - `user_id` (String.t): The ID of the user to access.  **Note:** Users can only access their own information. A user, even one with Admin rights, cannot access another user's settings.
   - `opts` (keyword): Optional parameters
 
@@ -163,8 +163,8 @@ defmodule DocuSign.Api.UserSignatures do
 
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
-  - `image_type` (String.t): Specificies the type of image. Valid values are:  - `signature_image` - `initials_image`
-  - `signature_id` (String.t): The ID of the signature being accessed.
+  - `image_type` (String.t): Specificies the type of image. Valid values:  - `stamp_image` - `signature_image` - `initials_image`
+  - `signature_id` (String.t): The ID of the account stamp.
   - `user_id` (String.t): The ID of the user to access.  **Note:** Users can only access their own information. A user, even one with Admin rights, cannot access another user's settings.
   - `opts` (keyword): Optional parameters
     - `:include_chrome` (String.t): When **true,** the chrome (or frame containing the added line and identifier) is included with the signature image.
@@ -348,7 +348,7 @@ defmodule DocuSign.Api.UserSignatures do
 
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
-  - `signature_id` (String.t): The ID of the signature being accessed.
+  - `signature_id` (String.t): The ID of the account stamp.
   - `user_id` (String.t): The ID of the user to access.  **Note:** Users can only access their own information. A user, even one with Admin rights, cannot access another user's settings.
   - `opts` (keyword): Optional parameters
     - `:close_existing_signature` (String.t): When **true,** closes the current signature.
@@ -405,8 +405,8 @@ defmodule DocuSign.Api.UserSignatures do
 
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
-  - `image_type` (String.t): Specificies the type of image. Valid values are:  - `signature_image` - `initials_image`
-  - `signature_id` (String.t): The ID of the signature being accessed.
+  - `image_type` (String.t): Specificies the type of image. Valid values:  - `stamp_image` - `signature_image` - `initials_image`
+  - `signature_id` (String.t): The ID of the account stamp.
   - `user_id` (String.t): The ID of the user to access.  **Note:** Users can only access their own information. A user, even one with Admin rights, cannot access another user's settings.
   - `opts` (keyword): Optional parameters
     - `:transparent_png` (String.t): 

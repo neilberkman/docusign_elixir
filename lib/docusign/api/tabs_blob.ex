@@ -10,7 +10,8 @@ defmodule DocuSign.Api.TabsBlob do
   import DocuSign.RequestBuilder
 
   @doc """
-  Gets encrypted tabs for envelope.
+  Reserved for DocuSign.
+  This endpoint has been deprecated.
 
   ### Parameters
 
@@ -42,7 +43,8 @@ defmodule DocuSign.Api.TabsBlob do
   end
 
   @doc """
-  Updates encrypted tabs for envelope.
+  Reserved for DocuSign.
+  This endpoint has been deprecated.
 
   ### Parameters
 

@@ -11,6 +11,7 @@ defmodule DocuSign.Api.AccountWatermarks do
 
   @doc """
   Get watermark information.
+  Enables you to preview a watermark specified by the request.
 
   ### Parameters
 
@@ -44,6 +45,7 @@ defmodule DocuSign.Api.AccountWatermarks do
 
   @doc """
   Get watermark preview.
+  Update the watermark for the account.  **Note:** Many of the request fields must be set to specific values. If you use an invalid value for one of these fields, the endpoint may return 200 OK but set the field to a default value. See the request body for more information.
 
   ### Parameters
 
@@ -84,6 +86,7 @@ defmodule DocuSign.Api.AccountWatermarks do
 
   @doc """
   Update watermark information.
+  Returns information about the watermark for the account.
 
   ### Parameters
 

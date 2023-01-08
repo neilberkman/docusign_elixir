@@ -3,7 +3,7 @@
 
 defmodule DocuSign.Model.TabsBlob do
   @moduledoc """
-
+  Reserved for DocuSign.
   """
 
   @derive [Poison.Encoder]

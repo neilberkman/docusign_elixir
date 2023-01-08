@@ -92,7 +92,7 @@ defmodule DocuSign.Api.Contacts do
 
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
-  - `contact_id` (String.t): The ID of a contact person in the account's address book.
+  - `contact_id` (String.t): The ID of a contact person in the account's address book.  **Note:** To return all contacts, omit this parameter. It is not required.
   - `opts` (keyword): Optional parameters
     - `:cloud_provider` (String.t): (Optional) The cloud provider from which to retrieve the contacts. Valid values are:  - `rooms` - `docusignCore` (default)
 

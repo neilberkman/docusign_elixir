@@ -3,7 +3,7 @@
 
 defmodule DocuSign.Model.ConnectOAuthConfig do
   @moduledoc """
-
+  A complex object describing a Connect OAuth configuration.
   """
 
   @derive [Poison.Encoder]
@@ -11,6 +11,7 @@ defmodule DocuSign.Model.ConnectOAuthConfig do
     :authorizationServerUrl,
     :clientId,
     :clientSecret,
+    :customParameters,
     :scope
   ]
 
@@ -18,6 +19,7 @@ defmodule DocuSign.Model.ConnectOAuthConfig do
           :authorizationServerUrl => String.t() | nil,
           :clientId => String.t() | nil,
           :clientSecret => String.t() | nil,
+          :customParameters => String.t() | nil,
           :scope => String.t() | nil
         }
 end

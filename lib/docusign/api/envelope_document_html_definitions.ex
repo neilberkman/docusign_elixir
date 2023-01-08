@@ -10,13 +10,14 @@ defmodule DocuSign.Api.EnvelopeDocumentHtmlDefinitions do
   import DocuSign.RequestBuilder
 
   @doc """
-  Gets the Original HTML Definition used to generate the Responsive HTML for a given document.
+  Retrieves the HTML definition used to generate a dynamically sized responsive document.
+  Retrieves the HTML definition used to generate a dynamically sized responsive document.  If the document was not created as a signable HTML document, this endpoint will return a 200-OK response and an empty JSON body.   **Note:** The `documentId` query parameter is a GUID value, not an integer document ID. If an invalid document ID is provided, this endpoint will return a 200-OK response and an empty JSON body.  ### Related topics  - [Responsive signing](/docs/esign-rest-api/esign101/concepts/responsive/)
 
   ### Parameters
 
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
-  - `document_id` (String.t): The unique ID of the document within the envelope.  Unlike other IDs in the eSignature API, you specify the `documentId` yourself. Typically the first document has the ID `1`, the second document `2`, and so on, but you can use any numbering scheme that fits within a 32-bit signed integer (1 through 2147483647).   Tab objects have a `documentId` property that specifies the document on which to place the tab. 
+  - `document_id` (String.t): The GUID of the document.  Example: c671747c-xxxx-xxxx-xxxx-4a4a48e23744
   - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec` 
   - `opts` (keyword): Optional parameters
 

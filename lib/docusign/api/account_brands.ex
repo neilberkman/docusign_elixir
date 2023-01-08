@@ -255,7 +255,7 @@ defmodule DocuSign.Api.AccountBrands do
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `brand_id` (String.t): The ID of the brand.
   - `opts` (keyword): Optional parameters
-    - `:replace_brand` (String.t): 
+    - `:replace_brand` (String.t): When **true,** replaces the brand instead of updating it. The only unchanged value is the brand ID. The request body must be XML. The default value is **false.**
     - `:body` (Brand): 
 
   ### Returns

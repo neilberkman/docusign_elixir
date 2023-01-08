@@ -10,13 +10,14 @@ defmodule DocuSign.Api.AccountSignatures do
   import DocuSign.RequestBuilder
 
   @doc """
-  Close the specified signature by ID.
+  Deletes an account stamp.
+  Deletes a stamp specified by `signatureId`. 
 
   ### Parameters
 
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
-  - `signature_id` (String.t): The ID of the signature being accessed.
+  - `signature_id` (String.t): The ID of the account stamp.
   - `opts` (keyword): Optional parameters
 
   ### Returns
@@ -51,14 +52,15 @@ defmodule DocuSign.Api.AccountSignatures do
   end
 
   @doc """
-  Deletes a signature image, initials, or stamp.
+  Deletes the image for a stamp.
+  Deletes the image for a stamp specified by `signatureId`.
 
   ### Parameters
 
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
-  - `image_type` (String.t): Specificies the type of image. Valid values are:  - `signature_image` - `initials_image`
-  - `signature_id` (String.t): The ID of the signature being accessed.
+  - `image_type` (String.t): Specificies the type of image. Valid values:  - `stamp_image` - `signature_image` - `initials_image`
+  - `signature_id` (String.t): The ID of the account stamp.
   - `opts` (keyword): Optional parameters
 
   ### Returns
@@ -98,13 +100,14 @@ defmodule DocuSign.Api.AccountSignatures do
   end
 
   @doc """
-  Returns information about the specified signature.
+  Returns information about the specified stamp.
+  Returns information about the specified stamp.
 
   ### Parameters
 
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
-  - `signature_id` (String.t): The ID of the signature being accessed.
+  - `signature_id` (String.t): The ID of the account stamp.
   - `opts` (keyword): Optional parameters
 
   ### Returns
@@ -137,14 +140,15 @@ defmodule DocuSign.Api.AccountSignatures do
   end
 
   @doc """
-  Returns a signature image, initials, or stamp.
+  Returns the image for an account stamp.
+  Returns the image for an account stamp.
 
   ### Parameters
 
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
-  - `image_type` (String.t): Specificies the type of image. Valid values are:  - `signature_image` - `initials_image`
-  - `signature_id` (String.t): The ID of the signature being accessed.
+  - `image_type` (String.t): Specificies the type of image. Valid values:  - `stamp_image` - `signature_image` - `initials_image`
+  - `signature_id` (String.t): The ID of the account stamp.
   - `opts` (keyword): Optional parameters
     - `:include_chrome` (String.t): When **true,** the chrome (or frame containing the added line and identifier) is included with the signature image.
 
@@ -187,16 +191,17 @@ defmodule DocuSign.Api.AccountSignatures do
   end
 
   @doc """
-  Returns the managed signature definitions for the account
+  Returns a list of stamps available in the account.
+  Returns a list of stamps available in the account.
 
   ### Parameters
 
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `opts` (keyword): Optional parameters
-    - `:stamp_format` (String.t): 
-    - `:stamp_name` (String.t): 
-    - `:stamp_type` (String.t): 
+    - `:stamp_format` (String.t): The format of the stamp to return. Valid values: - `NameDateHanko` - `NameHanko` - `PlaceholderHanko`
+    - `:stamp_name` (String.t): The name associated with the stamps to return. This value can be a Japanese surname (up to 5 characters) or a purchase order ID.
+    - `:stamp_type` (String.t): The type of the stamps to return. Valid values: - `name_stamp` - `stamp` - `signature`
 
   ### Returns
 
@@ -230,7 +235,8 @@ defmodule DocuSign.Api.AccountSignatures do
   end
 
   @doc """
-  Adds or updates one or more account signatures. This request may include images in multi-part format.
+  Adds or updates one or more account stamps.
+  Adds or updates one or more account stamps. 
 
   ### Parameters
 
@@ -272,7 +278,8 @@ defmodule DocuSign.Api.AccountSignatures do
   end
 
   @doc """
-  Updates an account signature. 
+  Updates an account stamp.
+  Adds or updates one or more account stamps. This request may include images in multi-part format.
 
   ### Parameters
 
@@ -312,13 +319,14 @@ defmodule DocuSign.Api.AccountSignatures do
   end
 
   @doc """
-  Updates an account signature.
+  Updates an account stamp by ID.
+  Updates an account stamp specified by the `signatureId` query parameter.
 
   ### Parameters
 
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
-  - `signature_id` (String.t): The ID of the signature being accessed.
+  - `signature_id` (String.t): The ID of the account stamp.
   - `opts` (keyword): Optional parameters
     - `:close_existing_signature` (String.t): When **true,** closes the current signature.
     - `:body` (AccountSignatureDefinition): 
@@ -366,13 +374,14 @@ defmodule DocuSign.Api.AccountSignatures do
 
   @doc """
   Sets a signature image, initials, or stamp.
+  Sets a signature image, initials, or stamp.
 
   ### Parameters
 
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
-  - `image_type` (String.t): Specificies the type of image. Valid values are:  - `signature_image` - `initials_image`
-  - `signature_id` (String.t): The ID of the signature being accessed.
+  - `image_type` (String.t): Specificies the type of image. Valid values:  - `stamp_image` - `signature_image` - `initials_image`
+  - `signature_id` (String.t): The ID of the account stamp.
   - `opts` (keyword): Optional parameters
     - `:transparent_png` (String.t): 
 

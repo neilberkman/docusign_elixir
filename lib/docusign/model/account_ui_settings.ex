@@ -10,6 +10,8 @@ defmodule DocuSign.Model.AccountUiSettings do
   defstruct [
     :adminMessage,
     :askAnAdmin,
+    :clickwrapSchemaVersion,
+    :clickwrapSchemaVersionMetadata,
     :enableAdminMessage,
     :enableAdminMessageMetadata,
     :enableEasySignCanUseMultiTemplateApply,
@@ -41,6 +43,8 @@ defmodule DocuSign.Model.AccountUiSettings do
   @type t :: %__MODULE__{
           :adminMessage => DocuSign.Model.AdminMessage.t() | nil,
           :askAnAdmin => DocuSign.Model.AskAnAdmin.t() | nil,
+          :clickwrapSchemaVersion => String.t() | nil,
+          :clickwrapSchemaVersionMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
           :enableAdminMessage => String.t() | nil,
           :enableAdminMessageMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
           :enableEasySignCanUseMultiTemplateApply => String.t() | nil,
@@ -78,6 +82,12 @@ defimpl Poison.Decoder, for: DocuSign.Model.AccountUiSettings do
     value
     |> deserialize(:adminMessage, :struct, DocuSign.Model.AdminMessage, options)
     |> deserialize(:askAnAdmin, :struct, DocuSign.Model.AskAnAdmin, options)
+    |> deserialize(
+      :clickwrapSchemaVersionMetadata,
+      :struct,
+      DocuSign.Model.SettingsMetadata,
+      options
+    )
     |> deserialize(:enableAdminMessageMetadata, :struct, DocuSign.Model.SettingsMetadata, options)
     |> deserialize(
       :enableEasySignCanUseMultiTemplateApplyMetadata,

@@ -117,6 +117,7 @@ defmodule DocuSign.Api.EnvelopeDocuments do
   - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec` 
   - `opts` (keyword): Optional parameters
     - `:documents_by_userid` (String.t): When **true,** allows recipients to get documents by their user id. For example, if a user is included in two different routing orders with different visibilities, using this parameter returns all of the documents from both routing orders.
+    - `:include_docgen_formfields` (String.t): 
     - `:include_metadata` (String.t): When **true,** the response includes metadata that indicates which properties the sender can edit.
     - `:include_tabs` (String.t): When **true,** information about the tabs, including prefill tabs, associated with the documents are included in the response.
     - `:recipient_id` (String.t): Allows the sender to retrieve the documents as one of the recipients that they control. The `documents_by_userid` parameter must be set to **false** for this to work.
@@ -134,6 +135,7 @@ defmodule DocuSign.Api.EnvelopeDocuments do
   def documents_get_documents(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
       :documents_by_userid => :query,
+      :include_docgen_formfields => :query,
       :include_metadata => :query,
       :include_tabs => :query,
       :recipient_id => :query,

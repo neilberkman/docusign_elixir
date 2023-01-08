@@ -3,7 +3,7 @@
 
 defmodule DocuSign.Model.RecipientEmailNotification do
   @moduledoc """
-
+  Sets custom email subject and email body for individual recipients. **Note:** You must explicitly set `supportedLanguage` if you use this feature. 
   """
 
   @derive [Poison.Encoder]

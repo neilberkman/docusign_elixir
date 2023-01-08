@@ -3,7 +3,7 @@
 
 defmodule DocuSign.Model.AccountSignatures do
   @moduledoc """
-
+  AccountSignatures represent stamps used to sign documents.
   """
 
   @derive [Poison.Encoder]

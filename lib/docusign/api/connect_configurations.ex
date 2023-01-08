@@ -214,7 +214,8 @@ defmodule DocuSign.Api.ConnectConfigurations do
   end
 
   @doc """
-  Sets the Connect OAuth Config for the account.
+  Delete the Connect OAuth configuration.
+  Deletes the Connect OAuth configuration for the specified account.  **Note:** To use this function, you must be an account administrator and Connect must be enabled on your account.  ## Related topics: - [OAuth for DocuSign Connect](/platform/webhooks/connect/validation-and-security/oauth-connect/) 
 
   ### Parameters
 
@@ -248,7 +249,8 @@ defmodule DocuSign.Api.ConnectConfigurations do
   end
 
   @doc """
-  Sets the Connect OAuth Config for the account.
+  Retrieves the Connect OAuth information for the account.
+  Gets the Connect OAuth configuration for the specified account.  **Note:** To use this function, you must be an account administrator and Connect must be enabled on your account.  ## Related topics: - [OAuth for DocuSign Connect](/platform/webhooks/connect/validation-and-security/oauth-connect/) 
 
   ### Parameters
 
@@ -281,7 +283,8 @@ defmodule DocuSign.Api.ConnectConfigurations do
   end
 
   @doc """
-  Sets the Connect OAuth Config for the account.
+  Set up Connect OAuth for the specified account.
+  Sets up Connect OAuth for the specified account using an authorization server of your choice. To use this endpoint, get the client ID and client secret from your authorization server.  When you call this endpoint, DocuSign requests an access token from your authorization server. DocuSign will use that token in the Authorization HTTP header of your account's Connect messages. Finally, your listener will be responsible for validating the token by calling the authorization server.  **Note:** To use this function, you must be an account administrator and Connect must be enabled on your account.  ## Related topics: - [OAuth for DocuSign Connect](/platform/webhooks/connect/validation-and-security/oauth-connect/) 
 
   ### Parameters
 

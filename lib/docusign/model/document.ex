@@ -11,6 +11,7 @@ defmodule DocuSign.Model.Document do
     :applyAnchorTabs,
     :assignTabsToRecipientId,
     :display,
+    :docGenFormFields,
     :documentBase64,
     :documentFields,
     :documentId,
@@ -19,6 +20,7 @@ defmodule DocuSign.Model.Document do
     :fileFormatHint,
     :htmlDefinition,
     :includeInDownload,
+    :isDocGenDocument,
     :matchBoxes,
     :name,
     :order,
@@ -39,6 +41,7 @@ defmodule DocuSign.Model.Document do
           :applyAnchorTabs => String.t() | nil,
           :assignTabsToRecipientId => String.t() | nil,
           :display => String.t() | nil,
+          :docGenFormFields => [DocuSign.Model.DocGenFormField.t()] | nil,
           :documentBase64 => String.t() | nil,
           :documentFields => [DocuSign.Model.NameValue.t()] | nil,
           :documentId => String.t() | nil,
@@ -47,6 +50,7 @@ defmodule DocuSign.Model.Document do
           :fileFormatHint => String.t() | nil,
           :htmlDefinition => DocuSign.Model.DocumentHtmlDefinition.t() | nil,
           :includeInDownload => String.t() | nil,
+          :isDocGenDocument => String.t() | nil,
           :matchBoxes => [DocuSign.Model.MatchBox.t()] | nil,
           :name => String.t() | nil,
           :order => String.t() | nil,
@@ -69,6 +73,7 @@ defimpl Poison.Decoder, for: DocuSign.Model.Document do
 
   def decode(value, options) do
     value
+    |> deserialize(:docGenFormFields, :list, DocuSign.Model.DocGenFormField, options)
     |> deserialize(:documentFields, :list, DocuSign.Model.NameValue, options)
     |> deserialize(:htmlDefinition, :struct, DocuSign.Model.DocumentHtmlDefinition, options)
     |> deserialize(:matchBoxes, :list, DocuSign.Model.MatchBox, options)

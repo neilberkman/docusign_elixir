@@ -14,6 +14,8 @@ defmodule DocuSign.Model.EnvelopesInformation do
     :envelopeTransactionStatuses,
     :folders,
     :lastQueriedDateTime,
+    :nextUri,
+    :previousUri,
     :resultSetSize,
     :startPosition,
     :totalSetSize
@@ -26,6 +28,8 @@ defmodule DocuSign.Model.EnvelopesInformation do
           :envelopeTransactionStatuses => [DocuSign.Model.EnvelopeTransactionStatus.t()] | nil,
           :folders => [DocuSign.Model.Folder.t()] | nil,
           :lastQueriedDateTime => String.t() | nil,
+          :nextUri => String.t() | nil,
+          :previousUri => String.t() | nil,
           :resultSetSize => String.t() | nil,
           :startPosition => String.t() | nil,
           :totalSetSize => String.t() | nil

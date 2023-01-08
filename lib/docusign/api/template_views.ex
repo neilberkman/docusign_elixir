@@ -11,7 +11,7 @@ defmodule DocuSign.Api.TemplateViews do
 
   @doc """
   Gets a URL for a template edit view.
-  This method returns a URL for starting an edit view of a template that uses the DocuSign Template UI.
+  This method returns a URL for starting an edit view of a template that uses the DocuSign Template UI. The URL can only be used once.  To prevent the user from accessing the sending account, set the `returnUrl` value in the request body.  ## Information security notice  If the `returnUrl` value is not set, this method provides full access to the sending account. If the account has administrative privileges, then this method also provides administrator access.
 
   ### Parameters
 

@@ -93,7 +93,7 @@ defmodule DocuSign.Api.SigningGroups do
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `opts` (keyword): Optional parameters
-    - `:group_type` (String.t): 
+    - `:group_type` (String.t): Filters by the type of signing group. Valid values: * `sharedSigningGroup` * `privateSigningGroup` * `systemSigningGroup`
     - `:include_users` (String.t): When **true,** the response includes the signing group members. 
 
   ### Returns

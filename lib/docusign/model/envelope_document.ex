@@ -16,6 +16,9 @@ defmodule DocuSign.Model.EnvelopeDocument do
     :containsPdfFormFields,
     :display,
     :displayMetadata,
+    :docGenDocumentStatus,
+    :docGenErrors,
+    :docGenFormFields,
     :documentBase64,
     :documentFields,
     :documentId,
@@ -23,6 +26,7 @@ defmodule DocuSign.Model.EnvelopeDocument do
     :errorDetails,
     :includeInDownload,
     :includeInDownloadMetadata,
+    :isDocGenDocument,
     :name,
     :nameMetadata,
     :order,
@@ -45,6 +49,9 @@ defmodule DocuSign.Model.EnvelopeDocument do
           :containsPdfFormFields => String.t() | nil,
           :display => String.t() | nil,
           :displayMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :docGenDocumentStatus => String.t() | nil,
+          :docGenErrors => [DocuSign.Model.DocGenSyntaxError.t()] | nil,
+          :docGenFormFields => [DocuSign.Model.DocGenFormField.t()] | nil,
           :documentBase64 => String.t() | nil,
           :documentFields => [DocuSign.Model.NameValue.t()] | nil,
           :documentId => String.t() | nil,
@@ -52,6 +59,7 @@ defmodule DocuSign.Model.EnvelopeDocument do
           :errorDetails => DocuSign.Model.ErrorDetails.t() | nil,
           :includeInDownload => String.t() | nil,
           :includeInDownloadMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :isDocGenDocument => String.t() | nil,
           :name => String.t() | nil,
           :nameMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
           :order => String.t() | nil,
@@ -74,6 +82,8 @@ defimpl Poison.Decoder, for: DocuSign.Model.EnvelopeDocument do
     |> deserialize(:authoritativeCopyMetadata, :struct, DocuSign.Model.PropertyMetadata, options)
     |> deserialize(:availableDocumentTypes, :list, DocuSign.Model.SignatureType, options)
     |> deserialize(:displayMetadata, :struct, DocuSign.Model.PropertyMetadata, options)
+    |> deserialize(:docGenErrors, :list, DocuSign.Model.DocGenSyntaxError, options)
+    |> deserialize(:docGenFormFields, :list, DocuSign.Model.DocGenFormField, options)
     |> deserialize(:documentFields, :list, DocuSign.Model.NameValue, options)
     |> deserialize(:errorDetails, :struct, DocuSign.Model.ErrorDetails, options)
     |> deserialize(:includeInDownloadMetadata, :struct, DocuSign.Model.PropertyMetadata, options)

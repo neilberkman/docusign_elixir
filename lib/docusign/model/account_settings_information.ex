@@ -295,6 +295,8 @@ defmodule DocuSign.Model.AccountSettingsInformation do
     :emailTemplateVersionMetadata,
     :enableAccessCodeGenerator,
     :enableAccessCodeGeneratorMetadata,
+    :enableAdmHealthcare,
+    :enableAdmHealthcareMetadata,
     :enableAdvancedPayments,
     :enableAdvancedPaymentsMetadata,
     :enableAdvancedPowerForms,
@@ -309,6 +311,16 @@ defmodule DocuSign.Model.AccountSettingsInformation do
     :enableBccDummyLinkMetadata,
     :enableCalculatedFields,
     :enableCalculatedFieldsMetadata,
+    :enableClickPlus,
+    :enableClickPlusConditionalContent,
+    :enableClickPlusConditionalContentMetaData,
+    :enableClickPlusCustomFields,
+    :enableClickPlusCustomFieldsMetaData,
+    :enableClickPlusCustomStyle,
+    :enableClickPlusCustomStyleMetaData,
+    :enableClickPlusDynamicContent,
+    :enableClickPlusDynamicContentMetaData,
+    :enableClickPlusMetaData,
     :enableClickwraps,
     :enableClickwrapsMetadata,
     :enableCombinedPDFDownloadForSBS,
@@ -420,6 +432,8 @@ defmodule DocuSign.Model.AccountSettingsInformation do
     :EnvelopeLimitsTotalDocumentSizeAllowedInMBEnabled,
     :EnvelopeLimitsTotalDocumentSizeAllowedInMBEnabledMetadata,
     :EnvelopeLimitsTotalDocumentSizeAllowedInMBMetadata,
+    :envelopeSearchMode,
+    :envelopeSearchModeMetadata,
     :envelopeStampingDefaultValue,
     :envelopeStampingDefaultValueMetadata,
     :exitPrompt,
@@ -453,6 +467,8 @@ defmodule DocuSign.Model.AccountSettingsInformation do
     :idCheckRequiredMetadata,
     :identityVerification,
     :identityVerificationMetadata,
+    :idfxKBAAuthenticationOverride,
+    :idfxKBAAuthenticationOverrideMetadata,
     :idfxPhoneAuthenticationOverride,
     :idfxPhoneAuthenticationOverrideMetadata,
     :ignoreErrorIfAnchorTabNotFound,
@@ -471,6 +487,8 @@ defmodule DocuSign.Model.AccountSettingsInformation do
     :maximumUsersPerSigningGroup,
     :maximumUsersPerSigningGroupMetadata,
     :maxNumberOfCustomStamps,
+    :mergeMixedModeResults,
+    :mergeMixedModeResultsMetadata,
     :mobileSessionTimeout,
     :mobileSessionTimeoutMetadata,
     :numberOfActiveCustomStamps,
@@ -616,10 +634,14 @@ defmodule DocuSign.Model.AccountSettingsInformation do
     :useDerivedKeysMetadata,
     :useDocuSignExpressSignerCertificate,
     :useDocuSignExpressSignerCertificateMetadata,
+    :useEnvelopeSearchMixedMode,
+    :useEnvelopeSearchMixedModeMetadata,
     :useMultiAppGroupsData,
     :useMultiAppGroupsDataMetadata,
     :useNewBlobForPdf,
     :useNewBlobForPdfMetadata,
+    :useNewEnvelopeSearch,
+    :useNewEnvelopeSearchMetadata,
     :useSAFESignerCertificates,
     :useSAFESignerCertificatesMetadata,
     :usesAPI,
@@ -944,6 +966,8 @@ defmodule DocuSign.Model.AccountSettingsInformation do
           :emailTemplateVersionMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
           :enableAccessCodeGenerator => String.t() | nil,
           :enableAccessCodeGeneratorMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :enableAdmHealthcare => String.t() | nil,
+          :enableAdmHealthcareMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
           :enableAdvancedPayments => String.t() | nil,
           :enableAdvancedPaymentsMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
           :enableAdvancedPowerForms => String.t() | nil,
@@ -958,6 +982,16 @@ defmodule DocuSign.Model.AccountSettingsInformation do
           :enableBccDummyLinkMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
           :enableCalculatedFields => String.t() | nil,
           :enableCalculatedFieldsMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :enableClickPlus => String.t() | nil,
+          :enableClickPlusConditionalContent => String.t() | nil,
+          :enableClickPlusConditionalContentMetaData => DocuSign.Model.SettingsMetadata.t() | nil,
+          :enableClickPlusCustomFields => String.t() | nil,
+          :enableClickPlusCustomFieldsMetaData => DocuSign.Model.SettingsMetadata.t() | nil,
+          :enableClickPlusCustomStyle => String.t() | nil,
+          :enableClickPlusCustomStyleMetaData => DocuSign.Model.SettingsMetadata.t() | nil,
+          :enableClickPlusDynamicContent => String.t() | nil,
+          :enableClickPlusDynamicContentMetaData => DocuSign.Model.SettingsMetadata.t() | nil,
+          :enableClickPlusMetaData => DocuSign.Model.SettingsMetadata.t() | nil,
           :enableClickwraps => String.t() | nil,
           :enableClickwrapsMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
           :enableCombinedPDFDownloadForSBS => String.t() | nil,
@@ -1081,6 +1115,8 @@ defmodule DocuSign.Model.AccountSettingsInformation do
             DocuSign.Model.SettingsMetadata.t() | nil,
           :EnvelopeLimitsTotalDocumentSizeAllowedInMBMetadata =>
             DocuSign.Model.SettingsMetadata.t() | nil,
+          :envelopeSearchMode => String.t() | nil,
+          :envelopeSearchModeMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
           :envelopeStampingDefaultValue => String.t() | nil,
           :envelopeStampingDefaultValueMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
           :exitPrompt => String.t() | nil,
@@ -1114,6 +1150,8 @@ defmodule DocuSign.Model.AccountSettingsInformation do
           :idCheckRequiredMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
           :identityVerification => [DocuSign.Model.AccountIdentityVerificationWorkflow.t()] | nil,
           :identityVerificationMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :idfxKBAAuthenticationOverride => String.t() | nil,
+          :idfxKBAAuthenticationOverrideMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
           :idfxPhoneAuthenticationOverride => String.t() | nil,
           :idfxPhoneAuthenticationOverrideMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
           :ignoreErrorIfAnchorTabNotFound => String.t() | nil,
@@ -1134,6 +1172,8 @@ defmodule DocuSign.Model.AccountSettingsInformation do
           :maximumUsersPerSigningGroup => String.t() | nil,
           :maximumUsersPerSigningGroupMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
           :maxNumberOfCustomStamps => String.t() | nil,
+          :mergeMixedModeResults => String.t() | nil,
+          :mergeMixedModeResultsMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
           :mobileSessionTimeout => String.t() | nil,
           :mobileSessionTimeoutMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
           :numberOfActiveCustomStamps => String.t() | nil,
@@ -1292,10 +1332,14 @@ defmodule DocuSign.Model.AccountSettingsInformation do
           :useDocuSignExpressSignerCertificate => String.t() | nil,
           :useDocuSignExpressSignerCertificateMetadata =>
             DocuSign.Model.SettingsMetadata.t() | nil,
+          :useEnvelopeSearchMixedMode => String.t() | nil,
+          :useEnvelopeSearchMixedModeMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
           :useMultiAppGroupsData => String.t() | nil,
           :useMultiAppGroupsDataMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
           :useNewBlobForPdf => String.t() | nil,
           :useNewBlobForPdfMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :useNewEnvelopeSearch => String.t() | nil,
+          :useNewEnvelopeSearchMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
           :useSAFESignerCertificates => String.t() | nil,
           :useSAFESignerCertificatesMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
           :usesAPI => String.t() | nil,
@@ -1959,6 +2003,12 @@ defimpl Poison.Decoder, for: DocuSign.Model.AccountSettingsInformation do
       options
     )
     |> deserialize(
+      :enableAdmHealthcareMetadata,
+      :struct,
+      DocuSign.Model.SettingsMetadata,
+      options
+    )
+    |> deserialize(
       :enableAdvancedPaymentsMetadata,
       :struct,
       DocuSign.Model.SettingsMetadata,
@@ -1990,6 +2040,31 @@ defimpl Poison.Decoder, for: DocuSign.Model.AccountSettingsInformation do
       DocuSign.Model.SettingsMetadata,
       options
     )
+    |> deserialize(
+      :enableClickPlusConditionalContentMetaData,
+      :struct,
+      DocuSign.Model.SettingsMetadata,
+      options
+    )
+    |> deserialize(
+      :enableClickPlusCustomFieldsMetaData,
+      :struct,
+      DocuSign.Model.SettingsMetadata,
+      options
+    )
+    |> deserialize(
+      :enableClickPlusCustomStyleMetaData,
+      :struct,
+      DocuSign.Model.SettingsMetadata,
+      options
+    )
+    |> deserialize(
+      :enableClickPlusDynamicContentMetaData,
+      :struct,
+      DocuSign.Model.SettingsMetadata,
+      options
+    )
+    |> deserialize(:enableClickPlusMetaData, :struct, DocuSign.Model.SettingsMetadata, options)
     |> deserialize(:enableClickwrapsMetadata, :struct, DocuSign.Model.SettingsMetadata, options)
     |> deserialize(
       :enableCommentsHistoryDownloadInSigningMetadata,
@@ -2265,6 +2340,7 @@ defimpl Poison.Decoder, for: DocuSign.Model.AccountSettingsInformation do
       DocuSign.Model.SettingsMetadata,
       options
     )
+    |> deserialize(:envelopeSearchModeMetadata, :struct, DocuSign.Model.SettingsMetadata, options)
     |> deserialize(
       :envelopeStampingDefaultValueMetadata,
       :struct,
@@ -2329,6 +2405,12 @@ defimpl Poison.Decoder, for: DocuSign.Model.AccountSettingsInformation do
       options
     )
     |> deserialize(
+      :idfxKBAAuthenticationOverrideMetadata,
+      :struct,
+      DocuSign.Model.SettingsMetadata,
+      options
+    )
+    |> deserialize(
       :idfxPhoneAuthenticationOverrideMetadata,
       :struct,
       DocuSign.Model.SettingsMetadata,
@@ -2373,6 +2455,12 @@ defimpl Poison.Decoder, for: DocuSign.Model.AccountSettingsInformation do
     )
     |> deserialize(
       :maximumUsersPerSigningGroupMetadata,
+      :struct,
+      DocuSign.Model.SettingsMetadata,
+      options
+    )
+    |> deserialize(
+      :mergeMixedModeResultsMetadata,
       :struct,
       DocuSign.Model.SettingsMetadata,
       options
@@ -2718,12 +2806,24 @@ defimpl Poison.Decoder, for: DocuSign.Model.AccountSettingsInformation do
       options
     )
     |> deserialize(
+      :useEnvelopeSearchMixedModeMetadata,
+      :struct,
+      DocuSign.Model.SettingsMetadata,
+      options
+    )
+    |> deserialize(
       :useMultiAppGroupsDataMetadata,
       :struct,
       DocuSign.Model.SettingsMetadata,
       options
     )
     |> deserialize(:useNewBlobForPdfMetadata, :struct, DocuSign.Model.SettingsMetadata, options)
+    |> deserialize(
+      :useNewEnvelopeSearchMetadata,
+      :struct,
+      DocuSign.Model.SettingsMetadata,
+      options
+    )
     |> deserialize(
       :useSAFESignerCertificatesMetadata,
       :struct,
