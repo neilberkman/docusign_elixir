@@ -173,7 +173,7 @@ defmodule DocuSign.Model.NotaryRecipient do
           :notaryType => String.t() | nil,
           :note => String.t() | nil,
           :noteMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
-          :offlineAttributes => DocuSign.Model.OfflineAttributes.t() | nil,
+          :offlineAttributes => map() | nil,
           :phoneAuthentication => DocuSign.Model.RecipientPhoneAuthentication.t() | nil,
           :phoneNumber => DocuSign.Model.RecipientPhoneNumber.t() | nil,
           :proofFile => DocuSign.Model.RecipientProofFile.t() | nil,
@@ -266,7 +266,6 @@ defimpl Poison.Decoder, for: DocuSign.Model.NotaryRecipient do
     |> deserialize(:lastNameMetadata, :struct, DocuSign.Model.PropertyMetadata, options)
     |> deserialize(:nameMetadata, :struct, DocuSign.Model.PropertyMetadata, options)
     |> deserialize(:noteMetadata, :struct, DocuSign.Model.PropertyMetadata, options)
-    |> deserialize(:offlineAttributes, :struct, DocuSign.Model.OfflineAttributes, options)
     |> deserialize(
       :phoneAuthentication,
       :struct,
