@@ -105,22 +105,25 @@ defmodule DocuSign.Connection do
 
   defp consent_required_error?(error) do
     reason = Map.get(error, :reason)
-    reason && reason =~ "consent_required"
+    is_binary(reason) && reason =~ "consent_required"
   end
 
   defp build_consent_url() do
     client_id = Application.fetch_env!(:docusign, :client_id)
     hostname = Application.fetch_env!(:docusign, :hostname)
 
-    "https://#{hostname}/oauth/auth?response_type=code&scope=signature%20impersonation&client_id=#{
-      client_id
-    }&redirect_uri=https://#{hostname}/me"
+    "https://#{hostname}/oauth/auth?response_type=code&scope=signature%20impersonation&client_id=#{client_id}&redirect_uri=https://#{hostname}/me"
   end
 
   defp get_default_account_for_client(client) do
     client
     |> User.info()
     |> User.default_account()
+    |> add_base_uri_to_account()
+  end
+
+  defp add_base_uri_to_account(account) do
+    %{account | base_uri: "#{account.base_uri}/restapi"}
   end
 
   @doc """
