@@ -1,4 +1,4 @@
-name: Recast CI
+name: docusign_elixir CI
 
 on: push
 
