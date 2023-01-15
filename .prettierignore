@@ -1,0 +1,6 @@
+_build
+cover
+.elixir_ls
+deps
+priv/static
+assets/js/_hooks/
