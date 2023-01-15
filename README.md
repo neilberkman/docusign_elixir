@@ -33,7 +33,7 @@ by [DocuSign](https://appdemo.docusign.com).
 You will need to set the following configuration variables in your config file:
 
 ```
-config :docusign, 
+config :docusign,
   hostname: "account-d.docusign.com",
   client_id: "?????-?????-???????",
   private_key: "docusign_key.pem"
@@ -47,7 +47,7 @@ Notes:
 Optional configuration with default values:
 
 ```
-config :docusign, 
+config :docusign,
   timeout: 30_000, # 30 seconds
   token_expires_in: 7_200 # 2 hours
 ```
@@ -65,7 +65,7 @@ export DOCUSIGN_PRIVATE_KEY=<private key file path here>
 And the corresponding config file:
 
 ```
-config :docusign, 
+config :docusign,
   client_id: System.fetch_env!("DOCUSIGN_CLIENT_ID"),
   private_key: System.fetch_env!("DOCUSIGN_PRIVATE_KEY")
 ```
@@ -74,11 +74,11 @@ Then, just be sure to run `source .env` in your shell before compiling your proj
 
 ### Configuring DocuSign
 
-Access DocuSign using an administrator account and go in `Settings`. 
+Access DocuSign using an administrator account and go in `Settings`.
 
 1. Under `Apps & Keys`, note the `API Account ID`. This is the `Account ID` mentionned above.
 2. Create a new app:
-   1. Provide a name. 
+   1. Provide a name.
    2. In section `Authentication`, click on `+ GENERATE RSA`. Store securely the information provided. The private key will have to be provided in the config files of your app (or in a file).
    3. Add a redirect URI for: `https://account-d.docusign.com/me` (or `https://account.docusign.com/me` if on the DocuSign production site). Important for users to consent the impersonation of your app.
 3. Under `Apps & Keys`, note the `Integration key` of the app you just added. This is the `Client ID` mentionned above.
@@ -89,14 +89,14 @@ a user for it (see below).
 
 ### Impersonate another user through the API
 
-If you want to use the API through other DocuSign users (impersonation), you first need to create the user in 
+If you want to use the API through other DocuSign users (impersonation), you first need to create the user in
 DocuSign, then you have to ask the user to `consent` the impersonation that your app will do.
 To do so, after you created the user, send them the following link (replace `DOCUSIGN_CLIENT_ID` with the ID configured above):
 
-Sandbox: 
+Sandbox:
 `https://account-d.docusign.com/oauth/auth?response_type=code&scope=signature%20impersonation&client_id=DOCUSIGN_CLIENT_ID&redirect_uri=https://account-d.docusign.com/me`
 
-Production: 
+Production:
 `https://account.docusign.com/oauth/auth?response_type=code&scope=signature%20impersonation&client_id=DOCUSIGN_CLIENT_ID&redirect_uri=https://account.docusign.com/me`
 
 The user will then have to sign in and approve your application to use their credentials.
@@ -106,7 +106,7 @@ page in DocuSign.
 
 ### Using the API
 
-Before calling API functions (`DocuSign.API.xxx`), you must first establish a connection to the 
+Before calling API functions (`DocuSign.API.xxx`), you must first establish a connection to the
 DocuSign API:
 
 ```
