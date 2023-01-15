@@ -4,6 +4,5 @@ engines:
   credo:
     enabled: true
 exclude_paths:
-- config
-- test
-
+  - config
+  - test
