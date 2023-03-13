@@ -76,7 +76,7 @@ Then, just be sure to run `source .env` in your shell before compiling your proj
 
 Access DocuSign using an administrator account and go in `Settings`.
 
-1. Under `Apps & Keys`, note the `API Account ID`. This is the `Account ID` mentionned above.
+1. Under `Apps & Keys`, note the `API Account ID`. This is the `Account ID` mentioned above.
 2. Create a new app:
    1. Provide a name.
    2. In section `Authentication`, click on `+ GENERATE RSA`. Store securely the information provided. The private key will have to be provided in the config files of your app (or in a file).
