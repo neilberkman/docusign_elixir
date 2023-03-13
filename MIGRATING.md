@@ -1,4 +1,4 @@
-# Migrating to `v1.0.0` from an earlier version
+# Migrating to `v1.0` from an earlier version
 
 This version contains some breaking changes. You may need to modify your code.
 
