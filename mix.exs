@@ -44,7 +44,7 @@ defmodule DocuSign.MixProject do
       {:joken, "~> 2.0"},
       {:oauth2, "~> 2.0"},
       {:plug_cowboy, "~> 2.0"},
-      {:castore, "~> 0.1.0"},
+      {:castore, "~> 1.0"},
       {:mint, "~> 1.0"},
 
       # test
