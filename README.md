@@ -1,6 +1,6 @@
 # DocuSign API Client
 
-Unofficial DocuSign Elixir Library used to interact with the eSign REST API. Send, sign, and approve documents using this client.
+Unofficial DocuSign Elixir Library used to interact with the eSignature REST API. Send, sign, and approve documents using this client.
 
 ## Installation
 
@@ -141,19 +141,24 @@ the API client for those users and refresh the access tokens.
 
 ## Regenerating stubs
 
-1. Download the latest [OpenAPI Generator](https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/6.2.1/openapi-generator-cli-6.2.1.jar) executable.
-2. Download the latest [DocuSign OpenAPI Specification](https://raw.githubusercontent.com/docusign/eSign-OpenAPI-Specification/master/esignature.rest.swagger-v2.1.json) file (or "swagger" file).
-3. Change the title in the swagger file to "DocuSign" (the path to the title in JSON is `info.title`).
-4. Execute the following commands:
+1. Install the latest [OpenAPI Generator](https://openapi-generator.tech/docs/installation).
+2. NOTE: When updating the version of OpenAPI Generator, updating the "OpenAPI Generator 6.4.0" comment header in a separate commit beforehand will make the other changes easier to review.
+3. Download the latest [DocuSign OpenAPI Specification](https://raw.githubusercontent.com/docusign/eSign-OpenAPI-Specification/master/esignature.rest.swagger-v2.1.json) file (or "swagger" file).
+4. Change the title in the swagger file to "DocuSign" (the path to the title in JSON is `info.title`).
+5. Rename the `"number"` definition to `"docuSignNumber"` and update the $ref's to use `"#/definitions/docuSignNumber"`.
+6. Rename the `"date"` definition to `"docuSignDate"` and update the $ref's to use `"#/definitions/docuSignDate"`.
+7. Execute the following commands:
 
 ```bash
-java -jar "openapi-generator-cli-6.2.1.jar" generate -i "esignature.rest.swagger-v2.1.json" -g "elixir" -o "/tmp/elixir_api_client"
+openapi-generator generate -i "esignature.rest.swagger-v2.1.json" -g "elixir" -o "/tmp/elixir_api_client"
 rm -rf lib/docusign/api/*
 rm -rf lib/docusign/model/*
 cp -rf /tmp/elixir_api_client/lib/docu_sign/api/* lib/docusign/api
 cp -rf /tmp/elixir_api_client/lib/docu_sign/model/* lib/docusign/model
 mix format
 ```
+
+NOTE: To minimize differences, also trim trailing whitespace by replacing ` +$` with nothing across all files.
 
 ## JWT Authorization Example
 
