@@ -76,7 +76,7 @@ defmodule DocuSign.Model.Tabs do
           :notarizeTabs => [DocuSign.Model.Notarize.t()] | nil,
           :notarySealTabs => [DocuSign.Model.NotarySeal.t()] | nil,
           :noteTabs => [DocuSign.Model.Note.t()] | nil,
-          :numberTabs => [DocuSign.Model.Float.t()] | nil,
+          :numberTabs => [DocuSign.Model.DocuSignNumber.t()] | nil,
           :numericalTabs => [DocuSign.Model.Numerical.t()] | nil,
           :phoneNumberTabs => [DocuSign.Model.PhoneNumber.t()] | nil,
           :polyLineOverlayTabs => [DocuSign.Model.PolyLineOverlay.t()] | nil,
@@ -123,6 +123,7 @@ defimpl Poison.Decoder, for: DocuSign.Model.Tabs do
     |> deserialize(:notarizeTabs, :list, DocuSign.Model.Notarize, options)
     |> deserialize(:notarySealTabs, :list, DocuSign.Model.NotarySeal, options)
     |> deserialize(:noteTabs, :list, DocuSign.Model.Note, options)
+    |> deserialize(:numberTabs, :list, DocuSign.Model.DocuSignNumber, options)
     |> deserialize(:numericalTabs, :list, DocuSign.Model.Numerical, options)
     |> deserialize(:phoneNumberTabs, :list, DocuSign.Model.PhoneNumber, options)
     |> deserialize(:polyLineOverlayTabs, :list, DocuSign.Model.PolyLineOverlay, options)

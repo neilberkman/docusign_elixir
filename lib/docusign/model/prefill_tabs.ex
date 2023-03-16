@@ -25,7 +25,7 @@ defmodule DocuSign.Model.PrefillTabs do
           :checkboxTabs => [DocuSign.Model.Checkbox.t()] | nil,
           :dateTabs => [DocuSign.Model.DateTime.t()] | nil,
           :emailTabs => [DocuSign.Model.Email.t()] | nil,
-          :numberTabs => [DocuSign.Model.Float.t()] | nil,
+          :numberTabs => [DocuSign.Model.DocuSignNumber.t()] | nil,
           :radioGroupTabs => [DocuSign.Model.RadioGroup.t()] | nil,
           :senderCompanyTabs => [DocuSign.Model.SenderCompany.t()] | nil,
           :senderNameTabs => [DocuSign.Model.SenderName.t()] | nil,
@@ -44,6 +44,7 @@ defimpl Poison.Decoder, for: DocuSign.Model.PrefillTabs do
     |> deserialize(:checkboxTabs, :list, DocuSign.Model.Checkbox, options)
     |> deserialize(:dateTabs, :list, DocuSign.Model.Date, options)
     |> deserialize(:emailTabs, :list, DocuSign.Model.Email, options)
+    |> deserialize(:numberTabs, :list, DocuSign.Model.DocuSignNumber, options)
     |> deserialize(:radioGroupTabs, :list, DocuSign.Model.RadioGroup, options)
     |> deserialize(:senderCompanyTabs, :list, DocuSign.Model.SenderCompany, options)
     |> deserialize(:senderNameTabs, :list, DocuSign.Model.SenderName, options)
