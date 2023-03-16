@@ -61,7 +61,7 @@ defmodule DocuSign.Model.EnvelopeRecipientTabs do
           :companyTabs => [DocuSign.Model.Company.t()] | nil,
           :currencyTabs => [DocuSign.Model.Currency.t()] | nil,
           :dateSignedTabs => [DocuSign.Model.DateSigned.t()] | nil,
-          :dateTabs => [DocuSign.Model.DateTime.t()] | nil,
+          :dateTabs => [DocuSign.Model.DocuSignDate.t()] | nil,
           :declineTabs => [DocuSign.Model.Decline.t()] | nil,
           :drawTabs => [DocuSign.Model.Draw.t()] | nil,
           :emailAddressTabs => [DocuSign.Model.EmailAddress.t()] | nil,
@@ -109,7 +109,7 @@ defimpl Poison.Decoder, for: DocuSign.Model.EnvelopeRecipientTabs do
     |> deserialize(:companyTabs, :list, DocuSign.Model.Company, options)
     |> deserialize(:currencyTabs, :list, DocuSign.Model.Currency, options)
     |> deserialize(:dateSignedTabs, :list, DocuSign.Model.DateSigned, options)
-    |> deserialize(:dateTabs, :list, DocuSign.Model.Date, options)
+    |> deserialize(:dateTabs, :list, DocuSign.Model.DocuSignDate, options)
     |> deserialize(:declineTabs, :list, DocuSign.Model.Decline, options)
     |> deserialize(:drawTabs, :list, DocuSign.Model.Draw, options)
     |> deserialize(:emailAddressTabs, :list, DocuSign.Model.EmailAddress, options)
