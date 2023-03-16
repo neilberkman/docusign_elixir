@@ -21,6 +21,7 @@ defmodule DocuSign.Model.BulkSendingCopyRecipient do
     :idCheckConfigurationName,
     :idCheckInformationInput,
     :identificationMethod,
+    :identityVerification,
     :name,
     :note,
     :phoneAuthentication,
@@ -48,6 +49,7 @@ defmodule DocuSign.Model.BulkSendingCopyRecipient do
           :idCheckConfigurationName => String.t() | nil,
           :idCheckInformationInput => DocuSign.Model.IdCheckInformationInput.t() | nil,
           :identificationMethod => String.t() | nil,
+          :identityVerification => DocuSign.Model.RecipientIdentityVerification.t() | nil,
           :name => String.t() | nil,
           :note => String.t() | nil,
           :phoneAuthentication => DocuSign.Model.RecipientPhoneAuthentication.t() | nil,
@@ -77,6 +79,12 @@ defimpl Poison.Decoder, for: DocuSign.Model.BulkSendingCopyRecipient do
       :idCheckInformationInput,
       :struct,
       DocuSign.Model.IdCheckInformationInput,
+      options
+    )
+    |> deserialize(
+      :identityVerification,
+      :struct,
+      DocuSign.Model.RecipientIdentityVerification,
       options
     )
     |> deserialize(

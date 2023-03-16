@@ -60,6 +60,7 @@ defmodule DocuSign.Model.TabMetadata do
     :underline,
     :validationMessage,
     :validationPattern,
+    :validationType,
     :width
   ]
 
@@ -116,6 +117,7 @@ defmodule DocuSign.Model.TabMetadata do
           :underline => String.t() | nil,
           :validationMessage => String.t() | nil,
           :validationPattern => String.t() | nil,
+          :validationType => String.t() | nil,
           :width => String.t() | nil
         }
 end

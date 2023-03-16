@@ -51,7 +51,7 @@ defmodule DocuSign.Api.Groups do
 
   @doc """
   Gets information about groups associated with the account.
-  Retrieves information about groups associated with the account.   ### Related topics  - [How to set a permission profile](/docs/esign-rest-api/how-to/permission-profile-setting/)
+  Retrieves information about groups associated with the account.  **Note:** To retrieve a group's users, use this endpoint to get the group ID and then call the [listGroupUsers](/docs/esign-rest-api/reference/usergroups/groupusers/list/) endpoint.   ### Related topics  - [How to set a permission profile](/docs/esign-rest-api/how-to/permission-profile-setting/)
 
   ### Parameters
 
@@ -59,7 +59,7 @@ defmodule DocuSign.Api.Groups do
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `opts` (keyword): Optional parameters
     - `:count` (String.t): The maximum number of results to return.  Use `start_position` to specify the number of results to skip.  Valid values: `1` to `100`
-    - `:group_type` (String.t):
+    - `:group_type` (String.t): The type of group to return. Valid values:  * `AdminGroup` * `CustomGroup` * `EveryoneGroup`
     - `:include_usercount` (String.t): When **true,** every group returned in the response includes a `userCount` property that contains the total number of users in the group. The default is **true.**
     - `:search_text` (String.t): Filters the results of a GET request based on the text that you specify.
     - `:start_position` (String.t): The zero-based index of the result from which to start returning results.  Use with `count` to limit the number of results.  The default value is `0`.

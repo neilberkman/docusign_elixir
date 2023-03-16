@@ -10,13 +10,15 @@ defmodule DocuSign.Model.RecipientIdentityVerification do
   defstruct [
     :inputOptions,
     :workflowId,
-    :workflowIdMetadata
+    :workflowIdMetadata,
+    :workflowLabel
   ]
 
   @type t :: %__MODULE__{
           :inputOptions => [DocuSign.Model.RecipientIdentityInputOption.t()] | nil,
           :workflowId => String.t() | nil,
-          :workflowIdMetadata => DocuSign.Model.PropertyMetadata.t() | nil
+          :workflowIdMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :workflowLabel => String.t() | nil
         }
 end
 

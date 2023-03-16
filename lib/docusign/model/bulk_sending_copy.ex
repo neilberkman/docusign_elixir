@@ -9,6 +9,7 @@ defmodule DocuSign.Model.BulkSendingCopy do
   @derive [Poison.Encoder]
   defstruct [
     :customFields,
+    :docGenFormFields,
     :emailBlurb,
     :emailSubject,
     :recipients
@@ -16,6 +17,7 @@ defmodule DocuSign.Model.BulkSendingCopy do
 
   @type t :: %__MODULE__{
           :customFields => [DocuSign.Model.BulkSendingCopyCustomField.t()] | nil,
+          :docGenFormFields => [DocuSign.Model.BulksendingCopyDocGenFormField.t()] | nil,
           :emailBlurb => String.t() | nil,
           :emailSubject => String.t() | nil,
           :recipients => [DocuSign.Model.BulkSendingCopyRecipient.t()] | nil
@@ -28,6 +30,12 @@ defimpl Poison.Decoder, for: DocuSign.Model.BulkSendingCopy do
   def decode(value, options) do
     value
     |> deserialize(:customFields, :list, DocuSign.Model.BulkSendingCopyCustomField, options)
+    |> deserialize(
+      :docGenFormFields,
+      :list,
+      DocuSign.Model.BulksendingCopyDocGenFormField,
+      options
+    )
     |> deserialize(:recipients, :list, DocuSign.Model.BulkSendingCopyRecipient, options)
   end
 end

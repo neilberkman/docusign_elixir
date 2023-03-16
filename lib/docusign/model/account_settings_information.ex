@@ -202,12 +202,16 @@ defmodule DocuSign.Model.AccountSettingsInformation do
     :allowSupplementalDocumentsMetadata,
     :allowThirdPartyElectronicNotary,
     :allowThirdPartyElectronicNotaryMetadata,
+    :allowTransactionsWorkspace,
+    :allowTransactionsWorkspaceMetadata,
     :allowUsersToAccessDirectory,
     :allowUsersToAccessDirectoryMetadata,
     :allowValueInsights,
     :allowValueInsightsMetadata,
     :allowWebForms,
     :allowWebFormsMetadata,
+    :allowWhatsAppDelivery,
+    :allowWhatsAppDeliveryMetadata,
     :anchorPopulationScope,
     :anchorPopulationScopeMetadata,
     :anchorTagVersionedPlacementEnabled,
@@ -332,6 +336,7 @@ defmodule DocuSign.Model.AccountSettingsInformation do
     :enableCustomerSatisfactionMetricTrackingMetadata,
     :enableDSPro,
     :enableDSProMetadata,
+    :enableEnforceTlsEmailsSettingMetadata,
     :enableEnvelopeStampingByAccountAdmin,
     :enableEnvelopeStampingByAccountAdminMetadata,
     :enableEnvelopeStampingByDSAdmin,
@@ -346,6 +351,8 @@ defmodule DocuSign.Model.AccountSettingsInformation do
     :enableIDFxIntuitKBAMetadata,
     :enableIDFxPhoneAuthentication,
     :enableIDFxPhoneAuthenticationMetadata,
+    :enableIdfxPhoneAuthSignatureAuthStatus,
+    :enableIdfxPhoneAuthSignatureAuthStatusMetadata,
     :enableInBrowserEditor,
     :enableInBrowserEditorMetadata,
     :enableKeyTermsSuggestionsByDocumentType,
@@ -424,14 +431,16 @@ defmodule DocuSign.Model.AccountSettingsInformation do
     :enableWitnessingMetadata,
     :enforceTemplateNameUniqueness,
     :enforceTemplateNameUniquenessMetadata,
+    :enforceTlsEmails,
+    :enforceTlsEmailsMetadata,
     :envelopeIntegrationAllowed,
     :envelopeIntegrationAllowedMetadata,
     :envelopeIntegrationEnabled,
     :envelopeIntegrationEnabledMetadata,
-    :EnvelopeLimitsTotalDocumentSizeAllowedInMB,
-    :EnvelopeLimitsTotalDocumentSizeAllowedInMBEnabled,
-    :EnvelopeLimitsTotalDocumentSizeAllowedInMBEnabledMetadata,
-    :EnvelopeLimitsTotalDocumentSizeAllowedInMBMetadata,
+    :envelopeLimitsTotalDocumentSizeAllowedInMB,
+    :envelopeLimitsTotalDocumentSizeAllowedInMBEnabled,
+    :envelopeLimitsTotalDocumentSizeAllowedInMBEnabledMetadata,
+    :envelopeLimitsTotalDocumentSizeAllowedInMBMetadata,
     :envelopeSearchMode,
     :envelopeSearchModeMetadata,
     :envelopeStampingDefaultValue,
@@ -451,6 +460,8 @@ defmodule DocuSign.Model.AccountSettingsInformation do
     :finishReminderMetadata,
     :guidedFormsHtmlAllowed,
     :guidedFormsHtmlAllowedMetadata,
+    :guidedFormsHtmlConversionPolicy,
+    :guidedFormsHtmlConversionPolicyMetadata,
     :hasRecipientConnectClaimedDomain,
     :hideAccountAddressInCoC,
     :hideAccountAddressInCoCMetadata,
@@ -526,6 +537,7 @@ defmodule DocuSign.Model.AccountSettingsInformation do
     :rsaVeridPassword,
     :rsaVeridRuleset,
     :rsaVeridUserId,
+    :sbsTransactionLevel,
     :selfSignedRecipientEmailDocument,
     :selfSignedRecipientEmailDocumentMetadata,
     :selfSignedRecipientEmailDocumentUserOverride,
@@ -871,12 +883,16 @@ defmodule DocuSign.Model.AccountSettingsInformation do
           :allowSupplementalDocumentsMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
           :allowThirdPartyElectronicNotary => String.t() | nil,
           :allowThirdPartyElectronicNotaryMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :allowTransactionsWorkspace => String.t() | nil,
+          :allowTransactionsWorkspaceMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
           :allowUsersToAccessDirectory => String.t() | nil,
           :allowUsersToAccessDirectoryMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
           :allowValueInsights => String.t() | nil,
           :allowValueInsightsMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
           :allowWebForms => String.t() | nil,
           :allowWebFormsMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :allowWhatsAppDelivery => String.t() | nil,
+          :allowWhatsAppDeliveryMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
           :anchorPopulationScope => String.t() | nil,
           :anchorPopulationScopeMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
           :anchorTagVersionedPlacementEnabled => String.t() | nil,
@@ -1005,6 +1021,7 @@ defmodule DocuSign.Model.AccountSettingsInformation do
             DocuSign.Model.SettingsMetadata.t() | nil,
           :enableDSPro => String.t() | nil,
           :enableDSProMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :enableEnforceTlsEmailsSettingMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
           :enableEnvelopeStampingByAccountAdmin => String.t() | nil,
           :enableEnvelopeStampingByAccountAdminMetadata =>
             DocuSign.Model.SettingsMetadata.t() | nil,
@@ -1022,6 +1039,9 @@ defmodule DocuSign.Model.AccountSettingsInformation do
           :enableIDFxIntuitKBAMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
           :enableIDFxPhoneAuthentication => String.t() | nil,
           :enableIDFxPhoneAuthenticationMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :enableIdfxPhoneAuthSignatureAuthStatus => String.t() | nil,
+          :enableIdfxPhoneAuthSignatureAuthStatusMetadata =>
+            DocuSign.Model.SettingsMetadata.t() | nil,
           :enableInBrowserEditor => String.t() | nil,
           :enableInBrowserEditorMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
           :enableKeyTermsSuggestionsByDocumentType => String.t() | nil,
@@ -1105,15 +1125,17 @@ defmodule DocuSign.Model.AccountSettingsInformation do
           :enableWitnessingMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
           :enforceTemplateNameUniqueness => String.t() | nil,
           :enforceTemplateNameUniquenessMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :enforceTlsEmails => String.t() | nil,
+          :enforceTlsEmailsMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
           :envelopeIntegrationAllowed => String.t() | nil,
           :envelopeIntegrationAllowedMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
           :envelopeIntegrationEnabled => String.t() | nil,
           :envelopeIntegrationEnabledMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
-          :EnvelopeLimitsTotalDocumentSizeAllowedInMB => String.t() | nil,
-          :EnvelopeLimitsTotalDocumentSizeAllowedInMBEnabled => String.t() | nil,
-          :EnvelopeLimitsTotalDocumentSizeAllowedInMBEnabledMetadata =>
+          :envelopeLimitsTotalDocumentSizeAllowedInMB => String.t() | nil,
+          :envelopeLimitsTotalDocumentSizeAllowedInMBEnabled => String.t() | nil,
+          :envelopeLimitsTotalDocumentSizeAllowedInMBEnabledMetadata =>
             DocuSign.Model.SettingsMetadata.t() | nil,
-          :EnvelopeLimitsTotalDocumentSizeAllowedInMBMetadata =>
+          :envelopeLimitsTotalDocumentSizeAllowedInMBMetadata =>
             DocuSign.Model.SettingsMetadata.t() | nil,
           :envelopeSearchMode => String.t() | nil,
           :envelopeSearchModeMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
@@ -1134,6 +1156,8 @@ defmodule DocuSign.Model.AccountSettingsInformation do
           :finishReminderMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
           :guidedFormsHtmlAllowed => String.t() | nil,
           :guidedFormsHtmlAllowedMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :guidedFormsHtmlConversionPolicy => String.t() | nil,
+          :guidedFormsHtmlConversionPolicyMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
           :hasRecipientConnectClaimedDomain => String.t() | nil,
           :hideAccountAddressInCoC => String.t() | nil,
           :hideAccountAddressInCoCMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
@@ -1214,6 +1238,7 @@ defmodule DocuSign.Model.AccountSettingsInformation do
           :rsaVeridPassword => String.t() | nil,
           :rsaVeridRuleset => String.t() | nil,
           :rsaVeridUserId => String.t() | nil,
+          :sbsTransactionLevel => String.t() | nil,
           :selfSignedRecipientEmailDocument => String.t() | nil,
           :selfSignedRecipientEmailDocumentMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
           :selfSignedRecipientEmailDocumentUserOverride => String.t() | nil,
@@ -1813,6 +1838,12 @@ defimpl Poison.Decoder, for: DocuSign.Model.AccountSettingsInformation do
       options
     )
     |> deserialize(
+      :allowTransactionsWorkspaceMetadata,
+      :struct,
+      DocuSign.Model.SettingsMetadata,
+      options
+    )
+    |> deserialize(
       :allowUsersToAccessDirectoryMetadata,
       :struct,
       DocuSign.Model.SettingsMetadata,
@@ -1820,6 +1851,12 @@ defimpl Poison.Decoder, for: DocuSign.Model.AccountSettingsInformation do
     )
     |> deserialize(:allowValueInsightsMetadata, :struct, DocuSign.Model.SettingsMetadata, options)
     |> deserialize(:allowWebFormsMetadata, :struct, DocuSign.Model.SettingsMetadata, options)
+    |> deserialize(
+      :allowWhatsAppDeliveryMetadata,
+      :struct,
+      DocuSign.Model.SettingsMetadata,
+      options
+    )
     |> deserialize(
       :anchorPopulationScopeMetadata,
       :struct,
@@ -2086,6 +2123,12 @@ defimpl Poison.Decoder, for: DocuSign.Model.AccountSettingsInformation do
     )
     |> deserialize(:enableDSProMetadata, :struct, DocuSign.Model.SettingsMetadata, options)
     |> deserialize(
+      :enableEnforceTlsEmailsSettingMetadata,
+      :struct,
+      DocuSign.Model.SettingsMetadata,
+      options
+    )
+    |> deserialize(
       :enableEnvelopeStampingByAccountAdminMetadata,
       :struct,
       DocuSign.Model.SettingsMetadata,
@@ -2123,6 +2166,12 @@ defimpl Poison.Decoder, for: DocuSign.Model.AccountSettingsInformation do
     )
     |> deserialize(
       :enableIDFxPhoneAuthenticationMetadata,
+      :struct,
+      DocuSign.Model.SettingsMetadata,
+      options
+    )
+    |> deserialize(
+      :enableIdfxPhoneAuthSignatureAuthStatusMetadata,
       :struct,
       DocuSign.Model.SettingsMetadata,
       options
@@ -2316,6 +2365,7 @@ defimpl Poison.Decoder, for: DocuSign.Model.AccountSettingsInformation do
       DocuSign.Model.SettingsMetadata,
       options
     )
+    |> deserialize(:enforceTlsEmailsMetadata, :struct, DocuSign.Model.SettingsMetadata, options)
     |> deserialize(
       :envelopeIntegrationAllowedMetadata,
       :struct,
@@ -2329,13 +2379,13 @@ defimpl Poison.Decoder, for: DocuSign.Model.AccountSettingsInformation do
       options
     )
     |> deserialize(
-      :EnvelopeLimitsTotalDocumentSizeAllowedInMBEnabledMetadata,
+      :envelopeLimitsTotalDocumentSizeAllowedInMBEnabledMetadata,
       :struct,
       DocuSign.Model.SettingsMetadata,
       options
     )
     |> deserialize(
-      :EnvelopeLimitsTotalDocumentSizeAllowedInMBMetadata,
+      :envelopeLimitsTotalDocumentSizeAllowedInMBMetadata,
       :struct,
       DocuSign.Model.SettingsMetadata,
       options
@@ -2371,6 +2421,12 @@ defimpl Poison.Decoder, for: DocuSign.Model.AccountSettingsInformation do
     |> deserialize(:finishReminderMetadata, :struct, DocuSign.Model.SettingsMetadata, options)
     |> deserialize(
       :guidedFormsHtmlAllowedMetadata,
+      :struct,
+      DocuSign.Model.SettingsMetadata,
+      options
+    )
+    |> deserialize(
+      :guidedFormsHtmlConversionPolicyMetadata,
       :struct,
       DocuSign.Model.SettingsMetadata,
       options

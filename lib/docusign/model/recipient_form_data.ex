@@ -8,25 +8,25 @@ defmodule DocuSign.Model.RecipientFormData do
 
   @derive [Poison.Encoder]
   defstruct [
-    :DeclinedTime,
-    :DeliveredTime,
+    :declinedTime,
+    :deliveredTime,
     :email,
     :formData,
     :name,
     :recipientId,
-    :SentTime,
-    :SignedTime
+    :sentTime,
+    :signedTime
   ]
 
   @type t :: %__MODULE__{
-          :DeclinedTime => String.t() | nil,
-          :DeliveredTime => String.t() | nil,
+          :declinedTime => String.t() | nil,
+          :deliveredTime => String.t() | nil,
           :email => String.t() | nil,
           :formData => [DocuSign.Model.FormDataItem.t()] | nil,
           :name => String.t() | nil,
           :recipientId => String.t() | nil,
-          :SentTime => String.t() | nil,
-          :SignedTime => String.t() | nil
+          :sentTime => String.t() | nil,
+          :signedTime => String.t() | nil
         }
 end
 

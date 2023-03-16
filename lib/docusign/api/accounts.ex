@@ -43,14 +43,14 @@ defmodule DocuSign.Api.Accounts do
 
   @doc """
   Retrieves the account information for the specified account.
-  Retrieves the account information for the specified account.  **Response** The `canUpgrade` property contains is a Boolean that indicates whether the account can be upgraded through the API.
+  Retrieves the account information for the specified account.
 
   ### Parameters
 
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `opts` (keyword): Optional parameters
-    - `:include_account_settings` (String.t): When **true,** includes account settings in the response. If you omit this parameter, the default behavior is **false.**
+    - `:include_account_settings` (String.t): When **true,** includes account settings in the response. The default value is **false.**
 
   ### Returns
 
