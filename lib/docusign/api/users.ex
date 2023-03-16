@@ -292,15 +292,15 @@ defmodule DocuSign.Api.Users do
   end
 
   @doc """
-  Removes users account privileges.
-  Closes one or more user records in the account. Users are never deleted from an account, but closing a user prevents them from using account functions.  The response specifies whether the API execution succeeded (200 - OK) or failed (400 - Error). The response contains a user structure similar to the request and includes the user changes. If an error occurred during the DELETE operation for any of the users, the response for that user contains an `errorDetails` property with `errorCode` and `message` properties.
+  Closes one or more users in the account.
+  Closes one or more users in the account, preventing them from accessing account features. Users are not permanently deleted.  The request body requires only the IDs of the users to close:  ```json {     \"users\": [         { \"userId\": \"6b67a1ee-xxxx-xxxx-xxxx-385763624163\" },         { \"userId\": \"b6c74c52-xxxx-xxxx-xxxx-457a81d88926\" },         { \"userId\": \"464f7988-xxxx-xxxx-xxxx-781ee556ab7a\" }     ] } ```  You can use [`Users:update`](/docs/esign-rest-api/reference/users/users/update/) to re-open a closed user.
 
   ### Parameters
 
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `opts` (keyword): Optional parameters
-    - `:delete` (String.t): ID of the user to delete. This parameter takes a comma-separated list of values in the format: `Groups,PermissionSet,SigningGroupsEmail`.
+    - `:delete` (String.t): A list of groups to remove the user from. A comma-separated list of the following:  - `Groups` - `PermissionSet` - `SigningGroupsEmail`
     - `:body` (UserInfoList):
 
   ### Returns
@@ -353,7 +353,7 @@ defmodule DocuSign.Api.Users do
     - `:login_status` (String.t): When **true,** the response includes the login status of each user.
     - `:not_group_id` (String.t): Return user records excluding the specified group IDs.
     - `:start_position` (String.t): The zero-based index of the result from which to start returning results.  Use with `count` to limit the number of results.  The default value is `0`.
-    - `:status` (String.t): Filters results by user account status. Possible values are:  * `ActivationRequired` * `ActivationSent` * `Active` * `Closed` * `Disabled`
+    - `:status` (String.t): Filters results by user account status. A comma-separated list of any of the following:  * `ActivationRequired` * `ActivationSent` * `Active` * `Closed` * `Disabled`
     - `:user_name_substring` (String.t): Filters results based on a full or partial user name.  **Note:** When you enter a partial user name, you do not use a wildcard character.
 
   ### Returns

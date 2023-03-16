@@ -20,7 +20,8 @@ defmodule DocuSign.Model.LocalePolicyTab do
     :initialFormat,
     :nameFormat,
     :timeFormat,
-    :timeZone
+    :timeZone,
+    :useLongCurrencyFormat
   ]
 
   @type t :: %__MODULE__{
@@ -36,7 +37,8 @@ defmodule DocuSign.Model.LocalePolicyTab do
           :initialFormat => String.t() | nil,
           :nameFormat => String.t() | nil,
           :timeFormat => String.t() | nil,
-          :timeZone => String.t() | nil
+          :timeZone => String.t() | nil,
+          :useLongCurrencyFormat => String.t() | nil
         }
 end
 

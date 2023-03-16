@@ -167,6 +167,7 @@ defmodule DocuSign.Api.EnvelopeDocuments do
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `document_id` (String.t): The unique ID of the document within the envelope.  Unlike other IDs in the eSignature API, you specify the `documentId` yourself. Typically the first document has the ID `1`, the second document `2`, and so on, but you can use any numbering scheme that fits within a 32-bit signed integer (1 through 2147483647).   Tab objects have a `documentId` property that specifies the document on which to place the tab.
   - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec`
+  - `document_file_bytes` (String.t): Updated document content.
   - `opts` (keyword): Optional parameters
 
   ### Returns
@@ -174,16 +175,30 @@ defmodule DocuSign.Api.EnvelopeDocuments do
   - `{:ok, DocuSign.Model.EnvelopeDocument.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec documents_put_document(Tesla.Env.client(), String.t(), String.t(), String.t(), keyword()) ::
+  @spec documents_put_document(
+          Tesla.Env.client(),
+          String.t(),
+          String.t(),
+          String.t(),
+          String.t(),
+          keyword()
+        ) ::
           {:ok, DocuSign.Model.EnvelopeDocument.t()}
           | {:ok, DocuSign.Model.ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
-  def documents_put_document(connection, account_id, document_id, envelope_id, _opts \\ []) do
+  def documents_put_document(
+        connection,
+        account_id,
+        document_id,
+        envelope_id,
+        document_file_bytes,
+        _opts \\ []
+      ) do
     request =
       %{}
       |> method(:put)
       |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/documents/#{document_id}")
-      |> ensure_body()
+      |> add_param(:body, :body, document_file_bytes)
       |> Enum.into([])
 
     connection
@@ -232,59 +247,6 @@ defmodule DocuSign.Api.EnvelopeDocuments do
     |> Connection.request(request)
     |> evaluate_response([
       {200, %DocuSign.Model.EnvelopeDocumentsResult{}},
-      {400, %DocuSign.Model.ErrorDetails{}}
-    ])
-  end
-
-  @doc """
-  Retrieves a PDF document from the envelope with no CoC.
-
-  ### Parameters
-
-  - `connection` (DocuSign.Connection): Connection to server
-  - `account_id` (String.t): The external account number (int) or account ID GUID.
-  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec`
-  - `regen_document_id` (String.t):
-  - `opts` (keyword): Optional parameters
-    - `:body` (Document): An optional document object that will act as the primary document in the composite template object. If the document node is present, it will take precedence over any server template or inline template documents. It always comes first. Only use this when you want to supply the document dynamically.
-
-  ### Returns
-
-  - `{:ok, String.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
-  """
-  @spec documents_put_regen_document(
-          Tesla.Env.client(),
-          String.t(),
-          String.t(),
-          String.t(),
-          keyword()
-        ) :: {:ok, DocuSign.Model.ErrorDetails.t()} | {:ok, String.t()} | {:error, Tesla.Env.t()}
-  def documents_put_regen_document(
-        connection,
-        account_id,
-        envelope_id,
-        regen_document_id,
-        opts \\ []
-      ) do
-    optional_params = %{
-      :body => :body
-    }
-
-    request =
-      %{}
-      |> method(:put)
-      |> url(
-        "/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/documents/#{regen_document_id}/regen"
-      )
-      |> add_optional_params(optional_params, opts)
-      |> ensure_body()
-      |> Enum.into([])
-
-    connection
-    |> Connection.request(request)
-    |> evaluate_response([
-      {200, false},
       {400, %DocuSign.Model.ErrorDetails{}}
     ])
   end

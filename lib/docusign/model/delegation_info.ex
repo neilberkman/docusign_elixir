@@ -8,17 +8,17 @@ defmodule DocuSign.Model.DelegationInfo do
 
   @derive [Poison.Encoder]
   defstruct [
-    :Email,
-    :Name,
-    :UserAuthorizationId,
-    :UserId
+    :email,
+    :name,
+    :userAuthorizationId,
+    :userId
   ]
 
   @type t :: %__MODULE__{
-          :Email => String.t() | nil,
-          :Name => String.t() | nil,
-          :UserAuthorizationId => String.t() | nil,
-          :UserId => String.t() | nil
+          :email => String.t() | nil,
+          :name => String.t() | nil,
+          :userAuthorizationId => String.t() | nil,
+          :userId => String.t() | nil
         }
 end
 

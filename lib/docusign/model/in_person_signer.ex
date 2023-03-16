@@ -55,6 +55,7 @@ defmodule DocuSign.Model.InPersonSigner do
     :notaryId,
     :note,
     :noteMetadata,
+    :offlineAttributes,
     :phoneAuthentication,
     :recipientAttachments,
     :recipientAuthenticationStatus,
@@ -150,6 +151,7 @@ defmodule DocuSign.Model.InPersonSigner do
           :notaryId => String.t() | nil,
           :note => String.t() | nil,
           :noteMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :offlineAttributes => DocuSign.Model.OfflineAttributes.t() | nil,
           :phoneAuthentication => DocuSign.Model.RecipientPhoneAuthentication.t() | nil,
           :recipientAttachments => [DocuSign.Model.RecipientAttachment.t()] | nil,
           :recipientAuthenticationStatus => DocuSign.Model.AuthenticationStatus.t() | nil,
@@ -244,6 +246,7 @@ defimpl Poison.Decoder, for: DocuSign.Model.InPersonSigner do
     |> deserialize(:nameMetadata, :struct, DocuSign.Model.PropertyMetadata, options)
     |> deserialize(:notaryHost, :struct, DocuSign.Model.NotaryHost, options)
     |> deserialize(:noteMetadata, :struct, DocuSign.Model.PropertyMetadata, options)
+    |> deserialize(:offlineAttributes, :struct, DocuSign.Model.OfflineAttributes, options)
     |> deserialize(
       :phoneAuthentication,
       :struct,

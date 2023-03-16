@@ -8,11 +8,11 @@ defmodule DocuSign.Model.IdEvidenceViewLink do
 
   @derive [Poison.Encoder]
   defstruct [
-    :ViewLink
+    :viewLink
   ]
 
   @type t :: %__MODULE__{
-          :ViewLink => String.t() | nil
+          :viewLink => String.t() | nil
         }
 end
 

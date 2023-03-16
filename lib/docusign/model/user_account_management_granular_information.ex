@@ -22,6 +22,8 @@ defmodule DocuSign.Model.UserAccountManagementGranularInformation do
     :canManageEnvelopeTransferMetadata,
     :canManageGroupsButNotUsers,
     :canManageGroupsButNotUsersMetadata,
+    :canManageJointAgreements,
+    :canManageJointAgreementsMetadata,
     :canManageReporting,
     :canManageReportingMetadata,
     :canManageSharing,
@@ -50,6 +52,8 @@ defmodule DocuSign.Model.UserAccountManagementGranularInformation do
           :canManageEnvelopeTransferMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
           :canManageGroupsButNotUsers => String.t() | nil,
           :canManageGroupsButNotUsersMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :canManageJointAgreements => String.t() | nil,
+          :canManageJointAgreementsMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
           :canManageReporting => String.t() | nil,
           :canManageReportingMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
           :canManageSharing => String.t() | nil,
@@ -97,6 +101,12 @@ defimpl Poison.Decoder, for: DocuSign.Model.UserAccountManagementGranularInforma
     )
     |> deserialize(
       :canManageGroupsButNotUsersMetadata,
+      :struct,
+      DocuSign.Model.SettingsMetadata,
+      options
+    )
+    |> deserialize(
+      :canManageJointAgreementsMetadata,
       :struct,
       DocuSign.Model.SettingsMetadata,
       options
