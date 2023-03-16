@@ -66,16 +66,18 @@ defmodule DocuSign.Api.Folders do
 
   @doc """
   Gets a list of the folders for the account.
-  Retrieves a list of the folders for the account, including the folder hierarchy. You can specify type kinds of folders to return with the `include` query parameter.  ### Related topics  - [Searching for envelopes](/docs/esign-rest-api/esign101/concepts/envelopes/search/) - [Sharing templates](/docs/esign-rest-api/esign101/concepts/templates/sharing/)
+  Retrieves a list of the folders for the account.  Use the `include` query parameter to specify the kinds of folders to return.  By default, only the first level of subfolders is shown. Set the `sub_folder_depth` query parameter to `-1` to return the entire folder hierarchy.   <ds-column>  <ds-step open=\"false\" hideIcon=\"true\">  Default returns only top-level folders.  <div>  `GET 'https://demo.docusign.net/restapi/v2.1/accounts/624e3e00-xxxx-xxxx-xxxx-43918c520dab/folders'`   ```json {   \"resultSetSize\": \"5\",   \"startPosition\": \"0\",   \"endPosition\": \"4\",   \"totalSetSize\": \"5\",   \"folders\": [     {       \"name\": \"Draft\",       \"type\": \"draft\",       \"itemCount\": \"1\",       \"subFolderCount\": \"0\",       \"hasSubFolders\": \"false\"     },     {       \"name\": \"Inbox\",       \"type\": \"inbox\",       \"itemCount\": \"0\",       \"subFolderCount\": \"1\",       \"hasSubFolders\": \"true\",       \"folders\": [         {           \"name\": \"Project Fair\",           \"type\": \"normal\",           \"hasSubFolders\": \"false\",           \"parentFolderId\": \"3ed02ee3-xxxx-xxxx-xxxx-e6795f96a840\",           \"parentFolderUri\": \"/folders/3ed02ee3-xxxx-xxxx-xxxx-e6795f96a840\"         }       ]     },     {       \"name\": \"Deleted Items\",       \"type\": \"recyclebin\",       \"itemCount\": \"0\",       \"subFolderCount\": \"0\",       \"hasSubFolders\": \"false\"     },     {       \"name\": \"Sent Items\",       \"type\": \"sentitems\",       \"itemCount\": \"3\",       \"subFolderCount\": \"0\",       \"hasSubFolders\": \"false\"     }   ] }  ```  </div></ds-step>   <ds-step open=\"false\" hideIcon=\"true\">  Setting `sub_folder_depth` to `-1` returns the entire folder hierarchy.   <div>  `GET 'https://demo.docusign.net/restapi/v2.1/accounts/624e3e00-xxxx-xxxx-xxxx-43918c520dab/folders?sub_folder_depth=-1'`  One envelope has been moved from the `Inbox` folder to the `Project Fair/Phase 1` folder, and the endpoint is invoked with `sub_folder_depth=-1`.   ```json {   \"resultSetSize\": \"5\",   \"startPosition\": \"0\",   \"endPosition\": \"4\",   \"totalSetSize\": \"4\",   \"folders\": [     {       \"name\": \"Draft\",       \"type\": \"draft\",       \"itemCount\": \"1\",       \"hasSubFolders\": \"false\"     },     {       \"name\": \"Inbox\",       \"type\": \"inbox\",       \"itemCount\": \"0\",       \"hasSubFolders\": \"true\",       \"folders\": [         {           \"name\": \"Project Fair\",           \"type\": \"normal\",           \"itemCount\": \"0\",           \"hasSubFolders\": \"true\",           \"parentFolderId\": \"3ed02ee3-xxxx-xxxx-xxxx-e6795f96a840\",           \"parentFolderUri\": \"/folders/3ed02ee3-xxxx-xxxx-xxxx-e6795f96a840\",           \"folders\": [             {               \"name\": \"NDAs\",               \"type\": \"normal\",               \"itemCount\": \"0\",               \"hasSubFolders\": \"false\",               \"parentFolderId\": \"12882f2f-xxxx-xxxx-xxxx-e04a714f8e2d\",               \"parentFolderUri\": \"/folders/12882f2f-xxxx-xxxx-xxxx-e04a714f8e2d\"             },             {               \"name\": \"Phase 1\",               \"type\": \"normal\",               \"itemCount\": \"1\",               \"hasSubFolders\": \"false\",               \"parentFolderId\": \"12882f2f-xxxx-xxxx-xxxx-e04a714f8e2d\",               \"parentFolderUri\": \"/folders/12882f2f-xxxx-xxxx-xxxx-e04a714f8e2d\"             }           ]         }       ]     },     {       \"name\": \"Deleted Items\",       \"type\": \"recyclebin\",       \"itemCount\": \"0\",       \"hasSubFolders\": \"false\"     },     {       \"name\": \"Sent Items\",       \"type\": \"sentitems\",       \"itemCount\": \"1\",       \"hasSubFolders\": \"false\"     }   ] } ```  </div></ds-step> </ds-column>   ### Related topics  - [Searching for envelopes](/docs/esign-rest-api/esign101/concepts/envelopes/search/) - [Sharing templates](/docs/esign-rest-api/esign101/concepts/templates/sharing/)
 
   ### Parameters
 
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `opts` (keyword): Optional parameters
+    - `:count` (String.t): The maximum number of results to return.
     - `:include` (String.t): A comma-separated list of folder types to include in the response. Valid values are:  - `envelope_folders`: Returns a list of envelope folders. (Default) - `template_folders`: Returns a list of template folders.  - `shared_template_folders`: Returns a list of shared template folders.
     - `:include_items` (String.t): Indicates whether folder items are included in the response. If this parameter is omitted, the default is false.
     - `:start_position` (String.t): The zero-based index of the result from which to start returning results.  The default value is `0`.
+    - `:sub_folder_depth` (String.t): If missing or any value other than `-1`, the returned list contains only the top-level folders. A value of `-1` returns the complete folder hierarchy.
     - `:template` (String.t): This parameter is deprecated as of version 2.1. Use `include` instead.
     - `:user_filter` (String.t): Narrows down the resulting folder list by the following values:  - `all`: Returns all templates owned or shared with the user. (default) - `owned_by_me`: Returns only  templates the user owns. - `shared_with_me`: Returns only templates that are shared with the user.
 
@@ -90,9 +92,11 @@ defmodule DocuSign.Api.Folders do
           | {:error, Tesla.Env.t()}
   def folders_get_folders(connection, account_id, opts \\ []) do
     optional_params = %{
+      :count => :query,
       :include => :query,
       :include_items => :query,
       :start_position => :query,
+      :sub_folder_depth => :query,
       :template => :query,
       :user_filter => :query
     }

@@ -17,6 +17,7 @@ defmodule DocuSign.Model.Contacts do
     :errorDetails,
     :isOwner,
     :name,
+    :notaryContactDetails,
     :organization,
     :roomContactType,
     :shared,
@@ -34,6 +35,7 @@ defmodule DocuSign.Model.Contacts do
           :errorDetails => DocuSign.Model.ErrorDetails.t() | nil,
           :isOwner => boolean() | nil,
           :name => String.t() | nil,
+          :notaryContactDetails => DocuSign.Model.NotaryContactDetails.t() | nil,
           :organization => String.t() | nil,
           :roomContactType => String.t() | nil,
           :shared => String.t() | nil,
@@ -49,5 +51,6 @@ defimpl Poison.Decoder, for: DocuSign.Model.Contacts do
     value
     |> deserialize(:contactPhoneNumbers, :list, DocuSign.Model.ContactPhoneNumber, options)
     |> deserialize(:errorDetails, :struct, DocuSign.Model.ErrorDetails, options)
+    |> deserialize(:notaryContactDetails, :struct, DocuSign.Model.NotaryContactDetails, options)
   end
 end

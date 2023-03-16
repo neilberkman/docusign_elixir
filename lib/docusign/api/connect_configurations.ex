@@ -328,6 +328,46 @@ defmodule DocuSign.Api.ConnectConfigurations do
   end
 
   @doc """
+  Updates the existing Connect OAuth configuration for the account.
+
+  ### Parameters
+
+  - `connection` (DocuSign.Connection): Connection to server
+  - `account_id` (String.t): The external account number (int) or account ID GUID.
+  - `opts` (keyword): Optional parameters
+    - `:body` (ConnectOAuthConfig):
+
+  ### Returns
+
+  - `{:ok, DocuSign.Model.ConnectOAuthConfig.t}` on success
+  - `{:error, Tesla.Env.t}` on failure
+  """
+  @spec connect_o_auth_config_put_connect_o_auth_config(Tesla.Env.client(), String.t(), keyword()) ::
+          {:ok, DocuSign.Model.ErrorDetails.t()}
+          | {:ok, DocuSign.Model.ConnectOAuthConfig.t()}
+          | {:error, Tesla.Env.t()}
+  def connect_o_auth_config_put_connect_o_auth_config(connection, account_id, opts \\ []) do
+    optional_params = %{
+      :body => :body
+    }
+
+    request =
+      %{}
+      |> method(:put)
+      |> url("/v2.1/accounts/#{account_id}/connect/oauth")
+      |> add_optional_params(optional_params, opts)
+      |> ensure_body()
+      |> Enum.into([])
+
+    connection
+    |> Connection.request(request)
+    |> evaluate_response([
+      {200, %DocuSign.Model.ConnectOAuthConfig{}},
+      {400, %DocuSign.Model.ErrorDetails{}}
+    ])
+  end
+
+  @doc """
   Creates a Connect configuration.
   Creates a custom Connect configuration for the specified account.  Connect is a webhook service that provides updates when certain events occur in your eSignature workflows. You can use this endpoint to create: * Account-level Connect configurations to listen for events related to any envelopes sent by one or more account users * Recipient Connect configurations that are triggered when one or more of your account users receive an envelope  To set an account-level configuration, set `configurationType` to **custom.** To set a Recipient Connect configuration, set `configurationType` to **customrecipient.**  If you want to listen for events on only one envelope, use the [eventNotification](/docs/esign-rest-api/reference/envelopes/envelopes/create/#schema__envelopedefinition_eventnotification) object instead.  **Note:** To use this function, you must be an account administrator and Connect must be enabled on your account.  ## Data models  There are four possible data models for your Connect configuration. Consider: * Do you want the data in JSON or XML? * Do you want events sent individually (SIM) or in aggregate?  DocuSign recommends using the [JSON SIM event model](/platform/webhooks/connect/improved-json-sim-event-model/).  <ds-column>  <ds-step open=\"false\" hideIcon=\"true\"> <h3>JSON SIM (Recommended)</h3> <div>  Set `deliveryMode` to **SIM** and `eventData.version` to **restv2.1.** Use the `events` property to set the event statuses that will trigger your configuration.  The following sample request shows how to create an envelope-level configuration using JSON SIM: ``` {   \"configurationType\": \"custom\",   \"urlToPublishTo\": \"YOUR-WEBHOOK-URL\",   \"allUsers\": \"true\",   \"name\": \"jsonSimTest\",   \"deliveryMode\": \"SIM\",   \"allowEnvelopePublish\": \"true\",   \"enableLog\": \"true\",   \"eventData\": {       \"version\": \"restv2.1\"   },   \"events\": [       \"envelope-sent\",       \"envelope-delivered\",       \"envelope-completed\"   ] } ```  The following sample request shows how to create a Recipient Connect configuration using JSON SIM: ``` {   \"configurationType\": \"customrecipient\",   \"urlToPublishTo\": \"YOUR-WEBHOOK-URL\",   \"allUsers\": \"true\",   \"name\": \"jsonSimTest\",   \"deliveryMode\": \"SIM\",   \"allowEnvelopePublish\": \"true\",   \"enableLog\": \"true\",   \"eventData\": {       \"version\": \"restv2.1\"   },   \"events\": [       \"recipient-sent\",       \"recipient-completed\"   ] } ```  </div></ds-step>  <ds-step open=\"false\" hideIcon=\"true\"> <h3>JSON Aggregate</h3> <div>  Set `deliveryMode` to **aggregate** and `eventData.version` to **restv2.1.** Use the `envelopeEvents` or `recipientEvents` property to set the event statuses that will trigger your configuration.  </div></ds-step>  <ds-step open=\"false\" hideIcon=\"true\"> <h3>XML Aggregate</h3> <div>  Set `deliveryMode` to **aggregate.** Use the `envelopeEvents` or `recipientEvents` property to set the event statuses that will trigger your configuration.  </div></ds-step>  <ds-step open=\"false\" hideIcon=\"true\"> <h3>XML SIM (Legacy apps only)</h3> <div>  **Note:** This model [will be deprecated](https://www.docusign.com/blog/developers/docusign-connect-xml-sim-messaging-format-deprecated).   Set `deliveryMode` to **SIM.** Use the `envelopeEvents` or `recipientEvents` property to set the event statuses that will trigger your configuration.  </div></ds-step> </ds-column>  ## Troubleshooting  If your configuration is not working, check the following.  * Connect must be enabled for your account to use this function. * If you are using `envelopeEvents` or `recipientEvents`, make sure that the event values are sentence case, not lowercase. * Make sure you have either set `allUsers` to **true** or set `userIds` to a non-empty array of IDs. * By default, this endpoint creates a disabled configuration. To enable the configuration immediately, set the body parameter `allowEnvelopePublish` to **true.** You can also enable the configuration in the UI. * To check if events are being emitted, set `enableLog` to **true** to view event logs in the Connect console.  ## Related topics  * For more information about Connect, see the [DocuSign Connect guide](/platform/webhooks/connect/). * Use the MyAPICalls sample app to see an [example of this endpoint](https://myapicalls.sampleapps.docusign.com/scenario/6) using the JSON SIM model.
 
