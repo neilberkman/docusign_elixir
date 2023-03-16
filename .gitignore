@@ -35,3 +35,5 @@ swagger-codegen-cli.jar
 
 # Ignore vscode config
 .vscode
+
+esignature.rest.swagger-v2.1.json
