@@ -9,7 +9,7 @@ The package can be installed by adding `docusign` to your list of dependencies i
 ```elixir
 def deps do
   [
-    {:docusign, "~> 1.0.1"}
+    {:docusign, "~> 1.1.0"}
   ]
 end
 ```
