@@ -13,7 +13,7 @@ defmodule DocuSign.MixProject do
       name: "DocuSign",
       app: :docusign,
       version: @version,
-      elixir: "~> 1.10",
+      elixir: "~> 1.12",
       package: package(),
       source_url: @url,
       maintainers: @maintainers,
