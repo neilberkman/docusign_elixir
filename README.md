@@ -129,6 +129,15 @@ By default, the HTTP requests will timeout after 30_000 ms. You can configure th
 config :docusign, timeout: 60_000
 ```
 
+## Tesla adapter configuration
+
+By default, the API is called using `Tesla` with the Mint adapter. You can override the adapter
+to any [Tesla adapter][tesla_adapters]:
+
+```elixir
+config :docusign, adapter: {Tesla.Adapter.Hackney, [recv_timeout: 30_000]}
+```
+
 ## Migrating from 0.3.x to 0.4.0
 
 Version 0.4.0 brings the ability to call DocuSign API with different user IDs. This is useful if your
@@ -163,3 +172,5 @@ NOTE: To minimize differences, also trim trailing whitespace by replacing ` +$` 
 ## JWT Authorization Example
 
 See the [Elixir sample](https://github.com/neilberkman/docusign_elixir_sample_app) for an example Elixir SDK implementation that uses the JWT bearer grant to authenticate.
+
+[tesla_adapters]: https://hexdocs.pm/tesla/readme.html#adapters

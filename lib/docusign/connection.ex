@@ -45,7 +45,7 @@ defmodule DocuSign.Connection do
            [{"authorization", "#{token.token_type} #{token.access_token}"}]},
           {Tesla.Middleware.EncodeJson, engine: Poison}
         ],
-        Tesla.Adapter.Mint
+        Application.get_env(:docusign, :adapter, Tesla.Adapter.Mint)
       )
     end
   end
