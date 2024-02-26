@@ -138,6 +138,12 @@ to any [Tesla adapter][tesla_adapters]:
 config :docusign, adapter: {Tesla.Adapter.Hackney, [recv_timeout: 30_000]}
 ```
 
+## DocuSign Connect
+
+To receive webhooks from DocuSign Connect, you can use `DocuSign.WebhookPlug` with
+your custom webhook handler. See the documentation of `DocuSign.WebhookPlug` for more
+details.
+
 ## Migrating from 0.3.x to 0.4.0
 
 Version 0.4.0 brings the ability to call DocuSign API with different user IDs. This is useful if your
