@@ -5,6 +5,7 @@
 ### Enhancements
 
 - Add support for configuring underlying Tesla adapter.
+- Add webhook plug to simplify DocuSign Connect integration.
 
 ## v1.1.1
 
