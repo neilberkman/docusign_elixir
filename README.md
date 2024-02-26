@@ -36,7 +36,7 @@ You will need to set the following configuration variables in your config file:
 config :docusign,
   hostname: "account-d.docusign.com",
   client_id: "?????-?????-???????",
-  private_key: "docusign_key.pem"
+  private_key_file: "docusign_key.pem"
 ```
 
 Notes:
@@ -67,7 +67,7 @@ And the corresponding config file:
 ```
 config :docusign,
   client_id: System.fetch_env!("DOCUSIGN_CLIENT_ID"),
-  private_key: System.fetch_env!("DOCUSIGN_PRIVATE_KEY")
+  private_key_file: System.fetch_env!("DOCUSIGN_PRIVATE_KEY")
 ```
 
 Then, just be sure to run `source .env` in your shell before compiling your project.
