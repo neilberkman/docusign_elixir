@@ -12,6 +12,8 @@ defmodule DocuSign.OAuth.Impl do
 
   @behaviour DocuSign.OAuth
 
+  require Logger
+
   alias OAuth2.{AccessToken, Client, Error}
   @type param :: binary | %{binary => param} | [param]
   @type params :: %{binary => param} | Keyword.t()
@@ -138,17 +140,45 @@ defmodule DocuSign.OAuth.Impl do
     end
   end
 
-  # Create token signer based on PEM-encoded key. If the provided `pem_key` is
-  # `nil`, load it from the application environment.
+  # Create token signer based on PEM-encoded key.
   #
   @spec create_token_signer :: Joken.Signer.t()
   defp create_token_signer do
-    Joken.Signer.create("RS256", %{"pem" => token_key()})
+    private_key_config = {
+      Application.get_env(:docusign, :private_key),
+      Application.get_env(:docusign, :private_key_file),
+      Application.get_env(:docusign, :private_key_contents)
+    }
+
+    case private_key_config do
+      {nil, nil, nil} ->
+        raise "No private key found in application environment. Please set :private_key_file or :private_key_contents."
+
+      {deprecated_private_key_file, nil, nil} ->
+        Logger.warning(
+          "The :private_key DocuSign configuration is deprecated. Please use :private_key_file or :private_key_contents."
+        )
+
+        token_signer_from_file(deprecated_private_key_file)
+
+      {nil, private_key_file, nil} ->
+        token_signer_from_file(private_key_file)
+
+      {nil, nil, private_key_contents} ->
+        token_signer_from_contents(private_key_contents)
+
+      _ ->
+        raise "Multiple DocuSign private keys were provided. Please use only one of :private_key, :private_key_file, or :private_key_contents."
+    end
   end
 
-  defp token_key do
-    :docusign
-    |> Application.fetch_env!(:private_key)
+  defp token_signer_from_file(file_path) do
+    file_path
     |> File.read!()
+    |> token_signer_from_contents()
+  end
+
+  defp token_signer_from_contents(contents) do
+    Joken.Signer.create("RS256", %{"pem" => contents})
   end
 end

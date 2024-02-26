@@ -5,9 +5,19 @@ defmodule DocuSign.OAuth.ImplTest do
   alias OAuth2.{AccessToken, Client}
   alias Plug.Conn
 
+  import ExUnit.CaptureLog
+
   setup do
     bypass = Bypass.open()
     {:ok, bypass: bypass}
+  end
+
+  setup do
+    # Some tests will override the application environment so reset it between tests.
+    Application.delete_env(:docusign, :token_signer)
+    Application.delete_env(:docusign, :private_key_file)
+    Application.delete_env(:docusign, :private_key_contents)
+    Application.put_env(:docusign, :private_key, "test/support/test_key")
   end
 
   @token ~s({
@@ -160,5 +170,73 @@ defmodule DocuSign.OAuth.ImplTest do
              "name" => "Neil Test1",
              "sub" => "84a39dd2-b972-48b2-929a-cf743466a4d5"
            }
+  end
+
+  describe "private key configuration" do
+    setup %{bypass: bypass} do
+      stub_token_request(bypass)
+      :ok
+    end
+
+    test "logs warning when private_key is set but succeeds", %{bypass: bypass} do
+      Application.put_env(:docusign, :private_key, "test/support/test_key")
+
+      assert log_of_get_token!(bypass) =~
+               "[warning] The :private_key DocuSign configuration is deprecated. Please use :private_key_file or :private_key_contents."
+    end
+
+    test "can be configured with private_key_file", %{bypass: bypass} do
+      Application.delete_env(:docusign, :private_key)
+      Application.put_env(:docusign, :private_key_file, "test/support/test_key")
+
+      assert log_of_get_token!(bypass) == ""
+    end
+
+    test "can be configured with private_key_contents", %{bypass: bypass} do
+      Application.delete_env(:docusign, :private_key)
+      Application.put_env(:docusign, :private_key_contents, File.read!("test/support/test_key"))
+
+      assert log_of_get_token!(bypass) == ""
+    end
+
+    test "raises without private key configuration", %{bypass: bypass} do
+      Application.delete_env(:docusign, :private_key)
+
+      assert_raise RuntimeError,
+                   "No private key found in application environment. Please set :private_key_file or :private_key_contents.",
+                   fn ->
+                     OAuth.Impl.get_token!(
+                       OAuth.Impl.client(site: "http://localhost:#{bypass.port}")
+                     )
+                   end
+    end
+
+    test "raises if multiple private key configuration keys are used", %{bypass: bypass} do
+      Application.put_env(:docusign, :private_key_file, "test/support/test_key")
+      Application.put_env(:docusign, :private_key_contents, File.read!("test/support/test_key"))
+
+      assert_raise RuntimeError,
+                   "Multiple DocuSign private keys were provided. Please use only one of :private_key, :private_key_file, or :private_key_contents.",
+                   fn ->
+                     OAuth.Impl.get_token!(
+                       OAuth.Impl.client(site: "http://localhost:#{bypass.port}")
+                     )
+                   end
+    end
+  end
+
+  defp stub_token_request(bypass) do
+    Bypass.stub(bypass, "POST", "/oauth/token", fn conn ->
+      Conn.resp(conn, 200, @token)
+    end)
+  end
+
+  defp log_of_get_token!(bypass) do
+    {_client, log} =
+      with_log(fn ->
+        OAuth.Impl.get_token!(OAuth.Impl.client(site: "http://localhost:#{bypass.port}"))
+      end)
+
+    log
   end
 end
