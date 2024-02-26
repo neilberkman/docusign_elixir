@@ -1,6 +1,6 @@
 # Changelog
 
-## v1.1.3 (unreleased)
+## v1.1.3
 
 ### Enhancements
 
