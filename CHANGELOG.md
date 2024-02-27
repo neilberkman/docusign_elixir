@@ -16,7 +16,7 @@ or `:private_key_contents`.
 - Configuring the private key with `:private_key` was deprecated in favour of
 either `:private_key_file` (same semantics) or `:private_key_contents`.
 
-## v1.1.3 (unreleased)
+## v1.1.3
 
 ### Enhancements
 
