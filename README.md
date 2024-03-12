@@ -126,7 +126,7 @@ account_id = "ACCOUNT_ID"
 
 ## Timeout configuration
 
-By default, the HTTP requests will timeout after 30_000 ms. You can configure the timeout:
+By default, HTTP requests will time out after 30_000 ms. You can configure the timeout:
 
 ```elixir
 config :docusign, timeout: 60_000
