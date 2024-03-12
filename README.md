@@ -44,8 +44,8 @@ Notes:
 - the hostname should be set to `account.docusign.com` for the production environment
 - the path for the private key file can be relative or absolute
 - the private key can also be configured with `private_key_contents`, which is the contents
-of the private key file. This is useful when you do not store the private key on disk,
-but in a secrets store such as Hashicorp Vault or AWS Secrets Manager.
+  of the private key file. This is useful when you do not store the private key on disk,
+  but in a secrets store such as Hashicorp Vault or AWS Secrets Manager.
 
 Optional configuration with default values:
 
