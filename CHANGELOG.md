@@ -1,5 +1,21 @@
 # Changelog
 
+## v1.3.0
+
+### Breaking Changes
+- Update minimum Elixir version support to "~> 1.16 or ~> 1.17 or ~> 1.18"
+- Update Poison dependency to "~> 6.0"
+
+### Enhancements
+- Fix contract type specs to match actual function implementations across the codebase
+- Add proper moduledocs and cleanup module documentation
+- Add dialyzer configuration to handle auto-generated code
+
+### Housekeeping
+- Update dependencies to latest versions
+- Replace empty @moduledoc with @moduledoc false for generated modules
+- Update toolchain versions (Erlang 27.2, Elixir 1.18.1, Node 21.7.3)
+
 ## v1.2.0
 
 ### Enhancements
