@@ -49,6 +49,7 @@ defmodule DocuSign.User do
   alias DocuSign.{ClientRegistry, Util}
 
   defmodule AppAccount do
+    @moduledoc false
     defstruct [:account_id, :account_name, :base_uri, :is_default]
     @type t :: %__MODULE__{}
   end
