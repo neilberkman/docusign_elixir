@@ -13,7 +13,7 @@ defmodule DocuSign.MixProject do
       name: "DocuSign",
       app: :docusign,
       version: @version,
-      elixir: "~> 1.12",
+      elixir: "~> 1.16 or ~> 1.17 or ~> 1.18",
       package: package(),
       source_url: @url,
       maintainers: @maintainers,
@@ -40,7 +40,7 @@ defmodule DocuSign.MixProject do
   defp deps do
     [
       {:tesla, "~> 1.4"},
-      {:poison, "~> 5.0"},
+      {:poison, "~> 6.0"},
       {:joken, "~> 2.0"},
       {:oauth2, "~> 2.0"},
       {:plug_cowboy, "~> 2.0"},
