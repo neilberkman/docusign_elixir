@@ -21,7 +21,11 @@ defmodule DocuSign.MixProject do
       homepage_url: @url,
       deps: deps(),
       elixirc_paths: elixirc_paths(Mix.env()),
-      docs: docs()
+      docs: docs(),
+      dialyzer: [
+        ignore_warnings: ".dialyzer_ignore.exs",
+        plt_add_apps: [:mix]
+      ]
     ]
   end
 

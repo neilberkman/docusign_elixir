@@ -130,7 +130,7 @@ defmodule DocuSign.Connection do
   @doc """
   Makes a request.
   """
-  @spec request(t(), Keyword.t()) :: OAuth2.Response.t()
+  @spec request(t(), Keyword.t()) :: {:ok, OAuth2.Response.t()} | {:error, Tesla.Env.t()}
   def request(conn, opts \\ []) do
     timeout = Application.get_env(:docusign, :timeout, @timeout)
     opts = opts |> Keyword.merge(opts: [adapter: [timeout: timeout]])
