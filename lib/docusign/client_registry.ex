@@ -8,6 +8,7 @@ defmodule DocuSign.ClientRegistry do
   use GenServer
 
   defmodule State do
+    @moduledoc false
     defstruct clients: %{}, oauth_impl: nil
   end
 

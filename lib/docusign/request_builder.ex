@@ -218,6 +218,7 @@ defmodule DocuSign.RequestBuilder do
     resolve_mapping(env, mapping)
   end
 
+  # credo:disable-for-next-line Credo.Check.Consistency.ParameterPatternMatching
   def evaluate_response(_ = error, _), do: error
 
   def resolve_mapping(env, mapping, default \\ nil)

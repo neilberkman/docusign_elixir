@@ -56,16 +56,18 @@ defmodule DocuSign.Connection do
   @deprecated "Use DocuSign.Connection.get/1 instead."
   @spec new() :: t()
   def new() do
-    with {:ok, client} <- get_default_client() do
-      account = get_default_account_for_client(client)
+    case get_default_client() do
+      {:ok, client} ->
+        account = get_default_account_for_client(client)
 
-      __MODULE__
-      |> struct(
-        client: client,
-        app_account: account
-      )
-    else
-      {:error, error} -> raise error
+        __MODULE__
+        |> struct(
+          client: client,
+          app_account: account
+        )
+
+      {:error, error} ->
+        raise error
     end
   end
 
@@ -85,17 +87,16 @@ defmodule DocuSign.Connection do
   @type oauth_error :: OAuth2.Response.t() | OAuth2.Error.t()
   @spec get(String.t()) :: {:ok, t()} | {:error, oauth_error}
   def get(user_id) do
-    with {:ok, client} <- ClientRegistry.client(user_id) do
-      account = get_default_account_for_client(client)
-      connection = struct(__MODULE__, client: client, app_account: account)
+    case ClientRegistry.client(user_id) do
+      {:ok, client} ->
+        account = get_default_account_for_client(client)
+        connection = struct(__MODULE__, client: client, app_account: account)
+        {:ok, connection}
 
-      {:ok, connection}
-    else
       {:error, error} ->
         if consent_required_error?(error) do
           url = build_consent_url()
           message = "Ask user to visit this URL to consent impersonation: #{url}"
-
           {:error, {:consent_required, message}}
         else
           {:error, error}
@@ -129,7 +130,7 @@ defmodule DocuSign.Connection do
   @doc """
   Makes a request.
   """
-  @spec request(t(), Keyword.t()) :: %OAuth2.Response{}
+  @spec request(t(), Keyword.t()) :: OAuth2.Response.t()
   def request(conn, opts \\ []) do
     timeout = Application.get_env(:docusign, :timeout, @timeout)
     opts = opts |> Keyword.merge(opts: [adapter: [timeout: timeout]])
