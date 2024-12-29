@@ -1,0 +1,3 @@
+[
+  ~r/lib\/docusign\/api\/.*/
+]
