@@ -84,11 +84,8 @@ defmodule DocuSign.RequestBuilder do
       %{^key => :body} when map_size(definitions) == 1 ->
         # If there is a single entity to send in the body there is no need to
         # enclose it in a multipart request.
-        map_for_body =
-          value
-          |> Map.from_struct()
-          |> prune_nils()
-
+        # Always use ModelCleaner to recursively clean the struct before sending
+        map_for_body = DocuSign.ModelCleaner.clean(value)
         add_param(request, :body, :body, map_for_body)
 
       _ ->
@@ -128,14 +125,20 @@ defmodule DocuSign.RequestBuilder do
   Map
   """
   @spec add_param(map(), atom, atom, any()) :: map()
-  def add_param(request, :body, :body, value), do: Map.put(request, :body, value)
+  def add_param(request, :body, :body, value) do
+    # Add to request
+    Map.put(request, :body, value)
+  end
 
   def add_param(request, :body, key, value) do
+    # Always clean the value using ModelCleaner
+    cleaned_value = DocuSign.ModelCleaner.clean(value)
+
     request
     |> Map.put_new_lazy(:body, &Tesla.Multipart.new/0)
     |> Map.update!(
       :body,
-      &Tesla.Multipart.add_field(&1, key, Poison.encode!(value),
+      &Tesla.Multipart.add_field(&1, key, Poison.encode!(cleaned_value),
         headers: [{:"Content-Type", "application/json"}]
       )
     )
