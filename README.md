@@ -9,7 +9,7 @@ The package can be installed by adding `docusign` to your list of dependencies i
 ```elixir
 def deps do
   [
-    {:docusign, "~> 1.3.0"}
+    {:docusign, "~> 1.3.1"}
   ]
 end
 ```
@@ -146,6 +146,17 @@ config :docusign, adapter: {Tesla.Adapter.Hackney, [recv_timeout: 30_000]}
 To receive webhooks from DocuSign Connect, you can use `DocuSign.WebhookPlug` with
 your custom webhook handler. See the documentation of `DocuSign.WebhookPlug` for more
 details.
+
+## Quick Start with LiveBook
+
+The fastest way to understand how to use this library is through our interactive [embedded_signing.livemd](examples/embedded_signing.livemd) LiveBook example. This notebook provides a complete working demonstration of DocuSign embedded signing, allowing you to:
+
+1. Connect to the DocuSign API
+2. Create and send documents for signing
+3. Generate an embedded signing URL
+4. Download signed documents
+
+Just open the LiveBook and follow along - no environment setup required!
 
 ## Migrating from 0.3.x to 0.4.0
 
