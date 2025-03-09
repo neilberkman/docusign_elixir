@@ -1,5 +1,14 @@
 # Changelog
 
+## v1.3.1
+
+### Bug Fixes
+- Fixed "INVALID_REQUEST_BODY" errors that occurred when using embedded signing functionality
+- Added ModelCleaner module to recursively remove nil values from nested structs before serializing to JSON
+- Updated RequestBuilder to clean request bodies of nil values, fixing the issue transparently
+- Added example livebook showing embedded signing workflow
+- Note: The example Livebook demonstrates using `body:` parameter for envelope creation as expected by the Elixir client
+
 ## v1.3.0
 
 ### Breaking Changes

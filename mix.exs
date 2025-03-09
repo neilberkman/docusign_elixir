@@ -2,7 +2,7 @@ defmodule DocuSign.MixProject do
   @moduledoc false
   use Mix.Project
 
-  @version "1.3.0"
+  @version "1.3.1"
   @url "https://github.com/neilberkman/docusign_elixir"
   @maintainers [
     "Neil Berkman"
@@ -45,11 +45,13 @@ defmodule DocuSign.MixProject do
     [
       {:tesla, "~> 1.4"},
       {:poison, "~> 6.0"},
+      {:jason, "~> 1.4"},
       {:joken, "~> 2.0"},
       {:oauth2, "~> 2.0"},
       {:plug_cowboy, "~> 2.0"},
       {:castore, "~> 1.0"},
       {:mint, "~> 1.0"},
+      {:meck, "~> 0.9.2"},
 
       # test
       {:mock, "~> 0.3.2", only: :test},
