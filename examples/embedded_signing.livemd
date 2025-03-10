@@ -6,9 +6,8 @@ This LiveBook demonstrates how to create a complete embedded signing experience 
 
 ```elixir
 Mix.install([
-  {:docusign, "~> 1.3.1"},
-  {:kino, "~> 0.10.0"},
-  {:jason, "~> 1.2"}
+  {:docusign, "~> 1.4.0"},
+  {:kino, "~> 0.15.3"}
 ])
 ```
 
@@ -58,19 +57,11 @@ user_id = Kino.Input.read(user_id_input)
 is_sandbox = Kino.Input.read(is_sandbox_input)
 return_url = Kino.Input.read(return_url_input)
 
-# Debug private key format
-IO.puts("Private key length: #{String.length(private_key)}")
-IO.puts("Key begins with: #{String.slice(private_key, 0, 27)}")
-IO.puts("Key ends with: #{String.slice(private_key, -25, 25)}")
-
 # Fix key format if needed
 private_key_formatted =
   private_key
   |> String.replace(~r/\r\n/, "\n") # Convert Windows line endings
   |> String.trim() # Remove leading/trailing whitespace
-
-IO.puts("Contains proper header: #{String.contains?(private_key, "BEGIN")}")
-IO.puts("Contains proper footer: #{String.contains?(private_key, "END")}")
 
 # Configure DocuSign application
 hostname = if is_sandbox, do: "account-d.docusign.com", else: "account.docusign.com"
@@ -87,17 +78,12 @@ Let's establish a connection to the DocuSign API:
 
 ```elixir
 # Create a connection with the specified user
-case DocuSign.Connection.get(user_id) do
+connection_result = DocuSign.Connection.get(user_id)
+
+conn = case connection_result do
   {:ok, connection} ->
     IO.puts("✅ Successfully connected to DocuSign")
-
-    # In a regular Elixir context, this would make conn available
-    # In LiveBook, we use persistent_term below instead
-    _conn = connection
-
-    # Let's also bind it to a global variable that's guaranteed to be accessible
-    # This is a workaround for LiveBook scope issues
-    :persistent_term.put(:docusign_conn, connection)
+    connection
 
   {:error, {:consent_required, consent_message}} when is_binary(consent_message) ->
     original_url = Regex.run(~r/https:\/\/[^\s]+/, consent_message) |> List.first()
@@ -128,10 +114,13 @@ case DocuSign.Connection.get(user_id) do
     > **Note**: If you're seeing redirect URI errors, ensure your DocuSign application has
     > `https://www.docusign.com` configured as a redirect URI.
     """) |> Kino.render()
+    
+    nil # Return nil as conn value to avoid undefined variable
 
   {:error, reason} ->
     IO.puts("❌ Failed to connect to DocuSign")
     IO.inspect(reason, label: "Error")
+    nil # Return nil as conn value to avoid undefined variable
 end
 ```
 
@@ -140,17 +129,11 @@ end
 Let's create a form to input the recipient's information:
 
 ```elixir
-# Get the connection from persistent storage
-conn = case :persistent_term.get(:docusign_conn, nil) do
-  nil ->
-    # No connection found
-    IO.puts("⚠️ Connection not established. Please run the previous cell to connect to DocuSign.")
-    nil
-  saved_conn ->
-    # Found in persistent term
-    IO.puts("Using connection from persistent storage")
-    saved_conn
-end
+# Verify that conn is available from previous cell
+conn = conn || (
+  IO.puts("⚠️ Connection not established. Please run the previous cell to connect to DocuSign.")
+  nil
+)
 
 recipient_name_input = Input.text("Recipient Name")
 recipient_email_input = Input.text("Recipient Email")
@@ -235,8 +218,8 @@ document = %DocuSign.Model.Document{
 sign_here_tab = %DocuSign.Model.SignHere{
   anchorString: "Signed by:", # More specific anchor text
   anchorUnits: "pixels",
-  anchorYOffset: "0",
-  anchorXOffset: "100", # Position to the right of the text
+  anchorYOffset: "-5", # Slightly negative to position just above the line
+  anchorXOffset: "110", # Slightly increased from original 100
   documentId: "1", # Match the document ID
   recipientId: "1" # Match the recipient ID
 }
@@ -244,8 +227,8 @@ sign_here_tab = %DocuSign.Model.SignHere{
 date_signed_tab = %DocuSign.Model.DateSigned{
   anchorString: "Date:", # Matches text in our document
   anchorUnits: "pixels",
-  anchorYOffset: "-10",
-  anchorXOffset: "50",
+  anchorYOffset: "-10", # Keep negative value to position above the line
+  anchorXOffset: "80", # Increased from 50 to better center the date
   documentId: "1", # Match the document ID
   recipientId: "1" # Match the recipient ID
 }
@@ -273,48 +256,33 @@ envelope_definition = %DocuSign.Model.EnvelopeDefinition{
   status: "sent"  # Important: For embedded signing, use "sent" (not "created")
 }
 
-# Debug info before sending
-IO.puts("Sending envelope:")
-IO.puts("- Document name: #{document.name}")
-IO.puts("- Document size: #{String.length(encoded_document)} bytes")
-IO.puts("- Signer email: #{signer.email}")
-IO.puts("- Signer name: #{signer.name}")
-IO.puts("- Client User ID: #{signer.clientUserId}")
-IO.puts("- Account ID: #{account_id}")
-IO.puts("- Status: #{envelope_definition.status}")
-
-# Let's also check the connection
-IO.puts("\nConnection Details:")
-IO.puts("- App Account: #{conn.app_account.account_name}")
-IO.puts("- Base URI: #{conn.app_account.base_uri}")
-IO.puts("- Token expiry: #{DateTime.from_unix!(conn.client.token.expires_at)}")
-
 # Create the envelope using the standard API - note we use body: instead of envelopeDefinition:
 result = DocuSign.Api.Envelopes.envelopes_post_envelopes(conn, account_id, body: envelope_definition)
 
-try do
-  case result do
-    {:ok, response} ->
-      envelope_id = response.envelopeId
-      IO.puts("✅ Envelope created successfully!")
-      IO.puts("Envelope ID: #{envelope_id}")
+# Create a variable to hold the envelope ID
+envelope_id = 
+  try do
+    case result do
+      {:ok, response} ->
+        id = response.envelopeId
+        IO.puts("✅ Envelope created successfully!")
+        IO.puts("Envelope ID: #{id}")
+        
+        # Return the envelope ID
+        id
 
-      # Store the envelope ID for later use
-      :persistent_term.put(:docusign_envelope_id, envelope_id)
-
-      # Store client_user_id for future use
-      :persistent_term.put(:docusign_client_user_id, client_user_id)
-
-    {:error, error} ->
-      IO.puts("❌ Failed to create envelope")
-      IO.inspect(error, label: "Error details:")
+      {:error, error} ->
+        IO.puts("❌ Failed to create envelope")
+        IO.inspect(error, label: "Error details:")
+        nil
+    end
+  rescue
+    e in KeyError ->
+      IO.puts("⚠️ Received error response with unexpected format")
+      IO.inspect(e, label: "KeyError details")
+      IO.inspect(result, label: "Full response")
+      nil
   end
-rescue
-  e in KeyError ->
-    IO.puts("⚠️ Received error response with unexpected format")
-    IO.inspect(e, label: "KeyError details")
-    IO.inspect(result, label: "Full response")
-end
 ```
 
 ## Create the Embedded Signing URL
@@ -322,37 +290,14 @@ end
 Now that we have created the envelope, we need to generate a URL that will allow the recipient to sign the document within your application:
 
 ```elixir
-# First, check if we have a connection
-conn =
-  # First try to get it from the binding (normal case)
-  case binding()[:conn] do
-    nil ->
-      # If not in binding, try to get it from the persistent term
-      case :persistent_term.get(:docusign_conn, nil) do
-        nil ->
-          # No connection found
-          IO.puts("⚠️ Connection not established. Please run the connection cell again.")
-          nil
-        saved_conn ->
-          # Found in persistent term
-          IO.puts("Using connection from persistent storage")
-          saved_conn
-      end
-    binding_conn -> binding_conn
-  end
+# Verify that conn is available from previous cells
+conn = conn || (
+  IO.puts("⚠️ Connection not established. Please run the previous cells to connect to DocuSign.")
+  nil
+)
 
-# Verify we have an envelope ID
-envelope_id =
-  # Try to get it from binding first
-  case binding()[:envelope_id] do
-    nil ->
-      # Try from persistent storage
-      case :persistent_term.get(:docusign_envelope_id, nil) do
-        nil -> nil
-        id -> id
-      end
-    id -> id
-  end
+# Check if envelope_id is available from previous cell
+# If not defined in previous cell execution, we'll let the user input it
 
 envelope_id_input =
   if envelope_id do
@@ -364,14 +309,8 @@ envelope_id_input =
 Kino.render(envelope_id_input)
 signing_envelope_id = Kino.Input.read(envelope_id_input)
 
-# Retrieve stored client_user_id or use the one from input
-client_user_id_to_use = case :persistent_term.get(:docusign_client_user_id, nil) do
-  nil ->
-    IO.puts("⚠️ No client_user_id found in storage, using the one from input")
-    client_user_id
-  stored_id ->
-    stored_id
-end
+# Use client_user_id from previous cell if available
+client_user_id_to_use = client_user_id
 
 # Create the recipient view request properly using the DocuSign SDK model
 recipient_view_request = %DocuSign.Model.RecipientViewRequest{
@@ -440,17 +379,11 @@ status_frame = Kino.Frame.new() |> Kino.render()
 # Create document frame to display retrieved document
 document_frame = Kino.Frame.new() |> Kino.render()
 
-# Get the connection from persistent storage
-conn = case :persistent_term.get(:docusign_conn, nil) do
-  nil ->
-    # No connection found
-    IO.puts("⚠️ Connection not established. Please run the connection cell again.")
-    nil
-  saved_conn ->
-    # Found in persistent term
-    IO.puts("Using connection from persistent storage")
-    saved_conn
-end
+# Verify that conn is available from previous cells
+conn = conn || (
+  IO.puts("⚠️ Connection not established. Please run the previous cells to connect to DocuSign.")
+  nil
+)
 
 # Function to check status and update UI
 check_envelope_status = fn ->
