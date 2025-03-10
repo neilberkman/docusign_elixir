@@ -27,7 +27,7 @@ defmodule DocuSign.Connection do
     """
 
     use Tesla
-    plug(Tesla.Middleware.EncodeJson, engine: Poison)
+    plug(Tesla.Middleware.EncodeJson, engine: Jason)
 
     @doc """
     Configure an authless client connection
@@ -43,7 +43,7 @@ defmodule DocuSign.Connection do
           {Tesla.Middleware.BaseUrl, app.base_uri},
           {Tesla.Middleware.Headers,
            [{"authorization", "#{token.token_type} #{token.access_token}"}]},
-          {Tesla.Middleware.EncodeJson, engine: Poison}
+          {Tesla.Middleware.EncodeJson, engine: Jason}
         ],
         Application.get_env(:docusign, :adapter, Tesla.Adapter.Mint)
       )
@@ -130,17 +130,21 @@ defmodule DocuSign.Connection do
   @doc """
   Makes a request.
   """
-  @spec request(t(), Keyword.t()) :: {:ok, OAuth2.Response.t()} | {:error, Tesla.Env.t()}
+  @spec request(t(), Keyword.t()) :: {:ok, Tesla.Env.t()} | {:error, Tesla.Env.t()}
   def request(conn, opts \\ []) do
     timeout = Application.get_env(:docusign, :timeout, @timeout)
     opts = opts |> Keyword.merge(opts: [adapter: [timeout: timeout]])
 
-    {_, res} =
+    result =
       conn
       |> Request.new()
       |> Request.request(opts)
 
-    res
+    case result do
+      {status, res} when status in [:ok, :error] -> {status, res}
+      # When Tesla returns just the env without a tuple
+      res -> {:ok, res}
+    end
   end
 
   @doc """

@@ -7,11 +7,6 @@ defmodule DocuSign.Application do
   require Logger
 
   def start(_type, _args) do
-    # Configure OAuth2 to use Jason as json library
-    if Code.ensure_loaded?(Jason) do
-      Application.put_env(:oauth2, :json_library, Jason)
-    end
-
     # Apply runtime patches before starting the application
     apply_runtime_patches()
 

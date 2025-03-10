@@ -51,33 +51,59 @@ defmodule DocuSign.ModelCleanerIntegrationTest do
       # let's directly test the ModelCleaner integration in RequestBuilder
       request = %{}
 
-      result =
+      # Test both the body and named parameter paths
+
+      # 1. Test with body parameter
+      body_result =
         DocuSign.RequestBuilder.add_optional_params(request, %{body: :body},
           body: envelope_definition
         )
 
-      # Extract the cleaned body from the result
-      cleaned_body = result.body
+      # Extract the cleaned body
+      body = body_result.body
 
-      # Verify it's a map (not a struct)
-      assert is_map(cleaned_body)
-      refute is_struct(cleaned_body)
+      # For :body parameter, ModelCleaner returns a cleaned map, not a Tesla.Multipart
+      assert is_map(body) and not is_struct(body)
 
-      # Verify nil values were removed at various levels
-      refute Map.has_key?(cleaned_body, :emailBlurb)
-
-      # Check document
-      document = List.first(cleaned_body.documents)
+      # Check that nil values were removed in the direct body
+      refute Map.has_key?(body, :emailBlurb)
+      document = List.first(body.documents)
       refute Map.has_key?(document, :transformPdfFields)
-
-      # Check nested tabs
-      signer = List.first(cleaned_body.recipients.signers)
+      signer = List.first(body.recipients.signers)
       sign_here = List.first(signer.tabs.signHereTabs)
       refute Map.has_key?(sign_here, :anchorYOffset)
+      refute Map.has_key?(signer.tabs, :dateSignedTabs)
+      refute Map.has_key?(body.recipients, :carbonCopies)
+
+      # 2. Test with named parameter
+      named_result =
+        DocuSign.RequestBuilder.add_optional_params(request, %{envelope: :body},
+          envelope: envelope_definition
+        )
+
+      # Extract and verify the body is now a Tesla.Multipart
+      multipart = named_result.body
+      assert %Tesla.Multipart{parts: [part]} = multipart
+      assert %Tesla.Multipart.Part{body: json_body} = part
+
+      # Parse the JSON
+      decoded = Jason.decode!(json_body)
+
+      # Verify nil values were removed at various levels
+      refute Map.has_key?(decoded, "emailBlurb")
+
+      # Check document
+      document = List.first(decoded["documents"])
+      refute Map.has_key?(document, "transformPdfFields")
+
+      # Check nested tabs
+      signer = List.first(decoded["recipients"]["signers"])
+      sign_here = List.first(signer["tabs"]["signHereTabs"])
+      refute Map.has_key?(sign_here, "anchorYOffset")
 
       # Check removed nil lists/maps
-      refute Map.has_key?(signer.tabs, :dateSignedTabs)
-      refute Map.has_key?(cleaned_body.recipients, :carbonCopies)
+      refute Map.has_key?(signer["tabs"], "dateSignedTabs")
+      refute Map.has_key?(decoded["recipients"], "carbonCopies")
     end
   end
 end
