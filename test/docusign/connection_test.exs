@@ -120,7 +120,7 @@ defmodule DocuSign.ConnectionTest do
 
       result = do_request(bypass)
 
-      assert result == :timeout
+      assert result == {:error, :timeout}
 
       # Force bypass expectations to pass to prevent exit :shutdown error
       Bypass.pass(bypass)
