@@ -1,5 +1,45 @@
 # Changelog
 
+## v1.4.0
+
+### Enhancements
+- Migrated from Poison to Jason for all JSON operations
+  - Much faster JSON encoding/decoding (Jason is generally 2-3x faster than Poison)
+  - Better compatibility with modern Elixir ecosystem
+  - Maintains backward compatibility with existing code
+- Updated all model modules to use `@derive Jason.Encoder` instead of Poison
+- Modified RequestBuilder to use Jason.encode! for request serialization
+- Updated Deserializer to use Jason.decode for response deserialization
+- Updated OAuth2 client implementation to use Jason as serializer
+- Fixed Tesla middleware to use Jason for JSON encoding
+- Ensured Connection module properly handles different response formats
+- Improved LiveBook example for embedded signing with better state management
+- Improved ModelCleaner implementation for nil value removal
+- Updated ModelCleaner tests with more comprehensive coverage
+- Added Credo configuration to exclude auto-generated model files from linting
+
+### API Enhancements
+- Added several new model modules from latest DocuSign API:
+  - EnvelopeViewDocumentSettings
+  - EnvelopeViewEnvelopeCustomFieldSettings
+  - EnvelopeViewRecipientSettings
+  - EnvelopeViewRequest
+  - EnvelopeViewSettings
+  - EnvelopeViewTaggerSettings
+  - EnvelopeViewTemplateSettings
+  - ExternalPrimaryAccountSafelistAuthRequirements
+  - Number
+  - PaletteItemSettings
+  - PaletteSettings
+  - TemplateAutoMatch
+  - TemplateAutoMatchList
+  - TemplateViewRequest
+  - Various UserAuthorization-related models
+
+### Documentation
+- Updated documentation to reflect the use of Jason for JSON handling
+- Improved embedded signing LiveBook example with better state management
+
 ## v1.3.1
 
 ### Bug Fixes

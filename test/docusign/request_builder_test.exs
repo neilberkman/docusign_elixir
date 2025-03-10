@@ -17,7 +17,17 @@ defmodule DocuSign.RequestBuilderTest do
 
       result = RequestBuilder.add_optional_params(request, optional_params, opts)
 
-      assert result == %{body: %{textTabs: [%{tabId: ":id:", value: ":value:"}]}}
+      # With Tesla.Multipart, we can't directly compare the entire structure
+      # So instead we extract and verify the JSON content
+      assert %{body: %Tesla.Multipart{parts: [part]}} = result
+      assert %Tesla.Multipart.Part{body: json_body} = part
+
+      # Parse the JSON body and check the structure
+      decoded = Jason.decode!(json_body)
+      assert %{"textTabs" => [%{"tabId" => ":id:", "value" => ":value:"}]} = decoded
+
+      # Check that nil values were removed
+      refute Map.has_key?(decoded, "approveTabs")
     end
   end
 end
