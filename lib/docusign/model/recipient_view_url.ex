@@ -3,7 +3,7 @@ defmodule DocuSign.Model.RecipientViewUrl do
   A model representing the response from a recipient view URL request.
   """
 
-  @derive [Poison.Encoder]
+  @derive [Jason.Encoder]
   defstruct [
     :url
   ]
@@ -13,8 +13,5 @@ defmodule DocuSign.Model.RecipientViewUrl do
         }
 end
 
-defimpl Poison.Decoder, for: DocuSign.Model.RecipientViewUrl do
-  def decode(value, _options) do
-    value
-  end
-end
+# For Jason, we don't need to implement a decoder since Jason doesn't have a Decoder protocol.
+# Instead, we'll handle this in the deserializer module.
