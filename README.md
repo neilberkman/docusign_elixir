@@ -168,26 +168,40 @@ the API client for those users and refresh the access tokens.
 
 `APIClient` functions have been deprecated. Please use corresponding functions in `ClientRegistry`.
 
-## Regenerating stubs
+## Regenerating the Library
 
-1. Install the latest [OpenAPI Generator](https://openapi-generator.tech/docs/installation).
-2. NOTE: When updating the version of OpenAPI Generator, updating the "OpenAPI Generator 6.4.0" comment header in a separate commit beforehand will make the other changes easier to review.
-3. Download the latest [DocuSign OpenAPI Specification](https://raw.githubusercontent.com/docusign/eSign-OpenAPI-Specification/master/esignature.rest.swagger-v2.1.json) file (or "swagger" file).
-4. Change the title in the swagger file to "DocuSign" (the path to the title in JSON is `info.title`).
-5. Rename the `"number"` definition to `"docuSignNumber"` and update the $ref's to use `"#/definitions/docuSignNumber"`.
-6. Rename the `"date"` definition to `"docuSignDate"` and update the $ref's to use `"#/definitions/docuSignDate"`.
-7. Execute the following commands:
+### Using Regeneration Scripts
+
+The DocuSign Elixir library can be regenerated using the provided script in the `scripts/regen` directory. This script handles:
+
+1. Preserving custom functionality (like ModelCleaner)
+2. Updating generated code from the latest OpenAPI specification
+3. Adjusting module names and references
+4. Running tests to verify everything works
+
+To regenerate the library:
+
+1. Download the latest OpenAPI specification:
 
 ```bash
-openapi-generator generate -i "esignature.rest.swagger-v2.1.json" -g "elixir" -o "/tmp/elixir_api_client"
-rm -rf lib/docusign/api/*
-rm -rf lib/docusign/model/*
-cp -rf /tmp/elixir_api_client/lib/docu_sign/api/* lib/docusign/api
-cp -rf /tmp/elixir_api_client/lib/docu_sign/model/* lib/docusign/model
-mix format
+curl -o /tmp/docusign_regen/esignature.swagger.json https://raw.githubusercontent.com/docusign/eSign-OpenAPI-Specification/master/esignature.rest.swagger-v2.1.json
 ```
 
-NOTE: To minimize differences, also trim trailing whitespace by replacing ` +$` with nothing across all files.
+2. Generate the client code:
+
+```bash
+openapi-generator generate -i /tmp/docusign_regen/esignature.swagger.json -g elixir -o /tmp/docusign_regen/elixir_api_client --additional-properties=packageName=docusign_e_signature_restapi
+```
+
+3. Run the regeneration script:
+
+```bash
+cd scripts/regen
+chmod +x regenerate_library.sh
+./regenerate_library.sh
+```
+
+See the [regeneration README](scripts/regen/README.md) for more details.
 
 ## JWT Authorization Example
 
