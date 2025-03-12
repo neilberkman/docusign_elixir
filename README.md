@@ -20,7 +20,7 @@ The package can be installed by adding `docusign` to your list of dependencies i
 ```elixir
 def deps do
   [
-    {:docusign, "~> 1.4.0"}
+    {:docusign, "~> 2.0.0"}
   ]
 end
 ```
@@ -73,7 +73,7 @@ For security, we recommend that you use environment variables rather than hard c
 
 ```
 export DOCUSIGN_CLIENT_ID=<client id here>
-export DOCUSIGN_PRIVATE_KEY=<private key file path here>
+export DOCUSIGN_PRIVATE_KEY_FILE=<private key file path here>
 ```
 
 And the corresponding config file:
@@ -81,7 +81,7 @@ And the corresponding config file:
 ```
 config :docusign,
   client_id: System.fetch_env!("DOCUSIGN_CLIENT_ID"),
-  private_key_file: System.fetch_env!("DOCUSIGN_PRIVATE_KEY")
+  private_key_file: System.fetch_env!("DOCUSIGN_PRIVATE_KEY_FILE")
 ```
 
 Then, just be sure to run `source .env` in your shell before compiling your project.
@@ -196,5 +196,9 @@ chmod +x regenerate_library.sh
 ```
 
 See the [regeneration README](scripts/regen/README.md) for more details.
+
+## JWT Authorization Example
+
+See the [Elixir sample](https://github.com/neilberkman/docusign_elixir_sample_app) for an example Elixir SDK implementation that uses the JWT bearer grant to authenticate.
 
 [tesla_adapters]: https://hexdocs.pm/tesla/readme.html#adapters
