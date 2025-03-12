@@ -1,5 +1,18 @@
 # Changelog
 
+## v2.0.0
+
+### Breaking Changes
+- Removed deprecated function `DocuSign.Connection.new/0`
+- Removed deprecated function `DocuSign.Connection.default_account/0`
+- Removed deprecated `:private_key` configuration option (use `:private_key_file` or `:private_key_contents`)
+- See [MIGRATING.md](MIGRATING.md) for migration guidance
+
+### Enhancements
+- Improved code organization by removing deprecated code
+- Updated LiveBook example to work with v2.0.0
+- Made LiveBook example more prominently featured in documentation
+
 ## v1.4.0
 
 ### Enhancements
