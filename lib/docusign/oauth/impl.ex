@@ -76,8 +76,12 @@ defmodule DocuSign.OAuth.Impl do
   @impl DocuSign.OAuth
   def get_client_info(client) do
     case Client.get(client, @client_info_path) do
-      {:ok, %{body: body}} -> body
-      _error -> nil
+      {:ok, %{body: body}} ->
+        body
+
+      {:error, error} ->
+        Logger.error("Failed to get client info: #{inspect(error)}")
+        nil
     end
   end
 

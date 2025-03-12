@@ -4,7 +4,7 @@ defmodule DocuSign do
 
   ## INVALID_REQUEST_BODY Fix
 
-  Version 1.4.0 includes a fix for the INVALID_REQUEST_BODY errors that occur when using
+  This library includes a fix for the INVALID_REQUEST_BODY errors that can occur when using
   embedded signing functionality. The fix implements a ModelCleaner module that recursively 
   removes nil values from request bodies before sending them to the DocuSign API.
 
