@@ -144,31 +144,21 @@ defmodule DocuSign.OAuth.Impl do
   #
   @spec create_token_signer :: Joken.Signer.t()
   defp create_token_signer do
-    private_key_config = {
-      Application.get_env(:docusign, :private_key),
-      Application.get_env(:docusign, :private_key_file),
-      Application.get_env(:docusign, :private_key_contents)
-    }
+    private_key_file = Application.get_env(:docusign, :private_key_file)
+    private_key_contents = Application.get_env(:docusign, :private_key_contents)
 
-    case private_key_config do
-      {nil, nil, nil} ->
+    case {private_key_file, private_key_contents} do
+      {nil, nil} ->
         raise "No private key found in application environment. Please set :private_key_file or :private_key_contents."
 
-      {deprecated_private_key_file, nil, nil} ->
-        Logger.warning(
-          "The :private_key DocuSign configuration is deprecated. Please use :private_key_file or :private_key_contents."
-        )
-
-        token_signer_from_file(deprecated_private_key_file)
-
-      {nil, private_key_file, nil} ->
+      {private_key_file, nil} when is_binary(private_key_file) ->
         token_signer_from_file(private_key_file)
 
-      {nil, nil, private_key_contents} ->
+      {nil, private_key_contents} when is_binary(private_key_contents) ->
         token_signer_from_contents(private_key_contents)
 
       _ ->
-        raise "Multiple DocuSign private keys were provided. Please use only one of :private_key, :private_key_file, or :private_key_contents."
+        raise "Multiple DocuSign private keys were provided. Please use only one of :private_key_file or :private_key_contents."
     end
   end
 
