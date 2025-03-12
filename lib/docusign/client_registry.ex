@@ -32,7 +32,14 @@ defmodule DocuSign.ClientRegistry do
   #####
   # GenServer implementation
   def init(opts) do
-    oauth_impl = Keyword.get(opts, :oauth_impl, oauth_implementation())
+    # Use provided oauth_impl from opts, or fall back to the one from application config
+    oauth_impl = 
+      if Keyword.has_key?(opts, :oauth_impl) do
+        Keyword.get(opts, :oauth_impl)
+      else
+        oauth_implementation()
+      end
+      
     {:ok, %State{oauth_impl: oauth_impl}}
   end
 
