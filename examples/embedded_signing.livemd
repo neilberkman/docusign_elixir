@@ -6,7 +6,7 @@ This LiveBook demonstrates how to create a complete embedded signing experience 
 
 ```elixir
 Mix.install([
-  {:docusign, "~> 1.4.0"},
+  {:docusign, "~> 2.0.0"},
   {:kino, "~> 0.15.3"}
 ])
 ```
