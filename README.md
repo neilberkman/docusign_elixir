@@ -2,6 +2,17 @@
 
 Unofficial DocuSign Elixir Library used to interact with the eSignature REST API. Send, sign, and approve documents using this client.
 
+## Quick Start with LiveBook
+
+**The easiest way to get started** is through our interactive [embedded_signing.livemd](examples/embedded_signing.livemd) LiveBook example. This notebook provides a complete working demonstration of DocuSign embedded signing, allowing you to:
+
+1. Connect to the DocuSign API
+2. Create and send documents for signing
+3. Generate an embedded signing URL
+4. Download signed documents
+
+Just open the LiveBook and follow along - no environment setup required!
+
 ## Installation
 
 The package can be installed by adding `docusign` to your list of dependencies in `mix.exs`:
@@ -84,7 +95,7 @@ Access DocuSign using an administrator account and go in `Settings`.
    1. Provide a name.
    2. In section `Authentication`, click on `+ GENERATE RSA`. Store securely the information provided. The private key will have to be provided in the config files of your app (or in a file).
    3. Add a redirect URI for: `https://account-d.docusign.com/me` (or `https://account.docusign.com/me` if on the DocuSign production site). Important for users to consent the impersonation of your app.
-3. Under `Apps & Keys`, note the `Integration key` of the app you just added. This is the `Client ID` mentionned above.
+3. Under `Apps & Keys`, note the `Integration key` of the app you just added. This is the `Client ID` mentioned above.
 
 If you want, you can use your administrator user with the API. The user ID is displayed in the
 `My account information` frame on the `Apps & Keys` page. But it would most likely be safer to create
@@ -147,26 +158,9 @@ To receive webhooks from DocuSign Connect, you can use `DocuSign.WebhookPlug` wi
 your custom webhook handler. See the documentation of `DocuSign.WebhookPlug` for more
 details.
 
-## Quick Start with LiveBook
+## Migration Guide
 
-The fastest way to understand how to use this library is through our interactive [embedded_signing.livemd](examples/embedded_signing.livemd) LiveBook example. This notebook provides a complete working demonstration of DocuSign embedded signing, allowing you to:
-
-1. Connect to the DocuSign API
-2. Create and send documents for signing
-3. Generate an embedded signing URL
-4. Download signed documents
-
-Just open the LiveBook and follow along - no environment setup required!
-
-## Migrating from 0.3.x to 0.4.0
-
-Version 0.4.0 brings the ability to call DocuSign API with different user IDs. This is useful if your
-users have different security restrictions in DocuSign. The `ClientRegistry` takes care or tracking
-the API client for those users and refresh the access tokens.
-
-`Connection.new/0` has been deprecated. You should replace calls to `Connection.new/0` with `Connection.get/1` and provide a user ID.
-
-`APIClient` functions have been deprecated. Please use corresponding functions in `ClientRegistry`.
+For information about migrating between versions, please see [MIGRATING.md](MIGRATING.md).
 
 ## Regenerating the Library
 
@@ -202,9 +196,5 @@ chmod +x regenerate_library.sh
 ```
 
 See the [regeneration README](scripts/regen/README.md) for more details.
-
-## JWT Authorization Example
-
-See the [Elixir sample](https://github.com/neilberkman/docusign_elixir_sample_app) for an example Elixir SDK implementation that uses the JWT bearer grant to authenticate.
 
 [tesla_adapters]: https://hexdocs.pm/tesla/readme.html#adapters
