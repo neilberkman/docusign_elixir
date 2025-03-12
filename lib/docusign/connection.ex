@@ -51,37 +51,6 @@ defmodule DocuSign.Connection do
   end
 
   @doc """
-  Create new conn for default configured user ID
-  """
-  @deprecated "Use DocuSign.Connection.get/1 instead."
-  @spec new() :: t()
-  def new() do
-    case get_default_client() do
-      {:ok, client} ->
-        account = get_default_account_for_client(client)
-
-        __MODULE__
-        |> struct(
-          client: client,
-          app_account: account
-        )
-
-      {:error, error} ->
-        raise error
-    end
-  end
-
-  # Note: to delete once all deprecated functions have been removed.
-  defp get_default_client do
-    ClientRegistry.client(default_user_id())
-  end
-
-  # Note: to delete once all deprecated functions have been removed.
-  defp default_user_id do
-    Application.get_env(:docusign, :user_id)
-  end
-
-  @doc """
   Create new conn for provided user ID.
   """
   @type oauth_error :: OAuth2.Response.t() | OAuth2.Error.t()
@@ -145,17 +114,5 @@ defmodule DocuSign.Connection do
       # When Tesla returns just the env without a tuple
       res -> {:ok, res}
     end
-  end
-
-  @doc """
-  Retrieves the default account of default user configured
-  """
-  @spec default_account() :: User.AppAccount.t()
-  @deprecated """
-  Please use `Docusign.Connection.get/1`. The returned structs includes `app_account`, which is the default account.
-  """
-  def default_account() do
-    get_default_client()
-    |> get_default_account_for_client()
   end
 end
