@@ -197,8 +197,4 @@ chmod +x regenerate_library.sh
 
 See the [regeneration README](scripts/regen/README.md) for more details.
 
-## JWT Authorization Example
-
-See the [Elixir sample](https://github.com/neilberkman/docusign_elixir_sample_app) for an example Elixir SDK implementation that uses the JWT bearer grant to authenticate.
-
 [tesla_adapters]: https://hexdocs.pm/tesla/readme.html#adapters
