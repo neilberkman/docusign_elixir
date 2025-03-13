@@ -68,10 +68,22 @@ defmodule DocuSign.MixProject do
 
   defp docs do
     [
-      extras: ["README.md", "MIGRATING.md", "examples/embedded_signing.livemd"],
+      extras: ["README.md", "CHANGELOG.md", "MIGRATING.md", "examples/embedded_signing.livemd"],
       main: "readme",
       source_ref: "v#{@version}",
-      source_url: @url
+      source_url: @url,
+      extra_section: "GUIDES",
+      groups_for_extras: [
+        "Guides": ~r/examples\/.*/,
+        "Migration Guides": ~r/MIGRATING\.md/,
+        "Changelog": ~r/CHANGELOG\.md/
+      ],
+      groups_for_modules: [
+        API: ~r/DocuSign\.Api\..*/,
+        Models: ~r/DocuSign\.Model\..*/,
+        Core: ~r/DocuSign\.(Connection|ClientRegistry|OAuth|User|Util).*/,
+        WebHook: ~r/DocuSign\.Webhook.*/
+      ]
     ]
   end
 
