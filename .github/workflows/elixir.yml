@@ -13,37 +13,36 @@ jobs:
           otp-version: "27.2"
           elixir-version: "1.18.1"
 
-      # For this build only, clean everything first to resolve dependency issues
-      - name: Clean Dependencies and Build
-        run: |
-          rm -rf deps
-          rm -rf _build
-          mix local.hex --force
-
       # Standard caching pattern based on Phoenix Framework
       - name: Cache deps
         id: cache-deps
         uses: actions/cache@v3
         env:
-          cache-name: deps-v2
+          cache-name: deps-v3
         with:
           path: deps
           key: ${{ runner.os }}-mix-${{ env.cache-name }}-${{ hashFiles('mix.lock', 'mix.exs') }}
-          # No restore-keys to ensure we don't get stale dependencies
+          restore-keys: |
+            ${{ runner.os }}-mix-${{ env.cache-name }}-
 
       - name: Cache compiled build
         id: cache-build
         uses: actions/cache@v3
         env:
-          cache-name: build-v2
+          cache-name: build-v3
         with:
           path: _build
           key: ${{ runner.os }}-mix-${{ env.cache-name }}-${{ hashFiles('mix.lock', 'mix.exs') }}
-          # No restore-keys to ensure we don't get stale build artifacts
+          restore-keys: |
+            ${{ runner.os }}-mix-${{ env.cache-name }}-
 
-      # Install dependencies 
+      # Only clean if cache not found
       - name: Install Dependencies
         run: |
+          if [ ! -d "deps" ]; then
+            echo "Cache not found, performing clean install"
+            mix local.hex --force
+          fi
           mix deps.get
 
       - name: Compile app
