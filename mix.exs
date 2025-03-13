@@ -68,7 +68,7 @@ defmodule DocuSign.MixProject do
 
   defp docs do
     [
-      extras: ["README.md"],
+      extras: ["README.md", "MIGRATING.md", "examples/embedded_signing.livemd"],
       main: "readme",
       source_ref: "v#{@version}",
       source_url: @url
