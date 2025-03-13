@@ -46,7 +46,7 @@ defmodule DocuSign.User do
     :links
   ]
 
-  alias DocuSign.{ClientRegistry, Util}
+  alias DocuSign.Util
 
   defmodule AppAccount do
     @moduledoc false
@@ -57,9 +57,8 @@ defmodule DocuSign.User do
   @doc """
   Retrieve the user info
   """
-  def info(client \\ nil) do
-    api_client = client || get_default_client()
-    body = oauth_implementation().get_client_info(api_client)
+  def info(client) do
+    body = oauth_implementation().get_client_info(client)
     attrs = Util.map_keys_to_atoms(body)
 
     __MODULE__
@@ -67,16 +66,6 @@ defmodule DocuSign.User do
     |> Map.update!(:accounts, fn accounts ->
       Enum.map(accounts, &struct(AppAccount, Util.map_keys_to_atoms(&1)))
     end)
-  end
-
-  # Note: to delete once all deprecated functions have been removed.
-  defp get_default_client do
-    ClientRegistry.client(default_user_id())
-  end
-
-  # Note: to delete once all deprecated functions have been removed.
-  defp default_user_id do
-    Application.get_env(:docusign, :user_id)
   end
 
   @doc """
