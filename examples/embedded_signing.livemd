@@ -1,6 +1,6 @@
 # DocuSign Embedded Signing with Elixir
 
-## Section
+[![Run in Livebook](https://livebook.dev/badge/v1/blue.svg)](https://livebook.dev/run?url=https://github.com/neilberkman/docusign_elixir/blob/main/examples/embedded_signing.livemd)
 
 This LiveBook demonstrates how to create a complete embedded signing experience with the DocuSign Elixir SDK. It walks you through the entire process from authentication to retrieving a signed document.
 

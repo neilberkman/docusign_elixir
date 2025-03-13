@@ -4,14 +4,16 @@ Unofficial DocuSign Elixir Library used to interact with the eSignature REST API
 
 ## Quick Start with LiveBook
 
-**The easiest way to get started** is through our interactive [embedded_signing.livemd](examples/embedded_signing.livemd) LiveBook example. This notebook provides a complete working demonstration of DocuSign embedded signing, allowing you to:
+**The easiest way to get started** is through our interactive LiveBook example. This notebook provides a complete working demonstration of DocuSign embedded signing, allowing you to:
 
 1. Connect to the DocuSign API
 2. Create and send documents for signing
 3. Generate an embedded signing URL
 4. Download signed documents
 
-Just open the LiveBook and follow along - no environment setup required!
+[![Run in Livebook](https://livebook.dev/badge/v1/blue.svg)](https://livebook.dev/run?url=https://github.com/neilberkman/docusign_elixir/blob/main/examples/embedded_signing.livemd)
+
+Just click the badge above to run the notebook in LiveBook - no environment setup required!
 
 ## Installation
 
