@@ -15,18 +15,20 @@ defmodule DocuSign.ConnectionTest do
 
   defmock(@oauth_mock, for: DocuSign.OAuth)
 
-  describe "(deprecated) creating a connection for default user" do
+  # Tests using the deprecated Connection.new have been rewritten to use Connection.get
+  describe "creating a connection for default user" do
     test "no user ID returns connection using default user ID" do
       {:ok, pid} = DocuSign.ClientRegistry.start_link(oauth_impl: DocuSign.OAuth.Fake)
       on_exit(fn -> assert_down(pid) end)
 
-      connection = Connection.new()
+      # Using Connection.get/1 instead of deprecated Connection.new/0
+      {:ok, connection} = Connection.get(Application.get_env(:docusign, :user_id))
 
       # Returns user id provided by OAuth.Fake
       assert connection.client.ref.user_id == ":user-id:"
     end
 
-    test "OAuth error raises an exception" do
+    test "OAuth error returns error tuple" do
       {:ok, pid} = DocuSign.ClientRegistry.start_link(oauth_impl: @oauth_mock)
       on_exit(fn -> assert_down(pid) end)
 
@@ -36,9 +38,9 @@ defmodule DocuSign.ConnectionTest do
       end)
       |> expect(:refresh_token!, fn _client, _force -> raise %OAuth2.Error{} end)
 
-      assert_raise OAuth2.Error, fn ->
-        Connection.new()
-      end
+      # Using Connection.get/1 instead of deprecated Connection.new/0
+      result = Connection.get(Application.get_env(:docusign, :user_id))
+      assert {:error, %OAuth2.Error{}} = result
     end
   end
 
