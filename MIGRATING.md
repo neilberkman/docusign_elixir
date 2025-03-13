@@ -1,10 +1,14 @@
-# Migrating to `v2.0` from `v1.x`
+# Migration Guide
+
+## Migrating to `v2.0` from `v1.x`
 
 Version 2.0.0 removes previously deprecated functionality. If you're still using any of these functions or configuration options, you'll need to update your code:
 
 - Removed `DocuSign.Connection.new/0` - use `DocuSign.Connection.get/1` and provide a user ID
 - Removed `DocuSign.Connection.default_account/0` - the app_account is included in the connection returned by `DocuSign.Connection.get/1`
 - Removed `:private_key` configuration option - use `:private_key_file` or `:private_key_contents` instead
+- Removed the entire `DocuSign.APIClient` module - use corresponding functions in `DocuSign.ClientRegistry` instead
+- Removed `DocuSign.User.info/0` - use `DocuSign.User.info/1` and provide a client parameter
 
 ## Migrating to `v0.4.0` from `v0.3.x`
 
