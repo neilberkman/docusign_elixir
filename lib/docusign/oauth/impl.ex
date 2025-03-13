@@ -150,6 +150,7 @@ defmodule DocuSign.OAuth.Impl do
   defp create_token_signer do
     private_key_file = Application.get_env(:docusign, :private_key_file)
     private_key_contents = Application.get_env(:docusign, :private_key_contents)
+    # In v2.0, we don't handle private_key anymore (deprecated)
 
     case {private_key_file, private_key_contents} do
       {nil, nil} ->

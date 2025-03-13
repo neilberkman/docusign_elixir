@@ -2,8 +2,10 @@
 # and its dependencies with the aid of the Config module.
 import Config
 
-# Using the recommended approach instead of deprecated private_key
-config :docusign, private_key_file: System.get_env("DOCUSIGN_PRIVATE_KEY") || "docusign_key.pem"
+# Using the recommended approach with proper environment variable naming
+config :docusign,
+  private_key_file: System.get_env("DOCUSIGN_PRIVATE_KEY_FILE") || "docusign_key.pem"
+
 config :docusign, token_expires_in: 3600
 
 config :docusign, client_id: System.get_env("DOCUSIGN_CLIENT_ID")
