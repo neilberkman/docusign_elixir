@@ -51,7 +51,7 @@ defmodule DocuSign.MixProject do
       {:castore, "~> 1.0"},
       {:mint, "~> 1.0"},
       {:meck, "~> 0.9.2"},
-      {:cowlib, "2.14.0"},
+      {:cowlib, "2.15.0"},
 
       # test
       {:mock, "~> 0.3.2", only: :test},
