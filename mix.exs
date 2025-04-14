@@ -74,9 +74,9 @@ defmodule DocuSign.MixProject do
       source_url: @url,
       extra_section: "GUIDES",
       groups_for_extras: [
-        "Guides": ~r/examples\/.*/,
+        Guides: ~r/examples\/.*/,
         "Migration Guides": ~r/MIGRATING\.md/,
-        "Changelog": ~r/CHANGELOG\.md/
+        Changelog: ~r/CHANGELOG\.md/
       ],
       groups_for_modules: [
         API: ~r/DocuSign\.Api\..*/,
@@ -92,7 +92,9 @@ defmodule DocuSign.MixProject do
       maintainers: @maintainers,
       licenses: ["MIT"],
       links: %{github: @url},
-      files: ~w(lib) ++ ~w(LICENSE mix.exs README.md CHANGELOG.md MIGRATING.md examples/embedded_signing.livemd)
+      files:
+        ~w(lib) ++
+          ~w(LICENSE mix.exs README.md CHANGELOG.md MIGRATING.md examples/embedded_signing.livemd)
     ]
   end
 end
