@@ -4,14 +4,32 @@ on: push
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          # Earliest supported version
+          - elixir: "1.16.0"
+            otp: "26.0"
+          # Latest 1.16 series
+          - elixir: "1.16.3"
+            otp: "26.2"
+          # Latest 1.17 series
+          - elixir: "1.17.3"
+            otp: "27.1"
+          # Latest 1.18 series with OTP 27
+          - elixir: "1.18.1"
+            otp: "27.2"
+          # Latest 1.18 series with OTP 28
+          - elixir: "1.18.4"
+            otp: "28.0"
     steps:
       - uses: actions/checkout@v3
 
       - name: Install Elixir
         uses: erlef/setup-beam@v1
         with:
-          otp-version: "27.2"
-          elixir-version: "1.18.1"
+          otp-version: ${{ matrix.otp }}
+          elixir-version: ${{ matrix.elixir }}
 
       # Standard caching pattern based on Phoenix Framework
       - name: Cache deps
@@ -21,9 +39,9 @@ jobs:
           cache-name: deps-v3
         with:
           path: deps
-          key: ${{ runner.os }}-mix-${{ env.cache-name }}-${{ hashFiles('mix.lock', 'mix.exs') }}
+          key: ${{ runner.os }}-mix-${{ env.cache-name }}-${{ matrix.elixir }}-${{ matrix.otp }}-${{ hashFiles('mix.lock', 'mix.exs') }}
           restore-keys: |
-            ${{ runner.os }}-mix-${{ env.cache-name }}-
+            ${{ runner.os }}-mix-${{ env.cache-name }}-${{ matrix.elixir }}-${{ matrix.otp }}-
 
       - name: Cache compiled build
         id: cache-build
@@ -32,9 +50,9 @@ jobs:
           cache-name: build-v3
         with:
           path: _build
-          key: ${{ runner.os }}-mix-${{ env.cache-name }}-${{ hashFiles('mix.lock', 'mix.exs') }}
+          key: ${{ runner.os }}-mix-${{ env.cache-name }}-${{ matrix.elixir }}-${{ matrix.otp }}-${{ hashFiles('mix.lock', 'mix.exs') }}
           restore-keys: |
-            ${{ runner.os }}-mix-${{ env.cache-name }}-
+            ${{ runner.os }}-mix-${{ env.cache-name }}-${{ matrix.elixir }}-${{ matrix.otp }}-
 
       # Only clean if cache not found
       - name: Install Dependencies
