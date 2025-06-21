@@ -31,6 +31,8 @@
 - Start Finch supervisor in both test and production environments
 - Add Tesla deprecation warning suppression to config
 - Remove explicit Mint dependency as it's included transitively via Finch
+- Update LiveBook example to use Kino 0.16.0
+- Update LiveBook to use local path for testing unreleased changes
 
 ## v2.0.0
 
