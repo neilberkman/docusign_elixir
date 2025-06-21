@@ -6,6 +6,9 @@ defmodule DocuSign.Model.RecipientPhoneNumber do
   Describes the recipient phone number.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.PropertyMetadata
+
   @derive Jason.Encoder
   defstruct [
     :countryCode,
@@ -16,16 +19,14 @@ defmodule DocuSign.Model.RecipientPhoneNumber do
 
   @type t :: %__MODULE__{
           :countryCode => String.t() | nil,
-          :countryCodeMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :countryCodeMetadata => PropertyMetadata.t() | nil,
           :number => String.t() | nil,
-          :numberMetadata => DocuSign.Model.PropertyMetadata.t() | nil
+          :numberMetadata => PropertyMetadata.t() | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
-    |> Deserializer.deserialize(:countryCodeMetadata, :struct, DocuSign.Model.PropertyMetadata)
-    |> Deserializer.deserialize(:numberMetadata, :struct, DocuSign.Model.PropertyMetadata)
+    |> Deserializer.deserialize(:countryCodeMetadata, :struct, PropertyMetadata)
+    |> Deserializer.deserialize(:numberMetadata, :struct, PropertyMetadata)
   end
 end

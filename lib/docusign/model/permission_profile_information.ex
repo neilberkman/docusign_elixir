@@ -6,19 +6,20 @@ defmodule DocuSign.Model.PermissionProfileInformation do
   Contains details about the permission profiles associated with an account.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.PermissionProfile
+
   @derive Jason.Encoder
   defstruct [
     :permissionProfiles
   ]
 
   @type t :: %__MODULE__{
-          :permissionProfiles => [DocuSign.Model.PermissionProfile.t()] | nil
+          :permissionProfiles => [PermissionProfile.t()] | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
-    |> Deserializer.deserialize(:permissionProfiles, :list, DocuSign.Model.PermissionProfile)
+    |> Deserializer.deserialize(:permissionProfiles, :list, PermissionProfile)
   end
 end

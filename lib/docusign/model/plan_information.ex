@@ -6,6 +6,11 @@ defmodule DocuSign.Model.PlanInformation do
   An object used to identify the features and attributes of the account being created.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.AddOn
+  alias DocuSign.Model.FeatureSet
+  alias DocuSign.Model.RecipientDomain
+
   @derive Jason.Encoder
   defstruct [
     :addOns,
@@ -17,20 +22,18 @@ defmodule DocuSign.Model.PlanInformation do
   ]
 
   @type t :: %__MODULE__{
-          :addOns => [DocuSign.Model.AddOn.t()] | nil,
+          :addOns => [AddOn.t()] | nil,
           :currencyCode => String.t() | nil,
           :freeTrialDaysOverride => String.t() | nil,
-          :planFeatureSets => [DocuSign.Model.FeatureSet.t()] | nil,
+          :planFeatureSets => [FeatureSet.t()] | nil,
           :planId => String.t() | nil,
-          :recipientDomains => [DocuSign.Model.RecipientDomain.t()] | nil
+          :recipientDomains => [RecipientDomain.t()] | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
-    |> Deserializer.deserialize(:addOns, :list, DocuSign.Model.AddOn)
-    |> Deserializer.deserialize(:planFeatureSets, :list, DocuSign.Model.FeatureSet)
-    |> Deserializer.deserialize(:recipientDomains, :list, DocuSign.Model.RecipientDomain)
+    |> Deserializer.deserialize(:addOns, :list, AddOn)
+    |> Deserializer.deserialize(:planFeatureSets, :list, FeatureSet)
+    |> Deserializer.deserialize(:recipientDomains, :list, RecipientDomain)
   end
 end

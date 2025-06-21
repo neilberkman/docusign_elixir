@@ -6,19 +6,20 @@ defmodule DocuSign.Model.TabMetadataList do
 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.TabMetadata
+
   @derive Jason.Encoder
   defstruct [
     :tabs
   ]
 
   @type t :: %__MODULE__{
-          :tabs => [DocuSign.Model.TabMetadata.t()] | nil
+          :tabs => [TabMetadata.t()] | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
-    |> Deserializer.deserialize(:tabs, :list, DocuSign.Model.TabMetadata)
+    |> Deserializer.deserialize(:tabs, :list, TabMetadata)
   end
 end

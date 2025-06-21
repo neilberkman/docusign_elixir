@@ -6,6 +6,9 @@ defmodule DocuSign.Model.SocialAccountInformation do
 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.ErrorDetails
+
   @derive Jason.Encoder
   defstruct [
     :email,
@@ -17,16 +20,14 @@ defmodule DocuSign.Model.SocialAccountInformation do
 
   @type t :: %__MODULE__{
           :email => String.t() | nil,
-          :errorDetails => DocuSign.Model.ErrorDetails.t() | nil,
+          :errorDetails => ErrorDetails.t() | nil,
           :provider => String.t() | nil,
           :socialId => String.t() | nil,
           :userName => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:errorDetails, :struct, DocuSign.Model.ErrorDetails)
+    |> Deserializer.deserialize(:errorDetails, :struct, ErrorDetails)
   end
 end

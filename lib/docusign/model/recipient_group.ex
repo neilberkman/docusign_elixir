@@ -6,6 +6,9 @@ defmodule DocuSign.Model.RecipientGroup do
   Describes a group of recipients.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.RecipientOption
+
   @derive Jason.Encoder
   defstruct [
     :groupMessage,
@@ -16,13 +19,11 @@ defmodule DocuSign.Model.RecipientGroup do
   @type t :: %__MODULE__{
           :groupMessage => String.t() | nil,
           :groupName => String.t() | nil,
-          :recipients => [DocuSign.Model.RecipientOption.t()] | nil
+          :recipients => [RecipientOption.t()] | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
-    |> Deserializer.deserialize(:recipients, :list, DocuSign.Model.RecipientOption)
+    |> Deserializer.deserialize(:recipients, :list, RecipientOption)
   end
 end

@@ -6,19 +6,20 @@ defmodule DocuSign.Model.ContactUpdateResponse do
   This response objects shows the updated details for the contacts.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.Contact
+
   @derive Jason.Encoder
   defstruct [
     :contacts
   ]
 
   @type t :: %__MODULE__{
-          :contacts => [DocuSign.Model.Contact.t()] | nil
+          :contacts => [Contact.t()] | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
-    |> Deserializer.deserialize(:contacts, :list, DocuSign.Model.Contact)
+    |> Deserializer.deserialize(:contacts, :list, Contact)
   end
 end

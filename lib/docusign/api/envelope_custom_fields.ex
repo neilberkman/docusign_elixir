@@ -6,8 +6,12 @@ defmodule DocuSign.Api.EnvelopeCustomFields do
   API calls for all endpoints tagged `EnvelopeCustomFields`.
   """
 
-  alias DocuSign.Connection
   import DocuSign.RequestBuilder
+
+  alias DocuSign.Connection
+  alias DocuSign.Model.CustomFieldsEnvelope
+  alias DocuSign.Model.EnvelopeCustomFields
+  alias DocuSign.Model.ErrorDetails
 
   @doc """
   Deletes envelope custom fields for draft and in-process envelopes.
@@ -27,8 +31,8 @@ defmodule DocuSign.Api.EnvelopeCustomFields do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec custom_fields_delete_custom_fields(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.EnvelopeCustomFields.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, EnvelopeCustomFields.t()}
           | {:error, Tesla.Env.t()}
   def custom_fields_delete_custom_fields(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
@@ -40,13 +44,13 @@ defmodule DocuSign.Api.EnvelopeCustomFields do
       |> method(:delete)
       |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/custom_fields")
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.EnvelopeCustomFields},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, EnvelopeCustomFields},
+      {400, ErrorDetails}
     ])
   end
 
@@ -67,21 +71,21 @@ defmodule DocuSign.Api.EnvelopeCustomFields do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec custom_fields_get_custom_fields(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.CustomFieldsEnvelope.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, CustomFieldsEnvelope.t()}
           | {:error, Tesla.Env.t()}
   def custom_fields_get_custom_fields(connection, account_id, envelope_id, _opts \\ []) do
     request =
       %{}
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/custom_fields")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.CustomFieldsEnvelope},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, CustomFieldsEnvelope},
+      {400, ErrorDetails}
     ])
   end
 
@@ -103,8 +107,8 @@ defmodule DocuSign.Api.EnvelopeCustomFields do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec custom_fields_post_custom_fields(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.EnvelopeCustomFields.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, EnvelopeCustomFields.t()}
           | {:error, Tesla.Env.t()}
   def custom_fields_post_custom_fields(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
@@ -117,13 +121,13 @@ defmodule DocuSign.Api.EnvelopeCustomFields do
       |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/custom_fields")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {201, DocuSign.Model.EnvelopeCustomFields},
-      {400, DocuSign.Model.ErrorDetails}
+      {201, EnvelopeCustomFields},
+      {400, ErrorDetails}
     ])
   end
 
@@ -145,8 +149,8 @@ defmodule DocuSign.Api.EnvelopeCustomFields do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec custom_fields_put_custom_fields(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.EnvelopeCustomFields.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, EnvelopeCustomFields.t()}
           | {:error, Tesla.Env.t()}
   def custom_fields_put_custom_fields(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
@@ -159,13 +163,13 @@ defmodule DocuSign.Api.EnvelopeCustomFields do
       |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/custom_fields")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.EnvelopeCustomFields},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, EnvelopeCustomFields},
+      {400, ErrorDetails}
     ])
   end
 end

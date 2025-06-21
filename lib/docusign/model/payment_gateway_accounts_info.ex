@@ -6,23 +6,24 @@ defmodule DocuSign.Model.PaymentGatewayAccountsInfo do
   Holds information about connected payment accounts.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.PaymentGatewayAccount
+
   @derive Jason.Encoder
   defstruct [
     :paymentGatewayAccounts
   ]
 
   @type t :: %__MODULE__{
-          :paymentGatewayAccounts => [DocuSign.Model.PaymentGatewayAccount.t()] | nil
+          :paymentGatewayAccounts => [PaymentGatewayAccount.t()] | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
     |> Deserializer.deserialize(
       :paymentGatewayAccounts,
       :list,
-      DocuSign.Model.PaymentGatewayAccount
+      PaymentGatewayAccount
     )
   end
 end

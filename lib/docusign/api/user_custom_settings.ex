@@ -6,8 +6,11 @@ defmodule DocuSign.Api.UserCustomSettings do
   API calls for all endpoints tagged `UserCustomSettings`.
   """
 
-  alias DocuSign.Connection
   import DocuSign.RequestBuilder
+
+  alias DocuSign.Connection
+  alias DocuSign.Model.CustomSettingsInformation
+  alias DocuSign.Model.ErrorDetails
 
   @doc """
   Deletes custom user settings for a specified user.
@@ -32,8 +35,8 @@ defmodule DocuSign.Api.UserCustomSettings do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.CustomSettingsInformation.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, CustomSettingsInformation.t()}
           | {:error, Tesla.Env.t()}
   def user_custom_settings_delete_custom_settings(connection, account_id, user_id, opts \\ []) do
     optional_params = %{
@@ -45,13 +48,13 @@ defmodule DocuSign.Api.UserCustomSettings do
       |> method(:delete)
       |> url("/v2.1/accounts/#{account_id}/users/#{user_id}/custom_settings")
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.CustomSettingsInformation},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, CustomSettingsInformation},
+      {400, ErrorDetails}
     ])
   end
 
@@ -77,21 +80,21 @@ defmodule DocuSign.Api.UserCustomSettings do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.CustomSettingsInformation.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, CustomSettingsInformation.t()}
           | {:error, Tesla.Env.t()}
   def user_custom_settings_get_custom_settings(connection, account_id, user_id, _opts \\ []) do
     request =
       %{}
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/users/#{user_id}/custom_settings")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.CustomSettingsInformation},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, CustomSettingsInformation},
+      {400, ErrorDetails}
     ])
   end
 
@@ -118,8 +121,8 @@ defmodule DocuSign.Api.UserCustomSettings do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.CustomSettingsInformation.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, CustomSettingsInformation.t()}
           | {:error, Tesla.Env.t()}
   def user_custom_settings_put_custom_settings(connection, account_id, user_id, opts \\ []) do
     optional_params = %{
@@ -132,13 +135,13 @@ defmodule DocuSign.Api.UserCustomSettings do
       |> url("/v2.1/accounts/#{account_id}/users/#{user_id}/custom_settings")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.CustomSettingsInformation},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, CustomSettingsInformation},
+      {400, ErrorDetails}
     ])
   end
 end

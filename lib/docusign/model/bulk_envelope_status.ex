@@ -6,6 +6,9 @@ defmodule DocuSign.Model.BulkEnvelopeStatus do
 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.BulkEnvelope
+
   @derive Jason.Encoder
   defstruct [
     :batchId,
@@ -27,7 +30,7 @@ defmodule DocuSign.Model.BulkEnvelopeStatus do
   @type t :: %__MODULE__{
           :batchId => String.t() | nil,
           :batchSize => String.t() | nil,
-          :bulkEnvelopes => [DocuSign.Model.BulkEnvelope.t()] | nil,
+          :bulkEnvelopes => [BulkEnvelope.t()] | nil,
           :bulkEnvelopesBatchUri => String.t() | nil,
           :endPosition => String.t() | nil,
           :failed => String.t() | nil,
@@ -41,10 +44,8 @@ defmodule DocuSign.Model.BulkEnvelopeStatus do
           :totalSetSize => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:bulkEnvelopes, :list, DocuSign.Model.BulkEnvelope)
+    |> Deserializer.deserialize(:bulkEnvelopes, :list, BulkEnvelope)
   end
 end

@@ -6,19 +6,20 @@ defmodule DocuSign.Model.EnvelopeDocumentFields do
   Envelope document fields
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.NameValue
+
   @derive Jason.Encoder
   defstruct [
     :documentFields
   ]
 
   @type t :: %__MODULE__{
-          :documentFields => [DocuSign.Model.NameValue.t()] | nil
+          :documentFields => [NameValue.t()] | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
-    |> Deserializer.deserialize(:documentFields, :list, DocuSign.Model.NameValue)
+    |> Deserializer.deserialize(:documentFields, :list, NameValue)
   end
 end

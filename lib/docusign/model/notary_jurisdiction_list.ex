@@ -6,6 +6,9 @@ defmodule DocuSign.Model.NotaryJurisdictionList do
   A paged list of jurisdictions.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.NotaryJurisdiction
+
   @derive Jason.Encoder
   defstruct [
     :endPosition,
@@ -20,17 +23,15 @@ defmodule DocuSign.Model.NotaryJurisdictionList do
   @type t :: %__MODULE__{
           :endPosition => String.t() | nil,
           :nextUri => String.t() | nil,
-          :notaryJurisdictions => [DocuSign.Model.NotaryJurisdiction.t()] | nil,
+          :notaryJurisdictions => [NotaryJurisdiction.t()] | nil,
           :previousUri => String.t() | nil,
           :resultSetSize => String.t() | nil,
           :startPosition => String.t() | nil,
           :totalSetSize => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:notaryJurisdictions, :list, DocuSign.Model.NotaryJurisdiction)
+    |> Deserializer.deserialize(:notaryJurisdictions, :list, NotaryJurisdiction)
   end
 end

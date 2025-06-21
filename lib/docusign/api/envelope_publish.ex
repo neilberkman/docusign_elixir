@@ -6,8 +6,11 @@ defmodule DocuSign.Api.EnvelopePublish do
   API calls for all endpoints tagged `EnvelopePublish`.
   """
 
-  alias DocuSign.Connection
   import DocuSign.RequestBuilder
+
+  alias DocuSign.Connection
+  alias DocuSign.Model.EnvelopePublishTransaction
+  alias DocuSign.Model.ErrorDetails
 
   @doc """
   Submits a batch of historical envelopes for republish to a webhook.
@@ -30,14 +33,10 @@ defmodule DocuSign.Api.EnvelopePublish do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.EnvelopePublishTransaction.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, EnvelopePublishTransaction.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
-  def historical_envelope_publish_post_historical_envelope_publish_transaction(
-        connection,
-        account_id,
-        opts \\ []
-      ) do
+  def historical_envelope_publish_post_historical_envelope_publish_transaction(connection, account_id, opts \\ []) do
     optional_params = %{
       :body => :body
     }
@@ -48,13 +47,13 @@ defmodule DocuSign.Api.EnvelopePublish do
       |> url("/v2.1/accounts/#{account_id}/connect/envelopes/publish/historical")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {201, DocuSign.Model.EnvelopePublishTransaction},
-      {400, DocuSign.Model.ErrorDetails}
+      {201, EnvelopePublishTransaction},
+      {400, ErrorDetails}
     ])
   end
 end

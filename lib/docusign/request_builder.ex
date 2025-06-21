@@ -190,8 +190,7 @@ defmodule DocuSign.RequestBuilder do
     decode(env, struct)
   end
 
-  defp resolve_mapping(env, [{:default, struct} | tail], _),
-    do: resolve_mapping(env, tail, struct)
+  defp resolve_mapping(env, [{:default, struct} | tail], _), do: resolve_mapping(env, tail, struct)
 
   defp resolve_mapping(env, [_ | tail], struct), do: resolve_mapping(env, tail, struct)
 

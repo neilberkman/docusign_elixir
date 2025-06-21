@@ -6,8 +6,11 @@ defmodule DocuSign.Api.TemplateDocumentHtmlDefinitions do
   API calls for all endpoints tagged `TemplateDocumentHtmlDefinitions`.
   """
 
-  alias DocuSign.Connection
   import DocuSign.RequestBuilder
+
+  alias DocuSign.Connection
+  alias DocuSign.Model.DocumentHtmlDefinitionOriginals
+  alias DocuSign.Model.ErrorDetails
 
   @doc """
   Gets the Original HTML Definition used to generate the Responsive HTML for a given document in a template.
@@ -32,8 +35,8 @@ defmodule DocuSign.Api.TemplateDocumentHtmlDefinitions do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.DocumentHtmlDefinitionOriginals.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, DocumentHtmlDefinitionOriginals.t()}
           | {:error, Tesla.Env.t()}
   def responsive_html_get_template_document_html_definitions(
         connection,
@@ -45,16 +48,14 @@ defmodule DocuSign.Api.TemplateDocumentHtmlDefinitions do
     request =
       %{}
       |> method(:get)
-      |> url(
-        "/v2.1/accounts/#{account_id}/templates/#{template_id}/documents/#{document_id}/html_definitions"
-      )
-      |> Enum.into([])
+      |> url("/v2.1/accounts/#{account_id}/templates/#{template_id}/documents/#{document_id}/html_definitions")
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.DocumentHtmlDefinitionOriginals},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, DocumentHtmlDefinitionOriginals},
+      {400, ErrorDetails}
     ])
   end
 end

@@ -6,6 +6,9 @@ defmodule DocuSign.Model.BrandResources do
   Information about the resource files that the brand uses for the email, signing, sending, and captive (embedded) signing experiences.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.UserInfo
+
   @derive Jason.Encoder
   defstruct [
     :createdByUserInfo,
@@ -19,21 +22,19 @@ defmodule DocuSign.Model.BrandResources do
   ]
 
   @type t :: %__MODULE__{
-          :createdByUserInfo => DocuSign.Model.UserInfo.t() | nil,
+          :createdByUserInfo => UserInfo.t() | nil,
           :createdDate => String.t() | nil,
           :dataNotSavedNotInMaster => [String.t()] | nil,
-          :modifiedByUserInfo => DocuSign.Model.UserInfo.t() | nil,
+          :modifiedByUserInfo => UserInfo.t() | nil,
           :modifiedDate => String.t() | nil,
           :modifiedTemplates => [String.t()] | nil,
           :resourcesContentType => String.t() | nil,
           :resourcesContentUri => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:createdByUserInfo, :struct, DocuSign.Model.UserInfo)
-    |> Deserializer.deserialize(:modifiedByUserInfo, :struct, DocuSign.Model.UserInfo)
+    |> Deserializer.deserialize(:createdByUserInfo, :struct, UserInfo)
+    |> Deserializer.deserialize(:modifiedByUserInfo, :struct, UserInfo)
   end
 end

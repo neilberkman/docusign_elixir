@@ -6,6 +6,12 @@ defmodule DocuSign.Model.InlineTemplate do
 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.AccountCustomFields
+  alias DocuSign.Model.Document
+  alias DocuSign.Model.Envelope
+  alias DocuSign.Model.EnvelopeRecipients
+
   @derive Jason.Encoder
   defstruct [
     :customFields,
@@ -16,20 +22,18 @@ defmodule DocuSign.Model.InlineTemplate do
   ]
 
   @type t :: %__MODULE__{
-          :customFields => DocuSign.Model.AccountCustomFields.t() | nil,
-          :documents => [DocuSign.Model.Document.t()] | nil,
-          :envelope => DocuSign.Model.Envelope.t() | nil,
-          :recipients => DocuSign.Model.EnvelopeRecipients.t() | nil,
+          :customFields => AccountCustomFields.t() | nil,
+          :documents => [Document.t()] | nil,
+          :envelope => Envelope.t() | nil,
+          :recipients => EnvelopeRecipients.t() | nil,
           :sequence => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:customFields, :struct, DocuSign.Model.AccountCustomFields)
-    |> Deserializer.deserialize(:documents, :list, DocuSign.Model.Document)
-    |> Deserializer.deserialize(:envelope, :struct, DocuSign.Model.Envelope)
-    |> Deserializer.deserialize(:recipients, :struct, DocuSign.Model.EnvelopeRecipients)
+    |> Deserializer.deserialize(:customFields, :struct, AccountCustomFields)
+    |> Deserializer.deserialize(:documents, :list, Document)
+    |> Deserializer.deserialize(:envelope, :struct, Envelope)
+    |> Deserializer.deserialize(:recipients, :struct, EnvelopeRecipients)
   end
 end

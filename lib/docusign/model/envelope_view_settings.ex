@@ -6,6 +6,13 @@ defmodule DocuSign.Model.EnvelopeViewSettings do
 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.EnvelopeViewDocumentSettings
+  alias DocuSign.Model.EnvelopeViewEnvelopeCustomFieldSettings
+  alias DocuSign.Model.EnvelopeViewRecipientSettings
+  alias DocuSign.Model.EnvelopeViewTaggerSettings
+  alias DocuSign.Model.EnvelopeViewTemplateSettings
+
   @derive Jason.Encoder
   defstruct [
     :backButtonAction,
@@ -26,11 +33,10 @@ defmodule DocuSign.Model.EnvelopeViewSettings do
 
   @type t :: %__MODULE__{
           :backButtonAction => String.t() | nil,
-          :documentSettings => DocuSign.Model.EnvelopeViewDocumentSettings.t() | nil,
-          :envelopeCustomFieldSettings =>
-            DocuSign.Model.EnvelopeViewEnvelopeCustomFieldSettings.t() | nil,
+          :documentSettings => EnvelopeViewDocumentSettings.t() | nil,
+          :envelopeCustomFieldSettings => EnvelopeViewEnvelopeCustomFieldSettings.t() | nil,
           :lockToken => String.t() | nil,
-          :recipientSettings => DocuSign.Model.EnvelopeViewRecipientSettings.t() | nil,
+          :recipientSettings => EnvelopeViewRecipientSettings.t() | nil,
           :sendButtonAction => String.t() | nil,
           :showAdvancedOptions => String.t() | nil,
           :showBackButton => String.t() | nil,
@@ -38,38 +44,36 @@ defmodule DocuSign.Model.EnvelopeViewSettings do
           :showHeaderActions => String.t() | nil,
           :showSignNow => String.t() | nil,
           :startingScreen => String.t() | nil,
-          :taggerSettings => DocuSign.Model.EnvelopeViewTaggerSettings.t() | nil,
-          :templateSettings => DocuSign.Model.EnvelopeViewTemplateSettings.t() | nil
+          :taggerSettings => EnvelopeViewTaggerSettings.t() | nil,
+          :templateSettings => EnvelopeViewTemplateSettings.t() | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
     |> Deserializer.deserialize(
       :documentSettings,
       :struct,
-      DocuSign.Model.EnvelopeViewDocumentSettings
+      EnvelopeViewDocumentSettings
     )
     |> Deserializer.deserialize(
       :envelopeCustomFieldSettings,
       :struct,
-      DocuSign.Model.EnvelopeViewEnvelopeCustomFieldSettings
+      EnvelopeViewEnvelopeCustomFieldSettings
     )
     |> Deserializer.deserialize(
       :recipientSettings,
       :struct,
-      DocuSign.Model.EnvelopeViewRecipientSettings
+      EnvelopeViewRecipientSettings
     )
     |> Deserializer.deserialize(
       :taggerSettings,
       :struct,
-      DocuSign.Model.EnvelopeViewTaggerSettings
+      EnvelopeViewTaggerSettings
     )
     |> Deserializer.deserialize(
       :templateSettings,
       :struct,
-      DocuSign.Model.EnvelopeViewTemplateSettings
+      EnvelopeViewTemplateSettings
     )
   end
 end

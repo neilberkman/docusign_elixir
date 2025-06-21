@@ -6,8 +6,14 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
   API calls for all endpoints tagged `EnvelopeWorkflowDefinition`.
   """
 
-  alias DocuSign.Connection
   import DocuSign.RequestBuilder
+
+  alias DocuSign.Connection
+  alias DocuSign.Model.DelayedRouting
+  alias DocuSign.Model.ErrorDetails
+  alias DocuSign.Model.ScheduledSending
+  alias DocuSign.Model.Workflow
+  alias DocuSign.Model.WorkflowStep
 
   @doc """
   Delete the workflow definition for an envelope.
@@ -30,7 +36,7 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
           String.t(),
           String.t(),
           keyword()
-        ) :: {:ok, nil} | {:ok, DocuSign.Model.ErrorDetails.t()} | {:error, Tesla.Env.t()}
+        ) :: {:ok, nil} | {:ok, ErrorDetails.t()} | {:error, Tesla.Env.t()}
   def envelope_workflow_definition_v2_delete_envelope_workflow_definition(
         connection,
         account_id,
@@ -41,13 +47,13 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
       %{}
       |> method(:delete)
       |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/workflow")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
       {200, false},
-      {400, DocuSign.Model.ErrorDetails}
+      {400, ErrorDetails}
     ])
   end
 
@@ -73,26 +79,21 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.Workflow.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, Workflow.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
-  def envelope_workflow_definition_v2_get_envelope_workflow_definition(
-        connection,
-        account_id,
-        envelope_id,
-        _opts \\ []
-      ) do
+  def envelope_workflow_definition_v2_get_envelope_workflow_definition(connection, account_id, envelope_id, _opts \\ []) do
     request =
       %{}
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/workflow")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.Workflow},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, Workflow},
+      {400, ErrorDetails}
     ])
   end
 
@@ -119,15 +120,10 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.Workflow.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, Workflow.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
-  def envelope_workflow_definition_v2_put_envelope_workflow_definition(
-        connection,
-        account_id,
-        envelope_id,
-        opts \\ []
-      ) do
+  def envelope_workflow_definition_v2_put_envelope_workflow_definition(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
       :body => :body
     }
@@ -138,13 +134,13 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
       |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/workflow")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.Workflow},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, Workflow},
+      {400, ErrorDetails}
     ])
   end
 
@@ -171,7 +167,7 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
           String.t(),
           String.t(),
           keyword()
-        ) :: {:ok, nil} | {:ok, DocuSign.Model.ErrorDetails.t()} | {:error, Tesla.Env.t()}
+        ) :: {:ok, nil} | {:ok, ErrorDetails.t()} | {:error, Tesla.Env.t()}
   def envelope_workflow_delayed_routing_delete_envelope_delayed_routing_definition(
         connection,
         account_id,
@@ -182,16 +178,14 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
     request =
       %{}
       |> method(:delete)
-      |> url(
-        "/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/workflow/steps/#{workflow_step_id}/delayedRouting"
-      )
-      |> Enum.into([])
+      |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/workflow/steps/#{workflow_step_id}/delayedRouting")
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
       {200, false},
-      {400, DocuSign.Model.ErrorDetails}
+      {400, ErrorDetails}
     ])
   end
 
@@ -219,8 +213,8 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.DelayedRouting.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, DelayedRouting.t()}
           | {:error, Tesla.Env.t()}
   def envelope_workflow_delayed_routing_get_envelope_delayed_routing_definition(
         connection,
@@ -232,16 +226,14 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
     request =
       %{}
       |> method(:get)
-      |> url(
-        "/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/workflow/steps/#{workflow_step_id}/delayedRouting"
-      )
-      |> Enum.into([])
+      |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/workflow/steps/#{workflow_step_id}/delayedRouting")
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.DelayedRouting},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, DelayedRouting},
+      {400, ErrorDetails}
     ])
   end
 
@@ -270,8 +262,8 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.DelayedRouting.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, DelayedRouting.t()}
           | {:error, Tesla.Env.t()}
   def envelope_workflow_delayed_routing_put_envelope_delayed_routing_definition(
         connection,
@@ -287,18 +279,16 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
     request =
       %{}
       |> method(:put)
-      |> url(
-        "/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/workflow/steps/#{workflow_step_id}/delayedRouting"
-      )
+      |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/workflow/steps/#{workflow_step_id}/delayedRouting")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.DelayedRouting},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, DelayedRouting},
+      {400, ErrorDetails}
     ])
   end
 
@@ -323,7 +313,7 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
           String.t(),
           String.t(),
           keyword()
-        ) :: {:ok, nil} | {:ok, DocuSign.Model.ErrorDetails.t()} | {:error, Tesla.Env.t()}
+        ) :: {:ok, nil} | {:ok, ErrorDetails.t()} | {:error, Tesla.Env.t()}
   def envelope_workflow_scheduled_sending_delete_envelope_scheduled_sending_definition(
         connection,
         account_id,
@@ -334,13 +324,13 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
       %{}
       |> method(:delete)
       |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/workflow/scheduledSending")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
       {200, false},
-      {400, DocuSign.Model.ErrorDetails}
+      {400, ErrorDetails}
     ])
   end
 
@@ -366,8 +356,8 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.ScheduledSending.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, ScheduledSending.t()}
           | {:error, Tesla.Env.t()}
   def envelope_workflow_scheduled_sending_get_envelope_scheduled_sending_definition(
         connection,
@@ -379,13 +369,13 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
       %{}
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/workflow/scheduledSending")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.ScheduledSending},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, ScheduledSending},
+      {400, ErrorDetails}
     ])
   end
 
@@ -412,8 +402,8 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.ScheduledSending.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, ScheduledSending.t()}
           | {:error, Tesla.Env.t()}
   def envelope_workflow_scheduled_sending_put_envelope_scheduled_sending_definition(
         connection,
@@ -431,13 +421,13 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
       |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/workflow/scheduledSending")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.ScheduledSending},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, ScheduledSending},
+      {400, ErrorDetails}
     ])
   end
 
@@ -464,7 +454,7 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
           String.t(),
           String.t(),
           keyword()
-        ) :: {:ok, nil} | {:ok, DocuSign.Model.ErrorDetails.t()} | {:error, Tesla.Env.t()}
+        ) :: {:ok, nil} | {:ok, ErrorDetails.t()} | {:error, Tesla.Env.t()}
   def envelope_workflow_step_delete_envelope_workflow_step_definition(
         connection,
         account_id,
@@ -475,16 +465,14 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
     request =
       %{}
       |> method(:delete)
-      |> url(
-        "/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/workflow/steps/#{workflow_step_id}"
-      )
-      |> Enum.into([])
+      |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/workflow/steps/#{workflow_step_id}")
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
       {200, false},
-      {400, DocuSign.Model.ErrorDetails}
+      {400, ErrorDetails}
     ])
   end
 
@@ -512,8 +500,8 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.WorkflowStep.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, WorkflowStep.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
   def envelope_workflow_step_get_envelope_workflow_step_definition(
         connection,
@@ -525,16 +513,14 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
     request =
       %{}
       |> method(:get)
-      |> url(
-        "/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/workflow/steps/#{workflow_step_id}"
-      )
-      |> Enum.into([])
+      |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/workflow/steps/#{workflow_step_id}")
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.WorkflowStep},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, WorkflowStep},
+      {400, ErrorDetails}
     ])
   end
 
@@ -561,15 +547,10 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.WorkflowStep.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, WorkflowStep.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
-  def envelope_workflow_step_post_envelope_workflow_step_definition(
-        connection,
-        account_id,
-        envelope_id,
-        opts \\ []
-      ) do
+  def envelope_workflow_step_post_envelope_workflow_step_definition(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
       :body => :body
     }
@@ -580,13 +561,13 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
       |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/workflow/steps")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {201, DocuSign.Model.WorkflowStep},
-      {400, DocuSign.Model.ErrorDetails}
+      {201, WorkflowStep},
+      {400, ErrorDetails}
     ])
   end
 
@@ -615,8 +596,8 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.WorkflowStep.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, WorkflowStep.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
   def envelope_workflow_step_put_envelope_workflow_step_definition(
         connection,
@@ -632,18 +613,16 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
     request =
       %{}
       |> method(:put)
-      |> url(
-        "/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/workflow/steps/#{workflow_step_id}"
-      )
+      |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/workflow/steps/#{workflow_step_id}")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.WorkflowStep},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, WorkflowStep},
+      {400, ErrorDetails}
     ])
   end
 
@@ -668,24 +647,19 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
           String.t(),
           String.t(),
           keyword()
-        ) :: {:ok, nil} | {:ok, DocuSign.Model.ErrorDetails.t()} | {:error, Tesla.Env.t()}
-  def template_workflow_definition_delete_template_workflow_definition(
-        connection,
-        account_id,
-        template_id,
-        _opts \\ []
-      ) do
+        ) :: {:ok, nil} | {:ok, ErrorDetails.t()} | {:error, Tesla.Env.t()}
+  def template_workflow_definition_delete_template_workflow_definition(connection, account_id, template_id, _opts \\ []) do
     request =
       %{}
       |> method(:delete)
       |> url("/v2.1/accounts/#{account_id}/templates/#{template_id}/workflow")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
       {200, false},
-      {400, DocuSign.Model.ErrorDetails}
+      {400, ErrorDetails}
     ])
   end
 
@@ -711,26 +685,21 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.Workflow.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, Workflow.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
-  def template_workflow_definition_get_template_workflow_definition(
-        connection,
-        account_id,
-        template_id,
-        _opts \\ []
-      ) do
+  def template_workflow_definition_get_template_workflow_definition(connection, account_id, template_id, _opts \\ []) do
     request =
       %{}
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/templates/#{template_id}/workflow")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.Workflow},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, Workflow},
+      {400, ErrorDetails}
     ])
   end
 
@@ -757,15 +726,10 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.Workflow.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, Workflow.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
-  def template_workflow_definition_put_template_workflow_definition(
-        connection,
-        account_id,
-        template_id,
-        opts \\ []
-      ) do
+  def template_workflow_definition_put_template_workflow_definition(connection, account_id, template_id, opts \\ []) do
     optional_params = %{
       :body => :body
     }
@@ -776,13 +740,13 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
       |> url("/v2.1/accounts/#{account_id}/templates/#{template_id}/workflow")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.Workflow},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, Workflow},
+      {400, ErrorDetails}
     ])
   end
 
@@ -809,7 +773,7 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
           String.t(),
           String.t(),
           keyword()
-        ) :: {:ok, nil} | {:ok, DocuSign.Model.ErrorDetails.t()} | {:error, Tesla.Env.t()}
+        ) :: {:ok, nil} | {:ok, ErrorDetails.t()} | {:error, Tesla.Env.t()}
   def template_workflow_delayed_routing_delete_template_delayed_routing_definition(
         connection,
         account_id,
@@ -820,16 +784,14 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
     request =
       %{}
       |> method(:delete)
-      |> url(
-        "/v2.1/accounts/#{account_id}/templates/#{template_id}/workflow/steps/#{workflow_step_id}/delayedRouting"
-      )
-      |> Enum.into([])
+      |> url("/v2.1/accounts/#{account_id}/templates/#{template_id}/workflow/steps/#{workflow_step_id}/delayedRouting")
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
       {200, false},
-      {400, DocuSign.Model.ErrorDetails}
+      {400, ErrorDetails}
     ])
   end
 
@@ -857,8 +819,8 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.DelayedRouting.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, DelayedRouting.t()}
           | {:error, Tesla.Env.t()}
   def template_workflow_delayed_routing_get_template_delayed_routing_definition(
         connection,
@@ -870,16 +832,14 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
     request =
       %{}
       |> method(:get)
-      |> url(
-        "/v2.1/accounts/#{account_id}/templates/#{template_id}/workflow/steps/#{workflow_step_id}/delayedRouting"
-      )
-      |> Enum.into([])
+      |> url("/v2.1/accounts/#{account_id}/templates/#{template_id}/workflow/steps/#{workflow_step_id}/delayedRouting")
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.DelayedRouting},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, DelayedRouting},
+      {400, ErrorDetails}
     ])
   end
 
@@ -908,8 +868,8 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.DelayedRouting.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, DelayedRouting.t()}
           | {:error, Tesla.Env.t()}
   def template_workflow_delayed_routing_put_template_delayed_routing_definition(
         connection,
@@ -925,18 +885,16 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
     request =
       %{}
       |> method(:put)
-      |> url(
-        "/v2.1/accounts/#{account_id}/templates/#{template_id}/workflow/steps/#{workflow_step_id}/delayedRouting"
-      )
+      |> url("/v2.1/accounts/#{account_id}/templates/#{template_id}/workflow/steps/#{workflow_step_id}/delayedRouting")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.DelayedRouting},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, DelayedRouting},
+      {400, ErrorDetails}
     ])
   end
 
@@ -961,7 +919,7 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
           String.t(),
           String.t(),
           keyword()
-        ) :: {:ok, nil} | {:ok, DocuSign.Model.ErrorDetails.t()} | {:error, Tesla.Env.t()}
+        ) :: {:ok, nil} | {:ok, ErrorDetails.t()} | {:error, Tesla.Env.t()}
   def template_workflow_scheduled_sending_delete_template_scheduled_sending_definition(
         connection,
         account_id,
@@ -972,13 +930,13 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
       %{}
       |> method(:delete)
       |> url("/v2.1/accounts/#{account_id}/templates/#{template_id}/workflow/scheduledSending")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
       {200, false},
-      {400, DocuSign.Model.ErrorDetails}
+      {400, ErrorDetails}
     ])
   end
 
@@ -1004,8 +962,8 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.ScheduledSending.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, ScheduledSending.t()}
           | {:error, Tesla.Env.t()}
   def template_workflow_scheduled_sending_get_template_scheduled_sending_definition(
         connection,
@@ -1017,13 +975,13 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
       %{}
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/templates/#{template_id}/workflow/scheduledSending")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.ScheduledSending},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, ScheduledSending},
+      {400, ErrorDetails}
     ])
   end
 
@@ -1049,8 +1007,8 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.ScheduledSending.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, ScheduledSending.t()}
           | {:error, Tesla.Env.t()}
   def template_workflow_scheduled_sending_put_template_scheduled_sending_definition(
         connection,
@@ -1068,13 +1026,13 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
       |> url("/v2.1/accounts/#{account_id}/templates/#{template_id}/workflow/scheduledSending")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.ScheduledSending},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, ScheduledSending},
+      {400, ErrorDetails}
     ])
   end
 
@@ -1101,7 +1059,7 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
           String.t(),
           String.t(),
           keyword()
-        ) :: {:ok, nil} | {:ok, DocuSign.Model.ErrorDetails.t()} | {:error, Tesla.Env.t()}
+        ) :: {:ok, nil} | {:ok, ErrorDetails.t()} | {:error, Tesla.Env.t()}
   def template_workflow_step_delete_template_workflow_step_definition(
         connection,
         account_id,
@@ -1112,16 +1070,14 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
     request =
       %{}
       |> method(:delete)
-      |> url(
-        "/v2.1/accounts/#{account_id}/templates/#{template_id}/workflow/steps/#{workflow_step_id}"
-      )
-      |> Enum.into([])
+      |> url("/v2.1/accounts/#{account_id}/templates/#{template_id}/workflow/steps/#{workflow_step_id}")
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
       {200, false},
-      {400, DocuSign.Model.ErrorDetails}
+      {400, ErrorDetails}
     ])
   end
 
@@ -1149,8 +1105,8 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.WorkflowStep.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, WorkflowStep.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
   def template_workflow_step_get_template_workflow_step_definition(
         connection,
@@ -1162,16 +1118,14 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
     request =
       %{}
       |> method(:get)
-      |> url(
-        "/v2.1/accounts/#{account_id}/templates/#{template_id}/workflow/steps/#{workflow_step_id}"
-      )
-      |> Enum.into([])
+      |> url("/v2.1/accounts/#{account_id}/templates/#{template_id}/workflow/steps/#{workflow_step_id}")
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.WorkflowStep},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, WorkflowStep},
+      {400, ErrorDetails}
     ])
   end
 
@@ -1198,15 +1152,10 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.WorkflowStep.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, WorkflowStep.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
-  def template_workflow_step_post_template_workflow_step_definition(
-        connection,
-        account_id,
-        template_id,
-        opts \\ []
-      ) do
+  def template_workflow_step_post_template_workflow_step_definition(connection, account_id, template_id, opts \\ []) do
     optional_params = %{
       :body => :body
     }
@@ -1217,13 +1166,13 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
       |> url("/v2.1/accounts/#{account_id}/templates/#{template_id}/workflow/steps")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {201, DocuSign.Model.WorkflowStep},
-      {400, DocuSign.Model.ErrorDetails}
+      {201, WorkflowStep},
+      {400, ErrorDetails}
     ])
   end
 
@@ -1252,8 +1201,8 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.WorkflowStep.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, WorkflowStep.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
   def template_workflow_step_put_template_workflow_step_definition(
         connection,
@@ -1269,18 +1218,16 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
     request =
       %{}
       |> method(:put)
-      |> url(
-        "/v2.1/accounts/#{account_id}/templates/#{template_id}/workflow/steps/#{workflow_step_id}"
-      )
+      |> url("/v2.1/accounts/#{account_id}/templates/#{template_id}/workflow/steps/#{workflow_step_id}")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.WorkflowStep},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, WorkflowStep},
+      {400, ErrorDetails}
     ])
   end
 end

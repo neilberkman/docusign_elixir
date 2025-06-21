@@ -6,8 +6,11 @@ defmodule DocuSign.Api.EnvelopeDocumentVisibility do
   API calls for all endpoints tagged `EnvelopeDocumentVisibility`.
   """
 
-  alias DocuSign.Connection
   import DocuSign.RequestBuilder
+
+  alias DocuSign.Connection
+  alias DocuSign.Model.DocumentVisibilityList
+  alias DocuSign.Model.ErrorDetails
 
   @doc """
   Returns document visibility for a recipient
@@ -33,29 +36,21 @@ defmodule DocuSign.Api.EnvelopeDocumentVisibility do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.DocumentVisibilityList.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, DocumentVisibilityList.t()}
           | {:error, Tesla.Env.t()}
-  def recipients_get_recipient_document_visibility(
-        connection,
-        account_id,
-        envelope_id,
-        recipient_id,
-        _opts \\ []
-      ) do
+  def recipients_get_recipient_document_visibility(connection, account_id, envelope_id, recipient_id, _opts \\ []) do
     request =
       %{}
       |> method(:get)
-      |> url(
-        "/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/recipients/#{recipient_id}/document_visibility"
-      )
-      |> Enum.into([])
+      |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/recipients/#{recipient_id}/document_visibility")
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.DocumentVisibilityList},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, DocumentVisibilityList},
+      {400, ErrorDetails}
     ])
   end
 
@@ -84,16 +79,10 @@ defmodule DocuSign.Api.EnvelopeDocumentVisibility do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.DocumentVisibilityList.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, DocumentVisibilityList.t()}
           | {:error, Tesla.Env.t()}
-  def recipients_put_recipient_document_visibility(
-        connection,
-        account_id,
-        envelope_id,
-        recipient_id,
-        opts \\ []
-      ) do
+  def recipients_put_recipient_document_visibility(connection, account_id, envelope_id, recipient_id, opts \\ []) do
     optional_params = %{
       :body => :body
     }
@@ -101,18 +90,16 @@ defmodule DocuSign.Api.EnvelopeDocumentVisibility do
     request =
       %{}
       |> method(:put)
-      |> url(
-        "/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/recipients/#{recipient_id}/document_visibility"
-      )
+      |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/recipients/#{recipient_id}/document_visibility")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.DocumentVisibilityList},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, DocumentVisibilityList},
+      {400, ErrorDetails}
     ])
   end
 
@@ -139,15 +126,10 @@ defmodule DocuSign.Api.EnvelopeDocumentVisibility do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.DocumentVisibilityList.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, DocumentVisibilityList.t()}
           | {:error, Tesla.Env.t()}
-  def recipients_put_recipients_document_visibility(
-        connection,
-        account_id,
-        envelope_id,
-        opts \\ []
-      ) do
+  def recipients_put_recipients_document_visibility(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
       :body => :body
     }
@@ -155,18 +137,16 @@ defmodule DocuSign.Api.EnvelopeDocumentVisibility do
     request =
       %{}
       |> method(:put)
-      |> url(
-        "/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/recipients/document_visibility"
-      )
+      |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/recipients/document_visibility")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.DocumentVisibilityList},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, DocumentVisibilityList},
+      {400, ErrorDetails}
     ])
   end
 end

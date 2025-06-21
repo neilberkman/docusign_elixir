@@ -6,6 +6,11 @@ defmodule DocuSign.Model.WorkspaceItem do
   This object represents an item in a workspace, which can be either a file or folder.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.Page
+  alias DocuSign.Model.WorkspaceUser
+  alias DocuSign.Model.WorkspaceUserAuthorization
+
   @derive Jason.Encoder
   defstruct [
     :callerAuthorization,
@@ -27,19 +32,19 @@ defmodule DocuSign.Model.WorkspaceItem do
     :parentFolderUri,
     :sha256,
     :thumbHeight,
-    :thumbnail,
     :thumbWidth,
+    :thumbnail,
     :type,
     :uri,
     :userAuthorization
   ]
 
   @type t :: %__MODULE__{
-          :callerAuthorization => DocuSign.Model.WorkspaceUserAuthorization.t() | nil,
+          :callerAuthorization => WorkspaceUserAuthorization.t() | nil,
           :contentType => String.t() | nil,
           :created => String.t() | nil,
           :createdById => String.t() | nil,
-          :createdByInformation => DocuSign.Model.WorkspaceUser.t() | nil,
+          :createdByInformation => WorkspaceUser.t() | nil,
           :extension => String.t() | nil,
           :fileSize => String.t() | nil,
           :fileUri => String.t() | nil,
@@ -47,36 +52,34 @@ defmodule DocuSign.Model.WorkspaceItem do
           :isPublic => String.t() | nil,
           :lastModified => String.t() | nil,
           :lastModifiedById => String.t() | nil,
-          :lastModifiedByInformation => DocuSign.Model.WorkspaceUser.t() | nil,
+          :lastModifiedByInformation => WorkspaceUser.t() | nil,
           :name => String.t() | nil,
           :pageCount => String.t() | nil,
           :parentFolderId => String.t() | nil,
           :parentFolderUri => String.t() | nil,
           :sha256 => String.t() | nil,
           :thumbHeight => String.t() | nil,
-          :thumbnail => DocuSign.Model.Page.t() | nil,
           :thumbWidth => String.t() | nil,
+          :thumbnail => Page.t() | nil,
           :type => String.t() | nil,
           :uri => String.t() | nil,
-          :userAuthorization => DocuSign.Model.WorkspaceUserAuthorization.t() | nil
+          :userAuthorization => WorkspaceUserAuthorization.t() | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
     |> Deserializer.deserialize(
       :callerAuthorization,
       :struct,
-      DocuSign.Model.WorkspaceUserAuthorization
+      WorkspaceUserAuthorization
     )
-    |> Deserializer.deserialize(:createdByInformation, :struct, DocuSign.Model.WorkspaceUser)
-    |> Deserializer.deserialize(:lastModifiedByInformation, :struct, DocuSign.Model.WorkspaceUser)
-    |> Deserializer.deserialize(:thumbnail, :struct, DocuSign.Model.Page)
+    |> Deserializer.deserialize(:createdByInformation, :struct, WorkspaceUser)
+    |> Deserializer.deserialize(:lastModifiedByInformation, :struct, WorkspaceUser)
+    |> Deserializer.deserialize(:thumbnail, :struct, Page)
     |> Deserializer.deserialize(
       :userAuthorization,
       :struct,
-      DocuSign.Model.WorkspaceUserAuthorization
+      WorkspaceUserAuthorization
     )
   end
 end

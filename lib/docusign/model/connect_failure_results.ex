@@ -6,19 +6,20 @@ defmodule DocuSign.Model.ConnectFailureResults do
 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.ConnectFailureResult
+
   @derive Jason.Encoder
   defstruct [
     :retryQueue
   ]
 
   @type t :: %__MODULE__{
-          :retryQueue => [DocuSign.Model.ConnectFailureResult.t()] | nil
+          :retryQueue => [ConnectFailureResult.t()] | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
-    |> Deserializer.deserialize(:retryQueue, :list, DocuSign.Model.ConnectFailureResult)
+    |> Deserializer.deserialize(:retryQueue, :list, ConnectFailureResult)
   end
 end

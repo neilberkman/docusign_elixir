@@ -6,6 +6,9 @@ defmodule DocuSign.Model.NotaryJournalMetaData do
 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.NotaryJournalCredibleWitness
+
   @derive Jason.Encoder
   defstruct [
     :comment,
@@ -16,19 +19,17 @@ defmodule DocuSign.Model.NotaryJournalMetaData do
 
   @type t :: %__MODULE__{
           :comment => String.t() | nil,
-          :credibleWitnesses => [DocuSign.Model.NotaryJournalCredibleWitness.t()] | nil,
+          :credibleWitnesses => [NotaryJournalCredibleWitness.t()] | nil,
           :signatureImage => String.t() | nil,
           :signerIdType => String.t() | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
     |> Deserializer.deserialize(
       :credibleWitnesses,
       :list,
-      DocuSign.Model.NotaryJournalCredibleWitness
+      NotaryJournalCredibleWitness
     )
   end
 end

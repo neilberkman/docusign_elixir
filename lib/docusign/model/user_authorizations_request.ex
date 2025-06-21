@@ -6,23 +6,24 @@ defmodule DocuSign.Model.UserAuthorizationsRequest do
   An object that describes the user authorizations to create or update. 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.UserAuthorizationCreateRequestWithId
+
   @derive Jason.Encoder
   defstruct [
     :authorizations
   ]
 
   @type t :: %__MODULE__{
-          :authorizations => [DocuSign.Model.UserAuthorizationCreateRequestWithId.t()] | nil
+          :authorizations => [UserAuthorizationCreateRequestWithId.t()] | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
     |> Deserializer.deserialize(
       :authorizations,
       :list,
-      DocuSign.Model.UserAuthorizationCreateRequestWithId
+      UserAuthorizationCreateRequestWithId
     )
   end
 end

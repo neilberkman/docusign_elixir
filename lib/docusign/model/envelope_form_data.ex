@@ -6,6 +6,11 @@ defmodule DocuSign.Model.EnvelopeFormData do
   This object contains the data that recipients have entered into the form fields associated with an envelope.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.FormDataItem
+  alias DocuSign.Model.PrefillFormData
+  alias DocuSign.Model.RecipientFormData
+
   @derive Jason.Encoder
   defstruct [
     :emailSubject,
@@ -20,19 +25,17 @@ defmodule DocuSign.Model.EnvelopeFormData do
   @type t :: %__MODULE__{
           :emailSubject => String.t() | nil,
           :envelopeId => String.t() | nil,
-          :formData => [DocuSign.Model.FormDataItem.t()] | nil,
-          :prefillFormData => DocuSign.Model.PrefillFormData.t() | nil,
-          :recipientFormData => [DocuSign.Model.RecipientFormData.t()] | nil,
+          :formData => [FormDataItem.t()] | nil,
+          :prefillFormData => PrefillFormData.t() | nil,
+          :recipientFormData => [RecipientFormData.t()] | nil,
           :sentDateTime => String.t() | nil,
           :status => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:formData, :list, DocuSign.Model.FormDataItem)
-    |> Deserializer.deserialize(:prefillFormData, :struct, DocuSign.Model.PrefillFormData)
-    |> Deserializer.deserialize(:recipientFormData, :list, DocuSign.Model.RecipientFormData)
+    |> Deserializer.deserialize(:formData, :list, FormDataItem)
+    |> Deserializer.deserialize(:prefillFormData, :struct, PrefillFormData)
+    |> Deserializer.deserialize(:recipientFormData, :list, RecipientFormData)
   end
 end

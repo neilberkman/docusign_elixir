@@ -6,6 +6,11 @@ defmodule DocuSign.Model.PowerForm do
   Contains details about a PowerForm.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.Envelope
+  alias DocuSign.Model.ErrorDetails
+  alias DocuSign.Model.PowerFormRecipient
+
   @derive Jason.Encoder
   defstruct [
     :createdBy,
@@ -40,8 +45,8 @@ defmodule DocuSign.Model.PowerForm do
           :createdDateTime => String.t() | nil,
           :emailBody => String.t() | nil,
           :emailSubject => String.t() | nil,
-          :envelopes => [DocuSign.Model.Envelope.t()] | nil,
-          :errorDetails => DocuSign.Model.ErrorDetails.t() | nil,
+          :envelopes => [Envelope.t()] | nil,
+          :errorDetails => ErrorDetails.t() | nil,
           :instructions => String.t() | nil,
           :isActive => String.t() | nil,
           :lastUsed => String.t() | nil,
@@ -52,7 +57,7 @@ defmodule DocuSign.Model.PowerForm do
           :name => String.t() | nil,
           :powerFormId => String.t() | nil,
           :powerFormUrl => String.t() | nil,
-          :recipients => [DocuSign.Model.PowerFormRecipient.t()] | nil,
+          :recipients => [PowerFormRecipient.t()] | nil,
           :senderName => String.t() | nil,
           :senderUserId => String.t() | nil,
           :signingMode => String.t() | nil,
@@ -63,12 +68,10 @@ defmodule DocuSign.Model.PowerForm do
           :usesRemaining => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:envelopes, :list, DocuSign.Model.Envelope)
-    |> Deserializer.deserialize(:errorDetails, :struct, DocuSign.Model.ErrorDetails)
-    |> Deserializer.deserialize(:recipients, :list, DocuSign.Model.PowerFormRecipient)
+    |> Deserializer.deserialize(:envelopes, :list, Envelope)
+    |> Deserializer.deserialize(:errorDetails, :struct, ErrorDetails)
+    |> Deserializer.deserialize(:recipients, :list, PowerFormRecipient)
   end
 end

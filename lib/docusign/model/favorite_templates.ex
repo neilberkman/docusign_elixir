@@ -6,6 +6,10 @@ defmodule DocuSign.Model.FavoriteTemplates do
 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.ErrorDetails
+  alias DocuSign.Model.FavoriteTemplatesContentItem
+
   @derive Jason.Encoder
   defstruct [
     :errorDetails,
@@ -14,20 +18,18 @@ defmodule DocuSign.Model.FavoriteTemplates do
   ]
 
   @type t :: %__MODULE__{
-          :errorDetails => DocuSign.Model.ErrorDetails.t() | nil,
-          :favoriteTemplates => [DocuSign.Model.FavoriteTemplatesContentItem.t()] | nil,
+          :errorDetails => ErrorDetails.t() | nil,
+          :favoriteTemplates => [FavoriteTemplatesContentItem.t()] | nil,
           :templatesUpdatedCount => integer() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:errorDetails, :struct, DocuSign.Model.ErrorDetails)
+    |> Deserializer.deserialize(:errorDetails, :struct, ErrorDetails)
     |> Deserializer.deserialize(
       :favoriteTemplates,
       :list,
-      DocuSign.Model.FavoriteTemplatesContentItem
+      FavoriteTemplatesContentItem
     )
   end
 end

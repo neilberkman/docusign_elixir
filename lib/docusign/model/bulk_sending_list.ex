@@ -6,6 +6,9 @@ defmodule DocuSign.Model.BulkSendingList do
   This object contains the details for the bulk send list.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.BulkSendingCopy
+
   @derive Jason.Encoder
   defstruct [
     :bulkCopies,
@@ -14,15 +17,13 @@ defmodule DocuSign.Model.BulkSendingList do
   ]
 
   @type t :: %__MODULE__{
-          :bulkCopies => [DocuSign.Model.BulkSendingCopy.t()] | nil,
+          :bulkCopies => [BulkSendingCopy.t()] | nil,
           :listId => String.t() | nil,
           :name => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:bulkCopies, :list, DocuSign.Model.BulkSendingCopy)
+    |> Deserializer.deserialize(:bulkCopies, :list, BulkSendingCopy)
   end
 end

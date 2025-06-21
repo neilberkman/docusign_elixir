@@ -6,6 +6,9 @@ defmodule DocuSign.Model.DowngradeBillingPlanInformation do
 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.PlanInformation
+
   @derive Jason.Encoder
   defstruct [
     :downgradeEventType,
@@ -18,17 +21,15 @@ defmodule DocuSign.Model.DowngradeBillingPlanInformation do
 
   @type t :: %__MODULE__{
           :downgradeEventType => String.t() | nil,
-          :planInformation => DocuSign.Model.PlanInformation.t() | nil,
+          :planInformation => PlanInformation.t() | nil,
           :promoCode => String.t() | nil,
           :saleDiscount => String.t() | nil,
           :saleDiscountPeriods => String.t() | nil,
           :saleDiscountType => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:planInformation, :struct, DocuSign.Model.PlanInformation)
+    |> Deserializer.deserialize(:planInformation, :struct, PlanInformation)
   end
 end

@@ -6,6 +6,13 @@ defmodule DocuSign.Model.Document do
   A document object.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.DocGenFormField
+  alias DocuSign.Model.DocumentHtmlDefinition
+  alias DocuSign.Model.EnvelopeRecipientTabs
+  alias DocuSign.Model.MatchBox
+  alias DocuSign.Model.NameValue
+
   @derive Jason.Encoder
   defstruct [
     :applyAnchorTabs,
@@ -45,19 +52,19 @@ defmodule DocuSign.Model.Document do
           :assignTabsToRecipientId => String.t() | nil,
           :authoritativeCopy => boolean() | nil,
           :display => String.t() | nil,
-          :docGenFormFields => [DocuSign.Model.DocGenFormField.t()] | nil,
+          :docGenFormFields => [DocGenFormField.t()] | nil,
           :documentBase64 => String.t() | nil,
-          :documentFields => [DocuSign.Model.NameValue.t()] | nil,
+          :documentFields => [NameValue.t()] | nil,
           :documentId => String.t() | nil,
           :documentTemplateAgreementTypeId => String.t() | nil,
           :documentTemplateId => String.t() | nil,
           :encryptedWithKeyManager => String.t() | nil,
           :fileExtension => String.t() | nil,
           :fileFormatHint => String.t() | nil,
-          :htmlDefinition => DocuSign.Model.DocumentHtmlDefinition.t() | nil,
+          :htmlDefinition => DocumentHtmlDefinition.t() | nil,
           :includeInDownload => String.t() | nil,
           :isDocGenDocument => String.t() | nil,
-          :matchBoxes => [DocuSign.Model.MatchBox.t()] | nil,
+          :matchBoxes => [MatchBox.t()] | nil,
           :name => String.t() | nil,
           :order => String.t() | nil,
           :pages => String.t() | nil,
@@ -66,21 +73,19 @@ defmodule DocuSign.Model.Document do
           :remoteUrl => String.t() | nil,
           :signerMustAcknowledge => String.t() | nil,
           :signerMustAcknowledgeUseAccountDefault => boolean() | nil,
-          :tabs => DocuSign.Model.EnvelopeRecipientTabs.t() | nil,
+          :tabs => EnvelopeRecipientTabs.t() | nil,
           :templateLocked => String.t() | nil,
           :templateRequired => String.t() | nil,
           :transformPdfFields => String.t() | nil,
           :uri => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:docGenFormFields, :list, DocuSign.Model.DocGenFormField)
-    |> Deserializer.deserialize(:documentFields, :list, DocuSign.Model.NameValue)
-    |> Deserializer.deserialize(:htmlDefinition, :struct, DocuSign.Model.DocumentHtmlDefinition)
-    |> Deserializer.deserialize(:matchBoxes, :list, DocuSign.Model.MatchBox)
-    |> Deserializer.deserialize(:tabs, :struct, DocuSign.Model.EnvelopeRecipientTabs)
+    |> Deserializer.deserialize(:docGenFormFields, :list, DocGenFormField)
+    |> Deserializer.deserialize(:documentFields, :list, NameValue)
+    |> Deserializer.deserialize(:htmlDefinition, :struct, DocumentHtmlDefinition)
+    |> Deserializer.deserialize(:matchBoxes, :list, MatchBox)
+    |> Deserializer.deserialize(:tabs, :struct, EnvelopeRecipientTabs)
   end
 end

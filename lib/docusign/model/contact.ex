@@ -6,6 +6,11 @@ defmodule DocuSign.Model.Contact do
 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.ContactPhoneNumber
+  alias DocuSign.Model.ErrorDetails
+  alias DocuSign.Model.NotaryContactDetails
+
   @derive Jason.Encoder
   defstruct [
     :cloudProvider,
@@ -29,13 +34,13 @@ defmodule DocuSign.Model.Contact do
           :cloudProvider => String.t() | nil,
           :cloudProviderContainerId => String.t() | nil,
           :contactId => String.t() | nil,
-          :contactPhoneNumbers => [DocuSign.Model.ContactPhoneNumber.t()] | nil,
+          :contactPhoneNumbers => [ContactPhoneNumber.t()] | nil,
           :contactUri => String.t() | nil,
           :emails => [String.t()] | nil,
-          :errorDetails => DocuSign.Model.ErrorDetails.t() | nil,
+          :errorDetails => ErrorDetails.t() | nil,
           :isOwner => boolean() | nil,
           :name => String.t() | nil,
-          :notaryContactDetails => DocuSign.Model.NotaryContactDetails.t() | nil,
+          :notaryContactDetails => NotaryContactDetails.t() | nil,
           :organization => String.t() | nil,
           :roomContactType => String.t() | nil,
           :shared => String.t() | nil,
@@ -43,16 +48,14 @@ defmodule DocuSign.Model.Contact do
           :signingGroupName => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:contactPhoneNumbers, :list, DocuSign.Model.ContactPhoneNumber)
-    |> Deserializer.deserialize(:errorDetails, :struct, DocuSign.Model.ErrorDetails)
+    |> Deserializer.deserialize(:contactPhoneNumbers, :list, ContactPhoneNumber)
+    |> Deserializer.deserialize(:errorDetails, :struct, ErrorDetails)
     |> Deserializer.deserialize(
       :notaryContactDetails,
       :struct,
-      DocuSign.Model.NotaryContactDetails
+      NotaryContactDetails
     )
   end
 end

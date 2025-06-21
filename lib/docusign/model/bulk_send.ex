@@ -6,6 +6,9 @@ defmodule DocuSign.Model.BulkSend do
   The bulk send list resource provides methods that enable you to create and manage bulk sending lists, which you can use to send multiple copies of an envelope in a single batch.   **Note:** The Bulk Send feature is only available on Business Pro and Enterprise Pro plans.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.BulkSendingCopy
+
   @derive Jason.Encoder
   defstruct [
     :bulkCopies,
@@ -14,15 +17,13 @@ defmodule DocuSign.Model.BulkSend do
   ]
 
   @type t :: %__MODULE__{
-          :bulkCopies => [DocuSign.Model.BulkSendingCopy.t()] | nil,
+          :bulkCopies => [BulkSendingCopy.t()] | nil,
           :listId => String.t() | nil,
           :name => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:bulkCopies, :list, DocuSign.Model.BulkSendingCopy)
+    |> Deserializer.deserialize(:bulkCopies, :list, BulkSendingCopy)
   end
 end

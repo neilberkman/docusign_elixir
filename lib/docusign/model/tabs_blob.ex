@@ -6,6 +6,9 @@ defmodule DocuSign.Model.TabsBlob do
   Reserved for Docusign.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.SettingsMetadata
+
   @derive Jason.Encoder
   defstruct [
     :allowTabOrder,
@@ -14,8 +17,8 @@ defmodule DocuSign.Model.TabsBlob do
     :approveDeclineTabsMetadata,
     :calculatedFieldsEnabled,
     :calculatedFieldsMetadata,
-    :checkboxTabsEnabled,
     :checkBoxTabsMetadata,
+    :checkboxTabsEnabled,
     :dataFieldRegexEnabled,
     :dataFieldRegexMetadata,
     :dataFieldSizeEnabled,
@@ -58,111 +61,109 @@ defmodule DocuSign.Model.TabsBlob do
 
   @type t :: %__MODULE__{
           :allowTabOrder => String.t() | nil,
-          :allowTabOrderMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :allowTabOrderMetadata => SettingsMetadata.t() | nil,
           :approveDeclineTabsEnabled => String.t() | nil,
-          :approveDeclineTabsMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :approveDeclineTabsMetadata => SettingsMetadata.t() | nil,
           :calculatedFieldsEnabled => String.t() | nil,
-          :calculatedFieldsMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :calculatedFieldsMetadata => SettingsMetadata.t() | nil,
+          :checkBoxTabsMetadata => SettingsMetadata.t() | nil,
           :checkboxTabsEnabled => String.t() | nil,
-          :checkBoxTabsMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
           :dataFieldRegexEnabled => String.t() | nil,
-          :dataFieldRegexMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :dataFieldRegexMetadata => SettingsMetadata.t() | nil,
           :dataFieldSizeEnabled => String.t() | nil,
-          :dataFieldSizeMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :dataFieldSizeMetadata => SettingsMetadata.t() | nil,
           :drawTabsEnabled => String.t() | nil,
-          :drawTabsMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :drawTabsMetadata => SettingsMetadata.t() | nil,
           :enableTabAgreementDetails => String.t() | nil,
-          :enableTabAgreementDetailsMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :enableTabAgreementDetailsMetadata => SettingsMetadata.t() | nil,
           :firstLastEmailTabsEnabled => String.t() | nil,
-          :firstLastEmailTabsMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :firstLastEmailTabsMetadata => SettingsMetadata.t() | nil,
           :listTabsEnabled => String.t() | nil,
-          :listTabsMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :listTabsMetadata => SettingsMetadata.t() | nil,
           :noteTabsEnabled => String.t() | nil,
-          :noteTabsMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :noteTabsMetadata => SettingsMetadata.t() | nil,
           :numericalTabsEnabled => String.t() | nil,
-          :numericalTabsMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :numericalTabsMetadata => SettingsMetadata.t() | nil,
           :prefillTabsEnabled => String.t() | nil,
-          :prefillTabsMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :prefillTabsMetadata => SettingsMetadata.t() | nil,
           :radioTabsEnabled => String.t() | nil,
-          :radioTabsMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :radioTabsMetadata => SettingsMetadata.t() | nil,
           :savingCustomTabsEnabled => String.t() | nil,
-          :savingCustomTabsMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :savingCustomTabsMetadata => SettingsMetadata.t() | nil,
           :senderToChangeTabAssignmentsEnabled => String.t() | nil,
-          :senderToChangeTabAssignmentsMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :senderToChangeTabAssignmentsMetadata => SettingsMetadata.t() | nil,
           :sharedCustomTabsEnabled => String.t() | nil,
-          :sharedCustomTabsMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :sharedCustomTabsMetadata => SettingsMetadata.t() | nil,
           :tabDataLabelEnabled => String.t() | nil,
-          :tabDataLabelMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :tabDataLabelMetadata => SettingsMetadata.t() | nil,
           :tabLocationEnabled => String.t() | nil,
-          :tabLocationMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :tabLocationMetadata => SettingsMetadata.t() | nil,
           :tabLockingEnabled => String.t() | nil,
-          :tabLockingMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :tabLockingMetadata => SettingsMetadata.t() | nil,
           :tabScaleEnabled => String.t() | nil,
-          :tabScaleMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :tabScaleMetadata => SettingsMetadata.t() | nil,
           :tabTextFormattingEnabled => String.t() | nil,
-          :tabTextFormattingMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :tabTextFormattingMetadata => SettingsMetadata.t() | nil,
           :textTabsEnabled => String.t() | nil,
-          :textTabsMetadata => DocuSign.Model.SettingsMetadata.t() | nil
+          :textTabsMetadata => SettingsMetadata.t() | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
-    |> Deserializer.deserialize(:allowTabOrderMetadata, :struct, DocuSign.Model.SettingsMetadata)
+    |> Deserializer.deserialize(:allowTabOrderMetadata, :struct, SettingsMetadata)
     |> Deserializer.deserialize(
       :approveDeclineTabsMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
     |> Deserializer.deserialize(
       :calculatedFieldsMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
-    |> Deserializer.deserialize(:checkBoxTabsMetadata, :struct, DocuSign.Model.SettingsMetadata)
-    |> Deserializer.deserialize(:dataFieldRegexMetadata, :struct, DocuSign.Model.SettingsMetadata)
-    |> Deserializer.deserialize(:dataFieldSizeMetadata, :struct, DocuSign.Model.SettingsMetadata)
-    |> Deserializer.deserialize(:drawTabsMetadata, :struct, DocuSign.Model.SettingsMetadata)
+    |> Deserializer.deserialize(:checkBoxTabsMetadata, :struct, SettingsMetadata)
+    |> Deserializer.deserialize(:dataFieldRegexMetadata, :struct, SettingsMetadata)
+    |> Deserializer.deserialize(:dataFieldSizeMetadata, :struct, SettingsMetadata)
+    |> Deserializer.deserialize(:drawTabsMetadata, :struct, SettingsMetadata)
     |> Deserializer.deserialize(
       :enableTabAgreementDetailsMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
     |> Deserializer.deserialize(
       :firstLastEmailTabsMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
-    |> Deserializer.deserialize(:listTabsMetadata, :struct, DocuSign.Model.SettingsMetadata)
-    |> Deserializer.deserialize(:noteTabsMetadata, :struct, DocuSign.Model.SettingsMetadata)
-    |> Deserializer.deserialize(:numericalTabsMetadata, :struct, DocuSign.Model.SettingsMetadata)
-    |> Deserializer.deserialize(:prefillTabsMetadata, :struct, DocuSign.Model.SettingsMetadata)
-    |> Deserializer.deserialize(:radioTabsMetadata, :struct, DocuSign.Model.SettingsMetadata)
+    |> Deserializer.deserialize(:listTabsMetadata, :struct, SettingsMetadata)
+    |> Deserializer.deserialize(:noteTabsMetadata, :struct, SettingsMetadata)
+    |> Deserializer.deserialize(:numericalTabsMetadata, :struct, SettingsMetadata)
+    |> Deserializer.deserialize(:prefillTabsMetadata, :struct, SettingsMetadata)
+    |> Deserializer.deserialize(:radioTabsMetadata, :struct, SettingsMetadata)
     |> Deserializer.deserialize(
       :savingCustomTabsMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
     |> Deserializer.deserialize(
       :senderToChangeTabAssignmentsMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
     |> Deserializer.deserialize(
       :sharedCustomTabsMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
-    |> Deserializer.deserialize(:tabDataLabelMetadata, :struct, DocuSign.Model.SettingsMetadata)
-    |> Deserializer.deserialize(:tabLocationMetadata, :struct, DocuSign.Model.SettingsMetadata)
-    |> Deserializer.deserialize(:tabLockingMetadata, :struct, DocuSign.Model.SettingsMetadata)
-    |> Deserializer.deserialize(:tabScaleMetadata, :struct, DocuSign.Model.SettingsMetadata)
+    |> Deserializer.deserialize(:tabDataLabelMetadata, :struct, SettingsMetadata)
+    |> Deserializer.deserialize(:tabLocationMetadata, :struct, SettingsMetadata)
+    |> Deserializer.deserialize(:tabLockingMetadata, :struct, SettingsMetadata)
+    |> Deserializer.deserialize(:tabScaleMetadata, :struct, SettingsMetadata)
     |> Deserializer.deserialize(
       :tabTextFormattingMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
-    |> Deserializer.deserialize(:textTabsMetadata, :struct, DocuSign.Model.SettingsMetadata)
+    |> Deserializer.deserialize(:textTabsMetadata, :struct, SettingsMetadata)
   end
 end

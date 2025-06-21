@@ -6,6 +6,10 @@ defmodule DocuSign.Model.AccountIdentityVerificationWorkflow do
   Specifies an Identity Verification workflow.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.AccountIdentityInputOption
+  alias DocuSign.Model.AccountSignatureProvider
+
   @derive Jason.Encoder
   defstruct [
     :defaultDescription,
@@ -22,24 +26,22 @@ defmodule DocuSign.Model.AccountIdentityVerificationWorkflow do
   @type t :: %__MODULE__{
           :defaultDescription => String.t() | nil,
           :defaultName => String.t() | nil,
-          :inputOptions => [DocuSign.Model.AccountIdentityInputOption.t()] | nil,
+          :inputOptions => [AccountIdentityInputOption.t()] | nil,
           :isDisabled => String.t() | nil,
           :ownerType => String.t() | nil,
-          :signatureProvider => DocuSign.Model.AccountSignatureProvider.t() | nil,
+          :signatureProvider => AccountSignatureProvider.t() | nil,
           :workflowId => String.t() | nil,
           :workflowLabel => String.t() | nil,
           :workflowResourceKey => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:inputOptions, :list, DocuSign.Model.AccountIdentityInputOption)
+    |> Deserializer.deserialize(:inputOptions, :list, AccountIdentityInputOption)
     |> Deserializer.deserialize(
       :signatureProvider,
       :struct,
-      DocuSign.Model.AccountSignatureProvider
+      AccountSignatureProvider
     )
   end
 end

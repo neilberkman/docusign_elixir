@@ -8,15 +8,15 @@ defmodule DocuSign.Model.EnvelopeViewDocumentSettings do
 
   @derive Jason.Encoder
   defstruct [
-    :showEditDocuments,
     :showEditDocumentVisibility,
+    :showEditDocuments,
     :showEditPages,
     :showSaveAsDocumentCustomField
   ]
 
   @type t :: %__MODULE__{
-          :showEditDocuments => String.t() | nil,
           :showEditDocumentVisibility => String.t() | nil,
+          :showEditDocuments => String.t() | nil,
           :showEditPages => String.t() | nil,
           :showSaveAsDocumentCustomField => String.t() | nil
         }

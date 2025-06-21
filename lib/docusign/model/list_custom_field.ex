@@ -6,6 +6,9 @@ defmodule DocuSign.Model.ListCustomField do
   This object represents a list custom field from which envelope creators and senders can select custom data.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.ErrorDetails
+
   @derive Jason.Encoder
   defstruct [
     :configurationType,
@@ -20,7 +23,7 @@ defmodule DocuSign.Model.ListCustomField do
 
   @type t :: %__MODULE__{
           :configurationType => String.t() | nil,
-          :errorDetails => DocuSign.Model.ErrorDetails.t() | nil,
+          :errorDetails => ErrorDetails.t() | nil,
           :fieldId => String.t() | nil,
           :listItems => [String.t()] | nil,
           :name => String.t() | nil,
@@ -29,10 +32,8 @@ defmodule DocuSign.Model.ListCustomField do
           :value => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:errorDetails, :struct, DocuSign.Model.ErrorDetails)
+    |> Deserializer.deserialize(:errorDetails, :struct, ErrorDetails)
   end
 end

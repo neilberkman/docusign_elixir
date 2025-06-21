@@ -6,19 +6,20 @@ defmodule DocuSign.Model.CustomSettingsInformation do
 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.NameValue
+
   @derive Jason.Encoder
   defstruct [
     :customSettings
   ]
 
   @type t :: %__MODULE__{
-          :customSettings => [DocuSign.Model.NameValue.t()] | nil
+          :customSettings => [NameValue.t()] | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
-    |> Deserializer.deserialize(:customSettings, :list, DocuSign.Model.NameValue)
+    |> Deserializer.deserialize(:customSettings, :list, NameValue)
   end
 end

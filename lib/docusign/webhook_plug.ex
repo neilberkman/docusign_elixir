@@ -125,33 +125,30 @@ defmodule DocuSign.WebhookPlug do
   unlikely, the plug will check all of the signatures provided.
   """
 
+  @behaviour Plug
+
   import Plug.Conn
-  alias Plug.Conn
 
   alias DocuSign.Webhook.Crypto
-
-  @behaviour Plug
+  alias Plug.Conn
 
   @impl true
   def init(opts) do
     path_info = String.split(opts[:at], "/", trim: true)
 
     opts
-    |> Enum.into(%{})
+    |> Map.new()
     |> Map.put_new(:path_info, path_info)
   end
 
   # sobelow_skip ["XSS"]
   # `send_resp(conn, 400, reason)` is controlled by the handler module. It's not user input.
   @impl true
-  def call(
-        %Conn{method: "POST", path_info: path_info} = conn,
-        %{
-          path_info: path_info,
-          hmac_secret_key: hmac_secret_key,
-          handler: handler
-        }
-      ) do
+  def call(%Conn{method: "POST", path_info: path_info} = conn, %{
+        handler: handler,
+        hmac_secret_key: hmac_secret_key,
+        path_info: path_info
+      }) do
     secret = parse_secret!(hmac_secret_key)
     {:ok, payload, conn} = Conn.read_body(conn)
 

@@ -6,6 +6,9 @@ defmodule DocuSign.Model.ConnectDebugLog do
 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.ErrorDetails
+
   @derive Jason.Encoder
   defstruct [
     :connectConfig,
@@ -17,16 +20,14 @@ defmodule DocuSign.Model.ConnectDebugLog do
 
   @type t :: %__MODULE__{
           :connectConfig => String.t() | nil,
-          :errorDetails => DocuSign.Model.ErrorDetails.t() | nil,
+          :errorDetails => ErrorDetails.t() | nil,
           :eventDateTime => String.t() | nil,
           :eventDescription => String.t() | nil,
           :payload => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:errorDetails, :struct, DocuSign.Model.ErrorDetails)
+    |> Deserializer.deserialize(:errorDetails, :struct, ErrorDetails)
   end
 end

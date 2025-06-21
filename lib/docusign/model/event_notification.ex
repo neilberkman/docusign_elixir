@@ -6,6 +6,11 @@ defmodule DocuSign.Model.EventNotification do
   Use this object to configure a [Docusign Connect webhook](/platform/webhooks/connect/).
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.ConnectEventData
+  alias DocuSign.Model.EnvelopeEvent
+  alias DocuSign.Model.RecipientEvent
+
   @derive Jason.Encoder
   defstruct [
     :deliveryMode,
@@ -33,8 +38,8 @@ defmodule DocuSign.Model.EventNotification do
 
   @type t :: %__MODULE__{
           :deliveryMode => String.t() | nil,
-          :envelopeEvents => [DocuSign.Model.EnvelopeEvent.t()] | nil,
-          :eventData => DocuSign.Model.ConnectEventData.t() | nil,
+          :envelopeEvents => [EnvelopeEvent.t()] | nil,
+          :eventData => ConnectEventData.t() | nil,
           :events => [String.t()] | nil,
           :includeCertificateOfCompletion => String.t() | nil,
           :includeCertificateWithSoap => String.t() | nil,
@@ -47,7 +52,7 @@ defmodule DocuSign.Model.EventNotification do
           :includeTimeZone => String.t() | nil,
           :integratorManaged => String.t() | nil,
           :loggingEnabled => String.t() | nil,
-          :recipientEvents => [DocuSign.Model.RecipientEvent.t()] | nil,
+          :recipientEvents => [RecipientEvent.t()] | nil,
           :requireAcknowledgment => String.t() | nil,
           :signMessageWithX509Cert => String.t() | nil,
           :soapNameSpace => String.t() | nil,
@@ -55,12 +60,10 @@ defmodule DocuSign.Model.EventNotification do
           :useSoapInterface => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:envelopeEvents, :list, DocuSign.Model.EnvelopeEvent)
-    |> Deserializer.deserialize(:eventData, :struct, DocuSign.Model.ConnectEventData)
-    |> Deserializer.deserialize(:recipientEvents, :list, DocuSign.Model.RecipientEvent)
+    |> Deserializer.deserialize(:envelopeEvents, :list, EnvelopeEvent)
+    |> Deserializer.deserialize(:eventData, :struct, ConnectEventData)
+    |> Deserializer.deserialize(:recipientEvents, :list, RecipientEvent)
   end
 end

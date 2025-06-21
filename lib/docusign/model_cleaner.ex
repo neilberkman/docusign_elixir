@@ -27,8 +27,7 @@ defmodule DocuSign.ModelCleaner do
   def clean(%{} = map) do
     map
     |> Enum.reject(fn {_k, v} -> is_nil(v) end)
-    |> Enum.map(fn {k, v} -> {k, clean(v)} end)
-    |> Enum.into(%{})
+    |> Map.new(fn {k, v} -> {k, clean(v)} end)
   end
 
   def clean(list) when is_list(list) do

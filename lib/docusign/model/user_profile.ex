@@ -6,6 +6,12 @@ defmodule DocuSign.Model.UserProfile do
 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.AddressInformation
+  alias DocuSign.Model.AuthenticationMethod
+  alias DocuSign.Model.UsageHistory
+  alias DocuSign.Model.UserInformation
+
   @derive Jason.Encoder
   defstruct [
     :address,
@@ -23,8 +29,8 @@ defmodule DocuSign.Model.UserProfile do
   ]
 
   @type t :: %__MODULE__{
-          :address => DocuSign.Model.AddressInformation.t() | nil,
-          :authenticationMethods => [DocuSign.Model.AuthenticationMethod.t()] | nil,
+          :address => AddressInformation.t() | nil,
+          :authenticationMethods => [AuthenticationMethod.t()] | nil,
           :companyName => String.t() | nil,
           :displayOrganizationInfo => String.t() | nil,
           :displayPersonalInfo => String.t() | nil,
@@ -32,22 +38,20 @@ defmodule DocuSign.Model.UserProfile do
           :displayUsageHistory => String.t() | nil,
           :profileImageUri => String.t() | nil,
           :title => String.t() | nil,
-          :usageHistory => DocuSign.Model.UsageHistory.t() | nil,
-          :userDetails => DocuSign.Model.UserInformation.t() | nil,
+          :usageHistory => UsageHistory.t() | nil,
+          :userDetails => UserInformation.t() | nil,
           :userProfileLastModifiedDate => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:address, :struct, DocuSign.Model.AddressInformation)
+    |> Deserializer.deserialize(:address, :struct, AddressInformation)
     |> Deserializer.deserialize(
       :authenticationMethods,
       :list,
-      DocuSign.Model.AuthenticationMethod
+      AuthenticationMethod
     )
-    |> Deserializer.deserialize(:usageHistory, :struct, DocuSign.Model.UsageHistory)
-    |> Deserializer.deserialize(:userDetails, :struct, DocuSign.Model.UserInformation)
+    |> Deserializer.deserialize(:usageHistory, :struct, UsageHistory)
+    |> Deserializer.deserialize(:userDetails, :struct, UserInformation)
   end
 end

@@ -6,6 +6,11 @@ defmodule DocuSign.Model.CompositeTemplate do
   This object contains information about a [composite template][composite], which you can use to to apply multiple templates to a single envelope, combine templates with PDF forms, and combine templates with documents from cloud sources.  [composite]: /docs/esign-rest-api/esign101/concepts/templates/composite/
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.Document
+  alias DocuSign.Model.InlineTemplate
+  alias DocuSign.Model.ServerTemplate
+
   @derive Jason.Encoder
   defstruct [
     :compositeTemplateId,
@@ -17,18 +22,16 @@ defmodule DocuSign.Model.CompositeTemplate do
 
   @type t :: %__MODULE__{
           :compositeTemplateId => String.t() | nil,
-          :document => DocuSign.Model.Document.t() | nil,
-          :inlineTemplates => [DocuSign.Model.InlineTemplate.t()] | nil,
+          :document => Document.t() | nil,
+          :inlineTemplates => [InlineTemplate.t()] | nil,
           :pdfMetaDataTemplateSequence => String.t() | nil,
-          :serverTemplates => [DocuSign.Model.ServerTemplate.t()] | nil
+          :serverTemplates => [ServerTemplate.t()] | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
-    |> Deserializer.deserialize(:document, :struct, DocuSign.Model.Document)
-    |> Deserializer.deserialize(:inlineTemplates, :list, DocuSign.Model.InlineTemplate)
-    |> Deserializer.deserialize(:serverTemplates, :list, DocuSign.Model.ServerTemplate)
+    |> Deserializer.deserialize(:document, :struct, Document)
+    |> Deserializer.deserialize(:inlineTemplates, :list, InlineTemplate)
+    |> Deserializer.deserialize(:serverTemplates, :list, ServerTemplate)
   end
 end

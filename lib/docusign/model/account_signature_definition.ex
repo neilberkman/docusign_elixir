@@ -6,6 +6,11 @@ defmodule DocuSign.Model.AccountSignatureDefinition do
 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.DateStampProperties
+  alias DocuSign.Model.SignatureGroupDef
+  alias DocuSign.Model.SignatureUserDef
+
   @derive Jason.Encoder
   defstruct [
     :dateStampProperties,
@@ -28,7 +33,7 @@ defmodule DocuSign.Model.AccountSignatureDefinition do
   ]
 
   @type t :: %__MODULE__{
-          :dateStampProperties => DocuSign.Model.DateStampProperties.t() | nil,
+          :dateStampProperties => DateStampProperties.t() | nil,
           :disallowUserResizeStamp => String.t() | nil,
           :externalID => String.t() | nil,
           :imageType => String.t() | nil,
@@ -37,22 +42,20 @@ defmodule DocuSign.Model.AccountSignatureDefinition do
           :nrdsLastName => String.t() | nil,
           :phoneticName => String.t() | nil,
           :signatureFont => String.t() | nil,
-          :signatureGroups => [DocuSign.Model.SignatureGroupDef.t()] | nil,
+          :signatureGroups => [SignatureGroupDef.t()] | nil,
           :signatureId => String.t() | nil,
           :signatureInitials => String.t() | nil,
           :signatureName => String.t() | nil,
           :signatureType => String.t() | nil,
-          :signatureUsers => [DocuSign.Model.SignatureUserDef.t()] | nil,
+          :signatureUsers => [SignatureUserDef.t()] | nil,
           :stampFormat => String.t() | nil,
           :stampSizeMM => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:dateStampProperties, :struct, DocuSign.Model.DateStampProperties)
-    |> Deserializer.deserialize(:signatureGroups, :list, DocuSign.Model.SignatureGroupDef)
-    |> Deserializer.deserialize(:signatureUsers, :list, DocuSign.Model.SignatureUserDef)
+    |> Deserializer.deserialize(:dateStampProperties, :struct, DateStampProperties)
+    |> Deserializer.deserialize(:signatureGroups, :list, SignatureGroupDef)
+    |> Deserializer.deserialize(:signatureUsers, :list, SignatureUserDef)
   end
 end

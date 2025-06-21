@@ -6,6 +6,10 @@ defmodule DocuSign.Model.AccountSignatureProvider do
   Contains information about the signature provider associated with the Identity Verification workflow. If empty, then this specific workflow is not intended for signers. 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.AccountSignatureProviderOption
+  alias DocuSign.Model.SignatureProviderRequiredOption
+
   @derive Jason.Encoder
   defstruct [
     :isRequired,
@@ -23,25 +27,21 @@ defmodule DocuSign.Model.AccountSignatureProvider do
           :signatureProviderDisplayName => String.t() | nil,
           :signatureProviderId => String.t() | nil,
           :signatureProviderName => String.t() | nil,
-          :signatureProviderOptionsMetadata =>
-            [DocuSign.Model.AccountSignatureProviderOption.t()] | nil,
-          :signatureProviderRequiredOptions =>
-            [DocuSign.Model.SignatureProviderRequiredOption.t()] | nil
+          :signatureProviderOptionsMetadata => [AccountSignatureProviderOption.t()] | nil,
+          :signatureProviderRequiredOptions => [SignatureProviderRequiredOption.t()] | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
     |> Deserializer.deserialize(
       :signatureProviderOptionsMetadata,
       :list,
-      DocuSign.Model.AccountSignatureProviderOption
+      AccountSignatureProviderOption
     )
     |> Deserializer.deserialize(
       :signatureProviderRequiredOptions,
       :list,
-      DocuSign.Model.SignatureProviderRequiredOption
+      SignatureProviderRequiredOption
     )
   end
 end

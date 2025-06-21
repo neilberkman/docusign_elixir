@@ -6,6 +6,9 @@ defmodule DocuSign.Model.BulkSendBatchActionRequest do
 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.Notification
+
   @derive Jason.Encoder
   defstruct [
     :action,
@@ -15,14 +18,12 @@ defmodule DocuSign.Model.BulkSendBatchActionRequest do
 
   @type t :: %__MODULE__{
           :action => String.t() | nil,
-          :notification => DocuSign.Model.Notification.t() | nil,
+          :notification => Notification.t() | nil,
           :voidReason => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:notification, :struct, DocuSign.Model.Notification)
+    |> Deserializer.deserialize(:notification, :struct, Notification)
   end
 end

@@ -6,6 +6,10 @@ defmodule DocuSign.Model.EnvelopePublish do
   The EnvelopePublish resource allows you to submit existing envelopes to any webhook. 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.EnvelopePublishTransactionErrorRollup
+  alias DocuSign.Model.UserInfo
+
   @derive Jason.Encoder
   defstruct [
     :applyConnectSettings,
@@ -26,8 +30,7 @@ defmodule DocuSign.Model.EnvelopePublish do
   @type t :: %__MODULE__{
           :applyConnectSettings => String.t() | nil,
           :envelopeCount => String.t() | nil,
-          :envelopeLevelErrorRollups =>
-            [DocuSign.Model.EnvelopePublishTransactionErrorRollup.t()] | nil,
+          :envelopeLevelErrorRollups => [EnvelopePublishTransactionErrorRollup.t()] | nil,
           :envelopePublishTransactionId => String.t() | nil,
           :errorCount => String.t() | nil,
           :fileLevelErrors => [String.t()] | nil,
@@ -36,19 +39,17 @@ defmodule DocuSign.Model.EnvelopePublish do
           :processingStatus => String.t() | nil,
           :resultsUri => String.t() | nil,
           :submissionDate => String.t() | nil,
-          :submittedByUserInfo => DocuSign.Model.UserInfo.t() | nil,
+          :submittedByUserInfo => UserInfo.t() | nil,
           :submittedForPublishingEnvelopeCount => String.t() | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
     |> Deserializer.deserialize(
       :envelopeLevelErrorRollups,
       :list,
-      DocuSign.Model.EnvelopePublishTransactionErrorRollup
+      EnvelopePublishTransactionErrorRollup
     )
-    |> Deserializer.deserialize(:submittedByUserInfo, :struct, DocuSign.Model.UserInfo)
+    |> Deserializer.deserialize(:submittedByUserInfo, :struct, UserInfo)
   end
 end

@@ -1,12 +1,12 @@
 defmodule DocuSign.ConnectionTest do
   use ExUnit.Case, async: false
 
-  alias DocuSign.Connection
-
   import DocuSign.EnvHelper
   import DocuSign.ProcessHelper
-
   import Mox
+
+  alias DocuSign.Connection
+  alias DocuSign.User.AppAccount
 
   setup :set_mox_from_context
   setup :verify_on_exit!
@@ -105,8 +105,8 @@ defmodule DocuSign.ConnectionTest do
 
   defp do_request(bypass) do
     conn = %Connection{
-      client: %{token: %OAuth2.AccessToken{}},
-      app_account: %DocuSign.User.AppAccount{base_uri: "http://localhost:#{bypass.port}"}
+      app_account: %AppAccount{base_uri: "http://localhost:#{bypass.port}"},
+      client: %{token: %OAuth2.AccessToken{}}
     }
 
     opts = [method: :get, url: "/endpoint"]

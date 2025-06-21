@@ -6,8 +6,10 @@ defmodule DocuSign.Api.Comments do
   API calls for all endpoints tagged `Comments`.
   """
 
-  alias DocuSign.Connection
   import DocuSign.RequestBuilder
+
+  alias DocuSign.Connection
+  alias DocuSign.Model.ErrorDetails
 
   @doc """
   Gets a PDF transcript of all of the comments in an envelope.
@@ -27,7 +29,7 @@ defmodule DocuSign.Api.Comments do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec comments_get_comments_transcript(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()} | {:ok, String.t()} | {:error, Tesla.Env.t()}
+          {:ok, ErrorDetails.t()} | {:ok, String.t()} | {:error, Tesla.Env.t()}
   def comments_get_comments_transcript(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
       :encoding => :query
@@ -38,13 +40,13 @@ defmodule DocuSign.Api.Comments do
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/comments/transcript")
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
       {200, false},
-      {400, DocuSign.Model.ErrorDetails}
+      {400, ErrorDetails}
     ])
   end
 end

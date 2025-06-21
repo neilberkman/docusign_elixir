@@ -6,8 +6,11 @@ defmodule DocuSign.Api.TemplateViews do
   API calls for all endpoints tagged `TemplateViews`.
   """
 
-  alias DocuSign.Connection
   import DocuSign.RequestBuilder
+
+  alias DocuSign.Connection
+  alias DocuSign.Model.ErrorDetails
+  alias DocuSign.Model.ViewUrl
 
   @doc """
   Gets a URL for a template edit view.
@@ -27,8 +30,8 @@ defmodule DocuSign.Api.TemplateViews do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec views_post_template_edit_view(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ViewUrl.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, ViewUrl.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
   def views_post_template_edit_view(connection, account_id, template_id, opts \\ []) do
     optional_params = %{
@@ -41,13 +44,13 @@ defmodule DocuSign.Api.TemplateViews do
       |> url("/v2.1/accounts/#{account_id}/templates/#{template_id}/views/edit")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {201, DocuSign.Model.ViewUrl},
-      {400, DocuSign.Model.ErrorDetails}
+      {201, ViewUrl},
+      {400, ErrorDetails}
     ])
   end
 end

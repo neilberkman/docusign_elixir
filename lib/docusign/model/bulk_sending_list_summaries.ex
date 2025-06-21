@@ -6,19 +6,20 @@ defmodule DocuSign.Model.BulkSendingListSummaries do
   This complex type contains summaries that provide basic information about the bulk send lists that belong to the current user.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.BulkSendingListSummary
+
   @derive Jason.Encoder
   defstruct [
     :bulkListSummaries
   ]
 
   @type t :: %__MODULE__{
-          :bulkListSummaries => [DocuSign.Model.BulkSendingListSummary.t()] | nil
+          :bulkListSummaries => [BulkSendingListSummary.t()] | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
-    |> Deserializer.deserialize(:bulkListSummaries, :list, DocuSign.Model.BulkSendingListSummary)
+    |> Deserializer.deserialize(:bulkListSummaries, :list, BulkSendingListSummary)
   end
 end

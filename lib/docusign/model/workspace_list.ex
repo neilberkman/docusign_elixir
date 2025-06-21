@@ -6,6 +6,9 @@ defmodule DocuSign.Model.WorkspaceList do
   This object contains a list of available workspaces.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.Workspace
+
   @derive Jason.Encoder
   defstruct [
     :endPosition,
@@ -20,13 +23,11 @@ defmodule DocuSign.Model.WorkspaceList do
           :resultSetSize => String.t() | nil,
           :startPosition => String.t() | nil,
           :totalSetSize => String.t() | nil,
-          :workspaces => [DocuSign.Model.Workspace.t()] | nil
+          :workspaces => [Workspace.t()] | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
-    |> Deserializer.deserialize(:workspaces, :list, DocuSign.Model.Workspace)
+    |> Deserializer.deserialize(:workspaces, :list, Workspace)
   end
 end

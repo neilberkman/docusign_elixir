@@ -29,7 +29,7 @@ defmodule DocuSign.Util do
   }
   """
   def map_keys_to_atoms(m) do
-    Enum.into(m, %{}, fn
+    Map.new(m, fn
       {k, v} when is_binary(k) ->
         a = String.to_existing_atom(k)
         {a, v}

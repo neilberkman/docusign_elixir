@@ -6,6 +6,10 @@ defmodule DocuSign.Model.NotaryJurisdiction do
   Creating, updating, and deleting notary jurisdiction objects.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.ErrorDetails
+  alias DocuSign.Model.Jurisdiction
+
   @derive Jason.Encoder
   defstruct [
     :commissionExpiration,
@@ -21,17 +25,15 @@ defmodule DocuSign.Model.NotaryJurisdiction do
           :commissionExpiration => String.t() | nil,
           :commissionId => String.t() | nil,
           :county => String.t() | nil,
-          :errorDetails => DocuSign.Model.ErrorDetails.t() | nil,
-          :jurisdiction => DocuSign.Model.Jurisdiction.t() | nil,
+          :errorDetails => ErrorDetails.t() | nil,
+          :jurisdiction => Jurisdiction.t() | nil,
           :registeredName => String.t() | nil,
           :sealType => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:errorDetails, :struct, DocuSign.Model.ErrorDetails)
-    |> Deserializer.deserialize(:jurisdiction, :struct, DocuSign.Model.Jurisdiction)
+    |> Deserializer.deserialize(:errorDetails, :struct, ErrorDetails)
+    |> Deserializer.deserialize(:jurisdiction, :struct, Jurisdiction)
   end
 end

@@ -6,6 +6,10 @@ defmodule DocuSign.Model.FolderItemsResponse do
 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.EnvelopeSummary
+  alias DocuSign.Model.Folder
+
   @derive Jason.Encoder
   defstruct [
     :endPosition,
@@ -20,8 +24,8 @@ defmodule DocuSign.Model.FolderItemsResponse do
 
   @type t :: %__MODULE__{
           :endPosition => String.t() | nil,
-          :envelopes => [DocuSign.Model.EnvelopeSummary.t()] | nil,
-          :folders => [DocuSign.Model.Folder.t()] | nil,
+          :envelopes => [EnvelopeSummary.t()] | nil,
+          :folders => [Folder.t()] | nil,
           :nextUri => String.t() | nil,
           :previousUri => String.t() | nil,
           :resultSetSize => String.t() | nil,
@@ -29,11 +33,9 @@ defmodule DocuSign.Model.FolderItemsResponse do
           :totalSetSize => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:envelopes, :list, DocuSign.Model.EnvelopeSummary)
-    |> Deserializer.deserialize(:folders, :list, DocuSign.Model.Folder)
+    |> Deserializer.deserialize(:envelopes, :list, EnvelopeSummary)
+    |> Deserializer.deserialize(:folders, :list, Folder)
   end
 end

@@ -6,6 +6,9 @@ defmodule DocuSign.Model.UserPasswordRules do
   Contains details about the password rules for a user.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.AccountPasswordRules
+
   @derive Jason.Encoder
   defstruct [
     :passwordRules,
@@ -13,14 +16,12 @@ defmodule DocuSign.Model.UserPasswordRules do
   ]
 
   @type t :: %__MODULE__{
-          :passwordRules => DocuSign.Model.AccountPasswordRules.t() | nil,
+          :passwordRules => AccountPasswordRules.t() | nil,
           :userId => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:passwordRules, :struct, DocuSign.Model.AccountPasswordRules)
+    |> Deserializer.deserialize(:passwordRules, :struct, AccountPasswordRules)
   end
 end

@@ -6,6 +6,9 @@ defmodule DocuSign.Model.PaymentProcessorInformation do
 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.AddressInformation
+
   @derive Jason.Encoder
   defstruct [
     :address,
@@ -14,15 +17,13 @@ defmodule DocuSign.Model.PaymentProcessorInformation do
   ]
 
   @type t :: %__MODULE__{
-          :address => DocuSign.Model.AddressInformation.t() | nil,
+          :address => AddressInformation.t() | nil,
           :billingAgreementId => String.t() | nil,
           :email => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:address, :struct, DocuSign.Model.AddressInformation)
+    |> Deserializer.deserialize(:address, :struct, AddressInformation)
   end
 end

@@ -6,8 +6,11 @@ defmodule DocuSign.Api.AccountSignatureProviders do
   API calls for all endpoints tagged `AccountSignatureProviders`.
   """
 
-  alias DocuSign.Connection
   import DocuSign.RequestBuilder
+
+  alias DocuSign.Connection
+  alias DocuSign.Model.AccountSignatureProviders
+  alias DocuSign.Model.ErrorDetails
 
   @doc """
   Gets the available signature providers for an account.
@@ -29,21 +32,21 @@ defmodule DocuSign.Api.AccountSignatureProviders do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.AccountSignatureProviders.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, AccountSignatureProviders.t()}
           | {:error, Tesla.Env.t()}
   def account_signature_providers_get_signature_providers(connection, account_id, _opts \\ []) do
     request =
       %{}
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/signatureProviders")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.AccountSignatureProviders},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, AccountSignatureProviders},
+      {400, ErrorDetails}
     ])
   end
 end

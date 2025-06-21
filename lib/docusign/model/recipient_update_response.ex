@@ -6,6 +6,10 @@ defmodule DocuSign.Model.RecipientUpdateResponse do
   The recipient details that are returned after you update the recipient.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.EnvelopeRecipientTabs
+  alias DocuSign.Model.ErrorDetails
+
   @derive Jason.Encoder
   defstruct [
     :combined,
@@ -17,17 +21,15 @@ defmodule DocuSign.Model.RecipientUpdateResponse do
 
   @type t :: %__MODULE__{
           :combined => String.t() | nil,
-          :errorDetails => DocuSign.Model.ErrorDetails.t() | nil,
+          :errorDetails => ErrorDetails.t() | nil,
           :recipientId => String.t() | nil,
           :recipientIdGuid => String.t() | nil,
-          :tabs => DocuSign.Model.EnvelopeRecipientTabs.t() | nil
+          :tabs => EnvelopeRecipientTabs.t() | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
-    |> Deserializer.deserialize(:errorDetails, :struct, DocuSign.Model.ErrorDetails)
-    |> Deserializer.deserialize(:tabs, :struct, DocuSign.Model.EnvelopeRecipientTabs)
+    |> Deserializer.deserialize(:errorDetails, :struct, ErrorDetails)
+    |> Deserializer.deserialize(:tabs, :struct, EnvelopeRecipientTabs)
   end
 end

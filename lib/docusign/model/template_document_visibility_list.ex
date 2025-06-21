@@ -6,19 +6,20 @@ defmodule DocuSign.Model.TemplateDocumentVisibilityList do
   A list of `documentVisibility` objects that specify whether the documents associated with a template are visible to recipients.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.DocumentVisibility
+
   @derive Jason.Encoder
   defstruct [
     :documentVisibility
   ]
 
   @type t :: %__MODULE__{
-          :documentVisibility => [DocuSign.Model.DocumentVisibility.t()] | nil
+          :documentVisibility => [DocumentVisibility.t()] | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
-    |> Deserializer.deserialize(:documentVisibility, :list, DocuSign.Model.DocumentVisibility)
+    |> Deserializer.deserialize(:documentVisibility, :list, DocumentVisibility)
   end
 end

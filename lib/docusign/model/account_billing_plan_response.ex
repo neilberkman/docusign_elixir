@@ -6,6 +6,18 @@ defmodule DocuSign.Model.AccountBillingPlanResponse do
   Defines an account billing plan response object.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.AccountAddress
+  alias DocuSign.Model.AccountBillingPlan
+  alias DocuSign.Model.BillingEntityInformationResponse
+  alias DocuSign.Model.BillingPlan
+  alias DocuSign.Model.CreditCardInformation
+  alias DocuSign.Model.DirectDebitProcessorInformation
+  alias DocuSign.Model.DowngradePlanUpdateResponse
+  alias DocuSign.Model.DowngradeRequestInformation
+  alias DocuSign.Model.PaymentProcessorInformation
+  alias DocuSign.Model.ReferralInformation
+
   @derive Jason.Encoder
   defstruct [
     :billingAddress,
@@ -24,59 +36,56 @@ defmodule DocuSign.Model.AccountBillingPlanResponse do
   ]
 
   @type t :: %__MODULE__{
-          :billingAddress => DocuSign.Model.AccountAddress.t() | nil,
+          :billingAddress => AccountAddress.t() | nil,
           :billingAddressIsCreditCardAddress => String.t() | nil,
-          :billingPlan => DocuSign.Model.AccountBillingPlan.t() | nil,
-          :creditCardInformation => DocuSign.Model.CreditCardInformation.t() | nil,
-          :directDebitProcessorInformation =>
-            DocuSign.Model.DirectDebitProcessorInformation.t() | nil,
-          :downgradePlanInformation => DocuSign.Model.DowngradePlanUpdateResponse.t() | nil,
-          :downgradeRequestInformation => DocuSign.Model.DowngradeRequestInformation.t() | nil,
-          :entityInformation => DocuSign.Model.BillingEntityInformationResponse.t() | nil,
+          :billingPlan => AccountBillingPlan.t() | nil,
+          :creditCardInformation => CreditCardInformation.t() | nil,
+          :directDebitProcessorInformation => DirectDebitProcessorInformation.t() | nil,
+          :downgradePlanInformation => DowngradePlanUpdateResponse.t() | nil,
+          :downgradeRequestInformation => DowngradeRequestInformation.t() | nil,
+          :entityInformation => BillingEntityInformationResponse.t() | nil,
           :paymentMethod => String.t() | nil,
-          :paymentProcessorInformation => DocuSign.Model.PaymentProcessorInformation.t() | nil,
-          :referralInformation => DocuSign.Model.ReferralInformation.t() | nil,
-          :successorPlans => [DocuSign.Model.BillingPlan.t()] | nil,
+          :paymentProcessorInformation => PaymentProcessorInformation.t() | nil,
+          :referralInformation => ReferralInformation.t() | nil,
+          :successorPlans => [BillingPlan.t()] | nil,
           :taxExemptId => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:billingAddress, :struct, DocuSign.Model.AccountAddress)
-    |> Deserializer.deserialize(:billingPlan, :struct, DocuSign.Model.AccountBillingPlan)
+    |> Deserializer.deserialize(:billingAddress, :struct, AccountAddress)
+    |> Deserializer.deserialize(:billingPlan, :struct, AccountBillingPlan)
     |> Deserializer.deserialize(
       :creditCardInformation,
       :struct,
-      DocuSign.Model.CreditCardInformation
+      CreditCardInformation
     )
     |> Deserializer.deserialize(
       :directDebitProcessorInformation,
       :struct,
-      DocuSign.Model.DirectDebitProcessorInformation
+      DirectDebitProcessorInformation
     )
     |> Deserializer.deserialize(
       :downgradePlanInformation,
       :struct,
-      DocuSign.Model.DowngradePlanUpdateResponse
+      DowngradePlanUpdateResponse
     )
     |> Deserializer.deserialize(
       :downgradeRequestInformation,
       :struct,
-      DocuSign.Model.DowngradeRequestInformation
+      DowngradeRequestInformation
     )
     |> Deserializer.deserialize(
       :entityInformation,
       :struct,
-      DocuSign.Model.BillingEntityInformationResponse
+      BillingEntityInformationResponse
     )
     |> Deserializer.deserialize(
       :paymentProcessorInformation,
       :struct,
-      DocuSign.Model.PaymentProcessorInformation
+      PaymentProcessorInformation
     )
-    |> Deserializer.deserialize(:referralInformation, :struct, DocuSign.Model.ReferralInformation)
-    |> Deserializer.deserialize(:successorPlans, :list, DocuSign.Model.BillingPlan)
+    |> Deserializer.deserialize(:referralInformation, :struct, ReferralInformation)
+    |> Deserializer.deserialize(:successorPlans, :list, BillingPlan)
   end
 end

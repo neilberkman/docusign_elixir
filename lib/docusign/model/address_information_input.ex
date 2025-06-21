@@ -6,6 +6,9 @@ defmodule DocuSign.Model.AddressInformationInput do
   Contains address input information.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.AddressInformation
+
   @derive Jason.Encoder
   defstruct [
     :addressInformation,
@@ -14,15 +17,13 @@ defmodule DocuSign.Model.AddressInformationInput do
   ]
 
   @type t :: %__MODULE__{
-          :addressInformation => DocuSign.Model.AddressInformation.t() | nil,
+          :addressInformation => AddressInformation.t() | nil,
           :displayLevelCode => String.t() | nil,
           :receiveInResponse => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:addressInformation, :struct, DocuSign.Model.AddressInformation)
+    |> Deserializer.deserialize(:addressInformation, :struct, AddressInformation)
   end
 end

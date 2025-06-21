@@ -6,8 +6,11 @@ defmodule DocuSign.Api.TemplateRecipientTabs do
   API calls for all endpoints tagged `TemplateRecipientTabs`.
   """
 
-  alias DocuSign.Connection
   import DocuSign.RequestBuilder
+
+  alias DocuSign.Connection
+  alias DocuSign.Model.ErrorDetails
+  alias DocuSign.Model.Tabs
 
   @doc """
   Deletes the tabs associated with a recipient in a template.
@@ -34,16 +37,10 @@ defmodule DocuSign.Api.TemplateRecipientTabs do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.Tabs.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, Tabs.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
-  def recipients_delete_template_recipient_tabs(
-        connection,
-        account_id,
-        recipient_id,
-        template_id,
-        opts \\ []
-      ) do
+  def recipients_delete_template_recipient_tabs(connection, account_id, recipient_id, template_id, opts \\ []) do
     optional_params = %{
       :body => :body
     }
@@ -51,17 +48,15 @@ defmodule DocuSign.Api.TemplateRecipientTabs do
     request =
       %{}
       |> method(:delete)
-      |> url(
-        "/v2.1/accounts/#{account_id}/templates/#{template_id}/recipients/#{recipient_id}/tabs"
-      )
+      |> url("/v2.1/accounts/#{account_id}/templates/#{template_id}/recipients/#{recipient_id}/tabs")
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.Tabs},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, Tabs},
+      {400, ErrorDetails}
     ])
   end
 
@@ -91,16 +86,10 @@ defmodule DocuSign.Api.TemplateRecipientTabs do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.Tabs.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, Tabs.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
-  def recipients_get_template_recipient_tabs(
-        connection,
-        account_id,
-        recipient_id,
-        template_id,
-        opts \\ []
-      ) do
+  def recipients_get_template_recipient_tabs(connection, account_id, recipient_id, template_id, opts \\ []) do
     optional_params = %{
       :include_anchor_tab_locations => :query,
       :include_metadata => :query
@@ -109,17 +98,15 @@ defmodule DocuSign.Api.TemplateRecipientTabs do
     request =
       %{}
       |> method(:get)
-      |> url(
-        "/v2.1/accounts/#{account_id}/templates/#{template_id}/recipients/#{recipient_id}/tabs"
-      )
+      |> url("/v2.1/accounts/#{account_id}/templates/#{template_id}/recipients/#{recipient_id}/tabs")
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.Tabs},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, Tabs},
+      {400, ErrorDetails}
     ])
   end
 
@@ -148,16 +135,10 @@ defmodule DocuSign.Api.TemplateRecipientTabs do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.Tabs.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, Tabs.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
-  def recipients_post_template_recipient_tabs(
-        connection,
-        account_id,
-        recipient_id,
-        template_id,
-        opts \\ []
-      ) do
+  def recipients_post_template_recipient_tabs(connection, account_id, recipient_id, template_id, opts \\ []) do
     optional_params = %{
       :body => :body
     }
@@ -165,18 +146,16 @@ defmodule DocuSign.Api.TemplateRecipientTabs do
     request =
       %{}
       |> method(:post)
-      |> url(
-        "/v2.1/accounts/#{account_id}/templates/#{template_id}/recipients/#{recipient_id}/tabs"
-      )
+      |> url("/v2.1/accounts/#{account_id}/templates/#{template_id}/recipients/#{recipient_id}/tabs")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {201, DocuSign.Model.Tabs},
-      {400, DocuSign.Model.ErrorDetails}
+      {201, Tabs},
+      {400, ErrorDetails}
     ])
   end
 
@@ -205,16 +184,10 @@ defmodule DocuSign.Api.TemplateRecipientTabs do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.Tabs.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, Tabs.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
-  def recipients_put_template_recipient_tabs(
-        connection,
-        account_id,
-        recipient_id,
-        template_id,
-        opts \\ []
-      ) do
+  def recipients_put_template_recipient_tabs(connection, account_id, recipient_id, template_id, opts \\ []) do
     optional_params = %{
       :body => :body
     }
@@ -222,18 +195,16 @@ defmodule DocuSign.Api.TemplateRecipientTabs do
     request =
       %{}
       |> method(:put)
-      |> url(
-        "/v2.1/accounts/#{account_id}/templates/#{template_id}/recipients/#{recipient_id}/tabs"
-      )
+      |> url("/v2.1/accounts/#{account_id}/templates/#{template_id}/recipients/#{recipient_id}/tabs")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.Tabs},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, Tabs},
+      {400, ErrorDetails}
     ])
   end
 end

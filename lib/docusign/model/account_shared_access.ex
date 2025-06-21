@@ -6,6 +6,10 @@ defmodule DocuSign.Model.AccountSharedAccess do
   Contains shared access information.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.ErrorDetails
+  alias DocuSign.Model.MemberSharedItems
+
   @derive Jason.Encoder
   defstruct [
     :accountId,
@@ -22,20 +26,18 @@ defmodule DocuSign.Model.AccountSharedAccess do
   @type t :: %__MODULE__{
           :accountId => String.t() | nil,
           :endPosition => String.t() | nil,
-          :errorDetails => DocuSign.Model.ErrorDetails.t() | nil,
+          :errorDetails => ErrorDetails.t() | nil,
           :nextUri => String.t() | nil,
           :previousUri => String.t() | nil,
           :resultSetSize => String.t() | nil,
-          :sharedAccess => [DocuSign.Model.MemberSharedItems.t()] | nil,
+          :sharedAccess => [MemberSharedItems.t()] | nil,
           :startPosition => String.t() | nil,
           :totalSetSize => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:errorDetails, :struct, DocuSign.Model.ErrorDetails)
-    |> Deserializer.deserialize(:sharedAccess, :list, DocuSign.Model.MemberSharedItems)
+    |> Deserializer.deserialize(:errorDetails, :struct, ErrorDetails)
+    |> Deserializer.deserialize(:sharedAccess, :list, MemberSharedItems)
   end
 end

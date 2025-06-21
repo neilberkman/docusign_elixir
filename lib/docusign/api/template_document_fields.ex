@@ -6,8 +6,11 @@ defmodule DocuSign.Api.TemplateDocumentFields do
   API calls for all endpoints tagged `TemplateDocumentFields`.
   """
 
-  alias DocuSign.Connection
   import DocuSign.RequestBuilder
+
+  alias DocuSign.Connection
+  alias DocuSign.Model.DocumentFieldsInformation
+  alias DocuSign.Model.ErrorDetails
 
   @doc """
   Deletes custom document fields from an existing template document.
@@ -34,16 +37,10 @@ defmodule DocuSign.Api.TemplateDocumentFields do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.DocumentFieldsInformation.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, DocumentFieldsInformation.t()}
           | {:error, Tesla.Env.t()}
-  def document_fields_delete_template_document_fields(
-        connection,
-        account_id,
-        document_id,
-        template_id,
-        opts \\ []
-      ) do
+  def document_fields_delete_template_document_fields(connection, account_id, document_id, template_id, opts \\ []) do
     optional_params = %{
       :body => :body
     }
@@ -51,17 +48,15 @@ defmodule DocuSign.Api.TemplateDocumentFields do
     request =
       %{}
       |> method(:delete)
-      |> url(
-        "/v2.1/accounts/#{account_id}/templates/#{template_id}/documents/#{document_id}/fields"
-      )
+      |> url("/v2.1/accounts/#{account_id}/templates/#{template_id}/documents/#{document_id}/fields")
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.DocumentFieldsInformation},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, DocumentFieldsInformation},
+      {400, ErrorDetails}
     ])
   end
 
@@ -89,29 +84,21 @@ defmodule DocuSign.Api.TemplateDocumentFields do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.DocumentFieldsInformation.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, DocumentFieldsInformation.t()}
           | {:error, Tesla.Env.t()}
-  def document_fields_get_template_document_fields(
-        connection,
-        account_id,
-        document_id,
-        template_id,
-        _opts \\ []
-      ) do
+  def document_fields_get_template_document_fields(connection, account_id, document_id, template_id, _opts \\ []) do
     request =
       %{}
       |> method(:get)
-      |> url(
-        "/v2.1/accounts/#{account_id}/templates/#{template_id}/documents/#{document_id}/fields"
-      )
-      |> Enum.into([])
+      |> url("/v2.1/accounts/#{account_id}/templates/#{template_id}/documents/#{document_id}/fields")
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.DocumentFieldsInformation},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, DocumentFieldsInformation},
+      {400, ErrorDetails}
     ])
   end
 
@@ -140,16 +127,10 @@ defmodule DocuSign.Api.TemplateDocumentFields do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.DocumentFieldsInformation.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, DocumentFieldsInformation.t()}
           | {:error, Tesla.Env.t()}
-  def document_fields_post_template_document_fields(
-        connection,
-        account_id,
-        document_id,
-        template_id,
-        opts \\ []
-      ) do
+  def document_fields_post_template_document_fields(connection, account_id, document_id, template_id, opts \\ []) do
     optional_params = %{
       :body => :body
     }
@@ -157,18 +138,16 @@ defmodule DocuSign.Api.TemplateDocumentFields do
     request =
       %{}
       |> method(:post)
-      |> url(
-        "/v2.1/accounts/#{account_id}/templates/#{template_id}/documents/#{document_id}/fields"
-      )
+      |> url("/v2.1/accounts/#{account_id}/templates/#{template_id}/documents/#{document_id}/fields")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {201, DocuSign.Model.DocumentFieldsInformation},
-      {400, DocuSign.Model.ErrorDetails}
+      {201, DocumentFieldsInformation},
+      {400, ErrorDetails}
     ])
   end
 
@@ -197,16 +176,10 @@ defmodule DocuSign.Api.TemplateDocumentFields do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.DocumentFieldsInformation.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, DocumentFieldsInformation.t()}
           | {:error, Tesla.Env.t()}
-  def document_fields_put_template_document_fields(
-        connection,
-        account_id,
-        document_id,
-        template_id,
-        opts \\ []
-      ) do
+  def document_fields_put_template_document_fields(connection, account_id, document_id, template_id, opts \\ []) do
     optional_params = %{
       :body => :body
     }
@@ -214,18 +187,16 @@ defmodule DocuSign.Api.TemplateDocumentFields do
     request =
       %{}
       |> method(:put)
-      |> url(
-        "/v2.1/accounts/#{account_id}/templates/#{template_id}/documents/#{document_id}/fields"
-      )
+      |> url("/v2.1/accounts/#{account_id}/templates/#{template_id}/documents/#{document_id}/fields")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.DocumentFieldsInformation},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, DocumentFieldsInformation},
+      {400, ErrorDetails}
     ])
   end
 end

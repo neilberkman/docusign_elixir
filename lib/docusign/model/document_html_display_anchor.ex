@@ -6,6 +6,9 @@ defmodule DocuSign.Model.DocumentHtmlDisplayAnchor do
 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.DocumentHtmlDisplaySettings
+
   @derive Jason.Encoder
   defstruct [
     :caseSensitive,
@@ -18,21 +21,19 @@ defmodule DocuSign.Model.DocumentHtmlDisplayAnchor do
 
   @type t :: %__MODULE__{
           :caseSensitive => boolean() | nil,
-          :displaySettings => DocuSign.Model.DocumentHtmlDisplaySettings.t() | nil,
+          :displaySettings => DocumentHtmlDisplaySettings.t() | nil,
           :endAnchor => String.t() | nil,
           :removeEndAnchor => boolean() | nil,
           :removeStartAnchor => boolean() | nil,
           :startAnchor => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
     |> Deserializer.deserialize(
       :displaySettings,
       :struct,
-      DocuSign.Model.DocumentHtmlDisplaySettings
+      DocumentHtmlDisplaySettings
     )
   end
 end

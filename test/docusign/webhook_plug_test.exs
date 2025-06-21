@@ -1,7 +1,8 @@
 defmodule DocuSign.WebhookPlugTest do
   use ExUnit.Case, async: true
-  import Plug.Test
+
   import Plug.Conn
+  import Plug.Test
 
   alias DocuSign.Webhook.Crypto
   alias DocuSign.WebhookPlug
@@ -9,18 +10,18 @@ defmodule DocuSign.WebhookPlugTest do
   @hmac256_key "sample-hmac-key"
 
   @webhook_event %{
-    "event" => "envelope-completed",
     "apiVersion" => "v2.1",
-    "uri" =>
-      "/restapi/v2.1/accounts/b123a4e6-094f-43aa-b2d9-30076d0af3c7/envelopes/6b0cff6d-1def-40c3-9684-1587c8fcaa2c",
-    "retryCount" => 0,
     "configurationId" => 123_456,
-    "generatedDateTime" => "2024-02-13T14:34:42.2740396Z",
     "data" => %{
       "accountId" => "b123a4e6-094f-43aa-b2d9-30076d0af3c7",
-      "userId" => "861d2a78-7e55-42a1-ba7f-7501cc1a0d28",
-      "envelopeId" => "6b0cff6d-1def-40c3-9684-1587c8fcaa2c"
-    }
+      "envelopeId" => "6b0cff6d-1def-40c3-9684-1587c8fcaa2c",
+      "userId" => "861d2a78-7e55-42a1-ba7f-7501cc1a0d28"
+    },
+    "event" => "envelope-completed",
+    "generatedDateTime" => "2024-02-13T14:34:42.2740396Z",
+    "retryCount" => 0,
+    "uri" =>
+      "/restapi/v2.1/accounts/b123a4e6-094f-43aa-b2d9-30076d0af3c7/envelopes/6b0cff6d-1def-40c3-9684-1587c8fcaa2c"
   }
 
   @opts WebhookPlug.init(

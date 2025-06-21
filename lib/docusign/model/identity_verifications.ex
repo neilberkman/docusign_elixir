@@ -6,23 +6,24 @@ defmodule DocuSign.Model.IdentityVerifications do
   Identity Verification enables you to verify a signer's identity before they can access a document. The `IdentityVerifications` resource provides a method that enables you to list the workflows that are available to an account.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.AccountIdentityVerificationWorkflow
+
   @derive Jason.Encoder
   defstruct [
     :identityVerification
   ]
 
   @type t :: %__MODULE__{
-          :identityVerification => [DocuSign.Model.AccountIdentityVerificationWorkflow.t()] | nil
+          :identityVerification => [AccountIdentityVerificationWorkflow.t()] | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
     |> Deserializer.deserialize(
       :identityVerification,
       :list,
-      DocuSign.Model.AccountIdentityVerificationWorkflow
+      AccountIdentityVerificationWorkflow
     )
   end
 end

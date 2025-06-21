@@ -6,6 +6,17 @@ defmodule DocuSign.Model.NewAccountDefinition do
 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.AccountAddress
+  alias DocuSign.Model.AccountSettingsInformation
+  alias DocuSign.Model.CreditCardInformation
+  alias DocuSign.Model.DirectDebitProcessorInformation
+  alias DocuSign.Model.PaymentProcessorInformation
+  alias DocuSign.Model.PlanInformation
+  alias DocuSign.Model.ReferralInformation
+  alias DocuSign.Model.SocialAccountInformation
+  alias DocuSign.Model.UserInformation
+
   @derive Jason.Encoder
   defstruct [
     :accountName,
@@ -30,58 +41,55 @@ defmodule DocuSign.Model.NewAccountDefinition do
 
   @type t :: %__MODULE__{
           :accountName => String.t() | nil,
-          :accountSettings => DocuSign.Model.AccountSettingsInformation.t() | nil,
-          :addressInformation => DocuSign.Model.AccountAddress.t() | nil,
-          :creditCardInformation => DocuSign.Model.CreditCardInformation.t() | nil,
-          :directDebitProcessorInformation =>
-            DocuSign.Model.DirectDebitProcessorInformation.t() | nil,
+          :accountSettings => AccountSettingsInformation.t() | nil,
+          :addressInformation => AccountAddress.t() | nil,
+          :creditCardInformation => CreditCardInformation.t() | nil,
+          :directDebitProcessorInformation => DirectDebitProcessorInformation.t() | nil,
           :distributorCode => String.t() | nil,
           :distributorPassword => String.t() | nil,
           :enablePreAuth => String.t() | nil,
           :envelopePartitionId => String.t() | nil,
-          :initialUser => DocuSign.Model.UserInformation.t() | nil,
+          :initialUser => UserInformation.t() | nil,
           :paymentMethod => String.t() | nil,
           :paymentProcessor => String.t() | nil,
-          :paymentProcessorInformation => DocuSign.Model.PaymentProcessorInformation.t() | nil,
-          :planInformation => DocuSign.Model.PlanInformation.t() | nil,
+          :paymentProcessorInformation => PaymentProcessorInformation.t() | nil,
+          :planInformation => PlanInformation.t() | nil,
           :processPayment => String.t() | nil,
-          :referralInformation => DocuSign.Model.ReferralInformation.t() | nil,
-          :socialAccountInformation => DocuSign.Model.SocialAccountInformation.t() | nil,
+          :referralInformation => ReferralInformation.t() | nil,
+          :socialAccountInformation => SocialAccountInformation.t() | nil,
           :taxExemptId => String.t() | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
     |> Deserializer.deserialize(
       :accountSettings,
       :struct,
-      DocuSign.Model.AccountSettingsInformation
+      AccountSettingsInformation
     )
-    |> Deserializer.deserialize(:addressInformation, :struct, DocuSign.Model.AccountAddress)
+    |> Deserializer.deserialize(:addressInformation, :struct, AccountAddress)
     |> Deserializer.deserialize(
       :creditCardInformation,
       :struct,
-      DocuSign.Model.CreditCardInformation
+      CreditCardInformation
     )
     |> Deserializer.deserialize(
       :directDebitProcessorInformation,
       :struct,
-      DocuSign.Model.DirectDebitProcessorInformation
+      DirectDebitProcessorInformation
     )
-    |> Deserializer.deserialize(:initialUser, :struct, DocuSign.Model.UserInformation)
+    |> Deserializer.deserialize(:initialUser, :struct, UserInformation)
     |> Deserializer.deserialize(
       :paymentProcessorInformation,
       :struct,
-      DocuSign.Model.PaymentProcessorInformation
+      PaymentProcessorInformation
     )
-    |> Deserializer.deserialize(:planInformation, :struct, DocuSign.Model.PlanInformation)
-    |> Deserializer.deserialize(:referralInformation, :struct, DocuSign.Model.ReferralInformation)
+    |> Deserializer.deserialize(:planInformation, :struct, PlanInformation)
+    |> Deserializer.deserialize(:referralInformation, :struct, ReferralInformation)
     |> Deserializer.deserialize(
       :socialAccountInformation,
       :struct,
-      DocuSign.Model.SocialAccountInformation
+      SocialAccountInformation
     )
   end
 end

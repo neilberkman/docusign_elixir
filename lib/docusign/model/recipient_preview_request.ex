@@ -6,6 +6,9 @@ defmodule DocuSign.Model.RecipientPreviewRequest do
   This request object contains the information necessary to create a recipient preview.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.RecipientTokenClientUrls
+
   @derive Jason.Encoder
   defstruct [
     :assertionId,
@@ -25,7 +28,7 @@ defmodule DocuSign.Model.RecipientPreviewRequest do
           :assertionId => String.t() | nil,
           :authenticationInstant => String.t() | nil,
           :authenticationMethod => String.t() | nil,
-          :clientURLs => DocuSign.Model.RecipientTokenClientUrls.t() | nil,
+          :clientURLs => RecipientTokenClientUrls.t() | nil,
           :pingFrequency => String.t() | nil,
           :pingUrl => String.t() | nil,
           :recipientId => String.t() | nil,
@@ -35,10 +38,8 @@ defmodule DocuSign.Model.RecipientPreviewRequest do
           :xFrameOptionsAllowFromUrl => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:clientURLs, :struct, DocuSign.Model.RecipientTokenClientUrls)
+    |> Deserializer.deserialize(:clientURLs, :struct, RecipientTokenClientUrls)
   end
 end

@@ -6,6 +6,9 @@ defmodule DocuSign.Model.UserAuthorizationWithStatus do
 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.UserAuthorization
+
   @derive Jason.Encoder
   defstruct [
     :authorization,
@@ -14,15 +17,13 @@ defmodule DocuSign.Model.UserAuthorizationWithStatus do
   ]
 
   @type t :: %__MODULE__{
-          :authorization => DocuSign.Model.UserAuthorization.t() | nil,
+          :authorization => UserAuthorization.t() | nil,
           :errorMessage => String.t() | nil,
           :success => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:authorization, :struct, DocuSign.Model.UserAuthorization)
+    |> Deserializer.deserialize(:authorization, :struct, UserAuthorization)
   end
 end

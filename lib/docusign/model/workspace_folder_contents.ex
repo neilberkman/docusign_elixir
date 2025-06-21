@@ -6,6 +6,9 @@ defmodule DocuSign.Model.WorkspaceFolderContents do
   This object's properties describe the contents of a workspace folder.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.WorkspaceItem
+
   @derive Jason.Encoder
   defstruct [
     :endPosition,
@@ -20,21 +23,19 @@ defmodule DocuSign.Model.WorkspaceFolderContents do
 
   @type t :: %__MODULE__{
           :endPosition => String.t() | nil,
-          :folder => DocuSign.Model.WorkspaceItem.t() | nil,
-          :items => [DocuSign.Model.WorkspaceItem.t()] | nil,
-          :parentFolders => [DocuSign.Model.WorkspaceItem.t()] | nil,
+          :folder => WorkspaceItem.t() | nil,
+          :items => [WorkspaceItem.t()] | nil,
+          :parentFolders => [WorkspaceItem.t()] | nil,
           :resultSetSize => String.t() | nil,
           :startPosition => String.t() | nil,
           :totalSetSize => String.t() | nil,
           :workspaceId => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:folder, :struct, DocuSign.Model.WorkspaceItem)
-    |> Deserializer.deserialize(:items, :list, DocuSign.Model.WorkspaceItem)
-    |> Deserializer.deserialize(:parentFolders, :list, DocuSign.Model.WorkspaceItem)
+    |> Deserializer.deserialize(:folder, :struct, WorkspaceItem)
+    |> Deserializer.deserialize(:items, :list, WorkspaceItem)
+    |> Deserializer.deserialize(:parentFolders, :list, WorkspaceItem)
   end
 end

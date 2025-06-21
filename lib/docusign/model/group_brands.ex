@@ -6,23 +6,24 @@ defmodule DocuSign.Model.GroupBrands do
   If your account includes multiple signing brands, you can use the groups functionality to assign different brands to different groups. This resource enables you to manage group brands.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.Brand
+
   @derive Jason.Encoder
   defstruct [
+    :brandOptions,
     :recipientBrandIdDefault,
-    :senderBrandIdDefault,
-    :brandOptions
+    :senderBrandIdDefault
   ]
 
   @type t :: %__MODULE__{
+          :brandOptions => [Brand.t()] | nil,
           :recipientBrandIdDefault => String.t() | nil,
-          :senderBrandIdDefault => String.t() | nil,
-          :brandOptions => [DocuSign.Model.Brand.t()] | nil
+          :senderBrandIdDefault => String.t() | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
-    |> Deserializer.deserialize(:brandOptions, :list, DocuSign.Model.Brand)
+    |> Deserializer.deserialize(:brandOptions, :list, Brand)
   end
 end

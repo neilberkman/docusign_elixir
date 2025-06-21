@@ -6,6 +6,9 @@ defmodule DocuSign.Model.DocumentTemplate do
 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.ErrorDetails
+
   @derive Jason.Encoder
   defstruct [
     :documentEndPage,
@@ -19,14 +22,12 @@ defmodule DocuSign.Model.DocumentTemplate do
           :documentEndPage => String.t() | nil,
           :documentId => String.t() | nil,
           :documentStartPage => String.t() | nil,
-          :errorDetails => DocuSign.Model.ErrorDetails.t() | nil,
+          :errorDetails => ErrorDetails.t() | nil,
           :templateId => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:errorDetails, :struct, DocuSign.Model.ErrorDetails)
+    |> Deserializer.deserialize(:errorDetails, :struct, ErrorDetails)
   end
 end

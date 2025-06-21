@@ -6,6 +6,44 @@ defmodule DocuSign.Model.Tabs do
   Tabs indicate to recipients where they should sign, initial, or enter data on a document. They are represented graphically as symbols on documents at the time of signing. Tabs can also display data to the recipients.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.Approve
+  alias DocuSign.Model.Checkbox
+  alias DocuSign.Model.CommentThread
+  alias DocuSign.Model.CommissionCounty
+  alias DocuSign.Model.CommissionExpiration
+  alias DocuSign.Model.CommissionNumber
+  alias DocuSign.Model.CommissionState
+  alias DocuSign.Model.Company
+  alias DocuSign.Model.DateSigned
+  alias DocuSign.Model.Decline
+  alias DocuSign.Model.Draw
+  alias DocuSign.Model.Email
+  alias DocuSign.Model.EmailAddress
+  alias DocuSign.Model.EnvelopeId
+  alias DocuSign.Model.FirstName
+  alias DocuSign.Model.FormulaTab
+  alias DocuSign.Model.FullName
+  alias DocuSign.Model.InitialHere
+  alias DocuSign.Model.LastName
+  alias DocuSign.Model.Notarize
+  alias DocuSign.Model.NotarySeal
+  alias DocuSign.Model.Note
+  alias DocuSign.Model.Numerical
+  alias DocuSign.Model.PhoneNumber
+  alias DocuSign.Model.PolyLineOverlay
+  alias DocuSign.Model.PrefillTabs
+  alias DocuSign.Model.RadioGroup
+  alias DocuSign.Model.SignerAttachment
+  alias DocuSign.Model.SignHere
+  alias DocuSign.Model.SmartSection
+  alias DocuSign.Model.Ssn
+  alias DocuSign.Model.TabGroup
+  alias DocuSign.Model.Text
+  alias DocuSign.Model.Title
+  alias DocuSign.Model.View
+  alias DocuSign.Model.Zip
+
   @derive Jason.Encoder
   defstruct [
     :approveTabs,
@@ -38,8 +76,8 @@ defmodule DocuSign.Model.Tabs do
     :polyLineOverlayTabs,
     :prefillTabs,
     :radioGroupTabs,
-    :signerAttachmentTabs,
     :signHereTabs,
+    :signerAttachmentTabs,
     :smartSectionTabs,
     :ssnTabs,
     :tabGroups,
@@ -50,91 +88,89 @@ defmodule DocuSign.Model.Tabs do
   ]
 
   @type t :: %__MODULE__{
-          :approveTabs => [DocuSign.Model.Approve.t()] | nil,
-          :checkboxTabs => [DocuSign.Model.Checkbox.t()] | nil,
-          :commentThreadTabs => [DocuSign.Model.CommentThread.t()] | nil,
-          :commissionCountyTabs => [DocuSign.Model.CommissionCounty.t()] | nil,
-          :commissionExpirationTabs => [DocuSign.Model.CommissionExpiration.t()] | nil,
-          :commissionNumberTabs => [DocuSign.Model.CommissionNumber.t()] | nil,
-          :commissionStateTabs => [DocuSign.Model.CommissionState.t()] | nil,
-          :companyTabs => [DocuSign.Model.Company.t()] | nil,
-          :dateSignedTabs => [DocuSign.Model.DateSigned.t()] | nil,
+          :approveTabs => [Approve.t()] | nil,
+          :checkboxTabs => [Checkbox.t()] | nil,
+          :commentThreadTabs => [CommentThread.t()] | nil,
+          :commissionCountyTabs => [CommissionCounty.t()] | nil,
+          :commissionExpirationTabs => [CommissionExpiration.t()] | nil,
+          :commissionNumberTabs => [CommissionNumber.t()] | nil,
+          :commissionStateTabs => [CommissionState.t()] | nil,
+          :companyTabs => [Company.t()] | nil,
+          :dateSignedTabs => [DateSigned.t()] | nil,
           :dateTabs => [DocuSign.Model.Date.t()] | nil,
-          :declineTabs => [DocuSign.Model.Decline.t()] | nil,
-          :drawTabs => [DocuSign.Model.Draw.t()] | nil,
-          :emailAddressTabs => [DocuSign.Model.EmailAddress.t()] | nil,
-          :emailTabs => [DocuSign.Model.Email.t()] | nil,
-          :envelopeIdTabs => [DocuSign.Model.EnvelopeId.t()] | nil,
-          :firstNameTabs => [DocuSign.Model.FirstName.t()] | nil,
-          :formulaTabs => [DocuSign.Model.FormulaTab.t()] | nil,
-          :fullNameTabs => [DocuSign.Model.FullName.t()] | nil,
-          :initialHereTabs => [DocuSign.Model.InitialHere.t()] | nil,
-          :lastNameTabs => [DocuSign.Model.LastName.t()] | nil,
+          :declineTabs => [Decline.t()] | nil,
+          :drawTabs => [Draw.t()] | nil,
+          :emailAddressTabs => [EmailAddress.t()] | nil,
+          :emailTabs => [Email.t()] | nil,
+          :envelopeIdTabs => [EnvelopeId.t()] | nil,
+          :firstNameTabs => [FirstName.t()] | nil,
+          :formulaTabs => [FormulaTab.t()] | nil,
+          :fullNameTabs => [FullName.t()] | nil,
+          :initialHereTabs => [InitialHere.t()] | nil,
+          :lastNameTabs => [LastName.t()] | nil,
           :listTabs => [DocuSign.Model.List.t()] | nil,
-          :notarizeTabs => [DocuSign.Model.Notarize.t()] | nil,
-          :notarySealTabs => [DocuSign.Model.NotarySeal.t()] | nil,
-          :noteTabs => [DocuSign.Model.Note.t()] | nil,
+          :notarizeTabs => [Notarize.t()] | nil,
+          :notarySealTabs => [NotarySeal.t()] | nil,
+          :noteTabs => [Note.t()] | nil,
           :numberTabs => [DocuSign.Model.Float.t()] | nil,
-          :numericalTabs => [DocuSign.Model.Numerical.t()] | nil,
-          :phoneNumberTabs => [DocuSign.Model.PhoneNumber.t()] | nil,
-          :polyLineOverlayTabs => [DocuSign.Model.PolyLineOverlay.t()] | nil,
-          :prefillTabs => DocuSign.Model.PrefillTabs.t() | nil,
-          :radioGroupTabs => [DocuSign.Model.RadioGroup.t()] | nil,
-          :signerAttachmentTabs => [DocuSign.Model.SignerAttachment.t()] | nil,
-          :signHereTabs => [DocuSign.Model.SignHere.t()] | nil,
-          :smartSectionTabs => [DocuSign.Model.SmartSection.t()] | nil,
-          :ssnTabs => [DocuSign.Model.Ssn.t()] | nil,
-          :tabGroups => [DocuSign.Model.TabGroup.t()] | nil,
-          :textTabs => [DocuSign.Model.Text.t()] | nil,
-          :titleTabs => [DocuSign.Model.Title.t()] | nil,
-          :viewTabs => [DocuSign.Model.View.t()] | nil,
-          :zipTabs => [DocuSign.Model.Zip.t()] | nil
+          :numericalTabs => [Numerical.t()] | nil,
+          :phoneNumberTabs => [PhoneNumber.t()] | nil,
+          :polyLineOverlayTabs => [PolyLineOverlay.t()] | nil,
+          :prefillTabs => PrefillTabs.t() | nil,
+          :radioGroupTabs => [RadioGroup.t()] | nil,
+          :signHereTabs => [SignHere.t()] | nil,
+          :signerAttachmentTabs => [SignerAttachment.t()] | nil,
+          :smartSectionTabs => [SmartSection.t()] | nil,
+          :ssnTabs => [Ssn.t()] | nil,
+          :tabGroups => [TabGroup.t()] | nil,
+          :textTabs => [Text.t()] | nil,
+          :titleTabs => [Title.t()] | nil,
+          :viewTabs => [View.t()] | nil,
+          :zipTabs => [Zip.t()] | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
-    |> Deserializer.deserialize(:approveTabs, :list, DocuSign.Model.Approve)
-    |> Deserializer.deserialize(:checkboxTabs, :list, DocuSign.Model.Checkbox)
-    |> Deserializer.deserialize(:commentThreadTabs, :list, DocuSign.Model.CommentThread)
-    |> Deserializer.deserialize(:commissionCountyTabs, :list, DocuSign.Model.CommissionCounty)
+    |> Deserializer.deserialize(:approveTabs, :list, Approve)
+    |> Deserializer.deserialize(:checkboxTabs, :list, Checkbox)
+    |> Deserializer.deserialize(:commentThreadTabs, :list, CommentThread)
+    |> Deserializer.deserialize(:commissionCountyTabs, :list, CommissionCounty)
     |> Deserializer.deserialize(
       :commissionExpirationTabs,
       :list,
-      DocuSign.Model.CommissionExpiration
+      CommissionExpiration
     )
-    |> Deserializer.deserialize(:commissionNumberTabs, :list, DocuSign.Model.CommissionNumber)
-    |> Deserializer.deserialize(:commissionStateTabs, :list, DocuSign.Model.CommissionState)
-    |> Deserializer.deserialize(:companyTabs, :list, DocuSign.Model.Company)
-    |> Deserializer.deserialize(:dateSignedTabs, :list, DocuSign.Model.DateSigned)
+    |> Deserializer.deserialize(:commissionNumberTabs, :list, CommissionNumber)
+    |> Deserializer.deserialize(:commissionStateTabs, :list, CommissionState)
+    |> Deserializer.deserialize(:companyTabs, :list, Company)
+    |> Deserializer.deserialize(:dateSignedTabs, :list, DateSigned)
     |> Deserializer.deserialize(:dateTabs, :list, DocuSign.Model.Date)
-    |> Deserializer.deserialize(:declineTabs, :list, DocuSign.Model.Decline)
-    |> Deserializer.deserialize(:drawTabs, :list, DocuSign.Model.Draw)
-    |> Deserializer.deserialize(:emailAddressTabs, :list, DocuSign.Model.EmailAddress)
-    |> Deserializer.deserialize(:emailTabs, :list, DocuSign.Model.Email)
-    |> Deserializer.deserialize(:envelopeIdTabs, :list, DocuSign.Model.EnvelopeId)
-    |> Deserializer.deserialize(:firstNameTabs, :list, DocuSign.Model.FirstName)
-    |> Deserializer.deserialize(:formulaTabs, :list, DocuSign.Model.FormulaTab)
-    |> Deserializer.deserialize(:fullNameTabs, :list, DocuSign.Model.FullName)
-    |> Deserializer.deserialize(:initialHereTabs, :list, DocuSign.Model.InitialHere)
-    |> Deserializer.deserialize(:lastNameTabs, :list, DocuSign.Model.LastName)
-    |> Deserializer.deserialize(:notarizeTabs, :list, DocuSign.Model.Notarize)
-    |> Deserializer.deserialize(:notarySealTabs, :list, DocuSign.Model.NotarySeal)
-    |> Deserializer.deserialize(:noteTabs, :list, DocuSign.Model.Note)
-    |> Deserializer.deserialize(:numericalTabs, :list, DocuSign.Model.Numerical)
-    |> Deserializer.deserialize(:phoneNumberTabs, :list, DocuSign.Model.PhoneNumber)
-    |> Deserializer.deserialize(:polyLineOverlayTabs, :list, DocuSign.Model.PolyLineOverlay)
-    |> Deserializer.deserialize(:prefillTabs, :struct, DocuSign.Model.PrefillTabs)
-    |> Deserializer.deserialize(:radioGroupTabs, :list, DocuSign.Model.RadioGroup)
-    |> Deserializer.deserialize(:signerAttachmentTabs, :list, DocuSign.Model.SignerAttachment)
-    |> Deserializer.deserialize(:signHereTabs, :list, DocuSign.Model.SignHere)
-    |> Deserializer.deserialize(:smartSectionTabs, :list, DocuSign.Model.SmartSection)
-    |> Deserializer.deserialize(:ssnTabs, :list, DocuSign.Model.Ssn)
-    |> Deserializer.deserialize(:tabGroups, :list, DocuSign.Model.TabGroup)
-    |> Deserializer.deserialize(:textTabs, :list, DocuSign.Model.Text)
-    |> Deserializer.deserialize(:titleTabs, :list, DocuSign.Model.Title)
-    |> Deserializer.deserialize(:viewTabs, :list, DocuSign.Model.View)
-    |> Deserializer.deserialize(:zipTabs, :list, DocuSign.Model.Zip)
+    |> Deserializer.deserialize(:declineTabs, :list, Decline)
+    |> Deserializer.deserialize(:drawTabs, :list, Draw)
+    |> Deserializer.deserialize(:emailAddressTabs, :list, EmailAddress)
+    |> Deserializer.deserialize(:emailTabs, :list, Email)
+    |> Deserializer.deserialize(:envelopeIdTabs, :list, EnvelopeId)
+    |> Deserializer.deserialize(:firstNameTabs, :list, FirstName)
+    |> Deserializer.deserialize(:formulaTabs, :list, FormulaTab)
+    |> Deserializer.deserialize(:fullNameTabs, :list, FullName)
+    |> Deserializer.deserialize(:initialHereTabs, :list, InitialHere)
+    |> Deserializer.deserialize(:lastNameTabs, :list, LastName)
+    |> Deserializer.deserialize(:notarizeTabs, :list, Notarize)
+    |> Deserializer.deserialize(:notarySealTabs, :list, NotarySeal)
+    |> Deserializer.deserialize(:noteTabs, :list, Note)
+    |> Deserializer.deserialize(:numericalTabs, :list, Numerical)
+    |> Deserializer.deserialize(:phoneNumberTabs, :list, PhoneNumber)
+    |> Deserializer.deserialize(:polyLineOverlayTabs, :list, PolyLineOverlay)
+    |> Deserializer.deserialize(:prefillTabs, :struct, PrefillTabs)
+    |> Deserializer.deserialize(:radioGroupTabs, :list, RadioGroup)
+    |> Deserializer.deserialize(:signerAttachmentTabs, :list, SignerAttachment)
+    |> Deserializer.deserialize(:signHereTabs, :list, SignHere)
+    |> Deserializer.deserialize(:smartSectionTabs, :list, SmartSection)
+    |> Deserializer.deserialize(:ssnTabs, :list, Ssn)
+    |> Deserializer.deserialize(:tabGroups, :list, TabGroup)
+    |> Deserializer.deserialize(:textTabs, :list, Text)
+    |> Deserializer.deserialize(:titleTabs, :list, Title)
+    |> Deserializer.deserialize(:viewTabs, :list, View)
+    |> Deserializer.deserialize(:zipTabs, :list, Zip)
   end
 end

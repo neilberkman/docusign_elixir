@@ -6,8 +6,11 @@ defmodule DocuSign.Api.EnvelopeDocumentHtmlDefinitions do
   API calls for all endpoints tagged `EnvelopeDocumentHtmlDefinitions`.
   """
 
-  alias DocuSign.Connection
   import DocuSign.RequestBuilder
+
+  alias DocuSign.Connection
+  alias DocuSign.Model.DocumentHtmlDefinitionOriginals
+  alias DocuSign.Model.ErrorDetails
 
   @doc """
   Retrieves the HTML definition used to generate a dynamically sized responsive document.
@@ -33,8 +36,8 @@ defmodule DocuSign.Api.EnvelopeDocumentHtmlDefinitions do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.DocumentHtmlDefinitionOriginals.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, DocumentHtmlDefinitionOriginals.t()}
           | {:error, Tesla.Env.t()}
   def responsive_html_get_envelope_document_html_definitions(
         connection,
@@ -46,16 +49,14 @@ defmodule DocuSign.Api.EnvelopeDocumentHtmlDefinitions do
     request =
       %{}
       |> method(:get)
-      |> url(
-        "/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/documents/#{document_id}/html_definitions"
-      )
-      |> Enum.into([])
+      |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/documents/#{document_id}/html_definitions")
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.DocumentHtmlDefinitionOriginals},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, DocumentHtmlDefinitionOriginals},
+      {400, ErrorDetails}
     ])
   end
 end

@@ -6,6 +6,9 @@ defmodule DocuSign.Model.RecipientIdentityPhoneNumber do
 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.PropertyMetadata
+
   @derive Jason.Encoder
   defstruct [
     :countryCode,
@@ -20,19 +23,17 @@ defmodule DocuSign.Model.RecipientIdentityPhoneNumber do
   @type t :: %__MODULE__{
           :countryCode => String.t() | nil,
           :countryCodeLock => String.t() | nil,
-          :countryCodeMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :countryCodeMetadata => PropertyMetadata.t() | nil,
           :extension => String.t() | nil,
-          :extensionMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :extensionMetadata => PropertyMetadata.t() | nil,
           :number => String.t() | nil,
-          :numberMetadata => DocuSign.Model.PropertyMetadata.t() | nil
+          :numberMetadata => PropertyMetadata.t() | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
-    |> Deserializer.deserialize(:countryCodeMetadata, :struct, DocuSign.Model.PropertyMetadata)
-    |> Deserializer.deserialize(:extensionMetadata, :struct, DocuSign.Model.PropertyMetadata)
-    |> Deserializer.deserialize(:numberMetadata, :struct, DocuSign.Model.PropertyMetadata)
+    |> Deserializer.deserialize(:countryCodeMetadata, :struct, PropertyMetadata)
+    |> Deserializer.deserialize(:extensionMetadata, :struct, PropertyMetadata)
+    |> Deserializer.deserialize(:numberMetadata, :struct, PropertyMetadata)
   end
 end

@@ -6,6 +6,9 @@ defmodule DocuSign.Model.UserInfo do
 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.ErrorDetails
+
   @derive Jason.Encoder
   defstruct [
     :accountId,
@@ -29,7 +32,7 @@ defmodule DocuSign.Model.UserInfo do
           :accountName => String.t() | nil,
           :activationAccessCode => String.t() | nil,
           :email => String.t() | nil,
-          :errorDetails => DocuSign.Model.ErrorDetails.t() | nil,
+          :errorDetails => ErrorDetails.t() | nil,
           :ipAddress => String.t() | nil,
           :loginStatus => String.t() | nil,
           :membershipId => String.t() | nil,
@@ -41,10 +44,8 @@ defmodule DocuSign.Model.UserInfo do
           :userType => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:errorDetails, :struct, DocuSign.Model.ErrorDetails)
+    |> Deserializer.deserialize(:errorDetails, :struct, ErrorDetails)
   end
 end

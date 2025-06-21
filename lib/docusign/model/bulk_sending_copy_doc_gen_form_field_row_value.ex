@@ -6,23 +6,24 @@ defmodule DocuSign.Model.BulkSendingCopyDocGenFormFieldRowValue do
 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.BulksendingCopyDocGenFormField
+
   @derive Jason.Encoder
   defstruct [
     :docGenFormFieldList
   ]
 
   @type t :: %__MODULE__{
-          :docGenFormFieldList => [DocuSign.Model.BulksendingCopyDocGenFormField.t()] | nil
+          :docGenFormFieldList => [BulksendingCopyDocGenFormField.t()] | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
     |> Deserializer.deserialize(
       :docGenFormFieldList,
       :list,
-      DocuSign.Model.BulksendingCopyDocGenFormField
+      BulksendingCopyDocGenFormField
     )
   end
 end

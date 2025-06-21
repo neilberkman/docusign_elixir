@@ -6,6 +6,10 @@ defmodule DocuSign.Model.RadioGroup do
   This group tab is used to place radio buttons on a document. The `radios` property contains a list of [`radio`](/docs/esign-rest-api/reference/envelopes/enveloperecipienttabs/) objects  associated with the group. Only one radio button can be selected in a group. 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.PropertyMetadata
+  alias DocuSign.Model.Radio
+
   @derive Jason.Encoder
   defstruct [
     :conditionalParentLabel,
@@ -27,10 +31,10 @@ defmodule DocuSign.Model.RadioGroup do
     :requireAllMetadata,
     :requireInitialOnSharedChange,
     :requireInitialOnSharedChangeMetadata,
-    :shared,
-    :sharedMetadata,
     :shareToRecipients,
     :shareToRecipientsMetadata,
+    :shared,
+    :sharedMetadata,
     :tabType,
     :tabTypeMetadata,
     :templateLocked,
@@ -45,84 +49,82 @@ defmodule DocuSign.Model.RadioGroup do
 
   @type t :: %__MODULE__{
           :conditionalParentLabel => String.t() | nil,
-          :conditionalParentLabelMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :conditionalParentLabelMetadata => PropertyMetadata.t() | nil,
           :conditionalParentValue => String.t() | nil,
-          :conditionalParentValueMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :conditionalParentValueMetadata => PropertyMetadata.t() | nil,
           :documentId => String.t() | nil,
-          :documentIdMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :documentIdMetadata => PropertyMetadata.t() | nil,
           :groupName => String.t() | nil,
-          :groupNameMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :groupNameMetadata => PropertyMetadata.t() | nil,
           :originalValue => String.t() | nil,
-          :originalValueMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
-          :radios => [DocuSign.Model.Radio.t()] | nil,
+          :originalValueMetadata => PropertyMetadata.t() | nil,
+          :radios => [Radio.t()] | nil,
           :recipientId => String.t() | nil,
           :recipientIdGuid => String.t() | nil,
-          :recipientIdGuidMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
-          :recipientIdMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :recipientIdGuidMetadata => PropertyMetadata.t() | nil,
+          :recipientIdMetadata => PropertyMetadata.t() | nil,
           :requireAll => String.t() | nil,
-          :requireAllMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :requireAllMetadata => PropertyMetadata.t() | nil,
           :requireInitialOnSharedChange => String.t() | nil,
-          :requireInitialOnSharedChangeMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
-          :shared => String.t() | nil,
-          :sharedMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :requireInitialOnSharedChangeMetadata => PropertyMetadata.t() | nil,
           :shareToRecipients => String.t() | nil,
-          :shareToRecipientsMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :shareToRecipientsMetadata => PropertyMetadata.t() | nil,
+          :shared => String.t() | nil,
+          :sharedMetadata => PropertyMetadata.t() | nil,
           :tabType => String.t() | nil,
-          :tabTypeMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :tabTypeMetadata => PropertyMetadata.t() | nil,
           :templateLocked => String.t() | nil,
-          :templateLockedMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :templateLockedMetadata => PropertyMetadata.t() | nil,
           :templateRequired => String.t() | nil,
-          :templateRequiredMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :templateRequiredMetadata => PropertyMetadata.t() | nil,
           :tooltip => String.t() | nil,
-          :tooltipMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :tooltipMetadata => PropertyMetadata.t() | nil,
           :value => String.t() | nil,
-          :valueMetadata => DocuSign.Model.PropertyMetadata.t() | nil
+          :valueMetadata => PropertyMetadata.t() | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
     |> Deserializer.deserialize(
       :conditionalParentLabelMetadata,
       :struct,
-      DocuSign.Model.PropertyMetadata
+      PropertyMetadata
     )
     |> Deserializer.deserialize(
       :conditionalParentValueMetadata,
       :struct,
-      DocuSign.Model.PropertyMetadata
+      PropertyMetadata
     )
-    |> Deserializer.deserialize(:documentIdMetadata, :struct, DocuSign.Model.PropertyMetadata)
-    |> Deserializer.deserialize(:groupNameMetadata, :struct, DocuSign.Model.PropertyMetadata)
-    |> Deserializer.deserialize(:originalValueMetadata, :struct, DocuSign.Model.PropertyMetadata)
-    |> Deserializer.deserialize(:radios, :list, DocuSign.Model.Radio)
+    |> Deserializer.deserialize(:documentIdMetadata, :struct, PropertyMetadata)
+    |> Deserializer.deserialize(:groupNameMetadata, :struct, PropertyMetadata)
+    |> Deserializer.deserialize(:originalValueMetadata, :struct, PropertyMetadata)
+    |> Deserializer.deserialize(:radios, :list, Radio)
     |> Deserializer.deserialize(
       :recipientIdGuidMetadata,
       :struct,
-      DocuSign.Model.PropertyMetadata
+      PropertyMetadata
     )
-    |> Deserializer.deserialize(:recipientIdMetadata, :struct, DocuSign.Model.PropertyMetadata)
-    |> Deserializer.deserialize(:requireAllMetadata, :struct, DocuSign.Model.PropertyMetadata)
+    |> Deserializer.deserialize(:recipientIdMetadata, :struct, PropertyMetadata)
+    |> Deserializer.deserialize(:requireAllMetadata, :struct, PropertyMetadata)
     |> Deserializer.deserialize(
       :requireInitialOnSharedChangeMetadata,
       :struct,
-      DocuSign.Model.PropertyMetadata
+      PropertyMetadata
     )
-    |> Deserializer.deserialize(:sharedMetadata, :struct, DocuSign.Model.PropertyMetadata)
+    |> Deserializer.deserialize(:sharedMetadata, :struct, PropertyMetadata)
     |> Deserializer.deserialize(
       :shareToRecipientsMetadata,
       :struct,
-      DocuSign.Model.PropertyMetadata
+      PropertyMetadata
     )
-    |> Deserializer.deserialize(:tabTypeMetadata, :struct, DocuSign.Model.PropertyMetadata)
-    |> Deserializer.deserialize(:templateLockedMetadata, :struct, DocuSign.Model.PropertyMetadata)
+    |> Deserializer.deserialize(:tabTypeMetadata, :struct, PropertyMetadata)
+    |> Deserializer.deserialize(:templateLockedMetadata, :struct, PropertyMetadata)
     |> Deserializer.deserialize(
       :templateRequiredMetadata,
       :struct,
-      DocuSign.Model.PropertyMetadata
+      PropertyMetadata
     )
-    |> Deserializer.deserialize(:tooltipMetadata, :struct, DocuSign.Model.PropertyMetadata)
-    |> Deserializer.deserialize(:valueMetadata, :struct, DocuSign.Model.PropertyMetadata)
+    |> Deserializer.deserialize(:tooltipMetadata, :struct, PropertyMetadata)
+    |> Deserializer.deserialize(:valueMetadata, :struct, PropertyMetadata)
   end
 end

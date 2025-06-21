@@ -6,19 +6,20 @@ defmodule DocuSign.Model.UserSignaturesInformation do
 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.UserSignature
+
   @derive Jason.Encoder
   defstruct [
     :userSignatures
   ]
 
   @type t :: %__MODULE__{
-          :userSignatures => [DocuSign.Model.UserSignature.t()] | nil
+          :userSignatures => [UserSignature.t()] | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
-    |> Deserializer.deserialize(:userSignatures, :list, DocuSign.Model.UserSignature)
+    |> Deserializer.deserialize(:userSignatures, :list, UserSignature)
   end
 end

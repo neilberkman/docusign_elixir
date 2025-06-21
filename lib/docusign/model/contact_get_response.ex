@@ -6,6 +6,9 @@ defmodule DocuSign.Model.ContactGetResponse do
   This response object contains information about the contacts associated with an account.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.Contact
+
   @derive Jason.Encoder
   defstruct [
     :contacts,
@@ -18,7 +21,7 @@ defmodule DocuSign.Model.ContactGetResponse do
   ]
 
   @type t :: %__MODULE__{
-          :contacts => [DocuSign.Model.Contact.t()] | nil,
+          :contacts => [Contact.t()] | nil,
           :endPosition => String.t() | nil,
           :nextUri => String.t() | nil,
           :previousUri => String.t() | nil,
@@ -27,10 +30,8 @@ defmodule DocuSign.Model.ContactGetResponse do
           :totalSetSize => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:contacts, :list, DocuSign.Model.Contact)
+    |> Deserializer.deserialize(:contacts, :list, Contact)
   end
 end

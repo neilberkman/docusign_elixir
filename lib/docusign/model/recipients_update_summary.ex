@@ -6,23 +6,24 @@ defmodule DocuSign.Model.RecipientsUpdateSummary do
   This is the response that the API returns after you update recipients.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.RecipientUpdateResponse
+
   @derive Jason.Encoder
   defstruct [
     :recipientUpdateResults
   ]
 
   @type t :: %__MODULE__{
-          :recipientUpdateResults => [DocuSign.Model.RecipientUpdateResponse.t()] | nil
+          :recipientUpdateResults => [RecipientUpdateResponse.t()] | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
     |> Deserializer.deserialize(
       :recipientUpdateResults,
       :list,
-      DocuSign.Model.RecipientUpdateResponse
+      RecipientUpdateResponse
     )
   end
 end

@@ -6,6 +6,9 @@ defmodule DocuSign.Model.ScheduledSending do
   A complex element that specifies the scheduled sending settings for the envelope.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.EnvelopeDelayRule
+
   @derive Jason.Encoder
   defstruct [
     :bulkListId,
@@ -17,14 +20,12 @@ defmodule DocuSign.Model.ScheduledSending do
   @type t :: %__MODULE__{
           :bulkListId => String.t() | nil,
           :resumeDate => String.t() | nil,
-          :rules => [DocuSign.Model.EnvelopeDelayRule.t()] | nil,
+          :rules => [EnvelopeDelayRule.t()] | nil,
           :status => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:rules, :list, DocuSign.Model.EnvelopeDelayRule)
+    |> Deserializer.deserialize(:rules, :list, EnvelopeDelayRule)
   end
 end

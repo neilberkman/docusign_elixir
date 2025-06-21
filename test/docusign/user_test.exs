@@ -1,12 +1,14 @@
 defmodule DocuSign.UserTest do
   use ExUnit.Case, async: true
 
-  alias DocuSign.User
-
   import DocuSign.ProcessHelper
 
+  alias DocuSign.OAuth.Fake
+  alias DocuSign.User
+  alias DocuSign.User.AppAccount
+
   setup do
-    {:ok, pid} = DocuSign.ClientRegistry.start_link(oauth_impl: DocuSign.OAuth.Fake)
+    {:ok, pid} = DocuSign.ClientRegistry.start_link(oauth_impl: Fake)
     on_exit(fn -> assert_down(pid) end)
   end
 
@@ -19,20 +21,20 @@ defmodule DocuSign.UserTest do
       result = User.info(client)
 
       assert %DocuSign.User{
-               created: "2018-09-07T23:49:34.163",
-               email: ":email:",
-               family_name: ":family-name:",
-               given_name: ":given-name:",
-               name: ":name:",
-               sub: ":user-id:",
                accounts: [
-                 %DocuSign.User.AppAccount{
+                 %AppAccount{
                    account_id: ":account-id:",
                    account_name: ":account-name:",
                    base_uri: "https://demo.docusign.net",
                    is_default: true
                  }
-               ]
+               ],
+               created: "2018-09-07T23:49:34.163",
+               email: ":email:",
+               family_name: ":family-name:",
+               given_name: ":given-name:",
+               name: ":name:",
+               sub: ":user-id:"
              } = result
     end
   end

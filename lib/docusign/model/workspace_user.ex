@@ -6,6 +6,9 @@ defmodule DocuSign.Model.WorkspaceUser do
   This object represents the workspace user. This property is only returned in response to user specific GET call. 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.ErrorDetails
+
   @derive Jason.Encoder
   defstruct [
     :accountId,
@@ -36,7 +39,7 @@ defmodule DocuSign.Model.WorkspaceUser do
           :created => String.t() | nil,
           :createdById => String.t() | nil,
           :email => String.t() | nil,
-          :errorDetails => DocuSign.Model.ErrorDetails.t() | nil,
+          :errorDetails => ErrorDetails.t() | nil,
           :invitationEmailBlurb => String.t() | nil,
           :invitationEmailSubject => String.t() | nil,
           :lastModified => String.t() | nil,
@@ -51,10 +54,8 @@ defmodule DocuSign.Model.WorkspaceUser do
           :workspaceUserUri => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:errorDetails, :struct, DocuSign.Model.ErrorDetails)
+    |> Deserializer.deserialize(:errorDetails, :struct, ErrorDetails)
   end
 end

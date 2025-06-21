@@ -6,8 +6,13 @@ defmodule DocuSign.Api.WorkspaceItems do
   API calls for all endpoints tagged `WorkspaceItems`.
   """
 
-  alias DocuSign.Connection
   import DocuSign.RequestBuilder
+
+  alias DocuSign.Connection
+  alias DocuSign.Model.ErrorDetails
+  alias DocuSign.Model.PageImages
+  alias DocuSign.Model.WorkspaceFolderContents
+  alias DocuSign.Model.WorkspaceItem
 
   @doc """
   Gets a workspace file
@@ -36,15 +41,8 @@ defmodule DocuSign.Api.WorkspaceItems do
           String.t(),
           String.t(),
           keyword()
-        ) :: {:ok, nil} | {:ok, DocuSign.Model.ErrorDetails.t()} | {:error, Tesla.Env.t()}
-  def workspace_file_get_workspace_file(
-        connection,
-        account_id,
-        file_id,
-        folder_id,
-        workspace_id,
-        opts \\ []
-      ) do
+        ) :: {:ok, nil} | {:ok, ErrorDetails.t()} | {:error, Tesla.Env.t()}
+  def workspace_file_get_workspace_file(connection, account_id, file_id, folder_id, workspace_id, opts \\ []) do
     optional_params = %{
       :is_download => :query,
       :pdf_version => :query
@@ -53,17 +51,15 @@ defmodule DocuSign.Api.WorkspaceItems do
     request =
       %{}
       |> method(:get)
-      |> url(
-        "/v2.1/accounts/#{account_id}/workspaces/#{workspace_id}/folders/#{folder_id}/files/#{file_id}"
-      )
+      |> url("/v2.1/accounts/#{account_id}/workspaces/#{workspace_id}/folders/#{folder_id}/files/#{file_id}")
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
       {200, false},
-      {400, DocuSign.Model.ErrorDetails}
+      {400, ErrorDetails}
     ])
   end
 
@@ -98,8 +94,8 @@ defmodule DocuSign.Api.WorkspaceItems do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.PageImages.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, PageImages.t()}
           | {:error, Tesla.Env.t()}
   def workspace_file_pages_get_workspace_file_pages(
         connection,
@@ -120,17 +116,15 @@ defmodule DocuSign.Api.WorkspaceItems do
     request =
       %{}
       |> method(:get)
-      |> url(
-        "/v2.1/accounts/#{account_id}/workspaces/#{workspace_id}/folders/#{folder_id}/files/#{file_id}/pages"
-      )
+      |> url("/v2.1/accounts/#{account_id}/workspaces/#{workspace_id}/folders/#{folder_id}/files/#{file_id}/pages")
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.PageImages},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, PageImages},
+      {400, ErrorDetails}
     ])
   end
 
@@ -158,28 +152,22 @@ defmodule DocuSign.Api.WorkspaceItems do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.WorkspaceItem.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, WorkspaceItem.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
-  def workspace_file_post_workspace_files(
-        connection,
-        account_id,
-        folder_id,
-        workspace_id,
-        _opts \\ []
-      ) do
+  def workspace_file_post_workspace_files(connection, account_id, folder_id, workspace_id, _opts \\ []) do
     request =
       %{}
       |> method(:post)
       |> url("/v2.1/accounts/#{account_id}/workspaces/#{workspace_id}/folders/#{folder_id}/files")
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {201, DocuSign.Model.WorkspaceItem},
-      {400, DocuSign.Model.ErrorDetails}
+      {201, WorkspaceItem},
+      {400, ErrorDetails}
     ])
   end
 
@@ -209,31 +197,22 @@ defmodule DocuSign.Api.WorkspaceItems do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.WorkspaceItem.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, WorkspaceItem.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
-  def workspace_file_put_workspace_file(
-        connection,
-        account_id,
-        file_id,
-        folder_id,
-        workspace_id,
-        _opts \\ []
-      ) do
+  def workspace_file_put_workspace_file(connection, account_id, file_id, folder_id, workspace_id, _opts \\ []) do
     request =
       %{}
       |> method(:put)
-      |> url(
-        "/v2.1/accounts/#{account_id}/workspaces/#{workspace_id}/folders/#{folder_id}/files/#{file_id}"
-      )
+      |> url("/v2.1/accounts/#{account_id}/workspaces/#{workspace_id}/folders/#{folder_id}/files/#{file_id}")
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.WorkspaceItem},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, WorkspaceItem},
+      {400, ErrorDetails}
     ])
   end
 
@@ -261,14 +240,8 @@ defmodule DocuSign.Api.WorkspaceItems do
           String.t(),
           String.t(),
           keyword()
-        ) :: {:ok, nil} | {:ok, DocuSign.Model.ErrorDetails.t()} | {:error, Tesla.Env.t()}
-  def workspace_folder_delete_workspace_items(
-        connection,
-        account_id,
-        folder_id,
-        workspace_id,
-        opts \\ []
-      ) do
+        ) :: {:ok, nil} | {:ok, ErrorDetails.t()} | {:error, Tesla.Env.t()}
+  def workspace_folder_delete_workspace_items(connection, account_id, folder_id, workspace_id, opts \\ []) do
     optional_params = %{
       :body => :body
     }
@@ -278,13 +251,13 @@ defmodule DocuSign.Api.WorkspaceItems do
       |> method(:delete)
       |> url("/v2.1/accounts/#{account_id}/workspaces/#{workspace_id}/folders/#{folder_id}")
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
       {200, false},
-      {400, DocuSign.Model.ErrorDetails}
+      {400, ErrorDetails}
     ])
   end
 
@@ -319,16 +292,10 @@ defmodule DocuSign.Api.WorkspaceItems do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.WorkspaceFolderContents.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, WorkspaceFolderContents.t()}
           | {:error, Tesla.Env.t()}
-  def workspace_folder_get_workspace_folder(
-        connection,
-        account_id,
-        folder_id,
-        workspace_id,
-        opts \\ []
-      ) do
+  def workspace_folder_get_workspace_folder(connection, account_id, folder_id, workspace_id, opts \\ []) do
     optional_params = %{
       :count => :query,
       :include_files => :query,
@@ -344,13 +311,13 @@ defmodule DocuSign.Api.WorkspaceItems do
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/workspaces/#{workspace_id}/folders/#{folder_id}")
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.WorkspaceFolderContents},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, WorkspaceFolderContents},
+      {400, ErrorDetails}
     ])
   end
 end

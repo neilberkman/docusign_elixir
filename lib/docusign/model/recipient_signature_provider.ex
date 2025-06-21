@@ -6,6 +6,10 @@ defmodule DocuSign.Model.RecipientSignatureProvider do
   An Electronic or Standards Based Signature (digital signature) provider for the signer to use. [More information](/docs/esign-rest-api/esign101/concepts/standards-based-signatures/). 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.PropertyMetadata
+  alias DocuSign.Model.RecipientSignatureProviderOptions
+
   @derive Jason.Encoder
   defstruct [
     :sealDocumentsWithTabsOnly,
@@ -19,23 +23,21 @@ defmodule DocuSign.Model.RecipientSignatureProvider do
           :sealDocumentsWithTabsOnly => String.t() | nil,
           :sealName => String.t() | nil,
           :signatureProviderName => String.t() | nil,
-          :signatureProviderNameMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
-          :signatureProviderOptions => DocuSign.Model.RecipientSignatureProviderOptions.t() | nil
+          :signatureProviderNameMetadata => PropertyMetadata.t() | nil,
+          :signatureProviderOptions => RecipientSignatureProviderOptions.t() | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
     |> Deserializer.deserialize(
       :signatureProviderNameMetadata,
       :struct,
-      DocuSign.Model.PropertyMetadata
+      PropertyMetadata
     )
     |> Deserializer.deserialize(
       :signatureProviderOptions,
       :struct,
-      DocuSign.Model.RecipientSignatureProviderOptions
+      RecipientSignatureProviderOptions
     )
   end
 end

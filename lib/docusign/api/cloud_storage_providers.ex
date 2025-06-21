@@ -6,8 +6,11 @@ defmodule DocuSign.Api.CloudStorageProviders do
   API calls for all endpoints tagged `CloudStorageProviders`.
   """
 
-  alias DocuSign.Connection
   import DocuSign.RequestBuilder
+
+  alias DocuSign.Connection
+  alias DocuSign.Model.CloudStorageProviders
+  alias DocuSign.Model.ErrorDetails
 
   @doc """
   Deletes the user authentication information for the specified cloud storage provider.
@@ -33,21 +36,21 @@ defmodule DocuSign.Api.CloudStorageProviders do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.CloudStorageProviders.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, CloudStorageProviders.t()}
           | {:error, Tesla.Env.t()}
   def cloud_storage_delete_cloud_storage(connection, account_id, service_id, user_id, _opts \\ []) do
     request =
       %{}
       |> method(:delete)
       |> url("/v2.1/accounts/#{account_id}/users/#{user_id}/cloud_storage/#{service_id}")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.CloudStorageProviders},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, CloudStorageProviders},
+      {400, ErrorDetails}
     ])
   end
 
@@ -74,8 +77,8 @@ defmodule DocuSign.Api.CloudStorageProviders do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.CloudStorageProviders.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, CloudStorageProviders.t()}
           | {:error, Tesla.Env.t()}
   def cloud_storage_delete_cloud_storage_providers(connection, account_id, user_id, opts \\ []) do
     optional_params = %{
@@ -87,13 +90,13 @@ defmodule DocuSign.Api.CloudStorageProviders do
       |> method(:delete)
       |> url("/v2.1/accounts/#{account_id}/users/#{user_id}/cloud_storage")
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.CloudStorageProviders},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, CloudStorageProviders},
+      {400, ErrorDetails}
     ])
   end
 
@@ -122,8 +125,8 @@ defmodule DocuSign.Api.CloudStorageProviders do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.CloudStorageProviders.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, CloudStorageProviders.t()}
           | {:error, Tesla.Env.t()}
   def cloud_storage_get_cloud_storage(connection, account_id, service_id, user_id, opts \\ []) do
     optional_params = %{
@@ -135,13 +138,13 @@ defmodule DocuSign.Api.CloudStorageProviders do
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/users/#{user_id}/cloud_storage/#{service_id}")
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.CloudStorageProviders},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, CloudStorageProviders},
+      {400, ErrorDetails}
     ])
   end
 
@@ -168,8 +171,8 @@ defmodule DocuSign.Api.CloudStorageProviders do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.CloudStorageProviders.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, CloudStorageProviders.t()}
           | {:error, Tesla.Env.t()}
   def cloud_storage_get_cloud_storage_providers(connection, account_id, user_id, opts \\ []) do
     optional_params = %{
@@ -181,13 +184,13 @@ defmodule DocuSign.Api.CloudStorageProviders do
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/users/#{user_id}/cloud_storage")
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.CloudStorageProviders},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, CloudStorageProviders},
+      {400, ErrorDetails}
     ])
   end
 
@@ -209,8 +212,8 @@ defmodule DocuSign.Api.CloudStorageProviders do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec cloud_storage_post_cloud_storage(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.CloudStorageProviders.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, CloudStorageProviders.t()}
           | {:error, Tesla.Env.t()}
   def cloud_storage_post_cloud_storage(connection, account_id, user_id, opts \\ []) do
     optional_params = %{
@@ -223,13 +226,13 @@ defmodule DocuSign.Api.CloudStorageProviders do
       |> url("/v2.1/accounts/#{account_id}/users/#{user_id}/cloud_storage")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {201, DocuSign.Model.CloudStorageProviders},
-      {400, DocuSign.Model.ErrorDetails}
+      {201, CloudStorageProviders},
+      {400, ErrorDetails}
     ])
   end
 end

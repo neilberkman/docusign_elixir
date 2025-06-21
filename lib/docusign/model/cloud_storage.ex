@@ -6,6 +6,10 @@ defmodule DocuSign.Model.CloudStorage do
   Cloud storage
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.ExternalDocServiceErrorDetails
+  alias DocuSign.Model.ExternalFile
+
   @derive Jason.Encoder
   defstruct [
     :endPosition,
@@ -23,9 +27,9 @@ defmodule DocuSign.Model.CloudStorage do
 
   @type t :: %__MODULE__{
           :endPosition => String.t() | nil,
-          :errorDetails => DocuSign.Model.ExternalDocServiceErrorDetails.t() | nil,
+          :errorDetails => ExternalDocServiceErrorDetails.t() | nil,
           :id => String.t() | nil,
-          :items => [DocuSign.Model.ExternalFile.t()] | nil,
+          :items => [ExternalFile.t()] | nil,
           :name => String.t() | nil,
           :nextUri => String.t() | nil,
           :previousUri => String.t() | nil,
@@ -35,15 +39,13 @@ defmodule DocuSign.Model.CloudStorage do
           :totalSetSize => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
     |> Deserializer.deserialize(
       :errorDetails,
       :struct,
-      DocuSign.Model.ExternalDocServiceErrorDetails
+      ExternalDocServiceErrorDetails
     )
-    |> Deserializer.deserialize(:items, :list, DocuSign.Model.ExternalFile)
+    |> Deserializer.deserialize(:items, :list, ExternalFile)
   end
 end

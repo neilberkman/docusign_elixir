@@ -6,6 +6,10 @@ defmodule DocuSign.Model.SigningGroups do
   Signing groups
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.ErrorDetails
+  alias DocuSign.Model.SigningGroupUser
+
   @derive Jason.Encoder
   defstruct [
     :created,
@@ -23,21 +27,19 @@ defmodule DocuSign.Model.SigningGroups do
   @type t :: %__MODULE__{
           :created => String.t() | nil,
           :createdBy => String.t() | nil,
-          :errorDetails => DocuSign.Model.ErrorDetails.t() | nil,
+          :errorDetails => ErrorDetails.t() | nil,
           :groupEmail => String.t() | nil,
           :groupName => String.t() | nil,
           :groupType => String.t() | nil,
           :modified => String.t() | nil,
           :modifiedBy => String.t() | nil,
           :signingGroupId => String.t() | nil,
-          :users => [DocuSign.Model.SigningGroupUser.t()] | nil
+          :users => [SigningGroupUser.t()] | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
-    |> Deserializer.deserialize(:errorDetails, :struct, DocuSign.Model.ErrorDetails)
-    |> Deserializer.deserialize(:users, :list, DocuSign.Model.SigningGroupUser)
+    |> Deserializer.deserialize(:errorDetails, :struct, ErrorDetails)
+    |> Deserializer.deserialize(:users, :list, SigningGroupUser)
   end
 end

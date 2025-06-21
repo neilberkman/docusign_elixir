@@ -6,8 +6,17 @@ defmodule DocuSign.Api.BulkSend do
   API calls for all endpoints tagged `BulkSend`.
   """
 
-  alias DocuSign.Connection
   import DocuSign.RequestBuilder
+
+  alias DocuSign.Connection
+  alias DocuSign.Model.BulkSendBatchStatus
+  alias DocuSign.Model.BulkSendBatchSummaries
+  alias DocuSign.Model.BulkSendingList
+  alias DocuSign.Model.BulkSendingListSummaries
+  alias DocuSign.Model.BulkSendResponse
+  alias DocuSign.Model.BulkSendTestResponse
+  alias DocuSign.Model.EnvelopesInformation
+  alias DocuSign.Model.ErrorDetails
 
   @doc """
   Gets the status of a specific bulk send batch.
@@ -31,26 +40,21 @@ defmodule DocuSign.Api.BulkSend do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.BulkSendBatchStatus.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, BulkSendBatchStatus.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
-  def bulk_send_v2_batch_get_bulk_send_batch_status(
-        connection,
-        account_id,
-        bulk_send_batch_id,
-        _opts \\ []
-      ) do
+  def bulk_send_v2_batch_get_bulk_send_batch_status(connection, account_id, bulk_send_batch_id, _opts \\ []) do
     request =
       %{}
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/bulk_send_batch/#{bulk_send_batch_id}")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.BulkSendBatchStatus},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, BulkSendBatchStatus},
+      {400, ErrorDetails}
     ])
   end
 
@@ -78,8 +82,8 @@ defmodule DocuSign.Api.BulkSend do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec bulk_send_v2_batch_get_bulk_send_batches(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.BulkSendBatchSummaries.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, BulkSendBatchSummaries.t()}
           | {:error, Tesla.Env.t()}
   def bulk_send_v2_batch_get_bulk_send_batches(connection, account_id, opts \\ []) do
     optional_params = %{
@@ -98,13 +102,13 @@ defmodule DocuSign.Api.BulkSend do
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/bulk_send_batch")
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.BulkSendBatchSummaries},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, BulkSendBatchSummaries},
+      {400, ErrorDetails}
     ])
   end
 
@@ -133,16 +137,10 @@ defmodule DocuSign.Api.BulkSend do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.BulkSendBatchStatus.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, BulkSendBatchStatus.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
-  def bulk_send_v2_batch_put_bulk_send_batch_action(
-        connection,
-        account_id,
-        bulk_action,
-        bulk_send_batch_id,
-        opts \\ []
-      ) do
+  def bulk_send_v2_batch_put_bulk_send_batch_action(connection, account_id, bulk_action, bulk_send_batch_id, opts \\ []) do
     optional_params = %{
       :body => :body
     }
@@ -153,13 +151,13 @@ defmodule DocuSign.Api.BulkSend do
       |> url("/v2.1/accounts/#{account_id}/bulk_send_batch/#{bulk_send_batch_id}/#{bulk_action}")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.BulkSendBatchStatus},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, BulkSendBatchStatus},
+      {400, ErrorDetails}
     ])
   end
 
@@ -186,15 +184,10 @@ defmodule DocuSign.Api.BulkSend do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.BulkSendBatchStatus.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, BulkSendBatchStatus.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
-  def bulk_send_v2_batch_put_bulk_send_batch_status(
-        connection,
-        account_id,
-        bulk_send_batch_id,
-        opts \\ []
-      ) do
+  def bulk_send_v2_batch_put_bulk_send_batch_status(connection, account_id, bulk_send_batch_id, opts \\ []) do
     optional_params = %{
       :body => :body
     }
@@ -205,13 +198,13 @@ defmodule DocuSign.Api.BulkSend do
       |> url("/v2.1/accounts/#{account_id}/bulk_send_batch/#{bulk_send_batch_id}")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.BulkSendBatchStatus},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, BulkSendBatchStatus},
+      {400, ErrorDetails}
     ])
   end
 
@@ -237,26 +230,21 @@ defmodule DocuSign.Api.BulkSend do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.BulkSendingListSummaries.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, BulkSendingListSummaries.t()}
           | {:error, Tesla.Env.t()}
-  def bulk_send_v2_crud_delete_bulk_send_list(
-        connection,
-        account_id,
-        bulk_send_list_id,
-        _opts \\ []
-      ) do
+  def bulk_send_v2_crud_delete_bulk_send_list(connection, account_id, bulk_send_list_id, _opts \\ []) do
     request =
       %{}
       |> method(:delete)
       |> url("/v2.1/accounts/#{account_id}/bulk_send_lists/#{bulk_send_list_id}")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.BulkSendingListSummaries},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, BulkSendingListSummaries},
+      {400, ErrorDetails}
     ])
   end
 
@@ -282,21 +270,21 @@ defmodule DocuSign.Api.BulkSend do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.BulkSendingList.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, BulkSendingList.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
   def bulk_send_v2_crud_get_bulk_send_list(connection, account_id, bulk_send_list_id, _opts \\ []) do
     request =
       %{}
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/bulk_send_lists/#{bulk_send_list_id}")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.BulkSendingList},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, BulkSendingList},
+      {400, ErrorDetails}
     ])
   end
 
@@ -316,21 +304,21 @@ defmodule DocuSign.Api.BulkSend do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec bulk_send_v2_crud_get_bulk_send_lists(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.BulkSendingListSummaries.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, BulkSendingListSummaries.t()}
           | {:error, Tesla.Env.t()}
   def bulk_send_v2_crud_get_bulk_send_lists(connection, account_id, _opts \\ []) do
     request =
       %{}
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/bulk_send_lists")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.BulkSendingListSummaries},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, BulkSendingListSummaries},
+      {400, ErrorDetails}
     ])
   end
 
@@ -351,8 +339,8 @@ defmodule DocuSign.Api.BulkSend do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec bulk_send_v2_crud_post_bulk_send_list(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.BulkSendingList.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, BulkSendingList.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
   def bulk_send_v2_crud_post_bulk_send_list(connection, account_id, opts \\ []) do
     optional_params = %{
@@ -365,13 +353,13 @@ defmodule DocuSign.Api.BulkSend do
       |> url("/v2.1/accounts/#{account_id}/bulk_send_lists")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {201, DocuSign.Model.BulkSendingList},
-      {400, DocuSign.Model.ErrorDetails}
+      {201, BulkSendingList},
+      {400, ErrorDetails}
     ])
   end
 
@@ -398,8 +386,8 @@ defmodule DocuSign.Api.BulkSend do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.BulkSendingList.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, BulkSendingList.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
   def bulk_send_v2_crud_put_bulk_send_list(connection, account_id, bulk_send_list_id, opts \\ []) do
     optional_params = %{
@@ -412,13 +400,13 @@ defmodule DocuSign.Api.BulkSend do
       |> url("/v2.1/accounts/#{account_id}/bulk_send_lists/#{bulk_send_list_id}")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.BulkSendingList},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, BulkSendingList},
+      {400, ErrorDetails}
     ])
   end
 
@@ -451,15 +439,10 @@ defmodule DocuSign.Api.BulkSend do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.EnvelopesInformation.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, EnvelopesInformation.t()}
           | {:error, Tesla.Env.t()}
-  def bulk_send_v2_envelopes_get_bulk_send_batch_envelopes(
-        connection,
-        account_id,
-        bulk_send_batch_id,
-        opts \\ []
-      ) do
+  def bulk_send_v2_envelopes_get_bulk_send_batch_envelopes(connection, account_id, bulk_send_batch_id, opts \\ []) do
     optional_params = %{
       :count => :query,
       :include => :query,
@@ -475,13 +458,13 @@ defmodule DocuSign.Api.BulkSend do
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/bulk_send_batch/#{bulk_send_batch_id}/envelopes")
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.EnvelopesInformation},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, EnvelopesInformation},
+      {400, ErrorDetails}
     ])
   end
 
@@ -508,15 +491,10 @@ defmodule DocuSign.Api.BulkSend do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.BulkSendResponse.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, BulkSendResponse.t()}
           | {:error, Tesla.Env.t()}
-  def bulk_send_v2_send_post_bulk_send_request(
-        connection,
-        account_id,
-        bulk_send_list_id,
-        opts \\ []
-      ) do
+  def bulk_send_v2_send_post_bulk_send_request(connection, account_id, bulk_send_list_id, opts \\ []) do
     optional_params = %{
       :body => :body
     }
@@ -527,13 +505,13 @@ defmodule DocuSign.Api.BulkSend do
       |> url("/v2.1/accounts/#{account_id}/bulk_send_lists/#{bulk_send_list_id}/send")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {201, DocuSign.Model.BulkSendResponse},
-      {400, DocuSign.Model.ErrorDetails}
+      {201, BulkSendResponse},
+      {400, ErrorDetails}
     ])
   end
 
@@ -560,15 +538,10 @@ defmodule DocuSign.Api.BulkSend do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.BulkSendTestResponse.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, BulkSendTestResponse.t()}
           | {:error, Tesla.Env.t()}
-  def bulk_send_v2_test_post_bulk_send_test_request(
-        connection,
-        account_id,
-        bulk_send_list_id,
-        opts \\ []
-      ) do
+  def bulk_send_v2_test_post_bulk_send_test_request(connection, account_id, bulk_send_list_id, opts \\ []) do
     optional_params = %{
       :body => :body
     }
@@ -579,13 +552,13 @@ defmodule DocuSign.Api.BulkSend do
       |> url("/v2.1/accounts/#{account_id}/bulk_send_lists/#{bulk_send_list_id}/test")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {201, DocuSign.Model.BulkSendTestResponse},
-      {400, DocuSign.Model.ErrorDetails}
+      {201, BulkSendTestResponse},
+      {400, ErrorDetails}
     ])
   end
 end

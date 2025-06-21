@@ -1,16 +1,24 @@
 defmodule DocuSign.ModelCleanerIntegrationTest do
   use ExUnit.Case
 
+  alias DocuSign.Model.Document
+  alias DocuSign.Model.EnvelopeDefinition
+  alias DocuSign.Model.Recipients
+  alias DocuSign.Model.Signer
+  alias DocuSign.Model.SignHere
+  alias DocuSign.Model.Tabs
+  alias Tesla.Multipart.Part
+
   describe "integration with API calls" do
     test "ModelCleaner is applied to request bodies" do
       # Create test data with nested nil values
-      envelope_definition = %DocuSign.Model.EnvelopeDefinition{
+      envelope_definition = %EnvelopeDefinition{
         emailSubject: "Test Subject",
         # This should be removed
         emailBlurb: nil,
         status: "created",
         documents: [
-          %DocuSign.Model.Document{
+          %Document{
             documentBase64: "base64content",
             name: "Test Document",
             fileExtension: "pdf",
@@ -19,16 +27,16 @@ defmodule DocuSign.ModelCleanerIntegrationTest do
             transformPdfFields: nil
           }
         ],
-        recipients: %DocuSign.Model.Recipients{
+        recipients: %Recipients{
           signers: [
-            %DocuSign.Model.Signer{
+            %Signer{
               email: "test@example.com",
               name: "Test Signer",
               recipientId: "1",
               routingOrder: "1",
-              tabs: %DocuSign.Model.Tabs{
+              tabs: %Tabs{
                 signHereTabs: [
-                  %DocuSign.Model.SignHere{
+                  %SignHere{
                     anchorString: "Sign Here",
                     anchorXOffset: "0",
                     # This should be removed
@@ -55,9 +63,7 @@ defmodule DocuSign.ModelCleanerIntegrationTest do
 
       # 1. Test with body parameter
       body_result =
-        DocuSign.RequestBuilder.add_optional_params(request, %{body: :body},
-          body: envelope_definition
-        )
+        DocuSign.RequestBuilder.add_optional_params(request, %{body: :body}, body: envelope_definition)
 
       # Extract the cleaned body
       body = body_result.body
@@ -77,14 +83,12 @@ defmodule DocuSign.ModelCleanerIntegrationTest do
 
       # 2. Test with named parameter
       named_result =
-        DocuSign.RequestBuilder.add_optional_params(request, %{envelope: :body},
-          envelope: envelope_definition
-        )
+        DocuSign.RequestBuilder.add_optional_params(request, %{envelope: :body}, envelope: envelope_definition)
 
       # Extract and verify the body is now a Tesla.Multipart
       multipart = named_result.body
       assert %Tesla.Multipart{parts: [part]} = multipart
-      assert %Tesla.Multipart.Part{body: json_body} = part
+      assert %Part{body: json_body} = part
 
       # Parse the JSON
       decoded = Jason.decode!(json_body)

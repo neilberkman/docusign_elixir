@@ -6,6 +6,12 @@ defmodule DocuSign.Model.AccountSignatures do
   AccountSignatures represent stamps used to sign documents.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.DateStampProperties
+  alias DocuSign.Model.ErrorDetails
+  alias DocuSign.Model.SignatureGroup
+  alias DocuSign.Model.SignatureUser
+
   @derive Jason.Encoder
   defstruct [
     :adoptedDateTime,
@@ -46,9 +52,9 @@ defmodule DocuSign.Model.AccountSignatures do
           :adoptedDateTime => String.t() | nil,
           :createdDateTime => String.t() | nil,
           :customField => String.t() | nil,
-          :dateStampProperties => DocuSign.Model.DateStampProperties.t() | nil,
+          :dateStampProperties => DateStampProperties.t() | nil,
           :disallowUserResizeStamp => String.t() | nil,
-          :errorDetails => DocuSign.Model.ErrorDetails.t() | nil,
+          :errorDetails => ErrorDetails.t() | nil,
           :externalID => String.t() | nil,
           :imageBase64 => String.t() | nil,
           :imageType => String.t() | nil,
@@ -62,14 +68,14 @@ defmodule DocuSign.Model.AccountSignatures do
           :phoneticName => String.t() | nil,
           :signature150ImageId => String.t() | nil,
           :signatureFont => String.t() | nil,
-          :signatureGroups => [DocuSign.Model.SignatureGroup.t()] | nil,
+          :signatureGroups => [SignatureGroup.t()] | nil,
           :signatureId => String.t() | nil,
           :signatureImageUri => String.t() | nil,
           :signatureInitials => String.t() | nil,
           :signatureName => String.t() | nil,
           :signatureRights => String.t() | nil,
           :signatureType => String.t() | nil,
-          :signatureUsers => [DocuSign.Model.SignatureUser.t()] | nil,
+          :signatureUsers => [SignatureUser.t()] | nil,
           :stampFormat => String.t() | nil,
           :stampImageUri => String.t() | nil,
           :stampSizeMM => String.t() | nil,
@@ -77,13 +83,11 @@ defmodule DocuSign.Model.AccountSignatures do
           :status => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:dateStampProperties, :struct, DocuSign.Model.DateStampProperties)
-    |> Deserializer.deserialize(:errorDetails, :struct, DocuSign.Model.ErrorDetails)
-    |> Deserializer.deserialize(:signatureGroups, :list, DocuSign.Model.SignatureGroup)
-    |> Deserializer.deserialize(:signatureUsers, :list, DocuSign.Model.SignatureUser)
+    |> Deserializer.deserialize(:dateStampProperties, :struct, DateStampProperties)
+    |> Deserializer.deserialize(:errorDetails, :struct, ErrorDetails)
+    |> Deserializer.deserialize(:signatureGroups, :list, SignatureGroup)
+    |> Deserializer.deserialize(:signatureUsers, :list, SignatureUser)
   end
 end

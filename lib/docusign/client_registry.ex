@@ -7,6 +7,8 @@ defmodule DocuSign.ClientRegistry do
   """
   use GenServer
 
+  alias DocuSign.OAuth.Impl
+
   defmodule State do
     @moduledoc false
     defstruct clients: %{}, oauth_impl: nil
@@ -44,19 +46,17 @@ defmodule DocuSign.ClientRegistry do
   end
 
   def handle_call({:get_client, user_id}, _from, state) do
-    try do
-      client =
-        case Map.get(state.clients, user_id) do
-          nil -> create_client(user_id, state.oauth_impl)
-          client -> refresh_client(client, state.oauth_impl)
-        end
+    client =
+      case Map.get(state.clients, user_id) do
+        nil -> create_client(user_id, state.oauth_impl)
+        client -> refresh_client(client, state.oauth_impl)
+      end
 
-      updated_clients = Map.put(state.clients, user_id, client)
+    updated_clients = Map.put(state.clients, user_id, client)
 
-      {:reply, {:ok, client}, %{state | clients: updated_clients}}
-    rescue
-      error -> {:reply, {:error, error}, state}
-    end
+    {:reply, {:ok, client}, %{state | clients: updated_clients}}
+  rescue
+    error -> {:reply, {:error, error}, state}
   end
 
   @doc """
@@ -95,6 +95,6 @@ defmodule DocuSign.ClientRegistry do
   end
 
   defp oauth_implementation do
-    Application.get_env(:docusign, :oauth_implementation, DocuSign.OAuth.Impl)
+    Application.get_env(:docusign, :oauth_implementation, Impl)
   end
 end

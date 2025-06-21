@@ -6,6 +6,9 @@ defmodule DocuSign.Model.CloudStorageProvider do
   Contains details about a specific cloud storage provider.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.ErrorDetails
+
   @derive Jason.Encoder
   defstruct [
     :authenticationUrl,
@@ -17,16 +20,14 @@ defmodule DocuSign.Model.CloudStorageProvider do
 
   @type t :: %__MODULE__{
           :authenticationUrl => String.t() | nil,
-          :errorDetails => DocuSign.Model.ErrorDetails.t() | nil,
+          :errorDetails => ErrorDetails.t() | nil,
           :redirectUrl => String.t() | nil,
           :service => String.t() | nil,
           :serviceId => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:errorDetails, :struct, DocuSign.Model.ErrorDetails)
+    |> Deserializer.deserialize(:errorDetails, :struct, ErrorDetails)
   end
 end

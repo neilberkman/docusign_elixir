@@ -6,6 +6,10 @@ defmodule DocuSign.Model.TemplateSummary do
   Summary of a template request.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.ErrorDetails
+  alias DocuSign.Model.TemplateMatch
+
   @derive Jason.Encoder
   defstruct [
     :applied,
@@ -23,19 +27,17 @@ defmodule DocuSign.Model.TemplateSummary do
           :applied => String.t() | nil,
           :documentId => String.t() | nil,
           :documentName => String.t() | nil,
-          :errorDetails => DocuSign.Model.ErrorDetails.t() | nil,
+          :errorDetails => ErrorDetails.t() | nil,
           :hasDocumentTemplateLibrary => String.t() | nil,
           :name => String.t() | nil,
           :templateId => String.t() | nil,
-          :templateMatch => DocuSign.Model.TemplateMatch.t() | nil,
+          :templateMatch => TemplateMatch.t() | nil,
           :uri => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:errorDetails, :struct, DocuSign.Model.ErrorDetails)
-    |> Deserializer.deserialize(:templateMatch, :struct, DocuSign.Model.TemplateMatch)
+    |> Deserializer.deserialize(:errorDetails, :struct, ErrorDetails)
+    |> Deserializer.deserialize(:templateMatch, :struct, TemplateMatch)
   end
 end
