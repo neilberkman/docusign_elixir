@@ -26,9 +26,6 @@ defmodule DocuSign.Connection do
     Handle Tesla connections.
     """
 
-    use Tesla
-    plug(Tesla.Middleware.EncodeJson, engine: Jason)
-
     @doc """
     Configure an authless client connection
 
@@ -107,7 +104,7 @@ defmodule DocuSign.Connection do
     result =
       conn
       |> Request.new()
-      |> Request.request(opts)
+      |> Tesla.request(opts)
 
     case result do
       {status, res} when status in [:ok, :error] -> {status, res}
