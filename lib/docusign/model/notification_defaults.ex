@@ -6,6 +6,9 @@ defmodule DocuSign.Model.NotificationDefaults do
   The `NotificationDefaults` resource provides methods that enable you to manage the default notifications for envelopes.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.NotificationDefaultSettings
+
   @derive Jason.Encoder
   defstruct [
     :apiEmailNotifications,
@@ -13,23 +16,21 @@ defmodule DocuSign.Model.NotificationDefaults do
   ]
 
   @type t :: %__MODULE__{
-          :apiEmailNotifications => DocuSign.Model.NotificationDefaultSettings.t() | nil,
-          :emailNotifications => DocuSign.Model.NotificationDefaultSettings.t() | nil
+          :apiEmailNotifications => NotificationDefaultSettings.t() | nil,
+          :emailNotifications => NotificationDefaultSettings.t() | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
     |> Deserializer.deserialize(
       :apiEmailNotifications,
       :struct,
-      DocuSign.Model.NotificationDefaultSettings
+      NotificationDefaultSettings
     )
     |> Deserializer.deserialize(
       :emailNotifications,
       :struct,
-      DocuSign.Model.NotificationDefaultSettings
+      NotificationDefaultSettings
     )
   end
 end

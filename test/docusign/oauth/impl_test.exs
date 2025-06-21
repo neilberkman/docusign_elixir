@@ -1,11 +1,12 @@
 defmodule DocuSign.OAuth.ImplTest do
   use ExUnit.Case, async: true
 
+  import ExUnit.CaptureLog
+
   alias DocuSign.OAuth
+  alias DocuSign.OAuth.Impl
   alias OAuth2.{AccessToken, Client}
   alias Plug.Conn
-
-  import ExUnit.CaptureLog
 
   setup do
     bypass = Bypass.open()
@@ -56,29 +57,29 @@ defmodule DocuSign.OAuth.ImplTest do
   describe "creating new API client" do
     test "create new api client for default user ID" do
       assert %Client{
-               request_opts: [],
-               site: "http://localhost",
-               strategy: DocuSign.OAuth.Impl,
-               token: nil,
-               token_method: :post,
-               token_url: "/oauth/token",
                ref: %{
                  user_id: ":user-id:"
-               }
+               },
+               request_opts: [],
+               site: "http://localhost",
+               strategy: Impl,
+               token: nil,
+               token_method: :post,
+               token_url: "/oauth/token"
              } = OAuth.Impl.client(site: "http://localhost")
     end
 
     test "create new api client for given user ID" do
       assert %Client{
-               request_opts: [],
-               site: "http://localhost",
-               strategy: DocuSign.OAuth.Impl,
-               token: nil,
-               token_method: :post,
-               token_url: "/oauth/token",
                ref: %{
                  user_id: ":other-user-id:"
-               }
+               },
+               request_opts: [],
+               site: "http://localhost",
+               strategy: Impl,
+               token: nil,
+               token_method: :post,
+               token_url: "/oauth/token"
              } = OAuth.Impl.client(user_id: ":other-user-id:", site: "http://localhost")
     end
   end
@@ -99,8 +100,8 @@ defmodule DocuSign.OAuth.ImplTest do
       OAuth.Impl.client(
         site: "http://localhost:#{bypass.port}",
         token: %AccessToken{
-          expires_at: now + 3600,
-          access_token: "TEST_TOKEN"
+          access_token: "TEST_TOKEN",
+          expires_at: now + 3600
         }
       )
 
@@ -113,7 +114,7 @@ defmodule DocuSign.OAuth.ImplTest do
     assert %AccessToken{access_token: "ISSUED_ACCESS_TOKEN"} =
              OAuth.Impl.refresh_token!(client, true).token
 
-    expired_client = %Client{client | token: %AccessToken{expires_at: now - 3600}}
+    expired_client = %{client | token: %AccessToken{expires_at: now - 3600}}
 
     assert %AccessToken{access_token: "ISSUED_ACCESS_TOKEN"} =
              OAuth.Impl.refresh_token!(expired_client).token
@@ -210,9 +211,7 @@ defmodule DocuSign.OAuth.ImplTest do
       assert_raise RuntimeError,
                    "No private key found in application environment. Please set :private_key_file or :private_key_contents.",
                    fn ->
-                     OAuth.Impl.get_token!(
-                       OAuth.Impl.client(site: "http://localhost:#{bypass.port}")
-                     )
+                     OAuth.Impl.get_token!(OAuth.Impl.client(site: "http://localhost:#{bypass.port}"))
                    end
     end
 
@@ -223,9 +222,7 @@ defmodule DocuSign.OAuth.ImplTest do
       assert_raise RuntimeError,
                    "Multiple DocuSign private keys were provided. Please use only one of :private_key_file or :private_key_contents.",
                    fn ->
-                     OAuth.Impl.get_token!(
-                       OAuth.Impl.client(site: "http://localhost:#{bypass.port}")
-                     )
+                     OAuth.Impl.get_token!(OAuth.Impl.client(site: "http://localhost:#{bypass.port}"))
                    end
     end
   end

@@ -6,6 +6,9 @@ defmodule DocuSign.Model.GroupInformation do
   This object is used for both requests and responses. Some properties (such as `endPosition`) only apply to the response of [Groups: list](/docs/esign-rest-api/reference/usergroups/groups/list/). 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.Group
+
   @derive Jason.Encoder
   defstruct [
     :endPosition,
@@ -19,7 +22,7 @@ defmodule DocuSign.Model.GroupInformation do
 
   @type t :: %__MODULE__{
           :endPosition => String.t() | nil,
-          :groups => [DocuSign.Model.Group.t()] | nil,
+          :groups => [Group.t()] | nil,
           :nextUri => String.t() | nil,
           :previousUri => String.t() | nil,
           :resultSetSize => String.t() | nil,
@@ -27,10 +30,8 @@ defmodule DocuSign.Model.GroupInformation do
           :totalSetSize => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:groups, :list, DocuSign.Model.Group)
+    |> Deserializer.deserialize(:groups, :list, Group)
   end
 end

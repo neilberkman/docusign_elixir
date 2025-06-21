@@ -6,6 +6,11 @@ defmodule DocuSign.Model.Accounts do
   Account management
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.AccountBrands
+  alias DocuSign.Model.AccountSettingsInformation
+  alias DocuSign.Model.RecipientDomain
+
   @derive Jason.Encoder
   defstruct [
     :accountIdGuid,
@@ -52,7 +57,7 @@ defmodule DocuSign.Model.Accounts do
   @type t :: %__MODULE__{
           :accountIdGuid => String.t() | nil,
           :accountName => String.t() | nil,
-          :accountSettings => DocuSign.Model.AccountSettingsInformation.t() | nil,
+          :accountSettings => AccountSettingsInformation.t() | nil,
           :allowTransactionRooms => String.t() | nil,
           :billingPeriodDaysRemaining => String.t() | nil,
           :billingPeriodEndDate => String.t() | nil,
@@ -60,7 +65,7 @@ defmodule DocuSign.Model.Accounts do
           :billingPeriodEnvelopesSent => String.t() | nil,
           :billingPeriodStartDate => String.t() | nil,
           :billingProfile => String.t() | nil,
-          :brands => DocuSign.Model.AccountBrands.t() | nil,
+          :brands => AccountBrands.t() | nil,
           :canUpgrade => String.t() | nil,
           :connectPermission => String.t() | nil,
           :createdDate => String.t() | nil,
@@ -82,7 +87,7 @@ defmodule DocuSign.Model.Accounts do
           :planEndDate => String.t() | nil,
           :planName => String.t() | nil,
           :planStartDate => String.t() | nil,
-          :recipientDomains => [DocuSign.Model.RecipientDomain.t()] | nil,
+          :recipientDomains => [RecipientDomain.t()] | nil,
           :seatsAllowed => String.t() | nil,
           :seatsInUse => String.t() | nil,
           :status21CFRPart11 => String.t() | nil,
@@ -91,16 +96,14 @@ defmodule DocuSign.Model.Accounts do
           :useDisplayAppliance => boolean() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
     |> Deserializer.deserialize(
       :accountSettings,
       :struct,
-      DocuSign.Model.AccountSettingsInformation
+      AccountSettingsInformation
     )
-    |> Deserializer.deserialize(:brands, :struct, DocuSign.Model.AccountBrands)
-    |> Deserializer.deserialize(:recipientDomains, :list, DocuSign.Model.RecipientDomain)
+    |> Deserializer.deserialize(:brands, :struct, AccountBrands)
+    |> Deserializer.deserialize(:recipientDomains, :list, RecipientDomain)
   end
 end

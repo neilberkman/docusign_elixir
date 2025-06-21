@@ -6,6 +6,9 @@ defmodule DocuSign.Model.BillingInvoice do
   Contains information about a billing invoice.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.BillingInvoiceItem
+
   @derive Jason.Encoder
   defstruct [
     :amount,
@@ -25,7 +28,7 @@ defmodule DocuSign.Model.BillingInvoice do
           :balance => String.t() | nil,
           :dueDate => String.t() | nil,
           :invoiceId => String.t() | nil,
-          :invoiceItems => [DocuSign.Model.BillingInvoiceItem.t()] | nil,
+          :invoiceItems => [BillingInvoiceItem.t()] | nil,
           :invoiceNumber => String.t() | nil,
           :invoiceUri => String.t() | nil,
           :nonTaxableAmount => String.t() | nil,
@@ -33,10 +36,8 @@ defmodule DocuSign.Model.BillingInvoice do
           :taxableAmount => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:invoiceItems, :list, DocuSign.Model.BillingInvoiceItem)
+    |> Deserializer.deserialize(:invoiceItems, :list, BillingInvoiceItem)
   end
 end

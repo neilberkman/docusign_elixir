@@ -6,19 +6,20 @@ defmodule DocuSign.Model.TemplateDocumentVisibility do
   Document Visibility enables senders to control the visibility of the documents in an envelope at the recipient level. For example, if the parties associated with a legal proceeding should have access to different documents, the Document Visibility feature enables you to keep all of the documents in the same envelope and set view permissions for the documents by recipient. This functionality is enabled for envelopes and templates. It is not available for PowerForms.  **Note:** Before you use Document Visibility, you should be aware of the following information:  - Document Visibility must be enabled for your account by your Docusign administrator.  - A document cannot be hidden from a recipient if the recipient has tabs assigned to them on the document.  - When the Document Visibility setting hides a document from a recipient, the document also does not appear in the recipient's list of envelopes, documents, or page images. - Carbon Copy, Certified Delivery (Needs to Sign), Editor, and Agent recipients can always see all of the documents associated with the envelope or template.  The Document Visibility feature has multiple settings that specify the options that senders have when sending documents. For more information, see [Use Document Visibility to Control Recipient Access](https://support.docusign.com/s/document-item?bundleId=gbo1643332197980&topicId=eui1578456411411.html).
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.DocumentVisibility
+
   @derive Jason.Encoder
   defstruct [
     :documentVisibility
   ]
 
   @type t :: %__MODULE__{
-          :documentVisibility => [DocuSign.Model.DocumentVisibility.t()] | nil
+          :documentVisibility => [DocumentVisibility.t()] | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
-    |> Deserializer.deserialize(:documentVisibility, :list, DocuSign.Model.DocumentVisibility)
+    |> Deserializer.deserialize(:documentVisibility, :list, DocumentVisibility)
   end
 end

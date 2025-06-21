@@ -6,8 +6,14 @@ defmodule DocuSign.Api.Authorizations do
   API calls for all endpoints tagged `Authorizations`.
   """
 
-  alias DocuSign.Connection
   import DocuSign.RequestBuilder
+
+  alias DocuSign.Connection
+  alias DocuSign.Model.ErrorDetails
+  alias DocuSign.Model.UserAuthorization
+  alias DocuSign.Model.UserAuthorizations
+  alias DocuSign.Model.UserAuthorizationsDeleteResponse
+  alias DocuSign.Model.UserAuthorizationsResponse
 
   @doc """
   Returns the authorizations for which the specified user is the agent user.
@@ -38,15 +44,10 @@ defmodule DocuSign.Api.Authorizations do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.UserAuthorizations.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, UserAuthorizations.t()}
           | {:error, Tesla.Env.t()}
-  def user_agent_authorizations_get_agent_user_authorizations(
-        connection,
-        account_id,
-        user_id,
-        opts \\ []
-      ) do
+  def user_agent_authorizations_get_agent_user_authorizations(connection, account_id, user_id, opts \\ []) do
     optional_params = %{
       :active_only => :query,
       :count => :query,
@@ -62,13 +63,13 @@ defmodule DocuSign.Api.Authorizations do
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/users/#{user_id}/authorizations/agent")
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.UserAuthorizations},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, UserAuthorizations},
+      {400, ErrorDetails}
     ])
   end
 
@@ -95,8 +96,8 @@ defmodule DocuSign.Api.Authorizations do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.UserAuthorization.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, UserAuthorization.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
   def user_authorization_create_user_authorization(connection, account_id, user_id, opts \\ []) do
     optional_params = %{
@@ -109,13 +110,13 @@ defmodule DocuSign.Api.Authorizations do
       |> url("/v2.1/accounts/#{account_id}/users/#{user_id}/authorization")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {201, DocuSign.Model.UserAuthorization},
-      {400, DocuSign.Model.ErrorDetails}
+      {201, UserAuthorization},
+      {400, ErrorDetails}
     ])
   end
 
@@ -142,25 +143,19 @@ defmodule DocuSign.Api.Authorizations do
           String.t(),
           String.t(),
           keyword()
-        ) :: {:ok, nil} | {:ok, DocuSign.Model.ErrorDetails.t()} | {:error, Tesla.Env.t()}
-  def user_authorization_delete_user_authorization(
-        connection,
-        account_id,
-        authorization_id,
-        user_id,
-        _opts \\ []
-      ) do
+        ) :: {:ok, nil} | {:ok, ErrorDetails.t()} | {:error, Tesla.Env.t()}
+  def user_authorization_delete_user_authorization(connection, account_id, authorization_id, user_id, _opts \\ []) do
     request =
       %{}
       |> method(:delete)
       |> url("/v2.1/accounts/#{account_id}/users/#{user_id}/authorization/#{authorization_id}")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
       {200, false},
-      {400, DocuSign.Model.ErrorDetails}
+      {400, ErrorDetails}
     ])
   end
 
@@ -188,27 +183,21 @@ defmodule DocuSign.Api.Authorizations do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.UserAuthorization.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, UserAuthorization.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
-  def user_authorization_get_user_authorization(
-        connection,
-        account_id,
-        authorization_id,
-        user_id,
-        _opts \\ []
-      ) do
+  def user_authorization_get_user_authorization(connection, account_id, authorization_id, user_id, _opts \\ []) do
     request =
       %{}
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/users/#{user_id}/authorization/#{authorization_id}")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.UserAuthorization},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, UserAuthorization},
+      {400, ErrorDetails}
     ])
   end
 
@@ -237,16 +226,10 @@ defmodule DocuSign.Api.Authorizations do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.UserAuthorization.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, UserAuthorization.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
-  def user_authorization_update_user_authorization(
-        connection,
-        account_id,
-        authorization_id,
-        user_id,
-        opts \\ []
-      ) do
+  def user_authorization_update_user_authorization(connection, account_id, authorization_id, user_id, opts \\ []) do
     optional_params = %{
       :body => :body
     }
@@ -257,13 +240,13 @@ defmodule DocuSign.Api.Authorizations do
       |> url("/v2.1/accounts/#{account_id}/users/#{user_id}/authorization/#{authorization_id}")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.UserAuthorization},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, UserAuthorization},
+      {400, ErrorDetails}
     ])
   end
 
@@ -290,8 +273,8 @@ defmodule DocuSign.Api.Authorizations do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.UserAuthorizationsDeleteResponse.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, UserAuthorizationsDeleteResponse.t()}
           | {:error, Tesla.Env.t()}
   def user_authorizations_delete_user_authorizations(connection, account_id, user_id, opts \\ []) do
     optional_params = %{
@@ -303,13 +286,13 @@ defmodule DocuSign.Api.Authorizations do
       |> method(:delete)
       |> url("/v2.1/accounts/#{account_id}/users/#{user_id}/authorizations")
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.UserAuthorizationsDeleteResponse},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, UserAuthorizationsDeleteResponse},
+      {400, ErrorDetails}
     ])
   end
 
@@ -342,15 +325,10 @@ defmodule DocuSign.Api.Authorizations do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.UserAuthorizations.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, UserAuthorizations.t()}
           | {:error, Tesla.Env.t()}
-  def user_authorizations_get_principal_user_authorizations(
-        connection,
-        account_id,
-        user_id,
-        opts \\ []
-      ) do
+  def user_authorizations_get_principal_user_authorizations(connection, account_id, user_id, opts \\ []) do
     optional_params = %{
       :active_only => :query,
       :count => :query,
@@ -366,13 +344,13 @@ defmodule DocuSign.Api.Authorizations do
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/users/#{user_id}/authorizations")
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.UserAuthorizations},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, UserAuthorizations},
+      {400, ErrorDetails}
     ])
   end
 
@@ -399,8 +377,8 @@ defmodule DocuSign.Api.Authorizations do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.UserAuthorizationsResponse.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, UserAuthorizationsResponse.t()}
           | {:error, Tesla.Env.t()}
   def user_authorizations_post_user_authorizations(connection, account_id, user_id, opts \\ []) do
     optional_params = %{
@@ -413,13 +391,13 @@ defmodule DocuSign.Api.Authorizations do
       |> url("/v2.1/accounts/#{account_id}/users/#{user_id}/authorizations")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {201, DocuSign.Model.UserAuthorizationsResponse},
-      {400, DocuSign.Model.ErrorDetails}
+      {201, UserAuthorizationsResponse},
+      {400, ErrorDetails}
     ])
   end
 end

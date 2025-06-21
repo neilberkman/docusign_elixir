@@ -6,6 +6,9 @@ defmodule DocuSign.Model.DocumentHtmlDefinitionOriginal do
 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.DocumentHtmlDefinition
+
   @derive Jason.Encoder
   defstruct [
     :documentId,
@@ -16,13 +19,11 @@ defmodule DocuSign.Model.DocumentHtmlDefinitionOriginal do
   @type t :: %__MODULE__{
           :documentId => String.t() | nil,
           :documentIdGuid => String.t() | nil,
-          :htmlDefinition => DocuSign.Model.DocumentHtmlDefinition.t() | nil
+          :htmlDefinition => DocumentHtmlDefinition.t() | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
-    |> Deserializer.deserialize(:htmlDefinition, :struct, DocuSign.Model.DocumentHtmlDefinition)
+    |> Deserializer.deserialize(:htmlDefinition, :struct, DocumentHtmlDefinition)
   end
 end

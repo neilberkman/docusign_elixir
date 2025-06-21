@@ -6,6 +6,16 @@ defmodule DocuSign.Model.BulkSendingCopyRecipient do
   This object contains details about a bulk send recipient.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.BulkSendingCopyTab
+  alias DocuSign.Model.IdCheckInformationInput
+  alias DocuSign.Model.RecipientEmailNotification
+  alias DocuSign.Model.RecipientIdentityVerification
+  alias DocuSign.Model.RecipientPhoneAuthentication
+  alias DocuSign.Model.RecipientSignatureProvider
+  alias DocuSign.Model.RecipientSmsAuthentication
+  alias DocuSign.Model.SocialAuthentication
+
   @derive Jason.Encoder
   defstruct [
     :accessCode,
@@ -41,67 +51,65 @@ defmodule DocuSign.Model.BulkSendingCopyRecipient do
           :customFields => [String.t()] | nil,
           :deliveryMethod => String.t() | nil,
           :email => String.t() | nil,
-          :emailNotification => DocuSign.Model.RecipientEmailNotification.t() | nil,
+          :emailNotification => RecipientEmailNotification.t() | nil,
           :embeddedRecipientStartURL => String.t() | nil,
           :faxNumber => String.t() | nil,
           :hostEmail => String.t() | nil,
           :hostName => String.t() | nil,
           :idCheckConfigurationName => String.t() | nil,
-          :idCheckInformationInput => DocuSign.Model.IdCheckInformationInput.t() | nil,
+          :idCheckInformationInput => IdCheckInformationInput.t() | nil,
           :identificationMethod => String.t() | nil,
-          :identityVerification => DocuSign.Model.RecipientIdentityVerification.t() | nil,
+          :identityVerification => RecipientIdentityVerification.t() | nil,
           :name => String.t() | nil,
           :note => String.t() | nil,
-          :phoneAuthentication => DocuSign.Model.RecipientPhoneAuthentication.t() | nil,
+          :phoneAuthentication => RecipientPhoneAuthentication.t() | nil,
           :recipientId => String.t() | nil,
-          :recipientSignatureProviders => [DocuSign.Model.RecipientSignatureProvider.t()] | nil,
+          :recipientSignatureProviders => [RecipientSignatureProvider.t()] | nil,
           :roleName => String.t() | nil,
           :signerName => String.t() | nil,
           :signingGroupId => String.t() | nil,
-          :smsAuthentication => DocuSign.Model.RecipientSmsAuthentication.t() | nil,
-          :socialAuthentications => [DocuSign.Model.SocialAuthentication.t()] | nil,
-          :tabs => [DocuSign.Model.BulkSendingCopyTab.t()] | nil
+          :smsAuthentication => RecipientSmsAuthentication.t() | nil,
+          :socialAuthentications => [SocialAuthentication.t()] | nil,
+          :tabs => [BulkSendingCopyTab.t()] | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
     |> Deserializer.deserialize(
       :emailNotification,
       :struct,
-      DocuSign.Model.RecipientEmailNotification
+      RecipientEmailNotification
     )
     |> Deserializer.deserialize(
       :idCheckInformationInput,
       :struct,
-      DocuSign.Model.IdCheckInformationInput
+      IdCheckInformationInput
     )
     |> Deserializer.deserialize(
       :identityVerification,
       :struct,
-      DocuSign.Model.RecipientIdentityVerification
+      RecipientIdentityVerification
     )
     |> Deserializer.deserialize(
       :phoneAuthentication,
       :struct,
-      DocuSign.Model.RecipientPhoneAuthentication
+      RecipientPhoneAuthentication
     )
     |> Deserializer.deserialize(
       :recipientSignatureProviders,
       :list,
-      DocuSign.Model.RecipientSignatureProvider
+      RecipientSignatureProvider
     )
     |> Deserializer.deserialize(
       :smsAuthentication,
       :struct,
-      DocuSign.Model.RecipientSmsAuthentication
+      RecipientSmsAuthentication
     )
     |> Deserializer.deserialize(
       :socialAuthentications,
       :list,
-      DocuSign.Model.SocialAuthentication
+      SocialAuthentication
     )
-    |> Deserializer.deserialize(:tabs, :list, DocuSign.Model.BulkSendingCopyTab)
+    |> Deserializer.deserialize(:tabs, :list, BulkSendingCopyTab)
   end
 end

@@ -6,6 +6,10 @@ defmodule DocuSign.Model.RecipientIdentityVerification do
   Specifies ID Verification applied on an envelope by workflow ID. See the [list](/docs/esign-rest-api/reference/accounts/identityverifications/list/) method in the [IdentityVerifications](/docs/esign-rest-api/reference/accounts/identityverifications/) resource for more information on how to retrieve workflow IDs available for an account. This can be used in addition to other [recipient authentication](https://support.docusign.com/s/document-item?bundleId=gav1643676262430&topicId=kzp1578456318101.html) methods.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.PropertyMetadata
+  alias DocuSign.Model.RecipientIdentityInputOption
+
   @derive Jason.Encoder
   defstruct [
     :inputOptions,
@@ -15,17 +19,15 @@ defmodule DocuSign.Model.RecipientIdentityVerification do
   ]
 
   @type t :: %__MODULE__{
-          :inputOptions => [DocuSign.Model.RecipientIdentityInputOption.t()] | nil,
+          :inputOptions => [RecipientIdentityInputOption.t()] | nil,
           :workflowId => String.t() | nil,
-          :workflowIdMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :workflowIdMetadata => PropertyMetadata.t() | nil,
           :workflowLabel => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:inputOptions, :list, DocuSign.Model.RecipientIdentityInputOption)
-    |> Deserializer.deserialize(:workflowIdMetadata, :struct, DocuSign.Model.PropertyMetadata)
+    |> Deserializer.deserialize(:inputOptions, :list, RecipientIdentityInputOption)
+    |> Deserializer.deserialize(:workflowIdMetadata, :struct, PropertyMetadata)
   end
 end

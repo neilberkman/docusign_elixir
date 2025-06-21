@@ -6,6 +6,9 @@ defmodule DocuSign.Model.BccEmailArchiveList do
   Contains a list of BCC email archive configurations.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.BccEmailArchive
+
   @derive Jason.Encoder
   defstruct [
     :bccEmailArchives,
@@ -18,7 +21,7 @@ defmodule DocuSign.Model.BccEmailArchiveList do
   ]
 
   @type t :: %__MODULE__{
-          :bccEmailArchives => [DocuSign.Model.BccEmailArchive.t()] | nil,
+          :bccEmailArchives => [BccEmailArchive.t()] | nil,
           :endPosition => String.t() | nil,
           :nextUri => String.t() | nil,
           :previousUri => String.t() | nil,
@@ -27,10 +30,8 @@ defmodule DocuSign.Model.BccEmailArchiveList do
           :totalSetSize => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:bccEmailArchives, :list, DocuSign.Model.BccEmailArchive)
+    |> Deserializer.deserialize(:bccEmailArchives, :list, BccEmailArchive)
   end
 end

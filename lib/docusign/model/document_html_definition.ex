@@ -6,6 +6,9 @@ defmodule DocuSign.Model.DocumentHtmlDefinition do
   Holds the properties that define how to generate the responsive-formatted HTML for the document. See [Responsive signing](/docs/esign-rest-api/esign101/concepts/responsive/) in the [eSignature concepts guide](/docs/esign-rest-api/esign101/concepts/).
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.DocumentHtmlDisplayAnchor
+
   @derive Jason.Encoder
   defstruct [
     :displayAnchorPrefix,
@@ -23,7 +26,7 @@ defmodule DocuSign.Model.DocumentHtmlDefinition do
 
   @type t :: %__MODULE__{
           :displayAnchorPrefix => String.t() | nil,
-          :displayAnchors => [DocuSign.Model.DocumentHtmlDisplayAnchor.t()] | nil,
+          :displayAnchors => [DocumentHtmlDisplayAnchor.t()] | nil,
           :displayOrder => String.t() | nil,
           :displayPageNumber => String.t() | nil,
           :documentGuid => String.t() | nil,
@@ -35,10 +38,8 @@ defmodule DocuSign.Model.DocumentHtmlDefinition do
           :source => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:displayAnchors, :list, DocuSign.Model.DocumentHtmlDisplayAnchor)
+    |> Deserializer.deserialize(:displayAnchors, :list, DocumentHtmlDisplayAnchor)
   end
 end

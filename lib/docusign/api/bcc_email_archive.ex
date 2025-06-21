@@ -6,8 +6,13 @@ defmodule DocuSign.Api.BCCEmailArchive do
   API calls for all endpoints tagged `BCCEmailArchive`.
   """
 
-  alias DocuSign.Connection
   import DocuSign.RequestBuilder
+
+  alias DocuSign.Connection
+  alias DocuSign.Model.BccEmailArchive
+  alias DocuSign.Model.BccEmailArchiveHistoryList
+  alias DocuSign.Model.BccEmailArchiveList
+  alias DocuSign.Model.ErrorDetails
 
   @doc """
   Deletes a BCC email archive configuration.
@@ -30,24 +35,19 @@ defmodule DocuSign.Api.BCCEmailArchive do
           String.t(),
           String.t(),
           keyword()
-        ) :: {:ok, nil} | {:ok, DocuSign.Model.ErrorDetails.t()} | {:error, Tesla.Env.t()}
-  def b_cc_email_archive_delete_bcc_email_archive(
-        connection,
-        account_id,
-        bcc_email_archive_id,
-        _opts \\ []
-      ) do
+        ) :: {:ok, nil} | {:ok, ErrorDetails.t()} | {:error, Tesla.Env.t()}
+  def b_cc_email_archive_delete_bcc_email_archive(connection, account_id, bcc_email_archive_id, _opts \\ []) do
     request =
       %{}
       |> method(:delete)
       |> url("/v2.1/accounts/#{account_id}/settings/bcc_email_archives/#{bcc_email_archive_id}")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
       {200, false},
-      {400, DocuSign.Model.ErrorDetails}
+      {400, ErrorDetails}
     ])
   end
 
@@ -75,15 +75,10 @@ defmodule DocuSign.Api.BCCEmailArchive do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.BccEmailArchiveHistoryList.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, BccEmailArchiveHistoryList.t()}
           | {:error, Tesla.Env.t()}
-  def b_cc_email_archive_get_bcc_email_archive_history_list(
-        connection,
-        account_id,
-        bcc_email_archive_id,
-        opts \\ []
-      ) do
+  def b_cc_email_archive_get_bcc_email_archive_history_list(connection, account_id, bcc_email_archive_id, opts \\ []) do
     optional_params = %{
       :count => :query,
       :start_position => :query
@@ -94,13 +89,13 @@ defmodule DocuSign.Api.BCCEmailArchive do
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/settings/bcc_email_archives/#{bcc_email_archive_id}")
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.BccEmailArchiveHistoryList},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, BccEmailArchiveHistoryList},
+      {400, ErrorDetails}
     ])
   end
 
@@ -122,8 +117,8 @@ defmodule DocuSign.Api.BCCEmailArchive do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec b_cc_email_archive_get_bcc_email_archive_list(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.BccEmailArchiveList.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, BccEmailArchiveList.t()}
           | {:error, Tesla.Env.t()}
   def b_cc_email_archive_get_bcc_email_archive_list(connection, account_id, opts \\ []) do
     optional_params = %{
@@ -136,13 +131,13 @@ defmodule DocuSign.Api.BCCEmailArchive do
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/settings/bcc_email_archives")
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.BccEmailArchiveList},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, BccEmailArchiveList},
+      {400, ErrorDetails}
     ])
   end
 
@@ -163,8 +158,8 @@ defmodule DocuSign.Api.BCCEmailArchive do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec b_cc_email_archive_post_bcc_email_archive(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.BccEmailArchive.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, BccEmailArchive.t()}
           | {:error, Tesla.Env.t()}
   def b_cc_email_archive_post_bcc_email_archive(connection, account_id, opts \\ []) do
     optional_params = %{
@@ -177,13 +172,13 @@ defmodule DocuSign.Api.BCCEmailArchive do
       |> url("/v2.1/accounts/#{account_id}/settings/bcc_email_archives")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {201, DocuSign.Model.BccEmailArchive},
-      {400, DocuSign.Model.ErrorDetails}
+      {201, BccEmailArchive},
+      {400, ErrorDetails}
     ])
   end
 end

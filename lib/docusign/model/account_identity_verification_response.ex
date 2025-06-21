@@ -6,23 +6,24 @@ defmodule DocuSign.Model.AccountIdentityVerificationResponse do
 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.AccountIdentityVerificationWorkflow
+
   @derive Jason.Encoder
   defstruct [
     :identityVerification
   ]
 
   @type t :: %__MODULE__{
-          :identityVerification => [DocuSign.Model.AccountIdentityVerificationWorkflow.t()] | nil
+          :identityVerification => [AccountIdentityVerificationWorkflow.t()] | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
     |> Deserializer.deserialize(
       :identityVerification,
       :list,
-      DocuSign.Model.AccountIdentityVerificationWorkflow
+      AccountIdentityVerificationWorkflow
     )
   end
 end

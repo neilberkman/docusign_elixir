@@ -6,19 +6,20 @@ defmodule DocuSign.Model.BrandsRequest do
   Details about one or more brands.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.BrandRequest
+
   @derive Jason.Encoder
   defstruct [
     :brands
   ]
 
   @type t :: %__MODULE__{
-          :brands => [DocuSign.Model.BrandRequest.t()] | nil
+          :brands => [BrandRequest.t()] | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
-    |> Deserializer.deserialize(:brands, :list, DocuSign.Model.BrandRequest)
+    |> Deserializer.deserialize(:brands, :list, BrandRequest)
   end
 end

@@ -6,6 +6,10 @@ defmodule DocuSign.Model.NotificationDefaultSettings do
   Contains details about the default notification settings for the envelope notifications that senders and signers receive.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.SenderEmailNotifications
+  alias DocuSign.Model.SignerEmailNotifications
+
   @derive Jason.Encoder
   defstruct [
     :senderEmailNotifications,
@@ -13,23 +17,21 @@ defmodule DocuSign.Model.NotificationDefaultSettings do
   ]
 
   @type t :: %__MODULE__{
-          :senderEmailNotifications => DocuSign.Model.SenderEmailNotifications.t() | nil,
-          :signerEmailNotifications => DocuSign.Model.SignerEmailNotifications.t() | nil
+          :senderEmailNotifications => SenderEmailNotifications.t() | nil,
+          :signerEmailNotifications => SignerEmailNotifications.t() | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
     |> Deserializer.deserialize(
       :senderEmailNotifications,
       :struct,
-      DocuSign.Model.SenderEmailNotifications
+      SenderEmailNotifications
     )
     |> Deserializer.deserialize(
       :signerEmailNotifications,
       :struct,
-      DocuSign.Model.SignerEmailNotifications
+      SignerEmailNotifications
     )
   end
 end

@@ -6,6 +6,9 @@ defmodule DocuSign.Model.PaletteSettings do
   Reserved for Docusign.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.PaletteItemSettings
+
   @derive Jason.Encoder
   defstruct [
     :annotations,
@@ -18,25 +21,23 @@ defmodule DocuSign.Model.PaletteSettings do
   ]
 
   @type t :: %__MODULE__{
-          :annotations => DocuSign.Model.PaletteItemSettings.t() | nil,
-          :custom => DocuSign.Model.PaletteItemSettings.t() | nil,
-          :merge => DocuSign.Model.PaletteItemSettings.t() | nil,
-          :notary => DocuSign.Model.PaletteItemSettings.t() | nil,
-          :seals => DocuSign.Model.PaletteItemSettings.t() | nil,
-          :smartContracts => DocuSign.Model.PaletteItemSettings.t() | nil,
-          :smartSections => DocuSign.Model.PaletteItemSettings.t() | nil
+          :annotations => PaletteItemSettings.t() | nil,
+          :custom => PaletteItemSettings.t() | nil,
+          :merge => PaletteItemSettings.t() | nil,
+          :notary => PaletteItemSettings.t() | nil,
+          :seals => PaletteItemSettings.t() | nil,
+          :smartContracts => PaletteItemSettings.t() | nil,
+          :smartSections => PaletteItemSettings.t() | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
-    |> Deserializer.deserialize(:annotations, :struct, DocuSign.Model.PaletteItemSettings)
-    |> Deserializer.deserialize(:custom, :struct, DocuSign.Model.PaletteItemSettings)
-    |> Deserializer.deserialize(:merge, :struct, DocuSign.Model.PaletteItemSettings)
-    |> Deserializer.deserialize(:notary, :struct, DocuSign.Model.PaletteItemSettings)
-    |> Deserializer.deserialize(:seals, :struct, DocuSign.Model.PaletteItemSettings)
-    |> Deserializer.deserialize(:smartContracts, :struct, DocuSign.Model.PaletteItemSettings)
-    |> Deserializer.deserialize(:smartSections, :struct, DocuSign.Model.PaletteItemSettings)
+    |> Deserializer.deserialize(:annotations, :struct, PaletteItemSettings)
+    |> Deserializer.deserialize(:custom, :struct, PaletteItemSettings)
+    |> Deserializer.deserialize(:merge, :struct, PaletteItemSettings)
+    |> Deserializer.deserialize(:notary, :struct, PaletteItemSettings)
+    |> Deserializer.deserialize(:seals, :struct, PaletteItemSettings)
+    |> Deserializer.deserialize(:smartContracts, :struct, PaletteItemSettings)
+    |> Deserializer.deserialize(:smartSections, :struct, PaletteItemSettings)
   end
 end

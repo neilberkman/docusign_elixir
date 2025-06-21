@@ -1,7 +1,6 @@
 import Config
 
 config :docusign, app_env: :dev
-
 config :docusign, hostname: "account-d.docusign.com"
 
 config :oauth2,

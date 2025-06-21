@@ -6,8 +6,12 @@ defmodule DocuSign.Api.EnvelopeDocuments do
   API calls for all endpoints tagged `EnvelopeDocuments`.
   """
 
-  alias DocuSign.Connection
   import DocuSign.RequestBuilder
+
+  alias DocuSign.Connection
+  alias DocuSign.Model.EnvelopeDocument
+  alias DocuSign.Model.EnvelopeDocumentsResult
+  alias DocuSign.Model.ErrorDetails
 
   @doc """
   Deletes documents from a draft envelope.
@@ -27,8 +31,8 @@ defmodule DocuSign.Api.EnvelopeDocuments do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec documents_delete_documents(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.EnvelopeDocumentsResult.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, EnvelopeDocumentsResult.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
   def documents_delete_documents(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
@@ -40,13 +44,13 @@ defmodule DocuSign.Api.EnvelopeDocuments do
       |> method(:delete)
       |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/documents")
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.EnvelopeDocumentsResult},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, EnvelopeDocumentsResult},
+      {400, ErrorDetails}
     ])
   end
 
@@ -77,7 +81,7 @@ defmodule DocuSign.Api.EnvelopeDocuments do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec documents_get_document(Tesla.Env.client(), String.t(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()} | {:ok, String.t()} | {:error, Tesla.Env.t()}
+          {:ok, ErrorDetails.t()} | {:ok, String.t()} | {:error, Tesla.Env.t()}
   def documents_get_document(connection, account_id, document_id, envelope_id, opts \\ []) do
     optional_params = %{
       :certificate => :query,
@@ -96,13 +100,13 @@ defmodule DocuSign.Api.EnvelopeDocuments do
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/documents/#{document_id}")
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
       {200, false},
-      {400, DocuSign.Model.ErrorDetails}
+      {400, ErrorDetails}
     ])
   end
 
@@ -129,8 +133,8 @@ defmodule DocuSign.Api.EnvelopeDocuments do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec documents_get_documents(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.EnvelopeDocumentsResult.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, EnvelopeDocumentsResult.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
   def documents_get_documents(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
@@ -147,13 +151,13 @@ defmodule DocuSign.Api.EnvelopeDocuments do
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/documents")
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.EnvelopeDocumentsResult},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, EnvelopeDocumentsResult},
+      {400, ErrorDetails}
     ])
   end
 
@@ -183,29 +187,22 @@ defmodule DocuSign.Api.EnvelopeDocuments do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.EnvelopeDocument.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, EnvelopeDocument.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
-  def documents_put_document(
-        connection,
-        account_id,
-        document_id,
-        envelope_id,
-        document_file_bytes,
-        _opts \\ []
-      ) do
+  def documents_put_document(connection, account_id, document_id, envelope_id, document_file_bytes, _opts \\ []) do
     request =
       %{}
       |> method(:put)
       |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/documents/#{document_id}")
       |> add_param(:body, :body, document_file_bytes)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.EnvelopeDocument},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, EnvelopeDocument},
+      {400, ErrorDetails}
     ])
   end
 
@@ -227,8 +224,8 @@ defmodule DocuSign.Api.EnvelopeDocuments do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec documents_put_documents(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.EnvelopeDocumentsResult.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, EnvelopeDocumentsResult.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
   def documents_put_documents(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
@@ -241,13 +238,13 @@ defmodule DocuSign.Api.EnvelopeDocuments do
       |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/documents")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.EnvelopeDocumentsResult},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, EnvelopeDocumentsResult},
+      {400, ErrorDetails}
     ])
   end
 end

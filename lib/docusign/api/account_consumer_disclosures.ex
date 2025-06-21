@@ -6,8 +6,12 @@ defmodule DocuSign.Api.AccountConsumerDisclosures do
   API calls for all endpoints tagged `AccountConsumerDisclosures`.
   """
 
-  alias DocuSign.Connection
   import DocuSign.RequestBuilder
+
+  alias DocuSign.Connection
+  alias DocuSign.Model.AccountConsumerDisclosures
+  alias DocuSign.Model.ConsumerDisclosure
+  alias DocuSign.Model.ErrorDetails
 
   @doc """
   Gets the default Electronic Record and Signature Disclosure for an account.
@@ -26,8 +30,8 @@ defmodule DocuSign.Api.AccountConsumerDisclosures do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec consumer_disclosure_get_consumer_disclosure(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.AccountConsumerDisclosures.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, AccountConsumerDisclosures.t()}
           | {:error, Tesla.Env.t()}
   def consumer_disclosure_get_consumer_disclosure(connection, account_id, opts \\ []) do
     optional_params = %{
@@ -39,13 +43,13 @@ defmodule DocuSign.Api.AccountConsumerDisclosures do
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/consumer_disclosure")
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.AccountConsumerDisclosures},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, AccountConsumerDisclosures},
+      {400, ErrorDetails}
     ])
   end
 
@@ -71,26 +75,21 @@ defmodule DocuSign.Api.AccountConsumerDisclosures do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.AccountConsumerDisclosures.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, AccountConsumerDisclosures.t()}
           | {:error, Tesla.Env.t()}
-  def consumer_disclosure_get_consumer_disclosure_lang_code(
-        connection,
-        account_id,
-        lang_code,
-        _opts \\ []
-      ) do
+  def consumer_disclosure_get_consumer_disclosure_lang_code(connection, account_id, lang_code, _opts \\ []) do
     request =
       %{}
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/consumer_disclosure/#{lang_code}")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.AccountConsumerDisclosures},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, AccountConsumerDisclosures},
+      {400, ErrorDetails}
     ])
   end
 
@@ -118,13 +117,13 @@ defmodule DocuSign.Api.AccountConsumerDisclosures do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.ConsumerDisclosure.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, ConsumerDisclosure.t()}
           | {:error, Tesla.Env.t()}
   def consumer_disclosure_put_consumer_disclosure(connection, account_id, lang_code, opts \\ []) do
     optional_params = %{
-      :include_metadata => :query,
-      :body => :body
+      :body => :body,
+      :include_metadata => :query
     }
 
     request =
@@ -133,13 +132,13 @@ defmodule DocuSign.Api.AccountConsumerDisclosures do
       |> url("/v2.1/accounts/#{account_id}/consumer_disclosure/#{lang_code}")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.ConsumerDisclosure},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, ConsumerDisclosure},
+      {400, ErrorDetails}
     ])
   end
 end

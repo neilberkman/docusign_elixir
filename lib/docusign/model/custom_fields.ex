@@ -6,6 +6,10 @@ defmodule DocuSign.Model.CustomFields do
   Contains information about custom fields.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.ListCustomField
+  alias DocuSign.Model.TextCustomField
+
   @derive Jason.Encoder
   defstruct [
     :listCustomFields,
@@ -13,15 +17,13 @@ defmodule DocuSign.Model.CustomFields do
   ]
 
   @type t :: %__MODULE__{
-          :listCustomFields => [DocuSign.Model.ListCustomField.t()] | nil,
-          :textCustomFields => [DocuSign.Model.TextCustomField.t()] | nil
+          :listCustomFields => [ListCustomField.t()] | nil,
+          :textCustomFields => [TextCustomField.t()] | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
-    |> Deserializer.deserialize(:listCustomFields, :list, DocuSign.Model.ListCustomField)
-    |> Deserializer.deserialize(:textCustomFields, :list, DocuSign.Model.TextCustomField)
+    |> Deserializer.deserialize(:listCustomFields, :list, ListCustomField)
+    |> Deserializer.deserialize(:textCustomFields, :list, TextCustomField)
   end
 end

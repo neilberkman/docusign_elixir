@@ -6,6 +6,9 @@ defmodule DocuSign.Model.BulkProcessResult do
 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.BulkSendBatchError
+
   @derive Jason.Encoder
   defstruct [
     :errors,
@@ -14,15 +17,13 @@ defmodule DocuSign.Model.BulkProcessResult do
   ]
 
   @type t :: %__MODULE__{
-          :errors => [DocuSign.Model.BulkSendBatchError.t()] | nil,
+          :errors => [BulkSendBatchError.t()] | nil,
           :listId => String.t() | nil,
           :success => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:errors, :list, DocuSign.Model.BulkSendBatchError)
+    |> Deserializer.deserialize(:errors, :list, BulkSendBatchError)
   end
 end

@@ -6,6 +6,9 @@ defmodule DocuSign.Model.BillingPlanUpdateResponse do
   Defines a billing plan update response object.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.BillingPlanPreview
+
   @derive Jason.Encoder
   defstruct [
     :accountPaymentMethod,
@@ -20,7 +23,7 @@ defmodule DocuSign.Model.BillingPlanUpdateResponse do
 
   @type t :: %__MODULE__{
           :accountPaymentMethod => String.t() | nil,
-          :billingPlanPreview => DocuSign.Model.BillingPlanPreview.t() | nil,
+          :billingPlanPreview => BillingPlanPreview.t() | nil,
           :currencyCode => String.t() | nil,
           :includedSeats => String.t() | nil,
           :paymentCycle => String.t() | nil,
@@ -29,10 +32,8 @@ defmodule DocuSign.Model.BillingPlanUpdateResponse do
           :planName => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:billingPlanPreview, :struct, DocuSign.Model.BillingPlanPreview)
+    |> Deserializer.deserialize(:billingPlanPreview, :struct, BillingPlanPreview)
   end
 end

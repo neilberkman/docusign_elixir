@@ -6,8 +6,11 @@ defmodule DocuSign.Api.ChunkedUploads do
   API calls for all endpoints tagged `ChunkedUploads`.
   """
 
-  alias DocuSign.Connection
   import DocuSign.RequestBuilder
+
+  alias DocuSign.Connection
+  alias DocuSign.Model.ChunkedUploadResponse
+  alias DocuSign.Model.ErrorDetails
 
   @doc """
   Deletes a chunked upload.
@@ -31,26 +34,21 @@ defmodule DocuSign.Api.ChunkedUploads do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.ChunkedUploadResponse.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, ChunkedUploadResponse.t()}
           | {:error, Tesla.Env.t()}
-  def chunked_uploads_delete_chunked_upload(
-        connection,
-        account_id,
-        chunked_upload_id,
-        _opts \\ []
-      ) do
+  def chunked_uploads_delete_chunked_upload(connection, account_id, chunked_upload_id, _opts \\ []) do
     request =
       %{}
       |> method(:delete)
       |> url("/v2.1/accounts/#{account_id}/chunked_uploads/#{chunked_upload_id}")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.ChunkedUploadResponse},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, ChunkedUploadResponse},
+      {400, ErrorDetails}
     ])
   end
 
@@ -72,8 +70,8 @@ defmodule DocuSign.Api.ChunkedUploads do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec chunked_uploads_get_chunked_upload(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.ChunkedUploadResponse.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, ChunkedUploadResponse.t()}
           | {:error, Tesla.Env.t()}
   def chunked_uploads_get_chunked_upload(connection, account_id, chunked_upload_id, opts \\ []) do
     optional_params = %{
@@ -85,13 +83,13 @@ defmodule DocuSign.Api.ChunkedUploads do
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/chunked_uploads/#{chunked_upload_id}")
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.ChunkedUploadResponse},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, ChunkedUploadResponse},
+      {400, ErrorDetails}
     ])
   end
 
@@ -112,8 +110,8 @@ defmodule DocuSign.Api.ChunkedUploads do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec chunked_uploads_post_chunked_uploads(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.ChunkedUploadResponse.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, ChunkedUploadResponse.t()}
           | {:error, Tesla.Env.t()}
   def chunked_uploads_post_chunked_uploads(connection, account_id, opts \\ []) do
     optional_params = %{
@@ -126,13 +124,13 @@ defmodule DocuSign.Api.ChunkedUploads do
       |> url("/v2.1/accounts/#{account_id}/chunked_uploads")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {201, DocuSign.Model.ChunkedUploadResponse},
-      {400, DocuSign.Model.ErrorDetails}
+      {201, ChunkedUploadResponse},
+      {400, ErrorDetails}
     ])
   end
 
@@ -161,8 +159,8 @@ defmodule DocuSign.Api.ChunkedUploads do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.ChunkedUploadResponse.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, ChunkedUploadResponse.t()}
           | {:error, Tesla.Env.t()}
   def chunked_uploads_put_chunked_upload_part(
         connection,
@@ -178,18 +176,16 @@ defmodule DocuSign.Api.ChunkedUploads do
     request =
       %{}
       |> method(:put)
-      |> url(
-        "/v2.1/accounts/#{account_id}/chunked_uploads/#{chunked_upload_id}/#{chunked_upload_part_seq}"
-      )
+      |> url("/v2.1/accounts/#{account_id}/chunked_uploads/#{chunked_upload_id}/#{chunked_upload_part_seq}")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.ChunkedUploadResponse},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, ChunkedUploadResponse},
+      {400, ErrorDetails}
     ])
   end
 
@@ -211,8 +207,8 @@ defmodule DocuSign.Api.ChunkedUploads do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec chunked_uploads_put_chunked_uploads(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.ChunkedUploadResponse.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, ChunkedUploadResponse.t()}
           | {:error, Tesla.Env.t()}
   def chunked_uploads_put_chunked_uploads(connection, account_id, chunked_upload_id, opts \\ []) do
     optional_params = %{
@@ -225,13 +221,13 @@ defmodule DocuSign.Api.ChunkedUploads do
       |> url("/v2.1/accounts/#{account_id}/chunked_uploads/#{chunked_upload_id}")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.ChunkedUploadResponse},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, ChunkedUploadResponse},
+      {400, ErrorDetails}
     ])
   end
 end

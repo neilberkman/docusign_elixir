@@ -6,8 +6,13 @@ defmodule DocuSign.Api.PowerForms do
   API calls for all endpoints tagged `PowerForms`.
   """
 
-  alias DocuSign.Connection
   import DocuSign.RequestBuilder
+
+  alias DocuSign.Connection
+  alias DocuSign.Model.ErrorDetails
+  alias DocuSign.Model.PowerForm
+  alias DocuSign.Model.PowerFormSendersResponse
+  alias DocuSign.Model.PowerFormsResponse
 
   @doc """
   Deletes a PowerForm.
@@ -26,19 +31,19 @@ defmodule DocuSign.Api.PowerForms do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec power_forms_delete_power_form(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, nil} | {:ok, DocuSign.Model.ErrorDetails.t()} | {:error, Tesla.Env.t()}
+          {:ok, nil} | {:ok, ErrorDetails.t()} | {:error, Tesla.Env.t()}
   def power_forms_delete_power_form(connection, account_id, power_form_id, _opts \\ []) do
     request =
       %{}
       |> method(:delete)
       |> url("/v2.1/accounts/#{account_id}/powerforms/#{power_form_id}")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
       {200, false},
-      {400, DocuSign.Model.ErrorDetails}
+      {400, ErrorDetails}
     ])
   end
 
@@ -59,8 +64,8 @@ defmodule DocuSign.Api.PowerForms do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec power_forms_delete_power_forms_list(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.PowerFormsResponse.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, PowerFormsResponse.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
   def power_forms_delete_power_forms_list(connection, account_id, opts \\ []) do
     optional_params = %{
@@ -72,13 +77,13 @@ defmodule DocuSign.Api.PowerForms do
       |> method(:delete)
       |> url("/v2.1/accounts/#{account_id}/powerforms")
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.PowerFormsResponse},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, PowerFormsResponse},
+      {400, ErrorDetails}
     ])
   end
 
@@ -99,21 +104,21 @@ defmodule DocuSign.Api.PowerForms do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec power_forms_get_power_form(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.PowerForm.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, PowerForm.t()}
           | {:error, Tesla.Env.t()}
   def power_forms_get_power_form(connection, account_id, power_form_id, _opts \\ []) do
     request =
       %{}
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/powerforms/#{power_form_id}")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.PowerForm},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, PowerForm},
+      {400, ErrorDetails}
     ])
   end
 
@@ -141,8 +146,8 @@ defmodule DocuSign.Api.PowerForms do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec power_forms_get_power_forms_list(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.PowerFormsResponse.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, PowerFormsResponse.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
   def power_forms_get_power_forms_list(connection, account_id, opts \\ []) do
     optional_params = %{
@@ -161,13 +166,13 @@ defmodule DocuSign.Api.PowerForms do
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/powerforms")
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.PowerFormsResponse},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, PowerFormsResponse},
+      {400, ErrorDetails}
     ])
   end
 
@@ -188,8 +193,8 @@ defmodule DocuSign.Api.PowerForms do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec power_forms_get_power_forms_senders(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.PowerFormSendersResponse.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, PowerFormSendersResponse.t()}
           | {:error, Tesla.Env.t()}
   def power_forms_get_power_forms_senders(connection, account_id, opts \\ []) do
     optional_params = %{
@@ -201,13 +206,13 @@ defmodule DocuSign.Api.PowerForms do
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/powerforms/senders")
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.PowerFormSendersResponse},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, PowerFormSendersResponse},
+      {400, ErrorDetails}
     ])
   end
 
@@ -228,8 +233,8 @@ defmodule DocuSign.Api.PowerForms do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec power_forms_post_power_form(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.PowerForm.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, PowerForm.t()}
           | {:error, Tesla.Env.t()}
   def power_forms_post_power_form(connection, account_id, opts \\ []) do
     optional_params = %{
@@ -242,13 +247,13 @@ defmodule DocuSign.Api.PowerForms do
       |> url("/v2.1/accounts/#{account_id}/powerforms")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {201, DocuSign.Model.PowerForm},
-      {400, DocuSign.Model.ErrorDetails}
+      {201, PowerForm},
+      {400, ErrorDetails}
     ])
   end
 
@@ -270,8 +275,8 @@ defmodule DocuSign.Api.PowerForms do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec power_forms_put_power_form(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.PowerForm.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, PowerForm.t()}
           | {:error, Tesla.Env.t()}
   def power_forms_put_power_form(connection, account_id, power_form_id, opts \\ []) do
     optional_params = %{
@@ -284,13 +289,13 @@ defmodule DocuSign.Api.PowerForms do
       |> url("/v2.1/accounts/#{account_id}/powerforms/#{power_form_id}")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.PowerForm},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, PowerForm},
+      {400, ErrorDetails}
     ])
   end
 end

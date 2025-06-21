@@ -6,6 +6,9 @@ defmodule DocuSign.Model.BillingPlanPreview do
   Information used to provide a preview of a billing plan.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.BillingInvoice
+
   @derive Jason.Encoder
   defstruct [
     :currencyCode,
@@ -18,17 +21,15 @@ defmodule DocuSign.Model.BillingPlanPreview do
 
   @type t :: %__MODULE__{
           :currencyCode => String.t() | nil,
-          :invoice => DocuSign.Model.BillingInvoice.t() | nil,
+          :invoice => BillingInvoice.t() | nil,
           :isProrated => String.t() | nil,
           :subtotalAmount => String.t() | nil,
           :taxAmount => String.t() | nil,
           :totalAmount => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:invoice, :struct, DocuSign.Model.BillingInvoice)
+    |> Deserializer.deserialize(:invoice, :struct, BillingInvoice)
   end
 end

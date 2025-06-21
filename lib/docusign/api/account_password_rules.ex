@@ -6,8 +6,12 @@ defmodule DocuSign.Api.AccountPasswordRules do
   API calls for all endpoints tagged `AccountPasswordRules`.
   """
 
-  alias DocuSign.Connection
   import DocuSign.RequestBuilder
+
+  alias DocuSign.Connection
+  alias DocuSign.Model.AccountPasswordRules
+  alias DocuSign.Model.ErrorDetails
+  alias DocuSign.Model.UserPasswordRules
 
   @doc """
   Gets the password rules for an account.
@@ -29,21 +33,21 @@ defmodule DocuSign.Api.AccountPasswordRules do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.AccountPasswordRules.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, AccountPasswordRules.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
   def account_password_rules_get_account_password_rules(connection, account_id, _opts \\ []) do
     request =
       %{}
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/settings/password_rules")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.AccountPasswordRules},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, AccountPasswordRules},
+      {400, ErrorDetails}
     ])
   end
 
@@ -68,8 +72,8 @@ defmodule DocuSign.Api.AccountPasswordRules do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.AccountPasswordRules.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, AccountPasswordRules.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
   def account_password_rules_put_account_password_rules(connection, account_id, opts \\ []) do
     optional_params = %{
@@ -82,13 +86,13 @@ defmodule DocuSign.Api.AccountPasswordRules do
       |> url("/v2.1/accounts/#{account_id}/settings/password_rules")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.AccountPasswordRules},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, AccountPasswordRules},
+      {400, ErrorDetails}
     ])
   end
 
@@ -106,21 +110,21 @@ defmodule DocuSign.Api.AccountPasswordRules do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec password_rules_get_password_rules(Tesla.Env.client(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.UserPasswordRules.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, UserPasswordRules.t()}
           | {:error, Tesla.Env.t()}
   def password_rules_get_password_rules(connection, _opts \\ []) do
     request =
       %{}
       |> method(:get)
       |> url("/v2.1/current_user/password_rules")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.UserPasswordRules},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, UserPasswordRules},
+      {400, ErrorDetails}
     ])
   end
 end

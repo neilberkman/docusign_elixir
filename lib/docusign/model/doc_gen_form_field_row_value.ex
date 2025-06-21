@@ -6,19 +6,20 @@ defmodule DocuSign.Model.DocGenFormFieldRowValue do
   An object representing a row of a dynamic table.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.DocGenFormField
+
   @derive Jason.Encoder
   defstruct [
     :docGenFormFieldList
   ]
 
   @type t :: %__MODULE__{
-          :docGenFormFieldList => [DocuSign.Model.DocGenFormField.t()] | nil
+          :docGenFormFieldList => [DocGenFormField.t()] | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
-    |> Deserializer.deserialize(:docGenFormFieldList, :list, DocuSign.Model.DocGenFormField)
+    |> Deserializer.deserialize(:docGenFormFieldList, :list, DocGenFormField)
   end
 end

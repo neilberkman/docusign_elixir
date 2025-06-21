@@ -6,6 +6,9 @@ defmodule DocuSign.Model.UserSignatureDefinition do
 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.DateStampProperties
+
   @derive Jason.Encoder
   defstruct [
     :dateStampProperties,
@@ -26,7 +29,7 @@ defmodule DocuSign.Model.UserSignatureDefinition do
   ]
 
   @type t :: %__MODULE__{
-          :dateStampProperties => DocuSign.Model.DateStampProperties.t() | nil,
+          :dateStampProperties => DateStampProperties.t() | nil,
           :disallowUserResizeStamp => String.t() | nil,
           :externalID => String.t() | nil,
           :imageType => String.t() | nil,
@@ -43,10 +46,8 @@ defmodule DocuSign.Model.UserSignatureDefinition do
           :stampSizeMM => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:dateStampProperties, :struct, DocuSign.Model.DateStampProperties)
+    |> Deserializer.deserialize(:dateStampProperties, :struct, DateStampProperties)
   end
 end

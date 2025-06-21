@@ -6,6 +6,9 @@ defmodule DocuSign.Model.RecipientIdentityInputOption do
 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.RecipientIdentityPhoneNumber
+
   @derive Jason.Encoder
   defstruct [
     :name,
@@ -16,19 +19,17 @@ defmodule DocuSign.Model.RecipientIdentityInputOption do
 
   @type t :: %__MODULE__{
           :name => String.t() | nil,
-          :phoneNumberList => [DocuSign.Model.RecipientIdentityPhoneNumber.t()] | nil,
+          :phoneNumberList => [RecipientIdentityPhoneNumber.t()] | nil,
           :stringValue => String.t() | nil,
           :valueType => String.t() | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
     |> Deserializer.deserialize(
       :phoneNumberList,
       :list,
-      DocuSign.Model.RecipientIdentityPhoneNumber
+      RecipientIdentityPhoneNumber
     )
   end
 end

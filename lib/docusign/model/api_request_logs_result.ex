@@ -6,19 +6,20 @@ defmodule DocuSign.Model.ApiRequestLogsResult do
   Contains information about multiple API request logs.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.ApiRequestLog
+
   @derive Jason.Encoder
   defstruct [
     :apiRequestLogs
   ]
 
   @type t :: %__MODULE__{
-          :apiRequestLogs => [DocuSign.Model.ApiRequestLog.t()] | nil
+          :apiRequestLogs => [ApiRequestLog.t()] | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
-    |> Deserializer.deserialize(:apiRequestLogs, :list, DocuSign.Model.ApiRequestLog)
+    |> Deserializer.deserialize(:apiRequestLogs, :list, ApiRequestLog)
   end
 end

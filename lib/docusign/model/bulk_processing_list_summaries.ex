@@ -6,23 +6,24 @@ defmodule DocuSign.Model.BulkProcessingListSummaries do
 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.BulkProcessingListSummary
+
   @derive Jason.Encoder
   defstruct [
     :bulkListSummaries
   ]
 
   @type t :: %__MODULE__{
-          :bulkListSummaries => [DocuSign.Model.BulkProcessingListSummary.t()] | nil
+          :bulkListSummaries => [BulkProcessingListSummary.t()] | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
     |> Deserializer.deserialize(
       :bulkListSummaries,
       :list,
-      DocuSign.Model.BulkProcessingListSummary
+      BulkProcessingListSummary
     )
   end
 end

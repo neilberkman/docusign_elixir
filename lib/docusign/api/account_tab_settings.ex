@@ -6,8 +6,11 @@ defmodule DocuSign.Api.AccountTabSettings do
   API calls for all endpoints tagged `AccountTabSettings`.
   """
 
-  alias DocuSign.Connection
   import DocuSign.RequestBuilder
+
+  alias DocuSign.Connection
+  alias DocuSign.Model.ErrorDetails
+  alias DocuSign.Model.TabAccountSettings
 
   @doc """
   Returns tab settings list for specified account
@@ -25,21 +28,21 @@ defmodule DocuSign.Api.AccountTabSettings do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec tab_settings_get_tab_settings(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.TabAccountSettings.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, TabAccountSettings.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
   def tab_settings_get_tab_settings(connection, account_id, _opts \\ []) do
     request =
       %{}
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/settings/tabs")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.TabAccountSettings},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, TabAccountSettings},
+      {400, ErrorDetails}
     ])
   end
 
@@ -60,8 +63,8 @@ defmodule DocuSign.Api.AccountTabSettings do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec tab_settings_put_settings(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.TabAccountSettings.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, TabAccountSettings.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
   def tab_settings_put_settings(connection, account_id, opts \\ []) do
     optional_params = %{
@@ -74,13 +77,13 @@ defmodule DocuSign.Api.AccountTabSettings do
       |> url("/v2.1/accounts/#{account_id}/settings/tabs")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.TabAccountSettings},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, TabAccountSettings},
+      {400, ErrorDetails}
     ])
   end
 end

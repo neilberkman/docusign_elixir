@@ -6,8 +6,14 @@ defmodule DocuSign.Api.EnvelopeRecipients do
   API calls for all endpoints tagged `EnvelopeRecipients`.
   """
 
-  alias DocuSign.Connection
   import DocuSign.RequestBuilder
+
+  alias DocuSign.Connection
+  alias DocuSign.Model.EnvelopeRecipients
+  alias DocuSign.Model.ErrorDetails
+  alias DocuSign.Model.IdEvidenceResourceToken
+  alias DocuSign.Model.RecipientsUpdateSummary
+  alias DocuSign.Model.ViewUrl
 
   @doc """
   Deletes a recipient from an envelope.
@@ -33,21 +39,21 @@ defmodule DocuSign.Api.EnvelopeRecipients do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.EnvelopeRecipients.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, EnvelopeRecipients.t()}
           | {:error, Tesla.Env.t()}
   def recipients_delete_recipient(connection, account_id, envelope_id, recipient_id, _opts \\ []) do
     request =
       %{}
       |> method(:delete)
       |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/recipients/#{recipient_id}")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.EnvelopeRecipients},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, EnvelopeRecipients},
+      {400, ErrorDetails}
     ])
   end
 
@@ -69,8 +75,8 @@ defmodule DocuSign.Api.EnvelopeRecipients do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec recipients_delete_recipients(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.EnvelopeRecipients.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, EnvelopeRecipients.t()}
           | {:error, Tesla.Env.t()}
   def recipients_delete_recipients(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
@@ -82,13 +88,13 @@ defmodule DocuSign.Api.EnvelopeRecipients do
       |> method(:delete)
       |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/recipients")
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.EnvelopeRecipients},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, EnvelopeRecipients},
+      {400, ErrorDetails}
     ])
   end
 
@@ -113,8 +119,8 @@ defmodule DocuSign.Api.EnvelopeRecipients do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec recipients_get_recipients(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.EnvelopeRecipients.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, EnvelopeRecipients.t()}
           | {:error, Tesla.Env.t()}
   def recipients_get_recipients(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
@@ -129,13 +135,13 @@ defmodule DocuSign.Api.EnvelopeRecipients do
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/recipients")
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.EnvelopeRecipients},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, EnvelopeRecipients},
+      {400, ErrorDetails}
     ])
   end
 
@@ -164,16 +170,10 @@ defmodule DocuSign.Api.EnvelopeRecipients do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.IdEvidenceResourceToken.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, IdEvidenceResourceToken.t()}
           | {:error, Tesla.Env.t()}
-  def recipients_post_recipient_proof_file_resource_token(
-        connection,
-        account_id,
-        envelope_id,
-        recipient_id,
-        opts \\ []
-      ) do
+  def recipients_post_recipient_proof_file_resource_token(connection, account_id, envelope_id, recipient_id, opts \\ []) do
     optional_params = %{
       :token_scopes => :query
     }
@@ -181,18 +181,16 @@ defmodule DocuSign.Api.EnvelopeRecipients do
     request =
       %{}
       |> method(:post)
-      |> url(
-        "/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/recipients/#{recipient_id}/identity_proof_token"
-      )
+      |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/recipients/#{recipient_id}/identity_proof_token")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {201, DocuSign.Model.IdEvidenceResourceToken},
-      {400, DocuSign.Model.ErrorDetails}
+      {201, IdEvidenceResourceToken},
+      {400, ErrorDetails}
     ])
   end
 
@@ -215,13 +213,13 @@ defmodule DocuSign.Api.EnvelopeRecipients do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec recipients_post_recipients(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.EnvelopeRecipients.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, EnvelopeRecipients.t()}
           | {:error, Tesla.Env.t()}
   def recipients_post_recipients(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
-      :resend_envelope => :query,
-      :body => :body
+      :body => :body,
+      :resend_envelope => :query
     }
 
     request =
@@ -230,13 +228,13 @@ defmodule DocuSign.Api.EnvelopeRecipients do
       |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/recipients")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {201, DocuSign.Model.EnvelopeRecipients},
-      {400, DocuSign.Model.ErrorDetails}
+      {201, EnvelopeRecipients},
+      {400, ErrorDetails}
     ])
   end
 
@@ -261,15 +259,15 @@ defmodule DocuSign.Api.EnvelopeRecipients do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec recipients_put_recipients(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.RecipientsUpdateSummary.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, RecipientsUpdateSummary.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
   def recipients_put_recipients(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
+      :body => :body,
       :combine_same_order_recipients => :query,
       :offline_signing => :query,
-      :resend_envelope => :query,
-      :body => :body
+      :resend_envelope => :query
     }
 
     request =
@@ -278,13 +276,13 @@ defmodule DocuSign.Api.EnvelopeRecipients do
       |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/recipients")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.RecipientsUpdateSummary},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, RecipientsUpdateSummary},
+      {400, ErrorDetails}
     ])
   end
 
@@ -311,8 +309,8 @@ defmodule DocuSign.Api.EnvelopeRecipients do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.ViewUrl.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, ViewUrl.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
   def views_post_envelope_recipient_preview(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
@@ -325,13 +323,13 @@ defmodule DocuSign.Api.EnvelopeRecipients do
       |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/views/recipient_preview")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {201, DocuSign.Model.ViewUrl},
-      {400, DocuSign.Model.ErrorDetails}
+      {201, ViewUrl},
+      {400, ErrorDetails}
     ])
   end
 
@@ -359,16 +357,10 @@ defmodule DocuSign.Api.EnvelopeRecipients do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.ViewUrl.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, ViewUrl.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
-  def views_post_recipient_manual_review_view(
-        connection,
-        account_id,
-        envelope_id,
-        recipient_id,
-        _opts \\ []
-      ) do
+  def views_post_recipient_manual_review_view(connection, account_id, envelope_id, recipient_id, _opts \\ []) do
     request =
       %{}
       |> method(:post)
@@ -376,13 +368,13 @@ defmodule DocuSign.Api.EnvelopeRecipients do
         "/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/recipients/#{recipient_id}/views/identity_manual_review"
       )
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {201, DocuSign.Model.ViewUrl},
-      {400, DocuSign.Model.ErrorDetails}
+      {201, ViewUrl},
+      {400, ErrorDetails}
     ])
   end
 end

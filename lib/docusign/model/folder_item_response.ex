@@ -6,6 +6,9 @@ defmodule DocuSign.Model.FolderItemResponse do
   Results from a folder item request.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.FolderItemV2
+
   @derive Jason.Encoder
   defstruct [
     :endPosition,
@@ -19,7 +22,7 @@ defmodule DocuSign.Model.FolderItemResponse do
 
   @type t :: %__MODULE__{
           :endPosition => String.t() | nil,
-          :folderItems => [DocuSign.Model.FolderItemV2.t()] | nil,
+          :folderItems => [FolderItemV2.t()] | nil,
           :nextUri => String.t() | nil,
           :previousUri => String.t() | nil,
           :resultSetSize => String.t() | nil,
@@ -27,10 +30,8 @@ defmodule DocuSign.Model.FolderItemResponse do
           :totalRows => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:folderItems, :list, DocuSign.Model.FolderItemV2)
+    |> Deserializer.deserialize(:folderItems, :list, FolderItemV2)
   end
 end

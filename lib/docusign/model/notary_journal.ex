@@ -6,6 +6,10 @@ defmodule DocuSign.Model.NotaryJournal do
 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.Jurisdiction
+  alias DocuSign.Model.NotaryJournalMetaData
+
   @derive Jason.Encoder
   defstruct [
     :createdDate,
@@ -19,21 +23,19 @@ defmodule DocuSign.Model.NotaryJournal do
   @type t :: %__MODULE__{
           :createdDate => String.t() | nil,
           :documentName => String.t() | nil,
-          :jurisdiction => DocuSign.Model.Jurisdiction.t() | nil,
+          :jurisdiction => Jurisdiction.t() | nil,
           :notaryJournalId => String.t() | nil,
-          :notaryJournalMetaData => DocuSign.Model.NotaryJournalMetaData.t() | nil,
+          :notaryJournalMetaData => NotaryJournalMetaData.t() | nil,
           :signerName => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:jurisdiction, :struct, DocuSign.Model.Jurisdiction)
+    |> Deserializer.deserialize(:jurisdiction, :struct, Jurisdiction)
     |> Deserializer.deserialize(
       :notaryJournalMetaData,
       :struct,
-      DocuSign.Model.NotaryJournalMetaData
+      NotaryJournalMetaData
     )
   end
 end

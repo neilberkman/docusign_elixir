@@ -6,6 +6,10 @@ defmodule DocuSign.Model.Notification do
   A complex element that specifies the notification settings for the envelope.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.Expirations
+  alias DocuSign.Model.Reminders
+
   @derive Jason.Encoder
   defstruct [
     :expirations,
@@ -14,16 +18,14 @@ defmodule DocuSign.Model.Notification do
   ]
 
   @type t :: %__MODULE__{
-          :expirations => DocuSign.Model.Expirations.t() | nil,
-          :reminders => DocuSign.Model.Reminders.t() | nil,
+          :expirations => Expirations.t() | nil,
+          :reminders => Reminders.t() | nil,
           :useAccountDefaults => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:expirations, :struct, DocuSign.Model.Expirations)
-    |> Deserializer.deserialize(:reminders, :struct, DocuSign.Model.Reminders)
+    |> Deserializer.deserialize(:expirations, :struct, Expirations)
+    |> Deserializer.deserialize(:reminders, :struct, Reminders)
   end
 end

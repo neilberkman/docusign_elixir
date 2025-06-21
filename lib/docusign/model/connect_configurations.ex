@@ -6,12 +6,16 @@ defmodule DocuSign.Model.ConnectConfigurations do
   Contains information about a Docusign Connect configuration.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.ConnectEventData
+  alias DocuSign.Model.ConnectSalesforceObject
+
   @derive Jason.Encoder
   defstruct [
-    :allowEnvelopePublish,
-    :allowSalesforcePublish,
     :allUsers,
     :allUsersExcept,
+    :allowEnvelopePublish,
+    :allowSalesforcePublish,
     :configurationType,
     :connectId,
     :deliveryMode,
@@ -23,8 +27,8 @@ defmodule DocuSign.Model.ConnectConfigurations do
     :externalFolderId,
     :externalFolderLabel,
     :groupIds,
-    :includeCertificateOfCompletion,
     :includeCertSoapHeader,
+    :includeCertificateOfCompletion,
     :includeDocumentFields,
     :includeDocuments,
     :includeEnvelopeVoidReason,
@@ -48,29 +52,29 @@ defmodule DocuSign.Model.ConnectConfigurations do
     :signMessageWithX509Certificate,
     :soapNamespace,
     :urlToPublishTo,
+    :useSoapInterface,
     :userIds,
-    :userName,
-    :useSoapInterface
+    :userName
   ]
 
   @type t :: %__MODULE__{
-          :allowEnvelopePublish => String.t() | nil,
-          :allowSalesforcePublish => String.t() | nil,
           :allUsers => String.t() | nil,
           :allUsersExcept => String.t() | nil,
+          :allowEnvelopePublish => String.t() | nil,
+          :allowSalesforcePublish => String.t() | nil,
           :configurationType => String.t() | nil,
           :connectId => String.t() | nil,
           :deliveryMode => String.t() | nil,
           :disabledBy => String.t() | nil,
           :enableLog => String.t() | nil,
           :envelopeEvents => [String.t()] | nil,
-          :eventData => DocuSign.Model.ConnectEventData.t() | nil,
+          :eventData => ConnectEventData.t() | nil,
           :events => [String.t()] | nil,
           :externalFolderId => String.t() | nil,
           :externalFolderLabel => String.t() | nil,
           :groupIds => [String.t()] | nil,
-          :includeCertificateOfCompletion => String.t() | nil,
           :includeCertSoapHeader => String.t() | nil,
+          :includeCertificateOfCompletion => String.t() | nil,
           :includeDocumentFields => String.t() | nil,
           :includeDocuments => String.t() | nil,
           :includeEnvelopeVoidReason => String.t() | nil,
@@ -90,20 +94,18 @@ defmodule DocuSign.Model.ConnectConfigurations do
           :salesforceDocumentsAsContentFiles => String.t() | nil,
           :senderOverride => String.t() | nil,
           :senderSelectableItems => [String.t()] | nil,
-          :sfObjects => [DocuSign.Model.ConnectSalesforceObject.t()] | nil,
+          :sfObjects => [ConnectSalesforceObject.t()] | nil,
           :signMessageWithX509Certificate => String.t() | nil,
           :soapNamespace => String.t() | nil,
           :urlToPublishTo => String.t() | nil,
+          :useSoapInterface => String.t() | nil,
           :userIds => [String.t()] | nil,
-          :userName => String.t() | nil,
-          :useSoapInterface => String.t() | nil
+          :userName => String.t() | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
-    |> Deserializer.deserialize(:eventData, :struct, DocuSign.Model.ConnectEventData)
-    |> Deserializer.deserialize(:sfObjects, :list, DocuSign.Model.ConnectSalesforceObject)
+    |> Deserializer.deserialize(:eventData, :struct, ConnectEventData)
+    |> Deserializer.deserialize(:sfObjects, :list, ConnectSalesforceObject)
   end
 end

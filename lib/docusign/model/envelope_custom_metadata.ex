@@ -6,19 +6,20 @@ defmodule DocuSign.Model.EnvelopeCustomMetadata do
 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.NameValue
+
   @derive Jason.Encoder
   defstruct [
     :envelopeCustomMetadataDetails
   ]
 
   @type t :: %__MODULE__{
-          :envelopeCustomMetadataDetails => [DocuSign.Model.NameValue.t()] | nil
+          :envelopeCustomMetadataDetails => [NameValue.t()] | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
-    |> Deserializer.deserialize(:envelopeCustomMetadataDetails, :list, DocuSign.Model.NameValue)
+    |> Deserializer.deserialize(:envelopeCustomMetadataDetails, :list, NameValue)
   end
 end

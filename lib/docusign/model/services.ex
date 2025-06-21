@@ -6,6 +6,9 @@ defmodule DocuSign.Model.Services do
   API service information
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.ServiceVersion
+
   @derive Jason.Encoder
   defstruct [
     :buildBranch,
@@ -22,13 +25,11 @@ defmodule DocuSign.Model.Services do
           :buildSHA => String.t() | nil,
           :buildVersion => String.t() | nil,
           :linkedSites => [String.t()] | nil,
-          :serviceVersions => [DocuSign.Model.ServiceVersion.t()] | nil
+          :serviceVersions => [ServiceVersion.t()] | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
-    |> Deserializer.deserialize(:serviceVersions, :list, DocuSign.Model.ServiceVersion)
+    |> Deserializer.deserialize(:serviceVersions, :list, ServiceVersion)
   end
 end

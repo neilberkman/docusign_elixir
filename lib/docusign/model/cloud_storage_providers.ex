@@ -6,19 +6,20 @@ defmodule DocuSign.Model.CloudStorageProviders do
   The CloudStorageProviders resource provides methods that allow you to manage the cloud storage providers associate with an account.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.CloudStorageProvider
+
   @derive Jason.Encoder
   defstruct [
     :storageProviders
   ]
 
   @type t :: %__MODULE__{
-          :storageProviders => [DocuSign.Model.CloudStorageProvider.t()] | nil
+          :storageProviders => [CloudStorageProvider.t()] | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
-    |> Deserializer.deserialize(:storageProviders, :list, DocuSign.Model.CloudStorageProvider)
+    |> Deserializer.deserialize(:storageProviders, :list, CloudStorageProvider)
   end
 end

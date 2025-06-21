@@ -6,6 +6,9 @@ defmodule DocuSign.Model.ConnectSalesforceObject do
   A `connectSalesforceObject` is an object that updates envelope and document status or recipient status in your Salesforce account.  When you install Docusign Connect for Salesforce, the service automatically sets up two Connect objects: one that updates envelope status and documents and one that updates recipient status. You can also customize Docusign Connect for Salesforce by associating Docusign objects with Salesforce objects so that Docusign Connect for Salesforce updates or inserts the information into the Salesforce object. For more information, see  [Docusign for Salesforce - Adding Completed Documents to the Notes and Attachments](https://support.docusign.com/s/articles/DocuSign-for-Salesforce-Adding-Completed-Documents-to-the-Notes-and-Attachments-New).
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.ConnectSalesforceField
+
   @derive Jason.Encoder
   defstruct [
     :active,
@@ -25,17 +28,15 @@ defmodule DocuSign.Model.ConnectSalesforceObject do
           :id => String.t() | nil,
           :insert => String.t() | nil,
           :onCompleteOnly => String.t() | nil,
-          :selectFields => [DocuSign.Model.ConnectSalesforceField.t()] | nil,
+          :selectFields => [ConnectSalesforceField.t()] | nil,
           :sfObject => String.t() | nil,
           :sfObjectName => String.t() | nil,
-          :updateFields => [DocuSign.Model.ConnectSalesforceField.t()] | nil
+          :updateFields => [ConnectSalesforceField.t()] | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
-    |> Deserializer.deserialize(:selectFields, :list, DocuSign.Model.ConnectSalesforceField)
-    |> Deserializer.deserialize(:updateFields, :list, DocuSign.Model.ConnectSalesforceField)
+    |> Deserializer.deserialize(:selectFields, :list, ConnectSalesforceField)
+    |> Deserializer.deserialize(:updateFields, :list, ConnectSalesforceField)
   end
 end

@@ -6,6 +6,10 @@ defmodule DocuSign.Model.DocGenFormFields do
   A collection of document generation fields.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.DocGenFormField
+  alias DocuSign.Model.DocGenSyntaxError
+
   @derive Jason.Encoder
   defstruct [
     :docGenDocumentStatus,
@@ -16,16 +20,14 @@ defmodule DocuSign.Model.DocGenFormFields do
 
   @type t :: %__MODULE__{
           :docGenDocumentStatus => String.t() | nil,
-          :docGenErrors => [DocuSign.Model.DocGenSyntaxError.t()] | nil,
-          :docGenFormFieldList => [DocuSign.Model.DocGenFormField.t()] | nil,
+          :docGenErrors => [DocGenSyntaxError.t()] | nil,
+          :docGenFormFieldList => [DocGenFormField.t()] | nil,
           :documentId => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:docGenErrors, :list, DocuSign.Model.DocGenSyntaxError)
-    |> Deserializer.deserialize(:docGenFormFieldList, :list, DocuSign.Model.DocGenFormField)
+    |> Deserializer.deserialize(:docGenErrors, :list, DocGenSyntaxError)
+    |> Deserializer.deserialize(:docGenFormFieldList, :list, DocGenFormField)
   end
 end

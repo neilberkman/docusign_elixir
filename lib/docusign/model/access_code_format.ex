@@ -6,6 +6,9 @@ defmodule DocuSign.Model.AccessCodeFormat do
   Object specifying the format of the string provided to a recipient in order to access an envelope.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.SettingsMetadata
+
   @derive Jason.Encoder
   defstruct [
     :formatRequired,
@@ -22,29 +25,27 @@ defmodule DocuSign.Model.AccessCodeFormat do
 
   @type t :: %__MODULE__{
           :formatRequired => String.t() | nil,
-          :formatRequiredMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :formatRequiredMetadata => SettingsMetadata.t() | nil,
           :letterRequired => String.t() | nil,
-          :letterRequiredMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :letterRequiredMetadata => SettingsMetadata.t() | nil,
           :minimumLength => String.t() | nil,
-          :minimumLengthMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :minimumLengthMetadata => SettingsMetadata.t() | nil,
           :numberRequired => String.t() | nil,
-          :numberRequiredMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :numberRequiredMetadata => SettingsMetadata.t() | nil,
           :specialCharacterRequired => String.t() | nil,
-          :specialCharacterRequiredMetadata => DocuSign.Model.SettingsMetadata.t() | nil
+          :specialCharacterRequiredMetadata => SettingsMetadata.t() | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
-    |> Deserializer.deserialize(:formatRequiredMetadata, :struct, DocuSign.Model.SettingsMetadata)
-    |> Deserializer.deserialize(:letterRequiredMetadata, :struct, DocuSign.Model.SettingsMetadata)
-    |> Deserializer.deserialize(:minimumLengthMetadata, :struct, DocuSign.Model.SettingsMetadata)
-    |> Deserializer.deserialize(:numberRequiredMetadata, :struct, DocuSign.Model.SettingsMetadata)
+    |> Deserializer.deserialize(:formatRequiredMetadata, :struct, SettingsMetadata)
+    |> Deserializer.deserialize(:letterRequiredMetadata, :struct, SettingsMetadata)
+    |> Deserializer.deserialize(:minimumLengthMetadata, :struct, SettingsMetadata)
+    |> Deserializer.deserialize(:numberRequiredMetadata, :struct, SettingsMetadata)
     |> Deserializer.deserialize(
       :specialCharacterRequiredMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
   end
 end

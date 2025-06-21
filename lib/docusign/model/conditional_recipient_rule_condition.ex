@@ -6,6 +6,9 @@ defmodule DocuSign.Model.ConditionalRecipientRuleCondition do
 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.ConditionalRecipientRuleFilter
+
   @derive Jason.Encoder
   defstruct [
     :filters,
@@ -14,15 +17,13 @@ defmodule DocuSign.Model.ConditionalRecipientRuleCondition do
   ]
 
   @type t :: %__MODULE__{
-          :filters => [DocuSign.Model.ConditionalRecipientRuleFilter.t()] | nil,
+          :filters => [ConditionalRecipientRuleFilter.t()] | nil,
           :order => String.t() | nil,
           :recipientLabel => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:filters, :list, DocuSign.Model.ConditionalRecipientRuleFilter)
+    |> Deserializer.deserialize(:filters, :list, ConditionalRecipientRuleFilter)
   end
 end

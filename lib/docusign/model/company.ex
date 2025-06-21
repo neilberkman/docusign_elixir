@@ -6,6 +6,13 @@ defmodule DocuSign.Model.Company do
   A tab that displays the recipient's company name. 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.ErrorDetails
+  alias DocuSign.Model.LocalePolicyTab
+  alias DocuSign.Model.MergeField
+  alias DocuSign.Model.PropertyMetadata
+  alias DocuSign.Model.SmartContractInformation
+
   @derive Jason.Encoder
   defstruct [
     :anchorAllowWhiteSpaceInCharacters,
@@ -98,8 +105,8 @@ defmodule DocuSign.Model.Company do
     :templateLockedMetadata,
     :templateRequired,
     :templateRequiredMetadata,
-    :tooltip,
     :toolTipMetadata,
+    :tooltip,
     :underline,
     :underlineMetadata,
     :value,
@@ -115,218 +122,216 @@ defmodule DocuSign.Model.Company do
 
   @type t :: %__MODULE__{
           :anchorAllowWhiteSpaceInCharacters => String.t() | nil,
-          :anchorAllowWhiteSpaceInCharactersMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :anchorAllowWhiteSpaceInCharactersMetadata => PropertyMetadata.t() | nil,
           :anchorCaseSensitive => String.t() | nil,
-          :anchorCaseSensitiveMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :anchorCaseSensitiveMetadata => PropertyMetadata.t() | nil,
           :anchorHorizontalAlignment => String.t() | nil,
-          :anchorHorizontalAlignmentMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :anchorHorizontalAlignmentMetadata => PropertyMetadata.t() | nil,
           :anchorIgnoreIfNotPresent => String.t() | nil,
-          :anchorIgnoreIfNotPresentMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :anchorIgnoreIfNotPresentMetadata => PropertyMetadata.t() | nil,
           :anchorMatchWholeWord => String.t() | nil,
-          :anchorMatchWholeWordMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :anchorMatchWholeWordMetadata => PropertyMetadata.t() | nil,
           :anchorString => String.t() | nil,
-          :anchorStringMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :anchorStringMetadata => PropertyMetadata.t() | nil,
           :anchorTabProcessorVersion => String.t() | nil,
-          :anchorTabProcessorVersionMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :anchorTabProcessorVersionMetadata => PropertyMetadata.t() | nil,
           :anchorUnits => String.t() | nil,
-          :anchorUnitsMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :anchorUnitsMetadata => PropertyMetadata.t() | nil,
           :anchorXOffset => String.t() | nil,
-          :anchorXOffsetMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :anchorXOffsetMetadata => PropertyMetadata.t() | nil,
           :anchorYOffset => String.t() | nil,
-          :anchorYOffsetMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :anchorYOffsetMetadata => PropertyMetadata.t() | nil,
           :bold => String.t() | nil,
-          :boldMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :boldMetadata => PropertyMetadata.t() | nil,
           :caption => String.t() | nil,
-          :captionMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :captionMetadata => PropertyMetadata.t() | nil,
           :concealValueOnDocument => String.t() | nil,
-          :concealValueOnDocumentMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :concealValueOnDocumentMetadata => PropertyMetadata.t() | nil,
           :conditionalParentLabel => String.t() | nil,
-          :conditionalParentLabelMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :conditionalParentLabelMetadata => PropertyMetadata.t() | nil,
           :conditionalParentValue => String.t() | nil,
-          :conditionalParentValueMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :conditionalParentValueMetadata => PropertyMetadata.t() | nil,
           :customTabId => String.t() | nil,
-          :customTabIdMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :customTabIdMetadata => PropertyMetadata.t() | nil,
           :disableAutoSize => String.t() | nil,
-          :disableAutoSizeMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :disableAutoSizeMetadata => PropertyMetadata.t() | nil,
           :documentId => String.t() | nil,
-          :documentIdMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
-          :errorDetails => DocuSign.Model.ErrorDetails.t() | nil,
+          :documentIdMetadata => PropertyMetadata.t() | nil,
+          :errorDetails => ErrorDetails.t() | nil,
           :font => String.t() | nil,
           :fontColor => String.t() | nil,
-          :fontColorMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
-          :fontMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :fontColorMetadata => PropertyMetadata.t() | nil,
+          :fontMetadata => PropertyMetadata.t() | nil,
           :fontSize => String.t() | nil,
-          :fontSizeMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :fontSizeMetadata => PropertyMetadata.t() | nil,
           :formOrder => String.t() | nil,
-          :formOrderMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :formOrderMetadata => PropertyMetadata.t() | nil,
           :formPageLabel => String.t() | nil,
-          :formPageLabelMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :formPageLabelMetadata => PropertyMetadata.t() | nil,
           :formPageNumber => String.t() | nil,
-          :formPageNumberMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :formPageNumberMetadata => PropertyMetadata.t() | nil,
           :height => String.t() | nil,
-          :heightMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :heightMetadata => PropertyMetadata.t() | nil,
           :italic => String.t() | nil,
-          :italicMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
-          :localePolicy => DocuSign.Model.LocalePolicyTab.t() | nil,
+          :italicMetadata => PropertyMetadata.t() | nil,
+          :localePolicy => LocalePolicyTab.t() | nil,
           :locked => String.t() | nil,
-          :lockedMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :lockedMetadata => PropertyMetadata.t() | nil,
           :maxLength => String.t() | nil,
-          :maxLengthMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
-          :mergeField => DocuSign.Model.MergeField.t() | nil,
+          :maxLengthMetadata => PropertyMetadata.t() | nil,
+          :mergeField => MergeField.t() | nil,
           :mergeFieldXml => String.t() | nil,
           :name => String.t() | nil,
-          :nameMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :nameMetadata => PropertyMetadata.t() | nil,
           :originalValue => String.t() | nil,
-          :originalValueMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :originalValueMetadata => PropertyMetadata.t() | nil,
           :pageNumber => String.t() | nil,
-          :pageNumberMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :pageNumberMetadata => PropertyMetadata.t() | nil,
           :recipientId => String.t() | nil,
           :recipientIdGuid => String.t() | nil,
-          :recipientIdGuidMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
-          :recipientIdMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :recipientIdGuidMetadata => PropertyMetadata.t() | nil,
+          :recipientIdMetadata => PropertyMetadata.t() | nil,
           :required => String.t() | nil,
-          :requiredMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
-          :smartContractInformation => DocuSign.Model.SmartContractInformation.t() | nil,
+          :requiredMetadata => PropertyMetadata.t() | nil,
+          :smartContractInformation => SmartContractInformation.t() | nil,
           :source => String.t() | nil,
           :status => String.t() | nil,
-          :statusMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :statusMetadata => PropertyMetadata.t() | nil,
           :tabGroupLabels => [String.t()] | nil,
-          :tabGroupLabelsMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :tabGroupLabelsMetadata => PropertyMetadata.t() | nil,
           :tabId => String.t() | nil,
-          :tabIdMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :tabIdMetadata => PropertyMetadata.t() | nil,
           :tabLabel => String.t() | nil,
-          :tabLabelMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :tabLabelMetadata => PropertyMetadata.t() | nil,
           :tabOrder => String.t() | nil,
-          :tabOrderMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :tabOrderMetadata => PropertyMetadata.t() | nil,
           :tabType => String.t() | nil,
-          :tabTypeMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :tabTypeMetadata => PropertyMetadata.t() | nil,
           :templateLocked => String.t() | nil,
-          :templateLockedMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :templateLockedMetadata => PropertyMetadata.t() | nil,
           :templateRequired => String.t() | nil,
-          :templateRequiredMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :templateRequiredMetadata => PropertyMetadata.t() | nil,
+          :toolTipMetadata => PropertyMetadata.t() | nil,
           :tooltip => String.t() | nil,
-          :toolTipMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
           :underline => String.t() | nil,
-          :underlineMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :underlineMetadata => PropertyMetadata.t() | nil,
           :value => String.t() | nil,
-          :valueMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
-          :warningDetails => DocuSign.Model.ErrorDetails.t() | nil,
+          :valueMetadata => PropertyMetadata.t() | nil,
+          :warningDetails => ErrorDetails.t() | nil,
           :width => String.t() | nil,
-          :widthMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :widthMetadata => PropertyMetadata.t() | nil,
           :xPosition => String.t() | nil,
-          :xPositionMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :xPositionMetadata => PropertyMetadata.t() | nil,
           :yPosition => String.t() | nil,
-          :yPositionMetadata => DocuSign.Model.PropertyMetadata.t() | nil
+          :yPositionMetadata => PropertyMetadata.t() | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
     |> Deserializer.deserialize(
       :anchorAllowWhiteSpaceInCharactersMetadata,
       :struct,
-      DocuSign.Model.PropertyMetadata
+      PropertyMetadata
     )
     |> Deserializer.deserialize(
       :anchorCaseSensitiveMetadata,
       :struct,
-      DocuSign.Model.PropertyMetadata
+      PropertyMetadata
     )
     |> Deserializer.deserialize(
       :anchorHorizontalAlignmentMetadata,
       :struct,
-      DocuSign.Model.PropertyMetadata
+      PropertyMetadata
     )
     |> Deserializer.deserialize(
       :anchorIgnoreIfNotPresentMetadata,
       :struct,
-      DocuSign.Model.PropertyMetadata
+      PropertyMetadata
     )
     |> Deserializer.deserialize(
       :anchorMatchWholeWordMetadata,
       :struct,
-      DocuSign.Model.PropertyMetadata
+      PropertyMetadata
     )
-    |> Deserializer.deserialize(:anchorStringMetadata, :struct, DocuSign.Model.PropertyMetadata)
+    |> Deserializer.deserialize(:anchorStringMetadata, :struct, PropertyMetadata)
     |> Deserializer.deserialize(
       :anchorTabProcessorVersionMetadata,
       :struct,
-      DocuSign.Model.PropertyMetadata
+      PropertyMetadata
     )
-    |> Deserializer.deserialize(:anchorUnitsMetadata, :struct, DocuSign.Model.PropertyMetadata)
-    |> Deserializer.deserialize(:anchorXOffsetMetadata, :struct, DocuSign.Model.PropertyMetadata)
-    |> Deserializer.deserialize(:anchorYOffsetMetadata, :struct, DocuSign.Model.PropertyMetadata)
-    |> Deserializer.deserialize(:boldMetadata, :struct, DocuSign.Model.PropertyMetadata)
-    |> Deserializer.deserialize(:captionMetadata, :struct, DocuSign.Model.PropertyMetadata)
+    |> Deserializer.deserialize(:anchorUnitsMetadata, :struct, PropertyMetadata)
+    |> Deserializer.deserialize(:anchorXOffsetMetadata, :struct, PropertyMetadata)
+    |> Deserializer.deserialize(:anchorYOffsetMetadata, :struct, PropertyMetadata)
+    |> Deserializer.deserialize(:boldMetadata, :struct, PropertyMetadata)
+    |> Deserializer.deserialize(:captionMetadata, :struct, PropertyMetadata)
     |> Deserializer.deserialize(
       :concealValueOnDocumentMetadata,
       :struct,
-      DocuSign.Model.PropertyMetadata
+      PropertyMetadata
     )
     |> Deserializer.deserialize(
       :conditionalParentLabelMetadata,
       :struct,
-      DocuSign.Model.PropertyMetadata
+      PropertyMetadata
     )
     |> Deserializer.deserialize(
       :conditionalParentValueMetadata,
       :struct,
-      DocuSign.Model.PropertyMetadata
+      PropertyMetadata
     )
-    |> Deserializer.deserialize(:customTabIdMetadata, :struct, DocuSign.Model.PropertyMetadata)
+    |> Deserializer.deserialize(:customTabIdMetadata, :struct, PropertyMetadata)
     |> Deserializer.deserialize(
       :disableAutoSizeMetadata,
       :struct,
-      DocuSign.Model.PropertyMetadata
+      PropertyMetadata
     )
-    |> Deserializer.deserialize(:documentIdMetadata, :struct, DocuSign.Model.PropertyMetadata)
-    |> Deserializer.deserialize(:errorDetails, :struct, DocuSign.Model.ErrorDetails)
-    |> Deserializer.deserialize(:fontColorMetadata, :struct, DocuSign.Model.PropertyMetadata)
-    |> Deserializer.deserialize(:fontMetadata, :struct, DocuSign.Model.PropertyMetadata)
-    |> Deserializer.deserialize(:fontSizeMetadata, :struct, DocuSign.Model.PropertyMetadata)
-    |> Deserializer.deserialize(:formOrderMetadata, :struct, DocuSign.Model.PropertyMetadata)
-    |> Deserializer.deserialize(:formPageLabelMetadata, :struct, DocuSign.Model.PropertyMetadata)
-    |> Deserializer.deserialize(:formPageNumberMetadata, :struct, DocuSign.Model.PropertyMetadata)
-    |> Deserializer.deserialize(:heightMetadata, :struct, DocuSign.Model.PropertyMetadata)
-    |> Deserializer.deserialize(:italicMetadata, :struct, DocuSign.Model.PropertyMetadata)
-    |> Deserializer.deserialize(:localePolicy, :struct, DocuSign.Model.LocalePolicyTab)
-    |> Deserializer.deserialize(:lockedMetadata, :struct, DocuSign.Model.PropertyMetadata)
-    |> Deserializer.deserialize(:maxLengthMetadata, :struct, DocuSign.Model.PropertyMetadata)
-    |> Deserializer.deserialize(:mergeField, :struct, DocuSign.Model.MergeField)
-    |> Deserializer.deserialize(:nameMetadata, :struct, DocuSign.Model.PropertyMetadata)
-    |> Deserializer.deserialize(:originalValueMetadata, :struct, DocuSign.Model.PropertyMetadata)
-    |> Deserializer.deserialize(:pageNumberMetadata, :struct, DocuSign.Model.PropertyMetadata)
+    |> Deserializer.deserialize(:documentIdMetadata, :struct, PropertyMetadata)
+    |> Deserializer.deserialize(:errorDetails, :struct, ErrorDetails)
+    |> Deserializer.deserialize(:fontColorMetadata, :struct, PropertyMetadata)
+    |> Deserializer.deserialize(:fontMetadata, :struct, PropertyMetadata)
+    |> Deserializer.deserialize(:fontSizeMetadata, :struct, PropertyMetadata)
+    |> Deserializer.deserialize(:formOrderMetadata, :struct, PropertyMetadata)
+    |> Deserializer.deserialize(:formPageLabelMetadata, :struct, PropertyMetadata)
+    |> Deserializer.deserialize(:formPageNumberMetadata, :struct, PropertyMetadata)
+    |> Deserializer.deserialize(:heightMetadata, :struct, PropertyMetadata)
+    |> Deserializer.deserialize(:italicMetadata, :struct, PropertyMetadata)
+    |> Deserializer.deserialize(:localePolicy, :struct, LocalePolicyTab)
+    |> Deserializer.deserialize(:lockedMetadata, :struct, PropertyMetadata)
+    |> Deserializer.deserialize(:maxLengthMetadata, :struct, PropertyMetadata)
+    |> Deserializer.deserialize(:mergeField, :struct, MergeField)
+    |> Deserializer.deserialize(:nameMetadata, :struct, PropertyMetadata)
+    |> Deserializer.deserialize(:originalValueMetadata, :struct, PropertyMetadata)
+    |> Deserializer.deserialize(:pageNumberMetadata, :struct, PropertyMetadata)
     |> Deserializer.deserialize(
       :recipientIdGuidMetadata,
       :struct,
-      DocuSign.Model.PropertyMetadata
+      PropertyMetadata
     )
-    |> Deserializer.deserialize(:recipientIdMetadata, :struct, DocuSign.Model.PropertyMetadata)
-    |> Deserializer.deserialize(:requiredMetadata, :struct, DocuSign.Model.PropertyMetadata)
+    |> Deserializer.deserialize(:recipientIdMetadata, :struct, PropertyMetadata)
+    |> Deserializer.deserialize(:requiredMetadata, :struct, PropertyMetadata)
     |> Deserializer.deserialize(
       :smartContractInformation,
       :struct,
-      DocuSign.Model.SmartContractInformation
+      SmartContractInformation
     )
-    |> Deserializer.deserialize(:statusMetadata, :struct, DocuSign.Model.PropertyMetadata)
-    |> Deserializer.deserialize(:tabGroupLabelsMetadata, :struct, DocuSign.Model.PropertyMetadata)
-    |> Deserializer.deserialize(:tabIdMetadata, :struct, DocuSign.Model.PropertyMetadata)
-    |> Deserializer.deserialize(:tabLabelMetadata, :struct, DocuSign.Model.PropertyMetadata)
-    |> Deserializer.deserialize(:tabOrderMetadata, :struct, DocuSign.Model.PropertyMetadata)
-    |> Deserializer.deserialize(:tabTypeMetadata, :struct, DocuSign.Model.PropertyMetadata)
-    |> Deserializer.deserialize(:templateLockedMetadata, :struct, DocuSign.Model.PropertyMetadata)
+    |> Deserializer.deserialize(:statusMetadata, :struct, PropertyMetadata)
+    |> Deserializer.deserialize(:tabGroupLabelsMetadata, :struct, PropertyMetadata)
+    |> Deserializer.deserialize(:tabIdMetadata, :struct, PropertyMetadata)
+    |> Deserializer.deserialize(:tabLabelMetadata, :struct, PropertyMetadata)
+    |> Deserializer.deserialize(:tabOrderMetadata, :struct, PropertyMetadata)
+    |> Deserializer.deserialize(:tabTypeMetadata, :struct, PropertyMetadata)
+    |> Deserializer.deserialize(:templateLockedMetadata, :struct, PropertyMetadata)
     |> Deserializer.deserialize(
       :templateRequiredMetadata,
       :struct,
-      DocuSign.Model.PropertyMetadata
+      PropertyMetadata
     )
-    |> Deserializer.deserialize(:toolTipMetadata, :struct, DocuSign.Model.PropertyMetadata)
-    |> Deserializer.deserialize(:underlineMetadata, :struct, DocuSign.Model.PropertyMetadata)
-    |> Deserializer.deserialize(:valueMetadata, :struct, DocuSign.Model.PropertyMetadata)
-    |> Deserializer.deserialize(:warningDetails, :struct, DocuSign.Model.ErrorDetails)
-    |> Deserializer.deserialize(:widthMetadata, :struct, DocuSign.Model.PropertyMetadata)
-    |> Deserializer.deserialize(:xPositionMetadata, :struct, DocuSign.Model.PropertyMetadata)
-    |> Deserializer.deserialize(:yPositionMetadata, :struct, DocuSign.Model.PropertyMetadata)
+    |> Deserializer.deserialize(:toolTipMetadata, :struct, PropertyMetadata)
+    |> Deserializer.deserialize(:underlineMetadata, :struct, PropertyMetadata)
+    |> Deserializer.deserialize(:valueMetadata, :struct, PropertyMetadata)
+    |> Deserializer.deserialize(:warningDetails, :struct, ErrorDetails)
+    |> Deserializer.deserialize(:widthMetadata, :struct, PropertyMetadata)
+    |> Deserializer.deserialize(:xPositionMetadata, :struct, PropertyMetadata)
+    |> Deserializer.deserialize(:yPositionMetadata, :struct, PropertyMetadata)
   end
 end

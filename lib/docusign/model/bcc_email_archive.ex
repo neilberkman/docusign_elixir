@@ -6,6 +6,9 @@ defmodule DocuSign.Model.BccEmailArchive do
   The `EmailArchive` resource provides methods for managing your email archive configuration, which consists of the BCC email address or addresses that you want to use to archive Docusign emails. Each account can use up to five BCC email addresses for archiving purposes. 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.BccEmailArchiveHistory
+
   @derive Jason.Encoder
   defstruct [
     :bccEmailArchiveHistory,
@@ -18,7 +21,7 @@ defmodule DocuSign.Model.BccEmailArchive do
   ]
 
   @type t :: %__MODULE__{
-          :bccEmailArchiveHistory => [DocuSign.Model.BccEmailArchiveHistory.t()] | nil,
+          :bccEmailArchiveHistory => [BccEmailArchiveHistory.t()] | nil,
           :endPosition => String.t() | nil,
           :nextUri => String.t() | nil,
           :previousUri => String.t() | nil,
@@ -27,14 +30,12 @@ defmodule DocuSign.Model.BccEmailArchive do
           :totalSetSize => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
     |> Deserializer.deserialize(
       :bccEmailArchiveHistory,
       :list,
-      DocuSign.Model.BccEmailArchiveHistory
+      BccEmailArchiveHistory
     )
   end
 end

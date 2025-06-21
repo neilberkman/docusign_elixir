@@ -7,7 +7,8 @@
       "Bash(mix deps.get:*)",
       "Bash(mix test)",
       "WebFetch(domain:hexdocs.pm)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(mix format)"
     ]
   },
   "enableAllProjectMcpServers": false

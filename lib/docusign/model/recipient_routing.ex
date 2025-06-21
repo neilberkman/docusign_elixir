@@ -6,19 +6,20 @@ defmodule DocuSign.Model.RecipientRouting do
   Describes the recipient routing rules.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.RecipientRules
+
   @derive Jason.Encoder
   defstruct [
     :rules
   ]
 
   @type t :: %__MODULE__{
-          :rules => DocuSign.Model.RecipientRules.t() | nil
+          :rules => RecipientRules.t() | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
-    |> Deserializer.deserialize(:rules, :struct, DocuSign.Model.RecipientRules)
+    |> Deserializer.deserialize(:rules, :struct, RecipientRules)
   end
 end

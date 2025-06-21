@@ -6,8 +6,11 @@ defmodule DocuSign.Api.Services do
   API calls for all endpoints tagged `Services`.
   """
 
-  alias DocuSign.Connection
   import DocuSign.RequestBuilder
+
+  alias DocuSign.Connection
+  alias DocuSign.Model.ErrorDetails
+  alias DocuSign.Model.ServiceInformation
 
   @doc """
   Retrieves the available REST API versions.
@@ -24,21 +27,21 @@ defmodule DocuSign.Api.Services do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec service_information_get_service_information(Tesla.Env.client(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.ServiceInformation.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, ServiceInformation.t()}
           | {:error, Tesla.Env.t()}
   def service_information_get_service_information(connection, _opts \\ []) do
     request =
       %{}
       |> method(:get)
       |> url("/service_information")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.ServiceInformation},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, ServiceInformation},
+      {400, ErrorDetails}
     ])
   end
 end

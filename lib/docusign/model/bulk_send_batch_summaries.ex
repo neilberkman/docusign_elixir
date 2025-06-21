@@ -6,6 +6,9 @@ defmodule DocuSign.Model.BulkSendBatchSummaries do
   A list of bulk send batch summaries. 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.BulkSendBatchSummary
+
   @derive Jason.Encoder
   defstruct [
     :batchSizeLimit,
@@ -24,7 +27,7 @@ defmodule DocuSign.Model.BulkSendBatchSummaries do
 
   @type t :: %__MODULE__{
           :batchSizeLimit => String.t() | nil,
-          :bulkBatchSummaries => [DocuSign.Model.BulkSendBatchSummary.t()] | nil,
+          :bulkBatchSummaries => [BulkSendBatchSummary.t()] | nil,
           :bulkProcessQueueLimit => String.t() | nil,
           :bulkProcessTotalQueued => String.t() | nil,
           :endPosition => String.t() | nil,
@@ -37,10 +40,8 @@ defmodule DocuSign.Model.BulkSendBatchSummaries do
           :totalSetSize => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:bulkBatchSummaries, :list, DocuSign.Model.BulkSendBatchSummary)
+    |> Deserializer.deserialize(:bulkBatchSummaries, :list, BulkSendBatchSummary)
   end
 end

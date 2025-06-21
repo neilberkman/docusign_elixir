@@ -6,6 +6,9 @@ defmodule DocuSign.Model.FeatureSet do
   This object provides details about a feature set, or add-on product that is associated with an account. It is reserved for Docusign internal use only.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.CurrencyFeatureSetPrice
+
   @derive Jason.Encoder
   defstruct [
     :currencyFeatureSetPrices,
@@ -20,7 +23,7 @@ defmodule DocuSign.Model.FeatureSet do
   ]
 
   @type t :: %__MODULE__{
-          :currencyFeatureSetPrices => [DocuSign.Model.CurrencyFeatureSetPrice.t()] | nil,
+          :currencyFeatureSetPrices => [CurrencyFeatureSetPrice.t()] | nil,
           :envelopeFee => String.t() | nil,
           :featureSetId => String.t() | nil,
           :fixedFee => String.t() | nil,
@@ -31,14 +34,12 @@ defmodule DocuSign.Model.FeatureSet do
           :seatFee => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
     |> Deserializer.deserialize(
       :currencyFeatureSetPrices,
       :list,
-      DocuSign.Model.CurrencyFeatureSetPrice
+      CurrencyFeatureSetPrice
     )
   end
 end

@@ -6,6 +6,11 @@ defmodule DocuSign.Model.DocGenFormField do
   The document fields available for document generation.  This object is used in reponses (GET) and requests (PUT). When used with [DocumentGeneration: updateEnvelopeDocGenFormFields](/docs/esign-rest-api/reference/envelopes/documentgeneration/updateenvelopedocgenformfields/) (PUT), the `name` and `value` / `rowValues` properties are required and any other values are ignored. 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.DocGenFormFieldOption
+  alias DocuSign.Model.DocGenFormFieldRowValue
+  alias DocuSign.Model.DocGenFormFieldValidation
+
   @derive Jason.Encoder
   defstruct [
     :description,
@@ -25,22 +30,20 @@ defmodule DocuSign.Model.DocGenFormField do
           :description => String.t() | nil,
           :label => String.t() | nil,
           :name => String.t() | nil,
-          :options => [DocuSign.Model.DocGenFormFieldOption.t()] | nil,
+          :options => [DocGenFormFieldOption.t()] | nil,
           :order => String.t() | nil,
           :predefinedValidation => String.t() | nil,
           :required => String.t() | nil,
-          :rowValues => [DocuSign.Model.DocGenFormFieldRowValue.t()] | nil,
+          :rowValues => [DocGenFormFieldRowValue.t()] | nil,
           :type => String.t() | nil,
-          :validation => DocuSign.Model.DocGenFormFieldValidation.t() | nil,
+          :validation => DocGenFormFieldValidation.t() | nil,
           :value => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:options, :list, DocuSign.Model.DocGenFormFieldOption)
-    |> Deserializer.deserialize(:rowValues, :list, DocuSign.Model.DocGenFormFieldRowValue)
-    |> Deserializer.deserialize(:validation, :struct, DocuSign.Model.DocGenFormFieldValidation)
+    |> Deserializer.deserialize(:options, :list, DocGenFormFieldOption)
+    |> Deserializer.deserialize(:rowValues, :list, DocGenFormFieldRowValue)
+    |> Deserializer.deserialize(:validation, :struct, DocGenFormFieldValidation)
   end
 end

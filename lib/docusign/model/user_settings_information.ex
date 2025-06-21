@@ -6,6 +6,14 @@ defmodule DocuSign.Model.UserSettingsInformation do
   Properties that configure the settings for a user. Some elements of this object have a `metadata` property, which includes the following: - `rights`: The calling users permissions to edit this setting (can be `editable` or `read_only`) - `uiHint`: Internally used to build UIs (can be `available` or `hidden`) - `options`: The values supported for this setting (not all settings have this element)
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.LocalePolicy
+  alias DocuSign.Model.SealIdentifier
+  alias DocuSign.Model.SenderEmailNotifications
+  alias DocuSign.Model.SettingsMetadata
+  alias DocuSign.Model.SignerEmailNotifications
+  alias DocuSign.Model.UserAccountManagementGranularInformation
+
   @derive Jason.Encoder
   defstruct [
     :accountAgreementsAccessType,
@@ -16,10 +24,6 @@ defmodule DocuSign.Model.UserSettingsInformation do
     :allowAccessToAllAccountAgreements,
     :allowAccessToAllAccountAgreementsMetadata,
     :allowAutoTagging,
-    :allowedDocumentTemplateLibraryAccess,
-    :allowedDocumentTemplateLibraryAccessMetadata,
-    :allowedOrchestrationAccess,
-    :allowedOrchestrationAccessMetadata,
     :allowEnvelopeTransferTo,
     :allowEnvelopeTransferToMetadata,
     :allowEsealRecipients,
@@ -34,6 +38,10 @@ defmodule DocuSign.Model.UserSettingsInformation do
     :allowSupplementalDocumentsMetadata,
     :allowTransactions,
     :allowTransactionsMetadata,
+    :allowedDocumentTemplateLibraryAccess,
+    :allowedDocumentTemplateLibraryAccessMetadata,
+    :allowedOrchestrationAccess,
+    :allowedOrchestrationAccessMetadata,
     :anchorTagVersionedPlacementEnabled,
     :apiAccountWideAccess,
     :apiAccountWideAccessMetadata,
@@ -87,10 +95,10 @@ defmodule DocuSign.Model.UserSettingsInformation do
     :enableSequentialSigningAPIMetadata,
     :enableSequentialSigningUI,
     :enableSequentialSigningUIMetadata,
-    :enableSignerAttachments,
-    :enableSignerAttachmentsMetadata,
     :enableSignOnPaperOverride,
     :enableSignOnPaperOverrideMetadata,
+    :enableSignerAttachments,
+    :enableSignerAttachmentsMetadata,
     :enableTransactionPoint,
     :enableTransactionPointMetadata,
     :enableVaulting,
@@ -161,466 +169,460 @@ defmodule DocuSign.Model.UserSettingsInformation do
 
   @type t :: %__MODULE__{
           :accountAgreementsAccessType => String.t() | nil,
-          :accountAgreementsAccessTypeMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
-          :accountManagementGranular =>
-            DocuSign.Model.UserAccountManagementGranularInformation.t() | nil,
+          :accountAgreementsAccessTypeMetadata => SettingsMetadata.t() | nil,
+          :accountManagementGranular => UserAccountManagementGranularInformation.t() | nil,
           :adminOnly => String.t() | nil,
-          :adminOnlyMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :adminOnlyMetadata => SettingsMetadata.t() | nil,
           :allowAccessToAllAccountAgreements => String.t() | nil,
-          :allowAccessToAllAccountAgreementsMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :allowAccessToAllAccountAgreementsMetadata => SettingsMetadata.t() | nil,
           :allowAutoTagging => String.t() | nil,
-          :allowedDocumentTemplateLibraryAccess => String.t() | nil,
-          :allowedDocumentTemplateLibraryAccessMetadata =>
-            DocuSign.Model.SettingsMetadata.t() | nil,
-          :allowedOrchestrationAccess => String.t() | nil,
-          :allowedOrchestrationAccessMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
           :allowEnvelopeTransferTo => String.t() | nil,
-          :allowEnvelopeTransferToMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :allowEnvelopeTransferToMetadata => SettingsMetadata.t() | nil,
           :allowEsealRecipients => String.t() | nil,
-          :allowEsealRecipientsMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :allowEsealRecipientsMetadata => SettingsMetadata.t() | nil,
           :allowPowerFormsAdminToAccessAllPowerFormEnvelope => String.t() | nil,
-          :allowPowerFormsAdminToAccessAllPowerFormEnvelopeMetadata =>
-            DocuSign.Model.SettingsMetadata.t() | nil,
+          :allowPowerFormsAdminToAccessAllPowerFormEnvelopeMetadata => SettingsMetadata.t() | nil,
           :allowRecipientLanguageSelection => String.t() | nil,
-          :allowRecipientLanguageSelectionMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :allowRecipientLanguageSelectionMetadata => SettingsMetadata.t() | nil,
           :allowSendOnBehalfOf => String.t() | nil,
-          :allowSendOnBehalfOfMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :allowSendOnBehalfOfMetadata => SettingsMetadata.t() | nil,
           :allowSupplementalDocuments => String.t() | nil,
-          :allowSupplementalDocumentsMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :allowSupplementalDocumentsMetadata => SettingsMetadata.t() | nil,
           :allowTransactions => String.t() | nil,
-          :allowTransactionsMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :allowTransactionsMetadata => SettingsMetadata.t() | nil,
+          :allowedDocumentTemplateLibraryAccess => String.t() | nil,
+          :allowedDocumentTemplateLibraryAccessMetadata => SettingsMetadata.t() | nil,
+          :allowedOrchestrationAccess => String.t() | nil,
+          :allowedOrchestrationAccessMetadata => SettingsMetadata.t() | nil,
           :anchorTagVersionedPlacementEnabled => String.t() | nil,
           :apiAccountWideAccess => String.t() | nil,
-          :apiAccountWideAccessMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :apiAccountWideAccessMetadata => SettingsMetadata.t() | nil,
           :apiCanExportAC => String.t() | nil,
-          :apiCanExportACMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :apiCanExportACMetadata => SettingsMetadata.t() | nil,
           :bulkSend => String.t() | nil,
-          :bulkSendMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :bulkSendMetadata => SettingsMetadata.t() | nil,
           :canBulkUploadAgreements => String.t() | nil,
-          :canBulkUploadAgreementsMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :canBulkUploadAgreementsMetadata => SettingsMetadata.t() | nil,
           :canChargeAccount => String.t() | nil,
-          :canChargeAccountMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :canChargeAccountMetadata => SettingsMetadata.t() | nil,
           :canCreateTransaction => String.t() | nil,
-          :canCreateTransactionMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :canCreateTransactionMetadata => SettingsMetadata.t() | nil,
           :canDeleteDocumentsInTransaction => String.t() | nil,
-          :canDeleteDocumentsInTransactionMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :canDeleteDocumentsInTransactionMetadata => SettingsMetadata.t() | nil,
           :canDeleteTransaction => String.t() | nil,
-          :canDeleteTransactionMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :canDeleteTransactionMetadata => SettingsMetadata.t() | nil,
           :canEditSharedAddressbook => String.t() | nil,
-          :canEditSharedAddressbookMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :canEditSharedAddressbookMetadata => SettingsMetadata.t() | nil,
           :canLockEnvelopes => String.t() | nil,
-          :canLockEnvelopesMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :canLockEnvelopesMetadata => SettingsMetadata.t() | nil,
           :canManageAccount => String.t() | nil,
-          :canManageAccountMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :canManageAccountMetadata => SettingsMetadata.t() | nil,
           :canManageAgreementParties => String.t() | nil,
-          :canManageAgreementPartiesMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :canManageAgreementPartiesMetadata => SettingsMetadata.t() | nil,
           :canManageDistributor => String.t() | nil,
-          :canManageDistributorMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :canManageDistributorMetadata => SettingsMetadata.t() | nil,
           :canManageTemplates => String.t() | nil,
-          :canManageTemplatesMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :canManageTemplatesMetadata => SettingsMetadata.t() | nil,
           :canSendAPIRequests => String.t() | nil,
-          :canSendAPIRequestsMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :canSendAPIRequestsMetadata => SettingsMetadata.t() | nil,
           :canSendEnvelope => String.t() | nil,
-          :canSendEnvelopeMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :canSendEnvelopeMetadata => SettingsMetadata.t() | nil,
           :canSendEnvelopesViaSMS => String.t() | nil,
-          :canSendEnvelopesViaSMSMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :canSendEnvelopesViaSMSMetadata => SettingsMetadata.t() | nil,
           :canSignEnvelope => String.t() | nil,
-          :canSignEnvelopeMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :canSignEnvelopeMetadata => SettingsMetadata.t() | nil,
           :canUseScratchpad => String.t() | nil,
-          :canUseScratchpadMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :canUseScratchpadMetadata => SettingsMetadata.t() | nil,
           :canUseSmartContracts => String.t() | nil,
-          :canUseSmartContractsMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :canUseSmartContractsMetadata => SettingsMetadata.t() | nil,
           :disableDocumentUpload => String.t() | nil,
-          :disableDocumentUploadMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :disableDocumentUploadMetadata => SettingsMetadata.t() | nil,
           :disableOtherActions => String.t() | nil,
-          :disableOtherActionsMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :disableOtherActionsMetadata => SettingsMetadata.t() | nil,
           :enableDSPro => String.t() | nil,
-          :enableDSProMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :enableDSProMetadata => SettingsMetadata.t() | nil,
           :enableKeyTermsSuggestionsByDocumentType => String.t() | nil,
-          :enableKeyTermsSuggestionsByDocumentTypeMetadata =>
-            DocuSign.Model.SettingsMetadata.t() | nil,
+          :enableKeyTermsSuggestionsByDocumentTypeMetadata => SettingsMetadata.t() | nil,
           :enableSequentialSigningAPI => String.t() | nil,
-          :enableSequentialSigningAPIMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :enableSequentialSigningAPIMetadata => SettingsMetadata.t() | nil,
           :enableSequentialSigningUI => String.t() | nil,
-          :enableSequentialSigningUIMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
-          :enableSignerAttachments => String.t() | nil,
-          :enableSignerAttachmentsMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :enableSequentialSigningUIMetadata => SettingsMetadata.t() | nil,
           :enableSignOnPaperOverride => String.t() | nil,
-          :enableSignOnPaperOverrideMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :enableSignOnPaperOverrideMetadata => SettingsMetadata.t() | nil,
+          :enableSignerAttachments => String.t() | nil,
+          :enableSignerAttachmentsMetadata => SettingsMetadata.t() | nil,
           :enableTransactionPoint => String.t() | nil,
-          :enableTransactionPointMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :enableTransactionPointMetadata => SettingsMetadata.t() | nil,
           :enableVaulting => String.t() | nil,
-          :enableVaultingMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :enableVaultingMetadata => SettingsMetadata.t() | nil,
           :expressSendOnly => String.t() | nil,
           :isManagedByScim => String.t() | nil,
-          :isManagedByScimMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :isManagedByScimMetadata => SettingsMetadata.t() | nil,
           :isMembershipManagedByScim => String.t() | nil,
-          :isMembershipManagedByScimMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :isMembershipManagedByScimMetadata => SettingsMetadata.t() | nil,
           :locale => String.t() | nil,
-          :localeMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
-          :localePolicy => DocuSign.Model.LocalePolicy.t() | nil,
+          :localeMetadata => SettingsMetadata.t() | nil,
+          :localePolicy => LocalePolicy.t() | nil,
           :manageClickwrapsMode => String.t() | nil,
-          :manageClickwrapsModeMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :manageClickwrapsModeMetadata => SettingsMetadata.t() | nil,
           :modifiedBy => String.t() | nil,
-          :modifiedByMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :modifiedByMetadata => SettingsMetadata.t() | nil,
           :modifiedDate => String.t() | nil,
-          :modifiedDateMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :modifiedDateMetadata => SettingsMetadata.t() | nil,
           :modifiedPage => String.t() | nil,
-          :modifiedPageMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :modifiedPageMetadata => SettingsMetadata.t() | nil,
           :newSendUI => String.t() | nil,
-          :newSendUIMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :newSendUIMetadata => SettingsMetadata.t() | nil,
           :powerFormMode => String.t() | nil,
-          :powerFormModeMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :powerFormModeMetadata => SettingsMetadata.t() | nil,
           :recipientViewedNotification => String.t() | nil,
-          :recipientViewedNotificationMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
-          :sealIdentifiers => [DocuSign.Model.SealIdentifier.t()] | nil,
+          :recipientViewedNotificationMetadata => SettingsMetadata.t() | nil,
+          :sealIdentifiers => [SealIdentifier.t()] | nil,
           :selfSignedRecipientEmailDocument => String.t() | nil,
-          :selfSignedRecipientEmailDocumentMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
-          :senderEmailNotifications => DocuSign.Model.SenderEmailNotifications.t() | nil,
-          :signerEmailNotifications => DocuSign.Model.SignerEmailNotifications.t() | nil,
+          :selfSignedRecipientEmailDocumentMetadata => SettingsMetadata.t() | nil,
+          :senderEmailNotifications => SenderEmailNotifications.t() | nil,
+          :signerEmailNotifications => SignerEmailNotifications.t() | nil,
           :supplementalDocumentIncludeInDownload => String.t() | nil,
           :supplementalDocumentsMustAccept => String.t() | nil,
-          :supplementalDocumentsMustAcceptMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :supplementalDocumentsMustAcceptMetadata => SettingsMetadata.t() | nil,
           :supplementalDocumentsMustRead => String.t() | nil,
-          :supplementalDocumentsMustReadMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :supplementalDocumentsMustReadMetadata => SettingsMetadata.t() | nil,
           :supplementalDocumentsMustView => String.t() | nil,
-          :supplementalDocumentsMustViewMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :supplementalDocumentsMustViewMetadata => SettingsMetadata.t() | nil,
           :templateActiveCreation => String.t() | nil,
-          :templateActiveCreationMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :templateActiveCreationMetadata => SettingsMetadata.t() | nil,
           :templateApplyNotify => String.t() | nil,
-          :templateApplyNotifyMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :templateApplyNotifyMetadata => SettingsMetadata.t() | nil,
           :templateAutoMatching => String.t() | nil,
-          :templateAutoMatchingMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :templateAutoMatchingMetadata => SettingsMetadata.t() | nil,
           :templateMatchingSensitivity => String.t() | nil,
-          :templateMatchingSensitivityMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :templateMatchingSensitivityMetadata => SettingsMetadata.t() | nil,
           :templatePageLevelMatching => String.t() | nil,
-          :templatePageLevelMatchingMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :templatePageLevelMatchingMetadata => SettingsMetadata.t() | nil,
           :timezoneDST => String.t() | nil,
-          :timezoneDSTMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :timezoneDSTMetadata => SettingsMetadata.t() | nil,
           :timezoneMask => String.t() | nil,
-          :timezoneMaskMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :timezoneMaskMetadata => SettingsMetadata.t() | nil,
           :timezoneOffset => String.t() | nil,
-          :timezoneOffsetMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :timezoneOffsetMetadata => SettingsMetadata.t() | nil,
           :timezoneSendingPref => String.t() | nil,
-          :timezoneSendingPrefMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :timezoneSendingPrefMetadata => SettingsMetadata.t() | nil,
           :timezoneSigningPref => String.t() | nil,
-          :timezoneSigningPrefMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :timezoneSigningPrefMetadata => SettingsMetadata.t() | nil,
           :transactionPointSiteNameURL => String.t() | nil,
-          :transactionPointSiteNameURLMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :transactionPointSiteNameURLMetadata => SettingsMetadata.t() | nil,
           :transactionPointUserName => String.t() | nil,
-          :transactionPointUserNameMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :transactionPointUserNameMetadata => SettingsMetadata.t() | nil,
           :vaultingMode => String.t() | nil,
-          :vaultingModeMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :vaultingModeMetadata => SettingsMetadata.t() | nil,
           :webForms => String.t() | nil,
-          :webFormsMetadata => DocuSign.Model.SettingsMetadata.t() | nil
+          :webFormsMetadata => SettingsMetadata.t() | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
     |> Deserializer.deserialize(
       :accountAgreementsAccessTypeMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
     |> Deserializer.deserialize(
       :accountManagementGranular,
       :struct,
-      DocuSign.Model.UserAccountManagementGranularInformation
+      UserAccountManagementGranularInformation
     )
-    |> Deserializer.deserialize(:adminOnlyMetadata, :struct, DocuSign.Model.SettingsMetadata)
+    |> Deserializer.deserialize(:adminOnlyMetadata, :struct, SettingsMetadata)
     |> Deserializer.deserialize(
       :allowAccessToAllAccountAgreementsMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
     |> Deserializer.deserialize(
       :allowedDocumentTemplateLibraryAccessMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
     |> Deserializer.deserialize(
       :allowedOrchestrationAccessMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
     |> Deserializer.deserialize(
       :allowEnvelopeTransferToMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
     |> Deserializer.deserialize(
       :allowEsealRecipientsMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
     |> Deserializer.deserialize(
       :allowPowerFormsAdminToAccessAllPowerFormEnvelopeMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
     |> Deserializer.deserialize(
       :allowRecipientLanguageSelectionMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
     |> Deserializer.deserialize(
       :allowSendOnBehalfOfMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
     |> Deserializer.deserialize(
       :allowSupplementalDocumentsMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
     |> Deserializer.deserialize(
       :allowTransactionsMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
     |> Deserializer.deserialize(
       :apiAccountWideAccessMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
-    |> Deserializer.deserialize(:apiCanExportACMetadata, :struct, DocuSign.Model.SettingsMetadata)
-    |> Deserializer.deserialize(:bulkSendMetadata, :struct, DocuSign.Model.SettingsMetadata)
+    |> Deserializer.deserialize(:apiCanExportACMetadata, :struct, SettingsMetadata)
+    |> Deserializer.deserialize(:bulkSendMetadata, :struct, SettingsMetadata)
     |> Deserializer.deserialize(
       :canBulkUploadAgreementsMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
     |> Deserializer.deserialize(
       :canChargeAccountMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
     |> Deserializer.deserialize(
       :canCreateTransactionMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
     |> Deserializer.deserialize(
       :canDeleteDocumentsInTransactionMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
     |> Deserializer.deserialize(
       :canDeleteTransactionMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
     |> Deserializer.deserialize(
       :canEditSharedAddressbookMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
     |> Deserializer.deserialize(
       :canLockEnvelopesMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
     |> Deserializer.deserialize(
       :canManageAccountMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
     |> Deserializer.deserialize(
       :canManageAgreementPartiesMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
     |> Deserializer.deserialize(
       :canManageDistributorMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
     |> Deserializer.deserialize(
       :canManageTemplatesMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
     |> Deserializer.deserialize(
       :canSendAPIRequestsMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
     |> Deserializer.deserialize(
       :canSendEnvelopeMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
     |> Deserializer.deserialize(
       :canSendEnvelopesViaSMSMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
     |> Deserializer.deserialize(
       :canSignEnvelopeMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
     |> Deserializer.deserialize(
       :canUseScratchpadMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
     |> Deserializer.deserialize(
       :canUseSmartContractsMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
     |> Deserializer.deserialize(
       :disableDocumentUploadMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
     |> Deserializer.deserialize(
       :disableOtherActionsMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
-    |> Deserializer.deserialize(:enableDSProMetadata, :struct, DocuSign.Model.SettingsMetadata)
+    |> Deserializer.deserialize(:enableDSProMetadata, :struct, SettingsMetadata)
     |> Deserializer.deserialize(
       :enableKeyTermsSuggestionsByDocumentTypeMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
     |> Deserializer.deserialize(
       :enableSequentialSigningAPIMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
     |> Deserializer.deserialize(
       :enableSequentialSigningUIMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
     |> Deserializer.deserialize(
       :enableSignerAttachmentsMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
     |> Deserializer.deserialize(
       :enableSignOnPaperOverrideMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
     |> Deserializer.deserialize(
       :enableTransactionPointMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
-    |> Deserializer.deserialize(:enableVaultingMetadata, :struct, DocuSign.Model.SettingsMetadata)
+    |> Deserializer.deserialize(:enableVaultingMetadata, :struct, SettingsMetadata)
     |> Deserializer.deserialize(
       :isManagedByScimMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
     |> Deserializer.deserialize(
       :isMembershipManagedByScimMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
-    |> Deserializer.deserialize(:localeMetadata, :struct, DocuSign.Model.SettingsMetadata)
-    |> Deserializer.deserialize(:localePolicy, :struct, DocuSign.Model.LocalePolicy)
+    |> Deserializer.deserialize(:localeMetadata, :struct, SettingsMetadata)
+    |> Deserializer.deserialize(:localePolicy, :struct, LocalePolicy)
     |> Deserializer.deserialize(
       :manageClickwrapsModeMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
-    |> Deserializer.deserialize(:modifiedByMetadata, :struct, DocuSign.Model.SettingsMetadata)
-    |> Deserializer.deserialize(:modifiedDateMetadata, :struct, DocuSign.Model.SettingsMetadata)
-    |> Deserializer.deserialize(:modifiedPageMetadata, :struct, DocuSign.Model.SettingsMetadata)
-    |> Deserializer.deserialize(:newSendUIMetadata, :struct, DocuSign.Model.SettingsMetadata)
-    |> Deserializer.deserialize(:powerFormModeMetadata, :struct, DocuSign.Model.SettingsMetadata)
+    |> Deserializer.deserialize(:modifiedByMetadata, :struct, SettingsMetadata)
+    |> Deserializer.deserialize(:modifiedDateMetadata, :struct, SettingsMetadata)
+    |> Deserializer.deserialize(:modifiedPageMetadata, :struct, SettingsMetadata)
+    |> Deserializer.deserialize(:newSendUIMetadata, :struct, SettingsMetadata)
+    |> Deserializer.deserialize(:powerFormModeMetadata, :struct, SettingsMetadata)
     |> Deserializer.deserialize(
       :recipientViewedNotificationMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
-    |> Deserializer.deserialize(:sealIdentifiers, :list, DocuSign.Model.SealIdentifier)
+    |> Deserializer.deserialize(:sealIdentifiers, :list, SealIdentifier)
     |> Deserializer.deserialize(
       :selfSignedRecipientEmailDocumentMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
     |> Deserializer.deserialize(
       :senderEmailNotifications,
       :struct,
-      DocuSign.Model.SenderEmailNotifications
+      SenderEmailNotifications
     )
     |> Deserializer.deserialize(
       :signerEmailNotifications,
       :struct,
-      DocuSign.Model.SignerEmailNotifications
+      SignerEmailNotifications
     )
     |> Deserializer.deserialize(
       :supplementalDocumentsMustAcceptMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
     |> Deserializer.deserialize(
       :supplementalDocumentsMustReadMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
     |> Deserializer.deserialize(
       :supplementalDocumentsMustViewMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
     |> Deserializer.deserialize(
       :templateActiveCreationMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
     |> Deserializer.deserialize(
       :templateApplyNotifyMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
     |> Deserializer.deserialize(
       :templateAutoMatchingMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
     |> Deserializer.deserialize(
       :templateMatchingSensitivityMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
     |> Deserializer.deserialize(
       :templatePageLevelMatchingMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
-    |> Deserializer.deserialize(:timezoneDSTMetadata, :struct, DocuSign.Model.SettingsMetadata)
-    |> Deserializer.deserialize(:timezoneMaskMetadata, :struct, DocuSign.Model.SettingsMetadata)
-    |> Deserializer.deserialize(:timezoneOffsetMetadata, :struct, DocuSign.Model.SettingsMetadata)
+    |> Deserializer.deserialize(:timezoneDSTMetadata, :struct, SettingsMetadata)
+    |> Deserializer.deserialize(:timezoneMaskMetadata, :struct, SettingsMetadata)
+    |> Deserializer.deserialize(:timezoneOffsetMetadata, :struct, SettingsMetadata)
     |> Deserializer.deserialize(
       :timezoneSendingPrefMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
     |> Deserializer.deserialize(
       :timezoneSigningPrefMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
     |> Deserializer.deserialize(
       :transactionPointSiteNameURLMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
     |> Deserializer.deserialize(
       :transactionPointUserNameMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
-    |> Deserializer.deserialize(:vaultingModeMetadata, :struct, DocuSign.Model.SettingsMetadata)
-    |> Deserializer.deserialize(:webFormsMetadata, :struct, DocuSign.Model.SettingsMetadata)
+    |> Deserializer.deserialize(:vaultingModeMetadata, :struct, SettingsMetadata)
+    |> Deserializer.deserialize(:webFormsMetadata, :struct, SettingsMetadata)
   end
 end

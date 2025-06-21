@@ -6,6 +6,9 @@ defmodule DocuSign.Model.BillingPaymentsResponse do
   Defines a billing payments response object.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.BillingPaymentItem
+
   @derive Jason.Encoder
   defstruct [
     :billingPayments,
@@ -14,15 +17,13 @@ defmodule DocuSign.Model.BillingPaymentsResponse do
   ]
 
   @type t :: %__MODULE__{
-          :billingPayments => [DocuSign.Model.BillingPaymentItem.t()] | nil,
+          :billingPayments => [BillingPaymentItem.t()] | nil,
           :nextUri => String.t() | nil,
           :previousUri => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:billingPayments, :list, DocuSign.Model.BillingPaymentItem)
+    |> Deserializer.deserialize(:billingPayments, :list, BillingPaymentItem)
   end
 end

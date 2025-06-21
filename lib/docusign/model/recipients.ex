@@ -6,6 +6,19 @@ defmodule DocuSign.Model.Recipients do
   Specifies the envelope recipients.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.CarbonCopy
+  alias DocuSign.Model.CertifiedDelivery
+  alias DocuSign.Model.Editor
+  alias DocuSign.Model.ErrorDetails
+  alias DocuSign.Model.InPersonSigner
+  alias DocuSign.Model.Intermediary
+  alias DocuSign.Model.NotaryRecipient
+  alias DocuSign.Model.Participant
+  alias DocuSign.Model.SealSign
+  alias DocuSign.Model.Signer
+  alias DocuSign.Model.Witness
+
   @derive Jason.Encoder
   defstruct [
     :agents,
@@ -26,36 +39,34 @@ defmodule DocuSign.Model.Recipients do
 
   @type t :: %__MODULE__{
           :agents => [DocuSign.Model.Agent.t()] | nil,
-          :carbonCopies => [DocuSign.Model.CarbonCopy.t()] | nil,
-          :certifiedDeliveries => [DocuSign.Model.CertifiedDelivery.t()] | nil,
+          :carbonCopies => [CarbonCopy.t()] | nil,
+          :certifiedDeliveries => [CertifiedDelivery.t()] | nil,
           :currentRoutingOrder => String.t() | nil,
-          :editors => [DocuSign.Model.Editor.t()] | nil,
-          :errorDetails => DocuSign.Model.ErrorDetails.t() | nil,
-          :inPersonSigners => [DocuSign.Model.InPersonSigner.t()] | nil,
-          :intermediaries => [DocuSign.Model.Intermediary.t()] | nil,
-          :notaries => [DocuSign.Model.NotaryRecipient.t()] | nil,
-          :participants => [DocuSign.Model.Participant.t()] | nil,
+          :editors => [Editor.t()] | nil,
+          :errorDetails => ErrorDetails.t() | nil,
+          :inPersonSigners => [InPersonSigner.t()] | nil,
+          :intermediaries => [Intermediary.t()] | nil,
+          :notaries => [NotaryRecipient.t()] | nil,
+          :participants => [Participant.t()] | nil,
           :recipientCount => String.t() | nil,
-          :seals => [DocuSign.Model.SealSign.t()] | nil,
-          :signers => [DocuSign.Model.Signer.t()] | nil,
-          :witnesses => [DocuSign.Model.Witness.t()] | nil
+          :seals => [SealSign.t()] | nil,
+          :signers => [Signer.t()] | nil,
+          :witnesses => [Witness.t()] | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
     |> Deserializer.deserialize(:agents, :list, DocuSign.Model.Agent)
-    |> Deserializer.deserialize(:carbonCopies, :list, DocuSign.Model.CarbonCopy)
-    |> Deserializer.deserialize(:certifiedDeliveries, :list, DocuSign.Model.CertifiedDelivery)
-    |> Deserializer.deserialize(:editors, :list, DocuSign.Model.Editor)
-    |> Deserializer.deserialize(:errorDetails, :struct, DocuSign.Model.ErrorDetails)
-    |> Deserializer.deserialize(:inPersonSigners, :list, DocuSign.Model.InPersonSigner)
-    |> Deserializer.deserialize(:intermediaries, :list, DocuSign.Model.Intermediary)
-    |> Deserializer.deserialize(:notaries, :list, DocuSign.Model.NotaryRecipient)
-    |> Deserializer.deserialize(:participants, :list, DocuSign.Model.Participant)
-    |> Deserializer.deserialize(:seals, :list, DocuSign.Model.SealSign)
-    |> Deserializer.deserialize(:signers, :list, DocuSign.Model.Signer)
-    |> Deserializer.deserialize(:witnesses, :list, DocuSign.Model.Witness)
+    |> Deserializer.deserialize(:carbonCopies, :list, CarbonCopy)
+    |> Deserializer.deserialize(:certifiedDeliveries, :list, CertifiedDelivery)
+    |> Deserializer.deserialize(:editors, :list, Editor)
+    |> Deserializer.deserialize(:errorDetails, :struct, ErrorDetails)
+    |> Deserializer.deserialize(:inPersonSigners, :list, InPersonSigner)
+    |> Deserializer.deserialize(:intermediaries, :list, Intermediary)
+    |> Deserializer.deserialize(:notaries, :list, NotaryRecipient)
+    |> Deserializer.deserialize(:participants, :list, Participant)
+    |> Deserializer.deserialize(:seals, :list, SealSign)
+    |> Deserializer.deserialize(:signers, :list, Signer)
+    |> Deserializer.deserialize(:witnesses, :list, Witness)
   end
 end

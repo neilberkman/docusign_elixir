@@ -6,6 +6,10 @@ defmodule DocuSign.Model.ConditionalRecipientRule do
   A rule that defines a set of recipients and the conditions under which they will be used for the envelope.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.ConditionalRecipientRuleCondition
+  alias DocuSign.Model.RecipientGroup
+
   @derive Jason.Encoder
   defstruct [
     :conditions,
@@ -15,21 +19,19 @@ defmodule DocuSign.Model.ConditionalRecipientRule do
   ]
 
   @type t :: %__MODULE__{
-          :conditions => [DocuSign.Model.ConditionalRecipientRuleCondition.t()] | nil,
+          :conditions => [ConditionalRecipientRuleCondition.t()] | nil,
           :order => String.t() | nil,
-          :recipientGroup => DocuSign.Model.RecipientGroup.t() | nil,
+          :recipientGroup => RecipientGroup.t() | nil,
           :recipientId => String.t() | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
     |> Deserializer.deserialize(
       :conditions,
       :list,
-      DocuSign.Model.ConditionalRecipientRuleCondition
+      ConditionalRecipientRuleCondition
     )
-    |> Deserializer.deserialize(:recipientGroup, :struct, DocuSign.Model.RecipientGroup)
+    |> Deserializer.deserialize(:recipientGroup, :struct, RecipientGroup)
   end
 end

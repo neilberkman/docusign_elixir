@@ -6,6 +6,9 @@ defmodule DocuSign.Model.PageImages do
 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.Page
+
   @derive Jason.Encoder
   defstruct [
     :endPosition,
@@ -20,17 +23,15 @@ defmodule DocuSign.Model.PageImages do
   @type t :: %__MODULE__{
           :endPosition => String.t() | nil,
           :nextUri => String.t() | nil,
-          :pages => [DocuSign.Model.Page.t()] | nil,
+          :pages => [Page.t()] | nil,
           :previousUri => String.t() | nil,
           :resultSetSize => String.t() | nil,
           :startPosition => String.t() | nil,
           :totalSetSize => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:pages, :list, DocuSign.Model.Page)
+    |> Deserializer.deserialize(:pages, :list, Page)
   end
 end

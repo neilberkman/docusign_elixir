@@ -6,6 +6,9 @@ defmodule DocuSign.Model.RecipientViewRequest do
   The request body for the [EnvelopeViews: createRecipient](/docs/esign-rest-api/reference/envelopes/envelopeviews/createrecipient/) and [EnvelopeViews: createSharedRecipient](/docs/esign-rest-api/reference/envelopes/envelopeviews/createsharedrecipient/) methods.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.RecipientTokenClientUrls
+
   @derive Jason.Encoder
   defstruct [
     :assertionId,
@@ -32,7 +35,7 @@ defmodule DocuSign.Model.RecipientViewRequest do
           :assertionId => String.t() | nil,
           :authenticationInstant => String.t() | nil,
           :authenticationMethod => String.t() | nil,
-          :clientURLs => DocuSign.Model.RecipientTokenClientUrls.t() | nil,
+          :clientURLs => RecipientTokenClientUrls.t() | nil,
           :clientUserId => String.t() | nil,
           :displayFormat => String.t() | nil,
           :email => String.t() | nil,
@@ -49,10 +52,8 @@ defmodule DocuSign.Model.RecipientViewRequest do
           :xFrameOptionsAllowFromUrl => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:clientURLs, :struct, DocuSign.Model.RecipientTokenClientUrls)
+    |> Deserializer.deserialize(:clientURLs, :struct, RecipientTokenClientUrls)
   end
 end

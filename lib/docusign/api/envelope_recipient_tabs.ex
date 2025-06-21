@@ -6,8 +6,11 @@ defmodule DocuSign.Api.EnvelopeRecipientTabs do
   API calls for all endpoints tagged `EnvelopeRecipientTabs`.
   """
 
-  alias DocuSign.Connection
   import DocuSign.RequestBuilder
+
+  alias DocuSign.Connection
+  alias DocuSign.Model.EnvelopeRecipientTabs
+  alias DocuSign.Model.ErrorDetails
 
   @doc """
   Deletes the tabs associated with a recipient.  **Note:** It is an error to delete a tab that has the `templateLocked` property set to true. This property corresponds to the **Restrict changes** option in the web app.  
@@ -34,16 +37,10 @@ defmodule DocuSign.Api.EnvelopeRecipientTabs do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.EnvelopeRecipientTabs.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, EnvelopeRecipientTabs.t()}
           | {:error, Tesla.Env.t()}
-  def recipients_delete_recipient_tabs(
-        connection,
-        account_id,
-        envelope_id,
-        recipient_id,
-        opts \\ []
-      ) do
+  def recipients_delete_recipient_tabs(connection, account_id, envelope_id, recipient_id, opts \\ []) do
     optional_params = %{
       :body => :body
     }
@@ -51,17 +48,15 @@ defmodule DocuSign.Api.EnvelopeRecipientTabs do
     request =
       %{}
       |> method(:delete)
-      |> url(
-        "/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/recipients/#{recipient_id}/tabs"
-      )
+      |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/recipients/#{recipient_id}/tabs")
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.EnvelopeRecipientTabs},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, EnvelopeRecipientTabs},
+      {400, ErrorDetails}
     ])
   end
 
@@ -91,8 +86,8 @@ defmodule DocuSign.Api.EnvelopeRecipientTabs do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.EnvelopeRecipientTabs.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, EnvelopeRecipientTabs.t()}
           | {:error, Tesla.Env.t()}
   def recipients_get_recipient_tabs(connection, account_id, envelope_id, recipient_id, opts \\ []) do
     optional_params = %{
@@ -103,17 +98,15 @@ defmodule DocuSign.Api.EnvelopeRecipientTabs do
     request =
       %{}
       |> method(:get)
-      |> url(
-        "/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/recipients/#{recipient_id}/tabs"
-      )
+      |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/recipients/#{recipient_id}/tabs")
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.EnvelopeRecipientTabs},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, EnvelopeRecipientTabs},
+      {400, ErrorDetails}
     ])
   end
 
@@ -142,16 +135,10 @@ defmodule DocuSign.Api.EnvelopeRecipientTabs do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.EnvelopeRecipientTabs.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, EnvelopeRecipientTabs.t()}
           | {:error, Tesla.Env.t()}
-  def recipients_post_recipient_tabs(
-        connection,
-        account_id,
-        envelope_id,
-        recipient_id,
-        opts \\ []
-      ) do
+  def recipients_post_recipient_tabs(connection, account_id, envelope_id, recipient_id, opts \\ []) do
     optional_params = %{
       :body => :body
     }
@@ -159,18 +146,16 @@ defmodule DocuSign.Api.EnvelopeRecipientTabs do
     request =
       %{}
       |> method(:post)
-      |> url(
-        "/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/recipients/#{recipient_id}/tabs"
-      )
+      |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/recipients/#{recipient_id}/tabs")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {201, DocuSign.Model.EnvelopeRecipientTabs},
-      {400, DocuSign.Model.ErrorDetails}
+      {201, EnvelopeRecipientTabs},
+      {400, ErrorDetails}
     ])
   end
 
@@ -199,8 +184,8 @@ defmodule DocuSign.Api.EnvelopeRecipientTabs do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.EnvelopeRecipientTabs.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, EnvelopeRecipientTabs.t()}
           | {:error, Tesla.Env.t()}
   def recipients_put_recipient_tabs(connection, account_id, envelope_id, recipient_id, opts \\ []) do
     optional_params = %{
@@ -210,18 +195,16 @@ defmodule DocuSign.Api.EnvelopeRecipientTabs do
     request =
       %{}
       |> method(:put)
-      |> url(
-        "/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/recipients/#{recipient_id}/tabs"
-      )
+      |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/recipients/#{recipient_id}/tabs")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.EnvelopeRecipientTabs},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, EnvelopeRecipientTabs},
+      {400, ErrorDetails}
     ])
   end
 end

@@ -6,8 +6,11 @@ defmodule DocuSign.Api.ResponsiveHtmlPreview do
   API calls for all endpoints tagged `ResponsiveHtmlPreview`.
   """
 
-  alias DocuSign.Connection
   import DocuSign.RequestBuilder
+
+  alias DocuSign.Connection
+  alias DocuSign.Model.DocumentHtmlDefinitions
+  alias DocuSign.Model.ErrorDetails
 
   @doc """
   Creates a preview of the responsive versions of all of the documents in an envelope.
@@ -32,15 +35,10 @@ defmodule DocuSign.Api.ResponsiveHtmlPreview do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.DocumentHtmlDefinitions.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, DocumentHtmlDefinitions.t()}
           | {:error, Tesla.Env.t()}
-  def responsive_html_post_responsive_html_preview(
-        connection,
-        account_id,
-        envelope_id,
-        opts \\ []
-      ) do
+  def responsive_html_post_responsive_html_preview(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
       :body => :body
     }
@@ -51,13 +49,13 @@ defmodule DocuSign.Api.ResponsiveHtmlPreview do
       |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/responsive_html_preview")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {201, DocuSign.Model.DocumentHtmlDefinitions},
-      {400, DocuSign.Model.ErrorDetails}
+      {201, DocumentHtmlDefinitions},
+      {400, ErrorDetails}
     ])
   end
 end

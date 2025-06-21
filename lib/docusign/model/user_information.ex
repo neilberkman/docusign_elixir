@@ -6,6 +6,15 @@ defmodule DocuSign.Model.UserInformation do
   User information.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.AddressInformation
+  alias DocuSign.Model.ConnectUserObject
+  alias DocuSign.Model.ErrorDetails
+  alias DocuSign.Model.ForgottenPasswordInformation
+  alias DocuSign.Model.Group
+  alias DocuSign.Model.NameValue
+  alias DocuSign.Model.UserSettingsInformation
+
   @derive Jason.Encoder
   defstruct [
     :activationAccessCode,
@@ -59,19 +68,19 @@ defmodule DocuSign.Model.UserInformation do
   @type t :: %__MODULE__{
           :activationAccessCode => String.t() | nil,
           :company => String.t() | nil,
-          :connectConfigurations => [DocuSign.Model.ConnectUserObject.t()] | nil,
+          :connectConfigurations => [ConnectUserObject.t()] | nil,
           :countryCode => String.t() | nil,
           :createdDateTime => String.t() | nil,
-          :customSettings => [DocuSign.Model.NameValue.t()] | nil,
+          :customSettings => [NameValue.t()] | nil,
           :defaultAccountId => String.t() | nil,
           :email => String.t() | nil,
           :enableConnectForUser => String.t() | nil,
-          :errorDetails => DocuSign.Model.ErrorDetails.t() | nil,
+          :errorDetails => ErrorDetails.t() | nil,
           :firstName => String.t() | nil,
-          :forgottenPasswordInfo => DocuSign.Model.ForgottenPasswordInformation.t() | nil,
-          :groupList => [DocuSign.Model.Group.t()] | nil,
+          :forgottenPasswordInfo => ForgottenPasswordInformation.t() | nil,
+          :groupList => [Group.t()] | nil,
           :hasRemoteNotary => boolean() | nil,
-          :homeAddress => DocuSign.Model.AddressInformation.t() | nil,
+          :homeAddress => AddressInformation.t() | nil,
           :initialsImageUri => String.t() | nil,
           :isAdmin => String.t() | nil,
           :isAlternateAdmin => String.t() | nil,
@@ -99,27 +108,25 @@ defmodule DocuSign.Model.UserInformation do
           :userId => String.t() | nil,
           :userName => String.t() | nil,
           :userProfileLastModifiedDate => String.t() | nil,
-          :userSettings => DocuSign.Model.UserSettingsInformation.t() | nil,
+          :userSettings => UserSettingsInformation.t() | nil,
           :userStatus => String.t() | nil,
           :userType => String.t() | nil,
-          :workAddress => DocuSign.Model.AddressInformation.t() | nil
+          :workAddress => AddressInformation.t() | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
-    |> Deserializer.deserialize(:connectConfigurations, :list, DocuSign.Model.ConnectUserObject)
-    |> Deserializer.deserialize(:customSettings, :list, DocuSign.Model.NameValue)
-    |> Deserializer.deserialize(:errorDetails, :struct, DocuSign.Model.ErrorDetails)
+    |> Deserializer.deserialize(:connectConfigurations, :list, ConnectUserObject)
+    |> Deserializer.deserialize(:customSettings, :list, NameValue)
+    |> Deserializer.deserialize(:errorDetails, :struct, ErrorDetails)
     |> Deserializer.deserialize(
       :forgottenPasswordInfo,
       :struct,
-      DocuSign.Model.ForgottenPasswordInformation
+      ForgottenPasswordInformation
     )
-    |> Deserializer.deserialize(:groupList, :list, DocuSign.Model.Group)
-    |> Deserializer.deserialize(:homeAddress, :struct, DocuSign.Model.AddressInformation)
-    |> Deserializer.deserialize(:userSettings, :struct, DocuSign.Model.UserSettingsInformation)
-    |> Deserializer.deserialize(:workAddress, :struct, DocuSign.Model.AddressInformation)
+    |> Deserializer.deserialize(:groupList, :list, Group)
+    |> Deserializer.deserialize(:homeAddress, :struct, AddressInformation)
+    |> Deserializer.deserialize(:userSettings, :struct, UserSettingsInformation)
+    |> Deserializer.deserialize(:workAddress, :struct, AddressInformation)
   end
 end

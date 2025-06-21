@@ -6,19 +6,20 @@ defmodule DocuSign.Model.WorkspaceItemList do
   An array of objects that describe the items in a workspace.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.WorkspaceItem
+
   @derive Jason.Encoder
   defstruct [
     :items
   ]
 
   @type t :: %__MODULE__{
-          :items => [DocuSign.Model.WorkspaceItem.t()] | nil
+          :items => [WorkspaceItem.t()] | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
-    |> Deserializer.deserialize(:items, :list, DocuSign.Model.WorkspaceItem)
+    |> Deserializer.deserialize(:items, :list, WorkspaceItem)
   end
 end

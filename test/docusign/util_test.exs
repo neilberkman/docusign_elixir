@@ -1,5 +1,6 @@
 defmodule DocuSign.UtilTest do
   use ExUnit.Case
+
   import DocuSign.Util
 
   test ~c"map_keys_to_atoms" do

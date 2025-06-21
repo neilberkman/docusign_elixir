@@ -6,8 +6,13 @@ defmodule DocuSign.Api.TemplateRecipients do
   API calls for all endpoints tagged `TemplateRecipients`.
   """
 
-  alias DocuSign.Connection
   import DocuSign.RequestBuilder
+
+  alias DocuSign.Connection
+  alias DocuSign.Model.ErrorDetails
+  alias DocuSign.Model.Recipients
+  alias DocuSign.Model.RecipientsUpdateSummary
+  alias DocuSign.Model.ViewUrl
 
   @doc """
   Deletes the specified recipient file from a template.
@@ -34,16 +39,10 @@ defmodule DocuSign.Api.TemplateRecipients do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.Recipients.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, Recipients.t()}
           | {:error, Tesla.Env.t()}
-  def recipients_delete_template_recipient(
-        connection,
-        account_id,
-        recipient_id,
-        template_id,
-        opts \\ []
-      ) do
+  def recipients_delete_template_recipient(connection, account_id, recipient_id, template_id, opts \\ []) do
     optional_params = %{
       :body => :body
     }
@@ -53,13 +52,13 @@ defmodule DocuSign.Api.TemplateRecipients do
       |> method(:delete)
       |> url("/v2.1/accounts/#{account_id}/templates/#{template_id}/recipients/#{recipient_id}")
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.Recipients},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, Recipients},
+      {400, ErrorDetails}
     ])
   end
 
@@ -86,8 +85,8 @@ defmodule DocuSign.Api.TemplateRecipients do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.Recipients.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, Recipients.t()}
           | {:error, Tesla.Env.t()}
   def recipients_delete_template_recipients(connection, account_id, template_id, opts \\ []) do
     optional_params = %{
@@ -99,13 +98,13 @@ defmodule DocuSign.Api.TemplateRecipients do
       |> method(:delete)
       |> url("/v2.1/accounts/#{account_id}/templates/#{template_id}/recipients")
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.Recipients},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, Recipients},
+      {400, ErrorDetails}
     ])
   end
 
@@ -129,8 +128,8 @@ defmodule DocuSign.Api.TemplateRecipients do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec recipients_get_template_recipients(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.Recipients.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, Recipients.t()}
           | {:error, Tesla.Env.t()}
   def recipients_get_template_recipients(connection, account_id, template_id, opts \\ []) do
     optional_params = %{
@@ -144,13 +143,13 @@ defmodule DocuSign.Api.TemplateRecipients do
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/templates/#{template_id}/recipients")
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.Recipients},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, Recipients},
+      {400, ErrorDetails}
     ])
   end
 
@@ -173,13 +172,13 @@ defmodule DocuSign.Api.TemplateRecipients do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec recipients_post_template_recipients(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.Recipients.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, Recipients.t()}
           | {:error, Tesla.Env.t()}
   def recipients_post_template_recipients(connection, account_id, template_id, opts \\ []) do
     optional_params = %{
-      :resend_envelope => :query,
-      :body => :body
+      :body => :body,
+      :resend_envelope => :query
     }
 
     request =
@@ -188,13 +187,13 @@ defmodule DocuSign.Api.TemplateRecipients do
       |> url("/v2.1/accounts/#{account_id}/templates/#{template_id}/recipients")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {201, DocuSign.Model.Recipients},
-      {400, DocuSign.Model.ErrorDetails}
+      {201, Recipients},
+      {400, ErrorDetails}
     ])
   end
 
@@ -217,13 +216,13 @@ defmodule DocuSign.Api.TemplateRecipients do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec recipients_put_template_recipients(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.RecipientsUpdateSummary.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, RecipientsUpdateSummary.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
   def recipients_put_template_recipients(connection, account_id, template_id, opts \\ []) do
     optional_params = %{
-      :resend_envelope => :query,
-      :body => :body
+      :body => :body,
+      :resend_envelope => :query
     }
 
     request =
@@ -232,13 +231,13 @@ defmodule DocuSign.Api.TemplateRecipients do
       |> url("/v2.1/accounts/#{account_id}/templates/#{template_id}/recipients")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.RecipientsUpdateSummary},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, RecipientsUpdateSummary},
+      {400, ErrorDetails}
     ])
   end
 
@@ -265,8 +264,8 @@ defmodule DocuSign.Api.TemplateRecipients do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.ViewUrl.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, ViewUrl.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
   def views_post_template_recipient_preview(connection, account_id, template_id, opts \\ []) do
     optional_params = %{
@@ -279,13 +278,13 @@ defmodule DocuSign.Api.TemplateRecipients do
       |> url("/v2.1/accounts/#{account_id}/templates/#{template_id}/views/recipient_preview")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {201, DocuSign.Model.ViewUrl},
-      {400, DocuSign.Model.ErrorDetails}
+      {201, ViewUrl},
+      {400, ErrorDetails}
     ])
   end
 end

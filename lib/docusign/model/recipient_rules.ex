@@ -6,23 +6,24 @@ defmodule DocuSign.Model.RecipientRules do
 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.ConditionalRecipientRule
+
   @derive Jason.Encoder
   defstruct [
     :conditionalRecipients
   ]
 
   @type t :: %__MODULE__{
-          :conditionalRecipients => [DocuSign.Model.ConditionalRecipientRule.t()] | nil
+          :conditionalRecipients => [ConditionalRecipientRule.t()] | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
     |> Deserializer.deserialize(
       :conditionalRecipients,
       :list,
-      DocuSign.Model.ConditionalRecipientRule
+      ConditionalRecipientRule
     )
   end
 end

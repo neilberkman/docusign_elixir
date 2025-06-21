@@ -6,6 +6,9 @@ defmodule DocuSign.Model.IdCheckConfiguration do
   A complex object specifying ID check configuration.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.IdCheckSecurityStep
+
   @derive Jason.Encoder
   defstruct [
     :authSteps,
@@ -14,15 +17,13 @@ defmodule DocuSign.Model.IdCheckConfiguration do
   ]
 
   @type t :: %__MODULE__{
-          :authSteps => [DocuSign.Model.IdCheckSecurityStep.t()] | nil,
+          :authSteps => [IdCheckSecurityStep.t()] | nil,
           :isDefault => String.t() | nil,
           :name => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:authSteps, :list, DocuSign.Model.IdCheckSecurityStep)
+    |> Deserializer.deserialize(:authSteps, :list, IdCheckSecurityStep)
   end
 end

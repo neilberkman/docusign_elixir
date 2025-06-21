@@ -6,6 +6,13 @@ defmodule DocuSign.Model.MemberSharedItems do
   Information about shared items.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.ErrorDetails
+  alias DocuSign.Model.FolderSharedItem
+  alias DocuSign.Model.SharedItem
+  alias DocuSign.Model.TemplateSharedItem
+  alias DocuSign.Model.UserInfo
+
   @derive Jason.Encoder
   defstruct [
     :envelopes,
@@ -16,21 +23,19 @@ defmodule DocuSign.Model.MemberSharedItems do
   ]
 
   @type t :: %__MODULE__{
-          :envelopes => [DocuSign.Model.SharedItem.t()] | nil,
-          :errorDetails => DocuSign.Model.ErrorDetails.t() | nil,
-          :folders => [DocuSign.Model.FolderSharedItem.t()] | nil,
-          :templates => [DocuSign.Model.TemplateSharedItem.t()] | nil,
-          :user => DocuSign.Model.UserInfo.t() | nil
+          :envelopes => [SharedItem.t()] | nil,
+          :errorDetails => ErrorDetails.t() | nil,
+          :folders => [FolderSharedItem.t()] | nil,
+          :templates => [TemplateSharedItem.t()] | nil,
+          :user => UserInfo.t() | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
-    |> Deserializer.deserialize(:envelopes, :list, DocuSign.Model.SharedItem)
-    |> Deserializer.deserialize(:errorDetails, :struct, DocuSign.Model.ErrorDetails)
-    |> Deserializer.deserialize(:folders, :list, DocuSign.Model.FolderSharedItem)
-    |> Deserializer.deserialize(:templates, :list, DocuSign.Model.TemplateSharedItem)
-    |> Deserializer.deserialize(:user, :struct, DocuSign.Model.UserInfo)
+    |> Deserializer.deserialize(:envelopes, :list, SharedItem)
+    |> Deserializer.deserialize(:errorDetails, :struct, ErrorDetails)
+    |> Deserializer.deserialize(:folders, :list, FolderSharedItem)
+    |> Deserializer.deserialize(:templates, :list, TemplateSharedItem)
+    |> Deserializer.deserialize(:user, :struct, UserInfo)
   end
 end

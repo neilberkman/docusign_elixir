@@ -6,6 +6,9 @@ defmodule DocuSign.Model.AuthenticationStatus do
   A complex element that contains information about a user's authentication status.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.EventResult
+
   @derive Jason.Encoder
   defstruct [
     :accessCodeResult,
@@ -13,66 +16,64 @@ defmodule DocuSign.Model.AuthenticationStatus do
     :anySocialIDResult,
     :facebookResult,
     :googleResult,
-    :identityVerificationResult,
     :idLookupResult,
     :idQuestionsResult,
+    :identityVerificationResult,
     :linkedinResult,
     :liveIDResult,
     :ofacResult,
     :openIDResult,
     :phoneAuthResult,
+    :sTANPinResult,
     :salesforceResult,
     :signatureProviderResult,
     :smsAuthResult,
-    :sTANPinResult,
     :twitterResult,
     :yahooResult
   ]
 
   @type t :: %__MODULE__{
-          :accessCodeResult => DocuSign.Model.EventResult.t() | nil,
-          :ageVerifyResult => DocuSign.Model.EventResult.t() | nil,
-          :anySocialIDResult => DocuSign.Model.EventResult.t() | nil,
-          :facebookResult => DocuSign.Model.EventResult.t() | nil,
-          :googleResult => DocuSign.Model.EventResult.t() | nil,
-          :identityVerificationResult => DocuSign.Model.EventResult.t() | nil,
-          :idLookupResult => DocuSign.Model.EventResult.t() | nil,
-          :idQuestionsResult => DocuSign.Model.EventResult.t() | nil,
-          :linkedinResult => DocuSign.Model.EventResult.t() | nil,
-          :liveIDResult => DocuSign.Model.EventResult.t() | nil,
-          :ofacResult => DocuSign.Model.EventResult.t() | nil,
-          :openIDResult => DocuSign.Model.EventResult.t() | nil,
-          :phoneAuthResult => DocuSign.Model.EventResult.t() | nil,
-          :salesforceResult => DocuSign.Model.EventResult.t() | nil,
-          :signatureProviderResult => DocuSign.Model.EventResult.t() | nil,
-          :smsAuthResult => DocuSign.Model.EventResult.t() | nil,
-          :sTANPinResult => DocuSign.Model.EventResult.t() | nil,
-          :twitterResult => DocuSign.Model.EventResult.t() | nil,
-          :yahooResult => DocuSign.Model.EventResult.t() | nil
+          :accessCodeResult => EventResult.t() | nil,
+          :ageVerifyResult => EventResult.t() | nil,
+          :anySocialIDResult => EventResult.t() | nil,
+          :facebookResult => EventResult.t() | nil,
+          :googleResult => EventResult.t() | nil,
+          :idLookupResult => EventResult.t() | nil,
+          :idQuestionsResult => EventResult.t() | nil,
+          :identityVerificationResult => EventResult.t() | nil,
+          :linkedinResult => EventResult.t() | nil,
+          :liveIDResult => EventResult.t() | nil,
+          :ofacResult => EventResult.t() | nil,
+          :openIDResult => EventResult.t() | nil,
+          :phoneAuthResult => EventResult.t() | nil,
+          :sTANPinResult => EventResult.t() | nil,
+          :salesforceResult => EventResult.t() | nil,
+          :signatureProviderResult => EventResult.t() | nil,
+          :smsAuthResult => EventResult.t() | nil,
+          :twitterResult => EventResult.t() | nil,
+          :yahooResult => EventResult.t() | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
-    |> Deserializer.deserialize(:accessCodeResult, :struct, DocuSign.Model.EventResult)
-    |> Deserializer.deserialize(:ageVerifyResult, :struct, DocuSign.Model.EventResult)
-    |> Deserializer.deserialize(:anySocialIDResult, :struct, DocuSign.Model.EventResult)
-    |> Deserializer.deserialize(:facebookResult, :struct, DocuSign.Model.EventResult)
-    |> Deserializer.deserialize(:googleResult, :struct, DocuSign.Model.EventResult)
-    |> Deserializer.deserialize(:identityVerificationResult, :struct, DocuSign.Model.EventResult)
-    |> Deserializer.deserialize(:idLookupResult, :struct, DocuSign.Model.EventResult)
-    |> Deserializer.deserialize(:idQuestionsResult, :struct, DocuSign.Model.EventResult)
-    |> Deserializer.deserialize(:linkedinResult, :struct, DocuSign.Model.EventResult)
-    |> Deserializer.deserialize(:liveIDResult, :struct, DocuSign.Model.EventResult)
-    |> Deserializer.deserialize(:ofacResult, :struct, DocuSign.Model.EventResult)
-    |> Deserializer.deserialize(:openIDResult, :struct, DocuSign.Model.EventResult)
-    |> Deserializer.deserialize(:phoneAuthResult, :struct, DocuSign.Model.EventResult)
-    |> Deserializer.deserialize(:salesforceResult, :struct, DocuSign.Model.EventResult)
-    |> Deserializer.deserialize(:signatureProviderResult, :struct, DocuSign.Model.EventResult)
-    |> Deserializer.deserialize(:smsAuthResult, :struct, DocuSign.Model.EventResult)
-    |> Deserializer.deserialize(:sTANPinResult, :struct, DocuSign.Model.EventResult)
-    |> Deserializer.deserialize(:twitterResult, :struct, DocuSign.Model.EventResult)
-    |> Deserializer.deserialize(:yahooResult, :struct, DocuSign.Model.EventResult)
+    |> Deserializer.deserialize(:accessCodeResult, :struct, EventResult)
+    |> Deserializer.deserialize(:ageVerifyResult, :struct, EventResult)
+    |> Deserializer.deserialize(:anySocialIDResult, :struct, EventResult)
+    |> Deserializer.deserialize(:facebookResult, :struct, EventResult)
+    |> Deserializer.deserialize(:googleResult, :struct, EventResult)
+    |> Deserializer.deserialize(:identityVerificationResult, :struct, EventResult)
+    |> Deserializer.deserialize(:idLookupResult, :struct, EventResult)
+    |> Deserializer.deserialize(:idQuestionsResult, :struct, EventResult)
+    |> Deserializer.deserialize(:linkedinResult, :struct, EventResult)
+    |> Deserializer.deserialize(:liveIDResult, :struct, EventResult)
+    |> Deserializer.deserialize(:ofacResult, :struct, EventResult)
+    |> Deserializer.deserialize(:openIDResult, :struct, EventResult)
+    |> Deserializer.deserialize(:phoneAuthResult, :struct, EventResult)
+    |> Deserializer.deserialize(:salesforceResult, :struct, EventResult)
+    |> Deserializer.deserialize(:signatureProviderResult, :struct, EventResult)
+    |> Deserializer.deserialize(:smsAuthResult, :struct, EventResult)
+    |> Deserializer.deserialize(:sTANPinResult, :struct, EventResult)
+    |> Deserializer.deserialize(:twitterResult, :struct, EventResult)
+    |> Deserializer.deserialize(:yahooResult, :struct, EventResult)
   end
 end

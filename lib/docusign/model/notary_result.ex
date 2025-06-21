@@ -6,6 +6,10 @@ defmodule DocuSign.Model.NotaryResult do
   Describes a single notary jurisdiction.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.Jurisdiction
+  alias DocuSign.Model.Notary
+
   @derive Jason.Encoder
   defstruct [
     :jurisdictions,
@@ -13,15 +17,13 @@ defmodule DocuSign.Model.NotaryResult do
   ]
 
   @type t :: %__MODULE__{
-          :jurisdictions => [DocuSign.Model.Jurisdiction.t()] | nil,
-          :notary => DocuSign.Model.Notary.t() | nil
+          :jurisdictions => [Jurisdiction.t()] | nil,
+          :notary => Notary.t() | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
-    |> Deserializer.deserialize(:jurisdictions, :list, DocuSign.Model.Jurisdiction)
-    |> Deserializer.deserialize(:notary, :struct, DocuSign.Model.Notary)
+    |> Deserializer.deserialize(:jurisdictions, :list, Jurisdiction)
+    |> Deserializer.deserialize(:notary, :struct, Notary)
   end
 end

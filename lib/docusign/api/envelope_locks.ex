@@ -6,8 +6,11 @@ defmodule DocuSign.Api.EnvelopeLocks do
   API calls for all endpoints tagged `EnvelopeLocks`.
   """
 
-  alias DocuSign.Connection
   import DocuSign.RequestBuilder
+
+  alias DocuSign.Connection
+  alias DocuSign.Model.EnvelopeLocks
+  alias DocuSign.Model.ErrorDetails
 
   @doc """
   Deletes an envelope lock.
@@ -26,21 +29,21 @@ defmodule DocuSign.Api.EnvelopeLocks do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec lock_delete_envelope_lock(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.EnvelopeLocks.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, EnvelopeLocks.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
   def lock_delete_envelope_lock(connection, account_id, envelope_id, _opts \\ []) do
     request =
       %{}
       |> method(:delete)
       |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/lock")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.EnvelopeLocks},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, EnvelopeLocks},
+      {400, ErrorDetails}
     ])
   end
 
@@ -61,21 +64,21 @@ defmodule DocuSign.Api.EnvelopeLocks do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec lock_get_envelope_lock(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.EnvelopeLocks.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, EnvelopeLocks.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
   def lock_get_envelope_lock(connection, account_id, envelope_id, _opts \\ []) do
     request =
       %{}
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/lock")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.EnvelopeLocks},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, EnvelopeLocks},
+      {400, ErrorDetails}
     ])
   end
 
@@ -97,8 +100,8 @@ defmodule DocuSign.Api.EnvelopeLocks do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec lock_post_envelope_lock(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.EnvelopeLocks.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, EnvelopeLocks.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
   def lock_post_envelope_lock(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
@@ -111,13 +114,13 @@ defmodule DocuSign.Api.EnvelopeLocks do
       |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/lock")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {201, DocuSign.Model.EnvelopeLocks},
-      {400, DocuSign.Model.ErrorDetails}
+      {201, EnvelopeLocks},
+      {400, ErrorDetails}
     ])
   end
 
@@ -139,8 +142,8 @@ defmodule DocuSign.Api.EnvelopeLocks do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec lock_put_envelope_lock(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.EnvelopeLocks.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, EnvelopeLocks.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
   def lock_put_envelope_lock(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
@@ -153,13 +156,13 @@ defmodule DocuSign.Api.EnvelopeLocks do
       |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/lock")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.EnvelopeLocks},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, EnvelopeLocks},
+      {400, ErrorDetails}
     ])
   end
 end

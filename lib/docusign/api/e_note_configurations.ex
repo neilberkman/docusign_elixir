@@ -6,8 +6,11 @@ defmodule DocuSign.Api.ENoteConfigurations do
   API calls for all endpoints tagged `ENoteConfigurations`.
   """
 
-  alias DocuSign.Connection
   import DocuSign.RequestBuilder
+
+  alias DocuSign.Connection
+  alias DocuSign.Model.ENoteConfiguration
+  alias DocuSign.Model.ErrorDetails
 
   @doc """
   Deletes configuration information for the eNote eOriginal integration.
@@ -27,19 +30,19 @@ defmodule DocuSign.Api.ENoteConfigurations do
           Tesla.Env.client(),
           String.t(),
           keyword()
-        ) :: {:ok, nil} | {:ok, DocuSign.Model.ErrorDetails.t()} | {:error, Tesla.Env.t()}
+        ) :: {:ok, nil} | {:ok, ErrorDetails.t()} | {:error, Tesla.Env.t()}
   def e_note_configuration_delete_e_note_configuration(connection, account_id, _opts \\ []) do
     request =
       %{}
       |> method(:delete)
       |> url("/v2.1/accounts/#{account_id}/settings/enote_configuration")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
       {200, false},
-      {400, DocuSign.Model.ErrorDetails}
+      {400, ErrorDetails}
     ])
   end
 
@@ -58,21 +61,21 @@ defmodule DocuSign.Api.ENoteConfigurations do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec e_note_configuration_get_e_note_configuration(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.ENoteConfiguration.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, ENoteConfiguration.t()}
           | {:error, Tesla.Env.t()}
   def e_note_configuration_get_e_note_configuration(connection, account_id, _opts \\ []) do
     request =
       %{}
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/settings/enote_configuration")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.ENoteConfiguration},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, ENoteConfiguration},
+      {400, ErrorDetails}
     ])
   end
 
@@ -92,8 +95,8 @@ defmodule DocuSign.Api.ENoteConfigurations do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec e_note_configuration_put_e_note_configuration(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.ENoteConfiguration.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, ENoteConfiguration.t()}
           | {:error, Tesla.Env.t()}
   def e_note_configuration_put_e_note_configuration(connection, account_id, opts \\ []) do
     optional_params = %{
@@ -106,13 +109,13 @@ defmodule DocuSign.Api.ENoteConfigurations do
       |> url("/v2.1/accounts/#{account_id}/settings/enote_configuration")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.ENoteConfiguration},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, ENoteConfiguration},
+      {400, ErrorDetails}
     ])
   end
 end

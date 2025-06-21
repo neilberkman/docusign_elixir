@@ -6,6 +6,9 @@ defmodule DocuSign.Model.ConnectLog do
   Contains information about a Connect log entry.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.ConnectDebugLog
+
   @derive Jason.Encoder
   defstruct [
     :accountId,
@@ -31,7 +34,7 @@ defmodule DocuSign.Model.ConnectLog do
   @type t :: %__MODULE__{
           :accountId => String.t() | nil,
           :configUrl => String.t() | nil,
-          :connectDebugLog => [DocuSign.Model.ConnectDebugLog.t()] | nil,
+          :connectDebugLog => [ConnectDebugLog.t()] | nil,
           :connectId => String.t() | nil,
           :created => String.t() | nil,
           :email => String.t() | nil,
@@ -49,10 +52,8 @@ defmodule DocuSign.Model.ConnectLog do
           :userName => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:connectDebugLog, :list, DocuSign.Model.ConnectDebugLog)
+    |> Deserializer.deserialize(:connectDebugLog, :list, ConnectDebugLog)
   end
 end

@@ -6,19 +6,20 @@ defmodule DocuSign.Model.FileTypeList do
 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.FileType
+
   @derive Jason.Encoder
   defstruct [
     :fileTypes
   ]
 
   @type t :: %__MODULE__{
-          :fileTypes => [DocuSign.Model.FileType.t()] | nil
+          :fileTypes => [FileType.t()] | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
-    |> Deserializer.deserialize(:fileTypes, :list, DocuSign.Model.FileType)
+    |> Deserializer.deserialize(:fileTypes, :list, FileType)
   end
 end

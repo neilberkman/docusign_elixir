@@ -6,6 +6,10 @@ defmodule DocuSign.Model.EnvelopeWorkflowDefinition do
   Describes the workflow for an envelope or template.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.ScheduledSending
+  alias DocuSign.Model.WorkflowStep
+
   @derive Jason.Encoder
   defstruct [
     :currentWorkflowStepId,
@@ -18,16 +22,14 @@ defmodule DocuSign.Model.EnvelopeWorkflowDefinition do
   @type t :: %__MODULE__{
           :currentWorkflowStepId => String.t() | nil,
           :resumeDate => String.t() | nil,
-          :scheduledSending => DocuSign.Model.ScheduledSending.t() | nil,
+          :scheduledSending => ScheduledSending.t() | nil,
           :workflowStatus => String.t() | nil,
-          :workflowSteps => [DocuSign.Model.WorkflowStep.t()] | nil
+          :workflowSteps => [WorkflowStep.t()] | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
-    |> Deserializer.deserialize(:scheduledSending, :struct, DocuSign.Model.ScheduledSending)
-    |> Deserializer.deserialize(:workflowSteps, :list, DocuSign.Model.WorkflowStep)
+    |> Deserializer.deserialize(:scheduledSending, :struct, ScheduledSending)
+    |> Deserializer.deserialize(:workflowSteps, :list, WorkflowStep)
   end
 end

@@ -6,6 +6,15 @@ defmodule DocuSign.Model.BillingPlanInformation do
   This object contains details about a billing plan.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.AccountAddress
+  alias DocuSign.Model.AppStoreReceipt
+  alias DocuSign.Model.CreditCardInformation
+  alias DocuSign.Model.DirectDebitProcessorInformation
+  alias DocuSign.Model.PaymentProcessorInformation
+  alias DocuSign.Model.PlanInformation
+  alias DocuSign.Model.ReferralInformation
+
   @derive Jason.Encoder
   defstruct [
     :appStoreReceipt,
@@ -33,11 +42,10 @@ defmodule DocuSign.Model.BillingPlanInformation do
   ]
 
   @type t :: %__MODULE__{
-          :appStoreReceipt => DocuSign.Model.AppStoreReceipt.t() | nil,
-          :billingAddress => DocuSign.Model.AccountAddress.t() | nil,
-          :creditCardInformation => DocuSign.Model.CreditCardInformation.t() | nil,
-          :directDebitProcessorInformation =>
-            DocuSign.Model.DirectDebitProcessorInformation.t() | nil,
+          :appStoreReceipt => AppStoreReceipt.t() | nil,
+          :billingAddress => AccountAddress.t() | nil,
+          :creditCardInformation => CreditCardInformation.t() | nil,
+          :directDebitProcessorInformation => DirectDebitProcessorInformation.t() | nil,
           :downgradeReason => String.t() | nil,
           :enablePreAuth => String.t() | nil,
           :enableSupport => String.t() | nil,
@@ -45,10 +53,10 @@ defmodule DocuSign.Model.BillingPlanInformation do
           :incrementalSeats => String.t() | nil,
           :paymentMethod => String.t() | nil,
           :paymentProcessor => String.t() | nil,
-          :paymentProcessorInformation => DocuSign.Model.PaymentProcessorInformation.t() | nil,
-          :planInformation => DocuSign.Model.PlanInformation.t() | nil,
+          :paymentProcessorInformation => PaymentProcessorInformation.t() | nil,
+          :planInformation => PlanInformation.t() | nil,
           :processPayment => String.t() | nil,
-          :referralInformation => DocuSign.Model.ReferralInformation.t() | nil,
+          :referralInformation => ReferralInformation.t() | nil,
           :renewalStatus => String.t() | nil,
           :saleDiscountAmount => String.t() | nil,
           :saleDiscountFixedAmount => String.t() | nil,
@@ -58,28 +66,26 @@ defmodule DocuSign.Model.BillingPlanInformation do
           :taxExemptId => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:appStoreReceipt, :struct, DocuSign.Model.AppStoreReceipt)
-    |> Deserializer.deserialize(:billingAddress, :struct, DocuSign.Model.AccountAddress)
+    |> Deserializer.deserialize(:appStoreReceipt, :struct, AppStoreReceipt)
+    |> Deserializer.deserialize(:billingAddress, :struct, AccountAddress)
     |> Deserializer.deserialize(
       :creditCardInformation,
       :struct,
-      DocuSign.Model.CreditCardInformation
+      CreditCardInformation
     )
     |> Deserializer.deserialize(
       :directDebitProcessorInformation,
       :struct,
-      DocuSign.Model.DirectDebitProcessorInformation
+      DirectDebitProcessorInformation
     )
     |> Deserializer.deserialize(
       :paymentProcessorInformation,
       :struct,
-      DocuSign.Model.PaymentProcessorInformation
+      PaymentProcessorInformation
     )
-    |> Deserializer.deserialize(:planInformation, :struct, DocuSign.Model.PlanInformation)
-    |> Deserializer.deserialize(:referralInformation, :struct, DocuSign.Model.ReferralInformation)
+    |> Deserializer.deserialize(:planInformation, :struct, PlanInformation)
+    |> Deserializer.deserialize(:referralInformation, :struct, ReferralInformation)
   end
 end

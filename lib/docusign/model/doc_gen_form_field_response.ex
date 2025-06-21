@@ -6,6 +6,10 @@ defmodule DocuSign.Model.DocGenFormFieldResponse do
   An object for document generation responses.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.DocGenFormFields
+  alias DocuSign.Model.ErrorDetails
+
   @derive Jason.Encoder
   defstruct [
     :docGenFormFields,
@@ -13,15 +17,13 @@ defmodule DocuSign.Model.DocGenFormFieldResponse do
   ]
 
   @type t :: %__MODULE__{
-          :docGenFormFields => [DocuSign.Model.DocGenFormFields.t()] | nil,
-          :errorDetails => DocuSign.Model.ErrorDetails.t() | nil
+          :docGenFormFields => [DocGenFormFields.t()] | nil,
+          :errorDetails => ErrorDetails.t() | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
-    |> Deserializer.deserialize(:docGenFormFields, :list, DocuSign.Model.DocGenFormFields)
-    |> Deserializer.deserialize(:errorDetails, :struct, DocuSign.Model.ErrorDetails)
+    |> Deserializer.deserialize(:docGenFormFields, :list, DocGenFormFields)
+    |> Deserializer.deserialize(:errorDetails, :struct, ErrorDetails)
   end
 end

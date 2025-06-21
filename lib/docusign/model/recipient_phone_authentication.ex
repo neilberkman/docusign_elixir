@@ -6,6 +6,9 @@ defmodule DocuSign.Model.RecipientPhoneAuthentication do
   A complex type that contains the elements:  * `recipMayProvideNumber`: A Boolean value that specifies whether the recipient can use the phone number of their choice. * `senderProvidedNumbers`: A list of phone numbers that the recipient can use. * `recordVoicePrint`: Reserved for Docusign. * `validateRecipProvidedNumber`: Reserved for Docusign.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.PropertyMetadata
+
   @derive Jason.Encoder
   defstruct [
     :recipMayProvideNumber,
@@ -20,38 +23,36 @@ defmodule DocuSign.Model.RecipientPhoneAuthentication do
 
   @type t :: %__MODULE__{
           :recipMayProvideNumber => String.t() | nil,
-          :recipMayProvideNumberMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :recipMayProvideNumberMetadata => PropertyMetadata.t() | nil,
           :recordVoicePrint => String.t() | nil,
-          :recordVoicePrintMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :recordVoicePrintMetadata => PropertyMetadata.t() | nil,
           :senderProvidedNumbers => [String.t()] | nil,
-          :senderProvidedNumbersMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :senderProvidedNumbersMetadata => PropertyMetadata.t() | nil,
           :validateRecipProvidedNumber => String.t() | nil,
-          :validateRecipProvidedNumberMetadata => DocuSign.Model.PropertyMetadata.t() | nil
+          :validateRecipProvidedNumberMetadata => PropertyMetadata.t() | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
     |> Deserializer.deserialize(
       :recipMayProvideNumberMetadata,
       :struct,
-      DocuSign.Model.PropertyMetadata
+      PropertyMetadata
     )
     |> Deserializer.deserialize(
       :recordVoicePrintMetadata,
       :struct,
-      DocuSign.Model.PropertyMetadata
+      PropertyMetadata
     )
     |> Deserializer.deserialize(
       :senderProvidedNumbersMetadata,
       :struct,
-      DocuSign.Model.PropertyMetadata
+      PropertyMetadata
     )
     |> Deserializer.deserialize(
       :validateRecipProvidedNumberMetadata,
       :struct,
-      DocuSign.Model.PropertyMetadata
+      PropertyMetadata
     )
   end
 end

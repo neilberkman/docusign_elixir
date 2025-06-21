@@ -6,6 +6,26 @@ defmodule DocuSign.Model.EnvelopeDefinition do
   Envelope object definition.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.AccountCustomFields
+  alias DocuSign.Model.Attachment
+  alias DocuSign.Model.CompositeTemplate
+  alias DocuSign.Model.Document
+  alias DocuSign.Model.EmailSettings
+  alias DocuSign.Model.EnvelopeCustomMetadata
+  alias DocuSign.Model.EnvelopeDocument
+  alias DocuSign.Model.EnvelopeLocks
+  alias DocuSign.Model.EnvelopeMetadata
+  alias DocuSign.Model.EnvelopeRecipients
+  alias DocuSign.Model.EventNotification
+  alias DocuSign.Model.Folder
+  alias DocuSign.Model.Notification
+  alias DocuSign.Model.PowerForm
+  alias DocuSign.Model.RecipientViewRequest
+  alias DocuSign.Model.TemplateRole
+  alias DocuSign.Model.UserInfo
+  alias DocuSign.Model.Workflow
+
   @derive Jason.Encoder
   defstruct [
     :accessControlListBase64,
@@ -80,10 +100,10 @@ defmodule DocuSign.Model.EnvelopeDefinition do
     :purgeCompletedDate,
     :purgeRequestDate,
     :purgeState,
+    :recipientViewRequest,
     :recipients,
     :recipientsLock,
     :recipientsUri,
-    :recipientViewRequest,
     :sender,
     :sentDateTime,
     :signerCanSignOnMobile,
@@ -95,8 +115,8 @@ defmodule DocuSign.Model.EnvelopeDefinition do
     :templateRoles,
     :templatesUri,
     :transactionId,
-    :useDisclosure,
     :uSigState,
+    :useDisclosure,
     :voidedDateTime,
     :voidedReason,
     :workflow
@@ -112,7 +132,7 @@ defmodule DocuSign.Model.EnvelopeDefinition do
           :allowViewHistory => String.t() | nil,
           :anySigner => String.t() | nil,
           :asynchronous => String.t() | nil,
-          :attachments => [DocuSign.Model.Attachment.t()] | nil,
+          :attachments => [Attachment.t()] | nil,
           :attachmentsUri => String.t() | nil,
           :authoritativeCopy => String.t() | nil,
           :authoritativeCopyDefault => String.t() | nil,
@@ -122,10 +142,10 @@ defmodule DocuSign.Model.EnvelopeDefinition do
           :burnDefaultTabData => String.t() | nil,
           :certificateUri => String.t() | nil,
           :completedDateTime => String.t() | nil,
-          :compositeTemplates => [DocuSign.Model.CompositeTemplate.t()] | nil,
+          :compositeTemplates => [CompositeTemplate.t()] | nil,
           :copyRecipientData => String.t() | nil,
           :createdDateTime => String.t() | nil,
-          :customFields => DocuSign.Model.AccountCustomFields.t() | nil,
+          :customFields => AccountCustomFields.t() | nil,
           :customFieldsUri => String.t() | nil,
           :dataPopulationScope => String.t() | nil,
           :declinedDateTime => String.t() | nil,
@@ -133,28 +153,28 @@ defmodule DocuSign.Model.EnvelopeDefinition do
           :deliveredDateTime => String.t() | nil,
           :disableResponsiveDocument => String.t() | nil,
           :documentBase64 => String.t() | nil,
-          :documents => [DocuSign.Model.Document.t()] | nil,
+          :documents => [Document.t()] | nil,
           :documentsCombinedUri => String.t() | nil,
           :documentsUri => String.t() | nil,
           :emailBlurb => String.t() | nil,
-          :emailSettings => DocuSign.Model.EmailSettings.t() | nil,
+          :emailSettings => EmailSettings.t() | nil,
           :emailSubject => String.t() | nil,
           :enableWetSign => String.t() | nil,
           :enforceSignerVisibility => String.t() | nil,
-          :envelopeAttachments => [DocuSign.Model.Attachment.t()] | nil,
-          :envelopeCustomMetadata => DocuSign.Model.EnvelopeCustomMetadata.t() | nil,
-          :envelopeDocuments => [DocuSign.Model.EnvelopeDocument.t()] | nil,
+          :envelopeAttachments => [Attachment.t()] | nil,
+          :envelopeCustomMetadata => EnvelopeCustomMetadata.t() | nil,
+          :envelopeDocuments => [EnvelopeDocument.t()] | nil,
           :envelopeId => String.t() | nil,
           :envelopeIdStamping => String.t() | nil,
           :envelopeLocation => String.t() | nil,
-          :envelopeMetadata => DocuSign.Model.EnvelopeMetadata.t() | nil,
+          :envelopeMetadata => EnvelopeMetadata.t() | nil,
           :envelopeUri => String.t() | nil,
-          :eventNotification => DocuSign.Model.EventNotification.t() | nil,
+          :eventNotification => EventNotification.t() | nil,
           :expireAfter => String.t() | nil,
           :expireDateTime => String.t() | nil,
           :expireEnabled => String.t() | nil,
           :externalEnvelopeId => String.t() | nil,
-          :folders => [DocuSign.Model.Folder.t()] | nil,
+          :folders => [Folder.t()] | nil,
           :hasComments => String.t() | nil,
           :hasDocumentTemplateLibrary => String.t() | nil,
           :hasFormDataChanged => String.t() | nil,
@@ -166,20 +186,20 @@ defmodule DocuSign.Model.EnvelopeDefinition do
           :isSignatureProviderEnvelope => String.t() | nil,
           :lastModifiedDateTime => String.t() | nil,
           :location => String.t() | nil,
-          :lockInformation => DocuSign.Model.EnvelopeLocks.t() | nil,
+          :lockInformation => EnvelopeLocks.t() | nil,
           :messageLock => String.t() | nil,
-          :notification => DocuSign.Model.Notification.t() | nil,
+          :notification => Notification.t() | nil,
           :notificationUri => String.t() | nil,
           :password => String.t() | nil,
-          :powerForm => DocuSign.Model.PowerForm.t() | nil,
+          :powerForm => PowerForm.t() | nil,
           :purgeCompletedDate => String.t() | nil,
           :purgeRequestDate => String.t() | nil,
           :purgeState => String.t() | nil,
-          :recipients => DocuSign.Model.EnvelopeRecipients.t() | nil,
+          :recipientViewRequest => RecipientViewRequest.t() | nil,
+          :recipients => EnvelopeRecipients.t() | nil,
           :recipientsLock => String.t() | nil,
           :recipientsUri => String.t() | nil,
-          :recipientViewRequest => DocuSign.Model.RecipientViewRequest.t() | nil,
-          :sender => DocuSign.Model.UserInfo.t() | nil,
+          :sender => UserInfo.t() | nil,
           :sentDateTime => String.t() | nil,
           :signerCanSignOnMobile => String.t() | nil,
           :signingLocation => String.t() | nil,
@@ -187,46 +207,44 @@ defmodule DocuSign.Model.EnvelopeDefinition do
           :statusChangedDateTime => String.t() | nil,
           :statusDateTime => String.t() | nil,
           :templateId => String.t() | nil,
-          :templateRoles => [DocuSign.Model.TemplateRole.t()] | nil,
+          :templateRoles => [TemplateRole.t()] | nil,
           :templatesUri => String.t() | nil,
           :transactionId => String.t() | nil,
-          :useDisclosure => String.t() | nil,
           :uSigState => String.t() | nil,
+          :useDisclosure => String.t() | nil,
           :voidedDateTime => String.t() | nil,
           :voidedReason => String.t() | nil,
-          :workflow => DocuSign.Model.Workflow.t() | nil
+          :workflow => Workflow.t() | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
-    |> Deserializer.deserialize(:attachments, :list, DocuSign.Model.Attachment)
-    |> Deserializer.deserialize(:compositeTemplates, :list, DocuSign.Model.CompositeTemplate)
-    |> Deserializer.deserialize(:customFields, :struct, DocuSign.Model.AccountCustomFields)
-    |> Deserializer.deserialize(:documents, :list, DocuSign.Model.Document)
-    |> Deserializer.deserialize(:emailSettings, :struct, DocuSign.Model.EmailSettings)
-    |> Deserializer.deserialize(:envelopeAttachments, :list, DocuSign.Model.Attachment)
+    |> Deserializer.deserialize(:attachments, :list, Attachment)
+    |> Deserializer.deserialize(:compositeTemplates, :list, CompositeTemplate)
+    |> Deserializer.deserialize(:customFields, :struct, AccountCustomFields)
+    |> Deserializer.deserialize(:documents, :list, Document)
+    |> Deserializer.deserialize(:emailSettings, :struct, EmailSettings)
+    |> Deserializer.deserialize(:envelopeAttachments, :list, Attachment)
     |> Deserializer.deserialize(
       :envelopeCustomMetadata,
       :struct,
-      DocuSign.Model.EnvelopeCustomMetadata
+      EnvelopeCustomMetadata
     )
-    |> Deserializer.deserialize(:envelopeDocuments, :list, DocuSign.Model.EnvelopeDocument)
-    |> Deserializer.deserialize(:envelopeMetadata, :struct, DocuSign.Model.EnvelopeMetadata)
-    |> Deserializer.deserialize(:eventNotification, :struct, DocuSign.Model.EventNotification)
-    |> Deserializer.deserialize(:folders, :list, DocuSign.Model.Folder)
-    |> Deserializer.deserialize(:lockInformation, :struct, DocuSign.Model.EnvelopeLocks)
-    |> Deserializer.deserialize(:notification, :struct, DocuSign.Model.Notification)
-    |> Deserializer.deserialize(:powerForm, :struct, DocuSign.Model.PowerForm)
-    |> Deserializer.deserialize(:recipients, :struct, DocuSign.Model.EnvelopeRecipients)
+    |> Deserializer.deserialize(:envelopeDocuments, :list, EnvelopeDocument)
+    |> Deserializer.deserialize(:envelopeMetadata, :struct, EnvelopeMetadata)
+    |> Deserializer.deserialize(:eventNotification, :struct, EventNotification)
+    |> Deserializer.deserialize(:folders, :list, Folder)
+    |> Deserializer.deserialize(:lockInformation, :struct, EnvelopeLocks)
+    |> Deserializer.deserialize(:notification, :struct, Notification)
+    |> Deserializer.deserialize(:powerForm, :struct, PowerForm)
+    |> Deserializer.deserialize(:recipients, :struct, EnvelopeRecipients)
     |> Deserializer.deserialize(
       :recipientViewRequest,
       :struct,
-      DocuSign.Model.RecipientViewRequest
+      RecipientViewRequest
     )
-    |> Deserializer.deserialize(:sender, :struct, DocuSign.Model.UserInfo)
-    |> Deserializer.deserialize(:templateRoles, :list, DocuSign.Model.TemplateRole)
-    |> Deserializer.deserialize(:workflow, :struct, DocuSign.Model.Workflow)
+    |> Deserializer.deserialize(:sender, :struct, UserInfo)
+    |> Deserializer.deserialize(:templateRoles, :list, TemplateRole)
+    |> Deserializer.deserialize(:workflow, :struct, Workflow)
   end
 end

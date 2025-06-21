@@ -6,19 +6,20 @@ defmodule DocuSign.Model.AccountPasswordStrengthType do
 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.AccountPasswordStrengthTypeOption
+
   @derive Jason.Encoder
   defstruct [
     :options
   ]
 
   @type t :: %__MODULE__{
-          :options => [DocuSign.Model.AccountPasswordStrengthTypeOption.t()] | nil
+          :options => [AccountPasswordStrengthTypeOption.t()] | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
-    |> Deserializer.deserialize(:options, :list, DocuSign.Model.AccountPasswordStrengthTypeOption)
+    |> Deserializer.deserialize(:options, :list, AccountPasswordStrengthTypeOption)
   end
 end

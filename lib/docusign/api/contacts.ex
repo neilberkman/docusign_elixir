@@ -6,8 +6,12 @@ defmodule DocuSign.Api.Contacts do
   API calls for all endpoints tagged `Contacts`.
   """
 
-  alias DocuSign.Connection
   import DocuSign.RequestBuilder
+
+  alias DocuSign.Connection
+  alias DocuSign.Model.ContactGetResponse
+  alias DocuSign.Model.ContactUpdateResponse
+  alias DocuSign.Model.ErrorDetails
 
   @doc """
   Deletes a contact.
@@ -26,21 +30,21 @@ defmodule DocuSign.Api.Contacts do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec contacts_delete_contact_with_id(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.ContactUpdateResponse.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, ContactUpdateResponse.t()}
           | {:error, Tesla.Env.t()}
   def contacts_delete_contact_with_id(connection, account_id, contact_id, _opts \\ []) do
     request =
       %{}
       |> method(:delete)
       |> url("/v2.1/accounts/#{account_id}/contacts/#{contact_id}")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.ContactUpdateResponse},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, ContactUpdateResponse},
+      {400, ErrorDetails}
     ])
   end
 
@@ -61,8 +65,8 @@ defmodule DocuSign.Api.Contacts do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec contacts_delete_contacts(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.ContactUpdateResponse.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, ContactUpdateResponse.t()}
           | {:error, Tesla.Env.t()}
   def contacts_delete_contacts(connection, account_id, opts \\ []) do
     optional_params = %{
@@ -74,13 +78,13 @@ defmodule DocuSign.Api.Contacts do
       |> method(:delete)
       |> url("/v2.1/accounts/#{account_id}/contacts")
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.ContactUpdateResponse},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, ContactUpdateResponse},
+      {400, ErrorDetails}
     ])
   end
 
@@ -102,8 +106,8 @@ defmodule DocuSign.Api.Contacts do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec contacts_get_contact_by_id(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.ContactGetResponse.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, ContactGetResponse.t()}
           | {:error, Tesla.Env.t()}
   def contacts_get_contact_by_id(connection, account_id, contact_id, opts \\ []) do
     optional_params = %{
@@ -115,13 +119,13 @@ defmodule DocuSign.Api.Contacts do
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/contacts/#{contact_id}")
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.ContactGetResponse},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, ContactGetResponse},
+      {400, ErrorDetails}
     ])
   end
 
@@ -142,8 +146,8 @@ defmodule DocuSign.Api.Contacts do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec contacts_post_contacts(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.ContactUpdateResponse.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, ContactUpdateResponse.t()}
           | {:error, Tesla.Env.t()}
   def contacts_post_contacts(connection, account_id, opts \\ []) do
     optional_params = %{
@@ -156,13 +160,13 @@ defmodule DocuSign.Api.Contacts do
       |> url("/v2.1/accounts/#{account_id}/contacts")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {201, DocuSign.Model.ContactUpdateResponse},
-      {400, DocuSign.Model.ErrorDetails}
+      {201, ContactUpdateResponse},
+      {400, ErrorDetails}
     ])
   end
 
@@ -183,8 +187,8 @@ defmodule DocuSign.Api.Contacts do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec contacts_put_contacts(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.ContactUpdateResponse.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, ContactUpdateResponse.t()}
           | {:error, Tesla.Env.t()}
   def contacts_put_contacts(connection, account_id, opts \\ []) do
     optional_params = %{
@@ -197,13 +201,13 @@ defmodule DocuSign.Api.Contacts do
       |> url("/v2.1/accounts/#{account_id}/contacts")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.ContactUpdateResponse},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, ContactUpdateResponse},
+      {400, ErrorDetails}
     ])
   end
 end

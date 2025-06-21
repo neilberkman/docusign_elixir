@@ -9,16 +9,16 @@ defmodule DocuSign.Model.LockRequest do
   @derive Jason.Encoder
   defstruct [
     :lockDurationInSeconds,
-    :lockedByApp,
     :lockType,
+    :lockedByApp,
     :templatePassword,
     :useScratchPad
   ]
 
   @type t :: %__MODULE__{
           :lockDurationInSeconds => String.t() | nil,
-          :lockedByApp => String.t() | nil,
           :lockType => String.t() | nil,
+          :lockedByApp => String.t() | nil,
           :templatePassword => String.t() | nil,
           :useScratchPad => String.t() | nil
         }

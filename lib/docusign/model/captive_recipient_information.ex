@@ -6,19 +6,20 @@ defmodule DocuSign.Model.CaptiveRecipientInformation do
   Contains information about captive (embedded) recipients.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.CaptiveRecipient
+
   @derive Jason.Encoder
   defstruct [
     :captiveRecipients
   ]
 
   @type t :: %__MODULE__{
-          :captiveRecipients => [DocuSign.Model.CaptiveRecipient.t()] | nil
+          :captiveRecipients => [CaptiveRecipient.t()] | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
-    |> Deserializer.deserialize(:captiveRecipients, :list, DocuSign.Model.CaptiveRecipient)
+    |> Deserializer.deserialize(:captiveRecipients, :list, CaptiveRecipient)
   end
 end

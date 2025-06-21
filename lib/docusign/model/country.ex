@@ -6,25 +6,26 @@ defmodule DocuSign.Model.Country do
 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.Province
+
   @derive Jason.Encoder
   defstruct [
     :isoCode,
     :name,
-    :provinces,
-    :provinceValidated
+    :provinceValidated,
+    :provinces
   ]
 
   @type t :: %__MODULE__{
           :isoCode => String.t() | nil,
           :name => String.t() | nil,
-          :provinces => [DocuSign.Model.Province.t()] | nil,
-          :provinceValidated => String.t() | nil
+          :provinceValidated => String.t() | nil,
+          :provinces => [Province.t()] | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
-    |> Deserializer.deserialize(:provinces, :list, DocuSign.Model.Province)
+    |> Deserializer.deserialize(:provinces, :list, Province)
   end
 end

@@ -6,6 +6,11 @@ defmodule DocuSign.Model.CustomTabs do
   Custom tabs
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.LocalePolicyTab
+  alias DocuSign.Model.MergeField
+  alias DocuSign.Model.PropertyMetadata
+
   @derive Jason.Encoder
   defstruct [
     :anchor,
@@ -37,8 +42,8 @@ defmodule DocuSign.Model.CustomTabs do
     :lastModifiedByUserId,
     :localePolicy,
     :locked,
-    :maximumLength,
     :maxNumericalValue,
+    :maximumLength,
     :mergeField,
     :minNumericalValue,
     :name,
@@ -47,8 +52,8 @@ defmodule DocuSign.Model.CustomTabs do
     :paymentItemDescription,
     :paymentItemName,
     :requireAll,
-    :required,
     :requireInitialOnSharedChange,
+    :required,
     :scaleValue,
     :selected,
     :shared,
@@ -92,11 +97,11 @@ defmodule DocuSign.Model.CustomTabs do
           :lastModified => String.t() | nil,
           :lastModifiedByDisplayName => String.t() | nil,
           :lastModifiedByUserId => String.t() | nil,
-          :localePolicy => DocuSign.Model.LocalePolicyTab.t() | nil,
+          :localePolicy => LocalePolicyTab.t() | nil,
           :locked => String.t() | nil,
-          :maximumLength => String.t() | nil,
           :maxNumericalValue => String.t() | nil,
-          :mergeField => DocuSign.Model.MergeField.t() | nil,
+          :maximumLength => String.t() | nil,
+          :mergeField => MergeField.t() | nil,
           :minNumericalValue => String.t() | nil,
           :name => String.t() | nil,
           :numericalValue => String.t() | nil,
@@ -104,14 +109,14 @@ defmodule DocuSign.Model.CustomTabs do
           :paymentItemDescription => String.t() | nil,
           :paymentItemName => String.t() | nil,
           :requireAll => String.t() | nil,
-          :required => String.t() | nil,
           :requireInitialOnSharedChange => String.t() | nil,
+          :required => String.t() | nil,
           :scaleValue => String.t() | nil,
           :selected => String.t() | nil,
           :shared => String.t() | nil,
           :signatureProviderId => String.t() | nil,
           :stampType => String.t() | nil,
-          :stampTypeMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :stampTypeMetadata => PropertyMetadata.t() | nil,
           :tabLabel => String.t() | nil,
           :type => String.t() | nil,
           :underline => String.t() | nil,
@@ -121,12 +126,10 @@ defmodule DocuSign.Model.CustomTabs do
           :width => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:localePolicy, :struct, DocuSign.Model.LocalePolicyTab)
-    |> Deserializer.deserialize(:mergeField, :struct, DocuSign.Model.MergeField)
-    |> Deserializer.deserialize(:stampTypeMetadata, :struct, DocuSign.Model.PropertyMetadata)
+    |> Deserializer.deserialize(:localePolicy, :struct, LocalePolicyTab)
+    |> Deserializer.deserialize(:mergeField, :struct, MergeField)
+    |> Deserializer.deserialize(:stampTypeMetadata, :struct, PropertyMetadata)
   end
 end

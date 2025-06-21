@@ -6,6 +6,9 @@ defmodule DocuSign.Model.BillingInvoicesSummary do
 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.BillingInvoice
+
   @derive Jason.Encoder
   defstruct [
     :accountBalance,
@@ -17,16 +20,14 @@ defmodule DocuSign.Model.BillingInvoicesSummary do
 
   @type t :: %__MODULE__{
           :accountBalance => String.t() | nil,
-          :billingInvoices => [DocuSign.Model.BillingInvoice.t()] | nil,
+          :billingInvoices => [BillingInvoice.t()] | nil,
           :currencyCode => String.t() | nil,
           :pastDueBalance => String.t() | nil,
           :paymentAllowed => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:billingInvoices, :list, DocuSign.Model.BillingInvoice)
+    |> Deserializer.deserialize(:billingInvoices, :list, BillingInvoice)
   end
 end

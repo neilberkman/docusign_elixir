@@ -6,6 +6,10 @@ defmodule DocuSign.Model.AccountPermissionProfiles do
   The AccountPermissionProfiles resource provides methods that allow you to manage permission profiles for groups of account users.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.AccountRoleSettings
+  alias DocuSign.Model.UserInformation
+
   @derive Jason.Encoder
   defstruct [
     :modifiedByUsername,
@@ -22,16 +26,14 @@ defmodule DocuSign.Model.AccountPermissionProfiles do
           :modifiedDateTime => String.t() | nil,
           :permissionProfileId => String.t() | nil,
           :permissionProfileName => String.t() | nil,
-          :settings => DocuSign.Model.AccountRoleSettings.t() | nil,
+          :settings => AccountRoleSettings.t() | nil,
           :userCount => String.t() | nil,
-          :users => [DocuSign.Model.UserInformation.t()] | nil
+          :users => [UserInformation.t()] | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
-    |> Deserializer.deserialize(:settings, :struct, DocuSign.Model.AccountRoleSettings)
-    |> Deserializer.deserialize(:users, :list, DocuSign.Model.UserInformation)
+    |> Deserializer.deserialize(:settings, :struct, AccountRoleSettings)
+    |> Deserializer.deserialize(:users, :list, UserInformation)
   end
 end

@@ -6,8 +6,13 @@ defmodule DocuSign.Api.Payments do
   API calls for all endpoints tagged `Payments`.
   """
 
-  alias DocuSign.Connection
   import DocuSign.RequestBuilder
+
+  alias DocuSign.Connection
+  alias DocuSign.Model.BillingPaymentItem
+  alias DocuSign.Model.BillingPaymentResponse
+  alias DocuSign.Model.BillingPaymentsResponse
+  alias DocuSign.Model.ErrorDetails
 
   @doc """
   Gets billing payment information for a specific payment.
@@ -26,21 +31,21 @@ defmodule DocuSign.Api.Payments do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec billing_payments_get_payment(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.BillingPaymentItem.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, BillingPaymentItem.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
   def billing_payments_get_payment(connection, account_id, payment_id, _opts \\ []) do
     request =
       %{}
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/billing_payments/#{payment_id}")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.BillingPaymentItem},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, BillingPaymentItem},
+      {400, ErrorDetails}
     ])
   end
 
@@ -62,8 +67,8 @@ defmodule DocuSign.Api.Payments do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec billing_payments_get_payment_list(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.BillingPaymentsResponse.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, BillingPaymentsResponse.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
   def billing_payments_get_payment_list(connection, account_id, opts \\ []) do
     optional_params = %{
@@ -76,13 +81,13 @@ defmodule DocuSign.Api.Payments do
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/billing_payments")
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.BillingPaymentsResponse},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, BillingPaymentsResponse},
+      {400, ErrorDetails}
     ])
   end
 
@@ -103,8 +108,8 @@ defmodule DocuSign.Api.Payments do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec billing_payments_post_payment(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.BillingPaymentResponse.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, BillingPaymentResponse.t()}
           | {:error, Tesla.Env.t()}
   def billing_payments_post_payment(connection, account_id, opts \\ []) do
     optional_params = %{
@@ -117,13 +122,13 @@ defmodule DocuSign.Api.Payments do
       |> url("/v2.1/accounts/#{account_id}/billing_payments")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {201, DocuSign.Model.BillingPaymentResponse},
-      {400, DocuSign.Model.ErrorDetails}
+      {201, BillingPaymentResponse},
+      {400, ErrorDetails}
     ])
   end
 end

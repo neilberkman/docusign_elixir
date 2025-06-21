@@ -6,6 +6,11 @@ defmodule DocuSign.Model.AccountUiSettings do
   An object that defines the options that are available to non-administrators in the UI.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.AdminMessage
+  alias DocuSign.Model.AskAnAdmin
+  alias DocuSign.Model.SettingsMetadata
+
   @derive Jason.Encoder
   defstruct [
     :adminMessage,
@@ -47,135 +52,132 @@ defmodule DocuSign.Model.AccountUiSettings do
   ]
 
   @type t :: %__MODULE__{
-          :adminMessage => DocuSign.Model.AdminMessage.t() | nil,
+          :adminMessage => AdminMessage.t() | nil,
           :allowUsersToEditSharedAccess => String.t() | nil,
-          :allowUsersToEditSharedAccessMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
-          :askAnAdmin => DocuSign.Model.AskAnAdmin.t() | nil,
+          :allowUsersToEditSharedAccessMetadata => SettingsMetadata.t() | nil,
+          :askAnAdmin => AskAnAdmin.t() | nil,
           :clickwrapSchemaVersion => String.t() | nil,
-          :clickwrapSchemaVersionMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :clickwrapSchemaVersionMetadata => SettingsMetadata.t() | nil,
           :disableWebAppAccess => String.t() | nil,
-          :disableWebAppAccessMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :disableWebAppAccessMetadata => SettingsMetadata.t() | nil,
           :enableAdminMessage => String.t() | nil,
-          :enableAdminMessageMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :enableAdminMessageMetadata => SettingsMetadata.t() | nil,
           :enableEasySignCanUseMultiTemplateApply => String.t() | nil,
-          :enableEasySignCanUseMultiTemplateApplyMetadata =>
-            DocuSign.Model.SettingsMetadata.t() | nil,
+          :enableEasySignCanUseMultiTemplateApplyMetadata => SettingsMetadata.t() | nil,
           :enableEasySignTemplateUpload => String.t() | nil,
-          :enableEasySignTemplateUploadMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :enableEasySignTemplateUploadMetadata => SettingsMetadata.t() | nil,
           :enableEnvelopeCopyWithData => String.t() | nil,
-          :enableEnvelopeCopyWithDataMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :enableEnvelopeCopyWithDataMetadata => SettingsMetadata.t() | nil,
           :enableEnvelopeTypes => String.t() | nil,
-          :enableEnvelopeTypesMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :enableEnvelopeTypesMetadata => SettingsMetadata.t() | nil,
           :enableLegacySendflowLink => String.t() | nil,
-          :enableLegacySendflowLinkMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :enableLegacySendflowLinkMetadata => SettingsMetadata.t() | nil,
           :hasExternalLinkedAccounts => String.t() | nil,
-          :hasExternalLinkedAccountsMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :hasExternalLinkedAccountsMetadata => SettingsMetadata.t() | nil,
           :hideSendAnEnvelope => String.t() | nil,
-          :hideSendAnEnvelopeMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :hideSendAnEnvelopeMetadata => SettingsMetadata.t() | nil,
           :hideUseATemplate => String.t() | nil,
           :hideUseATemplateInPrepare => String.t() | nil,
-          :hideUseATemplateInPrepareMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
-          :hideUseATemplateMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :hideUseATemplateInPrepareMetadata => SettingsMetadata.t() | nil,
+          :hideUseATemplateMetadata => SettingsMetadata.t() | nil,
           :orderBasedRecipientIdGeneration => String.t() | nil,
-          :orderBasedRecipientIdGenerationMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :orderBasedRecipientIdGenerationMetadata => SettingsMetadata.t() | nil,
           :removeEnvelopeForwarding => String.t() | nil,
-          :removeEnvelopeForwardingMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :removeEnvelopeForwardingMetadata => SettingsMetadata.t() | nil,
           :shouldRedactAccessCode => String.t() | nil,
-          :shouldRedactAccessCodeMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :shouldRedactAccessCodeMetadata => SettingsMetadata.t() | nil,
           :uploadNewImageToSignOrInitial => String.t() | nil,
-          :uploadNewImageToSignOrInitialMetadata => DocuSign.Model.SettingsMetadata.t() | nil
+          :uploadNewImageToSignOrInitialMetadata => SettingsMetadata.t() | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
-    |> Deserializer.deserialize(:adminMessage, :struct, DocuSign.Model.AdminMessage)
+    |> Deserializer.deserialize(:adminMessage, :struct, AdminMessage)
     |> Deserializer.deserialize(
       :allowUsersToEditSharedAccessMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
-    |> Deserializer.deserialize(:askAnAdmin, :struct, DocuSign.Model.AskAnAdmin)
+    |> Deserializer.deserialize(:askAnAdmin, :struct, AskAnAdmin)
     |> Deserializer.deserialize(
       :clickwrapSchemaVersionMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
     |> Deserializer.deserialize(
       :disableWebAppAccessMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
     |> Deserializer.deserialize(
       :enableAdminMessageMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
     |> Deserializer.deserialize(
       :enableEasySignCanUseMultiTemplateApplyMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
     |> Deserializer.deserialize(
       :enableEasySignTemplateUploadMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
     |> Deserializer.deserialize(
       :enableEnvelopeCopyWithDataMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
     |> Deserializer.deserialize(
       :enableEnvelopeTypesMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
     |> Deserializer.deserialize(
       :enableLegacySendflowLinkMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
     |> Deserializer.deserialize(
       :hasExternalLinkedAccountsMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
     |> Deserializer.deserialize(
       :hideSendAnEnvelopeMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
     |> Deserializer.deserialize(
       :hideUseATemplateInPrepareMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
     |> Deserializer.deserialize(
       :hideUseATemplateMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
     |> Deserializer.deserialize(
       :orderBasedRecipientIdGenerationMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
     |> Deserializer.deserialize(
       :removeEnvelopeForwardingMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
     |> Deserializer.deserialize(
       :shouldRedactAccessCodeMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
     |> Deserializer.deserialize(
       :uploadNewImageToSignOrInitialMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
   end
 end

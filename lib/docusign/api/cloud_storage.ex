@@ -6,8 +6,11 @@ defmodule DocuSign.Api.CloudStorage do
   API calls for all endpoints tagged `CloudStorage`.
   """
 
-  alias DocuSign.Connection
   import DocuSign.RequestBuilder
+
+  alias DocuSign.Connection
+  alias DocuSign.Model.ErrorDetails
+  alias DocuSign.Model.ExternalFolder
 
   @doc """
   Gets a list of items from a cloud storage provider.
@@ -43,17 +46,10 @@ defmodule DocuSign.Api.CloudStorage do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.ExternalFolder.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, ExternalFolder.t()}
           | {:error, Tesla.Env.t()}
-  def cloud_storage_folder_get_cloud_storage_folder(
-        connection,
-        account_id,
-        folder_id,
-        service_id,
-        user_id,
-        opts \\ []
-      ) do
+  def cloud_storage_folder_get_cloud_storage_folder(connection, account_id, folder_id, service_id, user_id, opts \\ []) do
     optional_params = %{
       :cloud_storage_folder_path => :query,
       :cloud_storage_folderid_plain => :query,
@@ -68,17 +64,15 @@ defmodule DocuSign.Api.CloudStorage do
     request =
       %{}
       |> method(:get)
-      |> url(
-        "/v2.1/accounts/#{account_id}/users/#{user_id}/cloud_storage/#{service_id}/folders/#{folder_id}"
-      )
+      |> url("/v2.1/accounts/#{account_id}/users/#{user_id}/cloud_storage/#{service_id}/folders/#{folder_id}")
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.ExternalFolder},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, ExternalFolder},
+      {400, ErrorDetails}
     ])
   end
 
@@ -112,16 +106,10 @@ defmodule DocuSign.Api.CloudStorage do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.ExternalFolder.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, ExternalFolder.t()}
           | {:error, Tesla.Env.t()}
-  def cloud_storage_folder_get_cloud_storage_folder_all(
-        connection,
-        account_id,
-        service_id,
-        user_id,
-        opts \\ []
-      ) do
+  def cloud_storage_folder_get_cloud_storage_folder_all(connection, account_id, service_id, user_id, opts \\ []) do
     optional_params = %{
       :cloud_storage_folder_path => :query,
       :count => :query,
@@ -136,13 +124,13 @@ defmodule DocuSign.Api.CloudStorage do
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/users/#{user_id}/cloud_storage/#{service_id}/folders")
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.ExternalFolder},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, ExternalFolder},
+      {400, ErrorDetails}
     ])
   end
 end

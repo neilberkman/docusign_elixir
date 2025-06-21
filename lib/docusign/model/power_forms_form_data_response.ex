@@ -6,19 +6,20 @@ defmodule DocuSign.Model.PowerFormsFormDataResponse do
 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.PowerFormFormDataEnvelope
+
   @derive Jason.Encoder
   defstruct [
     :envelopes
   ]
 
   @type t :: %__MODULE__{
-          :envelopes => [DocuSign.Model.PowerFormFormDataEnvelope.t()] | nil
+          :envelopes => [PowerFormFormDataEnvelope.t()] | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
-    |> Deserializer.deserialize(:envelopes, :list, DocuSign.Model.PowerFormFormDataEnvelope)
+    |> Deserializer.deserialize(:envelopes, :list, PowerFormFormDataEnvelope)
   end
 end

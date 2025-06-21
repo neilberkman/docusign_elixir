@@ -6,6 +6,9 @@ defmodule DocuSign.Model.ExternalDocumentSources do
   A complex object specifying the external document sources.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.SettingsMetadata
+
   @derive Jason.Encoder
   defstruct [
     :boxnetEnabled,
@@ -22,25 +25,23 @@ defmodule DocuSign.Model.ExternalDocumentSources do
 
   @type t :: %__MODULE__{
           :boxnetEnabled => String.t() | nil,
-          :boxnetMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :boxnetMetadata => SettingsMetadata.t() | nil,
           :dropboxEnabled => String.t() | nil,
-          :dropboxMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :dropboxMetadata => SettingsMetadata.t() | nil,
           :googleDriveEnabled => String.t() | nil,
-          :googleDriveMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :googleDriveMetadata => SettingsMetadata.t() | nil,
           :oneDriveEnabled => String.t() | nil,
-          :oneDriveMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :oneDriveMetadata => SettingsMetadata.t() | nil,
           :salesforceEnabled => String.t() | nil,
-          :salesforceMetadata => DocuSign.Model.SettingsMetadata.t() | nil
+          :salesforceMetadata => SettingsMetadata.t() | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
-    |> Deserializer.deserialize(:boxnetMetadata, :struct, DocuSign.Model.SettingsMetadata)
-    |> Deserializer.deserialize(:dropboxMetadata, :struct, DocuSign.Model.SettingsMetadata)
-    |> Deserializer.deserialize(:googleDriveMetadata, :struct, DocuSign.Model.SettingsMetadata)
-    |> Deserializer.deserialize(:oneDriveMetadata, :struct, DocuSign.Model.SettingsMetadata)
-    |> Deserializer.deserialize(:salesforceMetadata, :struct, DocuSign.Model.SettingsMetadata)
+    |> Deserializer.deserialize(:boxnetMetadata, :struct, SettingsMetadata)
+    |> Deserializer.deserialize(:dropboxMetadata, :struct, SettingsMetadata)
+    |> Deserializer.deserialize(:googleDriveMetadata, :struct, SettingsMetadata)
+    |> Deserializer.deserialize(:oneDriveMetadata, :struct, SettingsMetadata)
+    |> Deserializer.deserialize(:salesforceMetadata, :struct, SettingsMetadata)
   end
 end

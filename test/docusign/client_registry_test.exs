@@ -1,10 +1,10 @@
 defmodule DocuSign.ClientRegistryTest do
   use ExUnit.Case, async: false
 
-  alias DocuSign.ClientRegistry
-
   import DocuSign.ProcessHelper
   import Mox
+
+  alias DocuSign.ClientRegistry
 
   setup :set_mox_from_context
   setup :verify_on_exit!

@@ -6,6 +6,9 @@ defmodule DocuSign.Model.EnvelopeTransferRuleInformation do
 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.EnvelopeTransferRule
+
   @derive Jason.Encoder
   defstruct [
     :endPosition,
@@ -19,7 +22,7 @@ defmodule DocuSign.Model.EnvelopeTransferRuleInformation do
 
   @type t :: %__MODULE__{
           :endPosition => String.t() | nil,
-          :envelopeTransferRules => [DocuSign.Model.EnvelopeTransferRule.t()] | nil,
+          :envelopeTransferRules => [EnvelopeTransferRule.t()] | nil,
           :nextUri => String.t() | nil,
           :previousUri => String.t() | nil,
           :resultSetSize => String.t() | nil,
@@ -27,14 +30,12 @@ defmodule DocuSign.Model.EnvelopeTransferRuleInformation do
           :totalSetSize => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
     |> Deserializer.deserialize(
       :envelopeTransferRules,
       :list,
-      DocuSign.Model.EnvelopeTransferRule
+      EnvelopeTransferRule
     )
   end
 end

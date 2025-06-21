@@ -6,8 +6,11 @@ defmodule DocuSign.Api.DocumentGeneration do
   API calls for all endpoints tagged `DocumentGeneration`.
   """
 
-  alias DocuSign.Connection
   import DocuSign.RequestBuilder
+
+  alias DocuSign.Connection
+  alias DocuSign.Model.DocGenFormFieldResponse
+  alias DocuSign.Model.ErrorDetails
 
   @doc """
   Returns sender fields for an envelope.
@@ -31,26 +34,21 @@ defmodule DocuSign.Api.DocumentGeneration do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.DocGenFormFieldResponse.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, DocGenFormFieldResponse.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
-  def doc_gen_form_fields_get_envelope_doc_gen_form_fields(
-        connection,
-        account_id,
-        envelope_id,
-        _opts \\ []
-      ) do
+  def doc_gen_form_fields_get_envelope_doc_gen_form_fields(connection, account_id, envelope_id, _opts \\ []) do
     request =
       %{}
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/docGenFormFields")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.DocGenFormFieldResponse},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, DocGenFormFieldResponse},
+      {400, ErrorDetails}
     ])
   end
 
@@ -78,18 +76,13 @@ defmodule DocuSign.Api.DocumentGeneration do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.DocGenFormFieldResponse.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, DocGenFormFieldResponse.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
-  def doc_gen_form_fields_put_envelope_doc_gen_form_fields(
-        connection,
-        account_id,
-        envelope_id,
-        opts \\ []
-      ) do
+  def doc_gen_form_fields_put_envelope_doc_gen_form_fields(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
-      :update_docgen_formfields_only => :query,
-      :body => :body
+      :body => :body,
+      :update_docgen_formfields_only => :query
     }
 
     request =
@@ -98,13 +91,13 @@ defmodule DocuSign.Api.DocumentGeneration do
       |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/docGenFormFields")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.DocGenFormFieldResponse},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, DocGenFormFieldResponse},
+      {400, ErrorDetails}
     ])
   end
 end

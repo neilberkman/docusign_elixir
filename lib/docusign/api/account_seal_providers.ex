@@ -6,8 +6,11 @@ defmodule DocuSign.Api.AccountSealProviders do
   API calls for all endpoints tagged `AccountSealProviders`.
   """
 
-  alias DocuSign.Connection
   import DocuSign.RequestBuilder
+
+  alias DocuSign.Connection
+  alias DocuSign.Model.AccountSealProviders
+  alias DocuSign.Model.ErrorDetails
 
   @doc """
   Returns available seals for specified account.
@@ -24,21 +27,21 @@ defmodule DocuSign.Api.AccountSealProviders do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec account_signature_providers_get_seal_providers(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.AccountSealProviders.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, AccountSealProviders.t()}
           | {:error, Tesla.Env.t()}
   def account_signature_providers_get_seal_providers(connection, account_id, _opts \\ []) do
     request =
       %{}
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/seals")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.AccountSealProviders},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, AccountSealProviders},
+      {400, ErrorDetails}
     ])
   end
 end

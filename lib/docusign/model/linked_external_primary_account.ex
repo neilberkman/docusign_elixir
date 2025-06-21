@@ -6,6 +6,10 @@ defmodule DocuSign.Model.LinkedExternalPrimaryAccount do
 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.ExternalPrimaryAccountRecipientAuthRequirements
+  alias DocuSign.Model.ExternalPrimaryAccountSafelistAuthRequirements
+
   @derive Jason.Encoder
   defstruct [
     :accountName,
@@ -38,28 +42,24 @@ defmodule DocuSign.Model.LinkedExternalPrimaryAccount do
           :pdfFieldHandlingPrefillTabPermission => String.t() | nil,
           :pdfFieldHandlingStandardInputTabPermission => String.t() | nil,
           :pdfFieldHandlingStandardTabPermission => String.t() | nil,
-          :recipientAuthRequirements =>
-            DocuSign.Model.ExternalPrimaryAccountRecipientAuthRequirements.t() | nil,
-          :recipientSafelistAuthRequirements =>
-            DocuSign.Model.ExternalPrimaryAccountSafelistAuthRequirements.t() | nil,
+          :recipientAuthRequirements => ExternalPrimaryAccountRecipientAuthRequirements.t() | nil,
+          :recipientSafelistAuthRequirements => ExternalPrimaryAccountSafelistAuthRequirements.t() | nil,
           :safelistRecipients => String.t() | nil,
           :status => String.t() | nil,
           :userId => String.t() | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
     |> Deserializer.deserialize(
       :recipientAuthRequirements,
       :struct,
-      DocuSign.Model.ExternalPrimaryAccountRecipientAuthRequirements
+      ExternalPrimaryAccountRecipientAuthRequirements
     )
     |> Deserializer.deserialize(
       :recipientSafelistAuthRequirements,
       :struct,
-      DocuSign.Model.ExternalPrimaryAccountSafelistAuthRequirements
+      ExternalPrimaryAccountSafelistAuthRequirements
     )
   end
 end

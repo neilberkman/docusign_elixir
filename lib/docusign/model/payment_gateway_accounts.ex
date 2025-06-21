@@ -6,6 +6,11 @@ defmodule DocuSign.Model.PaymentGatewayAccounts do
   Information about a connected payment gateway account.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.PaymentGatewayAccountSetting
+  alias DocuSign.Model.PaymentMethodWithOptions
+  alias DocuSign.Model.PayPalLegacySettings
+
   @derive Jason.Encoder
   defstruct [
     :allowCustomMetadata,
@@ -14,10 +19,10 @@ defmodule DocuSign.Model.PaymentGatewayAccounts do
     :isEnabled,
     :isLegacy,
     :lastModified,
+    :payPalLegacySettings,
     :paymentGateway,
     :paymentGatewayAccountId,
     :paymentGatewayDisplayName,
-    :payPalLegacySettings,
     :supportedCurrencies,
     :supportedPaymentMethods,
     :supportedPaymentMethodsWithOptions,
@@ -26,36 +31,33 @@ defmodule DocuSign.Model.PaymentGatewayAccounts do
 
   @type t :: %__MODULE__{
           :allowCustomMetadata => boolean() | nil,
-          :config => DocuSign.Model.PaymentGatewayAccountSetting.t() | nil,
+          :config => PaymentGatewayAccountSetting.t() | nil,
           :displayName => String.t() | nil,
           :isEnabled => String.t() | nil,
           :isLegacy => String.t() | nil,
           :lastModified => String.t() | nil,
+          :payPalLegacySettings => PayPalLegacySettings.t() | nil,
           :paymentGateway => String.t() | nil,
           :paymentGatewayAccountId => String.t() | nil,
           :paymentGatewayDisplayName => String.t() | nil,
-          :payPalLegacySettings => DocuSign.Model.PayPalLegacySettings.t() | nil,
           :supportedCurrencies => [String.t()] | nil,
           :supportedPaymentMethods => [String.t()] | nil,
-          :supportedPaymentMethodsWithOptions =>
-            [DocuSign.Model.PaymentMethodWithOptions.t()] | nil,
+          :supportedPaymentMethodsWithOptions => [PaymentMethodWithOptions.t()] | nil,
           :zeroDecimalCurrencies => [String.t()] | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:config, :struct, DocuSign.Model.PaymentGatewayAccountSetting)
+    |> Deserializer.deserialize(:config, :struct, PaymentGatewayAccountSetting)
     |> Deserializer.deserialize(
       :payPalLegacySettings,
       :struct,
-      DocuSign.Model.PayPalLegacySettings
+      PayPalLegacySettings
     )
     |> Deserializer.deserialize(
       :supportedPaymentMethodsWithOptions,
       :list,
-      DocuSign.Model.PaymentMethodWithOptions
+      PaymentMethodWithOptions
     )
   end
 end

@@ -6,29 +6,30 @@ defmodule DocuSign.Model.CurrencyPlanPrice do
 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.CreditCardTypes
+
   @derive Jason.Encoder
   defstruct [
     :currencyCode,
     :currencySymbol,
     :perSeatPrice,
-    :supportedCardTypes,
     :supportIncidentFee,
-    :supportPlanFee
+    :supportPlanFee,
+    :supportedCardTypes
   ]
 
   @type t :: %__MODULE__{
           :currencyCode => String.t() | nil,
           :currencySymbol => String.t() | nil,
           :perSeatPrice => String.t() | nil,
-          :supportedCardTypes => DocuSign.Model.CreditCardTypes.t() | nil,
           :supportIncidentFee => String.t() | nil,
-          :supportPlanFee => String.t() | nil
+          :supportPlanFee => String.t() | nil,
+          :supportedCardTypes => CreditCardTypes.t() | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
-    |> Deserializer.deserialize(:supportedCardTypes, :struct, DocuSign.Model.CreditCardTypes)
+    |> Deserializer.deserialize(:supportedCardTypes, :struct, CreditCardTypes)
   end
 end

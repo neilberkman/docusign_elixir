@@ -6,19 +6,20 @@ defmodule DocuSign.Model.NewUsersSummary do
   Object representing a summary of data for new users.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.NewUser
+
   @derive Jason.Encoder
   defstruct [
     :newUsers
   ]
 
   @type t :: %__MODULE__{
-          :newUsers => [DocuSign.Model.NewUser.t()] | nil
+          :newUsers => [NewUser.t()] | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
-    |> Deserializer.deserialize(:newUsers, :list, DocuSign.Model.NewUser)
+    |> Deserializer.deserialize(:newUsers, :list, NewUser)
   end
 end

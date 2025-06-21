@@ -6,8 +6,11 @@ defmodule DocuSign.Api.Groups do
   API calls for all endpoints tagged `Groups`.
   """
 
-  alias DocuSign.Connection
   import DocuSign.RequestBuilder
+
+  alias DocuSign.Connection
+  alias DocuSign.Model.ErrorDetails
+  alias DocuSign.Model.GroupInformation
 
   @doc """
   Deletes an existing user group.
@@ -26,8 +29,8 @@ defmodule DocuSign.Api.Groups do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec groups_delete_groups(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.GroupInformation.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, GroupInformation.t()}
           | {:error, Tesla.Env.t()}
   def groups_delete_groups(connection, account_id, opts \\ []) do
     optional_params = %{
@@ -39,13 +42,13 @@ defmodule DocuSign.Api.Groups do
       |> method(:delete)
       |> url("/v2.1/accounts/#{account_id}/groups")
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.GroupInformation},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, GroupInformation},
+      {400, ErrorDetails}
     ])
   end
 
@@ -70,8 +73,8 @@ defmodule DocuSign.Api.Groups do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec groups_get_groups(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.GroupInformation.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, GroupInformation.t()}
           | {:error, Tesla.Env.t()}
   def groups_get_groups(connection, account_id, opts \\ []) do
     optional_params = %{
@@ -87,13 +90,13 @@ defmodule DocuSign.Api.Groups do
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/groups")
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.GroupInformation},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, GroupInformation},
+      {400, ErrorDetails}
     ])
   end
 
@@ -114,8 +117,8 @@ defmodule DocuSign.Api.Groups do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec groups_post_groups(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.GroupInformation.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, GroupInformation.t()}
           | {:error, Tesla.Env.t()}
   def groups_post_groups(connection, account_id, opts \\ []) do
     optional_params = %{
@@ -128,13 +131,13 @@ defmodule DocuSign.Api.Groups do
       |> url("/v2.1/accounts/#{account_id}/groups")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {201, DocuSign.Model.GroupInformation},
-      {400, DocuSign.Model.ErrorDetails}
+      {201, GroupInformation},
+      {400, ErrorDetails}
     ])
   end
 
@@ -155,8 +158,8 @@ defmodule DocuSign.Api.Groups do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec groups_put_groups(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.GroupInformation.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, GroupInformation.t()}
           | {:error, Tesla.Env.t()}
   def groups_put_groups(connection, account_id, opts \\ []) do
     optional_params = %{
@@ -169,13 +172,13 @@ defmodule DocuSign.Api.Groups do
       |> url("/v2.1/accounts/#{account_id}/groups")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.GroupInformation},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, GroupInformation},
+      {400, ErrorDetails}
     ])
   end
 end

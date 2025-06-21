@@ -6,33 +6,34 @@ defmodule DocuSign.Model.RecipientFormData do
 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.FormDataItem
+
   @derive Jason.Encoder
   defstruct [
     :DeclinedTime,
     :DeliveredTime,
+    :SentTime,
+    :SignedTime,
     :email,
     :formData,
     :name,
-    :recipientId,
-    :SentTime,
-    :SignedTime
+    :recipientId
   ]
 
   @type t :: %__MODULE__{
           :DeclinedTime => String.t() | nil,
           :DeliveredTime => String.t() | nil,
-          :email => String.t() | nil,
-          :formData => [DocuSign.Model.FormDataItem.t()] | nil,
-          :name => String.t() | nil,
-          :recipientId => String.t() | nil,
           :SentTime => String.t() | nil,
-          :SignedTime => String.t() | nil
+          :SignedTime => String.t() | nil,
+          :email => String.t() | nil,
+          :formData => [FormDataItem.t()] | nil,
+          :name => String.t() | nil,
+          :recipientId => String.t() | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
-    |> Deserializer.deserialize(:formData, :list, DocuSign.Model.FormDataItem)
+    |> Deserializer.deserialize(:formData, :list, FormDataItem)
   end
 end

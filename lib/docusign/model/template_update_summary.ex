@@ -6,6 +6,15 @@ defmodule DocuSign.Model.TemplateUpdateSummary do
 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.BulkEnvelopeStatus
+  alias DocuSign.Model.EnvelopeLocks
+  alias DocuSign.Model.EnvelopeRecipientTabs
+  alias DocuSign.Model.ErrorDetails
+  alias DocuSign.Model.ListCustomField
+  alias DocuSign.Model.RecipientUpdateResponse
+  alias DocuSign.Model.TextCustomField
+
   @derive Jason.Encoder
   defstruct [
     :bulkEnvelopeStatus,
@@ -20,39 +29,37 @@ defmodule DocuSign.Model.TemplateUpdateSummary do
   ]
 
   @type t :: %__MODULE__{
-          :bulkEnvelopeStatus => DocuSign.Model.BulkEnvelopeStatus.t() | nil,
+          :bulkEnvelopeStatus => BulkEnvelopeStatus.t() | nil,
           :envelopeId => String.t() | nil,
-          :errorDetails => DocuSign.Model.ErrorDetails.t() | nil,
-          :listCustomFieldUpdateResults => [DocuSign.Model.ListCustomField.t()] | nil,
-          :lockInformation => DocuSign.Model.EnvelopeLocks.t() | nil,
+          :errorDetails => ErrorDetails.t() | nil,
+          :listCustomFieldUpdateResults => [ListCustomField.t()] | nil,
+          :lockInformation => EnvelopeLocks.t() | nil,
           :purgeState => String.t() | nil,
-          :recipientUpdateResults => [DocuSign.Model.RecipientUpdateResponse.t()] | nil,
-          :tabUpdateResults => DocuSign.Model.EnvelopeRecipientTabs.t() | nil,
-          :textCustomFieldUpdateResults => [DocuSign.Model.TextCustomField.t()] | nil
+          :recipientUpdateResults => [RecipientUpdateResponse.t()] | nil,
+          :tabUpdateResults => EnvelopeRecipientTabs.t() | nil,
+          :textCustomFieldUpdateResults => [TextCustomField.t()] | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
-    |> Deserializer.deserialize(:bulkEnvelopeStatus, :struct, DocuSign.Model.BulkEnvelopeStatus)
-    |> Deserializer.deserialize(:errorDetails, :struct, DocuSign.Model.ErrorDetails)
+    |> Deserializer.deserialize(:bulkEnvelopeStatus, :struct, BulkEnvelopeStatus)
+    |> Deserializer.deserialize(:errorDetails, :struct, ErrorDetails)
     |> Deserializer.deserialize(
       :listCustomFieldUpdateResults,
       :list,
-      DocuSign.Model.ListCustomField
+      ListCustomField
     )
-    |> Deserializer.deserialize(:lockInformation, :struct, DocuSign.Model.EnvelopeLocks)
+    |> Deserializer.deserialize(:lockInformation, :struct, EnvelopeLocks)
     |> Deserializer.deserialize(
       :recipientUpdateResults,
       :list,
-      DocuSign.Model.RecipientUpdateResponse
+      RecipientUpdateResponse
     )
-    |> Deserializer.deserialize(:tabUpdateResults, :struct, DocuSign.Model.EnvelopeRecipientTabs)
+    |> Deserializer.deserialize(:tabUpdateResults, :struct, EnvelopeRecipientTabs)
     |> Deserializer.deserialize(
       :textCustomFieldUpdateResults,
       :list,
-      DocuSign.Model.TextCustomField
+      TextCustomField
     )
   end
 end

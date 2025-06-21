@@ -6,6 +6,9 @@ defmodule DocuSign.Model.FormDataItem do
 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.ErrorDetails
+
   @derive Jason.Encoder
   defstruct [
     :errorDetails,
@@ -18,7 +21,7 @@ defmodule DocuSign.Model.FormDataItem do
   ]
 
   @type t :: %__MODULE__{
-          :errorDetails => DocuSign.Model.ErrorDetails.t() | nil,
+          :errorDetails => ErrorDetails.t() | nil,
           :listSelectedValue => String.t() | nil,
           :name => String.t() | nil,
           :numericalValue => String.t() | nil,
@@ -27,10 +30,8 @@ defmodule DocuSign.Model.FormDataItem do
           :value => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:errorDetails, :struct, DocuSign.Model.ErrorDetails)
+    |> Deserializer.deserialize(:errorDetails, :struct, ErrorDetails)
   end
 end

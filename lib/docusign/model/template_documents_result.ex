@@ -6,6 +6,9 @@ defmodule DocuSign.Model.TemplateDocumentsResult do
   The results of this method.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.EnvelopeDocument
+
   @derive Jason.Encoder
   defstruct [
     :templateDocuments,
@@ -13,14 +16,12 @@ defmodule DocuSign.Model.TemplateDocumentsResult do
   ]
 
   @type t :: %__MODULE__{
-          :templateDocuments => [DocuSign.Model.EnvelopeDocument.t()] | nil,
+          :templateDocuments => [EnvelopeDocument.t()] | nil,
           :templateId => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:templateDocuments, :list, DocuSign.Model.EnvelopeDocument)
+    |> Deserializer.deserialize(:templateDocuments, :list, EnvelopeDocument)
   end
 end

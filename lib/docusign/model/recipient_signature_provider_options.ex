@@ -6,6 +6,9 @@ defmodule DocuSign.Model.RecipientSignatureProviderOptions do
   Option settings for the signature provider. Different providers require or use different options. [The current provider list and the options they require.](/docs/esign-rest-api/esign101/concepts/standards-based-signatures/)
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.PropertyMetadata
+
   @derive Jason.Encoder
   defstruct [
     :cpfNumber,
@@ -20,26 +23,24 @@ defmodule DocuSign.Model.RecipientSignatureProviderOptions do
 
   @type t :: %__MODULE__{
           :cpfNumber => String.t() | nil,
-          :cpfNumberMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :cpfNumberMetadata => PropertyMetadata.t() | nil,
           :oneTimePassword => String.t() | nil,
-          :oneTimePasswordMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :oneTimePasswordMetadata => PropertyMetadata.t() | nil,
           :signerRole => String.t() | nil,
-          :signerRoleMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :signerRoleMetadata => PropertyMetadata.t() | nil,
           :sms => String.t() | nil,
-          :smsMetadata => DocuSign.Model.PropertyMetadata.t() | nil
+          :smsMetadata => PropertyMetadata.t() | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
-    |> Deserializer.deserialize(:cpfNumberMetadata, :struct, DocuSign.Model.PropertyMetadata)
+    |> Deserializer.deserialize(:cpfNumberMetadata, :struct, PropertyMetadata)
     |> Deserializer.deserialize(
       :oneTimePasswordMetadata,
       :struct,
-      DocuSign.Model.PropertyMetadata
+      PropertyMetadata
     )
-    |> Deserializer.deserialize(:signerRoleMetadata, :struct, DocuSign.Model.PropertyMetadata)
-    |> Deserializer.deserialize(:smsMetadata, :struct, DocuSign.Model.PropertyMetadata)
+    |> Deserializer.deserialize(:signerRoleMetadata, :struct, PropertyMetadata)
+    |> Deserializer.deserialize(:smsMetadata, :struct, PropertyMetadata)
   end
 end

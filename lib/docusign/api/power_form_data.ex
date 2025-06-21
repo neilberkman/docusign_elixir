@@ -6,8 +6,11 @@ defmodule DocuSign.Api.PowerFormData do
   API calls for all endpoints tagged `PowerFormData`.
   """
 
-  alias DocuSign.Connection
   import DocuSign.RequestBuilder
+
+  alias DocuSign.Connection
+  alias DocuSign.Model.ErrorDetails
+  alias DocuSign.Model.PowerFormsFormDataResponse
 
   @doc """
   Returns the data that users entered in a PowerForm.
@@ -34,8 +37,8 @@ defmodule DocuSign.Api.PowerFormData do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.PowerFormsFormDataResponse.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, PowerFormsFormDataResponse.t()}
           | {:error, Tesla.Env.t()}
   def power_forms_get_power_form_form_data(connection, account_id, power_form_id, opts \\ []) do
     optional_params = %{
@@ -49,13 +52,13 @@ defmodule DocuSign.Api.PowerFormData do
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/powerforms/#{power_form_id}/form_data")
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.PowerFormsFormDataResponse},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, PowerFormsFormDataResponse},
+      {400, ErrorDetails}
     ])
   end
 end

@@ -6,6 +6,10 @@ defmodule DocuSign.Model.Workspace do
   A Docusign workspace is a collaboration area for sharing files and data.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.WorkspaceSettings
+  alias DocuSign.Model.WorkspaceUser
+
   @derive Jason.Encoder
   defstruct [
     :billableAccountId,
@@ -25,12 +29,12 @@ defmodule DocuSign.Model.Workspace do
 
   @type t :: %__MODULE__{
           :billableAccountId => String.t() | nil,
-          :callerInformation => DocuSign.Model.WorkspaceUser.t() | nil,
+          :callerInformation => WorkspaceUser.t() | nil,
           :created => String.t() | nil,
-          :createdByInformation => DocuSign.Model.WorkspaceUser.t() | nil,
+          :createdByInformation => WorkspaceUser.t() | nil,
           :lastModified => String.t() | nil,
-          :lastModifiedByInformation => DocuSign.Model.WorkspaceUser.t() | nil,
-          :settings => DocuSign.Model.WorkspaceSettings.t() | nil,
+          :lastModifiedByInformation => WorkspaceUser.t() | nil,
+          :settings => WorkspaceSettings.t() | nil,
           :status => String.t() | nil,
           :workspaceBaseUrl => String.t() | nil,
           :workspaceDescription => String.t() | nil,
@@ -39,13 +43,11 @@ defmodule DocuSign.Model.Workspace do
           :workspaceUri => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:callerInformation, :struct, DocuSign.Model.WorkspaceUser)
-    |> Deserializer.deserialize(:createdByInformation, :struct, DocuSign.Model.WorkspaceUser)
-    |> Deserializer.deserialize(:lastModifiedByInformation, :struct, DocuSign.Model.WorkspaceUser)
-    |> Deserializer.deserialize(:settings, :struct, DocuSign.Model.WorkspaceSettings)
+    |> Deserializer.deserialize(:callerInformation, :struct, WorkspaceUser)
+    |> Deserializer.deserialize(:createdByInformation, :struct, WorkspaceUser)
+    |> Deserializer.deserialize(:lastModifiedByInformation, :struct, WorkspaceUser)
+    |> Deserializer.deserialize(:settings, :struct, WorkspaceSettings)
   end
 end

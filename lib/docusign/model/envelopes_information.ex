@@ -6,13 +6,18 @@ defmodule DocuSign.Model.EnvelopesInformation do
   Result set for the Envelopes: listStatusChanges method
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.Envelope
+  alias DocuSign.Model.EnvelopeTransactionStatus
+  alias DocuSign.Model.Folder
+
   @derive Jason.Encoder
   defstruct [
     :continuationToken,
     :endPosition,
-    :envelopes,
     :envelopeSearchSource,
     :envelopeTransactionStatuses,
+    :envelopes,
     :folders,
     :lastQueriedDateTime,
     :nextUri,
@@ -25,10 +30,10 @@ defmodule DocuSign.Model.EnvelopesInformation do
   @type t :: %__MODULE__{
           :continuationToken => String.t() | nil,
           :endPosition => String.t() | nil,
-          :envelopes => [DocuSign.Model.Envelope.t()] | nil,
           :envelopeSearchSource => String.t() | nil,
-          :envelopeTransactionStatuses => [DocuSign.Model.EnvelopeTransactionStatus.t()] | nil,
-          :folders => [DocuSign.Model.Folder.t()] | nil,
+          :envelopeTransactionStatuses => [EnvelopeTransactionStatus.t()] | nil,
+          :envelopes => [Envelope.t()] | nil,
+          :folders => [Folder.t()] | nil,
           :lastQueriedDateTime => String.t() | nil,
           :nextUri => String.t() | nil,
           :previousUri => String.t() | nil,
@@ -37,16 +42,14 @@ defmodule DocuSign.Model.EnvelopesInformation do
           :totalSetSize => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:envelopes, :list, DocuSign.Model.Envelope)
+    |> Deserializer.deserialize(:envelopes, :list, Envelope)
     |> Deserializer.deserialize(
       :envelopeTransactionStatuses,
       :list,
-      DocuSign.Model.EnvelopeTransactionStatus
+      EnvelopeTransactionStatus
     )
-    |> Deserializer.deserialize(:folders, :list, DocuSign.Model.Folder)
+    |> Deserializer.deserialize(:folders, :list, Folder)
   end
 end

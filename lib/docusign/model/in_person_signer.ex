@@ -6,6 +6,26 @@ defmodule DocuSign.Model.InPersonSigner do
   Contains information about an in-person recipient. This is a Docusign user, acting as a Signing Host, who is in the same physical location as the signer. To learn about the fields used for the eNotary feature, see the [EnvelopeRecipients resource][resource].  [resource]: /docs/esign-rest-api/reference/envelopes/enveloperecipients/#in-person-signer-recipient 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.AuthenticationStatus
+  alias DocuSign.Model.DocumentVisibility
+  alias DocuSign.Model.EnvelopeRecipientTabs
+  alias DocuSign.Model.ErrorDetails
+  alias DocuSign.Model.FeatureAvailableMetadata
+  alias DocuSign.Model.IdCheckInformationInput
+  alias DocuSign.Model.NotaryHost
+  alias DocuSign.Model.OfflineAttributes
+  alias DocuSign.Model.PropertyMetadata
+  alias DocuSign.Model.RecipientAttachment
+  alias DocuSign.Model.RecipientEmailNotification
+  alias DocuSign.Model.RecipientIdentityVerification
+  alias DocuSign.Model.RecipientPhoneAuthentication
+  alias DocuSign.Model.RecipientSignatureInformation
+  alias DocuSign.Model.RecipientSignatureProvider
+  alias DocuSign.Model.RecipientSmsAuthentication
+  alias DocuSign.Model.SocialAuthentication
+  alias DocuSign.Model.UserInfo
+
   @derive Jason.Encoder
   defstruct [
     :accessCode,
@@ -46,9 +66,9 @@ defmodule DocuSign.Model.InPersonSigner do
     :idCheckConfigurationNameMetadata,
     :idCheckInformationInput,
     :identityVerification,
-    :inheritEmailNotificationConfiguration,
     :inPersonSigningType,
     :inPersonSigningTypeMetadata,
+    :inheritEmailNotificationConfiguration,
     :lockedRecipientPhoneAuthEditable,
     :lockedRecipientSmsEditable,
     :name,
@@ -70,13 +90,15 @@ defmodule DocuSign.Model.InPersonSigner do
     :recipientTypeMetadata,
     :requireIdLookup,
     :requireIdLookupMetadata,
-    :requireSignerCertificate,
     :requireSignOnPaper,
+    :requireSignerCertificate,
     :requireUploadSignature,
     :roleName,
     :routingOrder,
     :routingOrderMetadata,
     :sentDateTime,
+    :signInEachLocation,
+    :signInEachLocationMetadata,
     :signatureInfo,
     :signedDateTime,
     :signerEmail,
@@ -87,8 +109,6 @@ defmodule DocuSign.Model.InPersonSigner do
     :signerLastNameMetadata,
     :signerName,
     :signerNameMetadata,
-    :signInEachLocation,
-    :signInEachLocationMetadata,
     :signingGroupId,
     :signingGroupIdMetadata,
     :signingGroupName,
@@ -108,7 +128,7 @@ defmodule DocuSign.Model.InPersonSigner do
 
   @type t :: %__MODULE__{
           :accessCode => String.t() | nil,
-          :accessCodeMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :accessCodeMetadata => PropertyMetadata.t() | nil,
           :addAccessCodeToEmail => String.t() | nil,
           :allowSystemOverrideForLockedRecipient => String.t() | nil,
           :autoNavigation => String.t() | nil,
@@ -124,80 +144,80 @@ defmodule DocuSign.Model.InPersonSigner do
           :defaultRecipient => String.t() | nil,
           :deliveredDateTime => String.t() | nil,
           :deliveryMethod => String.t() | nil,
-          :deliveryMethodMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :deliveryMethodMetadata => PropertyMetadata.t() | nil,
           :designatorId => String.t() | nil,
           :designatorIdGuid => String.t() | nil,
           :documentTemplateId => String.t() | nil,
-          :documentVisibility => [DocuSign.Model.DocumentVisibility.t()] | nil,
+          :documentVisibility => [DocumentVisibility.t()] | nil,
           :email => String.t() | nil,
-          :emailMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
-          :emailNotification => DocuSign.Model.RecipientEmailNotification.t() | nil,
+          :emailMetadata => PropertyMetadata.t() | nil,
+          :emailNotification => RecipientEmailNotification.t() | nil,
           :embeddedRecipientStartURL => String.t() | nil,
-          :errorDetails => DocuSign.Model.ErrorDetails.t() | nil,
+          :errorDetails => ErrorDetails.t() | nil,
           :excludedDocuments => [String.t()] | nil,
           :faxNumber => String.t() | nil,
-          :faxNumberMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :faxNumberMetadata => PropertyMetadata.t() | nil,
           :hostEmail => String.t() | nil,
-          :hostEmailMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :hostEmailMetadata => PropertyMetadata.t() | nil,
           :hostName => String.t() | nil,
-          :hostNameMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :hostNameMetadata => PropertyMetadata.t() | nil,
           :idCheckConfigurationName => String.t() | nil,
-          :idCheckConfigurationNameMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
-          :idCheckInformationInput => DocuSign.Model.IdCheckInformationInput.t() | nil,
-          :identityVerification => DocuSign.Model.RecipientIdentityVerification.t() | nil,
-          :inheritEmailNotificationConfiguration => String.t() | nil,
+          :idCheckConfigurationNameMetadata => PropertyMetadata.t() | nil,
+          :idCheckInformationInput => IdCheckInformationInput.t() | nil,
+          :identityVerification => RecipientIdentityVerification.t() | nil,
           :inPersonSigningType => String.t() | nil,
-          :inPersonSigningTypeMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :inPersonSigningTypeMetadata => PropertyMetadata.t() | nil,
+          :inheritEmailNotificationConfiguration => String.t() | nil,
           :lockedRecipientPhoneAuthEditable => String.t() | nil,
           :lockedRecipientSmsEditable => String.t() | nil,
           :name => String.t() | nil,
-          :nameMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
-          :notaryHost => DocuSign.Model.NotaryHost.t() | nil,
+          :nameMetadata => PropertyMetadata.t() | nil,
+          :notaryHost => NotaryHost.t() | nil,
           :notaryId => String.t() | nil,
           :note => String.t() | nil,
-          :noteMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
-          :offlineAttributes => DocuSign.Model.OfflineAttributes.t() | nil,
-          :phoneAuthentication => DocuSign.Model.RecipientPhoneAuthentication.t() | nil,
-          :recipientAttachments => [DocuSign.Model.RecipientAttachment.t()] | nil,
-          :recipientAuthenticationStatus => DocuSign.Model.AuthenticationStatus.t() | nil,
-          :recipientFeatureMetadata => [DocuSign.Model.FeatureAvailableMetadata.t()] | nil,
+          :noteMetadata => PropertyMetadata.t() | nil,
+          :offlineAttributes => OfflineAttributes.t() | nil,
+          :phoneAuthentication => RecipientPhoneAuthentication.t() | nil,
+          :recipientAttachments => [RecipientAttachment.t()] | nil,
+          :recipientAuthenticationStatus => AuthenticationStatus.t() | nil,
+          :recipientFeatureMetadata => [FeatureAvailableMetadata.t()] | nil,
           :recipientId => String.t() | nil,
           :recipientIdGuid => String.t() | nil,
-          :recipientSignatureProviders => [DocuSign.Model.RecipientSignatureProvider.t()] | nil,
+          :recipientSignatureProviders => [RecipientSignatureProvider.t()] | nil,
           :recipientSuppliesTabs => String.t() | nil,
           :recipientType => String.t() | nil,
-          :recipientTypeMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :recipientTypeMetadata => PropertyMetadata.t() | nil,
           :requireIdLookup => String.t() | nil,
-          :requireIdLookupMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
-          :requireSignerCertificate => String.t() | nil,
+          :requireIdLookupMetadata => PropertyMetadata.t() | nil,
           :requireSignOnPaper => String.t() | nil,
+          :requireSignerCertificate => String.t() | nil,
           :requireUploadSignature => String.t() | nil,
           :roleName => String.t() | nil,
           :routingOrder => String.t() | nil,
-          :routingOrderMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :routingOrderMetadata => PropertyMetadata.t() | nil,
           :sentDateTime => String.t() | nil,
-          :signatureInfo => DocuSign.Model.RecipientSignatureInformation.t() | nil,
+          :signInEachLocation => String.t() | nil,
+          :signInEachLocationMetadata => PropertyMetadata.t() | nil,
+          :signatureInfo => RecipientSignatureInformation.t() | nil,
           :signedDateTime => String.t() | nil,
           :signerEmail => String.t() | nil,
-          :signerEmailMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :signerEmailMetadata => PropertyMetadata.t() | nil,
           :signerFirstName => String.t() | nil,
-          :signerFirstNameMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :signerFirstNameMetadata => PropertyMetadata.t() | nil,
           :signerLastName => String.t() | nil,
-          :signerLastNameMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :signerLastNameMetadata => PropertyMetadata.t() | nil,
           :signerName => String.t() | nil,
-          :signerNameMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
-          :signInEachLocation => String.t() | nil,
-          :signInEachLocationMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :signerNameMetadata => PropertyMetadata.t() | nil,
           :signingGroupId => String.t() | nil,
-          :signingGroupIdMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :signingGroupIdMetadata => PropertyMetadata.t() | nil,
           :signingGroupName => String.t() | nil,
-          :signingGroupUsers => [DocuSign.Model.UserInfo.t()] | nil,
-          :smsAuthentication => DocuSign.Model.RecipientSmsAuthentication.t() | nil,
-          :socialAuthentications => [DocuSign.Model.SocialAuthentication.t()] | nil,
+          :signingGroupUsers => [UserInfo.t()] | nil,
+          :smsAuthentication => RecipientSmsAuthentication.t() | nil,
+          :socialAuthentications => [SocialAuthentication.t()] | nil,
           :status => String.t() | nil,
           :statusCode => String.t() | nil,
           :suppressEmails => String.t() | nil,
-          :tabs => DocuSign.Model.EnvelopeRecipientTabs.t() | nil,
+          :tabs => EnvelopeRecipientTabs.t() | nil,
           :templateLocked => String.t() | nil,
           :templateRequired => String.t() | nil,
           :totalTabCount => String.t() | nil,
@@ -205,105 +225,103 @@ defmodule DocuSign.Model.InPersonSigner do
           :webFormRecipientViewId => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:accessCodeMetadata, :struct, DocuSign.Model.PropertyMetadata)
-    |> Deserializer.deserialize(:deliveryMethodMetadata, :struct, DocuSign.Model.PropertyMetadata)
-    |> Deserializer.deserialize(:documentVisibility, :list, DocuSign.Model.DocumentVisibility)
-    |> Deserializer.deserialize(:emailMetadata, :struct, DocuSign.Model.PropertyMetadata)
+    |> Deserializer.deserialize(:accessCodeMetadata, :struct, PropertyMetadata)
+    |> Deserializer.deserialize(:deliveryMethodMetadata, :struct, PropertyMetadata)
+    |> Deserializer.deserialize(:documentVisibility, :list, DocumentVisibility)
+    |> Deserializer.deserialize(:emailMetadata, :struct, PropertyMetadata)
     |> Deserializer.deserialize(
       :emailNotification,
       :struct,
-      DocuSign.Model.RecipientEmailNotification
+      RecipientEmailNotification
     )
-    |> Deserializer.deserialize(:errorDetails, :struct, DocuSign.Model.ErrorDetails)
-    |> Deserializer.deserialize(:faxNumberMetadata, :struct, DocuSign.Model.PropertyMetadata)
-    |> Deserializer.deserialize(:hostEmailMetadata, :struct, DocuSign.Model.PropertyMetadata)
-    |> Deserializer.deserialize(:hostNameMetadata, :struct, DocuSign.Model.PropertyMetadata)
+    |> Deserializer.deserialize(:errorDetails, :struct, ErrorDetails)
+    |> Deserializer.deserialize(:faxNumberMetadata, :struct, PropertyMetadata)
+    |> Deserializer.deserialize(:hostEmailMetadata, :struct, PropertyMetadata)
+    |> Deserializer.deserialize(:hostNameMetadata, :struct, PropertyMetadata)
     |> Deserializer.deserialize(
       :idCheckConfigurationNameMetadata,
       :struct,
-      DocuSign.Model.PropertyMetadata
+      PropertyMetadata
     )
     |> Deserializer.deserialize(
       :idCheckInformationInput,
       :struct,
-      DocuSign.Model.IdCheckInformationInput
+      IdCheckInformationInput
     )
     |> Deserializer.deserialize(
       :identityVerification,
       :struct,
-      DocuSign.Model.RecipientIdentityVerification
+      RecipientIdentityVerification
     )
     |> Deserializer.deserialize(
       :inPersonSigningTypeMetadata,
       :struct,
-      DocuSign.Model.PropertyMetadata
+      PropertyMetadata
     )
-    |> Deserializer.deserialize(:nameMetadata, :struct, DocuSign.Model.PropertyMetadata)
-    |> Deserializer.deserialize(:notaryHost, :struct, DocuSign.Model.NotaryHost)
-    |> Deserializer.deserialize(:noteMetadata, :struct, DocuSign.Model.PropertyMetadata)
-    |> Deserializer.deserialize(:offlineAttributes, :struct, DocuSign.Model.OfflineAttributes)
+    |> Deserializer.deserialize(:nameMetadata, :struct, PropertyMetadata)
+    |> Deserializer.deserialize(:notaryHost, :struct, NotaryHost)
+    |> Deserializer.deserialize(:noteMetadata, :struct, PropertyMetadata)
+    |> Deserializer.deserialize(:offlineAttributes, :struct, OfflineAttributes)
     |> Deserializer.deserialize(
       :phoneAuthentication,
       :struct,
-      DocuSign.Model.RecipientPhoneAuthentication
+      RecipientPhoneAuthentication
     )
-    |> Deserializer.deserialize(:recipientAttachments, :list, DocuSign.Model.RecipientAttachment)
+    |> Deserializer.deserialize(:recipientAttachments, :list, RecipientAttachment)
     |> Deserializer.deserialize(
       :recipientAuthenticationStatus,
       :struct,
-      DocuSign.Model.AuthenticationStatus
+      AuthenticationStatus
     )
     |> Deserializer.deserialize(
       :recipientFeatureMetadata,
       :list,
-      DocuSign.Model.FeatureAvailableMetadata
+      FeatureAvailableMetadata
     )
     |> Deserializer.deserialize(
       :recipientSignatureProviders,
       :list,
-      DocuSign.Model.RecipientSignatureProvider
+      RecipientSignatureProvider
     )
-    |> Deserializer.deserialize(:recipientTypeMetadata, :struct, DocuSign.Model.PropertyMetadata)
+    |> Deserializer.deserialize(:recipientTypeMetadata, :struct, PropertyMetadata)
     |> Deserializer.deserialize(
       :requireIdLookupMetadata,
       :struct,
-      DocuSign.Model.PropertyMetadata
+      PropertyMetadata
     )
-    |> Deserializer.deserialize(:routingOrderMetadata, :struct, DocuSign.Model.PropertyMetadata)
+    |> Deserializer.deserialize(:routingOrderMetadata, :struct, PropertyMetadata)
     |> Deserializer.deserialize(
       :signatureInfo,
       :struct,
-      DocuSign.Model.RecipientSignatureInformation
+      RecipientSignatureInformation
     )
-    |> Deserializer.deserialize(:signerEmailMetadata, :struct, DocuSign.Model.PropertyMetadata)
+    |> Deserializer.deserialize(:signerEmailMetadata, :struct, PropertyMetadata)
     |> Deserializer.deserialize(
       :signerFirstNameMetadata,
       :struct,
-      DocuSign.Model.PropertyMetadata
+      PropertyMetadata
     )
-    |> Deserializer.deserialize(:signerLastNameMetadata, :struct, DocuSign.Model.PropertyMetadata)
-    |> Deserializer.deserialize(:signerNameMetadata, :struct, DocuSign.Model.PropertyMetadata)
+    |> Deserializer.deserialize(:signerLastNameMetadata, :struct, PropertyMetadata)
+    |> Deserializer.deserialize(:signerNameMetadata, :struct, PropertyMetadata)
     |> Deserializer.deserialize(
       :signInEachLocationMetadata,
       :struct,
-      DocuSign.Model.PropertyMetadata
+      PropertyMetadata
     )
-    |> Deserializer.deserialize(:signingGroupIdMetadata, :struct, DocuSign.Model.PropertyMetadata)
-    |> Deserializer.deserialize(:signingGroupUsers, :list, DocuSign.Model.UserInfo)
+    |> Deserializer.deserialize(:signingGroupIdMetadata, :struct, PropertyMetadata)
+    |> Deserializer.deserialize(:signingGroupUsers, :list, UserInfo)
     |> Deserializer.deserialize(
       :smsAuthentication,
       :struct,
-      DocuSign.Model.RecipientSmsAuthentication
+      RecipientSmsAuthentication
     )
     |> Deserializer.deserialize(
       :socialAuthentications,
       :list,
-      DocuSign.Model.SocialAuthentication
+      SocialAuthentication
     )
-    |> Deserializer.deserialize(:tabs, :struct, DocuSign.Model.EnvelopeRecipientTabs)
+    |> Deserializer.deserialize(:tabs, :struct, EnvelopeRecipientTabs)
   end
 end

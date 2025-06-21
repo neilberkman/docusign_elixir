@@ -6,6 +6,9 @@ defmodule DocuSign.Model.DowngradRequestBillingInfoResponse do
 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.DowngradePlanUpdateResponse
+
   @derive Jason.Encoder
   defstruct [
     :downgradePlanInformation,
@@ -13,18 +16,16 @@ defmodule DocuSign.Model.DowngradRequestBillingInfoResponse do
   ]
 
   @type t :: %__MODULE__{
-          :downgradePlanInformation => DocuSign.Model.DowngradePlanUpdateResponse.t() | nil,
+          :downgradePlanInformation => DowngradePlanUpdateResponse.t() | nil,
           :paymentMethod => String.t() | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
     |> Deserializer.deserialize(
       :downgradePlanInformation,
       :struct,
-      DocuSign.Model.DowngradePlanUpdateResponse
+      DowngradePlanUpdateResponse
     )
   end
 end

@@ -6,8 +6,11 @@ defmodule DocuSign.Api.IdentityVerifications do
   API calls for all endpoints tagged `IdentityVerifications`.
   """
 
-  alias DocuSign.Connection
   import DocuSign.RequestBuilder
+
+  alias DocuSign.Connection
+  alias DocuSign.Model.AccountIdentityVerificationResponse
+  alias DocuSign.Model.ErrorDetails
 
   @doc """
   Retrieves the Identity Verification workflows available to an account.
@@ -30,14 +33,10 @@ defmodule DocuSign.Api.IdentityVerifications do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.AccountIdentityVerificationResponse.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, AccountIdentityVerificationResponse.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
-  def account_identity_verification_get_account_identity_verification(
-        connection,
-        account_id,
-        opts \\ []
-      ) do
+  def account_identity_verification_get_account_identity_verification(connection, account_id, opts \\ []) do
     optional_params = %{
       :identity_verification_workflow_status => :query
     }
@@ -47,13 +46,13 @@ defmodule DocuSign.Api.IdentityVerifications do
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/identity_verification")
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.AccountIdentityVerificationResponse},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, AccountIdentityVerificationResponse},
+      {400, ErrorDetails}
     ])
   end
 end
