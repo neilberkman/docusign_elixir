@@ -13,7 +13,7 @@ IO.puts("Installing dependencies...")
 Application.put_env(:tesla, :disable_deprecated_builder_warning, true)
 
 Mix.install([
-  {:docusign, path: Path.join(__DIR__, "..")},
+  {:docusign, "~> 2.1.0"},
   {:kino, "~> 0.16.0"}
 ])
 
