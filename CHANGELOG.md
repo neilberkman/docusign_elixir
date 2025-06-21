@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## v2.1.0
 
 ### Enhancements
 - Add support for Elixir 1.18.4 and OTP 28
@@ -33,6 +33,9 @@
 - Remove explicit Mint dependency as it's included transitively via Finch
 - Update LiveBook example to use Kino 0.16.0
 - Update LiveBook to use local path for testing unreleased changes
+- Add Quokka formatter plugin for enhanced code formatting
+- Apply consistent code formatting across entire codebase
+- Add .git-blame-ignore-revs to ignore formatting commits in git blame
 
 ## v2.0.0
 
