@@ -49,7 +49,7 @@ defmodule DocuSign.MixProject do
       {:oauth2, "~> 2.0"},
       {:plug_cowboy, "~> 2.7.3"},
       {:castore, "~> 1.0"},
-      {:mint, "~> 1.0"},
+      {:finch, "~> 0.19"},
       {:meck, "~> 0.9.2"},
       {:cowlib, "2.15.0"},
 
