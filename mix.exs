@@ -62,7 +62,8 @@ defmodule DocuSign.MixProject do
       {:ex_doc, "~> 0.28", only: :dev},
       {:credo, "~> 1.0", only: [:dev, :test], runtime: false},
       {:dialyxir, "~> 1.1", only: [:dev], runtime: false},
-      {:mix_test_watch, "~> 1.0", only: :dev, runtime: false}
+      {:mix_test_watch, "~> 1.0", only: :dev, runtime: false},
+      {:quokka, "~> 2.7.1", only: [:dev, :test], runtime: false}
     ]
   end
 
