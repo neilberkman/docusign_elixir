@@ -1,14 +1,23 @@
 # DocuSign Embedded Signing with Elixir
 
+## Section
+
 [![Run in Livebook](https://livebook.dev/badge/v1/blue.svg)](https://livebook.dev/run?url=https://github.com/neilberkman/docusign_elixir/blob/main/examples/embedded_signing.livemd)
 
 This LiveBook demonstrates how to create a complete embedded signing experience with the DocuSign Elixir SDK. It walks you through the entire process from authentication to retrieving a signed document.
 
 ```elixir
+IO.puts("Installing dependencies...")
+
+# Suppress Tesla deprecation warnings
+Application.put_env(:tesla, :disable_deprecated_builder_warning, true)
+
 Mix.install([
-  {:docusign, "~> 2.0.0"},
-  {:kino, "~> 0.15.3"}
+  {:docusign, path: Path.join(__DIR__, "..")},
+  {:kino, "~> 0.16.0"}
 ])
+
+IO.puts("✅ Dependencies installed successfully!")
 ```
 
 ## Introduction
@@ -70,6 +79,15 @@ hostname = if is_sandbox, do: "account-d.docusign.com", else: "account.docusign.
 Application.put_env(:docusign, :hostname, hostname)
 Application.put_env(:docusign, :client_id, client_id)
 Application.put_env(:docusign, :private_key_contents, private_key_formatted)
+Application.put_env(:docusign, :user_id, user_id)
+
+# Debug: Check configuration
+IO.puts("Configuration set:")
+IO.puts("Hostname: #{hostname}")
+IO.puts("Client ID: #{client_id}")
+IO.puts("User ID: #{user_id}")
+IO.puts("Private key length: #{String.length(private_key_formatted)} chars")
+IO.puts("Is sandbox: #{is_sandbox}")
 ```
 
 ## Create a Connection
@@ -77,8 +95,12 @@ Application.put_env(:docusign, :private_key_contents, private_key_formatted)
 Let's establish a connection to the DocuSign API:
 
 ```elixir
+IO.puts("=== Starting connection attempt ===")
+
 # Create a connection with the specified user
+IO.puts("Attempting to connect with user_id: #{inspect(user_id)}")
 connection_result = DocuSign.Connection.get(user_id)
+IO.inspect(connection_result, label: "Connection result")
 
 conn = case connection_result do
   {:ok, connection} ->
