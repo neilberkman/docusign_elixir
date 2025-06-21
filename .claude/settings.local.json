@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git checkout:*)",
+      "Bash(mix compile)",
+      "Bash(mix deps.update:*)",
+      "Bash(mix deps.get:*)",
+      "Bash(mix test)",
+      "WebFetch(domain:hexdocs.pm)",
+      "Bash(git add:*)"
+    ]
+  },
+  "enableAllProjectMcpServers": false
+}

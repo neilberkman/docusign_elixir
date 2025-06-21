@@ -109,7 +109,7 @@ defmodule DocuSign.ConnectionTest do
       app_account: %DocuSign.User.AppAccount{base_uri: "http://localhost:#{bypass.port}"}
     }
 
-    opts = [method: :GET, url: "/endpoint"]
+    opts = [method: :get, url: "/endpoint"]
 
     Connection.request(conn, opts)
   end

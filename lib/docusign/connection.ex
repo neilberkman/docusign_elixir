@@ -26,9 +26,6 @@ defmodule DocuSign.Connection do
     Handle Tesla connections.
     """
 
-    use Tesla
-    plug(Tesla.Middleware.EncodeJson, engine: Jason)
-
     @doc """
     Configure an authless client connection
 
@@ -45,7 +42,7 @@ defmodule DocuSign.Connection do
            [{"authorization", "#{token.token_type} #{token.access_token}"}]},
           {Tesla.Middleware.EncodeJson, engine: Jason}
         ],
-        Application.get_env(:docusign, :adapter, Tesla.Adapter.Mint)
+        Application.get_env(:tesla, :adapter, {Tesla.Adapter.Finch, name: DocuSign.Finch})
       )
     end
   end
@@ -102,12 +99,12 @@ defmodule DocuSign.Connection do
   @spec request(t(), Keyword.t()) :: {:ok, Tesla.Env.t()} | {:error, Tesla.Env.t()}
   def request(conn, opts \\ []) do
     timeout = Application.get_env(:docusign, :timeout, @timeout)
-    opts = opts |> Keyword.merge(opts: [adapter: [timeout: timeout]])
+    opts = opts |> Keyword.merge(opts: [adapter: [receive_timeout: timeout]])
 
     result =
       conn
       |> Request.new()
-      |> Request.request(opts)
+      |> Tesla.request(opts)
 
     case result do
       {status, res} when status in [:ok, :error] -> {status, res}

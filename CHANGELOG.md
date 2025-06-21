@@ -1,5 +1,37 @@
 # Changelog
 
+## Unreleased
+
+### Enhancements
+- Add support for Elixir 1.18.4 and OTP 28
+- Migrate from Tesla.Builder to runtime configuration to fix deprecation warnings
+- Switch from Mint to Finch adapter for better performance and connection pooling
+- Add CI testing matrix to test against multiple Elixir/OTP version combinations:
+  - Elixir 1.16.0 with OTP 26.0 (earliest supported)
+  - Elixir 1.16.3 with OTP 26.2
+  - Elixir 1.17.3 with OTP 27.1
+  - Elixir 1.18.1 with OTP 27.2
+  - Elixir 1.18.4 with OTP 28.0 (latest)
+- Update dependencies to latest versions:
+  - castore 1.0.12 → 1.0.14
+  - ex_doc 0.38.0 → 0.38.2
+  - plug_cowboy 2.7.3 → 2.7.4
+  - tesla 1.14.1 → 1.14.3
+  - mix_test_watch 1.2.0 → 1.3.0
+  - credo 1.7.11 → 1.7.12
+  - mime 2.0.6 → 2.0.7 (transitive)
+  - plug 1.17.0 → 1.18.0 (transitive)
+
+### Bug Fixes
+- Fix deprecated `use Plug.Test` warning by using `import Plug.Test` and `import Plug.Conn`
+- Fix HTTP method case sensitivity for Finch adapter (`:GET` → `:get`)
+- Update timeout configuration to use Finch's `receive_timeout` option
+
+### Internal Changes
+- Start Finch supervisor in both test and production environments
+- Add Tesla deprecation warning suppression to config
+- Remove explicit Mint dependency as it's included transitively via Finch
+
 ## v2.0.0
 
 ### Breaking Changes

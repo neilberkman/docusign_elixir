@@ -16,10 +16,15 @@ defmodule DocuSign.Application do
     Supervisor.start_link(children, opts)
   end
 
-  defp children(:test), do: []
+  defp children(:test) do
+    [
+      {Finch, name: DocuSign.Finch}
+    ]
+  end
 
   defp children(_env) do
     [
+      {Finch, name: DocuSign.Finch},
       {DocuSign.ClientRegistry, []}
     ]
   end

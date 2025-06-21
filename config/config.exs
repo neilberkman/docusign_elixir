@@ -14,7 +14,8 @@ config :docusign, user_id: System.get_env("DOCUSIGN_USER_ID")
 
 import_config "#{Mix.env()}.exs"
 
-config :tesla, adapter: Tesla.Adapter.Mint
+config :tesla, adapter: {Tesla.Adapter.Finch, name: DocuSign.Finch}
+config :tesla, disable_deprecated_builder_warning: true
 
 if File.exists?("config/#{Mix.env()}.secret.exs") do
   import_config "#{Mix.env()}.secret.exs"
