@@ -1,0 +1,5 @@
+# Git commits to ignore when using git blame
+# Run: git config blame.ignoreRevsFile .git-blame-ignore-revs
+
+# Apply Quokka formatting to entire codebase
+8baff49fc5de3467752cfcec98dcdf70bcad6bb4
