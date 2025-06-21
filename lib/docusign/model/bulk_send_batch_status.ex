@@ -6,6 +6,10 @@ defmodule DocuSign.Model.BulkSendBatchStatus do
   Result of `getBulkSendBatchStatus`
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.BulkSendEnvelopesInfo
+  alias DocuSign.Model.BulkSendErrorStatus
+
   @derive Jason.Encoder
   defstruct [
     :action,
@@ -34,9 +38,9 @@ defmodule DocuSign.Model.BulkSendBatchStatus do
           :batchId => String.t() | nil,
           :batchName => String.t() | nil,
           :batchSize => String.t() | nil,
-          :bulkErrors => [DocuSign.Model.BulkSendErrorStatus.t()] | nil,
+          :bulkErrors => [BulkSendErrorStatus.t()] | nil,
           :envelopeIdOrTemplateId => String.t() | nil,
-          :envelopesInfo => DocuSign.Model.BulkSendEnvelopesInfo.t() | nil,
+          :envelopesInfo => BulkSendEnvelopesInfo.t() | nil,
           :envelopesUri => String.t() | nil,
           :failed => String.t() | nil,
           :mailingListId => String.t() | nil,
@@ -49,11 +53,9 @@ defmodule DocuSign.Model.BulkSendBatchStatus do
           :submittedDate => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:bulkErrors, :list, DocuSign.Model.BulkSendErrorStatus)
-    |> Deserializer.deserialize(:envelopesInfo, :struct, DocuSign.Model.BulkSendEnvelopesInfo)
+    |> Deserializer.deserialize(:bulkErrors, :list, BulkSendErrorStatus)
+    |> Deserializer.deserialize(:envelopesInfo, :struct, BulkSendEnvelopesInfo)
   end
 end

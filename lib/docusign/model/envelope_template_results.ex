@@ -6,6 +6,10 @@ defmodule DocuSign.Model.EnvelopeTemplateResults do
   Information about templates.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.EnvelopeTemplate
+  alias DocuSign.Model.Folder
+
   @derive Jason.Encoder
   defstruct [
     :endPosition,
@@ -20,8 +24,8 @@ defmodule DocuSign.Model.EnvelopeTemplateResults do
 
   @type t :: %__MODULE__{
           :endPosition => String.t() | nil,
-          :envelopeTemplates => [DocuSign.Model.EnvelopeTemplate.t()] | nil,
-          :folders => [DocuSign.Model.Folder.t()] | nil,
+          :envelopeTemplates => [EnvelopeTemplate.t()] | nil,
+          :folders => [Folder.t()] | nil,
           :nextUri => String.t() | nil,
           :previousUri => String.t() | nil,
           :resultSetSize => String.t() | nil,
@@ -29,11 +33,9 @@ defmodule DocuSign.Model.EnvelopeTemplateResults do
           :totalSetSize => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:envelopeTemplates, :list, DocuSign.Model.EnvelopeTemplate)
-    |> Deserializer.deserialize(:folders, :list, DocuSign.Model.Folder)
+    |> Deserializer.deserialize(:envelopeTemplates, :list, EnvelopeTemplate)
+    |> Deserializer.deserialize(:folders, :list, Folder)
   end
 end

@@ -6,8 +6,15 @@ defmodule DocuSign.Api.ConnectConfigurations do
   API calls for all endpoints tagged `ConnectConfigurations`.
   """
 
-  alias DocuSign.Connection
   import DocuSign.RequestBuilder
+
+  alias DocuSign.Connection
+  alias DocuSign.Model.ConnectConfigResults
+  alias DocuSign.Model.ConnectCustomConfiguration
+  alias DocuSign.Model.ConnectOAuthConfig
+  alias DocuSign.Model.ErrorDetails
+  alias DocuSign.Model.IntegratedConnectUserInfoList
+  alias DocuSign.Model.IntegratedUserInfoList
 
   @doc """
   Deletes the specified Connect configuration.
@@ -26,19 +33,19 @@ defmodule DocuSign.Api.ConnectConfigurations do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec connect_delete_connect_config(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, nil} | {:ok, DocuSign.Model.ErrorDetails.t()} | {:error, Tesla.Env.t()}
+          {:ok, nil} | {:ok, ErrorDetails.t()} | {:error, Tesla.Env.t()}
   def connect_delete_connect_config(connection, account_id, connect_id, _opts \\ []) do
     request =
       %{}
       |> method(:delete)
       |> url("/v2.1/accounts/#{account_id}/connect/#{connect_id}")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
       {200, false},
-      {400, DocuSign.Model.ErrorDetails}
+      {400, ErrorDetails}
     ])
   end
 
@@ -65,8 +72,8 @@ defmodule DocuSign.Api.ConnectConfigurations do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec connect_get_connect_all_users(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.IntegratedConnectUserInfoList.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, IntegratedConnectUserInfoList.t()}
           | {:error, Tesla.Env.t()}
   def connect_get_connect_all_users(connection, account_id, connect_id, opts \\ []) do
     optional_params = %{
@@ -83,13 +90,13 @@ defmodule DocuSign.Api.ConnectConfigurations do
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/connect/#{connect_id}/all/users")
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.IntegratedConnectUserInfoList},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, IntegratedConnectUserInfoList},
+      {400, ErrorDetails}
     ])
   end
 
@@ -110,21 +117,21 @@ defmodule DocuSign.Api.ConnectConfigurations do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec connect_get_connect_config(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.ConnectConfigResults.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, ConnectConfigResults.t()}
           | {:error, Tesla.Env.t()}
   def connect_get_connect_config(connection, account_id, connect_id, _opts \\ []) do
     request =
       %{}
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/connect/#{connect_id}")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.ConnectConfigResults},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, ConnectConfigResults},
+      {400, ErrorDetails}
     ])
   end
 
@@ -144,21 +151,21 @@ defmodule DocuSign.Api.ConnectConfigurations do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec connect_get_connect_configs(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.ConnectConfigResults.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, ConnectConfigResults.t()}
           | {:error, Tesla.Env.t()}
   def connect_get_connect_configs(connection, account_id, _opts \\ []) do
     request =
       %{}
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/connect")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.ConnectConfigResults},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, ConnectConfigResults},
+      {400, ErrorDetails}
     ])
   end
 
@@ -185,8 +192,8 @@ defmodule DocuSign.Api.ConnectConfigurations do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec connect_get_connect_users(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.IntegratedUserInfoList.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, IntegratedUserInfoList.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
   def connect_get_connect_users(connection, account_id, connect_id, opts \\ []) do
     optional_params = %{
@@ -203,13 +210,13 @@ defmodule DocuSign.Api.ConnectConfigurations do
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/connect/#{connect_id}/users")
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.IntegratedUserInfoList},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, IntegratedUserInfoList},
+      {400, ErrorDetails}
     ])
   end
 
@@ -232,19 +239,19 @@ defmodule DocuSign.Api.ConnectConfigurations do
           Tesla.Env.client(),
           String.t(),
           keyword()
-        ) :: {:ok, nil} | {:ok, DocuSign.Model.ErrorDetails.t()} | {:error, Tesla.Env.t()}
+        ) :: {:ok, nil} | {:ok, ErrorDetails.t()} | {:error, Tesla.Env.t()}
   def connect_o_auth_config_delete_connect_o_auth_config(connection, account_id, _opts \\ []) do
     request =
       %{}
       |> method(:delete)
       |> url("/v2.1/accounts/#{account_id}/connect/oauth")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
       {200, false},
-      {400, DocuSign.Model.ErrorDetails}
+      {400, ErrorDetails}
     ])
   end
 
@@ -264,21 +271,21 @@ defmodule DocuSign.Api.ConnectConfigurations do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec connect_o_auth_config_get_connect_o_auth_config(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.ConnectOAuthConfig.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, ConnectOAuthConfig.t()}
           | {:error, Tesla.Env.t()}
   def connect_o_auth_config_get_connect_o_auth_config(connection, account_id, _opts \\ []) do
     request =
       %{}
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/connect/oauth")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.ConnectOAuthConfig},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, ConnectOAuthConfig},
+      {400, ErrorDetails}
     ])
   end
 
@@ -303,8 +310,8 @@ defmodule DocuSign.Api.ConnectConfigurations do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.ConnectOAuthConfig.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, ConnectOAuthConfig.t()}
           | {:error, Tesla.Env.t()}
   def connect_o_auth_config_post_connect_o_auth_config(connection, account_id, opts \\ []) do
     optional_params = %{
@@ -317,13 +324,13 @@ defmodule DocuSign.Api.ConnectConfigurations do
       |> url("/v2.1/accounts/#{account_id}/connect/oauth")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {201, DocuSign.Model.ConnectOAuthConfig},
-      {400, DocuSign.Model.ErrorDetails}
+      {201, ConnectOAuthConfig},
+      {400, ErrorDetails}
     ])
   end
 
@@ -343,8 +350,8 @@ defmodule DocuSign.Api.ConnectConfigurations do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec connect_o_auth_config_put_connect_o_auth_config(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.ConnectOAuthConfig.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, ConnectOAuthConfig.t()}
           | {:error, Tesla.Env.t()}
   def connect_o_auth_config_put_connect_o_auth_config(connection, account_id, opts \\ []) do
     optional_params = %{
@@ -357,13 +364,13 @@ defmodule DocuSign.Api.ConnectConfigurations do
       |> url("/v2.1/accounts/#{account_id}/connect/oauth")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.ConnectOAuthConfig},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, ConnectOAuthConfig},
+      {400, ErrorDetails}
     ])
   end
 
@@ -384,8 +391,8 @@ defmodule DocuSign.Api.ConnectConfigurations do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec connect_post_connect_configuration(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.ConnectCustomConfiguration.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, ConnectCustomConfiguration.t()}
           | {:error, Tesla.Env.t()}
   def connect_post_connect_configuration(connection, account_id, opts \\ []) do
     optional_params = %{
@@ -398,13 +405,13 @@ defmodule DocuSign.Api.ConnectConfigurations do
       |> url("/v2.1/accounts/#{account_id}/connect")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {201, DocuSign.Model.ConnectCustomConfiguration},
-      {400, DocuSign.Model.ErrorDetails}
+      {201, ConnectCustomConfiguration},
+      {400, ErrorDetails}
     ])
   end
 
@@ -425,8 +432,8 @@ defmodule DocuSign.Api.ConnectConfigurations do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec connect_put_connect_configuration(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.ConnectCustomConfiguration.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, ConnectCustomConfiguration.t()}
           | {:error, Tesla.Env.t()}
   def connect_put_connect_configuration(connection, account_id, opts \\ []) do
     optional_params = %{
@@ -439,13 +446,13 @@ defmodule DocuSign.Api.ConnectConfigurations do
       |> url("/v2.1/accounts/#{account_id}/connect")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.ConnectCustomConfiguration},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, ConnectCustomConfiguration},
+      {400, ErrorDetails}
     ])
   end
 end

@@ -6,6 +6,9 @@ defmodule DocuSign.Model.EnvelopeAttachment do
 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.ErrorDetails
+
   @derive Jason.Encoder
   defstruct [
     :accessControl,
@@ -20,15 +23,13 @@ defmodule DocuSign.Model.EnvelopeAttachment do
           :accessControl => String.t() | nil,
           :attachmentId => String.t() | nil,
           :attachmentType => String.t() | nil,
-          :errorDetails => DocuSign.Model.ErrorDetails.t() | nil,
+          :errorDetails => ErrorDetails.t() | nil,
           :label => String.t() | nil,
           :name => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:errorDetails, :struct, DocuSign.Model.ErrorDetails)
+    |> Deserializer.deserialize(:errorDetails, :struct, ErrorDetails)
   end
 end

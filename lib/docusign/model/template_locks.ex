@@ -6,34 +6,36 @@ defmodule DocuSign.Model.TemplateLocks do
   This section provides information about template locks. You use template locks to prevent others from making changes to a template while you are modifying it.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.ErrorDetails
+  alias DocuSign.Model.UserInfo
+
   @derive Jason.Encoder
   defstruct [
     :errorDetails,
     :lockDurationInSeconds,
+    :lockToken,
+    :lockType,
     :lockedByApp,
     :lockedByUser,
     :lockedUntilDateTime,
-    :lockToken,
-    :lockType,
     :useScratchPad
   ]
 
   @type t :: %__MODULE__{
-          :errorDetails => DocuSign.Model.ErrorDetails.t() | nil,
+          :errorDetails => ErrorDetails.t() | nil,
           :lockDurationInSeconds => String.t() | nil,
-          :lockedByApp => String.t() | nil,
-          :lockedByUser => DocuSign.Model.UserInfo.t() | nil,
-          :lockedUntilDateTime => String.t() | nil,
           :lockToken => String.t() | nil,
           :lockType => String.t() | nil,
+          :lockedByApp => String.t() | nil,
+          :lockedByUser => UserInfo.t() | nil,
+          :lockedUntilDateTime => String.t() | nil,
           :useScratchPad => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:errorDetails, :struct, DocuSign.Model.ErrorDetails)
-    |> Deserializer.deserialize(:lockedByUser, :struct, DocuSign.Model.UserInfo)
+    |> Deserializer.deserialize(:errorDetails, :struct, ErrorDetails)
+    |> Deserializer.deserialize(:lockedByUser, :struct, UserInfo)
   end
 end

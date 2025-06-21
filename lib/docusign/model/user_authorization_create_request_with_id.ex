@@ -6,6 +6,9 @@ defmodule DocuSign.Model.UserAuthorizationCreateRequestWithId do
   A user authorizations to create or update.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.AuthorizationUser
+
   @derive Jason.Encoder
   defstruct [
     :agentUser,
@@ -16,17 +19,15 @@ defmodule DocuSign.Model.UserAuthorizationCreateRequestWithId do
   ]
 
   @type t :: %__MODULE__{
-          :agentUser => DocuSign.Model.AuthorizationUser.t() | nil,
+          :agentUser => AuthorizationUser.t() | nil,
           :authorizationId => String.t() | nil,
           :endDate => String.t() | nil,
           :permission => String.t() | nil,
           :startDate => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:agentUser, :struct, DocuSign.Model.AuthorizationUser)
+    |> Deserializer.deserialize(:agentUser, :struct, AuthorizationUser)
   end
 end

@@ -6,8 +6,12 @@ defmodule DocuSign.Api.UserSignatures do
   API calls for all endpoints tagged `UserSignatures`.
   """
 
-  alias DocuSign.Connection
   import DocuSign.RequestBuilder
+
+  alias DocuSign.Connection
+  alias DocuSign.Model.ErrorDetails
+  alias DocuSign.Model.UserSignature
+  alias DocuSign.Model.UserSignaturesInformation
 
   @doc """
   Removes removes signature information for the specified user.
@@ -32,25 +36,19 @@ defmodule DocuSign.Api.UserSignatures do
           String.t(),
           String.t(),
           keyword()
-        ) :: {:ok, nil} | {:ok, DocuSign.Model.ErrorDetails.t()} | {:error, Tesla.Env.t()}
-  def user_signatures_delete_user_signature(
-        connection,
-        account_id,
-        signature_id,
-        user_id,
-        _opts \\ []
-      ) do
+        ) :: {:ok, nil} | {:ok, ErrorDetails.t()} | {:error, Tesla.Env.t()}
+  def user_signatures_delete_user_signature(connection, account_id, signature_id, user_id, _opts \\ []) do
     request =
       %{}
       |> method(:delete)
       |> url("/v2.1/accounts/#{account_id}/users/#{user_id}/signatures/#{signature_id}")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
       {200, false},
-      {400, DocuSign.Model.ErrorDetails}
+      {400, ErrorDetails}
     ])
   end
 
@@ -80,8 +78,8 @@ defmodule DocuSign.Api.UserSignatures do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.UserSignature.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, UserSignature.t()}
           | {:error, Tesla.Env.t()}
   def user_signatures_delete_user_signature_image(
         connection,
@@ -94,16 +92,14 @@ defmodule DocuSign.Api.UserSignatures do
     request =
       %{}
       |> method(:delete)
-      |> url(
-        "/v2.1/accounts/#{account_id}/users/#{user_id}/signatures/#{signature_id}/#{image_type}"
-      )
-      |> Enum.into([])
+      |> url("/v2.1/accounts/#{account_id}/users/#{user_id}/signatures/#{signature_id}/#{image_type}")
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.UserSignature},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, UserSignature},
+      {400, ErrorDetails}
     ])
   end
 
@@ -131,27 +127,21 @@ defmodule DocuSign.Api.UserSignatures do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.UserSignature.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, UserSignature.t()}
           | {:error, Tesla.Env.t()}
-  def user_signatures_get_user_signature(
-        connection,
-        account_id,
-        signature_id,
-        user_id,
-        _opts \\ []
-      ) do
+  def user_signatures_get_user_signature(connection, account_id, signature_id, user_id, _opts \\ []) do
     request =
       %{}
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/users/#{user_id}/signatures/#{signature_id}")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.UserSignature},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, UserSignature},
+      {400, ErrorDetails}
     ])
   end
 
@@ -181,15 +171,8 @@ defmodule DocuSign.Api.UserSignatures do
           String.t(),
           String.t(),
           keyword()
-        ) :: {:ok, DocuSign.Model.ErrorDetails.t()} | {:ok, String.t()} | {:error, Tesla.Env.t()}
-  def user_signatures_get_user_signature_image(
-        connection,
-        account_id,
-        image_type,
-        signature_id,
-        user_id,
-        opts \\ []
-      ) do
+        ) :: {:ok, ErrorDetails.t()} | {:ok, String.t()} | {:error, Tesla.Env.t()}
+  def user_signatures_get_user_signature_image(connection, account_id, image_type, signature_id, user_id, opts \\ []) do
     optional_params = %{
       :include_chrome => :query
     }
@@ -197,17 +180,15 @@ defmodule DocuSign.Api.UserSignatures do
     request =
       %{}
       |> method(:get)
-      |> url(
-        "/v2.1/accounts/#{account_id}/users/#{user_id}/signatures/#{signature_id}/#{image_type}"
-      )
+      |> url("/v2.1/accounts/#{account_id}/users/#{user_id}/signatures/#{signature_id}/#{image_type}")
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
       {200, false},
-      {400, DocuSign.Model.ErrorDetails}
+      {400, ErrorDetails}
     ])
   end
 
@@ -229,8 +210,8 @@ defmodule DocuSign.Api.UserSignatures do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec user_signatures_get_user_signatures(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.UserSignaturesInformation.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, UserSignaturesInformation.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
   def user_signatures_get_user_signatures(connection, account_id, user_id, opts \\ []) do
     optional_params = %{
@@ -242,13 +223,13 @@ defmodule DocuSign.Api.UserSignatures do
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/users/#{user_id}/signatures")
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.UserSignaturesInformation},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, UserSignaturesInformation},
+      {400, ErrorDetails}
     ])
   end
 
@@ -275,8 +256,8 @@ defmodule DocuSign.Api.UserSignatures do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.UserSignaturesInformation.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, UserSignaturesInformation.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
   def user_signatures_post_user_signatures(connection, account_id, user_id, opts \\ []) do
     optional_params = %{
@@ -289,13 +270,13 @@ defmodule DocuSign.Api.UserSignatures do
       |> url("/v2.1/accounts/#{account_id}/users/#{user_id}/signatures")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {201, DocuSign.Model.UserSignaturesInformation},
-      {400, DocuSign.Model.ErrorDetails}
+      {201, UserSignaturesInformation},
+      {400, ErrorDetails}
     ])
   end
 
@@ -316,8 +297,8 @@ defmodule DocuSign.Api.UserSignatures do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec user_signatures_put_user_signature(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.UserSignaturesInformation.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, UserSignaturesInformation.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
   def user_signatures_put_user_signature(connection, account_id, user_id, opts \\ []) do
     optional_params = %{
@@ -330,13 +311,13 @@ defmodule DocuSign.Api.UserSignatures do
       |> url("/v2.1/accounts/#{account_id}/users/#{user_id}/signatures")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.UserSignaturesInformation},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, UserSignaturesInformation},
+      {400, ErrorDetails}
     ])
   end
 
@@ -366,19 +347,13 @@ defmodule DocuSign.Api.UserSignatures do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.UserSignature.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, UserSignature.t()}
           | {:error, Tesla.Env.t()}
-  def user_signatures_put_user_signature_by_id(
-        connection,
-        account_id,
-        signature_id,
-        user_id,
-        opts \\ []
-      ) do
+  def user_signatures_put_user_signature_by_id(connection, account_id, signature_id, user_id, opts \\ []) do
     optional_params = %{
-      :close_existing_signature => :query,
-      :body => :body
+      :body => :body,
+      :close_existing_signature => :query
     }
 
     request =
@@ -387,13 +362,13 @@ defmodule DocuSign.Api.UserSignatures do
       |> url("/v2.1/accounts/#{account_id}/users/#{user_id}/signatures/#{signature_id}")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.UserSignature},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, UserSignature},
+      {400, ErrorDetails}
     ])
   end
 
@@ -426,8 +401,8 @@ defmodule DocuSign.Api.UserSignatures do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.UserSignature.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, UserSignature.t()}
           | {:error, Tesla.Env.t()}
   def user_signatures_put_user_signature_image(
         connection,
@@ -445,18 +420,16 @@ defmodule DocuSign.Api.UserSignatures do
     request =
       %{}
       |> method(:put)
-      |> url(
-        "/v2.1/accounts/#{account_id}/users/#{user_id}/signatures/#{signature_id}/#{image_type}"
-      )
+      |> url("/v2.1/accounts/#{account_id}/users/#{user_id}/signatures/#{signature_id}/#{image_type}")
       |> add_param(:body, :body, image_bytes)
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.UserSignature},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, UserSignature},
+      {400, ErrorDetails}
     ])
   end
 end

@@ -6,6 +6,9 @@ defmodule DocuSign.Model.NameValue do
   A name-value pair that describes an item and provides a value for the item.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.ErrorDetails
+
   @derive Jason.Encoder
   defstruct [
     :errorDetails,
@@ -15,16 +18,14 @@ defmodule DocuSign.Model.NameValue do
   ]
 
   @type t :: %__MODULE__{
-          :errorDetails => DocuSign.Model.ErrorDetails.t() | nil,
+          :errorDetails => ErrorDetails.t() | nil,
           :name => String.t() | nil,
           :originalValue => String.t() | nil,
           :value => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:errorDetails, :struct, DocuSign.Model.ErrorDetails)
+    |> Deserializer.deserialize(:errorDetails, :struct, ErrorDetails)
   end
 end

@@ -6,6 +6,9 @@ defmodule DocuSign.Model.IntegratedUserInfoList do
 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.UserInfo
+
   @derive Jason.Encoder
   defstruct [
     :allUsersSelected,
@@ -26,13 +29,11 @@ defmodule DocuSign.Model.IntegratedUserInfoList do
           :resultSetSize => String.t() | nil,
           :startPosition => String.t() | nil,
           :totalSetSize => String.t() | nil,
-          :users => [DocuSign.Model.UserInfo.t()] | nil
+          :users => [UserInfo.t()] | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
-    |> Deserializer.deserialize(:users, :list, DocuSign.Model.UserInfo)
+    |> Deserializer.deserialize(:users, :list, UserInfo)
   end
 end

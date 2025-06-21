@@ -6,6 +6,9 @@ defmodule DocuSign.Model.CreditCardInformation do
   This object contains information about a credit card that is associated with an account.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.AddressInformation
+
   @derive Jason.Encoder
   defstruct [
     :address,
@@ -20,7 +23,7 @@ defmodule DocuSign.Model.CreditCardInformation do
   ]
 
   @type t :: %__MODULE__{
-          :address => DocuSign.Model.AddressInformation.t() | nil,
+          :address => AddressInformation.t() | nil,
           :cardLastDigits => String.t() | nil,
           :cardNumber => String.t() | nil,
           :cardType => String.t() | nil,
@@ -31,10 +34,8 @@ defmodule DocuSign.Model.CreditCardInformation do
           :tokenizedCard => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:address, :struct, DocuSign.Model.AddressInformation)
+    |> Deserializer.deserialize(:address, :struct, AddressInformation)
   end
 end

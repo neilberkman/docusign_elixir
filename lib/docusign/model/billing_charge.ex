@@ -6,6 +6,10 @@ defmodule DocuSign.Model.BillingCharge do
   Contains information about a billing charge.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.BillingDiscount
+  alias DocuSign.Model.BillingPrice
+
   @derive Jason.Encoder
   defstruct [
     :allowedQuantity,
@@ -29,21 +33,19 @@ defmodule DocuSign.Model.BillingCharge do
           :chargeName => String.t() | nil,
           :chargeType => String.t() | nil,
           :chargeUnitOfMeasure => String.t() | nil,
-          :discounts => [DocuSign.Model.BillingDiscount.t()] | nil,
+          :discounts => [BillingDiscount.t()] | nil,
           :firstEffectiveDate => String.t() | nil,
           :includedQuantity => String.t() | nil,
           :incrementalQuantity => String.t() | nil,
           :lastEffectiveDate => String.t() | nil,
-          :prices => [DocuSign.Model.BillingPrice.t()] | nil,
+          :prices => [BillingPrice.t()] | nil,
           :unitPrice => String.t() | nil,
           :usedQuantity => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:discounts, :list, DocuSign.Model.BillingDiscount)
-    |> Deserializer.deserialize(:prices, :list, DocuSign.Model.BillingPrice)
+    |> Deserializer.deserialize(:discounts, :list, BillingDiscount)
+    |> Deserializer.deserialize(:prices, :list, BillingPrice)
   end
 end

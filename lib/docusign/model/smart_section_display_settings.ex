@@ -6,6 +6,9 @@ defmodule DocuSign.Model.SmartSectionDisplaySettings do
   These properties define how a Smart Section displays. A Smart Section is a type of display section.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.SmartSectionCollapsibleDisplaySettings
+
   @derive Jason.Encoder
   defstruct [
     :cellStyle,
@@ -24,7 +27,7 @@ defmodule DocuSign.Model.SmartSectionDisplaySettings do
 
   @type t :: %__MODULE__{
           :cellStyle => String.t() | nil,
-          :collapsibleSettings => DocuSign.Model.SmartSectionCollapsibleDisplaySettings.t() | nil,
+          :collapsibleSettings => SmartSectionCollapsibleDisplaySettings.t() | nil,
           :display => String.t() | nil,
           :displayLabel => String.t() | nil,
           :displayOrder => integer() | nil,
@@ -37,14 +40,12 @@ defmodule DocuSign.Model.SmartSectionDisplaySettings do
           :tableStyle => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
     |> Deserializer.deserialize(
       :collapsibleSettings,
       :struct,
-      DocuSign.Model.SmartSectionCollapsibleDisplaySettings
+      SmartSectionCollapsibleDisplaySettings
     )
   end
 end

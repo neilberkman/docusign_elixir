@@ -6,8 +6,13 @@ defmodule DocuSign.Api.Folders do
   API calls for all endpoints tagged `Folders`.
   """
 
-  alias DocuSign.Connection
   import DocuSign.RequestBuilder
+
+  alias DocuSign.Connection
+  alias DocuSign.Model.ErrorDetails
+  alias DocuSign.Model.FolderItemResponse
+  alias DocuSign.Model.FolderItemsResponse
+  alias DocuSign.Model.FoldersResponse
 
   @doc """
   Gets information about items in a specified folder. 
@@ -34,8 +39,8 @@ defmodule DocuSign.Api.Folders do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec folders_get_folder_items(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.FolderItemsResponse.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, FolderItemsResponse.t()}
           | {:error, Tesla.Env.t()}
   def folders_get_folder_items(connection, account_id, folder_id, opts \\ []) do
     optional_params = %{
@@ -54,13 +59,13 @@ defmodule DocuSign.Api.Folders do
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/folders/#{folder_id}")
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.FolderItemsResponse},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, FolderItemsResponse},
+      {400, ErrorDetails}
     ])
   end
 
@@ -87,8 +92,8 @@ defmodule DocuSign.Api.Folders do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec folders_get_folders(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.FoldersResponse.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, FoldersResponse.t()}
           | {:error, Tesla.Env.t()}
   def folders_get_folders(connection, account_id, opts \\ []) do
     optional_params = %{
@@ -106,13 +111,13 @@ defmodule DocuSign.Api.Folders do
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/folders")
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.FoldersResponse},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, FoldersResponse},
+      {400, ErrorDetails}
     ])
   end
 
@@ -134,8 +139,8 @@ defmodule DocuSign.Api.Folders do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec folders_put_folder_by_id(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.FoldersResponse.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, FoldersResponse.t()}
           | {:error, Tesla.Env.t()}
   def folders_put_folder_by_id(connection, account_id, folder_id, opts \\ []) do
     optional_params = %{
@@ -148,13 +153,13 @@ defmodule DocuSign.Api.Folders do
       |> url("/v2.1/accounts/#{account_id}/folders/#{folder_id}")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.FoldersResponse},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, FoldersResponse},
+      {400, ErrorDetails}
     ])
   end
 
@@ -188,15 +193,10 @@ defmodule DocuSign.Api.Folders do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.FolderItemResponse.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, FolderItemResponse.t()}
           | {:error, Tesla.Env.t()}
-  def search_folders_get_search_folder_contents(
-        connection,
-        account_id,
-        search_folder_id,
-        opts \\ []
-      ) do
+  def search_folders_get_search_folder_contents(connection, account_id, search_folder_id, opts \\ []) do
     optional_params = %{
       :all => :query,
       :count => :query,
@@ -213,13 +213,13 @@ defmodule DocuSign.Api.Folders do
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/search_folders/#{search_folder_id}")
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.FolderItemResponse},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, FolderItemResponse},
+      {400, ErrorDetails}
     ])
   end
 end

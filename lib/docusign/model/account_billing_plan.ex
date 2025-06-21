@@ -6,6 +6,12 @@ defmodule DocuSign.Model.AccountBillingPlan do
   Contains information about an account billing plan.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.AddOn
+  alias DocuSign.Model.DowngradePlanUpdateResponse
+  alias DocuSign.Model.FeatureSet
+  alias DocuSign.Model.SeatDiscount
+
   @derive Jason.Encoder
   defstruct [
     :addOns,
@@ -40,13 +46,13 @@ defmodule DocuSign.Model.AccountBillingPlan do
   ]
 
   @type t :: %__MODULE__{
-          :addOns => [DocuSign.Model.AddOn.t()] | nil,
+          :addOns => [AddOn.t()] | nil,
           :appStoreReceiptExpirationDate => String.t() | nil,
           :appStoreReceiptPurchaseDate => String.t() | nil,
           :canCancelRenewal => String.t() | nil,
           :canUpgrade => String.t() | nil,
           :currencyCode => String.t() | nil,
-          :downgradePlanInformation => DocuSign.Model.DowngradePlanUpdateResponse.t() | nil,
+          :downgradePlanInformation => DowngradePlanUpdateResponse.t() | nil,
           :enableSupport => String.t() | nil,
           :includedSeats => String.t() | nil,
           :incrementalSeats => String.t() | nil,
@@ -57,31 +63,29 @@ defmodule DocuSign.Model.AccountBillingPlan do
           :paymentMethod => String.t() | nil,
           :perSeatPrice => String.t() | nil,
           :planClassification => String.t() | nil,
-          :planFeatureSets => [DocuSign.Model.FeatureSet.t()] | nil,
+          :planFeatureSets => [FeatureSet.t()] | nil,
           :planId => String.t() | nil,
           :planName => String.t() | nil,
           :planStartDate => String.t() | nil,
           :productId => String.t() | nil,
           :renewalDate => String.t() | nil,
           :renewalStatus => String.t() | nil,
-          :seatDiscounts => [DocuSign.Model.SeatDiscount.t()] | nil,
+          :seatDiscounts => [SeatDiscount.t()] | nil,
           :subscriptionStartDate => String.t() | nil,
           :supportIncidentFee => String.t() | nil,
           :supportPlanFee => String.t() | nil,
           :taxExemptId => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:addOns, :list, DocuSign.Model.AddOn)
+    |> Deserializer.deserialize(:addOns, :list, AddOn)
     |> Deserializer.deserialize(
       :downgradePlanInformation,
       :struct,
-      DocuSign.Model.DowngradePlanUpdateResponse
+      DowngradePlanUpdateResponse
     )
-    |> Deserializer.deserialize(:planFeatureSets, :list, DocuSign.Model.FeatureSet)
-    |> Deserializer.deserialize(:seatDiscounts, :list, DocuSign.Model.SeatDiscount)
+    |> Deserializer.deserialize(:planFeatureSets, :list, FeatureSet)
+    |> Deserializer.deserialize(:seatDiscounts, :list, SeatDiscount)
   end
 end

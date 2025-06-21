@@ -6,6 +6,9 @@ defmodule DocuSign.Model.UserInformationList do
   Contains a list of account users.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.UserInformation
+
   @derive Jason.Encoder
   defstruct [
     :endPosition,
@@ -24,13 +27,11 @@ defmodule DocuSign.Model.UserInformationList do
           :resultSetSize => String.t() | nil,
           :startPosition => String.t() | nil,
           :totalSetSize => String.t() | nil,
-          :users => [DocuSign.Model.UserInformation.t()] | nil
+          :users => [UserInformation.t()] | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
-    |> Deserializer.deserialize(:users, :list, DocuSign.Model.UserInformation)
+    |> Deserializer.deserialize(:users, :list, UserInformation)
   end
 end

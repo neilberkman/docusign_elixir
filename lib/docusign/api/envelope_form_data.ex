@@ -6,8 +6,11 @@ defmodule DocuSign.Api.EnvelopeFormData do
   API calls for all endpoints tagged `EnvelopeFormData`.
   """
 
-  alias DocuSign.Connection
   import DocuSign.RequestBuilder
+
+  alias DocuSign.Connection
+  alias DocuSign.Model.EnvelopeFormData
+  alias DocuSign.Model.ErrorDetails
 
   @doc """
   Returns envelope tab data for an existing envelope.
@@ -26,21 +29,21 @@ defmodule DocuSign.Api.EnvelopeFormData do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec form_data_get_form_data(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.EnvelopeFormData.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, EnvelopeFormData.t()}
           | {:error, Tesla.Env.t()}
   def form_data_get_form_data(connection, account_id, envelope_id, _opts \\ []) do
     request =
       %{}
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/form_data")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.EnvelopeFormData},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, EnvelopeFormData},
+      {400, ErrorDetails}
     ])
   end
 end

@@ -6,6 +6,9 @@ defmodule DocuSign.Model.PrefillFormData do
 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.FormDataItem
+
   @derive Jason.Encoder
   defstruct [
     :formData,
@@ -15,16 +18,14 @@ defmodule DocuSign.Model.PrefillFormData do
   ]
 
   @type t :: %__MODULE__{
-          :formData => [DocuSign.Model.FormDataItem.t()] | nil,
+          :formData => [FormDataItem.t()] | nil,
           :senderEmail => String.t() | nil,
           :senderName => String.t() | nil,
           :senderUserId => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:formData, :list, DocuSign.Model.FormDataItem)
+    |> Deserializer.deserialize(:formData, :list, FormDataItem)
   end
 end

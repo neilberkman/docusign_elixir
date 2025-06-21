@@ -6,6 +6,9 @@ defmodule DocuSign.Model.EnvelopeEmailSettings do
   Envelope email settings
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.BccEmailAddress
+
   @derive Jason.Encoder
   defstruct [
     :bccEmailAddresses,
@@ -14,15 +17,13 @@ defmodule DocuSign.Model.EnvelopeEmailSettings do
   ]
 
   @type t :: %__MODULE__{
-          :bccEmailAddresses => [DocuSign.Model.BccEmailAddress.t()] | nil,
+          :bccEmailAddresses => [BccEmailAddress.t()] | nil,
           :replyEmailAddressOverride => String.t() | nil,
           :replyEmailNameOverride => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:bccEmailAddresses, :list, DocuSign.Model.BccEmailAddress)
+    |> Deserializer.deserialize(:bccEmailAddresses, :list, BccEmailAddress)
   end
 end

@@ -6,8 +6,11 @@ defmodule DocuSign.Api.TemplateCustomFields do
   API calls for all endpoints tagged `TemplateCustomFields`.
   """
 
-  alias DocuSign.Connection
   import DocuSign.RequestBuilder
+
+  alias DocuSign.Connection
+  alias DocuSign.Model.CustomFields
+  alias DocuSign.Model.ErrorDetails
 
   @doc """
   Deletes envelope custom fields in a template.
@@ -32,8 +35,8 @@ defmodule DocuSign.Api.TemplateCustomFields do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.CustomFields.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, CustomFields.t()}
           | {:error, Tesla.Env.t()}
   def custom_fields_delete_template_custom_fields(connection, account_id, template_id, opts \\ []) do
     optional_params = %{
@@ -45,13 +48,13 @@ defmodule DocuSign.Api.TemplateCustomFields do
       |> method(:delete)
       |> url("/v2.1/accounts/#{account_id}/templates/#{template_id}/custom_fields")
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.CustomFields},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, CustomFields},
+      {400, ErrorDetails}
     ])
   end
 
@@ -77,21 +80,21 @@ defmodule DocuSign.Api.TemplateCustomFields do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.CustomFields.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, CustomFields.t()}
           | {:error, Tesla.Env.t()}
   def custom_fields_get_template_custom_fields(connection, account_id, template_id, _opts \\ []) do
     request =
       %{}
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/templates/#{template_id}/custom_fields")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.CustomFields},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, CustomFields},
+      {400, ErrorDetails}
     ])
   end
 
@@ -118,8 +121,8 @@ defmodule DocuSign.Api.TemplateCustomFields do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.CustomFields.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, CustomFields.t()}
           | {:error, Tesla.Env.t()}
   def custom_fields_post_template_custom_fields(connection, account_id, template_id, opts \\ []) do
     optional_params = %{
@@ -132,13 +135,13 @@ defmodule DocuSign.Api.TemplateCustomFields do
       |> url("/v2.1/accounts/#{account_id}/templates/#{template_id}/custom_fields")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {201, DocuSign.Model.CustomFields},
-      {400, DocuSign.Model.ErrorDetails}
+      {201, CustomFields},
+      {400, ErrorDetails}
     ])
   end
 
@@ -165,8 +168,8 @@ defmodule DocuSign.Api.TemplateCustomFields do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.CustomFields.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, CustomFields.t()}
           | {:error, Tesla.Env.t()}
   def custom_fields_put_template_custom_fields(connection, account_id, template_id, opts \\ []) do
     optional_params = %{
@@ -179,13 +182,13 @@ defmodule DocuSign.Api.TemplateCustomFields do
       |> url("/v2.1/accounts/#{account_id}/templates/#{template_id}/custom_fields")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.CustomFields},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, CustomFields},
+      {400, ErrorDetails}
     ])
   end
 end

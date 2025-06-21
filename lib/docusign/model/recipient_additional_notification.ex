@@ -6,6 +6,10 @@ defmodule DocuSign.Model.RecipientAdditionalNotification do
   Describes an additional notification method.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.PropertyMetadata
+  alias DocuSign.Model.RecipientPhoneNumber
+
   @derive Jason.Encoder
   defstruct [
     :phoneNumber,
@@ -15,21 +19,19 @@ defmodule DocuSign.Model.RecipientAdditionalNotification do
   ]
 
   @type t :: %__MODULE__{
-          :phoneNumber => DocuSign.Model.RecipientPhoneNumber.t() | nil,
+          :phoneNumber => RecipientPhoneNumber.t() | nil,
           :secondaryDeliveryMethod => String.t() | nil,
-          :secondaryDeliveryMethodMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :secondaryDeliveryMethodMetadata => PropertyMetadata.t() | nil,
           :secondaryDeliveryStatus => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:phoneNumber, :struct, DocuSign.Model.RecipientPhoneNumber)
+    |> Deserializer.deserialize(:phoneNumber, :struct, RecipientPhoneNumber)
     |> Deserializer.deserialize(
       :secondaryDeliveryMethodMetadata,
       :struct,
-      DocuSign.Model.PropertyMetadata
+      PropertyMetadata
     )
   end
 end

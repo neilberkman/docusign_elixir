@@ -6,6 +6,9 @@ defmodule DocuSign.Model.ConnectConfigResults do
   This object contains the results of a ConnectConfigurations::GET method.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.ConnectCustomConfiguration
+
   @derive Jason.Encoder
   defstruct [
     :configurations,
@@ -13,14 +16,12 @@ defmodule DocuSign.Model.ConnectConfigResults do
   ]
 
   @type t :: %__MODULE__{
-          :configurations => [DocuSign.Model.ConnectCustomConfiguration.t()] | nil,
+          :configurations => [ConnectCustomConfiguration.t()] | nil,
           :totalRecords => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:configurations, :list, DocuSign.Model.ConnectCustomConfiguration)
+    |> Deserializer.deserialize(:configurations, :list, ConnectCustomConfiguration)
   end
 end

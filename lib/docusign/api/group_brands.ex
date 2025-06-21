@@ -6,8 +6,11 @@ defmodule DocuSign.Api.GroupBrands do
   API calls for all endpoints tagged `GroupBrands`.
   """
 
-  alias DocuSign.Connection
   import DocuSign.RequestBuilder
+
+  alias DocuSign.Connection
+  alias DocuSign.Model.ErrorDetails
+  alias DocuSign.Model.GroupBrands
 
   @doc """
   Deletes brand information from a group.
@@ -27,8 +30,8 @@ defmodule DocuSign.Api.GroupBrands do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec brands_delete_group_brands(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.GroupBrands.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, GroupBrands.t()}
           | {:error, Tesla.Env.t()}
   def brands_delete_group_brands(connection, account_id, group_id, opts \\ []) do
     optional_params = %{
@@ -40,13 +43,13 @@ defmodule DocuSign.Api.GroupBrands do
       |> method(:delete)
       |> url("/v2.1/accounts/#{account_id}/groups/#{group_id}/brands")
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.GroupBrands},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, GroupBrands},
+      {400, ErrorDetails}
     ])
   end
 
@@ -67,21 +70,21 @@ defmodule DocuSign.Api.GroupBrands do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec brands_get_group_brands(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.GroupBrands.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, GroupBrands.t()}
           | {:error, Tesla.Env.t()}
   def brands_get_group_brands(connection, account_id, group_id, _opts \\ []) do
     request =
       %{}
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/groups/#{group_id}/brands")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.GroupBrands},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, GroupBrands},
+      {400, ErrorDetails}
     ])
   end
 
@@ -103,8 +106,8 @@ defmodule DocuSign.Api.GroupBrands do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec brands_put_group_brands(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.GroupBrands.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, GroupBrands.t()}
           | {:error, Tesla.Env.t()}
   def brands_put_group_brands(connection, account_id, group_id, opts \\ []) do
     optional_params = %{
@@ -117,13 +120,13 @@ defmodule DocuSign.Api.GroupBrands do
       |> url("/v2.1/accounts/#{account_id}/groups/#{group_id}/brands")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.GroupBrands},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, GroupBrands},
+      {400, ErrorDetails}
     ])
   end
 end

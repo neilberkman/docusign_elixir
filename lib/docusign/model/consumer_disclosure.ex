@@ -6,6 +6,9 @@ defmodule DocuSign.Model.ConsumerDisclosure do
   Details about consumer disclosures.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.SettingsMetadata
+
   @derive Jason.Encoder
   defstruct [
     :accountEsignId,
@@ -45,7 +48,7 @@ defmodule DocuSign.Model.ConsumerDisclosure do
   @type t :: %__MODULE__{
           :accountEsignId => String.t() | nil,
           :allowCDWithdraw => String.t() | nil,
-          :allowCDWithdrawMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :allowCDWithdrawMetadata => SettingsMetadata.t() | nil,
           :changeEmail => String.t() | nil,
           :changeEmailOther => String.t() | nil,
           :companyName => String.t() | nil,
@@ -62,8 +65,7 @@ defmodule DocuSign.Model.ConsumerDisclosure do
           :pdfId => String.t() | nil,
           :useBrand => String.t() | nil,
           :useConsumerDisclosureWithinAccount => String.t() | nil,
-          :useConsumerDisclosureWithinAccountMetadata =>
-            DocuSign.Model.SettingsMetadata.t() | nil,
+          :useConsumerDisclosureWithinAccountMetadata => SettingsMetadata.t() | nil,
           :withdrawAddressLine1 => String.t() | nil,
           :withdrawAddressLine2 => String.t() | nil,
           :withdrawByEmail => String.t() | nil,
@@ -78,19 +80,17 @@ defmodule DocuSign.Model.ConsumerDisclosure do
           :withdrawState => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
     |> Deserializer.deserialize(
       :allowCDWithdrawMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
     |> Deserializer.deserialize(
       :useConsumerDisclosureWithinAccountMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
   end
 end

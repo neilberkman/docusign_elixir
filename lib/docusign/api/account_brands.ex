@@ -6,8 +6,14 @@ defmodule DocuSign.Api.AccountBrands do
   API calls for all endpoints tagged `AccountBrands`.
   """
 
-  alias DocuSign.Connection
   import DocuSign.RequestBuilder
+
+  alias DocuSign.Connection
+  alias DocuSign.Model.AccountBrands
+  alias DocuSign.Model.Brand
+  alias DocuSign.Model.BrandResources
+  alias DocuSign.Model.BrandResourcesList
+  alias DocuSign.Model.ErrorDetails
 
   @doc """
   Deletes a brand.
@@ -26,19 +32,19 @@ defmodule DocuSign.Api.AccountBrands do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec brand_delete_brand(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, nil} | {:ok, DocuSign.Model.ErrorDetails.t()} | {:error, Tesla.Env.t()}
+          {:ok, nil} | {:ok, ErrorDetails.t()} | {:error, Tesla.Env.t()}
   def brand_delete_brand(connection, account_id, brand_id, _opts \\ []) do
     request =
       %{}
       |> method(:delete)
       |> url("/v2.1/accounts/#{account_id}/brands/#{brand_id}")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
       {200, false},
-      {400, DocuSign.Model.ErrorDetails}
+      {400, ErrorDetails}
     ])
   end
 
@@ -59,19 +65,19 @@ defmodule DocuSign.Api.AccountBrands do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec brand_export_get_brand_export_file(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, nil} | {:ok, DocuSign.Model.ErrorDetails.t()} | {:error, Tesla.Env.t()}
+          {:ok, nil} | {:ok, ErrorDetails.t()} | {:error, Tesla.Env.t()}
   def brand_export_get_brand_export_file(connection, account_id, brand_id, _opts \\ []) do
     request =
       %{}
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/brands/#{brand_id}/file")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
       {200, false},
-      {400, DocuSign.Model.ErrorDetails}
+      {400, ErrorDetails}
     ])
   end
 
@@ -94,8 +100,8 @@ defmodule DocuSign.Api.AccountBrands do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec brand_get_brand(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.Brand.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, Brand.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
   def brand_get_brand(connection, account_id, brand_id, opts \\ []) do
     optional_params = %{
@@ -108,13 +114,13 @@ defmodule DocuSign.Api.AccountBrands do
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/brands/#{brand_id}")
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.Brand},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, Brand},
+      {400, ErrorDetails}
     ])
   end
 
@@ -141,19 +147,19 @@ defmodule DocuSign.Api.AccountBrands do
           String.t(),
           String.t(),
           keyword()
-        ) :: {:ok, nil} | {:ok, DocuSign.Model.ErrorDetails.t()} | {:error, Tesla.Env.t()}
+        ) :: {:ok, nil} | {:ok, ErrorDetails.t()} | {:error, Tesla.Env.t()}
   def brand_logo_delete_brand_logo(connection, account_id, brand_id, logo_type, _opts \\ []) do
     request =
       %{}
       |> method(:delete)
       |> url("/v2.1/accounts/#{account_id}/brands/#{brand_id}/logos/#{logo_type}")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
       {200, false},
-      {400, DocuSign.Model.ErrorDetails}
+      {400, ErrorDetails}
     ])
   end
 
@@ -180,19 +186,19 @@ defmodule DocuSign.Api.AccountBrands do
           String.t(),
           String.t(),
           keyword()
-        ) :: {:ok, DocuSign.Model.ErrorDetails.t()} | {:ok, String.t()} | {:error, Tesla.Env.t()}
+        ) :: {:ok, ErrorDetails.t()} | {:ok, String.t()} | {:error, Tesla.Env.t()}
   def brand_logo_get_brand_logo(connection, account_id, brand_id, logo_type, _opts \\ []) do
     request =
       %{}
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/brands/#{brand_id}/logos/#{logo_type}")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
       {200, false},
-      {400, DocuSign.Model.ErrorDetails}
+      {400, ErrorDetails}
     ])
   end
 
@@ -221,27 +227,20 @@ defmodule DocuSign.Api.AccountBrands do
           String.t(),
           String.t(),
           keyword()
-        ) :: {:ok, nil} | {:ok, DocuSign.Model.ErrorDetails.t()} | {:error, Tesla.Env.t()}
-  def brand_logo_put_brand_logo(
-        connection,
-        account_id,
-        brand_id,
-        logo_type,
-        logo_file_bytes,
-        _opts \\ []
-      ) do
+        ) :: {:ok, nil} | {:ok, ErrorDetails.t()} | {:error, Tesla.Env.t()}
+  def brand_logo_put_brand_logo(connection, account_id, brand_id, logo_type, logo_file_bytes, _opts \\ []) do
     request =
       %{}
       |> method(:put)
       |> url("/v2.1/accounts/#{account_id}/brands/#{brand_id}/logos/#{logo_type}")
       |> add_param(:body, :body, logo_file_bytes)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
       {200, false},
-      {400, DocuSign.Model.ErrorDetails}
+      {400, ErrorDetails}
     ])
   end
 
@@ -264,13 +263,13 @@ defmodule DocuSign.Api.AccountBrands do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec brand_put_brand(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.Brand.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, Brand.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
   def brand_put_brand(connection, account_id, brand_id, opts \\ []) do
     optional_params = %{
-      :replace_brand => :query,
-      :body => :body
+      :body => :body,
+      :replace_brand => :query
     }
 
     request =
@@ -279,13 +278,13 @@ defmodule DocuSign.Api.AccountBrands do
       |> url("/v2.1/accounts/#{account_id}/brands/#{brand_id}")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.Brand},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, Brand},
+      {400, ErrorDetails}
     ])
   end
 
@@ -314,14 +313,8 @@ defmodule DocuSign.Api.AccountBrands do
           String.t(),
           String.t(),
           keyword()
-        ) :: {:ok, nil} | {:ok, DocuSign.Model.ErrorDetails.t()} | {:error, Tesla.Env.t()}
-  def brand_resources_get_brand_resources(
-        connection,
-        account_id,
-        brand_id,
-        resource_content_type,
-        opts \\ []
-      ) do
+        ) :: {:ok, nil} | {:ok, ErrorDetails.t()} | {:error, Tesla.Env.t()}
+  def brand_resources_get_brand_resources(connection, account_id, brand_id, resource_content_type, opts \\ []) do
     optional_params = %{
       :langcode => :query,
       :return_master => :query
@@ -332,13 +325,13 @@ defmodule DocuSign.Api.AccountBrands do
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/brands/#{brand_id}/resources/#{resource_content_type}")
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
       {200, false},
-      {400, DocuSign.Model.ErrorDetails}
+      {400, ErrorDetails}
     ])
   end
 
@@ -364,21 +357,21 @@ defmodule DocuSign.Api.AccountBrands do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.BrandResourcesList.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, BrandResourcesList.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
   def brand_resources_get_brand_resources_list(connection, account_id, brand_id, _opts \\ []) do
     request =
       %{}
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/brands/#{brand_id}/resources")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.BrandResourcesList},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, BrandResourcesList},
+      {400, ErrorDetails}
     ])
   end
 
@@ -408,8 +401,8 @@ defmodule DocuSign.Api.AccountBrands do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.BrandResources.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, BrandResources.t()}
           | {:error, Tesla.Env.t()}
   def brand_resources_put_brand_resources(
         connection,
@@ -424,13 +417,13 @@ defmodule DocuSign.Api.AccountBrands do
       |> method(:put)
       |> url("/v2.1/accounts/#{account_id}/brands/#{brand_id}/resources/#{resource_content_type}")
       |> add_param(:file, :"file.xml", file_periodxml)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.BrandResources},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, BrandResources},
+      {400, ErrorDetails}
     ])
   end
 
@@ -451,8 +444,8 @@ defmodule DocuSign.Api.AccountBrands do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec brands_delete_brands(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.AccountBrands.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, AccountBrands.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
   def brands_delete_brands(connection, account_id, opts \\ []) do
     optional_params = %{
@@ -464,13 +457,13 @@ defmodule DocuSign.Api.AccountBrands do
       |> method(:delete)
       |> url("/v2.1/accounts/#{account_id}/brands")
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.AccountBrands},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, AccountBrands},
+      {400, ErrorDetails}
     ])
   end
 
@@ -492,8 +485,8 @@ defmodule DocuSign.Api.AccountBrands do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec brands_get_brands(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.AccountBrands.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, AccountBrands.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
   def brands_get_brands(connection, account_id, opts \\ []) do
     optional_params = %{
@@ -506,13 +499,13 @@ defmodule DocuSign.Api.AccountBrands do
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/brands")
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.AccountBrands},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, AccountBrands},
+      {400, ErrorDetails}
     ])
   end
 
@@ -533,8 +526,8 @@ defmodule DocuSign.Api.AccountBrands do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec brands_post_brands(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.AccountBrands.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, AccountBrands.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
   def brands_post_brands(connection, account_id, opts \\ []) do
     optional_params = %{
@@ -547,13 +540,13 @@ defmodule DocuSign.Api.AccountBrands do
       |> url("/v2.1/accounts/#{account_id}/brands")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {201, DocuSign.Model.AccountBrands},
-      {400, DocuSign.Model.ErrorDetails}
+      {201, AccountBrands},
+      {400, ErrorDetails}
     ])
   end
 end

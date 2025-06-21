@@ -6,6 +6,9 @@ defmodule DocuSign.Model.UserPasswordInformation do
 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.ForgottenPasswordInformation
+
   @derive Jason.Encoder
   defstruct [
     :currentPassword,
@@ -17,18 +20,16 @@ defmodule DocuSign.Model.UserPasswordInformation do
   @type t :: %__MODULE__{
           :currentPassword => String.t() | nil,
           :email => String.t() | nil,
-          :forgottenPasswordInfo => DocuSign.Model.ForgottenPasswordInformation.t() | nil,
+          :forgottenPasswordInfo => ForgottenPasswordInformation.t() | nil,
           :newPassword => String.t() | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
     |> Deserializer.deserialize(
       :forgottenPasswordInfo,
       :struct,
-      DocuSign.Model.ForgottenPasswordInformation
+      ForgottenPasswordInformation
     )
   end
 end

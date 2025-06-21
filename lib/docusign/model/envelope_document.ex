@@ -6,6 +6,15 @@ defmodule DocuSign.Model.EnvelopeDocument do
   This object contains details about the envelope document.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.DocGenFormField
+  alias DocuSign.Model.DocGenSyntaxError
+  alias DocuSign.Model.ErrorDetails
+  alias DocuSign.Model.NameValue
+  alias DocuSign.Model.Page
+  alias DocuSign.Model.PropertyMetadata
+  alias DocuSign.Model.SignatureType
+
   @derive Jason.Encoder
   defstruct [
     :addedRecipientIds,
@@ -50,34 +59,34 @@ defmodule DocuSign.Model.EnvelopeDocument do
           :addedRecipientIds => [String.t()] | nil,
           :attachmentTabId => String.t() | nil,
           :authoritativeCopy => String.t() | nil,
-          :authoritativeCopyMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
-          :availableDocumentTypes => [DocuSign.Model.SignatureType.t()] | nil,
+          :authoritativeCopyMetadata => PropertyMetadata.t() | nil,
+          :availableDocumentTypes => [SignatureType.t()] | nil,
           :containsPdfFormFields => String.t() | nil,
           :display => String.t() | nil,
-          :displayMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :displayMetadata => PropertyMetadata.t() | nil,
           :docGenDocumentStatus => String.t() | nil,
-          :docGenErrors => [DocuSign.Model.DocGenSyntaxError.t()] | nil,
-          :docGenFormFields => [DocuSign.Model.DocGenFormField.t()] | nil,
+          :docGenErrors => [DocGenSyntaxError.t()] | nil,
+          :docGenFormFields => [DocGenFormField.t()] | nil,
           :documentBase64 => String.t() | nil,
-          :documentFields => [DocuSign.Model.NameValue.t()] | nil,
+          :documentFields => [NameValue.t()] | nil,
           :documentId => String.t() | nil,
           :documentIdGuid => String.t() | nil,
           :documentTemplateAgreementTypeId => String.t() | nil,
           :documentTemplateId => String.t() | nil,
-          :errorDetails => DocuSign.Model.ErrorDetails.t() | nil,
+          :errorDetails => ErrorDetails.t() | nil,
           :hasDigitalSignature => String.t() | nil,
           :includeInDownload => String.t() | nil,
-          :includeInDownloadMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :includeInDownloadMetadata => PropertyMetadata.t() | nil,
           :isAceGenDocument => String.t() | nil,
           :isDocGenDocument => String.t() | nil,
           :isExternallyAvailable => String.t() | nil,
           :isFlattened => String.t() | nil,
           :name => String.t() | nil,
-          :nameMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :nameMetadata => PropertyMetadata.t() | nil,
           :order => String.t() | nil,
-          :pages => [DocuSign.Model.Page.t()] | nil,
+          :pages => [Page.t()] | nil,
           :signerMustAcknowledge => String.t() | nil,
-          :signerMustAcknowledgeMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :signerMustAcknowledgeMetadata => PropertyMetadata.t() | nil,
           :sizeBytes => String.t() | nil,
           :templateLocked => String.t() | nil,
           :templateRequired => String.t() | nil,
@@ -85,32 +94,30 @@ defmodule DocuSign.Model.EnvelopeDocument do
           :uri => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
     |> Deserializer.deserialize(
       :authoritativeCopyMetadata,
       :struct,
-      DocuSign.Model.PropertyMetadata
+      PropertyMetadata
     )
-    |> Deserializer.deserialize(:availableDocumentTypes, :list, DocuSign.Model.SignatureType)
-    |> Deserializer.deserialize(:displayMetadata, :struct, DocuSign.Model.PropertyMetadata)
-    |> Deserializer.deserialize(:docGenErrors, :list, DocuSign.Model.DocGenSyntaxError)
-    |> Deserializer.deserialize(:docGenFormFields, :list, DocuSign.Model.DocGenFormField)
-    |> Deserializer.deserialize(:documentFields, :list, DocuSign.Model.NameValue)
-    |> Deserializer.deserialize(:errorDetails, :struct, DocuSign.Model.ErrorDetails)
+    |> Deserializer.deserialize(:availableDocumentTypes, :list, SignatureType)
+    |> Deserializer.deserialize(:displayMetadata, :struct, PropertyMetadata)
+    |> Deserializer.deserialize(:docGenErrors, :list, DocGenSyntaxError)
+    |> Deserializer.deserialize(:docGenFormFields, :list, DocGenFormField)
+    |> Deserializer.deserialize(:documentFields, :list, NameValue)
+    |> Deserializer.deserialize(:errorDetails, :struct, ErrorDetails)
     |> Deserializer.deserialize(
       :includeInDownloadMetadata,
       :struct,
-      DocuSign.Model.PropertyMetadata
+      PropertyMetadata
     )
-    |> Deserializer.deserialize(:nameMetadata, :struct, DocuSign.Model.PropertyMetadata)
-    |> Deserializer.deserialize(:pages, :list, DocuSign.Model.Page)
+    |> Deserializer.deserialize(:nameMetadata, :struct, PropertyMetadata)
+    |> Deserializer.deserialize(:pages, :list, Page)
     |> Deserializer.deserialize(
       :signerMustAcknowledgeMetadata,
       :struct,
-      DocuSign.Model.PropertyMetadata
+      PropertyMetadata
     )
   end
 end

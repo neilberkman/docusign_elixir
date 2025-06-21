@@ -6,6 +6,10 @@ defmodule DocuSign.Model.MemberGroupSharedItem do
   Information about items shared among groups.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.ErrorDetails
+  alias DocuSign.Model.Group
+
   @derive Jason.Encoder
   defstruct [
     :errorDetails,
@@ -14,16 +18,14 @@ defmodule DocuSign.Model.MemberGroupSharedItem do
   ]
 
   @type t :: %__MODULE__{
-          :errorDetails => DocuSign.Model.ErrorDetails.t() | nil,
-          :group => DocuSign.Model.Group.t() | nil,
+          :errorDetails => ErrorDetails.t() | nil,
+          :group => Group.t() | nil,
           :shared => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:errorDetails, :struct, DocuSign.Model.ErrorDetails)
-    |> Deserializer.deserialize(:group, :struct, DocuSign.Model.Group)
+    |> Deserializer.deserialize(:errorDetails, :struct, ErrorDetails)
+    |> Deserializer.deserialize(:group, :struct, Group)
   end
 end

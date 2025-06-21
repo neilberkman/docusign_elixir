@@ -6,6 +6,17 @@ defmodule DocuSign.Model.PrefillTabs do
   Prefill tabs are tabs that the sender can fill in before the envelope is sent. They are sometimes called sender tags or pre-fill fields.  Only the following tab types can be prefill tabs:  - text - check boxes - radio buttons    [Pre-Fill Your Own Document Fields][app] describes how prefill tabs work in the web application.   [Customize your envelopes with pre-fill fields][catblog] shows how to use prefill tabs in your application using the eSignature SDKs.  [app]:      https://support.docusign.com/s/document-item?bundleId=gbo1643332197980&topicId=nwo1611173513994.html [catblog]:  https://www.docusign.com/blog/developers/common-api-tasks-customize-your-envelopes-pre-fill-fields
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.Checkbox
+  alias DocuSign.Model.Email
+  alias DocuSign.Model.RadioGroup
+  alias DocuSign.Model.SenderCompany
+  alias DocuSign.Model.SenderName
+  alias DocuSign.Model.Ssn
+  alias DocuSign.Model.TabGroup
+  alias DocuSign.Model.Text
+  alias DocuSign.Model.Zip
+
   @derive Jason.Encoder
   defstruct [
     :checkboxTabs,
@@ -22,32 +33,30 @@ defmodule DocuSign.Model.PrefillTabs do
   ]
 
   @type t :: %__MODULE__{
-          :checkboxTabs => [DocuSign.Model.Checkbox.t()] | nil,
+          :checkboxTabs => [Checkbox.t()] | nil,
           :dateTabs => [DocuSign.Model.Date.t()] | nil,
-          :emailTabs => [DocuSign.Model.Email.t()] | nil,
+          :emailTabs => [Email.t()] | nil,
           :numberTabs => [DocuSign.Model.Float.t()] | nil,
-          :radioGroupTabs => [DocuSign.Model.RadioGroup.t()] | nil,
-          :senderCompanyTabs => [DocuSign.Model.SenderCompany.t()] | nil,
-          :senderNameTabs => [DocuSign.Model.SenderName.t()] | nil,
-          :ssnTabs => [DocuSign.Model.Ssn.t()] | nil,
-          :tabGroups => [DocuSign.Model.TabGroup.t()] | nil,
-          :textTabs => [DocuSign.Model.Text.t()] | nil,
-          :zipTabs => [DocuSign.Model.Zip.t()] | nil
+          :radioGroupTabs => [RadioGroup.t()] | nil,
+          :senderCompanyTabs => [SenderCompany.t()] | nil,
+          :senderNameTabs => [SenderName.t()] | nil,
+          :ssnTabs => [Ssn.t()] | nil,
+          :tabGroups => [TabGroup.t()] | nil,
+          :textTabs => [Text.t()] | nil,
+          :zipTabs => [Zip.t()] | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
-    |> Deserializer.deserialize(:checkboxTabs, :list, DocuSign.Model.Checkbox)
+    |> Deserializer.deserialize(:checkboxTabs, :list, Checkbox)
     |> Deserializer.deserialize(:dateTabs, :list, DocuSign.Model.Date)
-    |> Deserializer.deserialize(:emailTabs, :list, DocuSign.Model.Email)
-    |> Deserializer.deserialize(:radioGroupTabs, :list, DocuSign.Model.RadioGroup)
-    |> Deserializer.deserialize(:senderCompanyTabs, :list, DocuSign.Model.SenderCompany)
-    |> Deserializer.deserialize(:senderNameTabs, :list, DocuSign.Model.SenderName)
-    |> Deserializer.deserialize(:ssnTabs, :list, DocuSign.Model.Ssn)
-    |> Deserializer.deserialize(:tabGroups, :list, DocuSign.Model.TabGroup)
-    |> Deserializer.deserialize(:textTabs, :list, DocuSign.Model.Text)
-    |> Deserializer.deserialize(:zipTabs, :list, DocuSign.Model.Zip)
+    |> Deserializer.deserialize(:emailTabs, :list, Email)
+    |> Deserializer.deserialize(:radioGroupTabs, :list, RadioGroup)
+    |> Deserializer.deserialize(:senderCompanyTabs, :list, SenderCompany)
+    |> Deserializer.deserialize(:senderNameTabs, :list, SenderName)
+    |> Deserializer.deserialize(:ssnTabs, :list, Ssn)
+    |> Deserializer.deserialize(:tabGroups, :list, TabGroup)
+    |> Deserializer.deserialize(:textTabs, :list, Text)
+    |> Deserializer.deserialize(:zipTabs, :list, Zip)
   end
 end

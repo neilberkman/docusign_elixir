@@ -6,6 +6,9 @@ defmodule DocuSign.Model.LocalePolicy do
 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.SettingsMetadata
+
   @derive Jason.Encoder
   defstruct [
     :addressFormat,
@@ -55,24 +58,24 @@ defmodule DocuSign.Model.LocalePolicy do
 
   @type t :: %__MODULE__{
           :addressFormat => String.t() | nil,
-          :addressFormatMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :addressFormatMetadata => SettingsMetadata.t() | nil,
           :allowRegion => String.t() | nil,
           :calendarType => String.t() | nil,
-          :calendarTypeMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :calendarTypeMetadata => SettingsMetadata.t() | nil,
           :cultureName => String.t() | nil,
-          :cultureNameMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :cultureNameMetadata => SettingsMetadata.t() | nil,
           :currencyCode => String.t() | nil,
-          :currencyCodeMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :currencyCodeMetadata => SettingsMetadata.t() | nil,
           :currencyNegativeFormat => String.t() | nil,
-          :currencyNegativeFormatMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :currencyNegativeFormatMetadata => SettingsMetadata.t() | nil,
           :currencyPositiveFormat => String.t() | nil,
-          :currencyPositiveFormatMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :currencyPositiveFormatMetadata => SettingsMetadata.t() | nil,
           :customDateFormat => String.t() | nil,
           :customSignDateFormat => String.t() | nil,
           :customSignTimeFormat => String.t() | nil,
           :customTimeFormat => String.t() | nil,
           :dateFormat => String.t() | nil,
-          :dateFormatMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :dateFormatMetadata => SettingsMetadata.t() | nil,
           :effectiveAddressFormat => String.t() | nil,
           :effectiveCalendarType => String.t() | nil,
           :effectiveCurrencyCode => String.t() | nil,
@@ -86,43 +89,41 @@ defmodule DocuSign.Model.LocalePolicy do
           :effectiveTimeFormat => String.t() | nil,
           :effectiveTimeZone => String.t() | nil,
           :initialFormat => String.t() | nil,
-          :initialFormatMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :initialFormatMetadata => SettingsMetadata.t() | nil,
           :nameFormat => String.t() | nil,
-          :nameFormatMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :nameFormatMetadata => SettingsMetadata.t() | nil,
           :signDateFormat => String.t() | nil,
-          :signDateFormatMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :signDateFormatMetadata => SettingsMetadata.t() | nil,
           :signTimeFormat => String.t() | nil,
-          :signTimeFormatMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :signTimeFormatMetadata => SettingsMetadata.t() | nil,
           :timeFormat => String.t() | nil,
-          :timeFormatMetadata => DocuSign.Model.SettingsMetadata.t() | nil,
+          :timeFormatMetadata => SettingsMetadata.t() | nil,
           :timeZone => String.t() | nil,
-          :timeZoneMetadata => DocuSign.Model.SettingsMetadata.t() | nil
+          :timeZoneMetadata => SettingsMetadata.t() | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
-    |> Deserializer.deserialize(:addressFormatMetadata, :struct, DocuSign.Model.SettingsMetadata)
-    |> Deserializer.deserialize(:calendarTypeMetadata, :struct, DocuSign.Model.SettingsMetadata)
-    |> Deserializer.deserialize(:cultureNameMetadata, :struct, DocuSign.Model.SettingsMetadata)
-    |> Deserializer.deserialize(:currencyCodeMetadata, :struct, DocuSign.Model.SettingsMetadata)
+    |> Deserializer.deserialize(:addressFormatMetadata, :struct, SettingsMetadata)
+    |> Deserializer.deserialize(:calendarTypeMetadata, :struct, SettingsMetadata)
+    |> Deserializer.deserialize(:cultureNameMetadata, :struct, SettingsMetadata)
+    |> Deserializer.deserialize(:currencyCodeMetadata, :struct, SettingsMetadata)
     |> Deserializer.deserialize(
       :currencyNegativeFormatMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
     |> Deserializer.deserialize(
       :currencyPositiveFormatMetadata,
       :struct,
-      DocuSign.Model.SettingsMetadata
+      SettingsMetadata
     )
-    |> Deserializer.deserialize(:dateFormatMetadata, :struct, DocuSign.Model.SettingsMetadata)
-    |> Deserializer.deserialize(:initialFormatMetadata, :struct, DocuSign.Model.SettingsMetadata)
-    |> Deserializer.deserialize(:nameFormatMetadata, :struct, DocuSign.Model.SettingsMetadata)
-    |> Deserializer.deserialize(:signDateFormatMetadata, :struct, DocuSign.Model.SettingsMetadata)
-    |> Deserializer.deserialize(:signTimeFormatMetadata, :struct, DocuSign.Model.SettingsMetadata)
-    |> Deserializer.deserialize(:timeFormatMetadata, :struct, DocuSign.Model.SettingsMetadata)
-    |> Deserializer.deserialize(:timeZoneMetadata, :struct, DocuSign.Model.SettingsMetadata)
+    |> Deserializer.deserialize(:dateFormatMetadata, :struct, SettingsMetadata)
+    |> Deserializer.deserialize(:initialFormatMetadata, :struct, SettingsMetadata)
+    |> Deserializer.deserialize(:nameFormatMetadata, :struct, SettingsMetadata)
+    |> Deserializer.deserialize(:signDateFormatMetadata, :struct, SettingsMetadata)
+    |> Deserializer.deserialize(:signTimeFormatMetadata, :struct, SettingsMetadata)
+    |> Deserializer.deserialize(:timeFormatMetadata, :struct, SettingsMetadata)
+    |> Deserializer.deserialize(:timeZoneMetadata, :struct, SettingsMetadata)
   end
 end

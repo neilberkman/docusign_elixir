@@ -6,19 +6,20 @@ defmodule DocuSign.Model.SupportedLanguages do
   A list of supported languages.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.NameValue
+
   @derive Jason.Encoder
   defstruct [
     :languages
   ]
 
   @type t :: %__MODULE__{
-          :languages => [DocuSign.Model.NameValue.t()] | nil
+          :languages => [NameValue.t()] | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
-    |> Deserializer.deserialize(:languages, :list, DocuSign.Model.NameValue)
+    |> Deserializer.deserialize(:languages, :list, NameValue)
   end
 end

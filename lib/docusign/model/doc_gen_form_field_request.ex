@@ -6,19 +6,20 @@ defmodule DocuSign.Model.DocGenFormFieldRequest do
   This object maps the document generation fields to their values.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.DocGenFormFields
+
   @derive Jason.Encoder
   defstruct [
     :docGenFormFields
   ]
 
   @type t :: %__MODULE__{
-          :docGenFormFields => [DocuSign.Model.DocGenFormFields.t()] | nil
+          :docGenFormFields => [DocGenFormFields.t()] | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
-    |> Deserializer.deserialize(:docGenFormFields, :list, DocuSign.Model.DocGenFormFields)
+    |> Deserializer.deserialize(:docGenFormFields, :list, DocGenFormFields)
   end
 end

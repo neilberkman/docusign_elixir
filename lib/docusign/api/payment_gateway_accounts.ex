@@ -6,8 +6,11 @@ defmodule DocuSign.Api.PaymentGatewayAccounts do
   API calls for all endpoints tagged `PaymentGatewayAccounts`.
   """
 
-  alias DocuSign.Connection
   import DocuSign.RequestBuilder
+
+  alias DocuSign.Connection
+  alias DocuSign.Model.ErrorDetails
+  alias DocuSign.Model.PaymentGatewayAccountsInfo
 
   @doc """
   List payment gateway accounts
@@ -29,25 +32,21 @@ defmodule DocuSign.Api.PaymentGatewayAccounts do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.PaymentGatewayAccountsInfo.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, PaymentGatewayAccountsInfo.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
-  def payment_gateway_accounts_get_all_payment_gateway_accounts(
-        connection,
-        account_id,
-        _opts \\ []
-      ) do
+  def payment_gateway_accounts_get_all_payment_gateway_accounts(connection, account_id, _opts \\ []) do
     request =
       %{}
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/payment_gateway_accounts")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.PaymentGatewayAccountsInfo},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, PaymentGatewayAccountsInfo},
+      {400, ErrorDetails}
     ])
   end
 end

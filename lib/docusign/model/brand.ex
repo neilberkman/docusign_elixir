@@ -6,6 +6,14 @@ defmodule DocuSign.Model.Brand do
   Information about a brand that is associated with an account. A brand applies custom styles and text to an envelope.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.BrandEmailContent
+  alias DocuSign.Model.BrandLink
+  alias DocuSign.Model.BrandLogos
+  alias DocuSign.Model.BrandResourceUrls
+  alias DocuSign.Model.ErrorDetails
+  alias DocuSign.Model.NameValue
+
   @derive Jason.Encoder
   defstruct [
     :brandCompany,
@@ -32,31 +40,29 @@ defmodule DocuSign.Model.Brand do
           :brandId => String.t() | nil,
           :brandLanguages => [String.t()] | nil,
           :brandName => String.t() | nil,
-          :colors => [DocuSign.Model.NameValue.t()] | nil,
+          :colors => [NameValue.t()] | nil,
           :defaultBrandLanguage => String.t() | nil,
-          :emailContent => [DocuSign.Model.BrandEmailContent.t()] | nil,
-          :errorDetails => DocuSign.Model.ErrorDetails.t() | nil,
+          :emailContent => [BrandEmailContent.t()] | nil,
+          :errorDetails => ErrorDetails.t() | nil,
           :isOrganizationBrand => String.t() | nil,
           :isOverridingCompanyName => boolean() | nil,
           :isSendingDefault => boolean() | nil,
           :isSigningDefault => boolean() | nil,
-          :landingPages => [DocuSign.Model.NameValue.t()] | nil,
-          :links => [DocuSign.Model.BrandLink.t()] | nil,
-          :logos => DocuSign.Model.BrandLogos.t() | nil,
+          :landingPages => [NameValue.t()] | nil,
+          :links => [BrandLink.t()] | nil,
+          :logos => BrandLogos.t() | nil,
           :organizationBrandLogo => String.t() | nil,
-          :resources => DocuSign.Model.BrandResourceUrls.t() | nil
+          :resources => BrandResourceUrls.t() | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
-    |> Deserializer.deserialize(:colors, :list, DocuSign.Model.NameValue)
-    |> Deserializer.deserialize(:emailContent, :list, DocuSign.Model.BrandEmailContent)
-    |> Deserializer.deserialize(:errorDetails, :struct, DocuSign.Model.ErrorDetails)
-    |> Deserializer.deserialize(:landingPages, :list, DocuSign.Model.NameValue)
-    |> Deserializer.deserialize(:links, :list, DocuSign.Model.BrandLink)
-    |> Deserializer.deserialize(:logos, :struct, DocuSign.Model.BrandLogos)
-    |> Deserializer.deserialize(:resources, :struct, DocuSign.Model.BrandResourceUrls)
+    |> Deserializer.deserialize(:colors, :list, NameValue)
+    |> Deserializer.deserialize(:emailContent, :list, BrandEmailContent)
+    |> Deserializer.deserialize(:errorDetails, :struct, ErrorDetails)
+    |> Deserializer.deserialize(:landingPages, :list, NameValue)
+    |> Deserializer.deserialize(:links, :list, BrandLink)
+    |> Deserializer.deserialize(:logos, :struct, BrandLogos)
+    |> Deserializer.deserialize(:resources, :struct, BrandResourceUrls)
   end
 end

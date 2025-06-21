@@ -6,8 +6,11 @@ defmodule DocuSign.Api.GroupUsers do
   API calls for all endpoints tagged `GroupUsers`.
   """
 
-  alias DocuSign.Connection
   import DocuSign.RequestBuilder
+
+  alias DocuSign.Connection
+  alias DocuSign.Model.ErrorDetails
+  alias DocuSign.Model.UsersResponse
 
   @doc """
   Deletes one or more users from a group
@@ -27,8 +30,8 @@ defmodule DocuSign.Api.GroupUsers do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec groups_delete_group_users(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.UsersResponse.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, UsersResponse.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
   def groups_delete_group_users(connection, account_id, group_id, opts \\ []) do
     optional_params = %{
@@ -40,13 +43,13 @@ defmodule DocuSign.Api.GroupUsers do
       |> method(:delete)
       |> url("/v2.1/accounts/#{account_id}/groups/#{group_id}/users")
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.UsersResponse},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, UsersResponse},
+      {400, ErrorDetails}
     ])
   end
 
@@ -69,8 +72,8 @@ defmodule DocuSign.Api.GroupUsers do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec groups_get_group_users(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.UsersResponse.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, UsersResponse.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
   def groups_get_group_users(connection, account_id, group_id, opts \\ []) do
     optional_params = %{
@@ -83,13 +86,13 @@ defmodule DocuSign.Api.GroupUsers do
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/groups/#{group_id}/users")
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.UsersResponse},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, UsersResponse},
+      {400, ErrorDetails}
     ])
   end
 
@@ -111,8 +114,8 @@ defmodule DocuSign.Api.GroupUsers do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec groups_put_group_users(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.UsersResponse.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, UsersResponse.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
   def groups_put_group_users(connection, account_id, group_id, opts \\ []) do
     optional_params = %{
@@ -125,13 +128,13 @@ defmodule DocuSign.Api.GroupUsers do
       |> url("/v2.1/accounts/#{account_id}/groups/#{group_id}/users")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.UsersResponse},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, UsersResponse},
+      {400, ErrorDetails}
     ])
   end
 end

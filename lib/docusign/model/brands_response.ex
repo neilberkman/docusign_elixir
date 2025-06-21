@@ -6,6 +6,9 @@ defmodule DocuSign.Model.BrandsResponse do
 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.Brand
+
   @derive Jason.Encoder
   defstruct [
     :brands,
@@ -14,15 +17,13 @@ defmodule DocuSign.Model.BrandsResponse do
   ]
 
   @type t :: %__MODULE__{
-          :brands => [DocuSign.Model.Brand.t()] | nil,
+          :brands => [Brand.t()] | nil,
           :recipientBrandIdDefault => String.t() | nil,
           :senderBrandIdDefault => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:brands, :list, DocuSign.Model.Brand)
+    |> Deserializer.deserialize(:brands, :list, Brand)
   end
 end

@@ -6,6 +6,9 @@ defmodule DocuSign.Model.DelayedRouting do
   A complex element that specifies the delayed routing settings for the workflow step.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.EnvelopeDelayRule
+
   @derive Jason.Encoder
   defstruct [
     :resumeDate,
@@ -15,14 +18,12 @@ defmodule DocuSign.Model.DelayedRouting do
 
   @type t :: %__MODULE__{
           :resumeDate => String.t() | nil,
-          :rules => [DocuSign.Model.EnvelopeDelayRule.t()] | nil,
+          :rules => [EnvelopeDelayRule.t()] | nil,
           :status => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:rules, :list, DocuSign.Model.EnvelopeDelayRule)
+    |> Deserializer.deserialize(:rules, :list, EnvelopeDelayRule)
   end
 end

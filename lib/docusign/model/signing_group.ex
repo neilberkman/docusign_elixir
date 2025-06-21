@@ -6,6 +6,10 @@ defmodule DocuSign.Model.SigningGroup do
   Contains details about a signing group. Signing groups enable you to send an envelope to a predefined group of recipients and have any one member of the group sign your documents. When you send an envelope to a signing group, anyone in the group can open it and sign it with their own signature.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.ErrorDetails
+  alias DocuSign.Model.SigningGroupUser
+
   @derive Jason.Encoder
   defstruct [
     :created,
@@ -23,21 +27,19 @@ defmodule DocuSign.Model.SigningGroup do
   @type t :: %__MODULE__{
           :created => String.t() | nil,
           :createdBy => String.t() | nil,
-          :errorDetails => DocuSign.Model.ErrorDetails.t() | nil,
+          :errorDetails => ErrorDetails.t() | nil,
           :groupEmail => String.t() | nil,
           :groupName => String.t() | nil,
           :groupType => String.t() | nil,
           :modified => String.t() | nil,
           :modifiedBy => String.t() | nil,
           :signingGroupId => String.t() | nil,
-          :users => [DocuSign.Model.SigningGroupUser.t()] | nil
+          :users => [SigningGroupUser.t()] | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
-    |> Deserializer.deserialize(:errorDetails, :struct, DocuSign.Model.ErrorDetails)
-    |> Deserializer.deserialize(:users, :list, DocuSign.Model.SigningGroupUser)
+    |> Deserializer.deserialize(:errorDetails, :struct, ErrorDetails)
+    |> Deserializer.deserialize(:users, :list, SigningGroupUser)
   end
 end

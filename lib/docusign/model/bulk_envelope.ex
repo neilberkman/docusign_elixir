@@ -6,6 +6,9 @@ defmodule DocuSign.Model.BulkEnvelope do
 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.ErrorDetails
+
   @derive Jason.Encoder
   defstruct [
     :bulkRecipientRow,
@@ -25,16 +28,14 @@ defmodule DocuSign.Model.BulkEnvelope do
           :email => String.t() | nil,
           :envelopeId => String.t() | nil,
           :envelopeUri => String.t() | nil,
-          :errorDetails => DocuSign.Model.ErrorDetails.t() | nil,
+          :errorDetails => ErrorDetails.t() | nil,
           :name => String.t() | nil,
           :submittedDateTime => String.t() | nil,
           :transactionId => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:errorDetails, :struct, DocuSign.Model.ErrorDetails)
+    |> Deserializer.deserialize(:errorDetails, :struct, ErrorDetails)
   end
 end

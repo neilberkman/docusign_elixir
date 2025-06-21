@@ -6,8 +6,11 @@ defmodule DocuSign.Api.NotaryJournals do
   API calls for all endpoints tagged `NotaryJournals`.
   """
 
-  alias DocuSign.Connection
   import DocuSign.RequestBuilder
+
+  alias DocuSign.Connection
+  alias DocuSign.Model.ErrorDetails
+  alias DocuSign.Model.NotaryJournalList
 
   @doc """
   Gets notary jurisdictions for a user.
@@ -26,8 +29,8 @@ defmodule DocuSign.Api.NotaryJournals do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec notary_journals_get_notary_journals(Tesla.Env.client(), keyword()) ::
-          {:ok, DocuSign.Model.NotaryJournalList.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, NotaryJournalList.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
   def notary_journals_get_notary_journals(connection, opts \\ []) do
     optional_params = %{
@@ -41,13 +44,13 @@ defmodule DocuSign.Api.NotaryJournals do
       |> method(:get)
       |> url("/v2.1/current_user/notary/journals")
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.NotaryJournalList},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, NotaryJournalList},
+      {400, ErrorDetails}
     ])
   end
 end

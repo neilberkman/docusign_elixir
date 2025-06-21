@@ -6,6 +6,9 @@ defmodule DocuSign.Model.PowerFormsResponse do
   A list of PowerForms.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.PowerForm
+
   @derive Jason.Encoder
   defstruct [
     :endPosition,
@@ -20,17 +23,15 @@ defmodule DocuSign.Model.PowerFormsResponse do
   @type t :: %__MODULE__{
           :endPosition => integer() | nil,
           :nextUri => String.t() | nil,
-          :powerForms => [DocuSign.Model.PowerForm.t()] | nil,
+          :powerForms => [PowerForm.t()] | nil,
           :previousUri => String.t() | nil,
           :resultSetSize => integer() | nil,
           :startPosition => integer() | nil,
           :totalSetSize => integer() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:powerForms, :list, DocuSign.Model.PowerForm)
+    |> Deserializer.deserialize(:powerForms, :list, PowerForm)
   end
 end

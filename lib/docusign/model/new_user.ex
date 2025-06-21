@@ -6,6 +6,9 @@ defmodule DocuSign.Model.NewUser do
   Object representing a new user.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.ErrorDetails
+
   @derive Jason.Encoder
   defstruct [
     :apiPassword,
@@ -25,7 +28,7 @@ defmodule DocuSign.Model.NewUser do
           :apiPassword => String.t() | nil,
           :createdDateTime => String.t() | nil,
           :email => String.t() | nil,
-          :errorDetails => DocuSign.Model.ErrorDetails.t() | nil,
+          :errorDetails => ErrorDetails.t() | nil,
           :membershipId => String.t() | nil,
           :permissionProfileId => String.t() | nil,
           :permissionProfileName => String.t() | nil,
@@ -35,10 +38,8 @@ defmodule DocuSign.Model.NewUser do
           :userStatus => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:errorDetails, :struct, DocuSign.Model.ErrorDetails)
+    |> Deserializer.deserialize(:errorDetails, :struct, ErrorDetails)
   end
 end

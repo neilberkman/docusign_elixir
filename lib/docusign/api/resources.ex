@@ -6,8 +6,11 @@ defmodule DocuSign.Api.Resources do
   API calls for all endpoints tagged `Resources`.
   """
 
-  alias DocuSign.Connection
   import DocuSign.RequestBuilder
+
+  alias DocuSign.Connection
+  alias DocuSign.Model.ErrorDetails
+  alias DocuSign.Model.ResourceInformation
 
   @doc """
   Lists resources for REST version specified
@@ -24,21 +27,21 @@ defmodule DocuSign.Api.Resources do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec service_information_get_resource_information(Tesla.Env.client(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.ResourceInformation.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, ResourceInformation.t()}
           | {:error, Tesla.Env.t()}
   def service_information_get_resource_information(connection, _opts \\ []) do
     request =
       %{}
       |> method(:get)
       |> url("/v2.1")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.ResourceInformation},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, ResourceInformation},
+      {400, ErrorDetails}
     ])
   end
 end

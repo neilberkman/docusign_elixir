@@ -6,8 +6,12 @@ defmodule DocuSign.Api.AccountPermissionProfiles do
   API calls for all endpoints tagged `AccountPermissionProfiles`.
   """
 
-  alias DocuSign.Connection
   import DocuSign.RequestBuilder
+
+  alias DocuSign.Connection
+  alias DocuSign.Model.ErrorDetails
+  alias DocuSign.Model.PermissionProfile
+  alias DocuSign.Model.PermissionProfileInformation
 
   @doc """
   Deletes a permission profile from an account.
@@ -31,13 +35,8 @@ defmodule DocuSign.Api.AccountPermissionProfiles do
           String.t(),
           String.t(),
           keyword()
-        ) :: {:ok, nil} | {:ok, DocuSign.Model.ErrorDetails.t()} | {:error, Tesla.Env.t()}
-  def permission_profiles_delete_permission_profiles(
-        connection,
-        account_id,
-        permission_profile_id,
-        opts \\ []
-      ) do
+        ) :: {:ok, nil} | {:ok, ErrorDetails.t()} | {:error, Tesla.Env.t()}
+  def permission_profiles_delete_permission_profiles(connection, account_id, permission_profile_id, opts \\ []) do
     optional_params = %{
       :move_users_to => :query
     }
@@ -47,13 +46,13 @@ defmodule DocuSign.Api.AccountPermissionProfiles do
       |> method(:delete)
       |> url("/v2.1/accounts/#{account_id}/permission_profiles/#{permission_profile_id}")
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
       {200, false},
-      {400, DocuSign.Model.ErrorDetails}
+      {400, ErrorDetails}
     ])
   end
 
@@ -80,15 +79,10 @@ defmodule DocuSign.Api.AccountPermissionProfiles do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.PermissionProfile.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, PermissionProfile.t()}
           | {:error, Tesla.Env.t()}
-  def permission_profiles_get_permission_profile(
-        connection,
-        account_id,
-        permission_profile_id,
-        opts \\ []
-      ) do
+  def permission_profiles_get_permission_profile(connection, account_id, permission_profile_id, opts \\ []) do
     optional_params = %{
       :include => :query
     }
@@ -98,13 +92,13 @@ defmodule DocuSign.Api.AccountPermissionProfiles do
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/permission_profiles/#{permission_profile_id}")
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.PermissionProfile},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, PermissionProfile},
+      {400, ErrorDetails}
     ])
   end
 
@@ -125,8 +119,8 @@ defmodule DocuSign.Api.AccountPermissionProfiles do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec permission_profiles_get_permission_profiles(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.PermissionProfileInformation.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, PermissionProfileInformation.t()}
           | {:error, Tesla.Env.t()}
   def permission_profiles_get_permission_profiles(connection, account_id, opts \\ []) do
     optional_params = %{
@@ -138,13 +132,13 @@ defmodule DocuSign.Api.AccountPermissionProfiles do
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/permission_profiles")
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.PermissionProfileInformation},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, PermissionProfileInformation},
+      {400, ErrorDetails}
     ])
   end
 
@@ -166,13 +160,13 @@ defmodule DocuSign.Api.AccountPermissionProfiles do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec permission_profiles_post_permission_profiles(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.PermissionProfile.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, PermissionProfile.t()}
           | {:error, Tesla.Env.t()}
   def permission_profiles_post_permission_profiles(connection, account_id, opts \\ []) do
     optional_params = %{
-      :include => :query,
-      :body => :body
+      :body => :body,
+      :include => :query
     }
 
     request =
@@ -181,13 +175,13 @@ defmodule DocuSign.Api.AccountPermissionProfiles do
       |> url("/v2.1/accounts/#{account_id}/permission_profiles")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {201, DocuSign.Model.PermissionProfile},
-      {400, DocuSign.Model.ErrorDetails}
+      {201, PermissionProfile},
+      {400, ErrorDetails}
     ])
   end
 
@@ -215,18 +209,13 @@ defmodule DocuSign.Api.AccountPermissionProfiles do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.PermissionProfile.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, PermissionProfile.t()}
           | {:error, Tesla.Env.t()}
-  def permission_profiles_put_permission_profiles(
-        connection,
-        account_id,
-        permission_profile_id,
-        opts \\ []
-      ) do
+  def permission_profiles_put_permission_profiles(connection, account_id, permission_profile_id, opts \\ []) do
     optional_params = %{
-      :include => :query,
-      :body => :body
+      :body => :body,
+      :include => :query
     }
 
     request =
@@ -235,13 +224,13 @@ defmodule DocuSign.Api.AccountPermissionProfiles do
       |> url("/v2.1/accounts/#{account_id}/permission_profiles/#{permission_profile_id}")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.PermissionProfile},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, PermissionProfile},
+      {400, ErrorDetails}
     ])
   end
 end

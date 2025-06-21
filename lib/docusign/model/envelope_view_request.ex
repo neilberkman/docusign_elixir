@@ -6,6 +6,9 @@ defmodule DocuSign.Model.EnvelopeViewRequest do
 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.EnvelopeViewSettings
+
   @derive Jason.Encoder
   defstruct [
     :returnUrl,
@@ -15,14 +18,12 @@ defmodule DocuSign.Model.EnvelopeViewRequest do
 
   @type t :: %__MODULE__{
           :returnUrl => String.t() | nil,
-          :settings => DocuSign.Model.EnvelopeViewSettings.t() | nil,
+          :settings => EnvelopeViewSettings.t() | nil,
           :viewAccess => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:settings, :struct, DocuSign.Model.EnvelopeViewSettings)
+    |> Deserializer.deserialize(:settings, :struct, EnvelopeViewSettings)
   end
 end

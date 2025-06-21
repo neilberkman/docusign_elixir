@@ -6,6 +6,11 @@ defmodule DocuSign.Model.BulkSendingCopy do
   This object contains the details to use for a specific copy, or instance, of the envelope. When you send an envelope by using a bulk send list, you can customize these properties for each instance.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.BulkSendingCopyCustomField
+  alias DocuSign.Model.BulksendingCopyDocGenFormField
+  alias DocuSign.Model.BulkSendingCopyRecipient
+
   @derive Jason.Encoder
   defstruct [
     :customFields,
@@ -16,23 +21,21 @@ defmodule DocuSign.Model.BulkSendingCopy do
   ]
 
   @type t :: %__MODULE__{
-          :customFields => [DocuSign.Model.BulkSendingCopyCustomField.t()] | nil,
-          :docGenFormFields => [DocuSign.Model.BulksendingCopyDocGenFormField.t()] | nil,
+          :customFields => [BulkSendingCopyCustomField.t()] | nil,
+          :docGenFormFields => [BulksendingCopyDocGenFormField.t()] | nil,
           :emailBlurb => String.t() | nil,
           :emailSubject => String.t() | nil,
-          :recipients => [DocuSign.Model.BulkSendingCopyRecipient.t()] | nil
+          :recipients => [BulkSendingCopyRecipient.t()] | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
-    |> Deserializer.deserialize(:customFields, :list, DocuSign.Model.BulkSendingCopyCustomField)
+    |> Deserializer.deserialize(:customFields, :list, BulkSendingCopyCustomField)
     |> Deserializer.deserialize(
       :docGenFormFields,
       :list,
-      DocuSign.Model.BulksendingCopyDocGenFormField
+      BulksendingCopyDocGenFormField
     )
-    |> Deserializer.deserialize(:recipients, :list, DocuSign.Model.BulkSendingCopyRecipient)
+    |> Deserializer.deserialize(:recipients, :list, BulkSendingCopyRecipient)
   end
 end

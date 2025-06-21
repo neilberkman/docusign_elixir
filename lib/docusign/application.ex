@@ -4,6 +4,7 @@ defmodule DocuSign.Application do
   @moduledoc false
 
   use Application
+
   require Logger
 
   def start(_type, _args) do
@@ -37,13 +38,9 @@ defmodule DocuSign.Application do
   def apply_runtime_patches do
     # The RequestBuilder now directly uses ModelCleaner
     if Code.ensure_loaded?(DocuSign.ModelCleaner) do
-      Logger.info(
-        "✅ DocuSign: ModelCleaner integrated into RequestBuilder to fix INVALID_REQUEST_BODY errors"
-      )
+      Logger.info("✅ DocuSign: ModelCleaner integrated into RequestBuilder to fix INVALID_REQUEST_BODY errors")
     else
-      Logger.warning(
-        "⚠️ DocuSign: ModelCleaner module not available, this may cause issues with API requests"
-      )
+      Logger.warning("⚠️ DocuSign: ModelCleaner module not available, this may cause issues with API requests")
     end
   end
 end

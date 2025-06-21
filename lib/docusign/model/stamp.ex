@@ -6,6 +6,10 @@ defmodule DocuSign.Model.Stamp do
 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.DateStampProperties
+  alias DocuSign.Model.ErrorDetails
+
   @derive Jason.Encoder
   defstruct [
     :adoptedDateTime,
@@ -30,9 +34,9 @@ defmodule DocuSign.Model.Stamp do
           :adoptedDateTime => String.t() | nil,
           :createdDateTime => String.t() | nil,
           :customField => String.t() | nil,
-          :dateStampProperties => DocuSign.Model.DateStampProperties.t() | nil,
+          :dateStampProperties => DateStampProperties.t() | nil,
           :disallowUserResizeStamp => String.t() | nil,
-          :errorDetails => DocuSign.Model.ErrorDetails.t() | nil,
+          :errorDetails => ErrorDetails.t() | nil,
           :externalID => String.t() | nil,
           :imageBase64 => String.t() | nil,
           :imageType => String.t() | nil,
@@ -45,11 +49,9 @@ defmodule DocuSign.Model.Stamp do
           :status => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:dateStampProperties, :struct, DocuSign.Model.DateStampProperties)
-    |> Deserializer.deserialize(:errorDetails, :struct, DocuSign.Model.ErrorDetails)
+    |> Deserializer.deserialize(:dateStampProperties, :struct, DateStampProperties)
+    |> Deserializer.deserialize(:errorDetails, :struct, ErrorDetails)
   end
 end

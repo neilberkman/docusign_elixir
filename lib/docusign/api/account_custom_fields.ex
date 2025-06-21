@@ -6,8 +6,11 @@ defmodule DocuSign.Api.AccountCustomFields do
   API calls for all endpoints tagged `AccountCustomFields`.
   """
 
-  alias DocuSign.Connection
   import DocuSign.RequestBuilder
+
+  alias DocuSign.Connection
+  alias DocuSign.Model.AccountCustomFields
+  alias DocuSign.Model.ErrorDetails
 
   @doc """
   Deletes an account custom field.
@@ -31,13 +34,8 @@ defmodule DocuSign.Api.AccountCustomFields do
           String.t(),
           String.t(),
           keyword()
-        ) :: {:ok, nil} | {:ok, DocuSign.Model.ErrorDetails.t()} | {:error, Tesla.Env.t()}
-  def account_custom_fields_delete_account_custom_fields(
-        connection,
-        account_id,
-        custom_field_id,
-        opts \\ []
-      ) do
+        ) :: {:ok, nil} | {:ok, ErrorDetails.t()} | {:error, Tesla.Env.t()}
+  def account_custom_fields_delete_account_custom_fields(connection, account_id, custom_field_id, opts \\ []) do
     optional_params = %{
       :apply_to_templates => :query
     }
@@ -47,13 +45,13 @@ defmodule DocuSign.Api.AccountCustomFields do
       |> method(:delete)
       |> url("/v2.1/accounts/#{account_id}/custom_fields/#{custom_field_id}")
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
       {200, false},
-      {400, DocuSign.Model.ErrorDetails}
+      {400, ErrorDetails}
     ])
   end
 
@@ -73,21 +71,21 @@ defmodule DocuSign.Api.AccountCustomFields do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec account_custom_fields_get_account_custom_fields(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.AccountCustomFields.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, AccountCustomFields.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
   def account_custom_fields_get_account_custom_fields(connection, account_id, _opts \\ []) do
     request =
       %{}
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/custom_fields")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.AccountCustomFields},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, AccountCustomFields},
+      {400, ErrorDetails}
     ])
   end
 
@@ -113,8 +111,8 @@ defmodule DocuSign.Api.AccountCustomFields do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.AccountCustomFields.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, AccountCustomFields.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
   def account_custom_fields_post_account_custom_fields(connection, account_id, opts \\ []) do
     optional_params = %{
@@ -128,13 +126,13 @@ defmodule DocuSign.Api.AccountCustomFields do
       |> url("/v2.1/accounts/#{account_id}/custom_fields")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {201, DocuSign.Model.AccountCustomFields},
-      {400, DocuSign.Model.ErrorDetails}
+      {201, AccountCustomFields},
+      {400, ErrorDetails}
     ])
   end
 
@@ -162,15 +160,10 @@ defmodule DocuSign.Api.AccountCustomFields do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.AccountCustomFields.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, AccountCustomFields.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
-  def account_custom_fields_put_account_custom_fields(
-        connection,
-        account_id,
-        custom_field_id,
-        opts \\ []
-      ) do
+  def account_custom_fields_put_account_custom_fields(connection, account_id, custom_field_id, opts \\ []) do
     optional_params = %{
       :apply_to_templates => :query,
       :body => :body
@@ -182,13 +175,13 @@ defmodule DocuSign.Api.AccountCustomFields do
       |> url("/v2.1/accounts/#{account_id}/custom_fields/#{custom_field_id}")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.AccountCustomFields},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, AccountCustomFields},
+      {400, ErrorDetails}
     ])
   end
 end

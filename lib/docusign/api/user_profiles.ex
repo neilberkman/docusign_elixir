@@ -6,8 +6,11 @@ defmodule DocuSign.Api.UserProfiles do
   API calls for all endpoints tagged `UserProfiles`.
   """
 
-  alias DocuSign.Connection
   import DocuSign.RequestBuilder
+
+  alias DocuSign.Connection
+  alias DocuSign.Model.ErrorDetails
+  alias DocuSign.Model.UserProfile
 
   @doc """
   Retrieves the user profile for a specified user.
@@ -26,21 +29,21 @@ defmodule DocuSign.Api.UserProfiles do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec user_profile_get_profile(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.UserProfile.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, UserProfile.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
   def user_profile_get_profile(connection, account_id, user_id, _opts \\ []) do
     request =
       %{}
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/users/#{user_id}/profile")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.UserProfile},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, UserProfile},
+      {400, ErrorDetails}
     ])
   end
 
@@ -62,7 +65,7 @@ defmodule DocuSign.Api.UserProfiles do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec user_profile_put_profile(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, nil} | {:ok, DocuSign.Model.ErrorDetails.t()} | {:error, Tesla.Env.t()}
+          {:ok, nil} | {:ok, ErrorDetails.t()} | {:error, Tesla.Env.t()}
   def user_profile_put_profile(connection, account_id, user_id, opts \\ []) do
     optional_params = %{
       :body => :body
@@ -74,13 +77,13 @@ defmodule DocuSign.Api.UserProfiles do
       |> url("/v2.1/accounts/#{account_id}/users/#{user_id}/profile")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
       {200, false},
-      {400, DocuSign.Model.ErrorDetails}
+      {400, ErrorDetails}
     ])
   end
 end

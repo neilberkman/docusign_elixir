@@ -6,6 +6,9 @@ defmodule DocuSign.Model.FolderItemV2 do
   Information about folder item results.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.EnvelopeRecipients
+
   @derive Jason.Encoder
   defstruct [
     :completedDateTime,
@@ -42,7 +45,7 @@ defmodule DocuSign.Model.FolderItemV2 do
           :is21CFRPart11 => String.t() | nil,
           :lastModifiedDateTime => String.t() | nil,
           :ownerName => String.t() | nil,
-          :recipients => DocuSign.Model.EnvelopeRecipients.t() | nil,
+          :recipients => EnvelopeRecipients.t() | nil,
           :recipientsUri => String.t() | nil,
           :senderCompany => String.t() | nil,
           :senderEmail => String.t() | nil,
@@ -55,10 +58,8 @@ defmodule DocuSign.Model.FolderItemV2 do
           :templateUri => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:recipients, :struct, DocuSign.Model.EnvelopeRecipients)
+    |> Deserializer.deserialize(:recipients, :struct, EnvelopeRecipients)
   end
 end

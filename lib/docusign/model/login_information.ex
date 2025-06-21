@@ -6,6 +6,9 @@ defmodule DocuSign.Model.LoginInformation do
 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.LoginAccount
+
   @derive Jason.Encoder
   defstruct [
     :apiPassword,
@@ -14,13 +17,11 @@ defmodule DocuSign.Model.LoginInformation do
 
   @type t :: %__MODULE__{
           :apiPassword => String.t() | nil,
-          :loginAccounts => [DocuSign.Model.LoginAccount.t()] | nil
+          :loginAccounts => [LoginAccount.t()] | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
-    |> Deserializer.deserialize(:loginAccounts, :list, DocuSign.Model.LoginAccount)
+    |> Deserializer.deserialize(:loginAccounts, :list, LoginAccount)
   end
 end

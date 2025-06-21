@@ -6,34 +6,36 @@ defmodule DocuSign.Model.EnvelopeLocks do
   Envelope locks let you lock an envelope to prevent any changes while you are updating an envelope. 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.ErrorDetails
+  alias DocuSign.Model.UserInfo
+
   @derive Jason.Encoder
   defstruct [
     :errorDetails,
     :lockDurationInSeconds,
+    :lockToken,
+    :lockType,
     :lockedByApp,
     :lockedByUser,
     :lockedUntilDateTime,
-    :lockToken,
-    :lockType,
     :useScratchPad
   ]
 
   @type t :: %__MODULE__{
-          :errorDetails => DocuSign.Model.ErrorDetails.t() | nil,
+          :errorDetails => ErrorDetails.t() | nil,
           :lockDurationInSeconds => String.t() | nil,
-          :lockedByApp => String.t() | nil,
-          :lockedByUser => DocuSign.Model.UserInfo.t() | nil,
-          :lockedUntilDateTime => String.t() | nil,
           :lockToken => String.t() | nil,
           :lockType => String.t() | nil,
+          :lockedByApp => String.t() | nil,
+          :lockedByUser => UserInfo.t() | nil,
+          :lockedUntilDateTime => String.t() | nil,
           :useScratchPad => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:errorDetails, :struct, DocuSign.Model.ErrorDetails)
-    |> Deserializer.deserialize(:lockedByUser, :struct, DocuSign.Model.UserInfo)
+    |> Deserializer.deserialize(:errorDetails, :struct, ErrorDetails)
+    |> Deserializer.deserialize(:lockedByUser, :struct, UserInfo)
   end
 end

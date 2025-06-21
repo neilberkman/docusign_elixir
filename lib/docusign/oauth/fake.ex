@@ -15,9 +15,9 @@ defmodule DocuSign.OAuth.Fake do
     OAuth2.Client.new(
       client_id: client_id,
       ref: %{
-        user_id: user_id,
         hostname: hostname,
-        token_expires_in: token_expires_in
+        token_expires_in: token_expires_in,
+        user_id: user_id
       }
     )
   end

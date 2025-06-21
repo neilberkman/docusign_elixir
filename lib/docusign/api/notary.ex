@@ -6,8 +6,12 @@ defmodule DocuSign.Api.Notary do
   API calls for all endpoints tagged `Notary`.
   """
 
-  alias DocuSign.Connection
   import DocuSign.RequestBuilder
+
+  alias DocuSign.Connection
+  alias DocuSign.Model.ErrorDetails
+  alias DocuSign.Model.Notary
+  alias DocuSign.Model.NotaryResult
 
   @doc """
   Gets settings for a  notary user.
@@ -25,8 +29,8 @@ defmodule DocuSign.Api.Notary do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec notary_get_notary(Tesla.Env.client(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.NotaryResult.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, NotaryResult.t()}
           | {:error, Tesla.Env.t()}
   def notary_get_notary(connection, opts \\ []) do
     optional_params = %{
@@ -38,13 +42,13 @@ defmodule DocuSign.Api.Notary do
       |> method(:get)
       |> url("/v2.1/current_user/notary")
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.NotaryResult},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, NotaryResult},
+      {400, ErrorDetails}
     ])
   end
 
@@ -64,8 +68,8 @@ defmodule DocuSign.Api.Notary do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec notary_post_notary(Tesla.Env.client(), keyword()) ::
-          {:ok, DocuSign.Model.Notary.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, Notary.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
   def notary_post_notary(connection, opts \\ []) do
     optional_params = %{
@@ -78,13 +82,13 @@ defmodule DocuSign.Api.Notary do
       |> url("/v2.1/current_user/notary")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {201, DocuSign.Model.Notary},
-      {400, DocuSign.Model.ErrorDetails}
+      {201, Notary},
+      {400, ErrorDetails}
     ])
   end
 
@@ -104,8 +108,8 @@ defmodule DocuSign.Api.Notary do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec notary_put_notary(Tesla.Env.client(), keyword()) ::
-          {:ok, DocuSign.Model.Notary.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, Notary.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
   def notary_put_notary(connection, opts \\ []) do
     optional_params = %{
@@ -118,13 +122,13 @@ defmodule DocuSign.Api.Notary do
       |> url("/v2.1/current_user/notary")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.Notary},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, Notary},
+      {400, ErrorDetails}
     ])
   end
 end

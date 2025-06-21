@@ -6,8 +6,12 @@ defmodule DocuSign.Api.Workspaces do
   API calls for all endpoints tagged `Workspaces`.
   """
 
-  alias DocuSign.Connection
   import DocuSign.RequestBuilder
+
+  alias DocuSign.Connection
+  alias DocuSign.Model.ErrorDetails
+  alias DocuSign.Model.Workspace
+  alias DocuSign.Model.WorkspaceList
 
   @doc """
   Delete Workspace
@@ -26,21 +30,21 @@ defmodule DocuSign.Api.Workspaces do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec workspace_delete_workspace(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.Workspace.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, Workspace.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
   def workspace_delete_workspace(connection, account_id, workspace_id, _opts \\ []) do
     request =
       %{}
       |> method(:delete)
       |> url("/v2.1/accounts/#{account_id}/workspaces/#{workspace_id}")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.Workspace},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, Workspace},
+      {400, ErrorDetails}
     ])
   end
 
@@ -61,21 +65,21 @@ defmodule DocuSign.Api.Workspaces do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec workspace_get_workspace(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.Workspace.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, Workspace.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
   def workspace_get_workspace(connection, account_id, workspace_id, _opts \\ []) do
     request =
       %{}
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/workspaces/#{workspace_id}")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.Workspace},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, Workspace},
+      {400, ErrorDetails}
     ])
   end
 
@@ -95,21 +99,21 @@ defmodule DocuSign.Api.Workspaces do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec workspace_get_workspaces(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.WorkspaceList.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, WorkspaceList.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
   def workspace_get_workspaces(connection, account_id, _opts \\ []) do
     request =
       %{}
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/workspaces")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.WorkspaceList},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, WorkspaceList},
+      {400, ErrorDetails}
     ])
   end
 
@@ -130,8 +134,8 @@ defmodule DocuSign.Api.Workspaces do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec workspace_post_workspace(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.Workspace.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, Workspace.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
   def workspace_post_workspace(connection, account_id, opts \\ []) do
     optional_params = %{
@@ -144,13 +148,13 @@ defmodule DocuSign.Api.Workspaces do
       |> url("/v2.1/accounts/#{account_id}/workspaces")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {201, DocuSign.Model.Workspace},
-      {400, DocuSign.Model.ErrorDetails}
+      {201, Workspace},
+      {400, ErrorDetails}
     ])
   end
 
@@ -172,8 +176,8 @@ defmodule DocuSign.Api.Workspaces do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec workspace_put_workspace(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.Workspace.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, Workspace.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
   def workspace_put_workspace(connection, account_id, workspace_id, opts \\ []) do
     optional_params = %{
@@ -186,13 +190,13 @@ defmodule DocuSign.Api.Workspaces do
       |> url("/v2.1/accounts/#{account_id}/workspaces/#{workspace_id}")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.Workspace},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, Workspace},
+      {400, ErrorDetails}
     ])
   end
 end

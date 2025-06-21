@@ -6,6 +6,10 @@ defmodule DocuSign.Model.WorkflowStep do
   Describes a single step in a workflow.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.DelayedRouting
+  alias DocuSign.Model.RecipientRouting
+
   @derive Jason.Encoder
   defstruct [
     :action,
@@ -14,28 +18,26 @@ defmodule DocuSign.Model.WorkflowStep do
     :itemId,
     :recipientRouting,
     :status,
-    :triggeredDate,
     :triggerOnItem,
+    :triggeredDate,
     :workflowStepId
   ]
 
   @type t :: %__MODULE__{
           :action => String.t() | nil,
           :completedDate => String.t() | nil,
-          :delayedRouting => DocuSign.Model.DelayedRouting.t() | nil,
+          :delayedRouting => DelayedRouting.t() | nil,
           :itemId => String.t() | nil,
-          :recipientRouting => DocuSign.Model.RecipientRouting.t() | nil,
+          :recipientRouting => RecipientRouting.t() | nil,
           :status => String.t() | nil,
-          :triggeredDate => String.t() | nil,
           :triggerOnItem => String.t() | nil,
+          :triggeredDate => String.t() | nil,
           :workflowStepId => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:delayedRouting, :struct, DocuSign.Model.DelayedRouting)
-    |> Deserializer.deserialize(:recipientRouting, :struct, DocuSign.Model.RecipientRouting)
+    |> Deserializer.deserialize(:delayedRouting, :struct, DelayedRouting)
+    |> Deserializer.deserialize(:recipientRouting, :struct, RecipientRouting)
   end
 end

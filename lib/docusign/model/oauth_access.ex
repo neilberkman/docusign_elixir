@@ -6,6 +6,9 @@ defmodule DocuSign.Model.OauthAccess do
 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.NameValue
+
   @derive Jason.Encoder
   defstruct [
     :access_token,
@@ -18,17 +21,15 @@ defmodule DocuSign.Model.OauthAccess do
 
   @type t :: %__MODULE__{
           :access_token => String.t() | nil,
-          :data => [DocuSign.Model.NameValue.t()] | nil,
+          :data => [NameValue.t()] | nil,
           :expires_in => String.t() | nil,
           :refresh_token => String.t() | nil,
           :scope => String.t() | nil,
           :token_type => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:data, :list, DocuSign.Model.NameValue)
+    |> Deserializer.deserialize(:data, :list, NameValue)
   end
 end

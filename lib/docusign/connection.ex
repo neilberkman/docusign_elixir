@@ -12,10 +12,14 @@ defmodule DocuSign.Connection do
       {:ok, %DocuSign.Model.UserInformationList{...}}
   """
 
-  alias OAuth2.Request
   alias DocuSign.{ClientRegistry, User}
+  alias OAuth2.Request
+  alias Tesla.Adapter.Finch
+  alias Tesla.Middleware.BaseUrl
+  alias Tesla.Middleware.EncodeJson
+  alias Tesla.Middleware.Headers
 
-  defstruct [:client, :app_account]
+  defstruct [:app_account, :client]
 
   @type t :: %__MODULE__{}
 
@@ -34,15 +38,14 @@ defmodule DocuSign.Connection do
     Tesla.Env.client
     """
     @spec new(DocuSign.Connection.t()) :: Tesla.Env.client()
-    def new(%{client: %{token: token} = _client, app_account: app} = _conn) do
+    def new(%{app_account: app, client: %{token: token} = _client} = _conn) do
       Tesla.client(
         [
-          {Tesla.Middleware.BaseUrl, app.base_uri},
-          {Tesla.Middleware.Headers,
-           [{"authorization", "#{token.token_type} #{token.access_token}"}]},
-          {Tesla.Middleware.EncodeJson, engine: Jason}
+          {BaseUrl, app.base_uri},
+          {Headers, [{"authorization", "#{token.token_type} #{token.access_token}"}]},
+          {EncodeJson, engine: Jason}
         ],
-        Application.get_env(:tesla, :adapter, {Tesla.Adapter.Finch, name: DocuSign.Finch})
+        Application.get_env(:tesla, :adapter, {Finch, name: DocuSign.Finch})
       )
     end
   end
@@ -75,7 +78,7 @@ defmodule DocuSign.Connection do
     is_binary(reason) && reason =~ "consent_required"
   end
 
-  defp build_consent_url() do
+  defp build_consent_url do
     client_id = Application.fetch_env!(:docusign, :client_id)
     hostname = Application.fetch_env!(:docusign, :hostname)
 
@@ -99,7 +102,7 @@ defmodule DocuSign.Connection do
   @spec request(t(), Keyword.t()) :: {:ok, Tesla.Env.t()} | {:error, Tesla.Env.t()}
   def request(conn, opts \\ []) do
     timeout = Application.get_env(:docusign, :timeout, @timeout)
-    opts = opts |> Keyword.merge(opts: [adapter: [receive_timeout: timeout]])
+    opts = opts |> Keyword.put(:opts, adapter: [receive_timeout: timeout])
 
     result =
       conn

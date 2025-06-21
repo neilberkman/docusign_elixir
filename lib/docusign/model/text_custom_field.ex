@@ -6,6 +6,9 @@ defmodule DocuSign.Model.TextCustomField do
   This object represents a free text custom field where envelope creators and senders can enter custom data.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.ErrorDetails
+
   @derive Jason.Encoder
   defstruct [
     :configurationType,
@@ -19,7 +22,7 @@ defmodule DocuSign.Model.TextCustomField do
 
   @type t :: %__MODULE__{
           :configurationType => String.t() | nil,
-          :errorDetails => DocuSign.Model.ErrorDetails.t() | nil,
+          :errorDetails => ErrorDetails.t() | nil,
           :fieldId => String.t() | nil,
           :name => String.t() | nil,
           :required => String.t() | nil,
@@ -27,10 +30,8 @@ defmodule DocuSign.Model.TextCustomField do
           :value => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:errorDetails, :struct, DocuSign.Model.ErrorDetails)
+    |> Deserializer.deserialize(:errorDetails, :struct, ErrorDetails)
   end
 end

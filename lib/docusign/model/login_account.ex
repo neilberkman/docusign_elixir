@@ -6,6 +6,9 @@ defmodule DocuSign.Model.LoginAccount do
 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.NameValue
+
   @derive Jason.Encoder
   defstruct [
     :accountId,
@@ -27,19 +30,17 @@ defmodule DocuSign.Model.LoginAccount do
           :baseUrl => String.t() | nil,
           :email => String.t() | nil,
           :isDefault => String.t() | nil,
-          :loginAccountSettings => [DocuSign.Model.NameValue.t()] | nil,
-          :loginUserSettings => [DocuSign.Model.NameValue.t()] | nil,
+          :loginAccountSettings => [NameValue.t()] | nil,
+          :loginUserSettings => [NameValue.t()] | nil,
           :name => String.t() | nil,
           :siteDescription => String.t() | nil,
           :userId => String.t() | nil,
           :userName => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:loginAccountSettings, :list, DocuSign.Model.NameValue)
-    |> Deserializer.deserialize(:loginUserSettings, :list, DocuSign.Model.NameValue)
+    |> Deserializer.deserialize(:loginAccountSettings, :list, NameValue)
+    |> Deserializer.deserialize(:loginUserSettings, :list, NameValue)
   end
 end

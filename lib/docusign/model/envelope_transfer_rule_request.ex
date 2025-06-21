@@ -6,6 +6,11 @@ defmodule DocuSign.Model.EnvelopeTransferRuleRequest do
   This object contains details about the envelope transfer rule that you want to create.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.Folder
+  alias DocuSign.Model.Group
+  alias DocuSign.Model.UserInformation
+
   @derive Jason.Encoder
   defstruct [
     :carbonCopyOriginalOwner,
@@ -25,22 +30,20 @@ defmodule DocuSign.Model.EnvelopeTransferRuleRequest do
           :enabled => String.t() | nil,
           :envelopeTransferRuleId => String.t() | nil,
           :eventType => String.t() | nil,
-          :fromGroups => [DocuSign.Model.Group.t()] | nil,
-          :fromUsers => [DocuSign.Model.UserInformation.t()] | nil,
+          :fromGroups => [Group.t()] | nil,
+          :fromUsers => [UserInformation.t()] | nil,
           :modifiedDate => String.t() | nil,
-          :modifiedUser => DocuSign.Model.UserInformation.t() | nil,
-          :toFolder => DocuSign.Model.Folder.t() | nil,
-          :toUser => DocuSign.Model.UserInformation.t() | nil
+          :modifiedUser => UserInformation.t() | nil,
+          :toFolder => Folder.t() | nil,
+          :toUser => UserInformation.t() | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
-    |> Deserializer.deserialize(:fromGroups, :list, DocuSign.Model.Group)
-    |> Deserializer.deserialize(:fromUsers, :list, DocuSign.Model.UserInformation)
-    |> Deserializer.deserialize(:modifiedUser, :struct, DocuSign.Model.UserInformation)
-    |> Deserializer.deserialize(:toFolder, :struct, DocuSign.Model.Folder)
-    |> Deserializer.deserialize(:toUser, :struct, DocuSign.Model.UserInformation)
+    |> Deserializer.deserialize(:fromGroups, :list, Group)
+    |> Deserializer.deserialize(:fromUsers, :list, UserInformation)
+    |> Deserializer.deserialize(:modifiedUser, :struct, UserInformation)
+    |> Deserializer.deserialize(:toFolder, :struct, Folder)
+    |> Deserializer.deserialize(:toUser, :struct, UserInformation)
   end
 end

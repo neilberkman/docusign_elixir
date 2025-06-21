@@ -6,6 +6,10 @@ defmodule DocuSign.Model.MergeField do
   Contains information for transferring values between Salesforce data fields and Docusign tabs. 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.PathExtendedElement
+  alias DocuSign.Model.PropertyMetadata
+
   @derive Jason.Encoder
   defstruct [
     :allowSenderToEdit,
@@ -24,37 +28,35 @@ defmodule DocuSign.Model.MergeField do
 
   @type t :: %__MODULE__{
           :allowSenderToEdit => String.t() | nil,
-          :allowSenderToEditMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :allowSenderToEditMetadata => PropertyMetadata.t() | nil,
           :configurationType => String.t() | nil,
-          :configurationTypeMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :configurationTypeMetadata => PropertyMetadata.t() | nil,
           :path => String.t() | nil,
-          :pathExtended => [DocuSign.Model.PathExtendedElement.t()] | nil,
-          :pathExtendedMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
-          :pathMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :pathExtended => [PathExtendedElement.t()] | nil,
+          :pathExtendedMetadata => PropertyMetadata.t() | nil,
+          :pathMetadata => PropertyMetadata.t() | nil,
           :row => String.t() | nil,
-          :rowMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :rowMetadata => PropertyMetadata.t() | nil,
           :writeBack => String.t() | nil,
-          :writeBackMetadata => DocuSign.Model.PropertyMetadata.t() | nil
+          :writeBackMetadata => PropertyMetadata.t() | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
     |> Deserializer.deserialize(
       :allowSenderToEditMetadata,
       :struct,
-      DocuSign.Model.PropertyMetadata
+      PropertyMetadata
     )
     |> Deserializer.deserialize(
       :configurationTypeMetadata,
       :struct,
-      DocuSign.Model.PropertyMetadata
+      PropertyMetadata
     )
-    |> Deserializer.deserialize(:pathExtended, :list, DocuSign.Model.PathExtendedElement)
-    |> Deserializer.deserialize(:pathExtendedMetadata, :struct, DocuSign.Model.PropertyMetadata)
-    |> Deserializer.deserialize(:pathMetadata, :struct, DocuSign.Model.PropertyMetadata)
-    |> Deserializer.deserialize(:rowMetadata, :struct, DocuSign.Model.PropertyMetadata)
-    |> Deserializer.deserialize(:writeBackMetadata, :struct, DocuSign.Model.PropertyMetadata)
+    |> Deserializer.deserialize(:pathExtended, :list, PathExtendedElement)
+    |> Deserializer.deserialize(:pathExtendedMetadata, :struct, PropertyMetadata)
+    |> Deserializer.deserialize(:pathMetadata, :struct, PropertyMetadata)
+    |> Deserializer.deserialize(:rowMetadata, :struct, PropertyMetadata)
+    |> Deserializer.deserialize(:writeBackMetadata, :struct, PropertyMetadata)
   end
 end

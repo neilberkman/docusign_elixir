@@ -6,6 +6,9 @@ defmodule DocuSign.Model.Authorizations do
   Authorizations allow you to share access between users on an account.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.AuthorizationUser
+
   @derive Jason.Encoder
   defstruct [
     :agentUser,
@@ -21,7 +24,7 @@ defmodule DocuSign.Model.Authorizations do
   ]
 
   @type t :: %__MODULE__{
-          :agentUser => DocuSign.Model.AuthorizationUser.t() | nil,
+          :agentUser => AuthorizationUser.t() | nil,
           :authorizationId => String.t() | nil,
           :created => String.t() | nil,
           :createdBy => String.t() | nil,
@@ -29,15 +32,13 @@ defmodule DocuSign.Model.Authorizations do
           :modified => String.t() | nil,
           :modifiedBy => String.t() | nil,
           :permission => String.t() | nil,
-          :principalUser => DocuSign.Model.AuthorizationUser.t() | nil,
+          :principalUser => AuthorizationUser.t() | nil,
           :startDate => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:agentUser, :struct, DocuSign.Model.AuthorizationUser)
-    |> Deserializer.deserialize(:principalUser, :struct, DocuSign.Model.AuthorizationUser)
+    |> Deserializer.deserialize(:agentUser, :struct, AuthorizationUser)
+    |> Deserializer.deserialize(:principalUser, :struct, AuthorizationUser)
   end
 end

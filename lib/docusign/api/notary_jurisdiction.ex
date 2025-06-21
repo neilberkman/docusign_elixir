@@ -6,8 +6,12 @@ defmodule DocuSign.Api.NotaryJurisdiction do
   API calls for all endpoints tagged `NotaryJurisdiction`.
   """
 
-  alias DocuSign.Connection
   import DocuSign.RequestBuilder
+
+  alias DocuSign.Connection
+  alias DocuSign.Model.ErrorDetails
+  alias DocuSign.Model.NotaryJurisdiction
+  alias DocuSign.Model.NotaryJurisdictionList
 
   @doc """
   Deletes the specified jurisdiction.
@@ -25,19 +29,19 @@ defmodule DocuSign.Api.NotaryJurisdiction do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec notary_jurisdictions_delete_notary_jurisdiction(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, nil} | {:ok, DocuSign.Model.ErrorDetails.t()} | {:error, Tesla.Env.t()}
+          {:ok, nil} | {:ok, ErrorDetails.t()} | {:error, Tesla.Env.t()}
   def notary_jurisdictions_delete_notary_jurisdiction(connection, jurisdiction_id, _opts \\ []) do
     request =
       %{}
       |> method(:delete)
       |> url("/v2.1/current_user/notary/jurisdictions/#{jurisdiction_id}")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
       {200, false},
-      {400, DocuSign.Model.ErrorDetails}
+      {400, ErrorDetails}
     ])
   end
 
@@ -57,21 +61,21 @@ defmodule DocuSign.Api.NotaryJurisdiction do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec notary_jurisdictions_get_notary_jurisdiction(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.NotaryJurisdiction.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, NotaryJurisdiction.t()}
           | {:error, Tesla.Env.t()}
   def notary_jurisdictions_get_notary_jurisdiction(connection, jurisdiction_id, _opts \\ []) do
     request =
       %{}
       |> method(:get)
       |> url("/v2.1/current_user/notary/jurisdictions/#{jurisdiction_id}")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.NotaryJurisdiction},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, NotaryJurisdiction},
+      {400, ErrorDetails}
     ])
   end
 
@@ -90,21 +94,21 @@ defmodule DocuSign.Api.NotaryJurisdiction do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec notary_jurisdictions_get_notary_jurisdictions(Tesla.Env.client(), keyword()) ::
-          {:ok, DocuSign.Model.NotaryJurisdictionList.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, NotaryJurisdictionList.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
   def notary_jurisdictions_get_notary_jurisdictions(connection, _opts \\ []) do
     request =
       %{}
       |> method(:get)
       |> url("/v2.1/current_user/notary/jurisdictions")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.NotaryJurisdictionList},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, NotaryJurisdictionList},
+      {400, ErrorDetails}
     ])
   end
 
@@ -124,8 +128,8 @@ defmodule DocuSign.Api.NotaryJurisdiction do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec notary_jurisdictions_post_notary_jurisdictions(Tesla.Env.client(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.NotaryJurisdiction.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, NotaryJurisdiction.t()}
           | {:error, Tesla.Env.t()}
   def notary_jurisdictions_post_notary_jurisdictions(connection, opts \\ []) do
     optional_params = %{
@@ -138,13 +142,13 @@ defmodule DocuSign.Api.NotaryJurisdiction do
       |> url("/v2.1/current_user/notary/jurisdictions")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {201, DocuSign.Model.NotaryJurisdiction},
-      {400, DocuSign.Model.ErrorDetails}
+      {201, NotaryJurisdiction},
+      {400, ErrorDetails}
     ])
   end
 
@@ -165,8 +169,8 @@ defmodule DocuSign.Api.NotaryJurisdiction do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec notary_jurisdictions_put_notary_jurisdiction(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.NotaryJurisdiction.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, NotaryJurisdiction.t()}
           | {:error, Tesla.Env.t()}
   def notary_jurisdictions_put_notary_jurisdiction(connection, jurisdiction_id, opts \\ []) do
     optional_params = %{
@@ -179,13 +183,13 @@ defmodule DocuSign.Api.NotaryJurisdiction do
       |> url("/v2.1/current_user/notary/jurisdictions/#{jurisdiction_id}")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.NotaryJurisdiction},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, NotaryJurisdiction},
+      {400, ErrorDetails}
     ])
   end
 end

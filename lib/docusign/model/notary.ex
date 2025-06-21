@@ -6,6 +6,9 @@ defmodule DocuSign.Model.Notary do
   Use Docusign eNotary to notarize documents digitally. Check the [Docusign eNotary support documentation](https://support.docusign.com/s/document-item?bundleId=gko1642535666104&topicId=jiv1635359045452.html) to see which jurisdictions are supported. 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.UserInformation
+
   @derive Jason.Encoder
   defstruct [
     :createdDate,
@@ -18,13 +21,11 @@ defmodule DocuSign.Model.Notary do
           :createdDate => String.t() | nil,
           :enabled => String.t() | nil,
           :searchable => String.t() | nil,
-          :userInfo => DocuSign.Model.UserInformation.t() | nil
+          :userInfo => UserInformation.t() | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
-    |> Deserializer.deserialize(:userInfo, :struct, DocuSign.Model.UserInformation)
+    |> Deserializer.deserialize(:userInfo, :struct, UserInformation)
   end
 end

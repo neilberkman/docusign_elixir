@@ -6,6 +6,9 @@ defmodule DocuSign.Model.BccEmailArchiveHistory do
   Contains details about the history of the BCC email archive configuration.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.UserInfo
+
   @derive Jason.Encoder
   defstruct [
     :accountId,
@@ -21,14 +24,12 @@ defmodule DocuSign.Model.BccEmailArchiveHistory do
           :action => String.t() | nil,
           :email => String.t() | nil,
           :modified => String.t() | nil,
-          :modifiedBy => DocuSign.Model.UserInfo.t() | nil,
+          :modifiedBy => UserInfo.t() | nil,
           :status => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:modifiedBy, :struct, DocuSign.Model.UserInfo)
+    |> Deserializer.deserialize(:modifiedBy, :struct, UserInfo)
   end
 end

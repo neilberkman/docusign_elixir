@@ -6,6 +6,13 @@ defmodule DocuSign.Model.Folder do
   This object contains details about a folder.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.ErrorDetails
+  alias DocuSign.Model.Filter
+  alias DocuSign.Model.Folder
+  alias DocuSign.Model.FolderItemV2
+  alias DocuSign.Model.UserInfo
+
   @derive Jason.Encoder
   defstruct [
     :errorDetails,
@@ -26,16 +33,16 @@ defmodule DocuSign.Model.Folder do
   ]
 
   @type t :: %__MODULE__{
-          :errorDetails => DocuSign.Model.ErrorDetails.t() | nil,
-          :filter => DocuSign.Model.Filter.t() | nil,
+          :errorDetails => ErrorDetails.t() | nil,
+          :filter => Filter.t() | nil,
           :folderId => String.t() | nil,
-          :folderItems => [DocuSign.Model.FolderItemV2.t()] | nil,
-          :folders => [DocuSign.Model.Folder.t()] | nil,
+          :folderItems => [FolderItemV2.t()] | nil,
+          :folders => [Folder.t()] | nil,
           :hasAccess => String.t() | nil,
           :hasSubFolders => String.t() | nil,
           :itemCount => String.t() | nil,
           :name => String.t() | nil,
-          :owner => DocuSign.Model.UserInfo.t() | nil,
+          :owner => UserInfo.t() | nil,
           :parentFolderId => String.t() | nil,
           :parentFolderUri => String.t() | nil,
           :subFolderCount => String.t() | nil,
@@ -43,14 +50,12 @@ defmodule DocuSign.Model.Folder do
           :uri => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:errorDetails, :struct, DocuSign.Model.ErrorDetails)
-    |> Deserializer.deserialize(:filter, :struct, DocuSign.Model.Filter)
-    |> Deserializer.deserialize(:folderItems, :list, DocuSign.Model.FolderItemV2)
-    |> Deserializer.deserialize(:folders, :list, DocuSign.Model.Folder)
-    |> Deserializer.deserialize(:owner, :struct, DocuSign.Model.UserInfo)
+    |> Deserializer.deserialize(:errorDetails, :struct, ErrorDetails)
+    |> Deserializer.deserialize(:filter, :struct, Filter)
+    |> Deserializer.deserialize(:folderItems, :list, FolderItemV2)
+    |> Deserializer.deserialize(:folders, :list, Folder)
+    |> Deserializer.deserialize(:owner, :struct, UserInfo)
   end
 end

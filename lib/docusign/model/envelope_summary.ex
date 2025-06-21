@@ -6,6 +6,10 @@ defmodule DocuSign.Model.EnvelopeSummary do
    This object describes an envelope.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.BulkEnvelopeStatus
+  alias DocuSign.Model.ErrorDetails
+
   @derive Jason.Encoder
   defstruct [
     :bulkEnvelopeStatus,
@@ -19,9 +23,9 @@ defmodule DocuSign.Model.EnvelopeSummary do
   ]
 
   @type t :: %__MODULE__{
-          :bulkEnvelopeStatus => DocuSign.Model.BulkEnvelopeStatus.t() | nil,
+          :bulkEnvelopeStatus => BulkEnvelopeStatus.t() | nil,
           :envelopeId => String.t() | nil,
-          :errorDetails => DocuSign.Model.ErrorDetails.t() | nil,
+          :errorDetails => ErrorDetails.t() | nil,
           :recipientSigningUri => String.t() | nil,
           :recipientSigningUriError => String.t() | nil,
           :status => String.t() | nil,
@@ -29,11 +33,9 @@ defmodule DocuSign.Model.EnvelopeSummary do
           :uri => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:bulkEnvelopeStatus, :struct, DocuSign.Model.BulkEnvelopeStatus)
-    |> Deserializer.deserialize(:errorDetails, :struct, DocuSign.Model.ErrorDetails)
+    |> Deserializer.deserialize(:bulkEnvelopeStatus, :struct, BulkEnvelopeStatus)
+    |> Deserializer.deserialize(:errorDetails, :struct, ErrorDetails)
   end
 end

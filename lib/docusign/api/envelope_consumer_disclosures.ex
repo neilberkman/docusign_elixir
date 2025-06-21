@@ -6,8 +6,11 @@ defmodule DocuSign.Api.EnvelopeConsumerDisclosures do
   API calls for all endpoints tagged `EnvelopeConsumerDisclosures`.
   """
 
-  alias DocuSign.Connection
   import DocuSign.RequestBuilder
+
+  alias DocuSign.Connection
+  alias DocuSign.Model.ConsumerDisclosure
+  alias DocuSign.Model.ErrorDetails
 
   @doc """
   Gets the default Electronic Record and Signature Disclosure for an envelope.
@@ -34,8 +37,8 @@ defmodule DocuSign.Api.EnvelopeConsumerDisclosures do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.ConsumerDisclosure.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, ConsumerDisclosure.t()}
           | {:error, Tesla.Env.t()}
   def consumer_disclosure_get_consumer_disclosure_envelope_id_recipient_id(
         connection,
@@ -51,17 +54,15 @@ defmodule DocuSign.Api.EnvelopeConsumerDisclosures do
     request =
       %{}
       |> method(:get)
-      |> url(
-        "/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/recipients/#{recipient_id}/consumer_disclosure"
-      )
+      |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/recipients/#{recipient_id}/consumer_disclosure")
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.ConsumerDisclosure},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, ConsumerDisclosure},
+      {400, ErrorDetails}
     ])
   end
 
@@ -92,8 +93,8 @@ defmodule DocuSign.Api.EnvelopeConsumerDisclosures do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.ConsumerDisclosure.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, ConsumerDisclosure.t()}
           | {:error, Tesla.Env.t()}
   def consumer_disclosure_get_consumer_disclosure_envelope_id_recipient_id_lang_code(
         connection,
@@ -114,13 +115,13 @@ defmodule DocuSign.Api.EnvelopeConsumerDisclosures do
         "/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/recipients/#{recipient_id}/consumer_disclosure/#{lang_code}"
       )
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.ConsumerDisclosure},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, ConsumerDisclosure},
+      {400, ErrorDetails}
     ])
   end
 end

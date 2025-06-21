@@ -6,6 +6,9 @@ defmodule DocuSign.Model.CommentHistoryResult do
 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.Comment
+
   @derive Jason.Encoder
   defstruct [
     :comments,
@@ -15,16 +18,14 @@ defmodule DocuSign.Model.CommentHistoryResult do
   ]
 
   @type t :: %__MODULE__{
-          :comments => [DocuSign.Model.Comment.t()] | nil,
+          :comments => [Comment.t()] | nil,
           :count => integer() | nil,
           :endTimetoken => String.t() | nil,
           :startTimetoken => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:comments, :list, DocuSign.Model.Comment)
+    |> Deserializer.deserialize(:comments, :list, Comment)
   end
 end

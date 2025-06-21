@@ -6,6 +6,9 @@ defmodule DocuSign.Model.UserSocialIdResult do
 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.SocialAccountInformation
+
   @derive Jason.Encoder
   defstruct [
     :socialAccountInformation,
@@ -13,18 +16,16 @@ defmodule DocuSign.Model.UserSocialIdResult do
   ]
 
   @type t :: %__MODULE__{
-          :socialAccountInformation => [DocuSign.Model.SocialAccountInformation.t()] | nil,
+          :socialAccountInformation => [SocialAccountInformation.t()] | nil,
           :userId => String.t() | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
     |> Deserializer.deserialize(
       :socialAccountInformation,
       :list,
-      DocuSign.Model.SocialAccountInformation
+      SocialAccountInformation
     )
   end
 end

@@ -6,6 +6,10 @@ defmodule DocuSign.Model.Group do
   This object contains information about a group.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.ErrorDetails
+  alias DocuSign.Model.UserInfo
+
   @derive Jason.Encoder
   defstruct [
     :accessType,
@@ -24,22 +28,20 @@ defmodule DocuSign.Model.Group do
   @type t :: %__MODULE__{
           :accessType => String.t() | nil,
           :dsGroupId => String.t() | nil,
-          :errorDetails => DocuSign.Model.ErrorDetails.t() | nil,
+          :errorDetails => ErrorDetails.t() | nil,
           :groupId => String.t() | nil,
           :groupName => String.t() | nil,
           :groupType => String.t() | nil,
           :isManagedByScim => String.t() | nil,
           :lastModifiedOn => String.t() | nil,
           :permissionProfileId => String.t() | nil,
-          :users => [DocuSign.Model.UserInfo.t()] | nil,
+          :users => [UserInfo.t()] | nil,
           :usersCount => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:errorDetails, :struct, DocuSign.Model.ErrorDetails)
-    |> Deserializer.deserialize(:users, :list, DocuSign.Model.UserInfo)
+    |> Deserializer.deserialize(:errorDetails, :struct, ErrorDetails)
+    |> Deserializer.deserialize(:users, :list, UserInfo)
   end
 end

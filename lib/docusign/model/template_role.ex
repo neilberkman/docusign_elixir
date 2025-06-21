@@ -6,6 +6,13 @@ defmodule DocuSign.Model.TemplateRole do
   Information about a specific role.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.EnvelopeRecipientTabs
+  alias DocuSign.Model.RecipientAdditionalNotification
+  alias DocuSign.Model.RecipientEmailNotification
+  alias DocuSign.Model.RecipientPhoneNumber
+  alias DocuSign.Model.RecipientSignatureProvider
+
   @derive Jason.Encoder
   defstruct [
     :accessCode,
@@ -28,43 +35,41 @@ defmodule DocuSign.Model.TemplateRole do
 
   @type t :: %__MODULE__{
           :accessCode => String.t() | nil,
-          :additionalNotifications => [DocuSign.Model.RecipientAdditionalNotification.t()] | nil,
+          :additionalNotifications => [RecipientAdditionalNotification.t()] | nil,
           :clientUserId => String.t() | nil,
           :defaultRecipient => String.t() | nil,
           :deliveryMethod => String.t() | nil,
           :email => String.t() | nil,
-          :emailNotification => DocuSign.Model.RecipientEmailNotification.t() | nil,
+          :emailNotification => RecipientEmailNotification.t() | nil,
           :embeddedRecipientStartURL => String.t() | nil,
           :inPersonSignerName => String.t() | nil,
           :name => String.t() | nil,
-          :phoneNumber => DocuSign.Model.RecipientPhoneNumber.t() | nil,
-          :recipientSignatureProviders => [DocuSign.Model.RecipientSignatureProvider.t()] | nil,
+          :phoneNumber => RecipientPhoneNumber.t() | nil,
+          :recipientSignatureProviders => [RecipientSignatureProvider.t()] | nil,
           :roleName => String.t() | nil,
           :routingOrder => String.t() | nil,
           :signingGroupId => String.t() | nil,
-          :tabs => DocuSign.Model.EnvelopeRecipientTabs.t() | nil
+          :tabs => EnvelopeRecipientTabs.t() | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
     |> Deserializer.deserialize(
       :additionalNotifications,
       :list,
-      DocuSign.Model.RecipientAdditionalNotification
+      RecipientAdditionalNotification
     )
     |> Deserializer.deserialize(
       :emailNotification,
       :struct,
-      DocuSign.Model.RecipientEmailNotification
+      RecipientEmailNotification
     )
-    |> Deserializer.deserialize(:phoneNumber, :struct, DocuSign.Model.RecipientPhoneNumber)
+    |> Deserializer.deserialize(:phoneNumber, :struct, RecipientPhoneNumber)
     |> Deserializer.deserialize(
       :recipientSignatureProviders,
       :list,
-      DocuSign.Model.RecipientSignatureProvider
+      RecipientSignatureProvider
     )
-    |> Deserializer.deserialize(:tabs, :struct, DocuSign.Model.EnvelopeRecipientTabs)
+    |> Deserializer.deserialize(:tabs, :struct, EnvelopeRecipientTabs)
   end
 end

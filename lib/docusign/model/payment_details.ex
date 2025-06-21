@@ -6,15 +6,21 @@ defmodule DocuSign.Model.PaymentDetails do
   When a formula tab has a `paymentDetails` property, the formula tab is a payment item. See [Requesting Payments Along with Signatures][paymentguide] in the Docusign Support Center to learn more about payments.  [paymentguide]:     https://support.docusign.com/s/document-item?bundleId=juu1573854950452&topicId=fyw1573854935374.html 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.Money
+  alias DocuSign.Model.PaymentLineItem
+  alias DocuSign.Model.PaymentSignerValues
+  alias DocuSign.Model.PropertyMetadata
+
   @derive Jason.Encoder
   defstruct [
     :allowedPaymentMethods,
     :chargeId,
     :currencyCode,
     :currencyCodeMetadata,
-    :customerId,
     :customMetadata,
     :customMetadataRequired,
+    :customerId,
     :gatewayAccountId,
     :gatewayAccountIdMetadata,
     :gatewayDisplayName,
@@ -32,35 +38,33 @@ defmodule DocuSign.Model.PaymentDetails do
           :allowedPaymentMethods => [String.t()] | nil,
           :chargeId => String.t() | nil,
           :currencyCode => String.t() | nil,
-          :currencyCodeMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
-          :customerId => String.t() | nil,
+          :currencyCodeMetadata => PropertyMetadata.t() | nil,
           :customMetadata => String.t() | nil,
           :customMetadataRequired => boolean() | nil,
+          :customerId => String.t() | nil,
           :gatewayAccountId => String.t() | nil,
-          :gatewayAccountIdMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :gatewayAccountIdMetadata => PropertyMetadata.t() | nil,
           :gatewayDisplayName => String.t() | nil,
           :gatewayName => String.t() | nil,
-          :lineItems => [DocuSign.Model.PaymentLineItem.t()] | nil,
+          :lineItems => [PaymentLineItem.t()] | nil,
           :paymentOption => String.t() | nil,
           :paymentSourceId => String.t() | nil,
-          :signerValues => DocuSign.Model.PaymentSignerValues.t() | nil,
+          :signerValues => PaymentSignerValues.t() | nil,
           :status => String.t() | nil,
           :subGatewayName => String.t() | nil,
-          :total => DocuSign.Model.Money.t() | nil
+          :total => Money.t() | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
-    |> Deserializer.deserialize(:currencyCodeMetadata, :struct, DocuSign.Model.PropertyMetadata)
+    |> Deserializer.deserialize(:currencyCodeMetadata, :struct, PropertyMetadata)
     |> Deserializer.deserialize(
       :gatewayAccountIdMetadata,
       :struct,
-      DocuSign.Model.PropertyMetadata
+      PropertyMetadata
     )
-    |> Deserializer.deserialize(:lineItems, :list, DocuSign.Model.PaymentLineItem)
-    |> Deserializer.deserialize(:signerValues, :struct, DocuSign.Model.PaymentSignerValues)
-    |> Deserializer.deserialize(:total, :struct, DocuSign.Model.Money)
+    |> Deserializer.deserialize(:lineItems, :list, PaymentLineItem)
+    |> Deserializer.deserialize(:signerValues, :struct, PaymentSignerValues)
+    |> Deserializer.deserialize(:total, :struct, Money)
   end
 end

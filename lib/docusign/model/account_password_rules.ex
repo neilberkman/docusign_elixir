@@ -6,6 +6,15 @@ defmodule DocuSign.Model.AccountPasswordRules do
   Contains details about the password rules for an account.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.AccountMinimumPasswordLength
+  alias DocuSign.Model.AccountPasswordExpirePasswordDays
+  alias DocuSign.Model.AccountPasswordLockoutDurationMinutes
+  alias DocuSign.Model.AccountPasswordLockoutDurationType
+  alias DocuSign.Model.AccountPasswordMinimumPasswordAgeDays
+  alias DocuSign.Model.AccountPasswordQuestionsRequired
+  alias DocuSign.Model.AccountPasswordStrengthType
+
   @derive Jason.Encoder
   defstruct [
     :expirePassword,
@@ -33,68 +42,62 @@ defmodule DocuSign.Model.AccountPasswordRules do
   @type t :: %__MODULE__{
           :expirePassword => String.t() | nil,
           :expirePasswordDays => String.t() | nil,
-          :expirePasswordDaysMetadata =>
-            DocuSign.Model.AccountPasswordExpirePasswordDays.t() | nil,
+          :expirePasswordDaysMetadata => AccountPasswordExpirePasswordDays.t() | nil,
           :lockoutDurationMinutes => String.t() | nil,
-          :lockoutDurationMinutesMetadata =>
-            DocuSign.Model.AccountPasswordLockoutDurationMinutes.t() | nil,
+          :lockoutDurationMinutesMetadata => AccountPasswordLockoutDurationMinutes.t() | nil,
           :lockoutDurationType => String.t() | nil,
-          :lockoutDurationTypeMetadata =>
-            DocuSign.Model.AccountPasswordLockoutDurationType.t() | nil,
+          :lockoutDurationTypeMetadata => AccountPasswordLockoutDurationType.t() | nil,
           :minimumPasswordAgeDays => String.t() | nil,
-          :minimumPasswordAgeDaysMetadata =>
-            DocuSign.Model.AccountPasswordMinimumPasswordAgeDays.t() | nil,
+          :minimumPasswordAgeDaysMetadata => AccountPasswordMinimumPasswordAgeDays.t() | nil,
           :minimumPasswordLength => String.t() | nil,
-          :minimumPasswordLengthMetadata => DocuSign.Model.AccountMinimumPasswordLength.t() | nil,
+          :minimumPasswordLengthMetadata => AccountMinimumPasswordLength.t() | nil,
           :passwordIncludeDigit => String.t() | nil,
           :passwordIncludeDigitOrSpecialCharacter => String.t() | nil,
           :passwordIncludeLowerCase => String.t() | nil,
           :passwordIncludeSpecialCharacter => String.t() | nil,
           :passwordIncludeUpperCase => String.t() | nil,
           :passwordStrengthType => String.t() | nil,
-          :passwordStrengthTypeMetadata => DocuSign.Model.AccountPasswordStrengthType.t() | nil,
+          :passwordStrengthTypeMetadata => AccountPasswordStrengthType.t() | nil,
           :questionsRequired => String.t() | nil,
-          :questionsRequiredMetadata => DocuSign.Model.AccountPasswordQuestionsRequired.t() | nil
+          :questionsRequiredMetadata => AccountPasswordQuestionsRequired.t() | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
     |> Deserializer.deserialize(
       :expirePasswordDaysMetadata,
       :struct,
-      DocuSign.Model.AccountPasswordExpirePasswordDays
+      AccountPasswordExpirePasswordDays
     )
     |> Deserializer.deserialize(
       :lockoutDurationMinutesMetadata,
       :struct,
-      DocuSign.Model.AccountPasswordLockoutDurationMinutes
+      AccountPasswordLockoutDurationMinutes
     )
     |> Deserializer.deserialize(
       :lockoutDurationTypeMetadata,
       :struct,
-      DocuSign.Model.AccountPasswordLockoutDurationType
+      AccountPasswordLockoutDurationType
     )
     |> Deserializer.deserialize(
       :minimumPasswordAgeDaysMetadata,
       :struct,
-      DocuSign.Model.AccountPasswordMinimumPasswordAgeDays
+      AccountPasswordMinimumPasswordAgeDays
     )
     |> Deserializer.deserialize(
       :minimumPasswordLengthMetadata,
       :struct,
-      DocuSign.Model.AccountMinimumPasswordLength
+      AccountMinimumPasswordLength
     )
     |> Deserializer.deserialize(
       :passwordStrengthTypeMetadata,
       :struct,
-      DocuSign.Model.AccountPasswordStrengthType
+      AccountPasswordStrengthType
     )
     |> Deserializer.deserialize(
       :questionsRequiredMetadata,
       :struct,
-      DocuSign.Model.AccountPasswordQuestionsRequired
+      AccountPasswordQuestionsRequired
     )
   end
 end

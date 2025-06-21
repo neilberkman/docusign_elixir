@@ -6,23 +6,24 @@ defmodule DocuSign.Model.AccountSignatureProviders do
   This resource provides information on the Standards Based Signature providers that have been provisioned for an account. 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.AccountSignatureProvider
+
   @derive Jason.Encoder
   defstruct [
     :signatureProviders
   ]
 
   @type t :: %__MODULE__{
-          :signatureProviders => [DocuSign.Model.AccountSignatureProvider.t()] | nil
+          :signatureProviders => [AccountSignatureProvider.t()] | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
     |> Deserializer.deserialize(
       :signatureProviders,
       :list,
-      DocuSign.Model.AccountSignatureProvider
+      AccountSignatureProvider
     )
   end
 end

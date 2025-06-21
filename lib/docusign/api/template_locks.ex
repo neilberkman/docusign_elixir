@@ -6,8 +6,11 @@ defmodule DocuSign.Api.TemplateLocks do
   API calls for all endpoints tagged `TemplateLocks`.
   """
 
-  alias DocuSign.Connection
   import DocuSign.RequestBuilder
+
+  alias DocuSign.Connection
+  alias DocuSign.Model.ErrorDetails
+  alias DocuSign.Model.LockInformation
 
   @doc """
   Deletes a template lock.
@@ -27,8 +30,8 @@ defmodule DocuSign.Api.TemplateLocks do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec lock_delete_template_lock(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.LockInformation.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, LockInformation.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
   def lock_delete_template_lock(connection, account_id, template_id, opts \\ []) do
     optional_params = %{
@@ -40,13 +43,13 @@ defmodule DocuSign.Api.TemplateLocks do
       |> method(:delete)
       |> url("/v2.1/accounts/#{account_id}/templates/#{template_id}/lock")
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.LockInformation},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, LockInformation},
+      {400, ErrorDetails}
     ])
   end
 
@@ -67,21 +70,21 @@ defmodule DocuSign.Api.TemplateLocks do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec lock_get_template_lock(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.LockInformation.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, LockInformation.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
   def lock_get_template_lock(connection, account_id, template_id, _opts \\ []) do
     request =
       %{}
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/templates/#{template_id}/lock")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.LockInformation},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, LockInformation},
+      {400, ErrorDetails}
     ])
   end
 
@@ -103,8 +106,8 @@ defmodule DocuSign.Api.TemplateLocks do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec lock_post_template_lock(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.LockInformation.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, LockInformation.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
   def lock_post_template_lock(connection, account_id, template_id, opts \\ []) do
     optional_params = %{
@@ -117,13 +120,13 @@ defmodule DocuSign.Api.TemplateLocks do
       |> url("/v2.1/accounts/#{account_id}/templates/#{template_id}/lock")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {201, DocuSign.Model.LockInformation},
-      {400, DocuSign.Model.ErrorDetails}
+      {201, LockInformation},
+      {400, ErrorDetails}
     ])
   end
 
@@ -145,8 +148,8 @@ defmodule DocuSign.Api.TemplateLocks do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec lock_put_template_lock(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.LockInformation.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, LockInformation.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
   def lock_put_template_lock(connection, account_id, template_id, opts \\ []) do
     optional_params = %{
@@ -159,13 +162,13 @@ defmodule DocuSign.Api.TemplateLocks do
       |> url("/v2.1/accounts/#{account_id}/templates/#{template_id}/lock")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.LockInformation},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, LockInformation},
+      {400, ErrorDetails}
     ])
   end
 end

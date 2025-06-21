@@ -6,8 +6,11 @@ defmodule DocuSign.Api.EnvelopeEmailSettings do
   API calls for all endpoints tagged `EnvelopeEmailSettings`.
   """
 
-  alias DocuSign.Connection
   import DocuSign.RequestBuilder
+
+  alias DocuSign.Connection
+  alias DocuSign.Model.EmailSettings
+  alias DocuSign.Model.ErrorDetails
 
   @doc """
   Deletes the email setting overrides for an envelope.
@@ -31,21 +34,21 @@ defmodule DocuSign.Api.EnvelopeEmailSettings do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.EmailSettings.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, EmailSettings.t()}
           | {:error, Tesla.Env.t()}
   def email_settings_delete_email_settings(connection, account_id, envelope_id, _opts \\ []) do
     request =
       %{}
       |> method(:delete)
       |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/email_settings")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.EmailSettings},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, EmailSettings},
+      {400, ErrorDetails}
     ])
   end
 
@@ -66,21 +69,21 @@ defmodule DocuSign.Api.EnvelopeEmailSettings do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec email_settings_get_email_settings(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.EmailSettings.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, EmailSettings.t()}
           | {:error, Tesla.Env.t()}
   def email_settings_get_email_settings(connection, account_id, envelope_id, _opts \\ []) do
     request =
       %{}
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/email_settings")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.EmailSettings},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, EmailSettings},
+      {400, ErrorDetails}
     ])
   end
 
@@ -102,8 +105,8 @@ defmodule DocuSign.Api.EnvelopeEmailSettings do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec email_settings_post_email_settings(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.EmailSettings.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, EmailSettings.t()}
           | {:error, Tesla.Env.t()}
   def email_settings_post_email_settings(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
@@ -116,13 +119,13 @@ defmodule DocuSign.Api.EnvelopeEmailSettings do
       |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/email_settings")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {201, DocuSign.Model.EmailSettings},
-      {400, DocuSign.Model.ErrorDetails}
+      {201, EmailSettings},
+      {400, ErrorDetails}
     ])
   end
 
@@ -144,8 +147,8 @@ defmodule DocuSign.Api.EnvelopeEmailSettings do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec email_settings_put_email_settings(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.EmailSettings.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, EmailSettings.t()}
           | {:error, Tesla.Env.t()}
   def email_settings_put_email_settings(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
@@ -158,13 +161,13 @@ defmodule DocuSign.Api.EnvelopeEmailSettings do
       |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/email_settings")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.EmailSettings},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, EmailSettings},
+      {400, ErrorDetails}
     ])
   end
 end

@@ -6,6 +6,9 @@ defmodule DocuSign.Model.DocumentHtmlDisplaySettings do
   This object defines how to display the HTML between the `startAnchor` and `endAnchor`.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.DocumentHtmlCollapsibleDisplaySettings
+
   @derive Jason.Encoder
   defstruct [
     :cellStyle,
@@ -24,7 +27,7 @@ defmodule DocuSign.Model.DocumentHtmlDisplaySettings do
 
   @type t :: %__MODULE__{
           :cellStyle => String.t() | nil,
-          :collapsibleSettings => DocuSign.Model.DocumentHtmlCollapsibleDisplaySettings.t() | nil,
+          :collapsibleSettings => DocumentHtmlCollapsibleDisplaySettings.t() | nil,
           :display => String.t() | nil,
           :displayLabel => String.t() | nil,
           :displayOrder => integer() | nil,
@@ -37,14 +40,12 @@ defmodule DocuSign.Model.DocumentHtmlDisplaySettings do
           :tableStyle => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
     |> Deserializer.deserialize(
       :collapsibleSettings,
       :struct,
-      DocuSign.Model.DocumentHtmlCollapsibleDisplaySettings
+      DocumentHtmlCollapsibleDisplaySettings
     )
   end
 end

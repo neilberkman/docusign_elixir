@@ -6,6 +6,12 @@ defmodule DocuSign.Model.IdCheckInformationInput do
   A complex element that contains input information related to a recipient ID check.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.AddressInformationInput
+  alias DocuSign.Model.DobInformationInput
+  alias DocuSign.Model.Ssn4InformationInput
+  alias DocuSign.Model.Ssn9InformationInput
+
   @derive Jason.Encoder
   defstruct [
     :addressInformationInput,
@@ -15,31 +21,29 @@ defmodule DocuSign.Model.IdCheckInformationInput do
   ]
 
   @type t :: %__MODULE__{
-          :addressInformationInput => DocuSign.Model.AddressInformationInput.t() | nil,
-          :dobInformationInput => DocuSign.Model.DobInformationInput.t() | nil,
-          :ssn4InformationInput => DocuSign.Model.Ssn4InformationInput.t() | nil,
-          :ssn9InformationInput => DocuSign.Model.Ssn9InformationInput.t() | nil
+          :addressInformationInput => AddressInformationInput.t() | nil,
+          :dobInformationInput => DobInformationInput.t() | nil,
+          :ssn4InformationInput => Ssn4InformationInput.t() | nil,
+          :ssn9InformationInput => Ssn9InformationInput.t() | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
     |> Deserializer.deserialize(
       :addressInformationInput,
       :struct,
-      DocuSign.Model.AddressInformationInput
+      AddressInformationInput
     )
-    |> Deserializer.deserialize(:dobInformationInput, :struct, DocuSign.Model.DobInformationInput)
+    |> Deserializer.deserialize(:dobInformationInput, :struct, DobInformationInput)
     |> Deserializer.deserialize(
       :ssn4InformationInput,
       :struct,
-      DocuSign.Model.Ssn4InformationInput
+      Ssn4InformationInput
     )
     |> Deserializer.deserialize(
       :ssn9InformationInput,
       :struct,
-      DocuSign.Model.Ssn9InformationInput
+      Ssn9InformationInput
     )
   end
 end

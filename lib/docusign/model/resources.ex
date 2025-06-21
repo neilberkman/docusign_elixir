@@ -6,19 +6,20 @@ defmodule DocuSign.Model.Resources do
   API resource information
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.NameValue
+
   @derive Jason.Encoder
   defstruct [
     :resources
   ]
 
   @type t :: %__MODULE__{
-          :resources => [DocuSign.Model.NameValue.t()] | nil
+          :resources => [NameValue.t()] | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
-    |> Deserializer.deserialize(:resources, :list, DocuSign.Model.NameValue)
+    |> Deserializer.deserialize(:resources, :list, NameValue)
   end
 end

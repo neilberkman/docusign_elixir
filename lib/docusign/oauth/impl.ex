@@ -8,13 +8,14 @@ defmodule DocuSign.OAuth.Impl do
   {:ok, user_info } = OAuth2.Client.get(client, "/oauth/userinfo")
 
   """
+  @behaviour DocuSign.OAuth
+
   use OAuth2.Strategy
 
-  @behaviour DocuSign.OAuth
+  alias OAuth2.{AccessToken, Client, Error}
 
   require Logger
 
-  alias OAuth2.{AccessToken, Client, Error}
   @type param :: binary | %{binary => param} | [param]
   @type params :: %{binary => param} | Keyword.t()
   @type headers :: [{binary, binary}]
@@ -33,9 +34,9 @@ defmodule DocuSign.OAuth.Impl do
       strategy: __MODULE__,
       client_id: client_id,
       ref: %{
-        user_id: user_id,
         hostname: hostname,
-        token_expires_in: token_expires_in
+        token_expires_in: token_expires_in,
+        user_id: user_id
       },
       site: "https://#{hostname}",
       authorize_url: "oauth/auth?response_type=code&scope=signature%20impersonation"
@@ -64,8 +65,7 @@ defmodule DocuSign.OAuth.Impl do
   end
 
   @impl DocuSign.OAuth
-  def interval_refresh_token(client),
-    do: client.token.expires_at - :erlang.system_time(:second) - 10
+  def interval_refresh_token(client), do: client.token.expires_at - :erlang.system_time(:second) - 10
 
   @impl DocuSign.OAuth
   def token_expired?(%AccessToken{} = token), do: AccessToken.expired?(token)
@@ -113,12 +113,12 @@ defmodule DocuSign.OAuth.Impl do
     now_unix = :erlang.system_time(:second)
 
     %{
-      "iss" => client.client_id,
-      "sub" => client.ref.user_id,
       "aud" => client.ref.hostname,
-      "iat" => now_unix,
       "exp" => now_unix + client.ref.token_expires_in,
-      "scope" => "signature"
+      "iat" => now_unix,
+      "iss" => client.client_id,
+      "scope" => "signature",
+      "sub" => client.ref.user_id
     }
   end
 

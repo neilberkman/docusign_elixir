@@ -6,6 +6,9 @@ defmodule DocuSign.Model.NotaryJournalList do
 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.NotaryJournal
+
   @derive Jason.Encoder
   defstruct [
     :endPosition,
@@ -20,17 +23,15 @@ defmodule DocuSign.Model.NotaryJournalList do
   @type t :: %__MODULE__{
           :endPosition => String.t() | nil,
           :nextUri => String.t() | nil,
-          :notaryJournals => [DocuSign.Model.NotaryJournal.t()] | nil,
+          :notaryJournals => [NotaryJournal.t()] | nil,
           :previousUri => String.t() | nil,
           :resultSetSize => String.t() | nil,
           :startPosition => String.t() | nil,
           :totalSetSize => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:notaryJournals, :list, DocuSign.Model.NotaryJournal)
+    |> Deserializer.deserialize(:notaryJournals, :list, NotaryJournal)
   end
 end

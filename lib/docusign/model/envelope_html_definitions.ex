@@ -6,23 +6,24 @@ defmodule DocuSign.Model.EnvelopeHtmlDefinitions do
 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.DocumentHtmlDefinitionOriginal
+
   @derive Jason.Encoder
   defstruct [
     :htmlDefinitions
   ]
 
   @type t :: %__MODULE__{
-          :htmlDefinitions => [DocuSign.Model.DocumentHtmlDefinitionOriginal.t()] | nil
+          :htmlDefinitions => [DocumentHtmlDefinitionOriginal.t()] | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
     |> Deserializer.deserialize(
       :htmlDefinitions,
       :list,
-      DocuSign.Model.DocumentHtmlDefinitionOriginal
+      DocumentHtmlDefinitionOriginal
     )
   end
 end

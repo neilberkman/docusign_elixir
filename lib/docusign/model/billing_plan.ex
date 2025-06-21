@@ -6,6 +6,12 @@ defmodule DocuSign.Model.BillingPlan do
   Contains information about a billing plan.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.AppStoreProduct
+  alias DocuSign.Model.CurrencyPlanPrice
+  alias DocuSign.Model.FeatureSet
+  alias DocuSign.Model.SeatDiscount
+
   @derive Jason.Encoder
   defstruct [
     :appStoreProducts,
@@ -26,8 +32,8 @@ defmodule DocuSign.Model.BillingPlan do
   ]
 
   @type t :: %__MODULE__{
-          :appStoreProducts => [DocuSign.Model.AppStoreProduct.t()] | nil,
-          :currencyPlanPrices => [DocuSign.Model.CurrencyPlanPrice.t()] | nil,
+          :appStoreProducts => [AppStoreProduct.t()] | nil,
+          :currencyPlanPrices => [CurrencyPlanPrice.t()] | nil,
           :enableSupport => String.t() | nil,
           :includedSeats => String.t() | nil,
           :otherDiscountPercent => String.t() | nil,
@@ -35,21 +41,19 @@ defmodule DocuSign.Model.BillingPlan do
           :paymentMethod => String.t() | nil,
           :perSeatPrice => String.t() | nil,
           :planClassification => String.t() | nil,
-          :planFeatureSets => [DocuSign.Model.FeatureSet.t()] | nil,
+          :planFeatureSets => [FeatureSet.t()] | nil,
           :planId => String.t() | nil,
           :planName => String.t() | nil,
-          :seatDiscounts => [DocuSign.Model.SeatDiscount.t()] | nil,
+          :seatDiscounts => [SeatDiscount.t()] | nil,
           :supportIncidentFee => String.t() | nil,
           :supportPlanFee => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:appStoreProducts, :list, DocuSign.Model.AppStoreProduct)
-    |> Deserializer.deserialize(:currencyPlanPrices, :list, DocuSign.Model.CurrencyPlanPrice)
-    |> Deserializer.deserialize(:planFeatureSets, :list, DocuSign.Model.FeatureSet)
-    |> Deserializer.deserialize(:seatDiscounts, :list, DocuSign.Model.SeatDiscount)
+    |> Deserializer.deserialize(:appStoreProducts, :list, AppStoreProduct)
+    |> Deserializer.deserialize(:currencyPlanPrices, :list, CurrencyPlanPrice)
+    |> Deserializer.deserialize(:planFeatureSets, :list, FeatureSet)
+    |> Deserializer.deserialize(:seatDiscounts, :list, SeatDiscount)
   end
 end

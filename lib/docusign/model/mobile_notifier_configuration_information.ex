@@ -6,23 +6,24 @@ defmodule DocuSign.Model.MobileNotifierConfigurationInformation do
 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.MobileNotifierConfiguration
+
   @derive Jason.Encoder
   defstruct [
     :mobileNotifierConfigurations
   ]
 
   @type t :: %__MODULE__{
-          :mobileNotifierConfigurations => [DocuSign.Model.MobileNotifierConfiguration.t()] | nil
+          :mobileNotifierConfigurations => [MobileNotifierConfiguration.t()] | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
     |> Deserializer.deserialize(
       :mobileNotifierConfigurations,
       :list,
-      DocuSign.Model.MobileNotifierConfiguration
+      MobileNotifierConfiguration
     )
   end
 end

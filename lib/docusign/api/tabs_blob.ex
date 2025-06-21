@@ -6,8 +6,10 @@ defmodule DocuSign.Api.TabsBlob do
   API calls for all endpoints tagged `TabsBlob`.
   """
 
-  alias DocuSign.Connection
   import DocuSign.RequestBuilder
+
+  alias DocuSign.Connection
+  alias DocuSign.Model.ErrorDetails
 
   @doc """
   Reserved for Docusign.
@@ -26,19 +28,19 @@ defmodule DocuSign.Api.TabsBlob do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec tabs_blob_get_tabs_blob(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, nil} | {:ok, DocuSign.Model.ErrorDetails.t()} | {:error, Tesla.Env.t()}
+          {:ok, nil} | {:ok, ErrorDetails.t()} | {:error, Tesla.Env.t()}
   def tabs_blob_get_tabs_blob(connection, account_id, envelope_id, _opts \\ []) do
     request =
       %{}
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/tabs_blob")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
       {200, false},
-      {400, DocuSign.Model.ErrorDetails}
+      {400, ErrorDetails}
     ])
   end
 
@@ -59,20 +61,20 @@ defmodule DocuSign.Api.TabsBlob do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec tabs_blob_put_tabs_blob(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, nil} | {:ok, DocuSign.Model.ErrorDetails.t()} | {:error, Tesla.Env.t()}
+          {:ok, nil} | {:ok, ErrorDetails.t()} | {:error, Tesla.Env.t()}
   def tabs_blob_put_tabs_blob(connection, account_id, envelope_id, _opts \\ []) do
     request =
       %{}
       |> method(:put)
       |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/tabs_blob")
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
       {200, false},
-      {400, DocuSign.Model.ErrorDetails}
+      {400, ErrorDetails}
     ])
   end
 end

@@ -6,8 +6,12 @@ defmodule DocuSign.Api.TemplateDocumentVisibility do
   API calls for all endpoints tagged `TemplateDocumentVisibility`.
   """
 
-  alias DocuSign.Connection
   import DocuSign.RequestBuilder
+
+  alias DocuSign.Connection
+  alias DocuSign.Model.DocumentVisibilityList
+  alias DocuSign.Model.ErrorDetails
+  alias DocuSign.Model.TemplateDocumentVisibilityList
 
   @doc """
   Returns document visibility for a template recipient
@@ -33,8 +37,8 @@ defmodule DocuSign.Api.TemplateDocumentVisibility do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.DocumentVisibilityList.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, DocumentVisibilityList.t()}
           | {:error, Tesla.Env.t()}
   def recipients_get_template_recipient_document_visibility(
         connection,
@@ -46,16 +50,14 @@ defmodule DocuSign.Api.TemplateDocumentVisibility do
     request =
       %{}
       |> method(:get)
-      |> url(
-        "/v2.1/accounts/#{account_id}/templates/#{template_id}/recipients/#{recipient_id}/document_visibility"
-      )
-      |> Enum.into([])
+      |> url("/v2.1/accounts/#{account_id}/templates/#{template_id}/recipients/#{recipient_id}/document_visibility")
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.DocumentVisibilityList},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, DocumentVisibilityList},
+      {400, ErrorDetails}
     ])
   end
 
@@ -84,8 +86,8 @@ defmodule DocuSign.Api.TemplateDocumentVisibility do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.TemplateDocumentVisibilityList.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, TemplateDocumentVisibilityList.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
   def recipients_put_template_recipient_document_visibility(
         connection,
@@ -101,18 +103,16 @@ defmodule DocuSign.Api.TemplateDocumentVisibility do
     request =
       %{}
       |> method(:put)
-      |> url(
-        "/v2.1/accounts/#{account_id}/templates/#{template_id}/recipients/#{recipient_id}/document_visibility"
-      )
+      |> url("/v2.1/accounts/#{account_id}/templates/#{template_id}/recipients/#{recipient_id}/document_visibility")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.TemplateDocumentVisibilityList},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, TemplateDocumentVisibilityList},
+      {400, ErrorDetails}
     ])
   end
 
@@ -139,15 +139,10 @@ defmodule DocuSign.Api.TemplateDocumentVisibility do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.TemplateDocumentVisibilityList.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, TemplateDocumentVisibilityList.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
-  def recipients_put_template_recipients_document_visibility(
-        connection,
-        account_id,
-        template_id,
-        opts \\ []
-      ) do
+  def recipients_put_template_recipients_document_visibility(connection, account_id, template_id, opts \\ []) do
     optional_params = %{
       :body => :body
     }
@@ -155,18 +150,16 @@ defmodule DocuSign.Api.TemplateDocumentVisibility do
     request =
       %{}
       |> method(:put)
-      |> url(
-        "/v2.1/accounts/#{account_id}/templates/#{template_id}/recipients/document_visibility"
-      )
+      |> url("/v2.1/accounts/#{account_id}/templates/#{template_id}/recipients/document_visibility")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.TemplateDocumentVisibilityList},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, TemplateDocumentVisibilityList},
+      {400, ErrorDetails}
     ])
   end
 end

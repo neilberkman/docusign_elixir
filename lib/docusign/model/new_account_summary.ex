@@ -6,6 +6,9 @@ defmodule DocuSign.Model.NewAccountSummary do
 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.BillingPlanPreview
+
   @derive Jason.Encoder
   defstruct [
     :accountId,
@@ -23,14 +26,12 @@ defmodule DocuSign.Model.NewAccountSummary do
           :accountName => String.t() | nil,
           :apiPassword => String.t() | nil,
           :baseUrl => String.t() | nil,
-          :billingPlanPreview => DocuSign.Model.BillingPlanPreview.t() | nil,
+          :billingPlanPreview => BillingPlanPreview.t() | nil,
           :userId => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:billingPlanPreview, :struct, DocuSign.Model.BillingPlanPreview)
+    |> Deserializer.deserialize(:billingPlanPreview, :struct, BillingPlanPreview)
   end
 end

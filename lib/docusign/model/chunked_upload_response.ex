@@ -6,6 +6,9 @@ defmodule DocuSign.Model.ChunkedUploadResponse do
   This response object is returned after you upload a chunked upload.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.ChunkedUploadPart
+
   @derive Jason.Encoder
   defstruct [
     :checksum,
@@ -22,7 +25,7 @@ defmodule DocuSign.Model.ChunkedUploadResponse do
   @type t :: %__MODULE__{
           :checksum => String.t() | nil,
           :chunkedUploadId => String.t() | nil,
-          :chunkedUploadParts => [DocuSign.Model.ChunkedUploadPart.t()] | nil,
+          :chunkedUploadParts => [ChunkedUploadPart.t()] | nil,
           :chunkedUploadUri => String.t() | nil,
           :committed => String.t() | nil,
           :expirationDateTime => String.t() | nil,
@@ -31,10 +34,8 @@ defmodule DocuSign.Model.ChunkedUploadResponse do
           :totalSize => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:chunkedUploadParts, :list, DocuSign.Model.ChunkedUploadPart)
+    |> Deserializer.deserialize(:chunkedUploadParts, :list, ChunkedUploadPart)
   end
 end

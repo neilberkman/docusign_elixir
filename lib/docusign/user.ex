@@ -13,6 +13,8 @@ defmodule DocuSign.User do
   """
 
   alias __MODULE__
+  alias DocuSign.OAuth.Impl
+  alias DocuSign.Util
 
   defstruct [
     # The user ID of the account holder
@@ -46,8 +48,6 @@ defmodule DocuSign.User do
     :links
   ]
 
-  alias DocuSign.Util
-
   defmodule AppAccount do
     @moduledoc false
     defstruct [:account_id, :account_name, :base_uri, :is_default]
@@ -78,6 +78,6 @@ defmodule DocuSign.User do
   def default_account(accounts), do: Enum.find(accounts, & &1.is_default)
 
   defp oauth_implementation do
-    Application.get_env(:docusign, :oauth_implementation, DocuSign.OAuth.Impl)
+    Application.get_env(:docusign, :oauth_implementation, Impl)
   end
 end

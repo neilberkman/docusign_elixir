@@ -6,6 +6,9 @@ defmodule DocuSign.Model.Page do
   Description of a page of a document.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.ErrorDetails
+
   @derive Jason.Encoder
   defstruct [
     :dpi,
@@ -20,7 +23,7 @@ defmodule DocuSign.Model.Page do
 
   @type t :: %__MODULE__{
           :dpi => String.t() | nil,
-          :errorDetails => DocuSign.Model.ErrorDetails.t() | nil,
+          :errorDetails => ErrorDetails.t() | nil,
           :height => String.t() | nil,
           :imageBytes => String.t() | nil,
           :mimeType => String.t() | nil,
@@ -29,10 +32,8 @@ defmodule DocuSign.Model.Page do
           :width => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:errorDetails, :struct, DocuSign.Model.ErrorDetails)
+    |> Deserializer.deserialize(:errorDetails, :struct, ErrorDetails)
   end
 end

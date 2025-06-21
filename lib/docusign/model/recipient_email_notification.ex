@@ -6,6 +6,9 @@ defmodule DocuSign.Model.RecipientEmailNotification do
   Sets custom email subject and email body for individual recipients. **Note:** You must explicitly set `supportedLanguage` if you use this feature. 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.PropertyMetadata
+
   @derive Jason.Encoder
   defstruct [
     :emailBody,
@@ -18,23 +21,21 @@ defmodule DocuSign.Model.RecipientEmailNotification do
 
   @type t :: %__MODULE__{
           :emailBody => String.t() | nil,
-          :emailBodyMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :emailBodyMetadata => PropertyMetadata.t() | nil,
           :emailSubject => String.t() | nil,
-          :emailSubjectMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :emailSubjectMetadata => PropertyMetadata.t() | nil,
           :supportedLanguage => String.t() | nil,
-          :supportedLanguageMetadata => DocuSign.Model.PropertyMetadata.t() | nil
+          :supportedLanguageMetadata => PropertyMetadata.t() | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
-    |> Deserializer.deserialize(:emailBodyMetadata, :struct, DocuSign.Model.PropertyMetadata)
-    |> Deserializer.deserialize(:emailSubjectMetadata, :struct, DocuSign.Model.PropertyMetadata)
+    |> Deserializer.deserialize(:emailBodyMetadata, :struct, PropertyMetadata)
+    |> Deserializer.deserialize(:emailSubjectMetadata, :struct, PropertyMetadata)
     |> Deserializer.deserialize(
       :supportedLanguageMetadata,
       :struct,
-      DocuSign.Model.PropertyMetadata
+      PropertyMetadata
     )
   end
 end

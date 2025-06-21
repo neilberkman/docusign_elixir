@@ -6,6 +6,9 @@ defmodule DocuSign.Model.AccountAddress do
   Contains information about the address associated with the account.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.Country
+
   @derive Jason.Encoder
   defstruct [
     :address1,
@@ -34,13 +37,11 @@ defmodule DocuSign.Model.AccountAddress do
           :phone => String.t() | nil,
           :postalCode => String.t() | nil,
           :state => String.t() | nil,
-          :supportedCountries => [DocuSign.Model.Country.t()] | nil
+          :supportedCountries => [Country.t()] | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
-    |> Deserializer.deserialize(:supportedCountries, :list, DocuSign.Model.Country)
+    |> Deserializer.deserialize(:supportedCountries, :list, Country)
   end
 end

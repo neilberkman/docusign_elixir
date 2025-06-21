@@ -6,6 +6,9 @@ defmodule DocuSign.Model.PowerFormSendersResponse do
   This object includes information about the users who have sent PowerForms.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.UserInfo
+
   @derive Jason.Encoder
   defstruct [
     :endPosition,
@@ -20,17 +23,15 @@ defmodule DocuSign.Model.PowerFormSendersResponse do
   @type t :: %__MODULE__{
           :endPosition => integer() | nil,
           :nextUri => String.t() | nil,
-          :powerFormSenders => [DocuSign.Model.UserInfo.t()] | nil,
+          :powerFormSenders => [UserInfo.t()] | nil,
           :previousUri => String.t() | nil,
           :resultSetSize => integer() | nil,
           :startPosition => integer() | nil,
           :totalSetSize => integer() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:powerFormSenders, :list, DocuSign.Model.UserInfo)
+    |> Deserializer.deserialize(:powerFormSenders, :list, UserInfo)
   end
 end

@@ -6,8 +6,12 @@ defmodule DocuSign.Api.SigningGroups do
   API calls for all endpoints tagged `SigningGroups`.
   """
 
-  alias DocuSign.Connection
   import DocuSign.RequestBuilder
+
+  alias DocuSign.Connection
+  alias DocuSign.Model.ErrorDetails
+  alias DocuSign.Model.SigningGroup
+  alias DocuSign.Model.SigningGroupInformation
 
   @doc """
   Deletes one or more signing groups.
@@ -26,8 +30,8 @@ defmodule DocuSign.Api.SigningGroups do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec signing_groups_delete_signing_groups(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.SigningGroupInformation.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, SigningGroupInformation.t()}
           | {:error, Tesla.Env.t()}
   def signing_groups_delete_signing_groups(connection, account_id, opts \\ []) do
     optional_params = %{
@@ -39,13 +43,13 @@ defmodule DocuSign.Api.SigningGroups do
       |> method(:delete)
       |> url("/v2.1/accounts/#{account_id}/signing_groups")
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.SigningGroupInformation},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, SigningGroupInformation},
+      {400, ErrorDetails}
     ])
   end
 
@@ -66,21 +70,21 @@ defmodule DocuSign.Api.SigningGroups do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec signing_groups_get_signing_group(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.SigningGroup.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, SigningGroup.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
   def signing_groups_get_signing_group(connection, account_id, signing_group_id, _opts \\ []) do
     request =
       %{}
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/signing_groups/#{signing_group_id}")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.SigningGroup},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, SigningGroup},
+      {400, ErrorDetails}
     ])
   end
 
@@ -102,8 +106,8 @@ defmodule DocuSign.Api.SigningGroups do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec signing_groups_get_signing_groups(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.SigningGroupInformation.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, SigningGroupInformation.t()}
           | {:error, Tesla.Env.t()}
   def signing_groups_get_signing_groups(connection, account_id, opts \\ []) do
     optional_params = %{
@@ -116,13 +120,13 @@ defmodule DocuSign.Api.SigningGroups do
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/signing_groups")
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.SigningGroupInformation},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, SigningGroupInformation},
+      {400, ErrorDetails}
     ])
   end
 
@@ -143,8 +147,8 @@ defmodule DocuSign.Api.SigningGroups do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec signing_groups_post_signing_groups(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.SigningGroupInformation.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, SigningGroupInformation.t()}
           | {:error, Tesla.Env.t()}
   def signing_groups_post_signing_groups(connection, account_id, opts \\ []) do
     optional_params = %{
@@ -157,13 +161,13 @@ defmodule DocuSign.Api.SigningGroups do
       |> url("/v2.1/accounts/#{account_id}/signing_groups")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {201, DocuSign.Model.SigningGroupInformation},
-      {400, DocuSign.Model.ErrorDetails}
+      {201, SigningGroupInformation},
+      {400, ErrorDetails}
     ])
   end
 
@@ -185,8 +189,8 @@ defmodule DocuSign.Api.SigningGroups do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec signing_groups_put_signing_group(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.SigningGroup.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, SigningGroup.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
   def signing_groups_put_signing_group(connection, account_id, signing_group_id, opts \\ []) do
     optional_params = %{
@@ -199,13 +203,13 @@ defmodule DocuSign.Api.SigningGroups do
       |> url("/v2.1/accounts/#{account_id}/signing_groups/#{signing_group_id}")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.SigningGroup},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, SigningGroup},
+      {400, ErrorDetails}
     ])
   end
 
@@ -226,8 +230,8 @@ defmodule DocuSign.Api.SigningGroups do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec signing_groups_put_signing_groups(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.SigningGroupInformation.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, SigningGroupInformation.t()}
           | {:error, Tesla.Env.t()}
   def signing_groups_put_signing_groups(connection, account_id, opts \\ []) do
     optional_params = %{
@@ -240,13 +244,13 @@ defmodule DocuSign.Api.SigningGroups do
       |> url("/v2.1/accounts/#{account_id}/signing_groups")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.SigningGroupInformation},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, SigningGroupInformation},
+      {400, ErrorDetails}
     ])
   end
 end

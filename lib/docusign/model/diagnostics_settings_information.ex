@@ -8,15 +8,15 @@ defmodule DocuSign.Model.DiagnosticsSettingsInformation do
 
   @derive Jason.Encoder
   defstruct [
-    :apiRequestLogging,
     :apiRequestLogMaxEntries,
-    :apiRequestLogRemainingEntries
+    :apiRequestLogRemainingEntries,
+    :apiRequestLogging
   ]
 
   @type t :: %__MODULE__{
-          :apiRequestLogging => String.t() | nil,
           :apiRequestLogMaxEntries => String.t() | nil,
-          :apiRequestLogRemainingEntries => String.t() | nil
+          :apiRequestLogRemainingEntries => String.t() | nil,
+          :apiRequestLogging => String.t() | nil
         }
 
   def decode(value) do

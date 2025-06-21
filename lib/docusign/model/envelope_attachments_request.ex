@@ -6,19 +6,20 @@ defmodule DocuSign.Model.EnvelopeAttachmentsRequest do
 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.Attachment
+
   @derive Jason.Encoder
   defstruct [
     :attachments
   ]
 
   @type t :: %__MODULE__{
-          :attachments => [DocuSign.Model.Attachment.t()] | nil
+          :attachments => [Attachment.t()] | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
-    |> Deserializer.deserialize(:attachments, :list, DocuSign.Model.Attachment)
+    |> Deserializer.deserialize(:attachments, :list, Attachment)
   end
 end

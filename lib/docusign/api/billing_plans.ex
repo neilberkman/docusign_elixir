@@ -6,8 +6,17 @@ defmodule DocuSign.Api.BillingPlans do
   API calls for all endpoints tagged `BillingPlans`.
   """
 
-  alias DocuSign.Connection
   import DocuSign.RequestBuilder
+
+  alias DocuSign.Connection
+  alias DocuSign.Model.AccountBillingPlanResponse
+  alias DocuSign.Model.BillingPlanResponse
+  alias DocuSign.Model.BillingPlansResponse
+  alias DocuSign.Model.BillingPlanUpdateResponse
+  alias DocuSign.Model.CreditCardInformation
+  alias DocuSign.Model.DowngradePlanUpdateResponse
+  alias DocuSign.Model.DowngradRequestBillingInfoResponse
+  alias DocuSign.Model.ErrorDetails
 
   @doc """
   Get Account Billing Plan
@@ -30,8 +39,8 @@ defmodule DocuSign.Api.BillingPlans do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec billing_plan_get_billing_plan(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.AccountBillingPlanResponse.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, AccountBillingPlanResponse.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
   def billing_plan_get_billing_plan(connection, account_id, opts \\ []) do
     optional_params = %{
@@ -47,13 +56,13 @@ defmodule DocuSign.Api.BillingPlans do
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/billing_plan")
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.AccountBillingPlanResponse},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, AccountBillingPlanResponse},
+      {400, ErrorDetails}
     ])
   end
 
@@ -73,21 +82,21 @@ defmodule DocuSign.Api.BillingPlans do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec billing_plan_get_credit_card_info(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.CreditCardInformation.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, CreditCardInformation.t()}
           | {:error, Tesla.Env.t()}
   def billing_plan_get_credit_card_info(connection, account_id, _opts \\ []) do
     request =
       %{}
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/billing_plan/credit_card")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.CreditCardInformation},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, CreditCardInformation},
+      {400, ErrorDetails}
     ])
   end
 
@@ -106,21 +115,21 @@ defmodule DocuSign.Api.BillingPlans do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec billing_plan_get_downgrade_request_billing_info(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.DowngradRequestBillingInfoResponse.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, DowngradRequestBillingInfoResponse.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
   def billing_plan_get_downgrade_request_billing_info(connection, account_id, _opts \\ []) do
     request =
       %{}
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/billing_plan/downgrade")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.DowngradRequestBillingInfoResponse},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, DowngradRequestBillingInfoResponse},
+      {400, ErrorDetails}
     ])
   end
 
@@ -142,13 +151,13 @@ defmodule DocuSign.Api.BillingPlans do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec billing_plan_put_billing_plan(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.BillingPlanUpdateResponse.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, BillingPlanUpdateResponse.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
   def billing_plan_put_billing_plan(connection, account_id, opts \\ []) do
     optional_params = %{
-      :preview_billing_plan => :query,
-      :body => :body
+      :body => :body,
+      :preview_billing_plan => :query
     }
 
     request =
@@ -157,13 +166,13 @@ defmodule DocuSign.Api.BillingPlans do
       |> url("/v2.1/accounts/#{account_id}/billing_plan")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.BillingPlanUpdateResponse},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, BillingPlanUpdateResponse},
+      {400, ErrorDetails}
     ])
   end
 
@@ -183,8 +192,8 @@ defmodule DocuSign.Api.BillingPlans do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec billing_plan_put_downgrade_account_billing_plan(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.DowngradePlanUpdateResponse.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, DowngradePlanUpdateResponse.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
   def billing_plan_put_downgrade_account_billing_plan(connection, account_id, opts \\ []) do
     optional_params = %{
@@ -197,13 +206,13 @@ defmodule DocuSign.Api.BillingPlans do
       |> url("/v2.1/accounts/#{account_id}/billing_plan/downgrade")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.DowngradePlanUpdateResponse},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, DowngradePlanUpdateResponse},
+      {400, ErrorDetails}
     ])
   end
 
@@ -223,21 +232,21 @@ defmodule DocuSign.Api.BillingPlans do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec billing_plans_get_billing_plan(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.BillingPlanResponse.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, BillingPlanResponse.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
   def billing_plans_get_billing_plan(connection, billing_plan_id, _opts \\ []) do
     request =
       %{}
       |> method(:get)
       |> url("/v2.1/billing_plans/#{billing_plan_id}")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.BillingPlanResponse},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, BillingPlanResponse},
+      {400, ErrorDetails}
     ])
   end
 
@@ -256,21 +265,21 @@ defmodule DocuSign.Api.BillingPlans do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec billing_plans_get_billing_plans(Tesla.Env.client(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.BillingPlansResponse.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, BillingPlansResponse.t()}
           | {:error, Tesla.Env.t()}
   def billing_plans_get_billing_plans(connection, _opts \\ []) do
     request =
       %{}
       |> method(:get)
       |> url("/v2.1/billing_plans")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.BillingPlansResponse},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, BillingPlansResponse},
+      {400, ErrorDetails}
     ])
   end
 
@@ -291,7 +300,7 @@ defmodule DocuSign.Api.BillingPlans do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec purchased_envelopes_put_purchased_envelopes(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, nil} | {:ok, DocuSign.Model.ErrorDetails.t()} | {:error, Tesla.Env.t()}
+          {:ok, nil} | {:ok, ErrorDetails.t()} | {:error, Tesla.Env.t()}
   def purchased_envelopes_put_purchased_envelopes(connection, account_id, opts \\ []) do
     optional_params = %{
       :body => :body
@@ -303,13 +312,13 @@ defmodule DocuSign.Api.BillingPlans do
       |> url("/v2.1/accounts/#{account_id}/billing_plan/purchased_envelopes")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
       {200, false},
-      {400, DocuSign.Model.ErrorDetails}
+      {400, ErrorDetails}
     ])
   end
 end

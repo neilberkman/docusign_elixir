@@ -6,19 +6,20 @@ defmodule DocuSign.Model.CommentsPublish do
 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.CommentPublish
+
   @derive Jason.Encoder
   defstruct [
     :commentsToPublish
   ]
 
   @type t :: %__MODULE__{
-          :commentsToPublish => [DocuSign.Model.CommentPublish.t()] | nil
+          :commentsToPublish => [CommentPublish.t()] | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
-    |> Deserializer.deserialize(:commentsToPublish, :list, DocuSign.Model.CommentPublish)
+    |> Deserializer.deserialize(:commentsToPublish, :list, CommentPublish)
   end
 end

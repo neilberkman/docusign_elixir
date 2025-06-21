@@ -6,6 +6,9 @@ defmodule DocuSign.Model.NotaryContactDetails do
 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.JurisdictionSummary
+
   @derive Jason.Encoder
   defstruct [
     :hasDocusignCertificate,
@@ -14,13 +17,11 @@ defmodule DocuSign.Model.NotaryContactDetails do
 
   @type t :: %__MODULE__{
           :hasDocusignCertificate => String.t() | nil,
-          :jurisdictions => [DocuSign.Model.JurisdictionSummary.t()] | nil
+          :jurisdictions => [JurisdictionSummary.t()] | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
-    |> Deserializer.deserialize(:jurisdictions, :list, DocuSign.Model.JurisdictionSummary)
+    |> Deserializer.deserialize(:jurisdictions, :list, JurisdictionSummary)
   end
 end

@@ -6,8 +6,13 @@ defmodule DocuSign.Api.Invoices do
   API calls for all endpoints tagged `Invoices`.
   """
 
-  alias DocuSign.Connection
   import DocuSign.RequestBuilder
+
+  alias DocuSign.Connection
+  alias DocuSign.Model.BillingInvoice
+  alias DocuSign.Model.BillingInvoicesResponse
+  alias DocuSign.Model.BillingInvoicesSummary
+  alias DocuSign.Model.ErrorDetails
 
   @doc """
   Retrieves a billing invoice.
@@ -31,21 +36,21 @@ defmodule DocuSign.Api.Invoices do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.BillingInvoice.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, BillingInvoice.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
   def billing_invoices_get_billing_invoice(connection, account_id, invoice_id, _opts \\ []) do
     request =
       %{}
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/billing_invoices/#{invoice_id}")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.BillingInvoice},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, BillingInvoice},
+      {400, ErrorDetails}
     ])
   end
 
@@ -67,8 +72,8 @@ defmodule DocuSign.Api.Invoices do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec billing_invoices_get_billing_invoices(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.BillingInvoicesResponse.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, BillingInvoicesResponse.t()}
           | {:error, Tesla.Env.t()}
   def billing_invoices_get_billing_invoices(connection, account_id, opts \\ []) do
     optional_params = %{
@@ -81,13 +86,13 @@ defmodule DocuSign.Api.Invoices do
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/billing_invoices")
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.BillingInvoicesResponse},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, BillingInvoicesResponse},
+      {400, ErrorDetails}
     ])
   end
 
@@ -107,21 +112,21 @@ defmodule DocuSign.Api.Invoices do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec billing_invoices_get_billing_invoices_past_due(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.BillingInvoicesSummary.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, BillingInvoicesSummary.t()}
           | {:error, Tesla.Env.t()}
   def billing_invoices_get_billing_invoices_past_due(connection, account_id, _opts \\ []) do
     request =
       %{}
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/billing_invoices_past_due")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.BillingInvoicesSummary},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, BillingInvoicesSummary},
+      {400, ErrorDetails}
     ])
   end
 end

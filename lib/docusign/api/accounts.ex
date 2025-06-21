@@ -6,8 +6,22 @@ defmodule DocuSign.Api.Accounts do
   API calls for all endpoints tagged `Accounts`.
   """
 
-  alias DocuSign.Connection
   import DocuSign.RequestBuilder
+
+  alias DocuSign.Connection
+  alias DocuSign.Model.AccountInformation
+  alias DocuSign.Model.AccountSettingsInformation
+  alias DocuSign.Model.AccountSharedAccess
+  alias DocuSign.Model.BillingChargeResponse
+  alias DocuSign.Model.CaptiveRecipientInformation
+  alias DocuSign.Model.EnvelopePurgeConfiguration
+  alias DocuSign.Model.ErrorDetails
+  alias DocuSign.Model.FileTypeList
+  alias DocuSign.Model.NewAccountSummary
+  alias DocuSign.Model.NotificationDefaults
+  alias DocuSign.Model.ProvisioningInformation
+  alias DocuSign.Model.RecipientNamesResponse
+  alias DocuSign.Model.SupportedLanguages
 
   @doc """
   Deletes the specified account.
@@ -26,7 +40,7 @@ defmodule DocuSign.Api.Accounts do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec accounts_delete_account(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, nil} | {:ok, DocuSign.Model.ErrorDetails.t()} | {:error, Tesla.Env.t()}
+          {:ok, nil} | {:ok, ErrorDetails.t()} | {:error, Tesla.Env.t()}
   def accounts_delete_account(connection, account_id, opts \\ []) do
     optional_params = %{
       :redact_user_data => :query
@@ -37,13 +51,13 @@ defmodule DocuSign.Api.Accounts do
       |> method(:delete)
       |> url("/v2.1/accounts/#{account_id}")
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
       {200, false},
-      {400, DocuSign.Model.ErrorDetails}
+      {400, ErrorDetails}
     ])
   end
 
@@ -64,8 +78,8 @@ defmodule DocuSign.Api.Accounts do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec accounts_get_account(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.AccountInformation.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, AccountInformation.t()}
           | {:error, Tesla.Env.t()}
   def accounts_get_account(connection, account_id, opts \\ []) do
     optional_params = %{
@@ -77,13 +91,13 @@ defmodule DocuSign.Api.Accounts do
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}")
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.AccountInformation},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, AccountInformation},
+      {400, ErrorDetails}
     ])
   end
 
@@ -102,21 +116,21 @@ defmodule DocuSign.Api.Accounts do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec accounts_get_provisioning(Tesla.Env.client(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.ProvisioningInformation.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, ProvisioningInformation.t()}
           | {:error, Tesla.Env.t()}
   def accounts_get_provisioning(connection, _opts \\ []) do
     request =
       %{}
       |> method(:get)
       |> url("/v2.1/accounts/provisioning")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.ProvisioningInformation},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, ProvisioningInformation},
+      {400, ErrorDetails}
     ])
   end
 
@@ -136,8 +150,8 @@ defmodule DocuSign.Api.Accounts do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec accounts_post_accounts(Tesla.Env.client(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.NewAccountSummary.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, NewAccountSummary.t()}
           | {:error, Tesla.Env.t()}
   def accounts_post_accounts(connection, opts \\ []) do
     optional_params = %{
@@ -150,13 +164,13 @@ defmodule DocuSign.Api.Accounts do
       |> url("/v2.1/accounts")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {201, DocuSign.Model.NewAccountSummary},
-      {400, DocuSign.Model.ErrorDetails}
+      {201, NewAccountSummary},
+      {400, ErrorDetails}
     ])
   end
 
@@ -177,8 +191,8 @@ defmodule DocuSign.Api.Accounts do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec billing_charges_get_account_billing_charges(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.BillingChargeResponse.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, BillingChargeResponse.t()}
           | {:error, Tesla.Env.t()}
   def billing_charges_get_account_billing_charges(connection, account_id, opts \\ []) do
     optional_params = %{
@@ -190,13 +204,13 @@ defmodule DocuSign.Api.Accounts do
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/billing_charges")
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.BillingChargeResponse},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, BillingChargeResponse},
+      {400, ErrorDetails}
     ])
   end
 
@@ -223,15 +237,10 @@ defmodule DocuSign.Api.Accounts do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.CaptiveRecipientInformation.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, CaptiveRecipientInformation.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
-  def captive_recipients_delete_captive_recipients_part(
-        connection,
-        account_id,
-        recipient_part,
-        opts \\ []
-      ) do
+  def captive_recipients_delete_captive_recipients_part(connection, account_id, recipient_part, opts \\ []) do
     optional_params = %{
       :body => :body
     }
@@ -241,13 +250,13 @@ defmodule DocuSign.Api.Accounts do
       |> method(:delete)
       |> url("/v2.1/accounts/#{account_id}/captive_recipients/#{recipient_part}")
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.CaptiveRecipientInformation},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, CaptiveRecipientInformation},
+      {400, ErrorDetails}
     ])
   end
 
@@ -271,25 +280,21 @@ defmodule DocuSign.Api.Accounts do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.EnvelopePurgeConfiguration.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, EnvelopePurgeConfiguration.t()}
           | {:error, Tesla.Env.t()}
-  def envelope_purge_configuration_get_envelope_purge_configuration(
-        connection,
-        account_id,
-        _opts \\ []
-      ) do
+  def envelope_purge_configuration_get_envelope_purge_configuration(connection, account_id, _opts \\ []) do
     request =
       %{}
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/settings/envelope_purge_configuration")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.EnvelopePurgeConfiguration},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, EnvelopePurgeConfiguration},
+      {400, ErrorDetails}
     ])
   end
 
@@ -314,14 +319,10 @@ defmodule DocuSign.Api.Accounts do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.EnvelopePurgeConfiguration.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, EnvelopePurgeConfiguration.t()}
           | {:error, Tesla.Env.t()}
-  def envelope_purge_configuration_put_envelope_purge_configuration(
-        connection,
-        account_id,
-        opts \\ []
-      ) do
+  def envelope_purge_configuration_put_envelope_purge_configuration(connection, account_id, opts \\ []) do
     optional_params = %{
       :body => :body
     }
@@ -332,13 +333,13 @@ defmodule DocuSign.Api.Accounts do
       |> url("/v2.1/accounts/#{account_id}/settings/envelope_purge_configuration")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.EnvelopePurgeConfiguration},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, EnvelopePurgeConfiguration},
+      {400, ErrorDetails}
     ])
   end
 
@@ -358,21 +359,21 @@ defmodule DocuSign.Api.Accounts do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec notification_defaults_get_notification_defaults(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.NotificationDefaults.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, NotificationDefaults.t()}
           | {:error, Tesla.Env.t()}
   def notification_defaults_get_notification_defaults(connection, account_id, _opts \\ []) do
     request =
       %{}
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/settings/notification_defaults")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.NotificationDefaults},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, NotificationDefaults},
+      {400, ErrorDetails}
     ])
   end
 
@@ -393,8 +394,8 @@ defmodule DocuSign.Api.Accounts do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec notification_defaults_put_notification_defaults(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.NotificationDefaults.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, NotificationDefaults.t()}
           | {:error, Tesla.Env.t()}
   def notification_defaults_put_notification_defaults(connection, account_id, opts \\ []) do
     optional_params = %{
@@ -407,13 +408,13 @@ defmodule DocuSign.Api.Accounts do
       |> url("/v2.1/accounts/#{account_id}/settings/notification_defaults")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.NotificationDefaults},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, NotificationDefaults},
+      {400, ErrorDetails}
     ])
   end
 
@@ -434,8 +435,8 @@ defmodule DocuSign.Api.Accounts do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec recipient_names_get_recipient_names(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.RecipientNamesResponse.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, RecipientNamesResponse.t()}
           | {:error, Tesla.Env.t()}
   def recipient_names_get_recipient_names(connection, account_id, opts \\ []) do
     optional_params = %{
@@ -447,13 +448,13 @@ defmodule DocuSign.Api.Accounts do
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/recipient_names")
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.RecipientNamesResponse},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, RecipientNamesResponse},
+      {400, ErrorDetails}
     ])
   end
 
@@ -473,21 +474,21 @@ defmodule DocuSign.Api.Accounts do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec settings_get_settings(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.AccountSettingsInformation.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, AccountSettingsInformation.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
   def settings_get_settings(connection, account_id, _opts \\ []) do
     request =
       %{}
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/settings")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.AccountSettingsInformation},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, AccountSettingsInformation},
+      {400, ErrorDetails}
     ])
   end
 
@@ -508,7 +509,7 @@ defmodule DocuSign.Api.Accounts do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec settings_put_settings(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, nil} | {:ok, DocuSign.Model.ErrorDetails.t()} | {:error, Tesla.Env.t()}
+          {:ok, nil} | {:ok, ErrorDetails.t()} | {:error, Tesla.Env.t()}
   def settings_put_settings(connection, account_id, opts \\ []) do
     optional_params = %{
       :body => :body
@@ -520,13 +521,13 @@ defmodule DocuSign.Api.Accounts do
       |> url("/v2.1/accounts/#{account_id}/settings")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
       {200, false},
-      {400, DocuSign.Model.ErrorDetails}
+      {400, ErrorDetails}
     ])
   end
 
@@ -554,8 +555,8 @@ defmodule DocuSign.Api.Accounts do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec shared_access_get_shared_access(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.AccountSharedAccess.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, AccountSharedAccess.t()}
           | {:error, Tesla.Env.t()}
   def shared_access_get_shared_access(connection, account_id, opts \\ []) do
     optional_params = %{
@@ -574,13 +575,13 @@ defmodule DocuSign.Api.Accounts do
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/shared_access")
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.AccountSharedAccess},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, AccountSharedAccess},
+      {400, ErrorDetails}
     ])
   end
 
@@ -604,15 +605,15 @@ defmodule DocuSign.Api.Accounts do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec shared_access_put_shared_access(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.AccountSharedAccess.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, AccountSharedAccess.t()}
           | {:error, Tesla.Env.t()}
   def shared_access_put_shared_access(connection, account_id, opts \\ []) do
     optional_params = %{
+      :body => :body,
       :item_type => :query,
       :preserve_existing_shared_access => :query,
-      :user_ids => :query,
-      :body => :body
+      :user_ids => :query
     }
 
     request =
@@ -621,13 +622,13 @@ defmodule DocuSign.Api.Accounts do
       |> url("/v2.1/accounts/#{account_id}/shared_access")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.AccountSharedAccess},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, AccountSharedAccess},
+      {400, ErrorDetails}
     ])
   end
 
@@ -647,21 +648,21 @@ defmodule DocuSign.Api.Accounts do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec supported_languages_get_supported_languages(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.SupportedLanguages.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, SupportedLanguages.t()}
           | {:error, Tesla.Env.t()}
   def supported_languages_get_supported_languages(connection, account_id, _opts \\ []) do
     request =
       %{}
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/supported_languages")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.SupportedLanguages},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, SupportedLanguages},
+      {400, ErrorDetails}
     ])
   end
 
@@ -685,21 +686,21 @@ defmodule DocuSign.Api.Accounts do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.FileTypeList.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, FileTypeList.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
   def unsupported_file_types_get_unsupported_file_types(connection, account_id, _opts \\ []) do
     request =
       %{}
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/unsupported_file_types")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.FileTypeList},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, FileTypeList},
+      {400, ErrorDetails}
     ])
   end
 end

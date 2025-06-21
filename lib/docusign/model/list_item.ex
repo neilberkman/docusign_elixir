@@ -6,6 +6,9 @@ defmodule DocuSign.Model.ListItem do
   One of the selectable items in the `listItems` property of a [`list`](/docs/esign-rest-api/reference/envelopes/enveloperecipienttabs/create/) tab.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.PropertyMetadata
+
   @derive Jason.Encoder
   defstruct [
     :selected,
@@ -18,19 +21,17 @@ defmodule DocuSign.Model.ListItem do
 
   @type t :: %__MODULE__{
           :selected => String.t() | nil,
-          :selectedMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :selectedMetadata => PropertyMetadata.t() | nil,
           :text => String.t() | nil,
-          :textMetadata => DocuSign.Model.PropertyMetadata.t() | nil,
+          :textMetadata => PropertyMetadata.t() | nil,
           :value => String.t() | nil,
-          :valueMetadata => DocuSign.Model.PropertyMetadata.t() | nil
+          :valueMetadata => PropertyMetadata.t() | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
-    |> Deserializer.deserialize(:selectedMetadata, :struct, DocuSign.Model.PropertyMetadata)
-    |> Deserializer.deserialize(:textMetadata, :struct, DocuSign.Model.PropertyMetadata)
-    |> Deserializer.deserialize(:valueMetadata, :struct, DocuSign.Model.PropertyMetadata)
+    |> Deserializer.deserialize(:selectedMetadata, :struct, PropertyMetadata)
+    |> Deserializer.deserialize(:textMetadata, :struct, PropertyMetadata)
+    |> Deserializer.deserialize(:valueMetadata, :struct, PropertyMetadata)
   end
 end

@@ -6,6 +6,9 @@ defmodule DocuSign.Model.FoldersRequest do
   Information for a folder request.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.Folder
+
   @derive Jason.Encoder
   defstruct [
     :envelopeIds,
@@ -15,14 +18,12 @@ defmodule DocuSign.Model.FoldersRequest do
 
   @type t :: %__MODULE__{
           :envelopeIds => [String.t()] | nil,
-          :folders => [DocuSign.Model.Folder.t()] | nil,
+          :folders => [Folder.t()] | nil,
           :fromFolderId => String.t() | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:folders, :list, DocuSign.Model.Folder)
+    |> Deserializer.deserialize(:folders, :list, Folder)
   end
 end

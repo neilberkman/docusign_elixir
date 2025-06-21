@@ -6,6 +6,9 @@ defmodule DocuSign.Model.ConnectHistoricalEnvelopeRepublish do
   The request body for the `createHistoricalEnvelopePublishTransaction` endpoint.
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.ConnectCustomConfiguration
+
   @derive Jason.Encoder
   defstruct [
     :config,
@@ -13,14 +16,12 @@ defmodule DocuSign.Model.ConnectHistoricalEnvelopeRepublish do
   ]
 
   @type t :: %__MODULE__{
-          :config => DocuSign.Model.ConnectCustomConfiguration.t() | nil,
+          :config => ConnectCustomConfiguration.t() | nil,
           :envelopes => [String.t()] | nil
         }
 
-  alias DocuSign.Deserializer
-
   def decode(value) do
     value
-    |> Deserializer.deserialize(:config, :struct, DocuSign.Model.ConnectCustomConfiguration)
+    |> Deserializer.deserialize(:config, :struct, ConnectCustomConfiguration)
   end
 end

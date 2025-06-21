@@ -6,8 +6,13 @@ defmodule DocuSign.Api.ConnectEvents do
   API calls for all endpoints tagged `ConnectEvents`.
   """
 
-  alias DocuSign.Connection
   import DocuSign.RequestBuilder
+
+  alias DocuSign.Connection
+  alias DocuSign.Model.ConnectFailureResults
+  alias DocuSign.Model.ConnectLog
+  alias DocuSign.Model.ConnectLogs
+  alias DocuSign.Model.ErrorDetails
 
   @doc """
   Deletes a Connect failure log entry.
@@ -30,19 +35,19 @@ defmodule DocuSign.Api.ConnectEvents do
           String.t(),
           String.t(),
           keyword()
-        ) :: {:ok, map()} | {:ok, DocuSign.Model.ErrorDetails.t()} | {:error, Tesla.Env.t()}
+        ) :: {:ok, map()} | {:ok, ErrorDetails.t()} | {:error, Tesla.Env.t()}
   def connect_failures_delete_connect_failure_log(connection, account_id, failure_id, _opts \\ []) do
     request =
       %{}
       |> method(:delete)
       |> url("/v2.1/accounts/#{account_id}/connect/failures/#{failure_id}")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
       {200, %{}},
-      {400, DocuSign.Model.ErrorDetails}
+      {400, ErrorDetails}
     ])
   end
 
@@ -64,8 +69,8 @@ defmodule DocuSign.Api.ConnectEvents do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec connect_failures_get_connect_logs(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.ConnectLogs.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, ConnectLogs.t()}
           | {:error, Tesla.Env.t()}
   def connect_failures_get_connect_logs(connection, account_id, opts \\ []) do
     optional_params = %{
@@ -78,13 +83,13 @@ defmodule DocuSign.Api.ConnectEvents do
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/connect/failures")
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.ConnectLogs},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, ConnectLogs},
+      {400, ErrorDetails}
     ])
   end
 
@@ -105,19 +110,19 @@ defmodule DocuSign.Api.ConnectEvents do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec connect_log_delete_connect_log(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, nil} | {:ok, DocuSign.Model.ErrorDetails.t()} | {:error, Tesla.Env.t()}
+          {:ok, nil} | {:ok, ErrorDetails.t()} | {:error, Tesla.Env.t()}
   def connect_log_delete_connect_log(connection, account_id, log_id, _opts \\ []) do
     request =
       %{}
       |> method(:delete)
       |> url("/v2.1/accounts/#{account_id}/connect/logs/#{log_id}")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
       {200, false},
-      {400, DocuSign.Model.ErrorDetails}
+      {400, ErrorDetails}
     ])
   end
 
@@ -137,19 +142,19 @@ defmodule DocuSign.Api.ConnectEvents do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec connect_log_delete_connect_logs(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, nil} | {:ok, DocuSign.Model.ErrorDetails.t()} | {:error, Tesla.Env.t()}
+          {:ok, nil} | {:ok, ErrorDetails.t()} | {:error, Tesla.Env.t()}
   def connect_log_delete_connect_logs(connection, account_id, _opts \\ []) do
     request =
       %{}
       |> method(:delete)
       |> url("/v2.1/accounts/#{account_id}/connect/logs")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
       {200, false},
-      {400, DocuSign.Model.ErrorDetails}
+      {400, ErrorDetails}
     ])
   end
 
@@ -171,8 +176,8 @@ defmodule DocuSign.Api.ConnectEvents do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec connect_log_get_connect_log(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ConnectLog.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, ConnectLog.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
   def connect_log_get_connect_log(connection, account_id, log_id, opts \\ []) do
     optional_params = %{
@@ -184,13 +189,13 @@ defmodule DocuSign.Api.ConnectEvents do
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/connect/logs/#{log_id}")
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.ConnectLog},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, ConnectLog},
+      {400, ErrorDetails}
     ])
   end
 
@@ -212,8 +217,8 @@ defmodule DocuSign.Api.ConnectEvents do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec connect_log_get_connect_logs(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.ConnectLogs.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, ConnectLogs.t()}
           | {:error, Tesla.Env.t()}
   def connect_log_get_connect_logs(connection, account_id, opts \\ []) do
     optional_params = %{
@@ -226,13 +231,13 @@ defmodule DocuSign.Api.ConnectEvents do
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/connect/logs")
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.ConnectLogs},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, ConnectLogs},
+      {400, ErrorDetails}
     ])
   end
 
@@ -253,8 +258,8 @@ defmodule DocuSign.Api.ConnectEvents do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec connect_publish_put_connect_retry(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.ConnectFailureResults.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, ConnectFailureResults.t()}
           | {:error, Tesla.Env.t()}
   def connect_publish_put_connect_retry(connection, account_id, opts \\ []) do
     optional_params = %{
@@ -267,13 +272,13 @@ defmodule DocuSign.Api.ConnectEvents do
       |> url("/v2.1/accounts/#{account_id}/connect/envelopes/retry_queue")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.ConnectFailureResults},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, ConnectFailureResults},
+      {400, ErrorDetails}
     ])
   end
 
@@ -299,27 +304,22 @@ defmodule DocuSign.Api.ConnectEvents do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.ConnectFailureResults.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, ConnectFailureResults.t()}
           | {:error, Tesla.Env.t()}
-  def connect_publish_put_connect_retry_by_envelope(
-        connection,
-        account_id,
-        envelope_id,
-        _opts \\ []
-      ) do
+  def connect_publish_put_connect_retry_by_envelope(connection, account_id, envelope_id, _opts \\ []) do
     request =
       %{}
       |> method(:put)
       |> url("/v2.1/accounts/#{account_id}/connect/envelopes/#{envelope_id}/retry_queue")
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.ConnectFailureResults},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, ConnectFailureResults},
+      {400, ErrorDetails}
     ])
   end
 end

@@ -6,8 +6,12 @@ defmodule DocuSign.Api.EnvelopeTransferRules do
   API calls for all endpoints tagged `EnvelopeTransferRules`.
   """
 
-  alias DocuSign.Connection
   import DocuSign.RequestBuilder
+
+  alias DocuSign.Connection
+  alias DocuSign.Model.EnvelopeTransferRule
+  alias DocuSign.Model.EnvelopeTransferRuleInformation
+  alias DocuSign.Model.ErrorDetails
 
   @doc """
   Deletes an envelope transfer rule.
@@ -30,7 +34,7 @@ defmodule DocuSign.Api.EnvelopeTransferRules do
           String.t(),
           String.t(),
           keyword()
-        ) :: {:ok, nil} | {:ok, DocuSign.Model.ErrorDetails.t()} | {:error, Tesla.Env.t()}
+        ) :: {:ok, nil} | {:ok, ErrorDetails.t()} | {:error, Tesla.Env.t()}
   def envelope_transfer_rules_delete_envelope_transfer_rules(
         connection,
         account_id,
@@ -41,13 +45,13 @@ defmodule DocuSign.Api.EnvelopeTransferRules do
       %{}
       |> method(:delete)
       |> url("/v2.1/accounts/#{account_id}/envelopes/transfer_rules/#{envelope_transfer_rule_id}")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
       {200, false},
-      {400, DocuSign.Model.ErrorDetails}
+      {400, ErrorDetails}
     ])
   end
 
@@ -73,8 +77,8 @@ defmodule DocuSign.Api.EnvelopeTransferRules do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.EnvelopeTransferRuleInformation.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, EnvelopeTransferRuleInformation.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
   def envelope_transfer_rules_get_envelope_transfer_rules(connection, account_id, opts \\ []) do
     optional_params = %{
@@ -87,13 +91,13 @@ defmodule DocuSign.Api.EnvelopeTransferRules do
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/envelopes/transfer_rules")
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.EnvelopeTransferRuleInformation},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, EnvelopeTransferRuleInformation},
+      {400, ErrorDetails}
     ])
   end
 
@@ -118,8 +122,8 @@ defmodule DocuSign.Api.EnvelopeTransferRules do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.EnvelopeTransferRuleInformation.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, EnvelopeTransferRuleInformation.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
   def envelope_transfer_rules_post_envelope_transfer_rules(connection, account_id, opts \\ []) do
     optional_params = %{
@@ -132,13 +136,13 @@ defmodule DocuSign.Api.EnvelopeTransferRules do
       |> url("/v2.1/accounts/#{account_id}/envelopes/transfer_rules")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {201, DocuSign.Model.EnvelopeTransferRuleInformation},
-      {400, DocuSign.Model.ErrorDetails}
+      {201, EnvelopeTransferRuleInformation},
+      {400, ErrorDetails}
     ])
   end
 
@@ -165,15 +169,10 @@ defmodule DocuSign.Api.EnvelopeTransferRules do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.EnvelopeTransferRule.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, EnvelopeTransferRule.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
-  def envelope_transfer_rules_put_envelope_transfer_rule(
-        connection,
-        account_id,
-        envelope_transfer_rule_id,
-        opts \\ []
-      ) do
+  def envelope_transfer_rules_put_envelope_transfer_rule(connection, account_id, envelope_transfer_rule_id, opts \\ []) do
     optional_params = %{
       :body => :body
     }
@@ -184,13 +183,13 @@ defmodule DocuSign.Api.EnvelopeTransferRules do
       |> url("/v2.1/accounts/#{account_id}/envelopes/transfer_rules/#{envelope_transfer_rule_id}")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.EnvelopeTransferRule},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, EnvelopeTransferRule},
+      {400, ErrorDetails}
     ])
   end
 
@@ -215,8 +214,8 @@ defmodule DocuSign.Api.EnvelopeTransferRules do
           String.t(),
           keyword()
         ) ::
-          {:ok, DocuSign.Model.EnvelopeTransferRuleInformation.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, EnvelopeTransferRuleInformation.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
   def envelope_transfer_rules_put_envelope_transfer_rules(connection, account_id, opts \\ []) do
     optional_params = %{
@@ -229,13 +228,13 @@ defmodule DocuSign.Api.EnvelopeTransferRules do
       |> url("/v2.1/accounts/#{account_id}/envelopes/transfer_rules")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.EnvelopeTransferRuleInformation},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, EnvelopeTransferRuleInformation},
+      {400, ErrorDetails}
     ])
   end
 end

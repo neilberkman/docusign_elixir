@@ -6,8 +6,12 @@ defmodule DocuSign.Api.RequestLogs do
   API calls for all endpoints tagged `RequestLogs`.
   """
 
-  alias DocuSign.Connection
   import DocuSign.RequestBuilder
+
+  alias DocuSign.Connection
+  alias DocuSign.Model.ApiRequestLogsResult
+  alias DocuSign.Model.DiagnosticsSettingsInformation
+  alias DocuSign.Model.ErrorDetails
 
   @doc """
   Deletes the request log files.
@@ -24,19 +28,19 @@ defmodule DocuSign.Api.RequestLogs do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec a_pi_request_log_delete_request_logs(Tesla.Env.client(), keyword()) ::
-          {:ok, nil} | {:ok, DocuSign.Model.ErrorDetails.t()} | {:error, Tesla.Env.t()}
+          {:ok, nil} | {:ok, ErrorDetails.t()} | {:error, Tesla.Env.t()}
   def a_pi_request_log_delete_request_logs(connection, _opts \\ []) do
     request =
       %{}
       |> method(:delete)
       |> url("/v2.1/diagnostics/request_logs")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
       {200, false},
-      {400, DocuSign.Model.ErrorDetails}
+      {400, ErrorDetails}
     ])
   end
 
@@ -56,19 +60,19 @@ defmodule DocuSign.Api.RequestLogs do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec a_pi_request_log_get_request_log(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()} | {:ok, String.t()} | {:error, Tesla.Env.t()}
+          {:ok, ErrorDetails.t()} | {:ok, String.t()} | {:error, Tesla.Env.t()}
   def a_pi_request_log_get_request_log(connection, request_log_id, _opts \\ []) do
     request =
       %{}
       |> method(:get)
       |> url("/v2.1/diagnostics/request_logs/#{request_log_id}")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
       {200, false},
-      {400, DocuSign.Model.ErrorDetails}
+      {400, ErrorDetails}
     ])
   end
 
@@ -87,21 +91,21 @@ defmodule DocuSign.Api.RequestLogs do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec a_pi_request_log_get_request_log_settings(Tesla.Env.client(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.DiagnosticsSettingsInformation.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, DiagnosticsSettingsInformation.t()}
           | {:error, Tesla.Env.t()}
   def a_pi_request_log_get_request_log_settings(connection, _opts \\ []) do
     request =
       %{}
       |> method(:get)
       |> url("/v2.1/diagnostics/settings")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.DiagnosticsSettingsInformation},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, DiagnosticsSettingsInformation},
+      {400, ErrorDetails}
     ])
   end
 
@@ -121,8 +125,8 @@ defmodule DocuSign.Api.RequestLogs do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec a_pi_request_log_get_request_logs(Tesla.Env.client(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.ApiRequestLogsResult.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, ApiRequestLogsResult.t()}
           | {:error, Tesla.Env.t()}
   def a_pi_request_log_get_request_logs(connection, opts \\ []) do
     optional_params = %{
@@ -134,13 +138,13 @@ defmodule DocuSign.Api.RequestLogs do
       |> method(:get)
       |> url("/v2.1/diagnostics/request_logs")
       |> add_optional_params(optional_params, opts)
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.ApiRequestLogsResult},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, ApiRequestLogsResult},
+      {400, ErrorDetails}
     ])
   end
 
@@ -160,8 +164,8 @@ defmodule DocuSign.Api.RequestLogs do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec a_pi_request_log_put_request_log_settings(Tesla.Env.client(), keyword()) ::
-          {:ok, DocuSign.Model.ErrorDetails.t()}
-          | {:ok, DocuSign.Model.DiagnosticsSettingsInformation.t()}
+          {:ok, ErrorDetails.t()}
+          | {:ok, DiagnosticsSettingsInformation.t()}
           | {:error, Tesla.Env.t()}
   def a_pi_request_log_put_request_log_settings(connection, opts \\ []) do
     optional_params = %{
@@ -174,13 +178,13 @@ defmodule DocuSign.Api.RequestLogs do
       |> url("/v2.1/diagnostics/settings")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.DiagnosticsSettingsInformation},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, DiagnosticsSettingsInformation},
+      {400, ErrorDetails}
     ])
   end
 end

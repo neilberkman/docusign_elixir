@@ -6,8 +6,11 @@ defmodule DocuSign.Api.AccountWatermarks do
   API calls for all endpoints tagged `AccountWatermarks`.
   """
 
-  alias DocuSign.Connection
   import DocuSign.RequestBuilder
+
+  alias DocuSign.Connection
+  alias DocuSign.Model.ErrorDetails
+  alias DocuSign.Model.Watermark
 
   @doc """
   Get watermark information.
@@ -25,21 +28,21 @@ defmodule DocuSign.Api.AccountWatermarks do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec watermark_get_watermark(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.Watermark.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, Watermark.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
   def watermark_get_watermark(connection, account_id, _opts \\ []) do
     request =
       %{}
       |> method(:get)
       |> url("/v2.1/accounts/#{account_id}/watermark")
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.Watermark},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, Watermark},
+      {400, ErrorDetails}
     ])
   end
 
@@ -60,8 +63,8 @@ defmodule DocuSign.Api.AccountWatermarks do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec watermark_preview_put_watermark_preview(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.Watermark.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, Watermark.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
   def watermark_preview_put_watermark_preview(connection, account_id, opts \\ []) do
     optional_params = %{
@@ -74,13 +77,13 @@ defmodule DocuSign.Api.AccountWatermarks do
       |> url("/v2.1/accounts/#{account_id}/watermark/preview")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.Watermark},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, Watermark},
+      {400, ErrorDetails}
     ])
   end
 
@@ -101,8 +104,8 @@ defmodule DocuSign.Api.AccountWatermarks do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec watermark_put_watermark(Tesla.Env.client(), String.t(), keyword()) ::
-          {:ok, DocuSign.Model.Watermark.t()}
-          | {:ok, DocuSign.Model.ErrorDetails.t()}
+          {:ok, Watermark.t()}
+          | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
   def watermark_put_watermark(connection, account_id, opts \\ []) do
     optional_params = %{
@@ -115,13 +118,13 @@ defmodule DocuSign.Api.AccountWatermarks do
       |> url("/v2.1/accounts/#{account_id}/watermark")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
-      |> Enum.into([])
+      |> Enum.to_list()
 
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, DocuSign.Model.Watermark},
-      {400, DocuSign.Model.ErrorDetails}
+      {200, Watermark},
+      {400, ErrorDetails}
     ])
   end
 end

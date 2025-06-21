@@ -6,6 +6,9 @@ defmodule DocuSign.Model.EnvelopeViewTaggerSettings do
 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.PaletteSettings
+
   @derive Jason.Encoder
   defstruct [
     :paletteDefault,
@@ -16,13 +19,11 @@ defmodule DocuSign.Model.EnvelopeViewTaggerSettings do
   @type t :: %__MODULE__{
           :paletteDefault => String.t() | nil,
           :paletteSections => String.t() | nil,
-          :paletteSettings => DocuSign.Model.PaletteSettings.t() | nil
+          :paletteSettings => PaletteSettings.t() | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
-    |> Deserializer.deserialize(:paletteSettings, :struct, DocuSign.Model.PaletteSettings)
+    |> Deserializer.deserialize(:paletteSettings, :struct, PaletteSettings)
   end
 end

@@ -6,19 +6,20 @@ defmodule DocuSign.Model.AccountSealProviders do
 
   """
 
+  alias DocuSign.Deserializer
+  alias DocuSign.Model.SealIdentifier
+
   @derive Jason.Encoder
   defstruct [
     :seals
   ]
 
   @type t :: %__MODULE__{
-          :seals => [DocuSign.Model.SealIdentifier.t()] | nil
+          :seals => [SealIdentifier.t()] | nil
         }
-
-  alias DocuSign.Deserializer
 
   def decode(value) do
     value
-    |> Deserializer.deserialize(:seals, :list, DocuSign.Model.SealIdentifier)
+    |> Deserializer.deserialize(:seals, :list, SealIdentifier)
   end
 end
