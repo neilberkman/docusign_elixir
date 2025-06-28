@@ -2,13 +2,32 @@
 
 ## v2.2.0
 
+### New Features
+- **OAuth2 Authorization Code Flow Support**: Complete implementation of OAuth2 Authorization Code Flow using the battle-tested `oauth2` library
+  - Add `DocuSign.OAuth.AuthorizationCodeStrategy` module implementing OAuth2.Strategy behavior
+  - Add `DocuSign.Connection.from_oauth_client/2` for creating connections from OAuth2.Client
+  - Support automatic token refresh and user info retrieval
+  - Comprehensive test coverage for OAuth2 flow
+- **Interactive LiveBook Guide**: New OAuth2 Authorization Code Flow LiveBook with:
+  - Complete end-to-end OAuth flow demonstration
+  - Built-in Bandit web server for OAuth callbacks
+  - Automatic authorization code capture and token exchange
+  - Real API testing with DocuSign accounts
+  - Production implementation examples and best practices
+
 ### Enhancements
 - Add model files to Dialyzer ignore list to prevent analysis of auto-generated code
 - Add IDEAS.md document cataloging potential improvements from Ruby client
 - Add changelog link to Hex package metadata for better discoverability
+- Remove unnecessary `plug_cowboy` dependency (only used transitively by test dependencies)
+- Update documentation with comprehensive OAuth2 examples
+- Add OAuth2 support to README with complete usage patterns
 
 ### Documentation
 - Create IDEAS.md to track feature ideas and improvements from other DocuSign clients
+
+### Breaking Changes
+- None (fully backward compatible)
 
 ## v2.1.0
 

@@ -21,21 +21,21 @@ defmodule DocuSign.UserTest do
       result = User.info(client)
 
       assert %DocuSign.User{
-              accounts: [
-                %AppAccount{
-                  account_id: ":account-id:",
-                  account_name: ":account-name:",
-                  base_uri: "https://demo.docusign.net",
-                  is_default: true
-                }
-              ],
-              created: "2018-09-07T23:49:34.163",
-              email: ":email:",
-              family_name: ":family-name:",
-              given_name: ":given-name:",
-              name: ":name:",
-              sub: ":user-id:"
-            } = result
+               accounts: [
+                 %AppAccount{
+                   account_id: ":account-id:",
+                   account_name: ":account-name:",
+                   base_uri: "https://demo.docusign.net",
+                   is_default: true
+                 }
+               ],
+               created: "2018-09-07T23:49:34.163",
+               email: ":email:",
+               family_name: ":family-name:",
+               given_name: ":given-name:",
+               name: ":name:",
+               sub: ":user-id:"
+             } = result
     end
   end
 end

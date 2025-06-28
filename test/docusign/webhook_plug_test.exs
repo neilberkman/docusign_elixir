@@ -43,10 +43,10 @@ defmodule DocuSign.WebhookPlugTest do
                           )
 
   @opts_with_tuple_handler WebhookPlug.init(
-                            at: "/webhook/docusign",
-                            handler: __MODULE__.StubTupleHandler,
-                            hmac_secret_key: "sample-hmac-key"
-                          )
+                             at: "/webhook/docusign",
+                             handler: __MODULE__.StubTupleHandler,
+                             hmac_secret_key: "sample-hmac-key"
+                           )
 
   @opts_with_error_atom_handler WebhookPlug.init(
                                   at: "/webhook/docusign",
@@ -55,22 +55,22 @@ defmodule DocuSign.WebhookPlugTest do
                                 )
 
   @opts_with_error_atom_reason_handler WebhookPlug.init(
-                                        at: "/webhook/docusign",
-                                        handler: __MODULE__.ErrorAtomReasonHandler,
-                                        hmac_secret_key: "sample-hmac-key"
-                                      )
+                                         at: "/webhook/docusign",
+                                         handler: __MODULE__.ErrorAtomReasonHandler,
+                                         hmac_secret_key: "sample-hmac-key"
+                                       )
 
   @opts_with_error_string_reason_handler WebhookPlug.init(
-                                          at: "/webhook/docusign",
-                                          handler: __MODULE__.ErrorStringReasonHandler,
-                                          hmac_secret_key: "sample-hmac-key"
-                                        )
+                                           at: "/webhook/docusign",
+                                           handler: __MODULE__.ErrorStringReasonHandler,
+                                           hmac_secret_key: "sample-hmac-key"
+                                         )
 
   @opts_with_bad_handler WebhookPlug.init(
-                          at: "/webhook/docusign",
-                          handler: __MODULE__.BadHandler,
-                          hmac_secret_key: "sample-hmac-key"
-                        )
+                           at: "/webhook/docusign",
+                           handler: __MODULE__.BadHandler,
+                           hmac_secret_key: "sample-hmac-key"
+                         )
 
   defmodule StubHandler do
     @moduledoc """

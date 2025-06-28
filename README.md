@@ -4,16 +4,19 @@ Unofficial DocuSign Elixir Library used to interact with the eSignature REST API
 
 ## Quick Start with LiveBook
 
-**The easiest way to get started** is through our interactive LiveBook example. This notebook provides a complete working demonstration of DocuSign embedded signing, allowing you to:
+**The easiest way to get started** is through our interactive LiveBook examples:
 
-1. Connect to the DocuSign API
-2. Create and send documents for signing
-3. Generate an embedded signing URL
-4. Download signed documents
+### Embedded Signing (JWT Impersonation)
+Complete working demonstration of DocuSign embedded signing with JWT authentication:
 
 [![Run in Livebook](https://livebook.dev/badge/v1/blue.svg)](https://livebook.dev/run?url=https://github.com/neilberkman/docusign_elixir/blob/main/examples/embedded_signing.livemd)
 
-Just click the badge above to run the notebook in LiveBook - no environment setup required!
+### OAuth2 Authorization Code Flow
+Interactive walkthrough of the OAuth2 Authorization Code Flow for user-facing applications:
+
+[![Run in Livebook](https://livebook.dev/badge/v1/blue.svg)](https://livebook.dev/run?url=https://github.com/neilberkman/docusign_elixir/blob/main/examples/oauth_authorization_code_flow.livemd)
+
+Just click the badges above to run the notebooks in LiveBook - no environment setup required!
 
 ## Installation
 
@@ -22,7 +25,7 @@ The package can be installed by adding `docusign` to your list of dependencies i
 ```elixir
 def deps do
   [
-    {:docusign, "~> 2.1.0"}
+    {:docusign, "~> 2.2.0"}
   ]
 end
 ```
@@ -31,109 +34,145 @@ The docs can be found at [https://hexdocs.pm/docusign](https://hexdocs.pm/docusi
 
 ## Usage
 
-In order to use this library with DocuSign, you need the following configured in your app:
+DocuSign Elixir supports two authentication methods:
 
+1. **OAuth2 Authorization Code Flow** - For user-facing applications where users grant permission
+2. **JWT Impersonation** - For server-to-server applications with pre-configured access
+
+### OAuth2 Authorization Code Flow
+
+**Recommended for user-facing applications** where users need to grant permission for your app to access their DocuSign account.
+
+#### Benefits
+- Users explicitly grant permission through DocuSign's consent screen
+- No admin pre-approval required (unlike JWT impersonation)
+- Tokens can be refreshed without user interaction
+- Standard OAuth2 compliance
+
+#### Quick Setup
+
+```elixir
+config :docusign,
+  hostname: "account-d.docusign.com", # or "account.docusign.com" for production
+  client_id: "your_integration_key",
+  client_secret: "your_secret_key"
+```
+
+#### Usage
+
+```elixir
+# 1. Create OAuth2 client
+client = DocuSign.OAuth.AuthorizationCodeStrategy.client(
+  redirect_uri: "https://yourapp.com/auth/callback"
+)
+
+# 2. Generate authorization URL (redirect user here)
+auth_url = OAuth2.Client.authorize_url!(client, scope: "signature")
+
+# 3. Exchange authorization code for tokens (in your callback handler)
+client = OAuth2.Client.get_token!(client, code: auth_code_from_callback)
+
+# 4. Get user info and create connection
+user_info = DocuSign.OAuth.AuthorizationCodeStrategy.get_user_info!(client)
+account = Enum.find(user_info["accounts"], &(&1["is_default"] == "true"))
+
+{:ok, conn} = DocuSign.Connection.from_oauth_client(
+  client,
+  account_id: account["account_id"],
+  base_uri: account["base_uri"] <> "/restapi"
+)
+
+# 5. Use connection with DocuSign APIs
+{:ok, users} = DocuSign.Api.Users.users_get_users(conn, account["account_id"])
+```
+
+**💡 For a complete interactive example, see the [OAuth2 LiveBook guide](https://livebook.dev/run?url=https://github.com/neilberkman/docusign_elixir/blob/main/examples/oauth_authorization_code_flow.livemd)!**
+
+### JWT Impersonation
+
+**For server-to-server applications** where you need to act on behalf of users with pre-configured access.
+
+#### Requirements
 - RSA Private key
-- DocuSign Client ID (integration key)
+- DocuSign Client ID (integration key)  
 - DocuSign Account ID
 - One or more DocuSign User IDs
 
-Note that you can test your integration with the full-featured sandbox environment provided
-by [DocuSign](https://appdemo.docusign.com).
+Note that you can test your integration with the full-featured sandbox environment provided by [DocuSign](https://appdemo.docusign.com).
 
-### Application configuration
+#### Application Configuration
 
-You will need to set the following configuration variables in your config file:
-
-```
+```elixir
 config :docusign,
   hostname: "account-d.docusign.com",
   client_id: "?????-?????-???????",
   private_key_file: "docusign_key.pem"
 ```
 
-Notes:
+**Notes:**
+- Set hostname to `account.docusign.com` for production
+- Private key path can be relative or absolute
+- Use `private_key_contents` instead of `private_key_file` for secrets stored in vault systems
 
-- the hostname should be set to `account.docusign.com` for the production environment
-- the path for the private key file can be relative or absolute
-- the private key can also be configured with `private_key_contents`, which is the contents
-  of the private key file. This is useful when you do not store the private key on disk,
-  but in a secrets store such as Hashicorp Vault or AWS Secrets Manager.
+#### Optional Configuration
 
-Optional configuration with default values:
-
-```
+```elixir
 config :docusign,
-  timeout: 30_000, # 30 seconds
+  timeout: 30_000,        # 30 seconds
   token_expires_in: 7_200 # 2 hours
 ```
 
-The `Account ID` is required when you call API functions. It is up to you to decide on how
-you want to configure your application. Same thing with the `User ID`.
+#### Environment Variables (Recommended)
 
-For security, we recommend that you use environment variables rather than hard coding your credentials. If you don't already have an environment variable manager, you can create a .env file in your project with the following content:
+For security, use environment variables instead of hardcoding credentials:
 
-```
+```bash
+# .env file
 export DOCUSIGN_CLIENT_ID=<client id here>
 export DOCUSIGN_PRIVATE_KEY_FILE=<private key file path here>
 ```
 
-And the corresponding config file:
-
-```
+```elixir
+# config.exs
 config :docusign,
   client_id: System.fetch_env!("DOCUSIGN_CLIENT_ID"),
   private_key_file: System.fetch_env!("DOCUSIGN_PRIVATE_KEY_FILE")
 ```
 
-Then, just be sure to run `source .env` in your shell before compiling your project.
+#### DocuSign Setup for JWT
 
-### Configuring DocuSign
+1. Access DocuSign admin and go to **Settings** → **Apps & Keys**
+2. Note the **API Account ID** (this is your Account ID)
+3. Create a new app:
+   - Provide a name
+   - In **Authentication**, click **+ GENERATE RSA** 
+   - Store the private key securely
+   - Add redirect URI: `https://account-d.docusign.com/me` (sandbox) or `https://account.docusign.com/me` (production)
+4. Note the **Integration Key** (this is your Client ID)
 
-Access DocuSign using an administrator account and go in `Settings`.
+#### User Consent for Impersonation
 
-1. Under `Apps & Keys`, note the `API Account ID`. This is the `Account ID` mentioned above.
-2. Create a new app:
-   1. Provide a name.
-   2. In section `Authentication`, click on `+ GENERATE RSA`. Store securely the information provided. The private key will have to be provided in the config files of your app (or in a file).
-   3. Add a redirect URI for: `https://account-d.docusign.com/me` (or `https://account.docusign.com/me` if on the DocuSign production site). Important for users to consent the impersonation of your app.
-3. Under `Apps & Keys`, note the `Integration key` of the app you just added. This is the `Client ID` mentioned above.
+For impersonating other users, they must first consent by visiting:
 
-If you want, you can use your administrator user with the API. The user ID is displayed in the
-`My account information` frame on the `Apps & Keys` page. But it would most likely be safer to create
-a user for it (see below).
-
-### Impersonate another user through the API
-
-If you want to use the API through other DocuSign users (impersonation), you first need to create the user in
-DocuSign, then you have to ask the user to `consent` the impersonation that your app will do.
-To do so, after you created the user, send them the following link (replace `DOCUSIGN_CLIENT_ID` with the ID configured above):
-
-Sandbox:
-`https://account-d.docusign.com/oauth/auth?response_type=code&scope=signature%20impersonation&client_id=DOCUSIGN_CLIENT_ID&redirect_uri=https://account-d.docusign.com/me`
-
-Production:
-`https://account.docusign.com/oauth/auth?response_type=code&scope=signature%20impersonation&client_id=DOCUSIGN_CLIENT_ID&redirect_uri=https://account.docusign.com/me`
-
-The user will then have to sign in and approve your application to use their credentials.
-
-The `user ID` to use with `Connection` and `ClientRegistry` is the `API Username` on the user's profile
-page in DocuSign.
-
-### Using the API
-
-Before calling API functions (`DocuSign.API.xxx`), you must first establish a connection to the
-DocuSign API:
-
+**Sandbox:**
 ```
+https://account-d.docusign.com/oauth/auth?response_type=code&scope=signature%20impersonation&client_id=YOUR_CLIENT_ID&redirect_uri=https://account-d.docusign.com/me
+```
+
+**Production:**
+```
+https://account.docusign.com/oauth/auth?response_type=code&scope=signature%20impersonation&client_id=YOUR_CLIENT_ID&redirect_uri=https://account.docusign.com/me
+```
+
+#### Using JWT APIs
+
+```elixir
+# Establish connection
 user_id = "USER_ID"
 {:ok, conn} = DocuSign.Connection.get(user_id)
-```
 
-You can then use any function from the `DocuSign.API` namespace. For instance:
-
-```
-account_id = "ACCOUNT_ID"
+# Call APIs
+account_id = "ACCOUNT_ID"  
 {:ok, users} = DocuSign.Api.Users.users_get_users(conn, account_id)
 ```
 
