@@ -92,7 +92,10 @@ defmodule DocuSign.MixProject do
     [
       maintainers: @maintainers,
       licenses: ["MIT"],
-      links: %{github: @url},
+      links: %{
+        "Changelog" => "#{@url}/blob/main/CHANGELOG.md",
+        "GitHub" => @url
+      },
       files:
         ~w(lib) ++
           ~w(LICENSE mix.exs README.md CHANGELOG.md MIGRATING.md examples/embedded_signing.livemd)
