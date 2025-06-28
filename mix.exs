@@ -47,7 +47,6 @@ defmodule DocuSign.MixProject do
       {:jason, "~> 1.4"},
       {:joken, "~> 2.0"},
       {:oauth2, "~> 2.0"},
-      {:plug_cowboy, "~> 2.7.3"},
       {:castore, "~> 1.0"},
       {:finch, "~> 0.19"},
       {:meck, "~> 0.9.2"},
@@ -69,7 +68,13 @@ defmodule DocuSign.MixProject do
 
   defp docs do
     [
-      extras: ["README.md", "CHANGELOG.md", "MIGRATING.md", "examples/embedded_signing.livemd"],
+      extras: [
+        "README.md",
+        "CHANGELOG.md",
+        "MIGRATING.md",
+        "examples/embedded_signing.livemd",
+        "examples/oauth_authorization_code_flow.livemd"
+      ],
       main: "readme",
       source_ref: "v#{@version}",
       source_url: @url,
@@ -98,7 +103,7 @@ defmodule DocuSign.MixProject do
       },
       files:
         ~w(lib) ++
-          ~w(LICENSE mix.exs README.md CHANGELOG.md MIGRATING.md examples/embedded_signing.livemd)
+          ~w(LICENSE mix.exs README.md CHANGELOG.md MIGRATING.md examples/embedded_signing.livemd examples/oauth_authorization_code_flow.livemd)
     ]
   end
 end

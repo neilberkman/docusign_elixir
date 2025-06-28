@@ -1,0 +1,686 @@
+# Untitled notebook
+
+## DocuSign OAuth2 Authorization Code Flow with Elixir
+
+### Introduction
+
+[![Run in Livebook](https://livebook.dev/badge/v1/blue.svg)](https://livebook.dev/run?url=https://github.com/neilberkman/docusign_elixir/blob/main/examples/oauth_authorization_code_flow.livemd)
+
+This LiveBook demonstrates how to implement the OAuth2 Authorization Code Flow with the DocuSign Elixir SDK using the battle-tested `oauth2` library. This flow is ideal for web applications where users need to grant permission for your application to access their DocuSign account.
+
+The Authorization Code Flow is more secure than JWT impersonation for user-facing applications because:
+
+* Users grant permission explicitly through DocuSign's consent screen
+* No need for admin pre-approval (like JWT impersonation requires)
+* Tokens can be refreshed without user interaction
+* Standard OAuth2 compliance
+* Uses proven OAuth2 library patterns
+
+```elixir
+IO.puts("Installing dependencies...")
+
+# Suppress Tesla deprecation warnings
+Application.put_env(:tesla, :disable_deprecated_builder_warning, true)
+
+Mix.install([
+  {:docusign, path: "/Users/neil/xuku/docusign_elixir"},
+  {:kino, "~> 0.16.0"},
+  {:bandit, "~> 1.7"}
+])
+
+IO.puts("✅ Dependencies installed successfully!")
+```
+
+### OAuth Callback Server
+
+Let's start a simple web server to handle the OAuth callback:
+
+```elixir
+# Create a shared state store for OAuth data
+defmodule OAuthState do
+  use Agent
+
+  def start_link(_) do
+    Agent.start_link(fn -> %{} end, name: __MODULE__)
+  end
+
+  def put(key, value) do
+    Agent.update(__MODULE__, &Map.put(&1, key, value))
+  end
+
+  def get(key) do
+    Agent.get(__MODULE__, &Map.get(&1, key))
+  end
+end
+
+# Start the state store
+{:ok, _} = OAuthState.start_link([])
+
+defmodule OAuthCallbackServer do
+  use Plug.Router
+
+  plug(:match)
+  plug(:dispatch)
+
+  get "/auth/docusign/callback" do
+    # Parse query parameters manually from query_string
+    query_params = if conn.query_string && conn.query_string != "" do
+      URI.decode_query(conn.query_string)
+    else
+      %{}
+    end
+    
+    code = query_params["code"]
+    state = query_params["state"]
+    
+    # Store the code in our shared state
+    OAuthState.put(:code, code)
+    OAuthState.put(:state, state)
+    OAuthState.put(:received_at, DateTime.utc_now())
+    
+    send_resp(conn, 200, """
+    <html>
+      <head><title>DocuSign OAuth Callback</title></head>
+      <body style="font-family: system-ui; text-align: center; padding: 50px;">
+        <h1>✅ Authorization Successful!</h1>
+        <p>You can now close this window and return to LiveBook.</p>
+        <p><strong>Authorization Code:</strong> #{String.slice(code || "none", 0, 20)}...</p>
+        <p><em>The code has been automatically captured for use in LiveBook.</em></p>
+        <script>
+          setTimeout(() => window.close(), 3000);
+        </script>
+      </body>
+    </html>
+    """)
+  end
+
+  match _ do
+    send_resp(conn, 404, "Not found")
+  end
+end
+
+# Start the server
+{:ok, _} = Bandit.start_link(plug: OAuthCallbackServer, port: 4000)
+
+IO.puts("🚀 OAuth callback server started on http://localhost:4000")
+```
+
+### OAuth2 Authorization Code Flow Overview
+
+The OAuth2 Authorization Code Flow consists of these steps:
+
+1. **Generate Authorization URL** - Redirect user to DocuSign for consent
+2. **User Grants Permission** - User signs in and authorizes your app
+3. **Receive Authorization Code** - DocuSign redirects back with a code
+4. **Exchange Code for Tokens** - Trade the code for access/refresh tokens
+5. **Use Tokens for API Calls** - Make authenticated requests to DocuSign
+6. **Refresh Tokens** - Get new access tokens when they expire
+
+### Configuration
+
+First, let's set up our DocuSign OAuth2 configuration:
+
+```elixir
+alias Kino.Input
+
+# Set up input forms for OAuth configuration
+client_id_input = Input.text("Integration Key",
+  label: "Found in the DocuSign admin under Apps & Keys")
+client_secret_input = Input.password("Client Secret",
+  label: "Found in the DocuSign admin under Apps & Keys")
+redirect_uri_input = Input.text("Redirect URI",
+  label: "Must match what's configured in DocuSign admin",
+  default: "http://localhost:4000/auth/docusign/callback")
+is_sandbox_input = Input.checkbox("Use Sandbox", default: true)
+
+# Display input forms individually for proper rendering
+Kino.render(client_id_input)
+Kino.render(client_secret_input)
+Kino.render(redirect_uri_input)
+Kino.render(is_sandbox_input)
+```
+
+Now let's configure the DocuSign OAuth client:
+
+```elixir
+# Get values from inputs
+client_id = Kino.Input.read(client_id_input)
+client_secret = Kino.Input.read(client_secret_input)
+redirect_uri = Kino.Input.read(redirect_uri_input)
+is_sandbox = Kino.Input.read(is_sandbox_input)
+
+# Configure DocuSign application
+hostname = if is_sandbox, do: "account-d.docusign.com", else: "account.docusign.com"
+
+# Use runtime configuration for OAuth
+Application.put_env(:docusign, :hostname, hostname)
+Application.put_env(:docusign, :client_id, client_id)
+Application.put_env(:docusign, :client_secret, client_secret)
+
+# Debug: Check configuration
+IO.puts("OAuth Configuration set:")
+IO.puts("Hostname: #{hostname}")
+IO.puts("Integration Key: #{client_id}")
+IO.puts("Client Secret: #{String.slice(client_secret, 0, 10)}...")
+IO.puts("Redirect URI: #{redirect_uri}")
+IO.puts("Is sandbox: #{is_sandbox}")
+```
+
+### Step 1: Generate Authorization URL
+
+The first step is to create an OAuth2 client and generate an authorization URL where users can grant permission to your application:
+
+```elixir
+# Create OAuth2 client
+oauth_client = DocuSign.OAuth.AuthorizationCodeStrategy.client(
+  redirect_uri: redirect_uri,
+  scope: "signature"
+)
+
+# Generate the authorization URL with CSRF protection
+state = "demo-state-#{:crypto.strong_rand_bytes(8) |> Base.encode16()}"
+authorization_url = OAuth2.Client.authorize_url!(
+  oauth_client,
+  state: state
+)
+
+# Display the authorization URL with a clickable link
+Kino.HTML.new("""
+<div style="margin: 20px 0; padding: 20px; border: 2px solid #007bff; border-radius: 8px; background-color: #f8f9fa;">
+  <h3>Step 1: User Authorization</h3>
+  <p>Click this link to authorize the application in DocuSign:</p>
+  <a href="#{authorization_url}" target="_blank" 
+     style="display: inline-block; background: #007bff; color: white; padding: 12px 24px; 
+            text-decoration: none; border-radius: 4px; font-weight: bold; margin: 10px 0;">
+    🔐 Authorize DocuSign Access
+  </a>
+  <br><br>
+  <details>
+    <summary>🔗 Full Authorization URL (click to expand)</summary>
+    <div style="background: #f1f3f4; padding: 10px; margin-top: 10px; border-radius: 4px; word-break: break-all; font-family: monospace; font-size: 12px;">
+      #{authorization_url}
+    </div>
+  </details>
+  <br>
+  <div style="background: #fff3cd; border: 1px solid #ffeaa7; padding: 15px; border-radius: 4px;">
+    <strong>📝 What happens next:</strong>
+    <ol>
+      <li>Click the authorization link above</li>
+      <li>Sign in to your DocuSign account</li>
+      <li>Review the permissions and click "ALLOW ACCESS"</li>
+      <li>You'll be redirected to your redirect URI with a <code>code</code> parameter</li>
+      <li>Copy the <code>code</code> value and paste it in the next section</li>
+    </ol>
+  </div>
+</div>
+""")
+```
+
+### Step 2: Authorization Code Input
+
+After clicking the authorization link and granting permission, DocuSign will redirect you back to the callback server. The authorization code will be automatically captured:
+
+```elixir
+# Check if we have a code from the callback
+callback_code = OAuthState.get(:code)
+callback_state = OAuthState.get(:state)
+received_at = OAuthState.get(:received_at)
+
+if callback_code do
+  Kino.Markdown.new("""
+  ## ✅ Authorization Code Received!
+  
+  **Code**: `#{String.slice(callback_code, 0, 30)}...`
+  **State**: `#{callback_state}`
+  **Received**: `#{received_at}`
+  
+  The authorization code has been automatically captured from the OAuth callback.
+  """)
+else
+  Kino.Markdown.new("""
+  ## ⏳ Waiting for Authorization...
+  
+  Please click the authorization link above and complete the OAuth flow.
+  The authorization code will appear here automatically once you authorize.
+  """)
+end
+```
+
+### Step 3: Exchange Authorization Code for Tokens
+
+Now let's exchange the authorization code for access and refresh tokens:
+
+```elixir
+# Get the authorization code from the shared state
+auth_code = OAuthState.get(:code)
+
+# Create a frame to display the token exchange results
+token_frame = Kino.Frame.new() |> Kino.render()
+
+if auth_code do
+  Kino.Frame.render(token_frame, Kino.Markdown.new("🔄 Exchanging authorization code for tokens..."))
+
+  # Exchange the authorization code for tokens using OAuth2 library
+  try do
+    oauth_client_with_tokens = OAuth2.Client.get_token!(
+      oauth_client,
+      code: auth_code
+    )
+
+    # Store OAuth2 client for later use (in a real app, you'd store these securely)
+    Process.put(:oauth_client, oauth_client_with_tokens)
+
+    # Extract token information for display
+    token = oauth_client_with_tokens.token
+    expires_in = if token.expires_at do
+      token.expires_at - System.system_time(:second)
+    else
+      "Unknown"
+    end
+
+    Kino.Frame.render(token_frame, Kino.Markdown.new("""
+    ## ✅ Token Exchange Successful!
+
+    Your authorization code has been successfully exchanged for OAuth tokens:
+
+    - **Access Token**: `#{String.slice(token.access_token, 0, 30)}...`
+    - **Refresh Token**: `#{if token.refresh_token, do: String.slice(token.refresh_token, 0, 30) <> "...", else: "Not provided"}`
+    - **Token Type**: `#{token.token_type}`
+    - **Expires In**: `#{expires_in}` seconds
+
+    🎉 You can now use this OAuth2 client to make authenticated API calls to DocuSign!
+    """))
+
+  rescue
+    error ->
+      Kino.Frame.render(token_frame, Kino.Markdown.new("""
+      ## ❌ Token Exchange Failed
+
+      **Error**: `#{inspect(error)}`
+
+      **Common causes:**
+      - Authorization code has expired (they're only valid for a few minutes)
+      - Authorization code has already been used
+      - Redirect URI doesn't match what was used in the authorization step
+      - Invalid client credentials
+
+      **Solution**: Go back to Step 1 and generate a new authorization URL.
+      """))
+  end
+else
+  Kino.Frame.render(token_frame, Kino.Markdown.new("""
+  ⏳ **Waiting for authorization code...**
+
+  Please complete the authorization flow above and paste the authorization code here.
+  """))
+end
+```
+
+### Step 4: Get User Information
+
+Let's use our OAuth tokens to get information about the authenticated user and their DocuSign accounts:
+
+```elixir
+# Create frame for user info
+user_info_frame = Kino.Frame.new() |> Kino.render()
+
+# Check if we have OAuth2 client from the previous step
+oauth_client = Process.get(:oauth_client)
+
+if oauth_client do
+  Kino.Frame.render(user_info_frame, Kino.Markdown.new("🔄 Fetching user information..."))
+
+  # Get user info using the OAuth2 strategy
+  try do
+    user_info = DocuSign.OAuth.AuthorizationCodeStrategy.get_user_info!(oauth_client)
+
+      # Display user information
+      accounts_info = if user_info["accounts"] do
+        user_info["accounts"]
+        |> Enum.with_index(1)
+        |> Enum.map(fn {account, index} ->
+          is_default = Map.get(account, "is_default", "false")
+          default_marker = if is_default == "true", do: " (Default)", else: ""
+
+          """
+          **Account #{index}#{default_marker}:**
+          - Account ID: `#{account["account_id"]}`
+          - Account Name: `#{account["account_name"]}`
+          - Base URI: `#{account["base_uri"]}`
+          """
+        end)
+        |> Enum.join("\n")
+      else
+        "No account information available"
+      end
+
+      Kino.Frame.render(user_info_frame, Kino.Markdown.new("""
+      ## 👤 User Information Retrieved
+
+      **User Details:**
+      - **Name**: #{user_info["name"]}
+      - **Email**: #{user_info["email"]}
+      - **User ID**: `#{user_info["sub"]}`
+      - **Created**: #{user_info["created"]}
+
+      **DocuSign Accounts:**
+      #{accounts_info}
+
+      🎯 **Next**: We'll use the default account to create a DocuSign connection for API calls.
+      """))
+
+    # Store user info for next step
+    Process.put(:user_info, user_info)
+
+  rescue
+    error ->
+      Kino.Frame.render(user_info_frame, Kino.Markdown.new("""
+      ## ❌ Failed to Get User Information
+
+      **Error**: #{inspect(error)}
+
+      This might indicate that your access token is invalid or expired.
+      Please try refreshing the token or re-authorizing.
+      """))
+  end
+else
+  Kino.Frame.render(user_info_frame, Kino.Markdown.new("""
+  ⏳ **Waiting for OAuth tokens...**
+
+  Please complete the token exchange step above first.
+  """))
+end
+```
+
+### Step 5: Create DocuSign Connection
+
+Now let's create a DocuSign connection using our OAuth tokens that we can use for API calls:
+
+```elixir
+# Create frame for connection setup
+connection_frame = Kino.Frame.new() |> Kino.render()
+
+oauth_client = Process.get(:oauth_client)
+user_info = Process.get(:user_info)
+
+if oauth_client && user_info do
+  Kino.Frame.render(connection_frame, Kino.Markdown.new("🔄 Creating DocuSign connection..."))
+
+  # Find the default account or use the first one
+  default_account = user_info["accounts"]
+    |> Enum.find(fn account -> Map.get(account, "is_default") == "true" end)
+
+  default_account = default_account || List.first(user_info["accounts"])
+
+  if default_account do
+    account_id = default_account["account_id"]
+    base_uri = "#{default_account["base_uri"]}/restapi"
+
+    # Create DocuSign connection from OAuth2 client
+    case DocuSign.Connection.from_oauth_client(
+      oauth_client,
+      account_id: account_id,
+      base_uri: base_uri
+    ) do
+      {:ok, conn} ->
+        # Store connection for API usage
+        Process.put(:docusign_connection, conn)
+
+        Kino.Frame.render(connection_frame, Kino.Markdown.new("""
+        ## ✅ DocuSign Connection Created!
+
+        Successfully created a DocuSign connection using OAuth2.Client:
+
+        - **Account ID**: `#{account_id}`
+        - **Account Name**: `#{default_account["account_name"]}`
+        - **API Base URI**: `#{base_uri}`
+        - **Connection Type**: OAuth2 Authorization Code Flow (using oauth2 library)
+
+        🚀 **Ready for API calls!** You can now use this connection with any DocuSign API function.
+        """))
+
+      {:error, reason} ->
+        Kino.Frame.render(connection_frame, Kino.Markdown.new("""
+        ## ❌ Failed to Create Connection
+
+        **Error**: #{inspect(reason)}
+
+        This is unexpected - please check your token and account information.
+        """))
+    end
+  else
+    Kino.Frame.render(connection_frame, Kino.Markdown.new("""
+    ## ❌ No DocuSign Accounts Found
+
+    The user information doesn't contain any DocuSign accounts. This might indicate:
+    - The user doesn't have access to any DocuSign accounts
+    - There's an issue with the OAuth scope or permissions
+
+    Please check your DocuSign account access.
+    """))
+  end
+else
+  Kino.Frame.render(connection_frame, Kino.Markdown.new("""
+  ⏳ **Waiting for tokens and user info...**
+
+  Please complete the previous steps first.
+  """))
+end
+```
+
+### Step 6: Test API Call - Get Account Information
+
+Let's test our OAuth connection by making an API call to get account information:
+
+```elixir
+# Create frame for API test
+api_test_frame = Kino.Frame.new() |> Kino.render()
+
+conn = Process.get(:docusign_connection)
+user_info = Process.get(:user_info)
+
+if conn && user_info do
+  default_account = user_info["accounts"]
+    |> Enum.find(fn account -> Map.get(account, "is_default") == "true" end)
+  default_account = default_account || List.first(user_info["accounts"])
+
+  account_id = default_account["account_id"]
+
+  Kino.Frame.render(api_test_frame, Kino.Markdown.new("🔄 Testing API call..."))
+
+  # Make an API call to get account information
+  case DocuSign.Api.Accounts.accounts_get_account(conn, account_id) do
+    {:ok, account_info} ->
+      Kino.Frame.render(api_test_frame, Kino.Markdown.new("""
+      ## ✅ API Call Successful!
+
+      Successfully retrieved account information using OAuth connection:
+
+      **Account Details:**
+      - **Account Name**: #{account_info.accountName}
+      - **Account ID**: `#{account_info.accountIdGuid}`
+      - **Plan Name**: #{account_info.planName}
+      - **External Account ID**: #{account_info.externalAccountId}
+      - **Created Date**: #{account_info.createdDate}
+      - **Suspension Status**: #{account_info.suspensionStatus}
+
+      **Billing Information:**
+      - **Billing Period**: #{account_info.billingPeriodStartDate} to #{account_info.billingPeriodEndDate}
+      - **Payment Method**: #{account_info.paymentMethod}
+      - **Envelope Unit Price**: #{account_info.envelopeUnitPrice}
+
+      🎉 **OAuth Authorization Code Flow Complete!**
+
+      Your application is now successfully authenticated with DocuSign using OAuth2 tokens and can make API calls on behalf of the user.
+      """))
+
+    {:error, %Tesla.Env{status: status, body: body}} ->
+      Kino.Frame.render(api_test_frame, Kino.Markdown.new("""
+      ## ❌ API Call Failed
+
+      **Status**: #{status}
+      **Response**: #{inspect(body)}
+
+      This might indicate:
+      - Access token has expired
+      - Insufficient permissions
+      - Account access issues
+      """))
+
+    {:error, reason} ->
+      Kino.Frame.render(api_test_frame, Kino.Markdown.new("""
+      ## ❌ API Call Error
+
+      **Error**: #{inspect(reason)}
+
+      There was an unexpected error making the API call.
+      """))
+  end
+else
+  Kino.Frame.render(api_test_frame, Kino.Markdown.new("""
+  ⏳ **Waiting for DocuSign connection...**
+
+  Please complete the connection setup step above first.
+  """))
+end
+```
+
+### Step 7: Token Refresh (Optional)
+
+OAuth access tokens expire (typically after 8 hours). Here's how you can refresh them using the refresh token:
+
+```elixir
+# Create frame for token refresh demo
+refresh_frame = Kino.Frame.new() |> Kino.render()
+
+oauth_client = Process.get(:oauth_client)
+
+if oauth_client && oauth_client.token && oauth_client.token.refresh_token do
+  refresh_button = Kino.Control.button("🔄 Refresh Access Token")
+  Kino.render(refresh_button)
+
+  Kino.listen(refresh_button, fn _ ->
+    Kino.Frame.render(refresh_frame, Kino.Markdown.new("🔄 Refreshing access token..."))
+
+    try do
+      refreshed_client = OAuth2.Client.refresh_token!(oauth_client)
+      
+      # Store new OAuth2 client
+      Process.put(:oauth_client, refreshed_client)
+
+      new_token = refreshed_client.token
+      expires_in = if new_token.expires_at do
+        new_token.expires_at - System.system_time(:second)
+      else
+        "Unknown"
+      end
+
+      Kino.Frame.render(refresh_frame, Kino.Markdown.new("""
+      ## ✅ Token Refresh Successful!
+
+      Your access token has been refreshed:
+
+      - **New Access Token**: `#{String.slice(new_token.access_token, 0, 30)}...`
+      - **New Refresh Token**: `#{if new_token.refresh_token, do: String.slice(new_token.refresh_token, 0, 30) <> "...", else: "Same as before"}`
+      - **Expires In**: `#{expires_in}` seconds
+
+      💡 **Note**: Some OAuth providers rotate refresh tokens, meaning you get a new refresh token each time you refresh. Always use the latest tokens.
+      """))
+
+    rescue
+      error ->
+        Kino.Frame.render(refresh_frame, Kino.Markdown.new("""
+        ## ❌ Token Refresh Failed
+
+        **Error**: `#{inspect(error)}`
+
+        **Common causes:**
+        - Refresh token has expired
+        - Refresh token has been revoked
+        - Invalid client credentials
+
+        **Solution**: The user will need to re-authorize through the full OAuth flow.
+        """))
+    end
+  end)
+
+  Kino.Frame.render(refresh_frame, Kino.Markdown.new("""
+  ## 🔄 Token Refresh
+
+  Click the button above to refresh your access token using the refresh token.
+
+  **When to refresh:**
+  - Before the access token expires (typically 8 hours)
+  - When you receive 401 Unauthorized responses
+  - As part of a scheduled token refresh process
+
+  **In production applications:**
+  - Implement automatic token refresh before expiration
+  - Store tokens securely (encrypted in database)
+  - Handle refresh token rotation properly
+  - Implement fallback to re-authorization flow if refresh fails
+  """))
+else
+  Kino.Frame.render(refresh_frame, Kino.Markdown.new("""
+  ## ℹ️ Token Refresh Not Available
+
+  #{if oauth_client && oauth_client.token do
+      if oauth_client.token.refresh_token do
+        "No refresh token available. Some OAuth flows don't provide refresh tokens."
+      else
+        "No refresh token available from the token exchange."
+      end
+    else
+      "Please complete the OAuth flow first to get tokens."
+    end}
+  """))
+end
+```
+
+### Production Implementation Notes
+
+This LiveBook demonstrates the OAuth2 Authorization Code Flow for DocuSign in an interactive way. When implementing this in a production web application, consider these important points:
+
+#### Security Best Practices
+
+1. **HTTPS Only**: Always use HTTPS for redirect URIs in production
+2. **State Parameter**: Always validate the `state` parameter to prevent CSRF attacks
+3. **Secure Token Storage**: Store tokens encrypted in a secure database
+4. **Token Scoping**: Only request the minimum required OAuth scopes
+
+#### Implementation Patterns
+
+For production Phoenix applications, refer to the comprehensive examples in the [DocuSign Elixir v2.2.0 README](https://github.com/neilberkman/docusign_elixir/blob/v2.2.0/README.md#oauth2-authorization-code-flow) which includes complete Phoenix controller implementation, token management patterns, and security best practices.
+
+## Conclusion
+
+🎉 **Congratulations!** You've successfully implemented the OAuth2 Authorization Code Flow with DocuSign:
+
+1. ✅ Generated authorization URL for user consent
+2. ✅ Exchanged authorization code for access/refresh tokens
+3. ✅ Retrieved user information using OAuth tokens
+4. ✅ Created DocuSign connection from OAuth tokens
+5. ✅ Made authenticated API calls to DocuSign
+6. ✅ Demonstrated token refresh functionality
+
+### Key Benefits of OAuth2 Authorization Code Flow:
+
+* **User Control**: Users explicitly grant permission through DocuSign's interface
+* **No Admin Pre-approval**: Unlike JWT impersonation, no admin setup required
+* **Standard Compliance**: Uses industry-standard OAuth2 flow
+* **Token Refresh**: Long-term access through refresh tokens
+* **Secure**: Follows OAuth2 security best practices
+
+### Next Steps:
+
+* Implement this flow in your web application
+* Set up secure token storage and management
+* Handle token refresh and expiration gracefully
+* Add error handling and user feedback
+* Consider implementing webhook notifications for document status updates
+
+For more information, check out the [DocuSign Elixir GitHub repository](https://github.com/neilberkman/docusign_elixir) and the [official DocuSign API documentation](https://developers.docusign.com/).
+
+```
+
+```
