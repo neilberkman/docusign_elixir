@@ -1,5 +1,15 @@
 # Changelog
 
+## v2.2.0
+
+### Enhancements
+- Add model files to Dialyzer ignore list to prevent analysis of auto-generated code
+- Add IDEAS.md document cataloging potential improvements from Ruby client
+- Add changelog link to Hex package metadata for better discoverability
+
+### Documentation
+- Create IDEAS.md to track feature ideas and improvements from other DocuSign clients
+
 ## v2.1.0
 
 ### Enhancements
