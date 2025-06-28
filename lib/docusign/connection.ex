@@ -3,12 +3,29 @@ defmodule DocuSign.Connection do
   The module is intended to be used to establish a connection with
   DocuSign eSignature API and then perform requests to it.
 
-  ### Example
+  ## JWT Impersonation Example
 
       iex> user_id = "74830914-547328-5432-5432543"
       iex> account_id = "61ac4bd1-c83c-4aa6-8654-ddf3tg5"
       iex> {:ok, conn} = DocuSign.Connection.get(user_id)
       iex> {:ok, users} = DocuSign.Api.Users.users_get_users(conn, account_id)
+      {:ok, %DocuSign.Model.UserInformationList{...}}
+
+  ## OAuth2 Authorization Code Flow Example
+
+      # Using the OAuth2 Authorization Code Strategy
+      iex> oauth_client = DocuSign.OAuth.AuthorizationCodeStrategy.client(
+      ...>   redirect_uri: "https://yourapp.com/auth/callback"
+      ...> )
+      ...> |> DocuSign.OAuth.AuthorizationCodeStrategy.get_token!(code: "auth_code")
+      iex> user_info = DocuSign.OAuth.AuthorizationCodeStrategy.get_user_info!(oauth_client)
+      iex> account = Enum.find(user_info["accounts"], &(&1["is_default"] == "true"))
+      iex> {:ok, conn} = DocuSign.Connection.from_oauth_client(
+      ...>   oauth_client,
+      ...>   account_id: account["account_id"],
+      ...>   base_uri: account["base_uri"] <> "/restapi"
+      ...> )
+      iex> {:ok, users} = DocuSign.Api.Users.users_get_users(conn, account["account_id"])
       {:ok, %DocuSign.Model.UserInformationList{...}}
   """
 
@@ -21,7 +38,10 @@ defmodule DocuSign.Connection do
 
   defstruct [:app_account, :client]
 
-  @type t :: %__MODULE__{}
+  @type t :: %__MODULE__{
+          app_account: map() | nil,
+          client: OAuth2.Client.t() | nil
+        }
 
   @timeout 30_000
 
@@ -31,14 +51,30 @@ defmodule DocuSign.Connection do
     """
 
     @doc """
-    Configure an authless client connection
+    Configure a client connection for both JWT impersonation and OAuth2 tokens.
+
+    This function pattern matches on the connection struct to determine whether
+    to use JWT tokens (from ClientRegistry) or OAuth2 tokens (from authorization code flow).
 
     # Returns
 
     Tesla.Env.client
     """
-    @spec new(DocuSign.Connection.t()) :: Tesla.Env.client()
-    def new(%{app_account: app, client: %{token: token} = _client} = _conn) do
+    @spec new(%{app_account: map(), client: OAuth2.Client.t()}) :: Tesla.Env.client()
+    def new(%{app_account: app, client: %OAuth2.Client{token: %OAuth2.AccessToken{} = token}}) do
+      # OAuth2.Client from authorization code flow
+      Tesla.client(
+        [
+          {BaseUrl, app.base_uri},
+          {Headers, [{"authorization", "#{token.token_type} #{token.access_token}"}]},
+          {EncodeJson, engine: Jason}
+        ],
+        Application.get_env(:tesla, :adapter, {Finch, name: DocuSign.Finch})
+      )
+    end
+
+    def new(%{app_account: app, client: %{token: token}}) do
+      # JWT impersonation client
       Tesla.client(
         [
           {BaseUrl, app.base_uri},
@@ -51,7 +87,7 @@ defmodule DocuSign.Connection do
   end
 
   @doc """
-  Create new conn for provided user ID.
+  Create new connection for provided user ID using JWT impersonation.
   """
   @type oauth_error :: OAuth2.Response.t() | OAuth2.Error.t()
   @spec get(String.t()) :: {:ok, t()} | {:error, oauth_error}
@@ -70,6 +106,74 @@ defmodule DocuSign.Connection do
         else
           {:error, error}
         end
+    end
+  end
+
+  @doc """
+  Create new connection from OAuth2 client with tokens.
+
+  This function creates a connection using an OAuth2.Client obtained through the
+  authorization code flow with `DocuSign.OAuth.AuthorizationCodeStrategy`.
+
+  ## Parameters
+
+  - `oauth_client` - OAuth2.Client with valid access token
+  - `opts` - Keyword list of options:
+    - `:account_id` - DocuSign account ID (required)
+    - `:base_uri` - API base URI (required)
+
+  ## Examples
+
+      # Using OAuth2 Authorization Code Strategy
+      oauth_client = DocuSign.OAuth.AuthorizationCodeStrategy.client(
+        redirect_uri: "https://yourapp.com/callback"
+      )
+      |> DocuSign.OAuth.AuthorizationCodeStrategy.get_token!(code: auth_code)
+      
+      # Get user info to find account details
+      user_info = DocuSign.OAuth.AuthorizationCodeStrategy.get_user_info!(oauth_client)
+      account = Enum.find(user_info["accounts"], &(&1["is_default"] == "true"))
+      
+      # Create connection
+      {:ok, conn} = from_oauth_client(
+        oauth_client,
+        account_id: account["account_id"],
+        base_uri: account["base_uri"] <> "/restapi"
+      )
+
+  ## Returns
+
+  - `{:ok, connection}` - Success with connection struct
+  - `{:error, reason}` - Failure with error reason
+
+  ## Notes
+
+  - The `base_uri` should be the full API endpoint (e.g., "https://demo.docusign.net/restapi")
+  - Use the account information from the user info endpoint to get correct base_uri
+  - The connection can be used immediately with DocuSign API functions
+  """
+  @spec from_oauth_client(OAuth2.Client.t(), keyword()) :: {:ok, t()} | {:error, atom()}
+  def from_oauth_client(%OAuth2.Client{} = oauth_client, opts \\ []) do
+    with {:ok, account_id} <- fetch_required_opt(opts, :account_id),
+         {:ok, base_uri} <- fetch_required_opt(opts, :base_uri) do
+      app_account = %{
+        account_id: account_id,
+        base_uri: base_uri
+      }
+
+      connection = %__MODULE__{
+        app_account: app_account,
+        client: oauth_client
+      }
+
+      {:ok, connection}
+    end
+  end
+
+  defp fetch_required_opt(opts, key) do
+    case Keyword.fetch(opts, key) do
+      {:ok, value} -> {:ok, value}
+      :error -> {:error, {:missing_required_option, key}}
     end
   end
 
@@ -99,7 +203,7 @@ defmodule DocuSign.Connection do
   @doc """
   Makes a request.
   """
-  @spec request(t(), Keyword.t()) :: {:ok, Tesla.Env.t()} | {:error, Tesla.Env.t()}
+  @spec request(t(), Keyword.t()) :: {:ok, Tesla.Env.t()} | {:error, any()}
   def request(conn, opts \\ []) do
     timeout = Application.get_env(:docusign, :timeout, @timeout)
     opts = opts |> Keyword.put(:opts, adapter: [receive_timeout: timeout])

@@ -153,8 +153,8 @@ defmodule DocuSign.WebhookPlug do
     {:ok, payload, conn} = Conn.read_body(conn)
 
     with :ok <- verify_signatures(payload, secret, signatures(conn)),
-        {:ok, %{} = event} <- parse_payload(payload),
-        :ok <- handle_event!(handler, event) do
+         {:ok, %{} = event} <- parse_payload(payload),
+         :ok <- handle_event!(handler, event) do
       halt(send_resp(conn, 200, "Webhook received."))
     else
       {:handle_error, reason} -> halt(send_resp(conn, 400, reason))
