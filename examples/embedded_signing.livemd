@@ -13,7 +13,7 @@ IO.puts("Installing dependencies...")
 Application.put_env(:tesla, :disable_deprecated_builder_warning, true)
 
 Mix.install([
-  {:docusign, "~> 2.1.0"},
+  {:docusign, "~> 2.2.1"},
   {:kino, "~> 0.16.0"}
 ])
 
@@ -458,60 +458,41 @@ check_envelope_status = fn ->
 
       # If envelope is completed, automatically retrieve the document
       if status == "completed" do
-        # Get the document using the DocuSign client library
-        result = DocuSign.Api.EnvelopeDocuments.documents_get_document(
-          conn,
-          account_id,
-          "1", # Document ID
-          signing_envelope_id,
-          decode_body: false  # Get raw response to handle PDF
-        )
-
-        case result do
-          {:ok, %Tesla.Env{status: 200, body: document_content}} ->
-            # Check content type from headers
-            content_type =
-              result
-              |> elem(1)
-              |> Map.get(:headers)
-              |> Enum.find(fn {k, _v} -> String.downcase(k) == "content-type" end)
-              |> elem(1)
-
+        document_url = "/v2.1/accounts/#{account_id}/envelopes/#{signing_envelope_id}/documents/1"
+        
+        case DocuSign.Connection.download_file(conn, document_url, strategy: :memory) do
+          {:ok, {document_content, filename, content_type}} ->
             cond do
-              # For HTML content, display in iframe
-              String.contains?(content_type, "html") ->
-                Kino.Frame.render(document_frame, Kino.HTML.new("""
-                <div>
-                  <h3>✅ Document Retrieved Successfully</h3>
-                  <iframe
-                    srcdoc="#{String.replace(document_content, "\"", "&quot;")}"
-                    style="width: 100%; height: 500px; border: 1px solid #ccc;">
-                  </iframe>
-                </div>
-                """))
-
-              # For PDF content, create a download link
               String.contains?(content_type, "pdf") ->
                 pdf_base64 = Base.encode64(document_content)
-
                 Kino.Frame.render(document_frame, Kino.HTML.new("""
                 <div>
-                  <h3>✅ PDF Document Retrieved</h3>
-                  <a href="data:application/pdf;base64,#{pdf_base64}" download="signed_document.pdf"
-                     style="display:inline-block; background:#4CAF50; color:white; padding:10px 15px;
-                     text-decoration:none; border-radius:4px; margin-top:10px;">
-                    Download Signed PDF
+                  <h3>✅ PDF Document Downloaded</h3>
+                  <p><strong>Filename:</strong> #{filename} | <strong>Size:</strong> #{byte_size(document_content)} bytes</p>
+                  <a href="data:application/pdf;base64,#{pdf_base64}" download="#{filename}"
+                     style="display:inline-block; background:#4CAF50; color:white; padding:12px 20px;
+                     text-decoration:none; border-radius:4px; margin-top:10px; font-weight:bold;">
+                    📄 Download Signed PDF
                   </a>
                 </div>
                 """))
 
-              # For other content types
+              String.contains?(content_type, "html") ->
+                Kino.Frame.render(document_frame, Kino.HTML.new("""
+                <div>
+                  <h3>✅ Document Downloaded</h3>
+                  <iframe srcdoc="#{String.replace(document_content, "\"", "&quot;")}"
+                    style="width: 100%; height: 400px; border: 1px solid #ccc; margin-top: 10px;">
+                  </iframe>
+                </div>
+                """))
+
               true ->
-                Kino.Frame.render(document_frame, Kino.Text.new("Document retrieved but cannot be displayed (#{content_type})"))
+                Kino.Frame.render(document_frame, Kino.Text.new("✅ Document downloaded: #{filename} (#{content_type})"))
             end
 
           {:error, error} ->
-            Kino.Frame.render(document_frame, Kino.Text.new("❌ Failed to retrieve document: #{inspect(error)}"))
+            Kino.Frame.render(document_frame, Kino.Text.new("❌ Failed to download document: #{inspect(error)}"))
         end
       end
 
@@ -542,7 +523,7 @@ You've learned how to:
 1. Create an envelope with a recipient specifically marked for embedded signing
    - Use status="sent" with a clientUserId to enable embedded signing
 2. Generate an embedded signing URL
-3. Automatically monitor the envelope status and retrieve the completed document
+3. Automatically monitor the envelope status and download the completed document using the new FileDownloader (v2.2.1+)
 
 In a real application, you would typically:
 
