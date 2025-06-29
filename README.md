@@ -38,7 +38,7 @@ The package can be installed by adding `docusign` to your list of dependencies i
 ```elixir
 def deps do
   [
-    {:docusign, "~> 2.2.1"}
+    {:docusign, "~> 2.2.2"}
   ]
 end
 ```
@@ -245,7 +245,7 @@ When debugging is enabled, you'll see detailed logs including:
 Example debug output:
 ```
 [debug] GET https://demo.docusign.net/restapi/v2.1/accounts -> 200 (145.2 ms)
-[debug] Request headers: [{"authorization", "[FILTERED]"}, {"X-DocuSign-SDK", "Elixir/2.2.1"}]
+[debug] Request headers: [{"authorization", "[FILTERED]"}, {"X-DocuSign-SDK", "Elixir/2.2.2"}]
 [debug] Response body: {"accounts": [...]}
 ```
 
@@ -261,8 +261,8 @@ config :docusign, :debug_filter_headers, ["authorization", "x-api-key", "x-custo
 
 The client automatically includes SDK identification headers with all requests:
 
-- `X-DocuSign-SDK: Elixir/2.2.1` - Identifies the SDK and version
-- `User-Agent: DocuSign-Elixir/2.2.1` - Standard user agent header
+- `X-DocuSign-SDK: Elixir/2.2.2` - Identifies the SDK and version
+- `User-Agent: DocuSign-Elixir/2.2.2` - Standard user agent header
 
 These headers help DocuSign track API usage and provide better support.
 
