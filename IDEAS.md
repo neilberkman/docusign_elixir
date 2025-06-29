@@ -4,24 +4,7 @@ This document contains ideas for meaningful improvements to the DocuSign Elixir 
 
 ## High Priority Improvements
 
-### 1. Enhanced SSL Configuration
-**Description**: Add comprehensive SSL configuration options similar to Ruby client
-**Ruby features to port**:
-- Custom CA certificate support (`ssl_ca_cert`)
-- Client certificate authentication (`cert_file`, `key_file`)
-- SSL verification controls (`verify_ssl`, `verify_ssl_host`)
-**Implementation**:
-```elixir
-config :docusign, :ssl_options, [
-  verify: :verify_peer,
-  cacertfile: "path/to/ca.pem",
-  certfile: "path/to/client.pem",
-  keyfile: "path/to/client.key",
-  verify_hostname: true
-]
-```
-
-### 2. File Download Support
+### 1. File Download Support
 **Description**: Built-in utilities for downloading and handling DocuSign documents
 **Ruby features to port**:
 - Automatic filename extraction from Content-Disposition headers
@@ -62,20 +45,7 @@ defp determine_hostname(base_uri) do
 end
 ```
 
-### 5. Multiple Authentication Methods
-**Description**: Support for various authentication strategies beyond JWT
-**Ruby features to port**:
-- API Key authentication
-- Basic authentication
-- OAuth token authentication
-**Implementation**:
-```elixir
-defmodule DocuSign.Auth.ApiKey
-defmodule DocuSign.Auth.BasicAuth
-defmodule DocuSign.Auth.OAuth
-```
-
-### 6. Enhanced Error Handling
+### 5. Enhanced Error Handling
 **Description**: Structured error types for different failure scenarios
 **Ruby features to port**:
 - Authentication errors
@@ -90,7 +60,7 @@ defmodule DocuSign.Error.Network
 defmodule DocuSign.Error.Validation
 ```
 
-### 7. Retry Logic and Resilience
+### 6. Retry Logic and Resilience
 **Description**: Automatic retry for transient failures
 **Features**:
 - Configurable retry counts
@@ -108,7 +78,7 @@ config :docusign, :retry_options, [
 
 ## Low Priority Improvements
 
-### 8. Collection Parameter Formatting
+### 7. Collection Parameter Formatting
 **Description**: Support for different parameter collection formats
 **Ruby features**: CSV, SSV, TSV, pipes, multi
 **Implementation**:
@@ -116,28 +86,14 @@ config :docusign, :retry_options, [
 def format_collection_param(values, format \\ :csv)
 ```
 
-### 9. Content-Type Negotiation
+### 8. Content-Type Negotiation
 **Description**: Automatic content type handling and negotiation
 **Features**:
 - JSON/XML response handling
 - Accept header management
 - Content encoding support
 
-### 10. Advanced Configuration Management
-**Description**: Ruby-style configuration object with validation
-**Features**:
-- Configuration validation
-- Environment-specific defaults
-- Runtime configuration updates
-**Implementation**:
-```elixir
-defmodule DocuSign.Configuration do
-  defstruct [:client_id, :client_secret, :hostname, :timeout, :ssl_options]
-  def validate(config), do: ...
-end
-```
-
-### 11. Webhook Support Enhancements
+### 9. Webhook Support Enhancements
 **Description**: Improve existing webhook functionality
 **Features**:
 - Multiple signature algorithms
@@ -145,7 +101,7 @@ end
 - Batch event processing
 - Dead letter queue support
 
-### 12. Connection Pooling
+### 10. Connection Pooling
 **Description**: Optimize HTTP connections for high-throughput applications
 **Features**:
 - Connection reuse
@@ -160,7 +116,7 @@ config :docusign, :pool_options, [
 ]
 ```
 
-### 13. Metrics and Monitoring
+### 11. Metrics and Monitoring
 **Description**: Built-in observability features
 **Features**:
 - Request duration metrics
@@ -173,7 +129,7 @@ config :docusign, :pool_options, [
 :telemetry.execute([:docusign, :request, :success], measurements, metadata)
 ```
 
-### 14. SDK Version Management
+### 12. SDK Version Management
 **Description**: Proper SDK identification and version handling
 **Features**:
 - User-Agent header management

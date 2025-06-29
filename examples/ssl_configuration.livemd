@@ -1,0 +1,538 @@
+# DocuSign SSL/TLS Configuration
+
+```elixir
+Mix.install([
+  {:docusign, path: Path.expand("..", __DIR__)},
+  {:kino, "~> 0.14.0"}
+])
+```
+
+## Introduction
+
+This LiveBook demonstrates how to configure SSL/TLS options for secure connections to DocuSign's API. This includes:
+
+- Custom CA certificates
+- Client certificate authentication (mutual TLS)
+- SSL verification options
+- Per-request SSL configuration
+
+## Basic Setup
+
+First, let's set up our basic DocuSign configuration:
+
+```elixir
+# These would normally come from environment variables
+client_id = System.get_env("DOCUSIGN_CLIENT_ID") || "your-client-id"
+user_id = System.get_env("DOCUSIGN_USER_ID") || "your-user-id"
+account_id = System.get_env("DOCUSIGN_ACCOUNT_ID") || "your-account-id"
+
+# For demo purposes, we'll show the config but not actually use it
+demo_config = %{
+  client_id: client_id,
+  user_id: user_id,
+  account_id: account_id
+}
+
+Kino.Markdown.new("""
+## Configuration Status
+
+Client ID: `#{client_id}`
+User ID: `#{user_id}`
+Account ID: `#{account_id}`
+
+⚠️ **Note**: This example demonstrates SSL configuration without making actual API calls.
+""")
+```
+
+## SSL Configuration Examples
+
+### 1. Global SSL Configuration
+
+Configure SSL options at the application level:
+
+````elixir
+# Example 1: Basic SSL configuration with custom CA certificate
+ssl_config_basic = [
+  verify: :verify_peer,
+  cacertfile: "/etc/ssl/certs/ca-certificates.crt",
+  depth: 3
+]
+
+# Example 2: Client certificate authentication (mutual TLS)
+ssl_config_mutual_tls = [
+  verify: :verify_peer,
+  cacertfile: "/path/to/ca-bundle.crt",
+  certfile: "/path/to/client-cert.pem",
+  keyfile: "/path/to/client-key.pem",
+  password: "keypassword"  # If the key is encrypted
+]
+
+# Example 3: Advanced SSL configuration
+ssl_config_advanced = [
+  verify: :verify_peer,
+  versions: [:"tlsv1.2", :"tlsv1.3"],
+  ciphers: [
+    "ECDHE-RSA-AES256-GCM-SHA384",
+    "ECDHE-RSA-AES128-GCM-SHA256"
+  ],
+  customize_hostname_check: [
+    match_fun: :public_key.pkix_verify_hostname_match_fun(:https)
+  ]
+]
+
+Kino.Markdown.new("""
+### SSL Configuration Examples
+
+1. **Basic Configuration** - Uses custom CA certificate bundle
+2. **Mutual TLS** - Includes client certificate for authentication
+3. **Advanced** - Specifies TLS versions and cipher suites
+
+In production, you would add one of these to your config file:
+
+```elixir
+config :docusign, :ssl_options, #{inspect(ssl_config_basic, pretty: true)}
+````
+
+""")
+
+````
+
+### 2. Building SSL Options
+
+Let's see how the SSL options are built and merged:
+
+```elixir
+# Test the SSL options builder
+defmodule SSLDemo do
+  def show_ssl_options do
+    # Default options
+    default_opts = DocuSign.SSLOptions.build()
+
+    # With custom options
+    custom_opts = DocuSign.SSLOptions.build(
+      verify: :verify_none,
+      depth: 5,
+      validate_files: false  # Don't validate file paths for demo
+    )
+
+    # With file paths (validation disabled for demo)
+    file_opts = DocuSign.SSLOptions.build(
+      cacertfile: "/custom/ca.pem",
+      certfile: "/custom/cert.pem",
+      keyfile: "/custom/key.pem",
+      validate_files: false
+    )
+
+    %{
+      default: default_opts,
+      custom: custom_opts,
+      with_files: file_opts
+    }
+  end
+
+  def show_ca_detection do
+    # Show how CA certificates are auto-detected
+    opts = DocuSign.SSLOptions.build()
+
+    cond do
+      opts[:cacertfile] -> "System CA bundle found at: #{opts[:cacertfile]}"
+      opts[:cacerts] -> "Using CAStore or built-in certificates"
+      true -> "No CA certificates configured"
+    end
+  end
+end
+
+ssl_examples = SSLDemo.show_ssl_options()
+ca_detection = SSLDemo.show_ca_detection()
+
+Kino.Markdown.new("""
+### SSL Options Builder Results
+
+**Default Options:**
+````
+
+#{inspect(ssl_examples.default, pretty: true, limit: 10)}
+
+```
+
+**Custom Options:**
+```
+
+#{inspect(ssl_examples.custom, pretty: true, limit: 10)}
+
+```
+
+**With File Paths:**
+```
+
+#{inspect(ssl_examples.with_files, pretty: true, limit: 10)}
+
+```
+
+**CA Certificate Detection:** #{ca_detection}
+""")
+```
+
+### 3. Per-Request SSL Configuration
+
+Demonstrate how to use different SSL options for specific requests:
+
+````elixir
+defmodule RequestDemo do
+  def show_request_structure do
+    # This shows the structure without making actual requests
+
+    # Standard request
+    standard_request = [
+      method: :get,
+      url: "/v2.1/accounts/#{:account_id}/users"
+    ]
+
+    # Request with custom SSL options
+    ssl_request = [
+      method: :get,
+      url: "/v2.1/accounts/#{:account_id}/users",
+      ssl_options: [
+        verify: :verify_peer,
+        cacertfile: "/special/ca-for-this-request.pem"
+      ]
+    ]
+
+    %{
+      standard: standard_request,
+      with_ssl: ssl_request
+    }
+  end
+
+  def show_connection_pooling do
+    # Show connection pool configuration
+    %{
+      pool_size: Application.get_env(:docusign, :pool_size, 10),
+      pool_count: Application.get_env(:docusign, :pool_count, 1),
+      ssl_configured: Application.get_env(:docusign, :ssl_options) != nil
+    }
+  end
+end
+
+request_examples = RequestDemo.show_request_structure()
+pool_config = RequestDemo.show_connection_pooling()
+
+Kino.Markdown.new("""
+### Per-Request SSL Options
+
+**Standard Request Structure:**
+```elixir
+#{inspect(request_examples.standard, pretty: true)}
+````
+
+**Request with SSL Options:**
+
+```elixir
+#{inspect(request_examples.with_ssl, pretty: true)}
+```
+
+### Connection Pooling
+
+Current pool configuration:
+
+- Pool size: #{pool_config.pool_size}
+- Pool count: #{pool_config.pool_count}
+- SSL configured: #{pool_config.ssl_configured}
+
+You can configure pooling in your config:
+
+```elixir
+config :docusign,
+  pool_size: 20,
+  pool_count: 2
+```
+
+""")
+
+````
+
+## Security Best Practices
+
+```elixir
+Kino.Markdown.new("""
+## Security Best Practices
+
+### 1. Certificate Verification
+
+**Always use `:verify_peer` in production:**
+```elixir
+# ✅ Good
+ssl_options: [verify: :verify_peer]
+
+# ❌ Bad - only for development/testing
+ssl_options: [verify: :verify_none]
+````
+
+### 2. CA Certificate Management
+
+**Keep CA certificates up to date:**
+
+- Use system CA bundles when possible
+- Update regularly to include new root certificates
+- Consider using `castore` hex package for Elixir apps
+
+### 3. Client Certificates
+
+**Protect private keys:**
+
+```elixir
+# Store securely and use environment variables
+ssl_options: [
+  certfile: System.get_env("CLIENT_CERT_PATH"),
+  keyfile: System.get_env("CLIENT_KEY_PATH"),
+  password: System.get_env("CLIENT_KEY_PASSWORD")
+]
+```
+
+### 4. TLS Versions
+
+**Use modern TLS versions:**
+
+```elixir
+ssl_options: [
+  versions: [:"tlsv1.2", :"tlsv1.3"]  # No TLS 1.0 or 1.1
+]
+```
+
+### 5. Hostname Verification
+
+**Always verify hostnames:**
+
+```elixir
+ssl_options: [
+  customize_hostname_check: [
+    match_fun: :public_key.pkix_verify_hostname_match_fun(:https)
+  ]
+]
+```
+
+""")
+
+````
+
+## Testing SSL Configuration with Live API Calls
+
+Let's test the SSL configuration with actual DocuSign API calls:
+
+```elixir
+# Configure your credentials for live testing
+user_id_input = Kino.Input.text("User ID")
+account_id_input = Kino.Input.text("Account ID")
+
+form = Kino.Layout.grid([user_id_input, account_id_input], columns: 2)
+
+Kino.Layout.grid([
+  Kino.Markdown.new("""
+  ## Live SSL Configuration Testing
+
+  Enter your DocuSign credentials to test SSL configuration with real API calls.
+
+  ⚠️ **Note**: Make sure you have:
+  1. Set up your DocuSign application
+  2. Configured JWT authentication
+  3. Granted user consent
+  """),
+  form
+])
+````
+
+Now let's test the SSL configuration with actual API calls:
+
+````elixir
+# Get user inputs
+user_id = Kino.Input.read(user_id_input)
+account_id = Kino.Input.read(account_id_input)
+
+if user_id == "" or account_id == "" do
+  Kino.Markdown.new("⚠️ Please enter both User ID and Account ID above")
+else
+  # Test 1: Connect with default SSL configuration
+  default_result = case DocuSign.Connection.get(user_id) do
+    {:ok, conn} ->
+      # Make a simple API call to test the connection
+      case DocuSign.Api.Accounts.accounts_get_account(conn, account_id) do
+        {:ok, account} -> {:ok, "Connected successfully with default SSL config"}
+        {:error, error} -> {:error, "API call failed: #{inspect(error)}"}
+      end
+    {:error, error} -> {:error, "Connection failed: #{inspect(error)}"}
+  end
+
+  # Test 2: Test with custom SSL options (if we had a test endpoint)
+  # Note: This demonstrates the API but won't actually use different SSL since
+  # DocuSign's production servers have valid certificates
+  custom_ssl_test = case DocuSign.Connection.get(user_id) do
+    {:ok, conn} ->
+      # In a real scenario, you might test against a server with:
+      # - Self-signed certificates (verify: :verify_none)
+      # - Custom CA certificates
+      # - Client certificates for mutual TLS
+
+      # For this demo, we'll just show the structure
+      {:info, "Custom SSL options would be used like this:
+
+      DocuSign.Connection.request(conn,
+        method: :get,
+        url: \"/v2.1/accounts/#{account_id}\",
+        ssl_options: [
+          verify: :verify_peer,
+          cacertfile: \"/custom/ca.pem\"
+        ]
+      )"}
+    {:error, _} -> {:error, "Couldn't establish connection"}
+  end
+
+  # Display results
+  Kino.Markdown.new("""
+  ## Test Results
+
+  ### Default SSL Configuration Test
+  #{case default_result do
+    {:ok, msg} -> "✅ " <> msg
+    {:error, msg} -> "❌ " <> msg
+  end}
+
+  ### Custom SSL Options
+  #{case custom_ssl_test do
+    {:info, msg} -> "ℹ️ " <> msg
+    {:error, msg} -> "❌ " <> msg
+  end}
+
+  ### Current SSL Configuration
+  ```elixir
+  #{DocuSign.SSLOptions.build() |> inspect(pretty: true, limit: 10)}
+````
+
+### Notes
+
+- DocuSign's production API uses valid SSL certificates
+- Custom SSL options are most useful for: - Corporate proxies with custom CAs - Client certificate authentication - Development/testing environments
+  """)
+  end
+
+````
+
+## Test SSL Error Handling
+
+Let's demonstrate what happens with different SSL configurations:
+
+```elixir
+# This cell demonstrates SSL configuration scenarios
+# Note: These won't actually fail against DocuSign's valid certificates
+
+scenarios = [
+  %{
+    name: "Strict certificate validation (default)",
+    options: [verify: :verify_peer, depth: 3],
+    expected: "Should work with valid certificates"
+  },
+  %{
+    name: "No certificate validation (NOT for production!)",
+    options: [verify: :verify_none],
+    expected: "Would accept any certificate - INSECURE"
+  },
+  %{
+    name: "Custom CA certificate",
+    options: [
+      verify: :verify_peer,
+      cacertfile: "/path/to/corporate-ca.pem",
+      validate_files: false
+    ],
+    expected: "Would use corporate CA bundle"
+  },
+  %{
+    name: "Client certificate (mutual TLS)",
+    options: [
+      certfile: "/path/to/client.pem",
+      keyfile: "/path/to/client-key.pem",
+      validate_files: false
+    ],
+    expected: "Would authenticate with client certificate"
+  }
+]
+
+results = Enum.map(scenarios, fn scenario ->
+  # Build SSL options for this scenario
+  opts = DocuSign.SSLOptions.build(scenario.options)
+
+  """
+  ### #{scenario.name}
+
+  **Options:**
+  ```elixir
+  #{inspect(scenario.options, pretty: true)}
+````
+
+**Result:** #{scenario.expected}
+
+**Built configuration includes:**
+
+- Verify mode: `#{opts[:verify]}`
+- Max depth: `#{opts[:depth]}`
+- TLS versions: `#{inspect(opts[:versions])}`
+  #{if opts[:cacertfile], do: "- CA cert file: `#{opts[:cacertfile]}`", else: ""}
+  #{if opts[:certfile], do: "- Client cert: `#{opts[:certfile]}`", else: ""}
+
+---
+
+"""
+end)
+
+Kino.Markdown.new("""
+
+## SSL Configuration Scenarios
+
+#{Enum.join(results, "\n")}
+
+### 🔒 Security Reminder
+
+Always use `:verify_peer` in production to ensure you're connecting to the real DocuSign API!
+""")
+
+````
+
+## Next Steps
+
+```elixir
+Kino.Markdown.new("""
+## Next Steps
+
+1. **Configure SSL in your application:**
+   ```elixir
+   # config/prod.exs
+   config :docusign, :ssl_options,
+     verify: :verify_peer,
+     cacertfile: "/etc/ssl/certs/ca-certificates.crt"
+````
+
+2. **Test with your DocuSign sandbox:**
+
+   - Set up your credentials
+   - Configure appropriate SSL options
+   - Make test API calls
+
+3. **Monitor and maintain:**
+
+   - Keep CA certificates updated
+   - Monitor for SSL errors in logs
+   - Test certificate rotation procedures
+
+4. **For production:**
+   - Use proper certificate storage (not in code)
+   - Implement certificate rotation
+   - Set up monitoring for certificate expiration
+
+## Additional Resources
+
+- [DocuSign API Documentation](https://developers.docusign.com/)
+- [Erlang SSL Documentation](http://erlang.org/doc/man/ssl.html)
+- [Finch Documentation](https://hexdocs.pm/finch/)
+  """)
+
+```
+
+```
