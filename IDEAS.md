@@ -4,27 +4,11 @@ This document contains ideas for meaningful improvements to the DocuSign Elixir 
 
 ## High Priority Improvements
 
-### 1. Request/Response Debugging
-**Description**: Comprehensive debugging and logging capabilities
-**Ruby features to port**:
-- Request/response body logging
-- Header inspection
-- Configurable log levels
-- SDK identification headers
-**Implementation**:
-```elixir
-# Tesla middleware approach
-{Tesla.Middleware.Logger, debug: true, log_level: :debug}
-{Tesla.Middleware.Headers, [{"X-DocuSign-SDK", "Elixir/#{version()}"}]}
-```
-
-## Medium Priority Improvements
-
-### 2. Enhanced Error Handling
+### 1. Enhanced Error Handling
 **Description**: Structured error types for different failure scenarios
 **Ruby features to port**:
 - Authentication errors
-- Rate limiting errors
+- Rate limiting errors  
 - Network timeout errors
 - Validation errors
 **Implementation**:
@@ -35,7 +19,9 @@ defmodule DocuSign.Error.Network
 defmodule DocuSign.Error.Validation
 ```
 
-### 3. Retry Logic and Resilience
+## Medium Priority Improvements
+
+### 2. Retry Logic and Resilience
 **Description**: Automatic retry for transient failures
 **Features**:
 - Configurable retry counts

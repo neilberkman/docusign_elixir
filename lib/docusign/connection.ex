@@ -30,7 +30,7 @@ defmodule DocuSign.Connection do
   """
 
   alias DocuSign.Util.Environment
-  alias DocuSign.{ClientRegistry, User}
+  alias DocuSign.{ClientRegistry, Debug, User}
   alias OAuth2.Request
   alias Tesla.Adapter.Finch
   alias Tesla.Middleware.BaseUrl
@@ -64,24 +64,30 @@ defmodule DocuSign.Connection do
     @spec new(%{app_account: map(), client: OAuth2.Client.t()}) :: Tesla.Env.client()
     def new(%{app_account: app, client: %OAuth2.Client{token: %OAuth2.AccessToken{} = token}}) do
       # OAuth2.Client from authorization code flow
-      Tesla.client(
+      middleware =
         [
           {BaseUrl, app.base_uri},
           {Headers, [{"authorization", "#{token.token_type} #{token.access_token}"}]},
           {EncodeJson, engine: Jason}
-        ],
+        ] ++ Debug.all_middleware()
+
+      Tesla.client(
+        middleware,
         Application.get_env(:tesla, :adapter, {Finch, name: DocuSign.Finch})
       )
     end
 
     def new(%{app_account: app, client: %{token: token}}) do
       # JWT impersonation client
-      Tesla.client(
+      middleware =
         [
           {BaseUrl, app.base_uri},
           {Headers, [{"authorization", "#{token.token_type} #{token.access_token}"}]},
           {EncodeJson, engine: Jason}
-        ],
+        ] ++ Debug.all_middleware()
+
+      Tesla.client(
+        middleware,
         Application.get_env(:tesla, :adapter, {Finch, name: DocuSign.Finch})
       )
     end
