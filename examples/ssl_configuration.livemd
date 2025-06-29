@@ -2,7 +2,7 @@
 
 ```elixir
 Mix.install([
-  {:docusign, path: Path.expand("..", __DIR__)},
+  {:docusign, "~> 2.2.1"},
   {:kino, "~> 0.14.0"}
 ])
 ```
@@ -510,13 +510,11 @@ Kino.Markdown.new("""
 ````
 
 2. **Test with your DocuSign sandbox:**
-
    - Set up your credentials
    - Configure appropriate SSL options
    - Make test API calls
 
 3. **Monitor and maintain:**
-
    - Keep CA certificates updated
    - Monitor for SSL errors in logs
    - Test certificate rotation procedures

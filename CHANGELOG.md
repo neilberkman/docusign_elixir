@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## v2.2.1
 
 ### New Features
 - **Environment Auto-Detection**: Automatic sandbox vs production environment detection based on API URLs

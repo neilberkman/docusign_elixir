@@ -7,11 +7,13 @@ Unofficial DocuSign Elixir Library used to interact with the eSignature REST API
 **The easiest way to get started** is through our interactive LiveBook examples:
 
 ### Embedded Signing (JWT Impersonation)
+
 Complete working demonstration of DocuSign embedded signing with JWT authentication:
 
 [![Run in Livebook](https://livebook.dev/badge/v1/blue.svg)](https://livebook.dev/run?url=https://github.com/neilberkman/docusign_elixir/blob/main/examples/embedded_signing.livemd)
 
 ### OAuth2 Authorization Code Flow
+
 Interactive walkthrough of the OAuth2 Authorization Code Flow for user-facing applications:
 
 [![Run in Livebook](https://livebook.dev/badge/v1/blue.svg)](https://livebook.dev/run?url=https://github.com/neilberkman/docusign_elixir/blob/main/examples/oauth_authorization_code_flow.livemd)
@@ -55,6 +57,7 @@ DocuSign Elixir supports two authentication methods:
 **Recommended for user-facing applications** where users need to grant permission for your app to access their DocuSign account.
 
 #### Benefits
+
 - Users explicitly grant permission through DocuSign's consent screen
 - No admin pre-approval required (unlike JWT impersonation)
 - Tokens can be refreshed without user interaction
@@ -125,6 +128,7 @@ account = Enum.find(user_info["accounts"], &(&1["is_default"] == "true"))
 **For server-to-server applications** where you need to act on behalf of users with pre-configured access.
 
 #### Requirements
+
 - RSA Private key
 - DocuSign Client ID (integration key)
 - DocuSign Account ID
@@ -142,6 +146,7 @@ config :docusign,
 ```
 
 **Notes:**
+
 - Set hostname to `account.docusign.com` for production
 - Private key path can be relative or absolute
 - Use `private_key_contents` instead of `private_key_file` for secrets stored in vault systems
@@ -187,11 +192,13 @@ config :docusign,
 For impersonating other users, they must first consent by visiting:
 
 **Sandbox:**
+
 ```
 https://account-d.docusign.com/oauth/auth?response_type=code&scope=signature%20impersonation&client_id=YOUR_CLIENT_ID&redirect_uri=https://account-d.docusign.com/me
 ```
 
 **Production:**
+
 ```
 https://account.docusign.com/oauth/auth?response_type=code&scope=signature%20impersonation&client_id=YOUR_CLIENT_ID&redirect_uri=https://account.docusign.com/me
 ```
