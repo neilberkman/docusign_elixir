@@ -1,5 +1,18 @@
 # Changelog
 
+## Unreleased
+
+### New Features
+- **Request/Response Debugging**: Comprehensive debugging and logging capabilities matching Ruby client functionality
+  - Add `DocuSign.Debug` module for configurable HTTP request/response logging
+  - Leverage Tesla's built-in Logger middleware with custom configuration
+  - Automatic SDK identification headers (`X-DocuSign-SDK: Elixir/version`, `User-Agent: DocuSign-Elixir/version`)
+  - Configurable sensitive header filtering (authorization tokens automatically filtered)
+  - Runtime debugging control via `DocuSign.Debug.enable_debugging()` and `disable_debugging()`
+  - Debug output includes request/response bodies, headers, timing, and HTTP status codes
+  - Seamless integration with both JWT impersonation and OAuth2 Authorization Code flows
+  - Complete test coverage with 23 test cases covering all debugging scenarios
+
 ## v2.2.1
 
 ### New Features

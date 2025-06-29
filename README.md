@@ -215,6 +215,68 @@ account_id = "ACCOUNT_ID"
 {:ok, users} = DocuSign.Api.Users.users_get_users(conn, account_id)
 ```
 
+## Request/Response Debugging
+
+The DocuSign Elixir client provides comprehensive debugging capabilities for HTTP requests and responses, similar to the Ruby client's debugging features.
+
+### Enable Debugging
+
+Enable debugging in your configuration to log HTTP request/response details:
+
+```elixir
+config :docusign, debugging: true
+```
+
+Or enable it at runtime:
+
+```elixir
+DocuSign.Debug.enable_debugging()
+```
+
+### Debug Output
+
+When debugging is enabled, you'll see detailed logs including:
+
+- HTTP request method, URL, and timing
+- Request and response headers (with sensitive data filtered)
+- Request and response bodies
+- SDK identification headers
+
+Example debug output:
+```
+[debug] GET https://demo.docusign.net/restapi/v2.1/accounts -> 200 (145.2 ms)
+[debug] Request headers: [{"authorization", "[FILTERED]"}, {"X-DocuSign-SDK", "Elixir/2.2.1"}]
+[debug] Response body: {"accounts": [...]}
+```
+
+### Header Filtering
+
+Sensitive headers like authorization tokens are automatically filtered in debug logs. You can customize which headers to filter:
+
+```elixir
+config :docusign, :debug_filter_headers, ["authorization", "x-api-key", "x-custom-secret"]
+```
+
+### SDK Identification
+
+The client automatically includes SDK identification headers with all requests:
+
+- `X-DocuSign-SDK: Elixir/2.2.1` - Identifies the SDK and version
+- `User-Agent: DocuSign-Elixir/2.2.1` - Standard user agent header
+
+These headers help DocuSign track API usage and provide better support.
+
+### Configuration Options
+
+```elixir
+config :docusign,
+  debugging: true,                    # Enable/disable debug logging
+  debug_filter_headers: [             # Headers to filter in logs
+    "authorization",
+    "x-api-key"
+  ]
+```
+
 ## Timeout configuration
 
 By default, HTTP requests will time out after 30_000 ms. You can configure the timeout:
