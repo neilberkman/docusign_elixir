@@ -3,7 +3,7 @@
 
 defmodule DocuSign.Model.DocGenFormField do
   @moduledoc """
-  The document fields available for document generation.  This object is used in reponses (GET) and requests (PUT). When used with [DocumentGeneration: updateEnvelopeDocGenFormFields](/docs/esign-rest-api/reference/envelopes/documentgeneration/updateenvelopedocgenformfields/) (PUT), the `name` and `value` / `rowValues` properties are required and any other values are ignored. 
+  The document fields available for document generation.  This object is used in reponses (GET) and requests (PUT). When used with [DocumentGeneration: updateEnvelopeDocGenFormFields](/docs/esign-rest-api/reference/envelopes/documentgeneration/updateenvelopedocgenformfields/) (PUT), the `name` and `value` / `rowValues` properties are required and any other values are ignored.
   """
 
   alias DocuSign.Deserializer

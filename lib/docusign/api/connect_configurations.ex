@@ -18,7 +18,7 @@ defmodule DocuSign.Api.ConnectConfigurations do
 
   @doc """
   Deletes the specified Connect configuration.
-  Deletes the specified Docusign Connect configuration.  <ds-inlinemessage> To use this method, you must be an account administrator and Connect must be enabled on your account. </ds-inlinemessage>   
+  Deletes the specified Docusign Connect configuration.  <ds-inlinemessage> To use this method, you must be an account administrator and Connect must be enabled on your account. </ds-inlinemessage>
 
   ### Parameters
 
@@ -51,7 +51,7 @@ defmodule DocuSign.Api.ConnectConfigurations do
 
   @doc """
   Returns all users from the configured Connect service.
-  Returns all users from the configured Connect service.  <ds-inlinemessage> To use this method, you must be an account administrator and Connect must be enabled on your account. </ds-inlinemessage> 
+  Returns all users from the configured Connect service.  <ds-inlinemessage> To use this method, you must be an account administrator and Connect must be enabled on your account. </ds-inlinemessage>
 
   ### Parameters
 
@@ -60,7 +60,7 @@ defmodule DocuSign.Api.ConnectConfigurations do
   - `connect_id` (String.t): The ID of the custom Connect configuration being accessed.
   - `opts` (keyword): Optional parameters
     - `:count` (String.t): The maximum number of results to return.
-    - `:domain_users_only` (String.t): 
+    - `:domain_users_only` (String.t):
     - `:email_substring` (String.t): Filters returned user records by full email address or a substring of email address.
     - `:start_position` (String.t): The position within the total result set from which to start returning values. The value **thumbnail** may be used to return the page image.
     - `:status` (String.t): The status of the item.
@@ -102,7 +102,7 @@ defmodule DocuSign.Api.ConnectConfigurations do
 
   @doc """
   Gets the details about a Connect configuration.
-  Retrieves the information for the specified Docusign Connect configuration.  <ds-inlinemessage> To use this method, you must be an account administrator and Connect must be enabled on your account. </ds-inlinemessage> 
+  Retrieves the information for the specified Docusign Connect configuration.  <ds-inlinemessage> To use this method, you must be an account administrator and Connect must be enabled on your account. </ds-inlinemessage>
 
   ### Parameters
 
@@ -137,7 +137,7 @@ defmodule DocuSign.Api.ConnectConfigurations do
 
   @doc """
   Get Connect configuration information.
-  Retrieves all the Docusign Custom Connect definitions for the specified account.  <ds-inlinemessage> To use this method, you must be an account administrator and Connect must be enabled on your account. </ds-inlinemessage> 
+  Retrieves all the Docusign Custom Connect definitions for the specified account.  <ds-inlinemessage> To use this method, you must be an account administrator and Connect must be enabled on your account. </ds-inlinemessage>
 
   ### Parameters
 
@@ -171,7 +171,7 @@ defmodule DocuSign.Api.ConnectConfigurations do
 
   @doc """
   Returns users from the configured Connect service.
-  Returns users from the configured Connect service.  <ds-inlinemessage> To use this method, you must be an account administrator and Connect must be enabled on your account. </ds-inlinemessage> 
+  Returns users from the configured Connect service.  <ds-inlinemessage> To use this method, you must be an account administrator and Connect must be enabled on your account. </ds-inlinemessage>
 
   ### Parameters
 
@@ -179,11 +179,11 @@ defmodule DocuSign.Api.ConnectConfigurations do
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `connect_id` (String.t): The ID of the custom Connect configuration being accessed.
   - `opts` (keyword): Optional parameters
-    - `:count` (String.t): The maximum number of results to return.  Use `start_position` to specify the number of results to skip.  
+    - `:count` (String.t): The maximum number of results to return.  Use `start_position` to specify the number of results to skip.
     - `:email_substring` (String.t): Filters returned user records by full email address or a substring of email address.
-    - `:list_included_users` (String.t): 
-    - `:start_position` (String.t): The zero-based index of the result from which to start returning results.  Use with `count` to limit the number of results.  The default value is `0`. 
-    - `:status` (String.t): Filters the results by user status. You can specify a comma-separated list of the following statuses:  * ActivationRequired  * ActivationSent  * Active * Closed  * Disabled 
+    - `:list_included_users` (String.t):
+    - `:start_position` (String.t): The zero-based index of the result from which to start returning results.  Use with `count` to limit the number of results.  The default value is `0`.
+    - `:status` (String.t): Filters the results by user status. You can specify a comma-separated list of the following statuses:  * ActivationRequired  * ActivationSent  * Active * Closed  * Disabled
     - `:user_name_substring` (String.t): Filters results based on a full or partial user name.  **Note:** When you enter a partial user name, you do not use a wildcard character.
 
   ### Returns
@@ -222,7 +222,7 @@ defmodule DocuSign.Api.ConnectConfigurations do
 
   @doc """
   Delete the Connect OAuth configuration.
-  Deletes the Connect OAuth configuration for the specified account.  <ds-inlinemessage> To use this method, you must be an account administrator and Connect must be enabled on your account. </ds-inlinemessage>  ## Related topics: - [OAuth for Docusign Connect](/platform/webhooks/connect/validation-and-security/oauth-connect/) 
+  Deletes the Connect OAuth configuration for the specified account.  <ds-inlinemessage> To use this method, you must be an account administrator and Connect must be enabled on your account. </ds-inlinemessage>  ## Related topics: - [OAuth for Docusign Connect](/platform/webhooks/connect/validation-and-security/oauth-connect/)
 
   ### Parameters
 
@@ -257,7 +257,7 @@ defmodule DocuSign.Api.ConnectConfigurations do
 
   @doc """
   Retrieves the Connect OAuth information for the account.
-  Gets the Connect OAuth configuration for the specified account.  <ds-inlinemessage> To use this method, you must be an account administrator and Connect must be enabled on your account. </ds-inlinemessage>  ## Related topics: - [OAuth for Docusign Connect](/platform/webhooks/connect/validation-and-security/oauth-connect/) 
+  Gets the Connect OAuth configuration for the specified account.  <ds-inlinemessage> To use this method, you must be an account administrator and Connect must be enabled on your account. </ds-inlinemessage>  ## Related topics: - [OAuth for Docusign Connect](/platform/webhooks/connect/validation-and-security/oauth-connect/)
 
   ### Parameters
 
@@ -291,14 +291,14 @@ defmodule DocuSign.Api.ConnectConfigurations do
 
   @doc """
   Set up Connect OAuth for the specified account.
-  Sets up Connect OAuth for the specified account using an authorization server of your choice. To use this endpoint, get the client ID and client secret from your authorization server.  When you call this endpoint, Docusign requests an access token from your authorization server. Docusign will use that token in the Authorization HTTP header of your account's Connect messages. Finally, your listener will be responsible for validating the token by calling the authorization server.  <ds-inlinemessage> To use this method, you must be an account administrator and Connect must be enabled on your account. </ds-inlinemessage>   ## Related topics: - [OAuth for Docusign Connect](/platform/webhooks/connect/validation-and-security/oauth-connect/) 
+  Sets up Connect OAuth for the specified account using an authorization server of your choice. To use this endpoint, get the client ID and client secret from your authorization server.  When you call this endpoint, Docusign requests an access token from your authorization server. Docusign will use that token in the Authorization HTTP header of your account's Connect messages. Finally, your listener will be responsible for validating the token by calling the authorization server.  <ds-inlinemessage> To use this method, you must be an account administrator and Connect must be enabled on your account. </ds-inlinemessage>   ## Related topics: - [OAuth for Docusign Connect](/platform/webhooks/connect/validation-and-security/oauth-connect/)
 
   ### Parameters
 
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `opts` (keyword): Optional parameters
-    - `:body` (ConnectOAuthConfig): 
+    - `:body` (ConnectOAuthConfig):
 
   ### Returns
 
@@ -335,14 +335,14 @@ defmodule DocuSign.Api.ConnectConfigurations do
   end
 
   @doc """
-  Updates the existing Connect OAuth configuration for the account. 
+  Updates the existing Connect OAuth configuration for the account.
 
   ### Parameters
 
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `opts` (keyword): Optional parameters
-    - `:body` (ConnectOAuthConfig): 
+    - `:body` (ConnectOAuthConfig):
 
   ### Returns
 
@@ -376,14 +376,14 @@ defmodule DocuSign.Api.ConnectConfigurations do
 
   @doc """
   Creates a Connect configuration.
-  Creates a custom Connect configuration for the specified account.  <ds-inlinemessage> To use this method, you must be an account administrator and Connect must be enabled on your account. </ds-inlinemessage>   Connect is a webhook service that provides updates when certain events occur in your eSignature workflows. You can use this endpoint to create: * Account-level Connect configurations to listen for events related to any envelopes sent by one or more account users * Recipient Connect configurations that are triggered when one or more of your account users receive an envelope  To set an account-level configuration, set `configurationType` to **custom.** To set a Recipient Connect configuration, set `configurationType` to **customrecipient.**  If you want to listen for events on only one envelope, use the [eventNotification](/docs/esign-rest-api/reference/envelopes/envelopes/create/#schema__envelopedefinition_eventnotification) object instead.  ## Data models  There are four possible data models for your Connect configuration. Consider: * Do you want the data in JSON or XML? * Do you want events sent individually (SIM) or in aggregate?  Docusign recommends using the [JSON SIM event model](/platform/webhooks/connect/json-sim-event-model/).  <ds-column>  <ds-step open=\"false\" hideIcon=\"true\"> <h3>JSON SIM (Recommended)</h3> <div>  Set `deliveryMode` to **SIM** and `eventData.version` to **restv2.1.** Use the `events` property to set the event statuses that will trigger your configuration.  The following sample request shows how to create an envelope-level configuration using JSON SIM: ``` {   \"configurationType\": \"custom\",   \"urlToPublishTo\": \"YOUR-WEBHOOK-URL\",   \"allUsers\": \"true\",   \"name\": \"jsonSimTest\",   \"deliveryMode\": \"SIM\",   \"allowEnvelopePublish\": \"true\",   \"enableLog\": \"true\",   \"eventData\": {       \"version\": \"restv2.1\"   },   \"events\": [       \"envelope-sent\",       \"envelope-delivered\",       \"envelope-completed\"   ] } ```  The following sample request shows how to create a Recipient Connect configuration using JSON SIM: ``` {   \"configurationType\": \"customrecipient\",   \"urlToPublishTo\": \"YOUR-WEBHOOK-URL\",   \"allUsers\": \"true\",   \"name\": \"jsonSimTest\",   \"deliveryMode\": \"SIM\",   \"allowEnvelopePublish\": \"true\",   \"enableLog\": \"true\",   \"eventData\": {       \"version\": \"restv2.1\"   },   \"events\": [       \"recipient-sent\",       \"recipient-completed\"   ] } ```  </div></ds-step>  <ds-step open=\"false\" hideIcon=\"true\"> <h3>JSON Aggregate</h3> <div>  Set `deliveryMode` to **aggregate** and `eventData.version` to **restv2.1.** Use the `envelopeEvents` or `recipientEvents` property to set the event statuses that will trigger your configuration.  </div></ds-step>  <ds-step open=\"false\" hideIcon=\"true\"> <h3>XML Aggregate</h3> <div>  Set `deliveryMode` to **aggregate.** Use the `envelopeEvents` or `recipientEvents` property to set the event statuses that will trigger your configuration.  </div></ds-step>  <ds-step open=\"false\" hideIcon=\"true\"> <h3>XML SIM (Legacy apps only)</h3> <div>  **Note:** This model [is deprecated](https://www.docusign.com/blog/developers/docusign-connect-xml-sim-messaging-format-deprecated).  Set `deliveryMode` to **SIM.** Use the `envelopeEvents` or `recipientEvents` property to set the event statuses that will trigger your configuration.  </div></ds-step> </ds-column>  ## Troubleshooting  If your configuration is not working, check the following.  * Connect must be enabled for your account to use this function. * If you are using `envelopeEvents` or `recipientEvents`, make sure that the event values are sentence case, not lowercase. * Make sure you have either set `allUsers` to **true** or set `userIds` to a non-empty array of IDs. * By default, this endpoint creates a disabled configuration. To enable the configuration immediately, set the body parameter `allowEnvelopePublish` to **true.** You can also enable the configuration in the UI. * To check if events are being emitted, set `enableLog` to **true** to view event logs in the Connect console.  ## Related topics  * For more information about Connect, see the [Docusign Connect guide](/platform/webhooks/connect/). * Use the MyAPICalls sample app to see an [example of this endpoint](https://myapicalls.sampleapps.docusign.com/scenario/6) using the JSON SIM model. 
+  Creates a custom Connect configuration for the specified account.  <ds-inlinemessage> To use this method, you must be an account administrator and Connect must be enabled on your account. </ds-inlinemessage>   Connect is a webhook service that provides updates when certain events occur in your eSignature workflows. You can use this endpoint to create: * Account-level Connect configurations to listen for events related to any envelopes sent by one or more account users * Recipient Connect configurations that are triggered when one or more of your account users receive an envelope  To set an account-level configuration, set `configurationType` to **custom.** To set a Recipient Connect configuration, set `configurationType` to **customrecipient.**  If you want to listen for events on only one envelope, use the [eventNotification](/docs/esign-rest-api/reference/envelopes/envelopes/create/#schema__envelopedefinition_eventnotification) object instead.  ## Data models  There are four possible data models for your Connect configuration. Consider: * Do you want the data in JSON or XML? * Do you want events sent individually (SIM) or in aggregate?  Docusign recommends using the [JSON SIM event model](/platform/webhooks/connect/json-sim-event-model/).  <ds-column>  <ds-step open=\"false\" hideIcon=\"true\"> <h3>JSON SIM (Recommended)</h3> <div>  Set `deliveryMode` to **SIM** and `eventData.version` to **restv2.1.** Use the `events` property to set the event statuses that will trigger your configuration.  The following sample request shows how to create an envelope-level configuration using JSON SIM: ``` {   \"configurationType\": \"custom\",   \"urlToPublishTo\": \"YOUR-WEBHOOK-URL\",   \"allUsers\": \"true\",   \"name\": \"jsonSimTest\",   \"deliveryMode\": \"SIM\",   \"allowEnvelopePublish\": \"true\",   \"enableLog\": \"true\",   \"eventData\": {       \"version\": \"restv2.1\"   },   \"events\": [       \"envelope-sent\",       \"envelope-delivered\",       \"envelope-completed\"   ] } ```  The following sample request shows how to create a Recipient Connect configuration using JSON SIM: ``` {   \"configurationType\": \"customrecipient\",   \"urlToPublishTo\": \"YOUR-WEBHOOK-URL\",   \"allUsers\": \"true\",   \"name\": \"jsonSimTest\",   \"deliveryMode\": \"SIM\",   \"allowEnvelopePublish\": \"true\",   \"enableLog\": \"true\",   \"eventData\": {       \"version\": \"restv2.1\"   },   \"events\": [       \"recipient-sent\",       \"recipient-completed\"   ] } ```  </div></ds-step>  <ds-step open=\"false\" hideIcon=\"true\"> <h3>JSON Aggregate</h3> <div>  Set `deliveryMode` to **aggregate** and `eventData.version` to **restv2.1.** Use the `envelopeEvents` or `recipientEvents` property to set the event statuses that will trigger your configuration.  </div></ds-step>  <ds-step open=\"false\" hideIcon=\"true\"> <h3>XML Aggregate</h3> <div>  Set `deliveryMode` to **aggregate.** Use the `envelopeEvents` or `recipientEvents` property to set the event statuses that will trigger your configuration.  </div></ds-step>  <ds-step open=\"false\" hideIcon=\"true\"> <h3>XML SIM (Legacy apps only)</h3> <div>  **Note:** This model [is deprecated](https://www.docusign.com/blog/developers/docusign-connect-xml-sim-messaging-format-deprecated).  Set `deliveryMode` to **SIM.** Use the `envelopeEvents` or `recipientEvents` property to set the event statuses that will trigger your configuration.  </div></ds-step> </ds-column>  ## Troubleshooting  If your configuration is not working, check the following.  * Connect must be enabled for your account to use this function. * If you are using `envelopeEvents` or `recipientEvents`, make sure that the event values are sentence case, not lowercase. * Make sure you have either set `allUsers` to **true** or set `userIds` to a non-empty array of IDs. * By default, this endpoint creates a disabled configuration. To enable the configuration immediately, set the body parameter `allowEnvelopePublish` to **true.** You can also enable the configuration in the UI. * To check if events are being emitted, set `enableLog` to **true** to view event logs in the Connect console.  ## Related topics  * For more information about Connect, see the [Docusign Connect guide](/platform/webhooks/connect/). * Use the MyAPICalls sample app to see an [example of this endpoint](https://myapicalls.sampleapps.docusign.com/scenario/6) using the JSON SIM model.
 
   ### Parameters
 
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `opts` (keyword): Optional parameters
-    - `:body` (ConnectCustomConfiguration): 
+    - `:body` (ConnectCustomConfiguration):
 
   ### Returns
 
@@ -417,14 +417,14 @@ defmodule DocuSign.Api.ConnectConfigurations do
 
   @doc """
   Updates a specified Connect configuration.
-  Updates the specified Docusign Connect configuration in your account. To enable the configuration, set the `allowEnvelopePublish` property to **true.**  After any updates, test your configuration to make sure it works as expected.  <ds-inlinemessage> To use this method, you must be an account administrator and Connect must be enabled on your account. </ds-inlinemessage> 
+  Updates the specified Docusign Connect configuration in your account. To enable the configuration, set the `allowEnvelopePublish` property to **true.**  After any updates, test your configuration to make sure it works as expected.  <ds-inlinemessage> To use this method, you must be an account administrator and Connect must be enabled on your account. </ds-inlinemessage>
 
   ### Parameters
 
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `opts` (keyword): Optional parameters
-    - `:body` (ConnectCustomConfiguration): 
+    - `:body` (ConnectCustomConfiguration):
 
   ### Returns
 

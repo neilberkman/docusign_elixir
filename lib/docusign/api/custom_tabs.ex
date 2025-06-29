@@ -82,7 +82,7 @@ defmodule DocuSign.Api.CustomTabs do
   end
 
   @doc """
-  Updates custom tab information.  
+  Updates custom tab information.
   Updates the information in a custom tab for the specified account.
 
   ### Parameters
@@ -91,7 +91,7 @@ defmodule DocuSign.Api.CustomTabs do
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `custom_tab_id` (String.t): The Docusign-generated custom tab ID for the custom tab to be applied. This can only be used when adding new tabs for a recipient. When used, the new tab inherits all the custom tab properties.
   - `opts` (keyword): Optional parameters
-    - `:body` (TabMetadata): 
+    - `:body` (TabMetadata):
 
   ### Returns
 
@@ -132,7 +132,7 @@ defmodule DocuSign.Api.CustomTabs do
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `opts` (keyword): Optional parameters
-    - `:custom_tab_only` (String.t): When **true,** only custom tabs are returned in the response. 
+    - `:custom_tab_only` (String.t): When **true,** only custom tabs are returned in the response.
 
   ### Returns
 
@@ -172,7 +172,7 @@ defmodule DocuSign.Api.CustomTabs do
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `opts` (keyword): Optional parameters
-    - `:body` (TabMetadata): 
+    - `:body` (TabMetadata):
 
   ### Returns
 

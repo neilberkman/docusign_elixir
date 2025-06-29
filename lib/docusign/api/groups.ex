@@ -14,14 +14,14 @@ defmodule DocuSign.Api.Groups do
 
   @doc """
   Deletes an existing user group.
-  Deletes an existing user group.  When you delete a group, you include only the `groupId` in the request body.  Example:  ``` {   \"groups\": [     {       \"groupId\": \"12345\"     } } ``` 
+  Deletes an existing user group.  When you delete a group, you include only the `groupId` in the request body.  Example:  ``` {   \"groups\": [     {       \"groupId\": \"12345\"     } } ```
 
   ### Parameters
 
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `opts` (keyword): Optional parameters
-    - `:body` (GroupInformation): 
+    - `:body` (GroupInformation):
 
   ### Returns
 
@@ -54,7 +54,7 @@ defmodule DocuSign.Api.Groups do
 
   @doc """
   Gets information about groups associated with the account.
-  Gets information about groups associated with the account.   <ds-inlinemessage kind=\"information\" markdown=\"1\"> To get the users in a group:  1. Use this endpoint to get the group ID. 2. Use [listGroupUsers](/docs/esign-rest-api/reference/usergroups/groupusers/list/)    to get the list of users. </ds-inlinemessage>  ### Related topics  - [How to set a permission profile](/docs/esign-rest-api/how-to/permission-profile-setting/) 
+  Gets information about groups associated with the account.   <ds-inlinemessage kind=\"information\" markdown=\"1\"> To get the users in a group:  1. Use this endpoint to get the group ID. 2. Use [listGroupUsers](/docs/esign-rest-api/reference/usergroups/groupusers/list/)    to get the list of users. </ds-inlinemessage>  ### Related topics  - [How to set a permission profile](/docs/esign-rest-api/how-to/permission-profile-setting/)
 
   ### Parameters
 
@@ -65,7 +65,7 @@ defmodule DocuSign.Api.Groups do
     - `:group_type` (String.t): The type of group to return. Valid values:  * `AdminGroup` * `CustomGroup` * `EveryoneGroup`
     - `:include_usercount` (String.t): When **true,** every group returned in the response includes a `userCount` property that contains the total number of users in the group. The default is **true.**
     - `:search_text` (String.t): Filters the results of a GET request based on the text that you specify.
-    - `:start_position` (String.t): The zero-based index of the result from which to start returning results.  Use with `count` to limit the number of results.  The default value is `0`. 
+    - `:start_position` (String.t): The zero-based index of the result from which to start returning results.  Use with `count` to limit the number of results.  The default value is `0`.
 
   ### Returns
 
@@ -102,14 +102,14 @@ defmodule DocuSign.Api.Groups do
 
   @doc """
   Creates one or more groups for the account.
-  Creates one or more groups for the account.  Groups help you manage users. For example, you can use groups to limit user access to templates.  You can associate a group with a [permission profile](/docs/esign-rest-api/esign101/concepts/permissions/), which sets the user permissions for users in that group without having to set the `userSettings` property for each user. You are not required to set permission profiles for a group, but it makes it easier to manage user permissions for a large number of users.   <ds-inlinemessage kind=\"warning\" markdown=\"1\"> This endpoint uses only the <code>groupName</code> and <code>permissionProfileId</code> properties in the request body. All other properties are ignored. </ds-inlinemessage>   Example request: ```json {   \"groups\": [     { \"groupName\": \"montagues\" },     { \"groupName\": \"capulets\" },     { \"groupName\": \"nobles\",        \"permissionProfileId\": 1597 }   ] } ```  Use [AccountPermissionProfiles: list](/docs/esign-rest-api/reference/accounts/accountpermissionprofiles/list/) to get a list of permission profiles and their IDs. It is an error if the `permissionProfileId` does not exist.   ### Related topics  - [How-To Set Up a Permission Profile](/docs/esign-rest-api/how-to/permission-profile-setting/) 
+  Creates one or more groups for the account.  Groups help you manage users. For example, you can use groups to limit user access to templates.  You can associate a group with a [permission profile](/docs/esign-rest-api/esign101/concepts/permissions/), which sets the user permissions for users in that group without having to set the `userSettings` property for each user. You are not required to set permission profiles for a group, but it makes it easier to manage user permissions for a large number of users.   <ds-inlinemessage kind=\"warning\" markdown=\"1\"> This endpoint uses only the <code>groupName</code> and <code>permissionProfileId</code> properties in the request body. All other properties are ignored. </ds-inlinemessage>   Example request: ```json {   \"groups\": [     { \"groupName\": \"montagues\" },     { \"groupName\": \"capulets\" },     { \"groupName\": \"nobles\",        \"permissionProfileId\": 1597 }   ] } ```  Use [AccountPermissionProfiles: list](/docs/esign-rest-api/reference/accounts/accountpermissionprofiles/list/) to get a list of permission profiles and their IDs. It is an error if the `permissionProfileId` does not exist.   ### Related topics  - [How-To Set Up a Permission Profile](/docs/esign-rest-api/how-to/permission-profile-setting/)
 
   ### Parameters
 
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `opts` (keyword): Optional parameters
-    - `:body` (GroupInformation): 
+    - `:body` (GroupInformation):
 
   ### Returns
 
@@ -150,7 +150,7 @@ defmodule DocuSign.Api.Groups do
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `opts` (keyword): Optional parameters
-    - `:body` (GroupInformation): 
+    - `:body` (GroupInformation):
 
   ### Returns
 

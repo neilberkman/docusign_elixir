@@ -20,10 +20,10 @@ defmodule DocuSign.Api.TemplateRecipientTabs do
 
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
-  - `recipient_id` (String.t): A local reference used to map recipients to other objects, such as specific document tabs.  A `recipientId` must be either an integer or a GUID, and the `recipientId` must be unique within an envelope.  For example, many envelopes assign the first recipient a `recipientId` of `1`. 
+  - `recipient_id` (String.t): A local reference used to map recipients to other objects, such as specific document tabs.  A `recipientId` must be either an integer or a GUID, and the `recipientId` must be unique within an envelope.  For example, many envelopes assign the first recipient a `recipientId` of `1`.
   - `template_id` (String.t): The ID of the template.
   - `opts` (keyword): Optional parameters
-    - `:body` (TemplateTabs): 
+    - `:body` (TemplateTabs):
 
   ### Returns
 
@@ -68,7 +68,7 @@ defmodule DocuSign.Api.TemplateRecipientTabs do
 
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
-  - `recipient_id` (String.t): A local reference used to map recipients to other objects, such as specific document tabs.  A `recipientId` must be either an integer or a GUID, and the `recipientId` must be unique within an envelope.  For example, many envelopes assign the first recipient a `recipientId` of `1`. 
+  - `recipient_id` (String.t): A local reference used to map recipients to other objects, such as specific document tabs.  A `recipientId` must be either an integer or a GUID, and the `recipientId` must be unique within an envelope.  For example, many envelopes assign the first recipient a `recipientId` of `1`.
   - `template_id` (String.t): The ID of the template.
   - `opts` (keyword): Optional parameters
     - `:include_anchor_tab_locations` (String.t): When **true,** all tabs with anchor tab properties are included in the response. The default value is **false.**
@@ -118,10 +118,10 @@ defmodule DocuSign.Api.TemplateRecipientTabs do
 
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
-  - `recipient_id` (String.t): A local reference used to map recipients to other objects, such as specific document tabs.  A `recipientId` must be either an integer or a GUID, and the `recipientId` must be unique within an envelope.  For example, many envelopes assign the first recipient a `recipientId` of `1`. 
+  - `recipient_id` (String.t): A local reference used to map recipients to other objects, such as specific document tabs.  A `recipientId` must be either an integer or a GUID, and the `recipientId` must be unique within an envelope.  For example, many envelopes assign the first recipient a `recipientId` of `1`.
   - `template_id` (String.t): The ID of the template.
   - `opts` (keyword): Optional parameters
-    - `:body` (TemplateTabs): 
+    - `:body` (TemplateTabs):
 
   ### Returns
 
@@ -167,10 +167,10 @@ defmodule DocuSign.Api.TemplateRecipientTabs do
 
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
-  - `recipient_id` (String.t): A local reference used to map recipients to other objects, such as specific document tabs.  A `recipientId` must be either an integer or a GUID, and the `recipientId` must be unique within an envelope.  For example, many envelopes assign the first recipient a `recipientId` of `1`. 
+  - `recipient_id` (String.t): A local reference used to map recipients to other objects, such as specific document tabs.  A `recipientId` must be either an integer or a GUID, and the `recipientId` must be unique within an envelope.  For example, many envelopes assign the first recipient a `recipientId` of `1`.
   - `template_id` (String.t): The ID of the template.
   - `opts` (keyword): Optional parameters
-    - `:body` (TemplateTabs): 
+    - `:body` (TemplateTabs):
 
   ### Returns
 

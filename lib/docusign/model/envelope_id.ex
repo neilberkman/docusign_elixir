@@ -3,7 +3,7 @@
 
 defmodule DocuSign.Model.EnvelopeId do
   @moduledoc """
-  A tab that displays the envelope ID.  **Note:**  The eSignature API uses the name `envelopeId` two ways:  - As a _property_ of type `string` used to identify an envelope  by its GUID. - As an _object_ used to represent an envelope tab that displays   the envelope's GUID. 
+  A tab that displays the envelope ID.  **Note:**  The eSignature API uses the name `envelopeId` two ways:  - As a _property_ of type `string` used to identify an envelope  by its GUID. - As an _object_ used to represent an envelope tab that displays   the envelope's GUID.
   """
 
   alias DocuSign.Deserializer

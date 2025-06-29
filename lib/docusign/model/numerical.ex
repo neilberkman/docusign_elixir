@@ -3,7 +3,7 @@
 
 defmodule DocuSign.Model.Numerical do
   @moduledoc """
-  Numerical tabs provide robust display and validation features, including formatting for different regions and currencies, and minimum and maximum value validation. See [Number fields](/docs/esign-rest-api/esign101/concepts/tabs/number-fields/) to learn more about this tab type. 
+  Numerical tabs provide robust display and validation features, including formatting for different regions and currencies, and minimum and maximum value validation. See [Number fields](/docs/esign-rest-api/esign101/concepts/tabs/number-fields/) to learn more about this tab type.
   """
 
   alias DocuSign.Deserializer

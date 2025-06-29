@@ -21,8 +21,8 @@ defmodule DocuSign.Api.EnvelopeTemplates do
 
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
-  - `document_id` (String.t): The unique ID of the document within the envelope.  Unlike other IDs in the eSignature API, you specify the `documentId` yourself. Typically the first document has the ID `1`, the second document `2`, and so on, but you can use any numbering scheme that fits within a 32-bit signed integer (1 through 2147483647).   Tab objects have a `documentId` property that specifies the document on which to place the tab. 
-  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec` 
+  - `document_id` (String.t): The unique ID of the document within the envelope.  Unlike other IDs in the eSignature API, you specify the `documentId` yourself. Typically the first document has the ID `1`, the second document `2`, and so on, but you can use any numbering scheme that fits within a 32-bit signed integer (1 through 2147483647).   Tab objects have a `documentId` property that specifies the document on which to place the tab.
+  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec`
   - `template_id` (String.t): The ID of the template.
   - `opts` (keyword): Optional parameters
 
@@ -62,10 +62,10 @@ defmodule DocuSign.Api.EnvelopeTemplates do
 
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
-  - `document_id` (String.t): The unique ID of the document within the envelope.  Unlike other IDs in the eSignature API, you specify the `documentId` yourself. Typically the first document has the ID `1`, the second document `2`, and so on, but you can use any numbering scheme that fits within a 32-bit signed integer (1 through 2147483647).   Tab objects have a `documentId` property that specifies the document on which to place the tab. 
-  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec` 
+  - `document_id` (String.t): The unique ID of the document within the envelope.  Unlike other IDs in the eSignature API, you specify the `documentId` yourself. Typically the first document has the ID `1`, the second document `2`, and so on, but you can use any numbering scheme that fits within a 32-bit signed integer (1 through 2147483647).   Tab objects have a `documentId` property that specifies the document on which to place the tab.
+  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec`
   - `opts` (keyword): Optional parameters
-    - `:include` (String.t): A comma-separated list that limits the results. Valid values are:  * `applied` * `matched` 
+    - `:include` (String.t): A comma-separated list that limits the results. Valid values are:  * `applied` * `matched`
 
   ### Returns
 
@@ -104,13 +104,13 @@ defmodule DocuSign.Api.EnvelopeTemplates do
 
   @doc """
   Gets templates used in an envelope.
-  This returns a list of the server-side templates, their name and ID, used in an envelope. 
+  This returns a list of the server-side templates, their name and ID, used in an envelope.
 
   ### Parameters
 
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
-  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec` 
+  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec`
   - `opts` (keyword): Optional parameters
     - `:include` (String.t): Filters the results by template type. Valid values: * `applied`: Returns the templates applied to an envelope. * `matching`: Returns the [matching templates](https://support.docusign.com/s/document-item?language=en_US&bundleId=jux1643235969954&topicId=far1578456612069.html&_LANG=enus) for an envelope.  The default value is `applied`.
 
@@ -151,11 +151,11 @@ defmodule DocuSign.Api.EnvelopeTemplates do
 
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
-  - `document_id` (String.t): The unique ID of the document within the envelope.  Unlike other IDs in the eSignature API, you specify the `documentId` yourself. Typically the first document has the ID `1`, the second document `2`, and so on, but you can use any numbering scheme that fits within a 32-bit signed integer (1 through 2147483647).   Tab objects have a `documentId` property that specifies the document on which to place the tab. 
-  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec` 
+  - `document_id` (String.t): The unique ID of the document within the envelope.  Unlike other IDs in the eSignature API, you specify the `documentId` yourself. Typically the first document has the ID `1`, the second document `2`, and so on, but you can use any numbering scheme that fits within a 32-bit signed integer (1 through 2147483647).   Tab objects have a `documentId` property that specifies the document on which to place the tab.
+  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec`
   - `opts` (keyword): Optional parameters
-    - `:preserve_template_recipient` (String.t): If omitted or set to false (the default), envelope recipients _will be removed_ if the template being applied includes only  tabs positioned via anchor text for the recipient, and none of the documents include the anchor text.   When **true,** the recipients _will be preserved_ after the template is applied.  
-    - `:body` (DocumentTemplateList): 
+    - `:preserve_template_recipient` (String.t): If omitted or set to false (the default), envelope recipients _will be removed_ if the template being applied includes only  tabs positioned via anchor text for the recipient, and none of the documents include the anchor text.   When **true,** the recipients _will be preserved_ after the template is applied.
+    - `:body` (DocumentTemplateList):
 
   ### Returns
 
@@ -202,10 +202,10 @@ defmodule DocuSign.Api.EnvelopeTemplates do
 
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
-  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec` 
+  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec`
   - `opts` (keyword): Optional parameters
-    - `:preserve_template_recipient` (String.t): If omitted or set to false (the default), envelope recipients _will be removed_ if the template being applied includes only  tabs positioned via anchor text for the recipient, and none of the documents include the anchor text.   When **true,** the recipients _will be preserved_ after the template is applied.  
-    - `:body` (DocumentTemplateList): 
+    - `:preserve_template_recipient` (String.t): If omitted or set to false (the default), envelope recipients _will be removed_ if the template being applied includes only  tabs positioned via anchor text for the recipient, and none of the documents include the anchor text.   When **true,** the recipients _will be preserved_ after the template is applied.
+    - `:body` (DocumentTemplateList):
 
   ### Returns
 

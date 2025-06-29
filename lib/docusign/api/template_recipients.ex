@@ -22,10 +22,10 @@ defmodule DocuSign.Api.TemplateRecipients do
 
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
-  - `recipient_id` (String.t): A local reference used to map recipients to other objects, such as specific document tabs.  A `recipientId` must be either an integer or a GUID, and the `recipientId` must be unique within an envelope.  For example, many envelopes assign the first recipient a `recipientId` of `1`. 
+  - `recipient_id` (String.t): A local reference used to map recipients to other objects, such as specific document tabs.  A `recipientId` must be either an integer or a GUID, and the `recipientId` must be unique within an envelope.  For example, many envelopes assign the first recipient a `recipientId` of `1`.
   - `template_id` (String.t): The ID of the template.
   - `opts` (keyword): Optional parameters
-    - `:body` (TemplateRecipients): 
+    - `:body` (TemplateRecipients):
 
   ### Returns
 
@@ -72,7 +72,7 @@ defmodule DocuSign.Api.TemplateRecipients do
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `template_id` (String.t): The ID of the template.
   - `opts` (keyword): Optional parameters
-    - `:body` (TemplateRecipients): 
+    - `:body` (TemplateRecipients):
 
   ### Returns
 
@@ -118,8 +118,8 @@ defmodule DocuSign.Api.TemplateRecipients do
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `template_id` (String.t): The ID of the template.
   - `opts` (keyword): Optional parameters
-    - `:include_anchor_tab_locations` (String.t):  When **true** and `include_tabs` is set to **true,** all tabs with anchor tab properties are included in the response. 
-    - `:include_extended` (String.t):  When **true,** the extended properties are included in the response. 
+    - `:include_anchor_tab_locations` (String.t):  When **true** and `include_tabs` is set to **true,** all tabs with anchor tab properties are included in the response.
+    - `:include_extended` (String.t):  When **true,** the extended properties are included in the response.
     - `:include_tabs` (String.t): When **true,** the tab information associated with the recipient is included in the response.
 
   ### Returns
@@ -164,7 +164,7 @@ defmodule DocuSign.Api.TemplateRecipients do
   - `template_id` (String.t): The ID of the template.
   - `opts` (keyword): Optional parameters
     - `:resend_envelope` (String.t): When **true,** resends the envelope to the recipients that you specify in the request body. Use this parameter to resend the envelope to a recipient who deleted the original email notification.  **Note:** Correcting an envelope is a different process. Docusign always resends an envelope when you correct it, regardless of the value that you enter here.
-    - `:body` (TemplateRecipients): 
+    - `:body` (TemplateRecipients):
 
   ### Returns
 
@@ -208,7 +208,7 @@ defmodule DocuSign.Api.TemplateRecipients do
   - `template_id` (String.t): The ID of the template.
   - `opts` (keyword): Optional parameters
     - `:resend_envelope` (String.t): When **true,** resends the envelope to the recipients that you specify in the request body. Use this parameter to resend the envelope to a recipient who deleted the original email notification.  **Note:** Correcting an envelope is a different process. Docusign always resends an envelope when you correct it, regardless of the value that you enter here.
-    - `:body` (TemplateRecipients): 
+    - `:body` (TemplateRecipients):
 
   ### Returns
 
@@ -251,7 +251,7 @@ defmodule DocuSign.Api.TemplateRecipients do
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `template_id` (String.t): The ID of the template.
   - `opts` (keyword): Optional parameters
-    - `:body` (RecipientPreviewRequest): 
+    - `:body` (RecipientPreviewRequest):
 
   ### Returns
 

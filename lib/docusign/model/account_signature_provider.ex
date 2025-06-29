@@ -3,7 +3,7 @@
 
 defmodule DocuSign.Model.AccountSignatureProvider do
   @moduledoc """
-  Contains information about the signature provider associated with the Identity Verification workflow. If empty, then this specific workflow is not intended for signers. 
+  Contains information about the signature provider associated with the Identity Verification workflow. If empty, then this specific workflow is not intended for signers.
   """
 
   alias DocuSign.Deserializer

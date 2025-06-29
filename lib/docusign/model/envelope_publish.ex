@@ -3,7 +3,7 @@
 
 defmodule DocuSign.Model.EnvelopePublish do
   @moduledoc """
-  The EnvelopePublish resource allows you to submit existing envelopes to any webhook. 
+  The EnvelopePublish resource allows you to submit existing envelopes to any webhook.
   """
 
   alias DocuSign.Deserializer

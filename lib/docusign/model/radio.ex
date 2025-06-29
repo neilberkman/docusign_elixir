@@ -3,7 +3,7 @@
 
 defmodule DocuSign.Model.Radio do
   @moduledoc """
-  One of the selectable radio buttons in the `radios` property of a [`radioGroup`](/docs/esign-rest-api/reference/envelopes/enveloperecipienttabs/) tab. 
+  One of the selectable radio buttons in the `radios` property of a [`radioGroup`](/docs/esign-rest-api/reference/envelopes/enveloperecipienttabs/) tab.
   """
 
   alias DocuSign.Deserializer

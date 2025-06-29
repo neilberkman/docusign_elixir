@@ -3,7 +3,7 @@
 
 defmodule DocuSign.Model.Date do
   @moduledoc """
-  A tab that allows the recipient to enter a date. Date tabs are one-line fields that allow date information to be entered in any format. The tooltip for this tab recommends entering the date as MM/DD/YYYY, but this is not enforced. The format entered by the signer is retained. If you need a particular date format enforced, Docusign recommends using a Text tab with a validation pattern and a validation message to enforce the format. 
+  A tab that allows the recipient to enter a date. Date tabs are one-line fields that allow date information to be entered in any format. The tooltip for this tab recommends entering the date as MM/DD/YYYY, but this is not enforced. The format entered by the signer is retained. If you need a particular date format enforced, Docusign recommends using a Text tab with a validation pattern and a validation message to enforce the format.
   """
 
   alias DocuSign.Deserializer

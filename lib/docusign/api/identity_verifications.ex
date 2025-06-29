@@ -14,14 +14,14 @@ defmodule DocuSign.Api.IdentityVerifications do
 
   @doc """
   Retrieves the Identity Verification workflows available to an account.
-  This method returns a list of Identity Verification workflows that are available to an account.  **Note:** To use this method, you must either be an account administrator or a sender.  ### Related topics  - [How to require ID Verification (IDV) for a recipient](/docs/esign-rest-api/how-to/id-verification/)  
+  This method returns a list of Identity Verification workflows that are available to an account.  **Note:** To use this method, you must either be an account administrator or a sender.  ### Related topics  - [How to require ID Verification (IDV) for a recipient](/docs/esign-rest-api/how-to/id-verification/)
 
   ### Parameters
 
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `opts` (keyword): Optional parameters
-    - `:identity_verification_workflow_status` (String.t): Filters the workflows returned according to status. Valid values:  - `active`: Only active workflows are returned. This is the default. - `deactivated`: Only deactivated workflows are returned. - `all`: All workflows are returned. 
+    - `:identity_verification_workflow_status` (String.t): Filters the workflows returned according to status. Valid values:  - `active`: Only active workflows are returned. This is the default. - `deactivated`: Only deactivated workflows are returned. - `all`: All workflows are returned.
 
   ### Returns
 

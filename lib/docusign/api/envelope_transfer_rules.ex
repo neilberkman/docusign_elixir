@@ -64,8 +64,8 @@ defmodule DocuSign.Api.EnvelopeTransferRules do
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `opts` (keyword): Optional parameters
-    - `:count` (String.t): The maximum number of results to return.  Use `start_position` to specify the number of results to skip. 
-    - `:start_position` (String.t): The zero-based index of the result from which to start returning results.  Use with `count` to limit the number of results.  The default value is `0`. 
+    - `:count` (String.t): The maximum number of results to return.  Use `start_position` to specify the number of results to skip.
+    - `:start_position` (String.t): The zero-based index of the result from which to start returning results.  Use with `count` to limit the number of results.  The default value is `0`.
 
   ### Returns
 
@@ -110,7 +110,7 @@ defmodule DocuSign.Api.EnvelopeTransferRules do
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `opts` (keyword): Optional parameters
-    - `:body` (EnvelopeTransferRuleRequest): 
+    - `:body` (EnvelopeTransferRuleRequest):
 
   ### Returns
 
@@ -156,7 +156,7 @@ defmodule DocuSign.Api.EnvelopeTransferRules do
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `envelope_transfer_rule_id` (String.t): The ID of the envelope transfer rule. The system generates this ID when the rule is first created.
   - `opts` (keyword): Optional parameters
-    - `:body` (EnvelopeTransferRule): 
+    - `:body` (EnvelopeTransferRule):
 
   ### Returns
 
@@ -202,7 +202,7 @@ defmodule DocuSign.Api.EnvelopeTransferRules do
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `opts` (keyword): Optional parameters
-    - `:body` (EnvelopeTransferRuleInformation): 
+    - `:body` (EnvelopeTransferRuleInformation):
 
   ### Returns
 

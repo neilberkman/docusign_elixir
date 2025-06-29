@@ -14,13 +14,13 @@ defmodule DocuSign.Api.DocumentGeneration do
 
   @doc """
   Returns sender fields for an envelope.
-  Given an `envelopeId`, this method returns the sender fields found in that envelope's documents. After you retrieve the sender fields, use the [DocumentGeneration::updateEnvelopeDocGenFormFields](/docs/esign-rest-api/reference/envelopes/documentgeneration/updateenvelopedocgenformfields/) method to populate the fields.  If the specified envelope does not contain a document with sender fields, the method will return success (`200`) and an empty object (`{}`) in the response.  ### Next steps  - [Learn about document generation in the eSignature concepts guide.](/docs/esign-rest-api/esign101/concepts/documents/document-generation/) - [Learn how to send an envelope with document generation in your preferred coding language](/docs/esign-rest-api/how-to/request-signature-email-document-generation/). 
+  Given an `envelopeId`, this method returns the sender fields found in that envelope's documents. After you retrieve the sender fields, use the [DocumentGeneration::updateEnvelopeDocGenFormFields](/docs/esign-rest-api/reference/envelopes/documentgeneration/updateenvelopedocgenformfields/) method to populate the fields.  If the specified envelope does not contain a document with sender fields, the method will return success (`200`) and an empty object (`{}`) in the response.  ### Next steps  - [Learn about document generation in the eSignature concepts guide.](/docs/esign-rest-api/esign101/concepts/documents/document-generation/) - [Learn how to send an envelope with document generation in your preferred coding language](/docs/esign-rest-api/how-to/request-signature-email-document-generation/).
 
   ### Parameters
 
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
-  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec` 
+  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec`
   - `opts` (keyword): Optional parameters
 
   ### Returns
@@ -54,16 +54,16 @@ defmodule DocuSign.Api.DocumentGeneration do
 
   @doc """
   Updates sender fields for an envelope.
-  This method dynamically generates an envelope's documents by populating its sender fields. The envelope must be in a draft state.  Use the [DocumentGeneration::getEnvelopeDocGenFormFields](/docs/esign-rest-api/reference/envelopes/documentgeneration/getenvelopedocgenformfields/) response to retrieve the list of sender fields for your envelope. Use that list to build the request for this method. For each field, specify the field name and the value to populate.  For example, your request body might look like this:  ```json {   \"docGenFormFields\": [     {       \"documentId\": \"bf3202e1-xxxx-xxxx-xxxx-af4f41366879\",       \"docGenFormFieldList\": [         {           \"name\": \"Candidate_Name\",           \"value\": \"Peggy Olson\"         },         {           \"name\": \"Job_Title\",           \"value\": \"Technical Writer\"         },         {           \"name\": \"Manager_Name\",           \"value\": \"Donald Draper\"         },         {           \"name\": \"Start_Date\",           \"value\": \"1960-02-28\"         },         {           \"name\": \"Salary\",           \"value\": \"3380\"         }       ]     }   ] } ```  ### Important notes  * If `update_docgen_formfields_only` is false (the default), the `documentId` changes after the update. * This endpoint does not validate number, date, or select data field values. The request can succeed even if a number or date field value is not a valid number or date, or if a select field value is not one of the allowed values.  ### Related topics  - [Learn about document generation in the eSignature concepts guide.](/docs/esign-rest-api/esign101/concepts/documents/document-generation/) - [See this method in use in your preferred coding language](/docs/esign-rest-api/how-to/request-signature-email-document-generation/). 
+  This method dynamically generates an envelope's documents by populating its sender fields. The envelope must be in a draft state.  Use the [DocumentGeneration::getEnvelopeDocGenFormFields](/docs/esign-rest-api/reference/envelopes/documentgeneration/getenvelopedocgenformfields/) response to retrieve the list of sender fields for your envelope. Use that list to build the request for this method. For each field, specify the field name and the value to populate.  For example, your request body might look like this:  ```json {   \"docGenFormFields\": [     {       \"documentId\": \"bf3202e1-xxxx-xxxx-xxxx-af4f41366879\",       \"docGenFormFieldList\": [         {           \"name\": \"Candidate_Name\",           \"value\": \"Peggy Olson\"         },         {           \"name\": \"Job_Title\",           \"value\": \"Technical Writer\"         },         {           \"name\": \"Manager_Name\",           \"value\": \"Donald Draper\"         },         {           \"name\": \"Start_Date\",           \"value\": \"1960-02-28\"         },         {           \"name\": \"Salary\",           \"value\": \"3380\"         }       ]     }   ] } ```  ### Important notes  * If `update_docgen_formfields_only` is false (the default), the `documentId` changes after the update. * This endpoint does not validate number, date, or select data field values. The request can succeed even if a number or date field value is not a valid number or date, or if a select field value is not one of the allowed values.  ### Related topics  - [Learn about document generation in the eSignature concepts guide.](/docs/esign-rest-api/esign101/concepts/documents/document-generation/) - [See this method in use in your preferred coding language](/docs/esign-rest-api/how-to/request-signature-email-document-generation/).
 
   ### Parameters
 
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
-  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec` 
+  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec`
   - `opts` (keyword): Optional parameters
-    - `:update_docgen_formfields_only` (String.t): When **false** or omitted, the documents are updated.  When **true,** only the form fields are updated. The documents are unchanged.  
-    - `:body` (DocGenFormFieldRequest): 
+    - `:update_docgen_formfields_only` (String.t): When **false** or omitted, the documents are updated.  When **true,** only the form fields are updated. The documents are unchanged.
+    - `:body` (DocGenFormFieldRequest):
 
   ### Returns
 

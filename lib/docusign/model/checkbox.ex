@@ -3,7 +3,7 @@
 
 defmodule DocuSign.Model.Checkbox do
   @moduledoc """
-  A tab that allows the recipient to select a yes/no (on/off) option. 
+  A tab that allows the recipient to select a yes/no (on/off) option.
   """
 
   alias DocuSign.Deserializer

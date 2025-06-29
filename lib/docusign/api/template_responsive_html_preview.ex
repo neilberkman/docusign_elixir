@@ -22,7 +22,7 @@ defmodule DocuSign.Api.TemplateResponsiveHtmlPreview do
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `template_id` (String.t): The ID of the template.
   - `opts` (keyword): Optional parameters
-    - `:body` (DocumentHtmlDefinition): 
+    - `:body` (DocumentHtmlDefinition):
 
   ### Returns
 

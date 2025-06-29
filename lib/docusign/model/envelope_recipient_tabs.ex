@@ -3,7 +3,7 @@
 
 defmodule DocuSign.Model.EnvelopeRecipientTabs do
   @moduledoc """
-  All of the tabs associated with a recipient. Each property is a list of a type of tab. 
+  All of the tabs associated with a recipient. Each property is a list of a type of tab.
   """
 
   alias DocuSign.Deserializer

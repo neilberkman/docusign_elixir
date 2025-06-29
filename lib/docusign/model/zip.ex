@@ -3,7 +3,7 @@
 
 defmodule DocuSign.Model.Zip do
   @moduledoc """
-  A tab that allows the recipient to enter a ZIP code. The ZIP code can be five digits or nine digits in the ZIP+4 format. The zip code can be typed with or without dashes. It uses the same parameters as a Text tab, with the validation message and pattern set for ZIP code information. 
+  A tab that allows the recipient to enter a ZIP code. The ZIP code can be five digits or nine digits in the ZIP+4 format. The zip code can be typed with or without dashes. It uses the same parameters as a Text tab, with the validation message and pattern set for ZIP code information.
   """
 
   alias DocuSign.Deserializer

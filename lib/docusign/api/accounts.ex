@@ -32,7 +32,7 @@ defmodule DocuSign.Api.Accounts do
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `opts` (keyword): Optional parameters
-    - `:redact_user_data` (String.t): 
+    - `:redact_user_data` (String.t):
 
   ### Returns
 
@@ -136,13 +136,13 @@ defmodule DocuSign.Api.Accounts do
 
   @doc """
   Creates new accounts.
-  Creates new Docusign accounts. You can use this method to create a single account or up to 100 accounts at a time.  **Note:**  This method is restricted to partner integrations. You must work with Docusign Professional Services or Docusign Business Development, who will provide you with the Distributor Code and Distributor Password that you need to include in the request body.   When creating a single account, the body of the request is a [`newAccountRequest`][newAccountRequest] object.  Example:  ``` {   \"newAccountRequest\": [     {       \"accountName\":\"Test Account\",       \"distributorCode\":\"MY_DIST_CODE\",       \"distributorPassword\":\"MY_DIST_PWD\",       \"initialUser\":{         \"email\":\"user@emaildomain.com\",         \"firstName\":\"John\",         \"middleName\": \"Harry\",         \"lastName\":\"Doe\",         \"suffixName\": \"\",         \"userName\": \"John Doe\",         \"jobTitle\": \"Engineer\",         \"company\": \"Test Company\"       },       \"addressInformation\":{         \"address1\": \"1234 Main Street\",         \"address2\": \"Suite 100\",         \"city\": \"Seattle\",         \"state\": \"WA\",         \"postalCode\": \"98101\",         \"country\": \"US\",         \"phone\": \"1234567890\",         \"fax\": \"1234567891\"       },       \"planInformation\":{         \"planId\":\"37085696-xxxx-xxxx-xxxx-7ea067752959\"       },       \"referralInformation\":{         \"includedSeats\": \"1\",         \"referralCode\": \"code\",         \"referrerName\": \"name\"       }     }   ] }  ``` If the request succeeds, it returns a 201 (Created) HTTP response code. The response returns the new account ID, password, and the default user information for each newly created account.   When creating multiple accounts, the body of the request is a `newAccountRequests` object, which contains one or more [`newAccountDefinition`][newAccountDefinition] objects. You can create up to 100 new accounts at a time this way.  The body for a multi-account creation request looks like this in JSON:  ``` {   \"newAccountRequests\": [     {       \"accountName\": \"accountone\",       . . .     },     {       \"accountName\": \"accounttwo\",       . . .     }   ] } ```  A multi-account request looks like this in XML:  ``` <newAccountsDefinition xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns=\"http://www.docusign.com/restapi\">   <newAccountRequests>     <newAccountDefinition>       . . .     </newAccountDefinition>     <newAccountDefinition>       . . .     </newAccountDefinition>   </newAccountRequests> </newAccountsDefinition> ```  A multi-account creation request may succeed (report a 201 code) even if some accounts could not be created. In this case, the `errorDetails` property in the response contains specific information about the failure.    [newAccountDefinition]: #/definitions/newAccountDefinition [nameValue]: #/definitions/nameValue [newAccountRequest]: #/definitions/newAccountRequest 
+  Creates new Docusign accounts. You can use this method to create a single account or up to 100 accounts at a time.  **Note:**  This method is restricted to partner integrations. You must work with Docusign Professional Services or Docusign Business Development, who will provide you with the Distributor Code and Distributor Password that you need to include in the request body.   When creating a single account, the body of the request is a [`newAccountRequest`][newAccountRequest] object.  Example:  ``` {   \"newAccountRequest\": [     {       \"accountName\":\"Test Account\",       \"distributorCode\":\"MY_DIST_CODE\",       \"distributorPassword\":\"MY_DIST_PWD\",       \"initialUser\":{         \"email\":\"user@emaildomain.com\",         \"firstName\":\"John\",         \"middleName\": \"Harry\",         \"lastName\":\"Doe\",         \"suffixName\": \"\",         \"userName\": \"John Doe\",         \"jobTitle\": \"Engineer\",         \"company\": \"Test Company\"       },       \"addressInformation\":{         \"address1\": \"1234 Main Street\",         \"address2\": \"Suite 100\",         \"city\": \"Seattle\",         \"state\": \"WA\",         \"postalCode\": \"98101\",         \"country\": \"US\",         \"phone\": \"1234567890\",         \"fax\": \"1234567891\"       },       \"planInformation\":{         \"planId\":\"37085696-xxxx-xxxx-xxxx-7ea067752959\"       },       \"referralInformation\":{         \"includedSeats\": \"1\",         \"referralCode\": \"code\",         \"referrerName\": \"name\"       }     }   ] }  ``` If the request succeeds, it returns a 201 (Created) HTTP response code. The response returns the new account ID, password, and the default user information for each newly created account.   When creating multiple accounts, the body of the request is a `newAccountRequests` object, which contains one or more [`newAccountDefinition`][newAccountDefinition] objects. You can create up to 100 new accounts at a time this way.  The body for a multi-account creation request looks like this in JSON:  ``` {   \"newAccountRequests\": [     {       \"accountName\": \"accountone\",       . . .     },     {       \"accountName\": \"accounttwo\",       . . .     }   ] } ```  A multi-account request looks like this in XML:  ``` <newAccountsDefinition xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns=\"http://www.docusign.com/restapi\">   <newAccountRequests>     <newAccountDefinition>       . . .     </newAccountDefinition>     <newAccountDefinition>       . . .     </newAccountDefinition>   </newAccountRequests> </newAccountsDefinition> ```  A multi-account creation request may succeed (report a 201 code) even if some accounts could not be created. In this case, the `errorDetails` property in the response contains specific information about the failure.    [newAccountDefinition]: #/definitions/newAccountDefinition [nameValue]: #/definitions/nameValue [newAccountRequest]: #/definitions/newAccountRequest
 
   ### Parameters
 
   - `connection` (DocuSign.Connection): Connection to server
   - `opts` (keyword): Optional parameters
-    - `:body` (NewAccountDefinition): 
+    - `:body` (NewAccountDefinition):
 
   ### Returns
 
@@ -176,14 +176,14 @@ defmodule DocuSign.Api.Accounts do
 
   @doc """
   Gets list of recurring and usage charges for the account.
-  Retrieves the list of recurring and usage charges for the account. This can be used to determine the charge structure and usage of charge plan items.   Privileges required: account administrator 
+  Retrieves the list of recurring and usage charges for the account. This can be used to determine the charge structure and usage of charge plan items.   Privileges required: account administrator
 
   ### Parameters
 
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `opts` (keyword): Optional parameters
-    - `:include_charges` (String.t): Specifies which billing charges to return. Valid values are:  * envelopes * seats 
+    - `:include_charges` (String.t): Specifies which billing charges to return. Valid values are:  * envelopes * seats
 
   ### Returns
 
@@ -222,9 +222,9 @@ defmodule DocuSign.Api.Accounts do
 
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
-  - `recipient_part` (String.t): Signature is the only supported value. 
+  - `recipient_part` (String.t): Signature is the only supported value.
   - `opts` (keyword): Optional parameters
-    - `:body` (CaptiveRecipientInformation): 
+    - `:body` (CaptiveRecipientInformation):
 
   ### Returns
 
@@ -307,7 +307,7 @@ defmodule DocuSign.Api.Accounts do
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `opts` (keyword): Optional parameters
-    - `:body` (EnvelopePurgeConfiguration): 
+    - `:body` (EnvelopePurgeConfiguration):
 
   ### Returns
 
@@ -386,7 +386,7 @@ defmodule DocuSign.Api.Accounts do
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `opts` (keyword): Optional parameters
-    - `:body` (NotificationDefaults): 
+    - `:body` (NotificationDefaults):
 
   ### Returns
 
@@ -501,7 +501,7 @@ defmodule DocuSign.Api.Accounts do
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `opts` (keyword): Optional parameters
-    - `:body` (AccountSettingsInformation): 
+    - `:body` (AccountSettingsInformation):
 
   ### Returns
 
@@ -540,13 +540,13 @@ defmodule DocuSign.Api.Accounts do
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `opts` (keyword): Optional parameters
-    - `:count` (String.t): The maximum number of results to return.  Use `start_position` to specify the number of results to skip.  Default: `1000` 
+    - `:count` (String.t): The maximum number of results to return.  Use `start_position` to specify the number of results to skip.  Default: `1000`
     - `:envelopes_not_shared_user_status` (String.t): This query parameter works in conjunction with `user_ids`. When you specify one of the following user statuses, the query limits the results to only users that match the specified status: - `ActivationRequired`: Membership Activation required - `ActivationSent`: Membership activation sent to user - `Active`: User Membership is active - `Closed`: User Membership is closed - `Disabled`: User Membership is disabled
     - `:folder_ids` (String.t): A comma-separated list of folder IDs for which to return shared item information. If `item_type` is set to `folders`, at least one folder ID is required.
-    - `:item_type` (String.t): Specifies the type of shared item being requested. Valid values:  - `envelopes`: Get information about envelope sharing between users. - `templates`: Get information about template sharing among users and groups. - `folders`: Get information about folder sharing among users and groups. 
+    - `:item_type` (String.t): Specifies the type of shared item being requested. Valid values:  - `envelopes`: Get information about envelope sharing between users. - `templates`: Get information about template sharing among users and groups. - `folders`: Get information about folder sharing among users and groups.
     - `:search_text` (String.t): Filter user names based on the specified string. The wild-card '*' (asterisk) can be used in the string.
     - `:shared` (String.t): A comma-separated list of sharing filters that specifies which users appear in the response.   - `not_shared`: The response lists users who do not share items of `item_type` with the current user.  - `shared_to`: The response lists users in `user_list` who are sharing items to current user.  - `shared_from`: The response lists users in `user_list` who are sharing items from the current user.  - `shared_to_and_from`: The response lists users in `user_list` who are sharing items to and from the current user.  If the current user does not have administrative privileges, only the `shared_to` option is valid.
-    - `:start_position` (String.t): The zero-based index of the result from which to start returning results.  Use with `count` to limit the number of results.  The default value is `0`. 
+    - `:start_position` (String.t): The zero-based index of the result from which to start returning results.  Use with `count` to limit the number of results.  The default value is `0`.
     - `:user_ids` (String.t): A comma-separated list of user IDs for whom the shared item information is being requested.
 
   ### Returns
@@ -587,17 +587,17 @@ defmodule DocuSign.Api.Accounts do
 
   @doc """
   Reserved: Sets the shared access information for users.
-  This sets the shared access status for one or more users or templates.  When setting user shared access, only users with account administration privileges can set shared access status for envelopes.  When setting template shared access, only users who own a template and have sharing permission or with account administration privileges can set shared access for templates.  Changes to the shared items status are not additive. The change always replaces the current status.  To change template shared access, add the query parameter `item_type` = `templates` to the request. When this is set, the user and envelopes properties are not required.  **Note:** This functionality is a newer version of the [Update Group Share](/docs/esign-rest-api/reference/templates/templates/updategroupshare/) functionality.  ### Related topics  - [How to share access to a Docusign envelope inbox](/docs/esign-rest-api/how-to/shared-access/)  
+  This sets the shared access status for one or more users or templates.  When setting user shared access, only users with account administration privileges can set shared access status for envelopes.  When setting template shared access, only users who own a template and have sharing permission or with account administration privileges can set shared access for templates.  Changes to the shared items status are not additive. The change always replaces the current status.  To change template shared access, add the query parameter `item_type` = `templates` to the request. When this is set, the user and envelopes properties are not required.  **Note:** This functionality is a newer version of the [Update Group Share](/docs/esign-rest-api/reference/templates/templates/updategroupshare/) functionality.  ### Related topics  - [How to share access to a Docusign envelope inbox](/docs/esign-rest-api/how-to/shared-access/)
 
   ### Parameters
 
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `opts` (keyword): Optional parameters
-    - `:item_type` (String.t): Specifies the type of shared item being set: - `envelopes`: Set envelope sharing between users. - `templates`: Set information about template sharing among users and groups. - `folders`: Get information about folder sharing among users and groups. 
+    - `:item_type` (String.t): Specifies the type of shared item being set: - `envelopes`: Set envelope sharing between users. - `templates`: Set information about template sharing among users and groups. - `folders`: Get information about folder sharing among users and groups.
     - `:preserve_existing_shared_access` (String.t): When **true,** preserve the existing shared access settings.
     - `:user_ids` (String.t): A comma-separated list of IDs for users whose shared item access is being set.
-    - `:body` (AccountSharedAccess): 
+    - `:body` (AccountSharedAccess):
 
   ### Returns
 

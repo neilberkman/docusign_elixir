@@ -3,7 +3,7 @@
 
 defmodule DocuSign.Model.Expirations do
   @moduledoc """
-  A complex element that specifies the expiration settings for the envelope. When an envelope expires, it is voided and no longer available for signing. **Note:** there is a short delay between when the envelope expires and when it is voided. 
+  A complex element that specifies the expiration settings for the envelope. When an envelope expires, it is voided and no longer available for signing. **Note:** there is a short delay between when the envelope expires and when it is voided.
   """
 
   @derive Jason.Encoder

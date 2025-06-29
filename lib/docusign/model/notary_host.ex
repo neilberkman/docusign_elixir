@@ -3,7 +3,7 @@
 
 defmodule DocuSign.Model.NotaryHost do
   @moduledoc """
-  This object is used only when `inPersonSigningType` in the `inPersonSigner` object is `notary`.  It describes information about the notary host. The following information is required when using the eNotary in-person signing flow:  * `name`: Specifies the notary's full legal name. * `email`: Specifies the notary's email address. * `recipientId`: A unique ID number for the notary signing host. 
+  This object is used only when `inPersonSigningType` in the `inPersonSigner` object is `notary`.  It describes information about the notary host. The following information is required when using the eNotary in-person signing flow:  * `name`: Specifies the notary's full legal name. * `email`: Specifies the notary's email address. * `recipientId`: A unique ID number for the notary signing host.
   """
 
   alias DocuSign.Deserializer

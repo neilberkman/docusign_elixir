@@ -3,7 +3,7 @@
 
 defmodule DocuSign.Model.AccountCustomFields do
   @moduledoc """
-  An `accountCustomField` is an envelope custom field that you set at the account level. Applying custom fields enables account administrators to group and manage envelopes. 
+  An `accountCustomField` is an envelope custom field that you set at the account level. Applying custom fields enables account administrators to group and manage envelopes.
   """
 
   alias DocuSign.Deserializer

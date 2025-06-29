@@ -3,7 +3,7 @@
 
 defmodule DocuSign.Model.SignerAttachment do
   @moduledoc """
-  A tab that allows the recipient to attach supporting documents to an envelope. 
+  A tab that allows the recipient to attach supporting documents to an envelope.
   """
 
   alias DocuSign.Deserializer

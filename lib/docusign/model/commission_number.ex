@@ -3,7 +3,7 @@
 
 defmodule DocuSign.Model.CommissionNumber do
   @moduledoc """
-  A Commission Number tab displays a notary's commission number. The tab is populated with the notary's commission information, but the recipient can also edit the value when notarizing. This tab can only be assigned to a remote notary recipient using [Docusign Notary][notary].  [notary]: /docs/notary-api/ 
+  A Commission Number tab displays a notary's commission number. The tab is populated with the notary's commission information, but the recipient can also edit the value when notarizing. This tab can only be assigned to a remote notary recipient using [Docusign Notary][notary].  [notary]: /docs/notary-api/
   """
 
   alias DocuSign.Deserializer

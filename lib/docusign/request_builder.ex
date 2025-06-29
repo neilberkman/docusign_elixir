@@ -186,7 +186,7 @@ defmodule DocuSign.RequestBuilder do
   def evaluate_response({:error, _} = error, _), do: error
 
   defp resolve_mapping(%Tesla.Env{status: status} = env, [{mapping_status, struct} | _], _)
-       when status == mapping_status do
+      when status == mapping_status do
     decode(env, struct)
   end
 

@@ -3,7 +3,7 @@
 
 defmodule DocuSign.Model.DocumentGeneration do
   @moduledoc """
-  Document Generation for eSignature allows you to dynamically generate documents from a Word template to send for signature within the eSignature sending workflow. 
+  Document Generation for eSignature allows you to dynamically generate documents from a Word template to send for signature within the eSignature sending workflow.
   """
 
   alias DocuSign.Deserializer

@@ -87,7 +87,7 @@ defmodule DocuSign.Api.ENoteConfigurations do
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `opts` (keyword): Optional parameters
-    - `:body` (ENoteConfiguration): 
+    - `:body` (ENoteConfiguration):
 
   ### Returns
 

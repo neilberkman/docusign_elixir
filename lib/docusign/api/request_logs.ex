@@ -111,7 +111,7 @@ defmodule DocuSign.Api.RequestLogs do
 
   @doc """
   Gets the API request logging log files.
-  Retrieves a list of log entries as a JSON or XML object or as a zip file containing the entries.  If the Accept header is set to `application/zip`, the response is a zip file containing individual text files, each representing an API request.  If the Accept header is set to `application/json` or `application/xml`, the response returns list of log entries in either JSON or XML. An example JSON response body is shown below. 
+  Retrieves a list of log entries as a JSON or XML object or as a zip file containing the entries.  If the Accept header is set to `application/zip`, the response is a zip file containing individual text files, each representing an API request.  If the Accept header is set to `application/json` or `application/xml`, the response returns list of log entries in either JSON or XML. An example JSON response body is shown below.
 
   ### Parameters
 
@@ -150,13 +150,13 @@ defmodule DocuSign.Api.RequestLogs do
 
   @doc """
   Enables or disables API request logging for troubleshooting.
-  Enables or disables API request logging for troubleshooting.  When enabled (`apiRequestLogging` is **true**), REST API requests and responses for the user are added to a log. A log can have up to 50 requests/responses and the current number of log entries can be determined by getting the settings. Logging is automatically disabled when the log limit of 50 is reached.  You can call [Diagnostics: getRequestLog](/docs/esign-rest-api/reference/diagnostics/requestlogs/get/) or [Diagnostics: listRequestLogs](/docs/esign-rest-api/reference/diagnostics/requestlogs/list/) to download the log files (individually or as a zip file). Call [Diagnostics: deleteRequestLogs](/docs/esign-rest-api/reference/diagnostics/requestlogs/delete/) to clear the log by deleting current entries.  Private information, such as passwords and integration key information, which is normally located in the call header is omitted from the request/response log.  API request logging only captures requests from the authenticated user. Any call that does not authenticate the user and resolve a userId is not logged. 
+  Enables or disables API request logging for troubleshooting.  When enabled (`apiRequestLogging` is **true**), REST API requests and responses for the user are added to a log. A log can have up to 50 requests/responses and the current number of log entries can be determined by getting the settings. Logging is automatically disabled when the log limit of 50 is reached.  You can call [Diagnostics: getRequestLog](/docs/esign-rest-api/reference/diagnostics/requestlogs/get/) or [Diagnostics: listRequestLogs](/docs/esign-rest-api/reference/diagnostics/requestlogs/list/) to download the log files (individually or as a zip file). Call [Diagnostics: deleteRequestLogs](/docs/esign-rest-api/reference/diagnostics/requestlogs/delete/) to clear the log by deleting current entries.  Private information, such as passwords and integration key information, which is normally located in the call header is omitted from the request/response log.  API request logging only captures requests from the authenticated user. Any call that does not authenticate the user and resolve a userId is not logged.
 
   ### Parameters
 
   - `connection` (DocuSign.Connection): Connection to server
   - `opts` (keyword): Optional parameters
-    - `:body` (DiagnosticsSettingsInformation): 
+    - `:body` (DiagnosticsSettingsInformation):
 
   ### Returns
 

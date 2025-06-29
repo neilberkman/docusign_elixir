@@ -15,7 +15,7 @@ defmodule DocuSign.Api.AccountSignatures do
 
   @doc """
   Deletes an account stamp.
-  Deletes a stamp specified by `signatureId`. 
+  Deletes a stamp specified by `signatureId`.
 
   ### Parameters
 
@@ -223,15 +223,15 @@ defmodule DocuSign.Api.AccountSignatures do
 
   @doc """
   Adds or updates one or more account stamps.
-  Adds or updates one or more account stamps. 
+  Adds or updates one or more account stamps.
 
   ### Parameters
 
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `opts` (keyword): Optional parameters
-    - `:decode_only` (String.t): 
-    - `:body` (AccountSignaturesInformation): 
+    - `:decode_only` (String.t):
+    - `:body` (AccountSignaturesInformation):
 
   ### Returns
 
@@ -273,7 +273,7 @@ defmodule DocuSign.Api.AccountSignatures do
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `opts` (keyword): Optional parameters
-    - `:body` (AccountSignaturesInformation): 
+    - `:body` (AccountSignaturesInformation):
 
   ### Returns
 
@@ -316,7 +316,7 @@ defmodule DocuSign.Api.AccountSignatures do
   - `signature_id` (String.t): The ID of the account stamp.
   - `opts` (keyword): Optional parameters
     - `:close_existing_signature` (String.t): When **true,** closes the current signature.
-    - `:body` (AccountSignatureDefinition): 
+    - `:body` (AccountSignatureDefinition):
 
   ### Returns
 
@@ -365,7 +365,7 @@ defmodule DocuSign.Api.AccountSignatures do
   - `image_type` (String.t): Specificies the type of image. Valid values:  - `stamp_image` - `signature_image` - `initials_image`
   - `signature_id` (String.t): The ID of the account stamp.
   - `opts` (keyword): Optional parameters
-    - `:transparent_png` (String.t): 
+    - `:transparent_png` (String.t):
 
   ### Returns
 

@@ -14,7 +14,7 @@ defmodule DocuSign.Api.SigningGroupUsers do
 
   @doc """
   Deletes  one or more members from a signing group.
-  Deletes  one or more members from the specified signing group. 
+  Deletes  one or more members from the specified signing group.
 
   ### Parameters
 
@@ -99,8 +99,8 @@ defmodule DocuSign.Api.SigningGroupUsers do
   end
 
   @doc """
-  Adds members to a signing group. 
-  Adds one or more new members to a signing group. A signing group can have a maximum of 50 members. 
+  Adds members to a signing group.
+  Adds one or more new members to a signing group. A signing group can have a maximum of 50 members.
 
   ### Parameters
 

@@ -3,7 +3,7 @@
 
 defmodule DocuSign.Model.CarbonCopy do
   @moduledoc """
-  Contains information about a carbon copy recipient. Carbon copy recipients get a copy of the envelope but don't need to sign, initial, date or add information to any of the documents. 
+  Contains information about a carbon copy recipient. Carbon copy recipients get a copy of the envelope but don't need to sign, initial, date or add information to any of the documents.
   """
 
   alias DocuSign.Deserializer

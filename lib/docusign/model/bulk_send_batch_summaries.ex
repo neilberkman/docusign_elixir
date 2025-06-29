@@ -3,7 +3,7 @@
 
 defmodule DocuSign.Model.BulkSendBatchSummaries do
   @moduledoc """
-  A list of bulk send batch summaries. 
+  A list of bulk send batch summaries.
   """
 
   alias DocuSign.Deserializer

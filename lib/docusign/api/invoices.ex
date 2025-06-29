@@ -56,7 +56,7 @@ defmodule DocuSign.Api.Invoices do
 
   @doc """
   Get a List of Billing Invoices
-  Retrieves a list of invoices for the account. If the from date or to date queries are not specified, the response returns invoices for the last 365 days.  Privileges required: account administrator 
+  Retrieves a list of invoices for the account. If the from date or to date queries are not specified, the response returns invoices for the last 365 days.  Privileges required: account administrator
 
   ### Parameters
 

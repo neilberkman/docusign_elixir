@@ -21,7 +21,7 @@ defmodule DocuSign.Api.TemplateDocumentVisibility do
 
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
-  - `recipient_id` (String.t): A local reference used to map recipients to other objects, such as specific document tabs.  A `recipientId` must be either an integer or a GUID, and the `recipientId` must be unique within an envelope.  For example, many envelopes assign the first recipient a `recipientId` of `1`. 
+  - `recipient_id` (String.t): A local reference used to map recipients to other objects, such as specific document tabs.  A `recipientId` must be either an integer or a GUID, and the `recipientId` must be unique within an envelope.  For example, many envelopes assign the first recipient a `recipientId` of `1`.
   - `template_id` (String.t): The ID of the template.
   - `opts` (keyword): Optional parameters
 
@@ -69,10 +69,10 @@ defmodule DocuSign.Api.TemplateDocumentVisibility do
 
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
-  - `recipient_id` (String.t): A local reference used to map recipients to other objects, such as specific document tabs.  A `recipientId` must be either an integer or a GUID, and the `recipientId` must be unique within an envelope.  For example, many envelopes assign the first recipient a `recipientId` of `1`. 
+  - `recipient_id` (String.t): A local reference used to map recipients to other objects, such as specific document tabs.  A `recipientId` must be either an integer or a GUID, and the `recipientId` must be unique within an envelope.  For example, many envelopes assign the first recipient a `recipientId` of `1`.
   - `template_id` (String.t): The ID of the template.
   - `opts` (keyword): Optional parameters
-    - `:body` (TemplateDocumentVisibilityList): 
+    - `:body` (TemplateDocumentVisibilityList):
 
   ### Returns
 
@@ -126,7 +126,7 @@ defmodule DocuSign.Api.TemplateDocumentVisibility do
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `template_id` (String.t): The ID of the template.
   - `opts` (keyword): Optional parameters
-    - `:body` (TemplateDocumentVisibilityList): 
+    - `:body` (TemplateDocumentVisibilityList):
 
   ### Returns
 

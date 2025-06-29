@@ -3,7 +3,7 @@
 
 defmodule DocuSign.Model.AccountSignatureProviders do
   @moduledoc """
-  This resource provides information on the Standards Based Signature providers that have been provisioned for an account. 
+  This resource provides information on the Standards Based Signature providers that have been provisioned for an account.
   """
 
   alias DocuSign.Deserializer

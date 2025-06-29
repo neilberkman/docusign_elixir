@@ -3,7 +3,7 @@
 
 defmodule DocuSign.Model.ConnectEvents do
   @moduledoc """
-  Connect event logging information. This object contains sections for regular Connect logs and for Connect failures. 
+  Connect event logging information. This object contains sections for regular Connect logs and for Connect failures.
   """
 
   alias DocuSign.Deserializer

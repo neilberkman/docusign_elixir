@@ -3,7 +3,7 @@
 
 defmodule DocuSign.Model.EnvelopeLocks do
   @moduledoc """
-  Envelope locks let you lock an envelope to prevent any changes while you are updating an envelope. 
+  Envelope locks let you lock an envelope to prevent any changes while you are updating an envelope.
   """
 
   alias DocuSign.Deserializer

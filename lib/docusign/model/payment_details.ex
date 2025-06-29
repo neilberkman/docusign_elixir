@@ -3,7 +3,7 @@
 
 defmodule DocuSign.Model.PaymentDetails do
   @moduledoc """
-  When a formula tab has a `paymentDetails` property, the formula tab is a payment item. See [Requesting Payments Along with Signatures][paymentguide] in the Docusign Support Center to learn more about payments.  [paymentguide]:     https://support.docusign.com/s/document-item?bundleId=juu1573854950452&topicId=fyw1573854935374.html 
+  When a formula tab has a `paymentDetails` property, the formula tab is a payment item. See [Requesting Payments Along with Signatures][paymentguide] in the Docusign Support Center to learn more about payments.  [paymentguide]:     https://support.docusign.com/s/document-item?bundleId=juu1573854950452&topicId=fyw1573854935374.html
   """
 
   alias DocuSign.Deserializer

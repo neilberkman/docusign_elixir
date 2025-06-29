@@ -3,7 +3,7 @@
 
 defmodule DocuSign.Model.Title do
   @moduledoc """
-  A tab that displays the recipient's title. 
+  A tab that displays the recipient's title.
   """
 
   alias DocuSign.Deserializer

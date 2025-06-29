@@ -3,7 +3,7 @@
 
 defmodule DocuSign.Model.MergeField do
   @moduledoc """
-  Contains information for transferring values between Salesforce data fields and Docusign tabs. 
+  Contains information for transferring values between Salesforce data fields and Docusign tabs.
   """
 
   alias DocuSign.Deserializer
