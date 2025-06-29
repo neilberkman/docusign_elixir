@@ -540,7 +540,7 @@ This LiveBook demonstrates how to create a complete embedded signing experience 
 You've learned how to:
 
 1. Create an envelope with a recipient specifically marked for embedded signing
-   * Use status="sent" with a clientUserId to enable embedded signing
+   - Use status="sent" with a clientUserId to enable embedded signing
 2. Generate an embedded signing URL
 3. Automatically monitor the envelope status and retrieve the completed document
 
