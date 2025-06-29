@@ -72,4 +72,5 @@ jobs:
           mix test --trace
 
       - name: Check formatting
+        if: matrix.elixir == '1.18.4' && matrix.otp == '28.0'
         run: mix format --check-formatted
