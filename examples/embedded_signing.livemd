@@ -455,7 +455,7 @@ check_envelope_status = fn ->
       # If envelope is completed, automatically retrieve the document
       if status == "completed" do
         document_url = "/v2.1/accounts/#{account_id}/envelopes/#{signing_envelope_id}/documents/1"
-        
+
         case DocuSign.Connection.download_file(conn, document_url, strategy: :memory) do
           {:ok, {document_content, filename, content_type}} ->
             cond do
