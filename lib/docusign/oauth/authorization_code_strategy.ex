@@ -27,7 +27,7 @@ defmodule DocuSign.OAuth.AuthorizationCodeStrategy do
 
       config :docusign,
         client_id: "your_integration_key",
-        client_secret: "your_secret_key", 
+        client_secret: "your_secret_key",
         hostname: "account-d.docusign.com"  # or "account.docusign.com" for production
   """
 

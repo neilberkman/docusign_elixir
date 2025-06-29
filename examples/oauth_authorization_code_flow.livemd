@@ -69,15 +69,15 @@ defmodule OAuthCallbackServer do
     else
       %{}
     end
-    
+
     code = query_params["code"]
     state = query_params["state"]
-    
+
     # Store the code in our shared state
     OAuthState.put(:code, code)
     OAuthState.put(:state, state)
     OAuthState.put(:received_at, DateTime.utc_now())
-    
+
     send_resp(conn, 200, """
     <html>
       <head><title>DocuSign OAuth Callback</title></head>
@@ -189,8 +189,8 @@ Kino.HTML.new("""
 <div style="margin: 20px 0; padding: 20px; border: 2px solid #007bff; border-radius: 8px; background-color: #f8f9fa;">
   <h3>Step 1: User Authorization</h3>
   <p>Click this link to authorize the application in DocuSign:</p>
-  <a href="#{authorization_url}" target="_blank" 
-     style="display: inline-block; background: #007bff; color: white; padding: 12px 24px; 
+  <a href="#{authorization_url}" target="_blank"
+     style="display: inline-block; background: #007bff; color: white; padding: 12px 24px;
             text-decoration: none; border-radius: 4px; font-weight: bold; margin: 10px 0;">
     🔐 Authorize DocuSign Access
   </a>
@@ -229,17 +229,17 @@ received_at = OAuthState.get(:received_at)
 if callback_code do
   Kino.Markdown.new("""
   ## ✅ Authorization Code Received!
-  
+
   **Code**: `#{String.slice(callback_code, 0, 30)}...`
   **State**: `#{callback_state}`
   **Received**: `#{received_at}`
-  
+
   The authorization code has been automatically captured from the OAuth callback.
   """)
 else
   Kino.Markdown.new("""
   ## ⏳ Waiting for Authorization...
-  
+
   Please click the authorization link above and complete the OAuth flow.
   The authorization code will appear here automatically once you authorize.
   """)
@@ -564,7 +564,7 @@ if oauth_client && oauth_client.token && oauth_client.token.refresh_token do
 
     try do
       refreshed_client = OAuth2.Client.refresh_token!(oauth_client)
-      
+
       # Store new OAuth2 client
       Process.put(:oauth_client, refreshed_client)
 

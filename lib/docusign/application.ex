@@ -19,15 +19,43 @@ defmodule DocuSign.Application do
 
   defp children(:test) do
     [
-      {Finch, name: DocuSign.Finch}
+      {Finch, name: DocuSign.Finch, pools: finch_pools()}
     ]
   end
 
   defp children(_env) do
     [
-      {Finch, name: DocuSign.Finch},
+      {Finch, name: DocuSign.Finch, pools: finch_pools()},
       {DocuSign.ClientRegistry, []}
     ]
+  end
+
+  defp finch_pools do
+    base_pools = %{
+      default: [
+        size: Application.get_env(:docusign, :pool_size, 10),
+        count: Application.get_env(:docusign, :pool_count, 1)
+      ]
+    }
+
+    # Only add SSL configuration if explicitly configured
+    if Application.get_env(:docusign, :ssl_options) do
+      add_ssl_to_pools(base_pools)
+    else
+      base_pools
+    end
+  end
+
+  defp add_ssl_to_pools(pools) do
+    if Code.ensure_loaded?(DocuSign.SSLOptions) do
+      ssl_opts = DocuSign.SSLOptions.build()
+
+      Map.update!(pools, :default, fn default_pool ->
+        Keyword.put(default_pool, :conn_opts, transport_opts: ssl_opts)
+      end)
+    else
+      pools
+    end
   end
 
   defp get_app_env do

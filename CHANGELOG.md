@@ -1,5 +1,23 @@
 # Changelog
 
+## Unreleased
+
+### Enhancements
+- Add comprehensive SSL/TLS configuration support
+  - Custom CA certificates and certificate validation
+  - Client certificate authentication (mutual TLS)
+  - Per-request SSL option overrides
+  - Automatic system CA certificate detection
+  - Connection pooling configuration
+- Add `DocuSign.SSLOptions` module for managing SSL configuration
+- Update `DocuSign.Connection` to support per-request SSL options
+- Enhance Finch integration with SSL transport options
+
+### Documentation
+- Add extensive SSL/TLS configuration documentation to README
+- Include security best practices for certificate validation
+- Document connection pooling options
+
 ## v2.2.0
 
 ### New Features

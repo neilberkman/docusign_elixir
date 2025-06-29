@@ -16,6 +16,17 @@ Interactive walkthrough of the OAuth2 Authorization Code Flow for user-facing ap
 
 [![Run in Livebook](https://livebook.dev/badge/v1/blue.svg)](https://livebook.dev/run?url=https://github.com/neilberkman/docusign_elixir/blob/main/examples/oauth_authorization_code_flow.livemd)
 
+### SSL Configuration Example
+
+Learn how to configure SSL/TLS options for secure connections:
+
+1. Configure custom CA certificates
+2. Set up client certificate authentication
+3. Understand security best practices
+4. Test your SSL configuration
+
+[![Run in Livebook](https://livebook.dev/badge/v1/blue.svg)](https://livebook.dev/run?url=https://github.com/neilberkman/docusign_elixir/blob/main/examples/ssl_configuration.livemd)
+
 Just click the badges above to run the notebooks in LiveBook - no environment setup required!
 
 ## Installation
@@ -94,7 +105,7 @@ account = Enum.find(user_info["accounts"], &(&1["is_default"] == "true"))
 
 #### Requirements
 - RSA Private key
-- DocuSign Client ID (integration key)  
+- DocuSign Client ID (integration key)
 - DocuSign Account ID
 - One or more DocuSign User IDs
 
@@ -145,7 +156,7 @@ config :docusign,
 2. Note the **API Account ID** (this is your Account ID)
 3. Create a new app:
    - Provide a name
-   - In **Authentication**, click **+ GENERATE RSA** 
+   - In **Authentication**, click **+ GENERATE RSA**
    - Store the private key securely
    - Add redirect URI: `https://account-d.docusign.com/me` (sandbox) or `https://account.docusign.com/me` (production)
 4. Note the **Integration Key** (this is your Client ID)
@@ -172,7 +183,7 @@ user_id = "USER_ID"
 {:ok, conn} = DocuSign.Connection.get(user_id)
 
 # Call APIs
-account_id = "ACCOUNT_ID"  
+account_id = "ACCOUNT_ID"
 {:ok, users} = DocuSign.Api.Users.users_get_users(conn, account_id)
 ```
 
@@ -184,13 +195,110 @@ By default, HTTP requests will time out after 30_000 ms. You can configure the t
 config :docusign, timeout: 60_000
 ```
 
+## SSL/TLS Configuration
+
+The DocuSign client supports comprehensive SSL/TLS configuration for secure connections. This is particularly useful for:
+
+- Using custom CA certificates
+- Client certificate authentication (mutual TLS)
+- Controlling SSL verification behavior
+- Configuring cipher suites and TLS versions
+
+### Basic SSL Configuration
+
+Configure SSL options at the application level:
+
+```elixir
+config :docusign, :ssl_options,
+  verify: :verify_peer,                    # Always verify server certificates (default)
+  cacertfile: "/path/to/ca-bundle.crt",   # Custom CA certificate bundle
+  depth: 3                                 # Certificate chain verification depth
+```
+
+### Client Certificate Authentication
+
+For mutual TLS authentication:
+
+```elixir
+config :docusign, :ssl_options,
+  certfile: "/path/to/client-cert.pem",   # Client certificate
+  keyfile: "/path/to/client-key.pem",     # Client private key
+  password: "keypassword"                  # Password for encrypted key (if needed)
+```
+
+### Advanced SSL Options
+
+```elixir
+config :docusign, :ssl_options,
+  # TLS versions
+  versions: [:"tlsv1.2", :"tlsv1.3"],
+
+  # Cipher suites (example)
+  ciphers: [
+    "ECDHE-RSA-AES256-GCM-SHA384",
+    "ECDHE-RSA-AES128-GCM-SHA256"
+  ],
+
+  # Custom hostname verification
+  customize_hostname_check: [
+    match_fun: :public_key.pkix_verify_hostname_match_fun(:https)
+  ],
+
+  # Custom verification function
+  verify_fun: {&MyApp.SSLVerification.verify/3, nil}
+```
+
+### Per-Request SSL Options
+
+You can override SSL options for specific requests:
+
+```elixir
+{:ok, conn} = DocuSign.Connection.get(user_id)
+
+# Use custom CA certificate for this request only
+DocuSign.Connection.request(conn,
+  method: :get,
+  url: "/accounts",
+  ssl_options: [
+    cacertfile: "/special/ca.pem",
+    verify: :verify_peer
+  ]
+)
+```
+
+### Connection Pooling
+
+Configure the underlying Finch connection pools:
+
+```elixir
+config :docusign,
+  pool_size: 10,      # Number of connections per pool (default: 10)
+  pool_count: 1       # Number of pools (default: 1)
+```
+
+### Security Best Practices
+
+1. **Always use `:verify_peer` in production** - Never disable certificate verification in production environments
+2. **Keep CA certificates updated** - Ensure your CA bundle includes all necessary root certificates
+3. **Use strong cipher suites** - Configure only secure cipher suites
+4. **Enable hostname verification** - Always verify that the certificate matches the hostname
+
+### Automatic CA Certificate Detection
+
+If you don't specify CA certificates, the library will attempt to use them in this order:
+
+1. User-specified `:cacertfile` or `:cacerts`
+2. CAStore library (if available as a dependency)
+3. System CA certificates from common locations
+4. Erlang's built-in CA certificates as a fallback
+
 ## Tesla adapter configuration
 
-By default, the API is called using `Tesla` with the Mint adapter. You can override the adapter
+By default, the API is called using `Tesla` with the Finch adapter. You can override the adapter
 to any [Tesla adapter][tesla_adapters]:
 
 ```elixir
-config :docusign, adapter: {Tesla.Adapter.Hackney, [recv_timeout: 30_000]}
+config :tesla, adapter: {Tesla.Adapter.Hackney, [recv_timeout: 30_000]}
 ```
 
 ## DocuSign Connect
