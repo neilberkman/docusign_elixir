@@ -242,6 +242,38 @@ defmodule DocuSign.Connection do
     end
   end
 
+  @doc """
+  Downloads a file from the DocuSign API.
+
+  This is a convenience function that wraps `DocuSign.FileDownloader.download/3`.
+  It provides an easy way to download documents, attachments, and other files
+  from DocuSign APIs with automatic filename extraction and flexible storage options.
+
+  ## Options
+
+  See `DocuSign.FileDownloader.download/3` for all available options.
+
+  ## Examples
+
+      # Download envelope document to temporary file
+      {:ok, temp_path} = DocuSign.Connection.download_file(conn, 
+        "/v2.1/accounts/123/envelopes/456/documents/1")
+
+      # Download to memory
+      {:ok, {content, filename, content_type}} = DocuSign.Connection.download_file(conn, url,
+        strategy: :memory)
+
+      # Download with custom temp options
+      {:ok, path} = DocuSign.Connection.download_file(conn, url,
+        temp_options: [prefix: "contract", suffix: ".pdf"])
+
+  """
+  @spec download_file(t(), String.t(), DocuSign.FileDownloader.download_options()) ::
+          DocuSign.FileDownloader.download_result()
+  def download_file(conn, url, opts \\ []) do
+    DocuSign.FileDownloader.download(conn, url, opts)
+  end
+
   defp build_adapter_options(timeout, ssl_opts) do
     base_opts = [receive_timeout: timeout]
 

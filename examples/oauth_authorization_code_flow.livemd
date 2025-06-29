@@ -650,7 +650,7 @@ This LiveBook demonstrates the OAuth2 Authorization Code Flow for DocuSign in an
 
 #### Implementation Patterns
 
-For production Phoenix applications, refer to the comprehensive examples in the [DocuSign Elixir v2.2.0 README](https://github.com/neilberkman/docusign_elixir/blob/v2.2.0/README.md#oauth2-authorization-code-flow) which includes complete Phoenix controller implementation, token management patterns, and security best practices.
+For production Phoenix applications, refer to the comprehensive examples in the [DocuSign Elixir v2.2.1 README](https://github.com/neilberkman/docusign_elixir/blob/v2.2.1/README.md#oauth2-authorization-code-flow) which includes complete Phoenix controller implementation, token management patterns, and security best practices.
 
 ## Conclusion
 
