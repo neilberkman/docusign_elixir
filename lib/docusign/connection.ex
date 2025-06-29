@@ -29,6 +29,7 @@ defmodule DocuSign.Connection do
       {:ok, %DocuSign.Model.UserInformationList{...}}
   """
 
+  alias DocuSign.Util.Environment
   alias DocuSign.{ClientRegistry, User}
   alias OAuth2.Request
   alias Tesla.Adapter.Finch
@@ -95,6 +96,13 @@ defmodule DocuSign.Connection do
     case ClientRegistry.client(user_id) do
       {:ok, client} ->
         account = get_default_account_for_client(client)
+
+        # Auto-detect hostname from account base_uri if not already configured
+        if is_nil(Application.get_env(:docusign, :hostname)) do
+          hostname = Environment.determine_hostname(account.base_uri)
+          Application.put_env(:docusign, :hostname, hostname)
+        end
+
         connection = struct(__MODULE__, client: client, app_account: account)
         {:ok, connection}
 
@@ -290,5 +298,120 @@ defmodule DocuSign.Connection do
 
       Keyword.put(base_opts, :transport_opts, transport_opts)
     end
+  end
+
+  @doc """
+  Automatically determines the appropriate OAuth hostname based on a base URI.
+
+  This function provides a convenient way to automatically configure the correct
+  OAuth hostname by analyzing the provided base URI for sandbox/demo patterns.
+  This is useful when creating connections with different environments.
+
+  ## Parameters
+
+  - `base_uri` - The DocuSign API base URI (e.g., "https://demo.docusign.net/restapi")
+
+  ## Returns
+
+  - `"account-d.docusign.com"` for sandbox/demo environments
+  - `"account.docusign.com"` for production environments
+
+  ## Examples
+
+      # Automatically detect sandbox environment
+      iex> DocuSign.Connection.determine_hostname("https://demo.docusign.net/restapi")
+      "account-d.docusign.com"
+
+      # Automatically detect production environment
+      iex> DocuSign.Connection.determine_hostname("https://na3.docusign.net/restapi")
+      "account.docusign.com"
+
+  ## Usage with OAuth2 Configuration
+
+      # Use automatic detection for OAuth2 setup
+      base_uri = "https://demo.docusign.net/restapi"
+      hostname = DocuSign.Connection.determine_hostname(base_uri)
+      
+      Application.put_env(:docusign, :hostname, hostname)
+
+  """
+  @spec determine_hostname(String.t()) :: String.t()
+  def determine_hostname(base_uri) when is_binary(base_uri) do
+    Environment.determine_hostname(base_uri)
+  end
+
+  @doc """
+  Detects the environment type based on the API base URI.
+
+  ## Parameters
+
+  - `base_uri` - The DocuSign API base URI
+
+  ## Returns
+
+  - `:sandbox` for sandbox/demo environments
+  - `:production` for production environments
+
+  ## Examples
+
+      iex> DocuSign.Connection.detect_environment("https://demo.docusign.net")
+      :sandbox
+
+      iex> DocuSign.Connection.detect_environment("https://na3.docusign.net")
+      :production
+
+  """
+  @spec detect_environment(String.t()) :: :sandbox | :production
+  def detect_environment(base_uri) when is_binary(base_uri) do
+    Environment.detect_environment(base_uri)
+  end
+
+  @doc """
+  Creates a connection with automatic environment detection from OAuth client.
+
+  This is an enhanced version of `from_oauth_client/2` that can automatically
+  determine the OAuth hostname from the base_uri if not already configured.
+
+  ## Parameters
+
+  - `oauth_client` - The OAuth2.Client with valid tokens
+  - `opts` - Options including:
+    - `:account_id` (required) - The DocuSign account ID
+    - `:base_uri` (required) - The API base URI
+    - `:auto_detect_hostname` (optional) - Whether to automatically set hostname config
+
+  ## Options
+
+  - `:auto_detect_hostname` - If `true`, automatically configures the application
+    hostname based on the base_uri environment detection. Default: `false`
+
+  ## Examples
+
+      # Create connection with automatic hostname detection
+      {:ok, conn} = DocuSign.Connection.from_oauth_client_with_detection(
+        oauth_client,
+        account_id: "12345",
+        base_uri: "https://demo.docusign.net/restapi",
+        auto_detect_hostname: true
+      )
+
+  """
+  @spec from_oauth_client_with_detection(OAuth2.Client.t(), keyword()) :: {:ok, t()} | {:error, atom()}
+  def from_oauth_client_with_detection(%OAuth2.Client{} = oauth_client, opts \\ []) do
+    {auto_detect, opts} = Keyword.pop(opts, :auto_detect_hostname, false)
+
+    if auto_detect do
+      case Keyword.fetch(opts, :base_uri) do
+        {:ok, base_uri} ->
+          hostname = Environment.determine_hostname(base_uri)
+          Application.put_env(:docusign, :hostname, hostname)
+
+        :error ->
+          # No base_uri provided, skip auto-detection
+          :ok
+      end
+    end
+
+    from_oauth_client(oauth_client, opts)
   end
 end

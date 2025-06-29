@@ -150,20 +150,16 @@ redirect_uri = Kino.Input.read(redirect_uri_input)
 is_sandbox = Kino.Input.read(is_sandbox_input)
 
 # Configure DocuSign application
-hostname = if is_sandbox, do: "account-d.docusign.com", else: "account.docusign.com"
-
-# Use runtime configuration for OAuth
-Application.put_env(:docusign, :hostname, hostname)
 Application.put_env(:docusign, :client_id, client_id)
 Application.put_env(:docusign, :client_secret, client_secret)
 
 # Debug: Check configuration
 IO.puts("OAuth Configuration set:")
-IO.puts("Hostname: #{hostname}")
 IO.puts("Integration Key: #{client_id}")
 IO.puts("Client Secret: #{String.slice(client_secret, 0, 10)}...")
 IO.puts("Redirect URI: #{redirect_uri}")
 IO.puts("Is sandbox: #{is_sandbox}")
+IO.puts("Hostname: will be auto-detected from account base URI")
 ```
 
 ### Step 1: Generate Authorization URL
@@ -416,11 +412,12 @@ if oauth_client && user_info do
     account_id = default_account["account_id"]
     base_uri = "#{default_account["base_uri"]}/restapi"
 
-    # Create DocuSign connection from OAuth2 client
-    case DocuSign.Connection.from_oauth_client(
+    # Create DocuSign connection from OAuth2 client with auto-detection
+    case DocuSign.Connection.from_oauth_client_with_detection(
       oauth_client,
       account_id: account_id,
-      base_uri: base_uri
+      base_uri: base_uri,
+      auto_detect_hostname: true  # Automatically set hostname based on base_uri
     ) do
       {:ok, conn} ->
         # Store connection for API usage
