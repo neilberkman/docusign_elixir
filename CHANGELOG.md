@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## v2.2.2
 
 ### New Features
 - **Request/Response Debugging**: Comprehensive debugging and logging capabilities matching Ruby client functionality
