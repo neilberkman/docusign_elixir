@@ -129,11 +129,11 @@ defmodule DocuSign.Connection do
         redirect_uri: "https://yourapp.com/callback"
       )
       |> DocuSign.OAuth.AuthorizationCodeStrategy.get_token!(code: auth_code)
-      
+
       # Get user info to find account details
       user_info = DocuSign.OAuth.AuthorizationCodeStrategy.get_user_info!(oauth_client)
       account = Enum.find(user_info["accounts"], &(&1["is_default"] == "true"))
-      
+
       # Create connection
       {:ok, conn} = from_oauth_client(
         oauth_client,
@@ -202,11 +202,33 @@ defmodule DocuSign.Connection do
 
   @doc """
   Makes a request.
+
+  ## Options
+
+  * `:ssl_options` - Override SSL options for this specific request
+  * All other options are passed through to Tesla
+
+  ## Examples
+
+      # Use custom CA certificate for this request
+      DocuSign.Connection.request(conn,
+        method: :get,
+        url: "/accounts",
+        ssl_options: [cacertfile: "/custom/ca.pem"]
+      )
   """
   @spec request(t(), Keyword.t()) :: {:ok, Tesla.Env.t()} | {:error, any()}
   def request(conn, opts \\ []) do
     timeout = Application.get_env(:docusign, :timeout, @timeout)
-    opts = opts |> Keyword.put(:opts, adapter: [receive_timeout: timeout])
+
+    # Extract SSL options if provided
+    {ssl_opts, opts} = Keyword.pop(opts, :ssl_options, [])
+
+    # Build adapter options with SSL configuration
+    adapter_opts = build_adapter_options(timeout, ssl_opts)
+
+    # Use the original format with nested adapter key
+    opts = Keyword.put(opts, :opts, adapter: adapter_opts)
 
     result =
       conn
@@ -217,6 +239,24 @@ defmodule DocuSign.Connection do
       {status, res} when status in [:ok, :error] -> {status, res}
       # When Tesla returns just the env without a tuple
       res -> {:ok, res}
+    end
+  end
+
+  defp build_adapter_options(timeout, ssl_opts) do
+    base_opts = [receive_timeout: timeout]
+
+    if ssl_opts == [] do
+      base_opts
+      # Merge with default SSL options
+    else
+      transport_opts =
+        if Code.ensure_loaded?(DocuSign.SSLOptions) do
+          DocuSign.SSLOptions.build(ssl_opts)
+        else
+          ssl_opts
+        end
+
+      Keyword.put(base_opts, :transport_opts, transport_opts)
     end
   end
 end
