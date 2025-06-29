@@ -2,6 +2,16 @@
 
 ## Unreleased
 
+### New Features
+- **File Download Support**: Built-in utilities for downloading and handling DocuSign documents
+  - Add `DocuSign.FileDownloader` module with multiple download strategies (memory, temp file, specific path)
+  - Automatic filename extraction from Content-Disposition headers with RFC 6266 support
+  - Intelligent temporary file management using the `temp` library with automatic cleanup
+  - Content-Type validation and file size limits
+  - Multiple file format support (PDF, HTML, images, etc.)
+  - Add `DocuSign.Connection.download_file/3` convenience function
+  - Comprehensive test coverage with 31 test cases
+
 ### Enhancements
 - Add comprehensive SSL/TLS configuration support
   - Custom CA certificates and certificate validation
@@ -12,11 +22,16 @@
 - Add `DocuSign.SSLOptions` module for managing SSL configuration
 - Update `DocuSign.Connection` to support per-request SSL options
 - Enhance Finch integration with SSL transport options
+- Add `temp` dependency for robust temporary file handling
+- Filename sanitization to prevent path traversal attacks
+- Configurable download validation and security options
 
 ### Documentation
 - Add extensive SSL/TLS configuration documentation to README
 - Include security best practices for certificate validation
 - Document connection pooling options
+- Complete API documentation for all download functions with examples
+- Security best practices for file downloads
 
 ## v2.2.0
 

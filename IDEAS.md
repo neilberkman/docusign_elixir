@@ -4,18 +4,7 @@ This document contains ideas for meaningful improvements to the DocuSign Elixir 
 
 ## High Priority Improvements
 
-### 1. File Download Support
-**Description**: Built-in utilities for downloading and handling DocuSign documents
-**Ruby features to port**:
-- Automatic filename extraction from Content-Disposition headers
-- Temporary file management
-- Multiple file format support (PDF, HTML, etc.)
-**Implementation**:
-```elixir
-DocuSign.Connection.download_file(conn, document_url, opts \\ [])
-```
-
-### 3. Request/Response Debugging
+### 1. Request/Response Debugging
 **Description**: Comprehensive debugging and logging capabilities
 **Ruby features to port**:
 - Request/response body logging
@@ -31,7 +20,7 @@ DocuSign.Connection.download_file(conn, document_url, opts \\ [])
 
 ## Medium Priority Improvements
 
-### 4. Environment Auto-Detection
+### 2. Environment Auto-Detection
 **Description**: Automatically determine demo vs production environments
 **Ruby feature**: Detects environment from base URI patterns
 **Implementation**:
@@ -45,7 +34,7 @@ defp determine_hostname(base_uri) do
 end
 ```
 
-### 5. Enhanced Error Handling
+### 3. Enhanced Error Handling
 **Description**: Structured error types for different failure scenarios
 **Ruby features to port**:
 - Authentication errors
@@ -60,7 +49,7 @@ defmodule DocuSign.Error.Network
 defmodule DocuSign.Error.Validation
 ```
 
-### 6. Retry Logic and Resilience
+### 4. Retry Logic and Resilience
 **Description**: Automatic retry for transient failures
 **Features**:
 - Configurable retry counts
@@ -78,7 +67,7 @@ config :docusign, :retry_options, [
 
 ## Low Priority Improvements
 
-### 7. Collection Parameter Formatting
+### 5. Collection Parameter Formatting
 **Description**: Support for different parameter collection formats
 **Ruby features**: CSV, SSV, TSV, pipes, multi
 **Implementation**:
@@ -86,14 +75,14 @@ config :docusign, :retry_options, [
 def format_collection_param(values, format \\ :csv)
 ```
 
-### 8. Content-Type Negotiation
+### 6. Content-Type Negotiation
 **Description**: Automatic content type handling and negotiation
 **Features**:
 - JSON/XML response handling
 - Accept header management
 - Content encoding support
 
-### 9. Webhook Support Enhancements
+### 7. Webhook Support Enhancements
 **Description**: Improve existing webhook functionality
 **Features**:
 - Multiple signature algorithms
@@ -101,7 +90,7 @@ def format_collection_param(values, format \\ :csv)
 - Batch event processing
 - Dead letter queue support
 
-### 10. Connection Pooling
+### 8. Connection Pooling
 **Description**: Optimize HTTP connections for high-throughput applications
 **Features**:
 - Connection reuse
@@ -116,7 +105,7 @@ config :docusign, :pool_options, [
 ]
 ```
 
-### 11. Metrics and Monitoring
+### 9. Metrics and Monitoring
 **Description**: Built-in observability features
 **Features**:
 - Request duration metrics
@@ -129,7 +118,7 @@ config :docusign, :pool_options, [
 :telemetry.execute([:docusign, :request, :success], measurements, metadata)
 ```
 
-### 12. SDK Version Management
+### 10. SDK Version Management
 **Description**: Proper SDK identification and version handling
 **Features**:
 - User-Agent header management
