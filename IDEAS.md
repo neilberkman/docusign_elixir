@@ -20,21 +20,7 @@ This document contains ideas for meaningful improvements to the DocuSign Elixir 
 
 ## Medium Priority Improvements
 
-### 2. Environment Auto-Detection
-**Description**: Automatically determine demo vs production environments
-**Ruby feature**: Detects environment from base URI patterns
-**Implementation**:
-```elixir
-defp determine_hostname(base_uri) do
-  if String.contains?(base_uri, ["demo", "apps-d"]) do
-    "account-d.docusign.com"
-  else
-    "account.docusign.com"
-  end
-end
-```
-
-### 3. Enhanced Error Handling
+### 2. Enhanced Error Handling
 **Description**: Structured error types for different failure scenarios
 **Ruby features to port**:
 - Authentication errors
@@ -49,7 +35,7 @@ defmodule DocuSign.Error.Network
 defmodule DocuSign.Error.Validation
 ```
 
-### 4. Retry Logic and Resilience
+### 3. Retry Logic and Resilience
 **Description**: Automatic retry for transient failures
 **Features**:
 - Configurable retry counts
@@ -67,7 +53,7 @@ config :docusign, :retry_options, [
 
 ## Low Priority Improvements
 
-### 5. Collection Parameter Formatting
+### 4. Collection Parameter Formatting
 **Description**: Support for different parameter collection formats
 **Ruby features**: CSV, SSV, TSV, pipes, multi
 **Implementation**:
@@ -75,14 +61,14 @@ config :docusign, :retry_options, [
 def format_collection_param(values, format \\ :csv)
 ```
 
-### 6. Content-Type Negotiation
+### 5. Content-Type Negotiation
 **Description**: Automatic content type handling and negotiation
 **Features**:
 - JSON/XML response handling
 - Accept header management
 - Content encoding support
 
-### 7. Webhook Support Enhancements
+### 6. Webhook Support Enhancements
 **Description**: Improve existing webhook functionality
 **Features**:
 - Multiple signature algorithms
@@ -90,7 +76,7 @@ def format_collection_param(values, format \\ :csv)
 - Batch event processing
 - Dead letter queue support
 
-### 8. Connection Pooling
+### 7. Connection Pooling
 **Description**: Optimize HTTP connections for high-throughput applications
 **Features**:
 - Connection reuse
@@ -105,7 +91,7 @@ config :docusign, :pool_options, [
 ]
 ```
 
-### 9. Metrics and Monitoring
+### 8. Metrics and Monitoring
 **Description**: Built-in observability features
 **Features**:
 - Request duration metrics
@@ -118,7 +104,7 @@ config :docusign, :pool_options, [
 :telemetry.execute([:docusign, :request, :success], measurements, metadata)
 ```
 
-### 10. SDK Version Management
+### 9. SDK Version Management
 **Description**: Proper SDK identification and version handling
 **Features**:
 - User-Agent header management
