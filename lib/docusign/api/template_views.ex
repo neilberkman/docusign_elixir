@@ -22,7 +22,7 @@ defmodule DocuSign.Api.TemplateViews do
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `template_id` (String.t): The ID of the template.
   - `opts` (keyword): Optional parameters
-    - `:body` (TemplateViewRequest): 
+    - `:body` (TemplateViewRequest):
 
   ### Returns
 

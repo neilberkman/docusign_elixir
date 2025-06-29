@@ -3,7 +3,7 @@
 
 defmodule DocuSign.Model.Notary do
   @moduledoc """
-  Use Docusign eNotary to notarize documents digitally. Check the [Docusign eNotary support documentation](https://support.docusign.com/s/document-item?bundleId=gko1642535666104&topicId=jiv1635359045452.html) to see which jurisdictions are supported. 
+  Use Docusign eNotary to notarize documents digitally. Check the [Docusign eNotary support documentation](https://support.docusign.com/s/document-item?bundleId=gko1642535666104&topicId=jiv1635359045452.html) to see which jurisdictions are supported.
   """
 
   alias DocuSign.Deserializer

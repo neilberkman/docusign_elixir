@@ -16,7 +16,7 @@ defmodule DocuSign.Api.Payments do
 
   @doc """
   Gets billing payment information for a specific payment.
-  Retrieves the information for a specified payment.   Privileges required: account administrator 
+  Retrieves the information for a specified payment.   Privileges required: account administrator
 
   ### Parameters
 
@@ -51,7 +51,7 @@ defmodule DocuSign.Api.Payments do
 
   @doc """
   Gets payment information for one or more payments.
-  Retrieves a list containing information about one or more payments. If the from date or to date queries are not used, the response returns payment information for the last 365 days.   Privileges required: account administrator 
+  Retrieves a list containing information about one or more payments. If the from date or to date queries are not used, the response returns payment information for the last 365 days.   Privileges required: account administrator
 
   ### Parameters
 
@@ -93,14 +93,14 @@ defmodule DocuSign.Api.Payments do
 
   @doc """
   Posts a payment to a past due invoice.
-  Posts a payment to a past due invoice.  This method can only be used if the `paymentAllowed` value for a past due invoice is true. This can be determined calling [Billing::listInvoicesPastDue](/docs/esign-rest-api/reference/billing/invoices/listpastdue/).  The response returns information for a single payment if a payment ID was used in the endpoint, or a list of payments. If the from date or to date queries or payment ID are not used, the response returns payment information for the last 365 days.  If the request was for a single payment ID, the `nextUri` and `previousUri` properties are not returned.  Privileges required: account administrator 
+  Posts a payment to a past due invoice.  This method can only be used if the `paymentAllowed` value for a past due invoice is true. This can be determined calling [Billing::listInvoicesPastDue](/docs/esign-rest-api/reference/billing/invoices/listpastdue/).  The response returns information for a single payment if a payment ID was used in the endpoint, or a list of payments. If the from date or to date queries or payment ID are not used, the response returns payment information for the last 365 days.  If the request was for a single payment ID, the `nextUri` and `previousUri` properties are not returned.  Privileges required: account administrator
 
   ### Parameters
 
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `opts` (keyword): Optional parameters
-    - `:body` (BillingPaymentRequest): 
+    - `:body` (BillingPaymentRequest):
 
   ### Returns
 

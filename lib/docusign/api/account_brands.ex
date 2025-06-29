@@ -255,7 +255,7 @@ defmodule DocuSign.Api.AccountBrands do
   - `brand_id` (String.t): The ID of the brand.
   - `opts` (keyword): Optional parameters
     - `:replace_brand` (String.t): When **true,** replaces the brand instead of updating it. The only unchanged value is the brand ID. The request body must be XML. The default value is **false.**
-    - `:body` (Brand): 
+    - `:body` (Brand):
 
   ### Returns
 
@@ -429,14 +429,14 @@ defmodule DocuSign.Api.AccountBrands do
 
   @doc """
   Deletes one or more brand profiles.
-  This method deletes one or more brand profiles from an account, based on the brand IDs that you include in the `brandsRequest`.  Either or both of the following settings must be enabled for the account to use this method:  - `canSelfBrandSign` - `canSelfBrandSend`  ### Related topics  - [How to create a brand](/docs/esign-rest-api/how-to/create-brand/) 
+  This method deletes one or more brand profiles from an account, based on the brand IDs that you include in the `brandsRequest`.  Either or both of the following settings must be enabled for the account to use this method:  - `canSelfBrandSign` - `canSelfBrandSend`  ### Related topics  - [How to create a brand](/docs/esign-rest-api/how-to/create-brand/)
 
   ### Parameters
 
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `opts` (keyword): Optional parameters
-    - `:body` (BrandsRequest): 
+    - `:body` (BrandsRequest):
 
   ### Returns
 
@@ -469,7 +469,7 @@ defmodule DocuSign.Api.AccountBrands do
 
   @doc """
   Gets a list of brands.
-  This method returns details about all of the [brands](/docs/esign-rest-api/esign101/concepts/branding/) associated with an account, including the default brand profiles.  Either or both of the following settings must be enabled for the account to use this method:  - `canSelfBrandSign` - `canSelfBrandSend`  ### Related topics  - [How to create a brand](/docs/esign-rest-api/how-to/create-brand/) - [How to apply a brand to an envelope](/docs/esign-rest-api/how-to/apply-brand-to-envelope/) 
+  This method returns details about all of the [brands](/docs/esign-rest-api/esign101/concepts/branding/) associated with an account, including the default brand profiles.  Either or both of the following settings must be enabled for the account to use this method:  - `canSelfBrandSign` - `canSelfBrandSend`  ### Related topics  - [How to create a brand](/docs/esign-rest-api/how-to/create-brand/) - [How to apply a brand to an envelope](/docs/esign-rest-api/how-to/apply-brand-to-envelope/)
 
   ### Parameters
 
@@ -511,14 +511,14 @@ defmodule DocuSign.Api.AccountBrands do
 
   @doc """
   Creates one or more brand profiles for an account.
-  This method creates one or more brand profile files for an account.  To specify logos for the brand, use the [AccountBrands: updateLogo](/docs/esign-rest-api/reference/accounts/accountbrands/updatelogo/) method after you create the brand.   Either or both of the following settings must be enabled for the account to use this method:  - `canSelfBrandSign` - `canSelfBrandSend`  ### Related topics  - [How to create a brand](/docs/esign-rest-api/how-to/create-brand/) 
+  This method creates one or more brand profile files for an account.  To specify logos for the brand, use the [AccountBrands: updateLogo](/docs/esign-rest-api/reference/accounts/accountbrands/updatelogo/) method after you create the brand.   Either or both of the following settings must be enabled for the account to use this method:  - `canSelfBrandSign` - `canSelfBrandSend`  ### Related topics  - [How to create a brand](/docs/esign-rest-api/how-to/create-brand/)
 
   ### Parameters
 
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `opts` (keyword): Optional parameters
-    - `:body` (Brand): 
+    - `:body` (Brand):
 
   ### Returns
 

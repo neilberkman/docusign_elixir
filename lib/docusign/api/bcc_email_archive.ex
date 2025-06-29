@@ -16,7 +16,7 @@ defmodule DocuSign.Api.BCCEmailArchive do
 
   @doc """
   Deletes a BCC email archive configuration.
-  This method deletes a BCC email archive configuration from an account.  When you use this method, the status of the BCC email archive configuration switches to `closed` and the BCC email address is no longer used to archive Docusign-generated email messages. 
+  This method deletes a BCC email archive configuration from an account.  When you use this method, the status of the BCC email archive configuration switches to `closed` and the BCC email address is no longer used to archive Docusign-generated email messages.
 
   ### Parameters
 
@@ -61,8 +61,8 @@ defmodule DocuSign.Api.BCCEmailArchive do
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `bcc_email_archive_id` (String.t): The ID of the BCC email archive configuration.
   - `opts` (keyword): Optional parameters
-    - `:count` (String.t): The maximum number of results to return.  Use `start_position` to specify the number of items to skip. 
-    - `:start_position` (String.t): The zero-based index of the result from which to start returning results.  Use with `count` to limit the number of results.  The default value is `0`. 
+    - `:count` (String.t): The maximum number of results to return.  Use `start_position` to specify the number of items to skip.
+    - `:start_position` (String.t): The zero-based index of the result from which to start returning results.  Use with `count` to limit the number of results.  The default value is `0`.
 
   ### Returns
 
@@ -108,8 +108,8 @@ defmodule DocuSign.Api.BCCEmailArchive do
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `opts` (keyword): Optional parameters
-    - `:count` (String.t): The maximum number of results to return.  Use `start_position` to specify the number of results to skip. 
-    - `:start_position` (String.t): The zero-based index of the result from which to start returning results.  Use with `count` to limit the number of results.  The default value is `0`. 
+    - `:count` (String.t): The maximum number of results to return.  Use `start_position` to specify the number of results to skip.
+    - `:start_position` (String.t): The zero-based index of the result from which to start returning results.  Use with `count` to limit the number of results.  The default value is `0`.
 
   ### Returns
 
@@ -143,7 +143,7 @@ defmodule DocuSign.Api.BCCEmailArchive do
 
   @doc """
   Creates a BCC email archive configuration.
-  This method creates a BCC email archive configuration for an account (adds a BCC email address to the account for archiving the emails that Docusign generates).  The only property that you must set in the request body is the BCC email address that you want to use.  **Note:** An account can have up to five active and pending email archive addresses combined, but you must use this method to add them to the account one at a time. Each email address is considered a separate BCC email archive configuration. 
+  This method creates a BCC email archive configuration for an account (adds a BCC email address to the account for archiving the emails that Docusign generates).  The only property that you must set in the request body is the BCC email address that you want to use.  **Note:** An account can have up to five active and pending email archive addresses combined, but you must use this method to add them to the account one at a time. Each email address is considered a separate BCC email archive configuration.
 
   ### Parameters
 

@@ -3,7 +3,7 @@
 
 defmodule DocuSign.Model.UserAuthorizationsRequest do
   @moduledoc """
-  An object that describes the user authorizations to create or update. 
+  An object that describes the user authorizations to create or update.
   """
 
   alias DocuSign.Deserializer

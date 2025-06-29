@@ -3,7 +3,7 @@
 
 defmodule DocuSign.Model.Decline do
   @moduledoc """
-  A tab that allows the recipient the option of declining an envelope. If the recipient clicks the tab during the signing process, the envelope is voided. 
+  A tab that allows the recipient the option of declining an envelope. If the recipient clicks the tab during the signing process, the envelope is voided.
   """
 
   alias DocuSign.Deserializer

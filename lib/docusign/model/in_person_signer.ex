@@ -3,7 +3,7 @@
 
 defmodule DocuSign.Model.InPersonSigner do
   @moduledoc """
-  Contains information about an in-person recipient. This is a Docusign user, acting as a Signing Host, who is in the same physical location as the signer. To learn about the fields used for the eNotary feature, see the [EnvelopeRecipients resource][resource].  [resource]: /docs/esign-rest-api/reference/envelopes/enveloperecipients/#in-person-signer-recipient 
+  Contains information about an in-person recipient. This is a Docusign user, acting as a Signing Host, who is in the same physical location as the signer. To learn about the fields used for the eNotary feature, see the [EnvelopeRecipients resource][resource].  [resource]: /docs/esign-rest-api/reference/envelopes/enveloperecipients/#in-person-signer-recipient
   """
 
   alias DocuSign.Deserializer

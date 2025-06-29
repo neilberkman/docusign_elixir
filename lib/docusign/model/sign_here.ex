@@ -3,7 +3,7 @@
 
 defmodule DocuSign.Model.SignHere do
   @moduledoc """
-  A tab that allows the recipient to sign a document. May be optional. 
+  A tab that allows the recipient to sign a document. May be optional.
   """
 
   alias DocuSign.Deserializer

@@ -3,7 +3,7 @@
 
 defmodule DocuSign.Model.FullName do
   @moduledoc """
-  A tab that displays the recipient's full name. 
+  A tab that displays the recipient's full name.
   """
 
   alias DocuSign.Deserializer

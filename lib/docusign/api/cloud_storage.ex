@@ -26,12 +26,12 @@ defmodule DocuSign.Api.CloudStorage do
   - `opts` (keyword): Optional parameters
     - `:cloud_storage_folder_path` (String.t): The file path to a cloud storage folder.
     - `:cloud_storage_folderid_plain` (String.t): A plain-text folder ID that you can use as an alternative to the existing folder id. This property is mainly used for rooms. Enter multiple folder IDs as a comma-separated list.
-    - `:count` (String.t): The maximum number of results to return.  Use `start_position` to specify the number of results to skip.  Default: `25` 
-    - `:order` (String.t): The order in which to sort the results.  Valid values are:    * `asc`: Ascending order. * `desc`: Descending order. 
+    - `:count` (String.t): The maximum number of results to return.  Use `start_position` to specify the number of results to skip.  Default: `25`
+    - `:order` (String.t): The order in which to sort the results.  Valid values are:    * `asc`: Ascending order. * `desc`: Descending order.
     - `:order_by` (String.t): The file attribute to use to sort the results.  Valid values are:   * `modified` * `name`
     - `:search_text` (String.t): Use this parameter to search for specific text.
-    - `:sky_drive_skip_token` (String.t): 
-    - `:start_position` (String.t): The zero-based index of the result from which to start returning results.  Use with `count` to limit the number of results.  The default value is `0`. 
+    - `:sky_drive_skip_token` (String.t):
+    - `:start_position` (String.t): The zero-based index of the result from which to start returning results.  Use with `count` to limit the number of results.  The default value is `0`.
 
   ### Returns
 
@@ -78,7 +78,7 @@ defmodule DocuSign.Api.CloudStorage do
 
   @doc """
   Retrieves a list of all the items in a specified folder from the specified cloud storage provider.
-  Retrieves a list of all the items in a specified folder from the specified cloud storage provider. 
+  Retrieves a list of all the items in a specified folder from the specified cloud storage provider.
 
   ### Parameters
 
@@ -87,12 +87,12 @@ defmodule DocuSign.Api.CloudStorage do
   - `service_id` (String.t): The ID of the service to access.   Valid values are the service name (\"Box\") or the numerical serviceId (\"4136\").
   - `user_id` (String.t): The ID of the user to access.  **Note:** Users can only access their own information. A user, even one with Admin rights, cannot access another user's settings.
   - `opts` (keyword): Optional parameters
-    - `:cloud_storage_folder_path` (String.t): A comma separated list of folder IDs included in the request. 
-    - `:count` (String.t): The maximum number of results to return.  Use `start_position` to specify the number of results to skip.  Default: `25` 
-    - `:order` (String.t): The order in which to sort the results.  Valid values are:    * `asc`: Ascending order. * `desc`: Descending order. 
+    - `:cloud_storage_folder_path` (String.t): A comma separated list of folder IDs included in the request.
+    - `:count` (String.t): The maximum number of results to return.  Use `start_position` to specify the number of results to skip.  Default: `25`
+    - `:order` (String.t): The order in which to sort the results.  Valid values are:    * `asc`: Ascending order. * `desc`: Descending order.
     - `:order_by` (String.t): The file attribute to use to sort the results.  Valid values are:   * `modified` * `name`
     - `:search_text` (String.t): Use this parameter to search for specific text.
-    - `:start_position` (String.t): The zero-based index of the result from which to start returning results.  Use with `count` to limit the number of results.  The default value is `0`. 
+    - `:start_position` (String.t): The zero-based index of the result from which to start returning results.  Use with `count` to limit the number of results.  The default value is `0`.
 
   ### Returns
 

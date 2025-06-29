@@ -3,7 +3,7 @@
 
 defmodule DocuSign.Model.Company do
   @moduledoc """
-  A tab that displays the recipient's company name. 
+  A tab that displays the recipient's company name.
   """
 
   alias DocuSign.Deserializer

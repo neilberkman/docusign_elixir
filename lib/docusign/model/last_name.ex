@@ -3,7 +3,7 @@
 
 defmodule DocuSign.Model.LastName do
   @moduledoc """
-  A tab that displays the recipient's last name. This tab takes the recipient's name as entered in the recipient information, splits it into sections based on spaces and uses the last section as the last name. 
+  A tab that displays the recipient's last name. This tab takes the recipient's name as entered in the recipient information, splits it into sections based on spaces and uses the last section as the last name.
   """
 
   alias DocuSign.Deserializer

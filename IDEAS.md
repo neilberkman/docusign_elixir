@@ -15,7 +15,7 @@ This document contains ideas for meaningful improvements to the DocuSign Elixir 
 config :docusign, :ssl_options, [
   verify: :verify_peer,
   cacertfile: "path/to/ca.pem",
-  certfile: "path/to/client.pem", 
+  certfile: "path/to/client.pem",
   keyfile: "path/to/client.key",
   verify_hostname: true
 ]
@@ -66,7 +66,7 @@ end
 **Description**: Support for various authentication strategies beyond JWT
 **Ruby features to port**:
 - API Key authentication
-- Basic authentication  
+- Basic authentication
 - OAuth token authentication
 **Implementation**:
 ```elixir
@@ -184,7 +184,7 @@ config :docusign, :pool_options, [
 
 ### Keep Superior Elixir Patterns
 1. **Behavior-based OAuth design** - More extensible than Ruby's monolithic approach
-2. **Tesla middleware architecture** - More composable than Ruby's single client class  
+2. **Tesla middleware architecture** - More composable than Ruby's single client class
 3. **GenServer-based token management** - Better concurrency than Ruby's stateful client
 4. **Supervision tree integration** - Leverage OTP fault tolerance
 

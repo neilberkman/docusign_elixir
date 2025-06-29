@@ -29,7 +29,7 @@ defmodule DocuSign.Api.Authorizations do
     - `:count` (String.t): The maximum number of results to return.
     - `:email_substring` (String.t): Filters returned user records by full email address or a substring of email address.
     - `:include_closed_users` (String.t): When **true,** returns active and scheduled authorizations of closed users. The default value is **true.** This value is only applied when `active_only` is **false.**
-    - `:permissions` (String.t): 
+    - `:permissions` (String.t):
     - `:start_position` (String.t): The position within the total result set from which to start returning values. The value **thumbnail** may be used to return the page image.
     - `:user_name_substring` (String.t): Filters results based on a full or partial user name.  **Note:** When you enter a partial user name, you do not use a wildcard character.
 
@@ -83,7 +83,7 @@ defmodule DocuSign.Api.Authorizations do
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `user_id` (String.t): The ID of the principal user.
   - `opts` (keyword): Optional parameters
-    - `:body` (UserAuthorizationCreateRequest): 
+    - `:body` (UserAuthorizationCreateRequest):
 
   ### Returns
 
@@ -121,7 +121,7 @@ defmodule DocuSign.Api.Authorizations do
   end
 
   @doc """
-  Deletes the user authorization. 
+  Deletes the user authorization.
   Deletes the user authorization specified by the `authorizationId`.  To call this endpoint, you must be an account administrator or you must be the principal user for the specified authorization.
 
   ### Parameters
@@ -160,7 +160,7 @@ defmodule DocuSign.Api.Authorizations do
   end
 
   @doc """
-  Returns the user authorization for a given authorization ID. 
+  Returns the user authorization for a given authorization ID.
   Returns the details for the user authorization specified by the `authorizationId`.  To call this endpoint, you must be an account administrator or you must be the principal user for the specified authorization.
 
   ### Parameters
@@ -212,7 +212,7 @@ defmodule DocuSign.Api.Authorizations do
   - `authorization_id` (String.t): The ID of the user authorization.
   - `user_id` (String.t): The ID of the principal user.
   - `opts` (keyword): Optional parameters
-    - `:body` (UserAuthorizationUpdateRequest): 
+    - `:body` (UserAuthorizationUpdateRequest):
 
   ### Returns
 
@@ -260,7 +260,7 @@ defmodule DocuSign.Api.Authorizations do
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `user_id` (String.t): The ID of the principal user.
   - `opts` (keyword): Optional parameters
-    - `:body` (UserAuthorizationsDeleteRequest): 
+    - `:body` (UserAuthorizationsDeleteRequest):
 
   ### Returns
 
@@ -356,7 +356,7 @@ defmodule DocuSign.Api.Authorizations do
 
   @doc """
   Create or update multiple user authorizations.
-  Create or update multiple user authorizations in a single request. The body of the request is a list of userAuthorizationSomething objects. To create a new authorization, specify the `agentUser` and `permission` fields, with the optional `startDate` and `endDate` fields. To update an existing authorization, specify the `authorizationId` field and the `startDate` and/or `endDate` fields.  For example, to create a new authorization and update the end date of an existing authorization, your request body might look like this:  ``` {   \"authorizations\": [     {       \"agentUser\": {         \"userId\": \"1470ff66-xxxx-xxxx-xxxx-8c46f140da37\",         \"accountId\": \"230546a7-xxxx-xxxx-xxxx-af205d5494ad\"       },       \"permission\": \"manage\"     },     {       \"authorizationId\": \"b73ac983-xxxx-xxxx-xxxx-b3c0ea5b09d3\",       \"endDate\": \"2023-05-09T21:36:27.0000000+00:00\"     }   ] } ```  The principal user is specified by the `userId` path parameter. To call this endpoint, you must be an account administrator or the principal user.  **Note:** To create an authorization with signing permission, the `AllowDelegationSigning` setting must be enabled on the account. If you share signing access, the agent user will receive an email notification. Each principal user can only share signing permission with one agent user. 
+  Create or update multiple user authorizations in a single request. The body of the request is a list of userAuthorizationSomething objects. To create a new authorization, specify the `agentUser` and `permission` fields, with the optional `startDate` and `endDate` fields. To update an existing authorization, specify the `authorizationId` field and the `startDate` and/or `endDate` fields.  For example, to create a new authorization and update the end date of an existing authorization, your request body might look like this:  ``` {   \"authorizations\": [     {       \"agentUser\": {         \"userId\": \"1470ff66-xxxx-xxxx-xxxx-8c46f140da37\",         \"accountId\": \"230546a7-xxxx-xxxx-xxxx-af205d5494ad\"       },       \"permission\": \"manage\"     },     {       \"authorizationId\": \"b73ac983-xxxx-xxxx-xxxx-b3c0ea5b09d3\",       \"endDate\": \"2023-05-09T21:36:27.0000000+00:00\"     }   ] } ```  The principal user is specified by the `userId` path parameter. To call this endpoint, you must be an account administrator or the principal user.  **Note:** To create an authorization with signing permission, the `AllowDelegationSigning` setting must be enabled on the account. If you share signing access, the agent user will receive an email notification. Each principal user can only share signing permission with one agent user.
 
   ### Parameters
 
@@ -364,7 +364,7 @@ defmodule DocuSign.Api.Authorizations do
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `user_id` (String.t): The ID of the principal user.
   - `opts` (keyword): Optional parameters
-    - `:body` (UserAuthorizationsRequest): 
+    - `:body` (UserAuthorizationsRequest):
 
   ### Returns
 

@@ -114,7 +114,7 @@ defmodule DocuSign.WebhookPlug do
   the HMAC secret key:
 
   1. An additional HMAC secret key is added to the DocuSign Connect
-     configuration.
+    configuration.
   2. The HMAC secret key of the plug is updated to this new secret key.
   3. Finally the previous HMAC secret key is removed from the DocuSign Connect.
 
@@ -153,8 +153,8 @@ defmodule DocuSign.WebhookPlug do
     {:ok, payload, conn} = Conn.read_body(conn)
 
     with :ok <- verify_signatures(payload, secret, signatures(conn)),
-         {:ok, %{} = event} <- parse_payload(payload),
-         :ok <- handle_event!(handler, event) do
+        {:ok, %{} = event} <- parse_payload(payload),
+        :ok <- handle_event!(handler, event) do
       halt(send_resp(conn, 200, "Webhook received."))
     else
       {:handle_error, reason} -> halt(send_resp(conn, 400, reason))

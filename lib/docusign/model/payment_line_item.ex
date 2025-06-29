@@ -3,7 +3,7 @@
 
 defmodule DocuSign.Model.PaymentLineItem do
   @moduledoc """
-  A line item describes details about an individual line item in a payment request.  
+  A line item describes details about an individual line item in a payment request.
   """
 
   @derive Jason.Encoder

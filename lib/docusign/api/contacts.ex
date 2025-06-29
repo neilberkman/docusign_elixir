@@ -57,7 +57,7 @@ defmodule DocuSign.Api.Contacts do
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `opts` (keyword): Optional parameters
-    - `:body` (ContactModRequest): 
+    - `:body` (ContactModRequest):
 
   ### Returns
 
@@ -138,7 +138,7 @@ defmodule DocuSign.Api.Contacts do
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `opts` (keyword): Optional parameters
-    - `:body` (ContactModRequest): 
+    - `:body` (ContactModRequest):
 
   ### Returns
 
@@ -179,7 +179,7 @@ defmodule DocuSign.Api.Contacts do
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `opts` (keyword): Optional parameters
-    - `:body` (ContactModRequest): 
+    - `:body` (ContactModRequest):
 
   ### Returns
 

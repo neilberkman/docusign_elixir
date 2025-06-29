@@ -160,7 +160,7 @@ defmodule DocuSign.Api.ConnectEvents do
 
   @doc """
   Gets a Connect log entry.
-  Retrieves the specified Connect log entry for your account.  <ds-inlinemessage> To use this method, you must be an account administrator and Connect must be enabled on your account. </ds-inlinemessage>  The `enableLog` setting in the Connect configuration must be set to **true** to enable logging. If logging is not enabled, then no log entries are recorded. 
+  Retrieves the specified Connect log entry for your account.  <ds-inlinemessage> To use this method, you must be an account administrator and Connect must be enabled on your account. </ds-inlinemessage>  The `enableLog` setting in the Connect configuration must be set to **true** to enable logging. If logging is not enabled, then no log entries are recorded.
 
   ### Parameters
 
@@ -201,7 +201,7 @@ defmodule DocuSign.Api.ConnectEvents do
 
   @doc """
   Gets the Connect log.
-  Retrieves a list of the 100 most recent Connect log entries for your account.  <ds-inlinemessage> To use this method, you must be an account administrator and Connect must be enabled on your account. </ds-inlinemessage>  The `enableLog` setting in the Connect configuration must be set to **true** to enable logging. Log entries are deleted after 15 days.  
+  Retrieves a list of the 100 most recent Connect log entries for your account.  <ds-inlinemessage> To use this method, you must be an account administrator and Connect must be enabled on your account. </ds-inlinemessage>  The `enableLog` setting in the Connect configuration must be set to **true** to enable logging. Log entries are deleted after 15 days.
 
   ### Parameters
 
@@ -243,14 +243,14 @@ defmodule DocuSign.Api.ConnectEvents do
 
   @doc """
   Republishes Connect information for multiple envelopes.
-  Republishes Connect information for the  specified set of envelopes.  <ds-inlinemessage> To use this method, you must be an account administrator and Connect must be enabled on your account. </ds-inlinemessage>   The primary use is to republish Connect post failures by including envelope IDs for the envelopes that failed to post in the request. The list of envelope IDs that failed to post correctly can be retrieved by calling to [Connect::listEventLogs](/docs/esign-rest-api/reference/connect/connectevents/list/) retrieve the failure log.  
+  Republishes Connect information for the  specified set of envelopes.  <ds-inlinemessage> To use this method, you must be an account administrator and Connect must be enabled on your account. </ds-inlinemessage>   The primary use is to republish Connect post failures by including envelope IDs for the envelopes that failed to post in the request. The list of envelope IDs that failed to post correctly can be retrieved by calling to [Connect::listEventLogs](/docs/esign-rest-api/reference/connect/connectevents/list/) retrieve the failure log.
 
   ### Parameters
 
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `opts` (keyword): Optional parameters
-    - `:body` (ConnectFailureFilter): 
+    - `:body` (ConnectFailureFilter):
 
   ### Returns
 
@@ -284,13 +284,13 @@ defmodule DocuSign.Api.ConnectEvents do
 
   @doc """
   Republishes Connect information for the specified envelope.
-  Republishes Connect information for the specified envelope.  <ds-inlinemessage> To use this method, you must be an account administrator and Connect must be enabled on your account. </ds-inlinemessage> 
+  Republishes Connect information for the specified envelope.  <ds-inlinemessage> To use this method, you must be an account administrator and Connect must be enabled on your account. </ds-inlinemessage>
 
   ### Parameters
 
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
-  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec` 
+  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec`
   - `opts` (keyword): Optional parameters
 
   ### Returns

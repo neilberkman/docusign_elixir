@@ -21,7 +21,7 @@ defmodule DocuSign.Api.EnvelopeDocumentHtmlDefinitions do
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `document_id` (String.t): The GUID of the document.  Example: c671747c-xxxx-xxxx-xxxx-4a4a48e23744
-  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec` 
+  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec`
   - `opts` (keyword): Optional parameters
 
   ### Returns

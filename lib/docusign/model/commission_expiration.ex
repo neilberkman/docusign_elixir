@@ -3,7 +3,7 @@
 
 defmodule DocuSign.Model.CommissionExpiration do
   @moduledoc """
-  A Commission Expiration tab displays the expiration date of a notary's commission. The tab is populated with the notary's commission information, but the recipient can also edit the value when notarizing. This tab can only be assigned to a remote notary recipient using [Docusign Notary](/docs/notary-api/). 
+  A Commission Expiration tab displays the expiration date of a notary's commission. The tab is populated with the notary's commission information, but the recipient can also edit the value when notarizing. This tab can only be assigned to a remote notary recipient using [Docusign Notary](/docs/notary-api/).
   """
 
   alias DocuSign.Deserializer

@@ -3,7 +3,7 @@
 
 defmodule DocuSign.Model.ENoteConfiguration do
   @moduledoc """
-  This object contains information used to configure [eNote][eNote] functionality. To use eNote, the Allow eNote for eOriginal account plan item must be on, and the Connect configuration for eOriginal must be set correctly.  [eNote]: https://support.docusign.com/s/document-item?bundleId=pik1583277475390&topicId=tsn1583277394951.html 
+  This object contains information used to configure [eNote][eNote] functionality. To use eNote, the Allow eNote for eOriginal account plan item must be on, and the Connect configuration for eOriginal must be set correctly.  [eNote]: https://support.docusign.com/s/document-item?bundleId=pik1583277475390&topicId=tsn1583277394951.html
   """
 
   @derive Jason.Encoder

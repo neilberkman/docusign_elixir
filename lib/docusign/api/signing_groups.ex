@@ -22,7 +22,7 @@ defmodule DocuSign.Api.SigningGroups do
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `opts` (keyword): Optional parameters
-    - `:body` (SigningGroupInformation): 
+    - `:body` (SigningGroupInformation):
 
   ### Returns
 
@@ -54,14 +54,14 @@ defmodule DocuSign.Api.SigningGroups do
   end
 
   @doc """
-  Gets information about a signing group. 
-  Retrieves information, including group member information, for the specified signing group. 
+  Gets information about a signing group.
+  Retrieves information, including group member information, for the specified signing group.
 
   ### Parameters
 
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
-  - `signing_group_id` (String.t): The ID of the [signing group](https://support.docusign.com/s/document-item?bundleId=gav1643676262430&topicId=zgn1578456447934.html). 
+  - `signing_group_id` (String.t): The ID of the [signing group](https://support.docusign.com/s/document-item?bundleId=gav1643676262430&topicId=zgn1578456447934.html).
   - `opts` (keyword): Optional parameters
 
   ### Returns
@@ -98,7 +98,7 @@ defmodule DocuSign.Api.SigningGroups do
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `opts` (keyword): Optional parameters
     - `:group_type` (String.t): Filters by the type of signing group. Valid values: * `sharedSigningGroup` * `privateSigningGroup` * `systemSigningGroup`
-    - `:include_users` (String.t): When **true,** the response includes the signing group members. 
+    - `:include_users` (String.t): When **true,** the response includes the signing group members.
 
   ### Returns
 
@@ -131,7 +131,7 @@ defmodule DocuSign.Api.SigningGroups do
   end
 
   @doc """
-  Creates a signing group. 
+  Creates a signing group.
   Creates one or more signing groups.   Multiple signing groups can be created in one call. Only users with account administrator privileges can create signing groups.   An account can have a maximum of 50 signing groups. Each signing group can have a maximum of 50 group members.   Signing groups can be used by any account user.
 
   ### Parameters
@@ -139,7 +139,7 @@ defmodule DocuSign.Api.SigningGroups do
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `opts` (keyword): Optional parameters
-    - `:body` (SigningGroupInformation): 
+    - `:body` (SigningGroupInformation):
 
   ### Returns
 
@@ -172,16 +172,16 @@ defmodule DocuSign.Api.SigningGroups do
   end
 
   @doc """
-  Updates a signing group. 
-  Updates signing group name and member information. You can also add new members to the signing group. A signing group can have a maximum of 50 members. 
+  Updates a signing group.
+  Updates signing group name and member information. You can also add new members to the signing group. A signing group can have a maximum of 50 members.
 
   ### Parameters
 
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
-  - `signing_group_id` (String.t): The ID of the [signing group](https://support.docusign.com/s/document-item?bundleId=gav1643676262430&topicId=zgn1578456447934.html). 
+  - `signing_group_id` (String.t): The ID of the [signing group](https://support.docusign.com/s/document-item?bundleId=gav1643676262430&topicId=zgn1578456447934.html).
   - `opts` (keyword): Optional parameters
-    - `:body` (SigningGroup): 
+    - `:body` (SigningGroup):
 
   ### Returns
 
@@ -215,14 +215,14 @@ defmodule DocuSign.Api.SigningGroups do
 
   @doc """
   Updates signing group names.
-  Updates the name of one or more existing signing groups. 
+  Updates the name of one or more existing signing groups.
 
   ### Parameters
 
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `opts` (keyword): Optional parameters
-    - `:body` (SigningGroupInformation): 
+    - `:body` (SigningGroupInformation):
 
   ### Returns
 

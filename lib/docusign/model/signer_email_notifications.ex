@@ -3,7 +3,7 @@
 
 defmodule DocuSign.Model.SignerEmailNotifications do
   @moduledoc """
-  An array of email notifications that specifies the email the user receives when they are a recipient. When the specific email notification is set to true, the user receives those types of email notifications from Docusign. The user inherits the default account email notification settings when the user is created. 
+  An array of email notifications that specifies the email the user receives when they are a recipient. When the specific email notification is set to true, the user receives those types of email notifications from Docusign. The user inherits the default account email notification settings when the user is created.
   """
 
   @derive Jason.Encoder

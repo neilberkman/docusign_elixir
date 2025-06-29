@@ -14,7 +14,7 @@ defmodule DocuSign.Api.Resources do
 
   @doc """
   Lists resources for REST version specified
-  Retrieves the base resources available for the eSignature REST API.  You do not need an integrator key to view the REST API versions and resources.  
+  Retrieves the base resources available for the eSignature REST API.  You do not need an integrator key to view the REST API versions and resources.
 
   ### Parameters
 

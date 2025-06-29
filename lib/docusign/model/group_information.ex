@@ -3,7 +3,7 @@
 
 defmodule DocuSign.Model.GroupInformation do
   @moduledoc """
-  This object is used for both requests and responses. Some properties (such as `endPosition`) only apply to the response of [Groups: list](/docs/esign-rest-api/reference/usergroups/groups/list/). 
+  This object is used for both requests and responses. Some properties (such as `endPosition`) only apply to the response of [Groups: list](/docs/esign-rest-api/reference/usergroups/groups/list/).
   """
 
   alias DocuSign.Deserializer

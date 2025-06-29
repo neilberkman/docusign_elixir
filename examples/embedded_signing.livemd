@@ -136,7 +136,7 @@ conn = case connection_result do
     > **Note**: If you're seeing redirect URI errors, ensure your DocuSign application has
     > `https://www.docusign.com` configured as a redirect URI.
     """) |> Kino.render()
-    
+
     nil # Return nil as conn value to avoid undefined variable
 
   {:error, reason} ->
@@ -282,14 +282,14 @@ envelope_definition = %DocuSign.Model.EnvelopeDefinition{
 result = DocuSign.Api.Envelopes.envelopes_post_envelopes(conn, account_id, body: envelope_definition)
 
 # Create a variable to hold the envelope ID
-envelope_id = 
+envelope_id =
   try do
     case result do
       {:ok, response} ->
         id = response.envelopeId
         IO.puts("✅ Envelope created successfully!")
         IO.puts("Envelope ID: #{id}")
-        
+
         # Return the envelope ID
         id
 

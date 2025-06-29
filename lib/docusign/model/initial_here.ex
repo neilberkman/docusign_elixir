@@ -3,7 +3,7 @@
 
 defmodule DocuSign.Model.InitialHere do
   @moduledoc """
-  A tab that allows the recipient to initial the document. May be optional. 
+  A tab that allows the recipient to initial the document. May be optional.
   """
 
   alias DocuSign.Deserializer

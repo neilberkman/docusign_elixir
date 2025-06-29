@@ -60,7 +60,7 @@ defmodule DocuSign.Api.AccountPasswordRules do
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `opts` (keyword): Optional parameters
-    - `:body` (AccountPasswordRules): 
+    - `:body` (AccountPasswordRules):
 
   ### Returns
 

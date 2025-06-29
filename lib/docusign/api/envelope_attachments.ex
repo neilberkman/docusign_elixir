@@ -14,15 +14,15 @@ defmodule DocuSign.Api.EnvelopeAttachments do
 
   @doc """
   Deletes one or more envelope attachments from a draft envelope.
-  Deletes one or more envelope attachments from a draft envelope.  <!-- std notice DEVDOCS-114911 --> <ds-inlinemessage kind=\"information\" markdown=\"1\">  It's easy to confuse envelope attachments, which are developer-only files associated with an envelope, with signer attachments.  To learn about the different types of attachments, see [Attachments](/docs/esign-rest-api/esign101/concepts/documents/attachments/) in the concept guide.  </ds-inlinemessage> <!-- end notice DEVDOCS-114911 --> 
+  Deletes one or more envelope attachments from a draft envelope.  <!-- std notice DEVDOCS-114911 --> <ds-inlinemessage kind=\"information\" markdown=\"1\">  It's easy to confuse envelope attachments, which are developer-only files associated with an envelope, with signer attachments.  To learn about the different types of attachments, see [Attachments](/docs/esign-rest-api/esign101/concepts/documents/attachments/) in the concept guide.  </ds-inlinemessage> <!-- end notice DEVDOCS-114911 -->
 
   ### Parameters
 
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
-  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec` 
+  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec`
   - `opts` (keyword): Optional parameters
-    - `:body` (EnvelopeAttachmentsRequest): 
+    - `:body` (EnvelopeAttachmentsRequest):
 
   ### Returns
 
@@ -55,14 +55,14 @@ defmodule DocuSign.Api.EnvelopeAttachments do
 
   @doc """
   Retrieves an envelope attachment from an envelope.
-  Retrieves an envelope attachment from an envelope.  <!-- std notice DEVDOCS-114911 --> <ds-inlinemessage kind=\"information\" markdown=\"1\">  It's easy to confuse envelope attachments, which are developer-only files associated with an envelope, with signer attachments.  To learn about the different types of attachments, see [Attachments](/docs/esign-rest-api/esign101/concepts/documents/attachments/) in the concept guide.  </ds-inlinemessage> <!-- end notice DEVDOCS-114911 --> 
+  Retrieves an envelope attachment from an envelope.  <!-- std notice DEVDOCS-114911 --> <ds-inlinemessage kind=\"information\" markdown=\"1\">  It's easy to confuse envelope attachments, which are developer-only files associated with an envelope, with signer attachments.  To learn about the different types of attachments, see [Attachments](/docs/esign-rest-api/esign101/concepts/documents/attachments/) in the concept guide.  </ds-inlinemessage> <!-- end notice DEVDOCS-114911 -->
 
   ### Parameters
 
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `attachment_id` (String.t): The unique identifier for the attachment.
-  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec` 
+  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec`
   - `opts` (keyword): Optional parameters
 
   ### Returns
@@ -94,13 +94,13 @@ defmodule DocuSign.Api.EnvelopeAttachments do
 
   @doc """
   Returns a list of envelope attachments associated with a specified envelope.
-  Returns a list of envelope attachments associated with a specified envelope.  <!-- std notice DEVDOCS-114911 --> <ds-inlinemessage kind=\"information\" markdown=\"1\">  It's easy to confuse envelope attachments, which are developer-only files associated with an envelope, with signer attachments.  To get a list of user-visible attachments, use [EnvelopeDocuments: get](/docs/esign-rest-api/reference/envelopes/envelopedocuments/get/).  To learn about the different types of attachments, see [Attachments](/docs/esign-rest-api/esign101/concepts/documents/attachments/) in the concept guide.  </ds-inlinemessage> <!-- end notice DEVDOCS-114911 --> 
+  Returns a list of envelope attachments associated with a specified envelope.  <!-- std notice DEVDOCS-114911 --> <ds-inlinemessage kind=\"information\" markdown=\"1\">  It's easy to confuse envelope attachments, which are developer-only files associated with an envelope, with signer attachments.  To get a list of user-visible attachments, use [EnvelopeDocuments: get](/docs/esign-rest-api/reference/envelopes/envelopedocuments/get/).  To learn about the different types of attachments, see [Attachments](/docs/esign-rest-api/esign101/concepts/documents/attachments/) in the concept guide.  </ds-inlinemessage> <!-- end notice DEVDOCS-114911 -->
 
   ### Parameters
 
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
-  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec` 
+  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec`
   - `opts` (keyword): Optional parameters
 
   ### Returns
@@ -129,16 +129,16 @@ defmodule DocuSign.Api.EnvelopeAttachments do
 
   @doc """
   Updates an envelope attachment in a draft or in-process envelope.
-  Updates an envelope attachment to a draft or in-process envelope.  <!-- std notice DEVDOCS-114911 --> <ds-inlinemessage kind=\"information\" markdown=\"1\">  It's easy to confuse envelope attachments, which are developer-only files associated with an envelope, with signer attachments.  To learn about the different types of attachments, see [Attachments](/docs/esign-rest-api/esign101/concepts/documents/attachments/) in the concept guide.  </ds-inlinemessage> <!-- end notice DEVDOCS-114911 --> 
+  Updates an envelope attachment to a draft or in-process envelope.  <!-- std notice DEVDOCS-114911 --> <ds-inlinemessage kind=\"information\" markdown=\"1\">  It's easy to confuse envelope attachments, which are developer-only files associated with an envelope, with signer attachments.  To learn about the different types of attachments, see [Attachments](/docs/esign-rest-api/esign101/concepts/documents/attachments/) in the concept guide.  </ds-inlinemessage> <!-- end notice DEVDOCS-114911 -->
 
   ### Parameters
 
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `attachment_id` (String.t): The unique identifier for the attachment.
-  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec` 
+  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec`
   - `opts` (keyword): Optional parameters
-    - `:body` (Attachment): 
+    - `:body` (Attachment):
 
   ### Returns
 
@@ -178,15 +178,15 @@ defmodule DocuSign.Api.EnvelopeAttachments do
 
   @doc """
   Adds one or more envelope attachments to a draft or in-process envelope.
-  Adds one or more envelope attachments to a draft or in-process envelope. Each envelope can have a maximum of 12 attachments.  Envelope attachments are files that an application can include in an envelope. They are not converted to PDF. Envelope attachments are available only through the API. There is no user interface in the Docusign web application for them.  For a list of supported file formats, see [Supported File Formats](https://support.docusign.com/s/document-item?bundleId=gbo1643332197980&topicId=xln1578456261162.html).  <!-- std notice DEVDOCS-114911 --> <ds-inlinemessage kind=\"information\" markdown=\"1\">  It's easy to confuse envelope attachments, which are developer-only files associated with an envelope, with signer attachments.  To learn about the different types of attachments, see [Attachments](/docs/esign-rest-api/esign101/concepts/documents/attachments/) in the concept guide.  </ds-inlinemessage> <!-- end notice DEVDOCS-114911 -->   
+  Adds one or more envelope attachments to a draft or in-process envelope. Each envelope can have a maximum of 12 attachments.  Envelope attachments are files that an application can include in an envelope. They are not converted to PDF. Envelope attachments are available only through the API. There is no user interface in the Docusign web application for them.  For a list of supported file formats, see [Supported File Formats](https://support.docusign.com/s/document-item?bundleId=gbo1643332197980&topicId=xln1578456261162.html).  <!-- std notice DEVDOCS-114911 --> <ds-inlinemessage kind=\"information\" markdown=\"1\">  It's easy to confuse envelope attachments, which are developer-only files associated with an envelope, with signer attachments.  To learn about the different types of attachments, see [Attachments](/docs/esign-rest-api/esign101/concepts/documents/attachments/) in the concept guide.  </ds-inlinemessage> <!-- end notice DEVDOCS-114911 -->
 
   ### Parameters
 
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
-  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec` 
+  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec`
   - `opts` (keyword): Optional parameters
-    - `:body` (EnvelopeAttachmentsRequest): 
+    - `:body` (EnvelopeAttachmentsRequest):
 
   ### Returns
 

@@ -3,7 +3,7 @@
 
 defmodule DocuSign.Model.WorkspaceUser do
   @moduledoc """
-  This object represents the workspace user. This property is only returned in response to user specific GET call. 
+  This object represents the workspace user. This property is only returned in response to user specific GET call.
   """
 
   alias DocuSign.Deserializer

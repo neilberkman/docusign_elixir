@@ -3,7 +3,7 @@
 
 defmodule DocuSign.Model.BccEmailArchive do
   @moduledoc """
-  The `EmailArchive` resource provides methods for managing your email archive configuration, which consists of the BCC email address or addresses that you want to use to archive Docusign emails. Each account can use up to five BCC email addresses for archiving purposes. 
+  The `EmailArchive` resource provides methods for managing your email archive configuration, which consists of the BCC email address or addresses that you want to use to archive Docusign emails. Each account can use up to five BCC email addresses for archiving purposes.
   """
 
   alias DocuSign.Deserializer

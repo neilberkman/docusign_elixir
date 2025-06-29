@@ -3,7 +3,7 @@
 
 defmodule DocuSign.Model.FirstName do
   @moduledoc """
-  A tab that displays the recipient's first name. This tab takes the recipient's name as entered in the recipient information, splits it into sections based on spaces and uses the first section as the first name. 
+  A tab that displays the recipient's first name. This tab takes the recipient's name as entered in the recipient information, splits it into sections based on spaces and uses the first section as the first name.
   """
 
   alias DocuSign.Deserializer

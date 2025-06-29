@@ -22,7 +22,7 @@ defmodule DocuSign.Api.AccountCustomFields do
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `custom_field_id` (String.t): The ID of the custom field.
   - `opts` (keyword): Optional parameters
-    - `:apply_to_templates` (String.t): 
+    - `:apply_to_templates` (String.t):
 
   ### Returns
 
@@ -99,7 +99,7 @@ defmodule DocuSign.Api.AccountCustomFields do
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `opts` (keyword): Optional parameters
     - `:apply_to_templates` (String.t): (Optional) When **true,** the new custom field is applied to all of the templates on the account.
-    - `:body` (CustomField): 
+    - `:body` (CustomField):
 
   ### Returns
 
@@ -146,8 +146,8 @@ defmodule DocuSign.Api.AccountCustomFields do
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `custom_field_id` (String.t): The ID of the custom field.
   - `opts` (keyword): Optional parameters
-    - `:apply_to_templates` (String.t): 
-    - `:body` (CustomField): 
+    - `:apply_to_templates` (String.t):
+    - `:body` (CustomField):
 
   ### Returns
 

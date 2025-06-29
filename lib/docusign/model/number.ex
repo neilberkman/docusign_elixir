@@ -3,7 +3,7 @@
 
 defmodule DocuSign.Model.Number do
   @moduledoc """
-  Number tabs validate that the entered value is a number. They do not support advanced validation or display options. See [Number fields](/docs/esign-rest-api/esign101/concepts/tabs/number-fields/) to learn more about this tab type. 
+  Number tabs validate that the entered value is a number. They do not support advanced validation or display options. See [Number fields](/docs/esign-rest-api/esign101/concepts/tabs/number-fields/) to learn more about this tab type.
   """
 
   alias DocuSign.Deserializer

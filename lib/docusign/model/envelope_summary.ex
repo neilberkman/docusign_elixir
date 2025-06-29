@@ -3,7 +3,7 @@
 
 defmodule DocuSign.Model.EnvelopeSummary do
   @moduledoc """
-   This object describes an envelope.
+  This object describes an envelope.
   """
 
   alias DocuSign.Deserializer

@@ -3,7 +3,7 @@
 
 defmodule DocuSign.Model.Approve do
   @moduledoc """
-  A tab that allows the recipient to approve documents without placing a signature or initials on the document. 
+  A tab that allows the recipient to approve documents without placing a signature or initials on the document.
   """
 
   alias DocuSign.Deserializer

@@ -14,7 +14,7 @@ defmodule DocuSign.Api.GroupUsers do
 
   @doc """
   Deletes one or more users from a group
-  Deletes one or more users from a group. This request takes a `userInfoList` that contains the users that you want to delete. 
+  Deletes one or more users from a group. This request takes a `userInfoList` that contains the users that you want to delete.
 
   ### Parameters
 
@@ -22,7 +22,7 @@ defmodule DocuSign.Api.GroupUsers do
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `group_id` (String.t): The ID of the group being accessed.
   - `opts` (keyword): Optional parameters
-    - `:body` (UserInfoList): 
+    - `:body` (UserInfoList):
 
   ### Returns
 
@@ -63,8 +63,8 @@ defmodule DocuSign.Api.GroupUsers do
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `group_id` (String.t): The ID of the group being accessed.
   - `opts` (keyword): Optional parameters
-    - `:count` (String.t): The maximum number of results to return.  Use `start_position` to specify the number of results to skip.  Valid values: `1` to `100`<br> Default: `50` 
-    - `:start_position` (String.t): The zero-based index of the result from which to start returning results.  Use with `count` to limit the number of results.  The default value is `0`. 
+    - `:count` (String.t): The maximum number of results to return.  Use `start_position` to specify the number of results to skip.  Valid values: `1` to `100`<br> Default: `50`
+    - `:start_position` (String.t): The zero-based index of the result from which to start returning results.  Use with `count` to limit the number of results.  The default value is `0`.
 
   ### Returns
 
@@ -106,7 +106,7 @@ defmodule DocuSign.Api.GroupUsers do
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `group_id` (String.t): The ID of the group being accessed.
   - `opts` (keyword): Optional parameters
-    - `:body` (UserInfoList): 
+    - `:body` (UserInfoList):
 
   ### Returns
 

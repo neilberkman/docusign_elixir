@@ -3,7 +3,7 @@
 
 defmodule DocuSign.Model.Money do
   @moduledoc """
-  Describes information about the `total` of a payment. 
+  Describes information about the `total` of a payment.
   """
 
   @derive Jason.Encoder

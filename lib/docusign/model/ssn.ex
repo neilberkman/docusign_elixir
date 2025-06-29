@@ -3,7 +3,7 @@
 
 defmodule DocuSign.Model.Ssn do
   @moduledoc """
-  A one-line field that allows the recipient to enter a Social Security Number. The SSN can be typed with or without dashes. It uses the same parameters as a Text tab, with the validation message and pattern set for SSN information. 
+  A one-line field that allows the recipient to enter a Social Security Number. The SSN can be typed with or without dashes. It uses the same parameters as a Text tab, with the validation message and pattern set for SSN information.
   """
 
   alias DocuSign.Deserializer

@@ -3,7 +3,7 @@
 
 defmodule DocuSign.Model.CommissionCounty do
   @moduledoc """
-  A Commission County tab displays the county of a notary's commission. The tab is populated with the notary's commission information, but the recipient can also edit the value when notarizing. This tab can only be assigned to a remote notary recipient using [Docusign Notary](/docs/notary-api/). 
+  A Commission County tab displays the county of a notary's commission. The tab is populated with the notary's commission information, but the recipient can also edit the value when notarizing. This tab can only be assigned to a remote notary recipient using [Docusign Notary](/docs/notary-api/).
   """
 
   alias DocuSign.Deserializer
