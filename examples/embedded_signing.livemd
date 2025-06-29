@@ -73,20 +73,16 @@ private_key_formatted =
   |> String.trim() # Remove leading/trailing whitespace
 
 # Configure DocuSign application
-hostname = if is_sandbox, do: "account-d.docusign.com", else: "account.docusign.com"
-
-# Use runtime configuration instead of Mix.Config
-Application.put_env(:docusign, :hostname, hostname)
 Application.put_env(:docusign, :client_id, client_id)
 Application.put_env(:docusign, :private_key_contents, private_key_formatted)
 Application.put_env(:docusign, :user_id, user_id)
 
 # Debug: Check configuration
 IO.puts("Configuration set:")
-IO.puts("Hostname: #{hostname}")
 IO.puts("Client ID: #{client_id}")
 IO.puts("User ID: #{user_id}")
 IO.puts("Private key length: #{String.length(private_key_formatted)} chars")
+IO.puts("Hostname: auto-detected from account info")
 IO.puts("Is sandbox: #{is_sandbox}")
 ```
 

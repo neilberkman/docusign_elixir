@@ -69,6 +69,27 @@ config :docusign,
   client_secret: "your_secret_key"
 ```
 
+#### Environment Auto-Detection
+
+Automatically determine the correct OAuth hostname based on your API base URI:
+
+```elixir
+# Automatically detect sandbox vs production from base URI
+base_uri = "https://demo.docusign.net/restapi"
+hostname = DocuSign.Connection.determine_hostname(base_uri)  # "account-d.docusign.com"
+
+# Configure OAuth with auto-detected hostname
+Application.put_env(:docusign, :hostname, hostname)
+
+# Or use the enhanced connection function with auto-detection
+{:ok, conn} = DocuSign.Connection.from_oauth_client_with_detection(
+  oauth_client,
+  account_id: account["account_id"],
+  base_uri: account["base_uri"] <> "/restapi",
+  auto_detect_hostname: true  # Automatically sets hostname config
+)
+```
+
 #### Usage
 
 ```elixir

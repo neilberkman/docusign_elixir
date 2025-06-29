@@ -3,6 +3,14 @@
 ## Unreleased
 
 ### New Features
+- **Environment Auto-Detection**: Automatic sandbox vs production environment detection based on API URLs
+  - Add `DocuSign.Util.Environment` module with hostname detection logic matching Ruby client behavior
+  - Automatically determine OAuth hostname (`account-d.docusign.com` vs `account.docusign.com`) from base URIs
+  - Add `DocuSign.Connection.determine_hostname/1` and `detect_environment/1` convenience functions
+  - Add `DocuSign.Connection.from_oauth_client_with_detection/2` for automatic hostname configuration
+  - Environment validation functions to ensure hostname/URI consistency
+  - Complete test coverage with 37 test cases covering all URL patterns and edge cases
+
 - **File Download Support**: Built-in utilities for downloading and handling DocuSign documents
   - Add `DocuSign.FileDownloader` module with multiple download strategies (memory, temp file, specific path)
   - Automatic filename extraction from Content-Disposition headers with RFC 6266 support
