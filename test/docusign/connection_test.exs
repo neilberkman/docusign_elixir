@@ -39,6 +39,15 @@ defmodule DocuSign.ConnectionTest do
     end
 
     test "consent required OAuth error returns error :consent_required" do
+      # Set required config for build_consent_url
+      Application.put_env(:docusign, :client_id, "test-client-id")
+      Application.put_env(:docusign, :hostname, "test.docusign.com")
+
+      on_exit(fn ->
+        Application.delete_env(:docusign, :client_id)
+        Application.delete_env(:docusign, :hostname)
+      end)
+
       @oauth_mock
       |> expect(:client, fn opts ->
         %OAuth2.Client{ref: %{user_id: opts[:user_id]}}
