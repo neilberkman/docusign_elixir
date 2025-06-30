@@ -145,14 +145,16 @@ defmodule DocuSign.ConnectionOAuthTest do
     end
 
     test "handles request errors with OAuth2.Client", %{bypass: bypass, conn: conn} do
+      Application.put_env(:docusign, :structured_errors, true)
+
       Bypass.expect_once(bypass, "GET", "/error", fn conn ->
         Plug.Conn.resp(conn, 401, Jason.encode!(%{"error" => "unauthorized"}))
       end)
 
-      {:ok, response} = Connection.request(conn, method: :get, url: "/error")
+      {:error, error} = Connection.request(conn, method: :get, url: "/error")
 
-      assert response.status == 401
-      assert Jason.decode!(response.body) == %{"error" => "unauthorized"}
+      assert %DocuSign.AuthenticationError{} = error
+      assert error.status == 401
     end
 
     defp get_req_header(conn, name) do
