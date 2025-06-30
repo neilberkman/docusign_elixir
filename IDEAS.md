@@ -4,24 +4,7 @@ This document contains ideas for meaningful improvements to the DocuSign Elixir 
 
 ## High Priority Improvements
 
-### 1. Enhanced Error Handling
-**Description**: Structured error types for different failure scenarios
-**Ruby features to port**:
-- Authentication errors
-- Rate limiting errors  
-- Network timeout errors
-- Validation errors
-**Implementation**:
-```elixir
-defmodule DocuSign.Error.Authentication
-defmodule DocuSign.Error.RateLimit
-defmodule DocuSign.Error.Network
-defmodule DocuSign.Error.Validation
-```
-
-## Medium Priority Improvements
-
-### 2. Retry Logic and Resilience
+### 1. Retry Logic and Resilience
 **Description**: Automatic retry for transient failures
 **Features**:
 - Configurable retry counts
@@ -37,9 +20,9 @@ config :docusign, :retry_options, [
 ]
 ```
 
-## Low Priority Improvements
+## Medium Priority Improvements
 
-### 4. Collection Parameter Formatting
+### 2. Collection Parameter Formatting
 **Description**: Support for different parameter collection formats
 **Ruby features**: CSV, SSV, TSV, pipes, multi
 **Implementation**:
@@ -47,14 +30,14 @@ config :docusign, :retry_options, [
 def format_collection_param(values, format \\ :csv)
 ```
 
-### 5. Content-Type Negotiation
+### 3. Content-Type Negotiation
 **Description**: Automatic content type handling and negotiation
 **Features**:
 - JSON/XML response handling
 - Accept header management
 - Content encoding support
 
-### 6. Webhook Support Enhancements
+### 4. Webhook Support Enhancements
 **Description**: Improve existing webhook functionality
 **Features**:
 - Multiple signature algorithms
@@ -62,7 +45,7 @@ def format_collection_param(values, format \\ :csv)
 - Batch event processing
 - Dead letter queue support
 
-### 7. Connection Pooling
+### 5. Connection Pooling
 **Description**: Optimize HTTP connections for high-throughput applications
 **Features**:
 - Connection reuse
@@ -77,7 +60,7 @@ config :docusign, :pool_options, [
 ]
 ```
 
-### 8. Metrics and Monitoring
+### 6. Metrics and Monitoring
 **Description**: Built-in observability features
 **Features**:
 - Request duration metrics
@@ -90,7 +73,7 @@ config :docusign, :pool_options, [
 :telemetry.execute([:docusign, :request, :success], measurements, metadata)
 ```
 
-### 9. SDK Version Management
+### 7. SDK Version Management
 **Description**: Proper SDK identification and version handling
 **Features**:
 - User-Agent header management

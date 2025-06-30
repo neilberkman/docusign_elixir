@@ -2,6 +2,7 @@ defmodule DocuSign.OAuth.ImplTest do
   use ExUnit.Case, async: true
 
   import ExUnit.CaptureLog
+  import Mox
 
   alias DocuSign.OAuth
   alias DocuSign.OAuth.Impl
