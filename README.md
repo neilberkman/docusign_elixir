@@ -243,6 +243,7 @@ When debugging is enabled, you'll see detailed logs including:
 - SDK identification headers
 
 Example debug output:
+
 ```
 [debug] GET https://demo.docusign.net/restapi/v2.1/accounts -> 200 (145.2 ms)
 [debug] Request headers: [{"authorization", "[FILTERED]"}, {"X-DocuSign-SDK", "Elixir/2.2.2"}]
@@ -284,6 +285,46 @@ By default, HTTP requests will time out after 30_000 ms. You can configure the t
 ```elixir
 config :docusign, timeout: 60_000
 ```
+
+## Structured Error Handling
+
+The DocuSign Elixir client provides opt-in structured error handling, returning detailed error structs instead of generic tuples for API failures. This allows for more granular and robust error management in your application.
+
+### Enable Structured Errors
+
+To enable structured errors, set the `:structured_errors` option in your application configuration:
+
+```elixir
+config :docusign, :structured_errors, true
+```
+
+When enabled, API calls that result in an error (e.g., HTTP status codes 4xx or 5xx) will return an `{:error, error_struct}` tuple, where `error_struct` is one of the following:
+
+- `DocuSign.ApiError`: A general API error.
+- `DocuSign.AuthenticationError`: Specifically for 401 Unauthorized errors.
+- `DocuSign.RateLimitError`: Specifically for 429 Too Many Requests errors.
+- `DocuSign.ValidationError`: Specifically for 400 Bad Request errors.
+
+Each error struct contains `message`, `status`, and `body` fields, providing comprehensive details about the error.
+
+### Example Usage
+
+```elixir
+case DocuSign.Api.Envelopes.envelopes_get_envelope(conn, account_id, envelope_id) do
+  {:ok, envelope} ->
+    IO.puts("Envelope retrieved: #{envelope.status}")
+  {:error, %DocuSign.AuthenticationError{message: msg, status: status}} ->
+    IO.puts("Authentication failed (Status: #{status}): #{msg}")
+  {:error, %DocuSign.ValidationError{message: msg, body: body}} ->
+    IO.puts("Validation error: #{msg}. Details: #{inspect(body)}")
+  {:error, %DocuSign.ApiError{message: msg, status: status}} ->
+    IO.puts("API Error (Status: #{status}): #{msg}")
+  {:error, reason} ->
+    IO.puts("An unexpected error occurred: #{inspect(reason)}")
+end
+```
+
+If `:structured_errors` is `false` (the default), errors will continue to be returned as `{:error, {:http_error, status, body}}` tuples for backward compatibility.
 
 ## SSL/TLS Configuration
 
