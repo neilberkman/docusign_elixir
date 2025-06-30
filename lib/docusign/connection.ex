@@ -30,7 +30,7 @@ defmodule DocuSign.Connection do
   """
 
   alias DocuSign.Util.Environment
-  alias DocuSign.{ClientRegistry, Debug, User}
+  alias DocuSign.{ClientRegistry, Debug, Error, User}
   alias OAuth2.Request
   alias Tesla.Adapter.Finch
   alias Tesla.Middleware.BaseUrl
@@ -244,15 +244,23 @@ defmodule DocuSign.Connection do
     # Use the original format with nested adapter key
     opts = Keyword.put(opts, :opts, adapter: adapter_opts)
 
-    result =
-      conn
-      |> Request.new()
-      |> Tesla.request(opts)
+    case conn |> Request.new() |> Tesla.request(opts) do
+      {:ok, %Tesla.Env{status: status} = response} when status in 200..299 ->
+        {:ok, response}
 
-    case result do
-      {status, res} when status in [:ok, :error] -> {status, res}
-      # When Tesla returns just the env without a tuple
-      res -> {:ok, res}
+      {:ok, %Tesla.Env{} = response} ->
+        handle_error_response(response)
+
+      {:error, reason} ->
+        {:error, reason}
+    end
+  end
+
+  defp handle_error_response(response) do
+    if Application.get_env(:docusign, :structured_errors, false) do
+      {:error, Error.new(response)}
+    else
+      {:error, {:http_error, response.status, response.body}}
     end
   end
 

@@ -1,5 +1,17 @@
 # Changelog
 
+## Unreleased
+
+### New Features
+- **Structured Error Handling**: Opt-in structured error types for improved error management
+  - Add `DocuSign.Error` module with custom error structs (`ApiError`, `AuthenticationError`, `RateLimitError`, `ValidationError`)
+  - Each error struct contains `message`, `status`, and `body` fields for comprehensive error information
+  - Modify `DocuSign.Connection.request/2` to return structured errors when `:structured_errors` config is enabled
+  - Maintains full backward compatibility - feature is disabled by default
+  - Enables pattern matching on specific error types (e.g., handle rate limits differently from auth errors)
+  - Add comprehensive test coverage for all error types
+  - Update OAuth implementation tests to match current API
+
 ## v2.2.2
 
 ### New Features
