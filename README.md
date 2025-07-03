@@ -1,3 +1,7 @@
+[![Hex.pm](https://img.shields.io/hexpm/v/docusign)](https://hex.pm/packages/docusign)
+[![Hexdocs.pm](https://img.shields.io/badge/docs-hexdocs.pm-purple)](https://hexdocs.pm/docusign)
+[![Github.com](https://github.com/neilberkman/docusign_elixir/actions/workflows/ci.yml/badge.svg)](https://github.com/neilberkman/docusign_elixir/actions)
+
 # DocuSign API Client
 
 Unofficial DocuSign Elixir Library used to interact with the eSignature REST API. Send, sign, and approve documents using this client.
