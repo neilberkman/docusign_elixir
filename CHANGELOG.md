@@ -1,5 +1,11 @@
 # Changelog
 
+## v2.2.3
+
+### Enhancements
+- **Error Handling**: Add opt-in structured error handling for better debugging and error management
+- **Dependency Updates**: Update jason dependency to ~> 1.4.4
+
 ## v2.2.2
 
 ### New Features
