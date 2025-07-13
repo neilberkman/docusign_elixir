@@ -2,7 +2,7 @@ defmodule DocuSign.MixProject do
   @moduledoc false
   use Mix.Project
 
-  @version "2.2.2"
+  @version "2.2.3"
   @url "https://github.com/neilberkman/docusign_elixir"
   @maintainers [
     "Neil Berkman"
@@ -44,7 +44,7 @@ defmodule DocuSign.MixProject do
   defp deps do
     [
       {:tesla, "~> 1.4"},
-      {:jason, "~> 1.4"},
+      {:jason, "~> 1.4.4"},
       {:joken, "~> 2.0"},
       {:oauth2, "~> 2.0"},
       {:castore, "~> 1.0"},
@@ -101,7 +101,7 @@ defmodule DocuSign.MixProject do
       maintainers: @maintainers,
       licenses: ["MIT"],
       links: %{
-        "Changelog" => "#{@url}/blob/main/CHANGELOG.md",
+        "Changelog" => "https://hexdocs.pm/docusign_elixir/changelog.html",
         "GitHub" => @url
       },
       files:

@@ -2,7 +2,7 @@
 
 ```elixir
 Mix.install([
-  {:docusign, "~> 2.2.1"},
+  {:docusign, "~> 2.2.3"},
   {:kino, "~> 0.14.0"}
 ])
 ```
