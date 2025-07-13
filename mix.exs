@@ -101,7 +101,7 @@ defmodule DocuSign.MixProject do
       maintainers: @maintainers,
       licenses: ["MIT"],
       links: %{
-        "Changelog" => "https://hexdocs.pm/docusign_elixir/changelog.html",
+        "Changelog" => "https://hexdocs.pm/docusign/changelog.html",
         "GitHub" => @url
       },
       files:
