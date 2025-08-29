@@ -30,7 +30,7 @@ defmodule DocuSign.Api.AccountCustomFields do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec account_custom_fields_delete_account_custom_fields(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           keyword()
@@ -70,7 +70,7 @@ defmodule DocuSign.Api.AccountCustomFields do
   - `{:ok, DocuSign.Model.AccountCustomFields.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec account_custom_fields_get_account_custom_fields(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec account_custom_fields_get_account_custom_fields(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, AccountCustomFields.t()}
           | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
@@ -107,7 +107,7 @@ defmodule DocuSign.Api.AccountCustomFields do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec account_custom_fields_post_account_custom_fields(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           keyword()
         ) ::
@@ -155,7 +155,7 @@ defmodule DocuSign.Api.AccountCustomFields do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec account_custom_fields_put_account_custom_fields(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           keyword()

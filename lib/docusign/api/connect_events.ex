@@ -31,7 +31,7 @@ defmodule DocuSign.Api.ConnectEvents do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec connect_failures_delete_connect_failure_log(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           keyword()
@@ -68,7 +68,7 @@ defmodule DocuSign.Api.ConnectEvents do
   - `{:ok, DocuSign.Model.ConnectLogs.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec connect_failures_get_connect_logs(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec connect_failures_get_connect_logs(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, ConnectLogs.t()}
           | {:error, Tesla.Env.t()}
@@ -109,7 +109,7 @@ defmodule DocuSign.Api.ConnectEvents do
   - `{:ok, nil}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec connect_log_delete_connect_log(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec connect_log_delete_connect_log(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, nil} | {:ok, ErrorDetails.t()} | {:error, Tesla.Env.t()}
   def connect_log_delete_connect_log(connection, account_id, log_id, _opts \\ []) do
     request =
@@ -141,7 +141,7 @@ defmodule DocuSign.Api.ConnectEvents do
   - `{:ok, nil}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec connect_log_delete_connect_logs(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec connect_log_delete_connect_logs(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, nil} | {:ok, ErrorDetails.t()} | {:error, Tesla.Env.t()}
   def connect_log_delete_connect_logs(connection, account_id, _opts \\ []) do
     request =
@@ -175,7 +175,7 @@ defmodule DocuSign.Api.ConnectEvents do
   - `{:ok, DocuSign.Model.ConnectLog.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec connect_log_get_connect_log(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec connect_log_get_connect_log(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, ConnectLog.t()}
           | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
@@ -216,7 +216,7 @@ defmodule DocuSign.Api.ConnectEvents do
   - `{:ok, DocuSign.Model.ConnectLogs.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec connect_log_get_connect_logs(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec connect_log_get_connect_logs(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, ConnectLogs.t()}
           | {:error, Tesla.Env.t()}
@@ -257,7 +257,7 @@ defmodule DocuSign.Api.ConnectEvents do
   - `{:ok, DocuSign.Model.ConnectFailureResults.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec connect_publish_put_connect_retry(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec connect_publish_put_connect_retry(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, ConnectFailureResults.t()}
           | {:error, Tesla.Env.t()}
@@ -299,7 +299,7 @@ defmodule DocuSign.Api.ConnectEvents do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec connect_publish_put_connect_retry_by_envelope(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           keyword()

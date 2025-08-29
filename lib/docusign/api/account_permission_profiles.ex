@@ -31,7 +31,7 @@ defmodule DocuSign.Api.AccountPermissionProfiles do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec permission_profiles_delete_permission_profiles(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           keyword()
@@ -74,7 +74,7 @@ defmodule DocuSign.Api.AccountPermissionProfiles do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec permission_profiles_get_permission_profile(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           keyword()
@@ -118,7 +118,7 @@ defmodule DocuSign.Api.AccountPermissionProfiles do
   - `{:ok, DocuSign.Model.PermissionProfileInformation.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec permission_profiles_get_permission_profiles(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec permission_profiles_get_permission_profiles(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, PermissionProfileInformation.t()}
           | {:error, Tesla.Env.t()}
@@ -159,7 +159,7 @@ defmodule DocuSign.Api.AccountPermissionProfiles do
   - `{:ok, DocuSign.Model.PermissionProfile.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec permission_profiles_post_permission_profiles(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec permission_profiles_post_permission_profiles(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, PermissionProfile.t()}
           | {:error, Tesla.Env.t()}
@@ -204,7 +204,7 @@ defmodule DocuSign.Api.AccountPermissionProfiles do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec permission_profiles_put_permission_profiles(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           keyword()

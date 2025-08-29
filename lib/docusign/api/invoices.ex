@@ -31,7 +31,7 @@ defmodule DocuSign.Api.Invoices do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec billing_invoices_get_billing_invoice(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           keyword()
@@ -71,7 +71,7 @@ defmodule DocuSign.Api.Invoices do
   - `{:ok, DocuSign.Model.BillingInvoicesResponse.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec billing_invoices_get_billing_invoices(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec billing_invoices_get_billing_invoices(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, BillingInvoicesResponse.t()}
           | {:error, Tesla.Env.t()}
@@ -111,7 +111,7 @@ defmodule DocuSign.Api.Invoices do
   - `{:ok, DocuSign.Model.BillingInvoicesSummary.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec billing_invoices_get_billing_invoices_past_due(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec billing_invoices_get_billing_invoices_past_due(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, BillingInvoicesSummary.t()}
           | {:error, Tesla.Env.t()}

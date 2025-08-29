@@ -26,7 +26,7 @@ defmodule DocuSign.Api.Services do
   - `{:ok, DocuSign.Model.ServiceInformation.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec service_information_get_service_information(Tesla.Env.client(), keyword()) ::
+  @spec service_information_get_service_information(DocuSign.Connection.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, ServiceInformation.t()}
           | {:error, Tesla.Env.t()}

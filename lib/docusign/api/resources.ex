@@ -26,7 +26,7 @@ defmodule DocuSign.Api.Resources do
   - `{:ok, DocuSign.Model.ResourceInformation.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec service_information_get_resource_information(Tesla.Env.client(), keyword()) ::
+  @spec service_information_get_resource_information(DocuSign.Connection.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, ResourceInformation.t()}
           | {:error, Tesla.Env.t()}

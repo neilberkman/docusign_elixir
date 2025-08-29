@@ -29,7 +29,7 @@ defmodule DocuSign.Api.CustomTabs do
   - `{:ok, nil}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec tab_delete_custom_tab(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec tab_delete_custom_tab(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, nil} | {:ok, ErrorDetails.t()} | {:error, Tesla.Env.t()}
   def tab_delete_custom_tab(connection, account_id, custom_tab_id, _opts \\ []) do
     request =
@@ -62,7 +62,7 @@ defmodule DocuSign.Api.CustomTabs do
   - `{:ok, DocuSign.Model.TabMetadata.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec tab_get_custom_tab(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec tab_get_custom_tab(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, TabMetadata.t()}
           | {:error, Tesla.Env.t()}
@@ -98,7 +98,7 @@ defmodule DocuSign.Api.CustomTabs do
   - `{:ok, DocuSign.Model.TabMetadata.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec tab_put_custom_tab(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec tab_put_custom_tab(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, TabMetadata.t()}
           | {:error, Tesla.Env.t()}
@@ -139,7 +139,7 @@ defmodule DocuSign.Api.CustomTabs do
   - `{:ok, DocuSign.Model.TabMetadataList.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec tabs_get_tab_definitions(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec tabs_get_tab_definitions(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, TabMetadataList.t()}
           | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
@@ -179,7 +179,7 @@ defmodule DocuSign.Api.CustomTabs do
   - `{:ok, DocuSign.Model.TabMetadata.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec tabs_post_tab_definitions(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec tabs_post_tab_definitions(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, TabMetadata.t()}
           | {:error, Tesla.Env.t()}

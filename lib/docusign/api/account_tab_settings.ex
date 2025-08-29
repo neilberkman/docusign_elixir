@@ -27,7 +27,7 @@ defmodule DocuSign.Api.AccountTabSettings do
   - `{:ok, DocuSign.Model.TabAccountSettings.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec tab_settings_get_tab_settings(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec tab_settings_get_tab_settings(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, TabAccountSettings.t()}
           | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
@@ -62,7 +62,7 @@ defmodule DocuSign.Api.AccountTabSettings do
   - `{:ok, DocuSign.Model.TabAccountSettings.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec tab_settings_put_settings(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec tab_settings_put_settings(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, TabAccountSettings.t()}
           | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}

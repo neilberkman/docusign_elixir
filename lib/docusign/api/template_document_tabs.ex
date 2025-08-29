@@ -32,7 +32,7 @@ defmodule DocuSign.Api.TemplateDocumentTabs do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec tabs_delete_template_document_tabs(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),
@@ -80,7 +80,7 @@ defmodule DocuSign.Api.TemplateDocumentTabs do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec tabs_get_template_document_tabs(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),
@@ -128,7 +128,7 @@ defmodule DocuSign.Api.TemplateDocumentTabs do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec tabs_get_template_page_tabs(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),
@@ -172,7 +172,7 @@ defmodule DocuSign.Api.TemplateDocumentTabs do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec tabs_post_template_document_tabs(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),
@@ -221,7 +221,7 @@ defmodule DocuSign.Api.TemplateDocumentTabs do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec tabs_put_template_document_tabs(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),

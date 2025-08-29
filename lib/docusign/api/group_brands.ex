@@ -29,7 +29,7 @@ defmodule DocuSign.Api.GroupBrands do
   - `{:ok, DocuSign.Model.GroupBrands.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec brands_delete_group_brands(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec brands_delete_group_brands(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, GroupBrands.t()}
           | {:error, Tesla.Env.t()}
@@ -69,7 +69,7 @@ defmodule DocuSign.Api.GroupBrands do
   - `{:ok, DocuSign.Model.GroupBrands.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec brands_get_group_brands(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec brands_get_group_brands(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, GroupBrands.t()}
           | {:error, Tesla.Env.t()}
@@ -105,7 +105,7 @@ defmodule DocuSign.Api.GroupBrands do
   - `{:ok, DocuSign.Model.GroupBrands.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec brands_put_group_brands(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec brands_put_group_brands(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, GroupBrands.t()}
           | {:error, Tesla.Env.t()}

@@ -29,7 +29,7 @@ defmodule DocuSign.Api.GroupUsers do
   - `{:ok, DocuSign.Model.UsersResponse.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec groups_delete_group_users(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec groups_delete_group_users(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, UsersResponse.t()}
           | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
@@ -71,7 +71,7 @@ defmodule DocuSign.Api.GroupUsers do
   - `{:ok, DocuSign.Model.UsersResponse.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec groups_get_group_users(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec groups_get_group_users(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, UsersResponse.t()}
           | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
@@ -113,7 +113,7 @@ defmodule DocuSign.Api.GroupUsers do
   - `{:ok, DocuSign.Model.UsersResponse.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec groups_put_group_users(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec groups_put_group_users(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, UsersResponse.t()}
           | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}

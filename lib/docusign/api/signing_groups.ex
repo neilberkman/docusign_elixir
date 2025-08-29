@@ -29,7 +29,7 @@ defmodule DocuSign.Api.SigningGroups do
   - `{:ok, DocuSign.Model.SigningGroupInformation.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec signing_groups_delete_signing_groups(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec signing_groups_delete_signing_groups(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, SigningGroupInformation.t()}
           | {:error, Tesla.Env.t()}
@@ -69,7 +69,7 @@ defmodule DocuSign.Api.SigningGroups do
   - `{:ok, DocuSign.Model.SigningGroup.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec signing_groups_get_signing_group(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec signing_groups_get_signing_group(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, SigningGroup.t()}
           | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
@@ -105,7 +105,7 @@ defmodule DocuSign.Api.SigningGroups do
   - `{:ok, DocuSign.Model.SigningGroupInformation.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec signing_groups_get_signing_groups(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec signing_groups_get_signing_groups(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, SigningGroupInformation.t()}
           | {:error, Tesla.Env.t()}
@@ -146,7 +146,7 @@ defmodule DocuSign.Api.SigningGroups do
   - `{:ok, DocuSign.Model.SigningGroupInformation.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec signing_groups_post_signing_groups(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec signing_groups_post_signing_groups(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, SigningGroupInformation.t()}
           | {:error, Tesla.Env.t()}
@@ -188,7 +188,7 @@ defmodule DocuSign.Api.SigningGroups do
   - `{:ok, DocuSign.Model.SigningGroup.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec signing_groups_put_signing_group(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec signing_groups_put_signing_group(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, SigningGroup.t()}
           | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
@@ -229,7 +229,7 @@ defmodule DocuSign.Api.SigningGroups do
   - `{:ok, DocuSign.Model.SigningGroupInformation.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec signing_groups_put_signing_groups(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec signing_groups_put_signing_groups(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, SigningGroupInformation.t()}
           | {:error, Tesla.Env.t()}

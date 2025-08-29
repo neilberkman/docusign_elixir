@@ -28,7 +28,7 @@ defmodule DocuSign.Api.AccountSignatureProviders do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec account_signature_providers_get_signature_providers(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           keyword()
         ) ::

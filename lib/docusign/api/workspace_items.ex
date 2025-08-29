@@ -35,7 +35,7 @@ defmodule DocuSign.Api.WorkspaceItems do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec workspace_file_get_workspace_file(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),
@@ -87,7 +87,7 @@ defmodule DocuSign.Api.WorkspaceItems do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec workspace_file_pages_get_workspace_file_pages(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),
@@ -146,7 +146,7 @@ defmodule DocuSign.Api.WorkspaceItems do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec workspace_file_post_workspace_files(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),
@@ -190,7 +190,7 @@ defmodule DocuSign.Api.WorkspaceItems do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec workspace_file_put_workspace_file(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),
@@ -235,7 +235,7 @@ defmodule DocuSign.Api.WorkspaceItems do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec workspace_folder_delete_workspace_items(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),
@@ -286,7 +286,7 @@ defmodule DocuSign.Api.WorkspaceItems do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec workspace_folder_get_workspace_folder(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),

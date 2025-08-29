@@ -28,7 +28,7 @@ defmodule DocuSign.Api.PaymentGatewayAccounts do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec payment_gateway_accounts_get_all_payment_gateway_accounts(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           keyword()
         ) ::

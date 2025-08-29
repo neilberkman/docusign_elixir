@@ -30,7 +30,7 @@ defmodule DocuSign.Api.EnvelopeTransferRules do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec envelope_transfer_rules_delete_envelope_transfer_rules(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           keyword()
@@ -73,7 +73,7 @@ defmodule DocuSign.Api.EnvelopeTransferRules do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec envelope_transfer_rules_get_envelope_transfer_rules(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           keyword()
         ) ::
@@ -118,7 +118,7 @@ defmodule DocuSign.Api.EnvelopeTransferRules do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec envelope_transfer_rules_post_envelope_transfer_rules(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           keyword()
         ) ::
@@ -164,7 +164,7 @@ defmodule DocuSign.Api.EnvelopeTransferRules do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec envelope_transfer_rules_put_envelope_transfer_rule(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           keyword()
@@ -210,7 +210,7 @@ defmodule DocuSign.Api.EnvelopeTransferRules do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec envelope_transfer_rules_put_envelope_transfer_rules(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           keyword()
         ) ::

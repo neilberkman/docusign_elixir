@@ -38,7 +38,7 @@ defmodule DocuSign.Api.BillingPlans do
   - `{:ok, DocuSign.Model.AccountBillingPlanResponse.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec billing_plan_get_billing_plan(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec billing_plan_get_billing_plan(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, AccountBillingPlanResponse.t()}
           | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
@@ -81,7 +81,7 @@ defmodule DocuSign.Api.BillingPlans do
   - `{:ok, DocuSign.Model.CreditCardInformation.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec billing_plan_get_credit_card_info(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec billing_plan_get_credit_card_info(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, CreditCardInformation.t()}
           | {:error, Tesla.Env.t()}
@@ -114,7 +114,7 @@ defmodule DocuSign.Api.BillingPlans do
   - `{:ok, DocuSign.Model.DowngradRequestBillingInfoResponse.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec billing_plan_get_downgrade_request_billing_info(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec billing_plan_get_downgrade_request_billing_info(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, DowngradRequestBillingInfoResponse.t()}
           | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
@@ -150,7 +150,7 @@ defmodule DocuSign.Api.BillingPlans do
   - `{:ok, DocuSign.Model.BillingPlanUpdateResponse.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec billing_plan_put_billing_plan(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec billing_plan_put_billing_plan(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, BillingPlanUpdateResponse.t()}
           | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
@@ -191,7 +191,7 @@ defmodule DocuSign.Api.BillingPlans do
   - `{:ok, DocuSign.Model.DowngradePlanUpdateResponse.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec billing_plan_put_downgrade_account_billing_plan(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec billing_plan_put_downgrade_account_billing_plan(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, DowngradePlanUpdateResponse.t()}
           | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
@@ -231,7 +231,7 @@ defmodule DocuSign.Api.BillingPlans do
   - `{:ok, DocuSign.Model.BillingPlanResponse.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec billing_plans_get_billing_plan(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec billing_plans_get_billing_plan(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, BillingPlanResponse.t()}
           | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
@@ -264,7 +264,7 @@ defmodule DocuSign.Api.BillingPlans do
   - `{:ok, DocuSign.Model.BillingPlansResponse.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec billing_plans_get_billing_plans(Tesla.Env.client(), keyword()) ::
+  @spec billing_plans_get_billing_plans(DocuSign.Connection.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, BillingPlansResponse.t()}
           | {:error, Tesla.Env.t()}
@@ -299,7 +299,7 @@ defmodule DocuSign.Api.BillingPlans do
   - `{:ok, nil}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec purchased_envelopes_put_purchased_envelopes(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec purchased_envelopes_put_purchased_envelopes(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, nil} | {:ok, ErrorDetails.t()} | {:error, Tesla.Env.t()}
   def purchased_envelopes_put_purchased_envelopes(connection, account_id, opts \\ []) do
     optional_params = %{

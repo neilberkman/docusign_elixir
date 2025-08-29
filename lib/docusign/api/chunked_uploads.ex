@@ -29,7 +29,7 @@ defmodule DocuSign.Api.ChunkedUploads do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec chunked_uploads_delete_chunked_upload(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           keyword()
@@ -69,7 +69,7 @@ defmodule DocuSign.Api.ChunkedUploads do
   - `{:ok, DocuSign.Model.ChunkedUploadResponse.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec chunked_uploads_get_chunked_upload(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec chunked_uploads_get_chunked_upload(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, ChunkedUploadResponse.t()}
           | {:error, Tesla.Env.t()}
@@ -109,7 +109,7 @@ defmodule DocuSign.Api.ChunkedUploads do
   - `{:ok, DocuSign.Model.ChunkedUploadResponse.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec chunked_uploads_post_chunked_uploads(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec chunked_uploads_post_chunked_uploads(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, ChunkedUploadResponse.t()}
           | {:error, Tesla.Env.t()}
@@ -153,7 +153,7 @@ defmodule DocuSign.Api.ChunkedUploads do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec chunked_uploads_put_chunked_upload_part(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),
@@ -206,7 +206,7 @@ defmodule DocuSign.Api.ChunkedUploads do
   - `{:ok, DocuSign.Model.ChunkedUploadResponse.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec chunked_uploads_put_chunked_uploads(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec chunked_uploads_put_chunked_uploads(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, ChunkedUploadResponse.t()}
           | {:error, Tesla.Env.t()}

@@ -33,7 +33,7 @@ defmodule DocuSign.Api.EnvelopeRecipients do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec recipients_delete_recipient(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),
@@ -74,7 +74,7 @@ defmodule DocuSign.Api.EnvelopeRecipients do
   - `{:ok, DocuSign.Model.EnvelopeRecipients.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec recipients_delete_recipients(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec recipients_delete_recipients(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, EnvelopeRecipients.t()}
           | {:error, Tesla.Env.t()}
@@ -118,7 +118,7 @@ defmodule DocuSign.Api.EnvelopeRecipients do
   - `{:ok, DocuSign.Model.EnvelopeRecipients.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec recipients_get_recipients(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec recipients_get_recipients(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, EnvelopeRecipients.t()}
           | {:error, Tesla.Env.t()}
@@ -164,7 +164,7 @@ defmodule DocuSign.Api.EnvelopeRecipients do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec recipients_post_recipient_proof_file_resource_token(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),
@@ -212,7 +212,7 @@ defmodule DocuSign.Api.EnvelopeRecipients do
   - `{:ok, DocuSign.Model.EnvelopeRecipients.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec recipients_post_recipients(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec recipients_post_recipients(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, EnvelopeRecipients.t()}
           | {:error, Tesla.Env.t()}
@@ -258,7 +258,7 @@ defmodule DocuSign.Api.EnvelopeRecipients do
   - `{:ok, DocuSign.Model.RecipientsUpdateSummary.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec recipients_put_recipients(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec recipients_put_recipients(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, RecipientsUpdateSummary.t()}
           | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
@@ -304,7 +304,7 @@ defmodule DocuSign.Api.EnvelopeRecipients do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec views_post_envelope_recipient_preview(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           keyword()
@@ -351,7 +351,7 @@ defmodule DocuSign.Api.EnvelopeRecipients do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec views_post_recipient_manual_review_view(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),

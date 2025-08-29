@@ -39,7 +39,7 @@ defmodule DocuSign.Api.CloudStorage do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec cloud_storage_folder_get_cloud_storage_folder(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),
@@ -100,7 +100,7 @@ defmodule DocuSign.Api.CloudStorage do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec cloud_storage_folder_get_cloud_storage_folder_all(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),
