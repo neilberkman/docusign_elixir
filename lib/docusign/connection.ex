@@ -30,7 +30,7 @@ defmodule DocuSign.Connection do
   """
 
   alias DocuSign.Util.Environment
-  alias DocuSign.{ClientRegistry, Debug, User, Error}
+  alias DocuSign.{ClientRegistry, Debug, Error, User}
   alias OAuth2.Request
   alias Tesla.Adapter.Finch
   alias Tesla.Middleware.BaseUrl
@@ -278,7 +278,7 @@ defmodule DocuSign.Connection do
   ## Examples
 
       # Download envelope document to temporary file
-      {:ok, temp_path} = DocuSign.Connection.download_file(conn, 
+      {:ok, temp_path} = DocuSign.Connection.download_file(conn,
         "/v2.1/accounts/123/envelopes/456/documents/1")
 
       # Download to memory
@@ -345,7 +345,7 @@ defmodule DocuSign.Connection do
       # Use automatic detection for OAuth2 setup
       base_uri = "https://demo.docusign.net/restapi"
       hostname = DocuSign.Connection.determine_hostname(base_uri)
-      
+
       Application.put_env(:docusign, :hostname, hostname)
 
   """
@@ -410,7 +410,8 @@ defmodule DocuSign.Connection do
       )
 
   """
-  @spec from_oauth_client_with_detection(OAuth2.Client.t(), keyword()) :: {:ok, t()} | {:error, atom()}
+  @spec from_oauth_client_with_detection(OAuth2.Client.t(), keyword()) ::
+          {:ok, t()} | {:error, atom()}
   def from_oauth_client_with_detection(%OAuth2.Client{} = oauth_client, opts \\ []) do
     {auto_detect, opts} = Keyword.pop(opts, :auto_detect_hostname, false)
 

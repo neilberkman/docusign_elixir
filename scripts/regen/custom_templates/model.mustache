@@ -1,0 +1,34 @@
+{{>licenseInfo}}
+{{#models}}{{#model}}defmodule DocuSign.Model.{{classname}} do
+  @moduledoc """
+  {{&description}}
+  """
+
+  @derive Jason.Encoder
+  defstruct [{{#vars}}
+    {{#atom}}{{&baseName}}{{/atom}}{{^-last}},{{/-last}}{{/vars}}
+  ]
+
+  @type t :: %__MODULE__{
+{{#vars}}          :{{&baseName}} => {{{datatype}}}{{#isNullable}} | nil{{/isNullable}}{{^isNullable}}{{^required}} | nil{{/required}}{{/isNullable}}{{^-last}},{{/-last}}
+{{/vars}}        }
+
+{{#hasComplexVars}}
+  alias DocuSign.Deserializer
+
+  def decode(value) do
+    value{{#vars}}{{^isPrimitiveType}}{{#baseType}}
+    |> Deserializer.deserialize(
+      {{#atom}}{{&baseName}}{{/atom}},
+      {{#isArray}}:list, DocuSign.Model.{{{items.baseType}}}{{/isArray}}{{#isMap}}:map, DocuSign.Model.{{{items.baseType}}}{{/isMap}}{{#isDate}}:date, nil{{/isDate}}{{#isDateTime}}:datetime, nil{{/isDateTime}}{{^isDate}}{{^isDateTime}}{{^isMap}}{{^isArray}}:struct, DocuSign.Model.{{baseType}}{{/isArray}}{{/isMap}}{{/isDateTime}}{{/isDate}}
+    ){{/baseType}}{{/isPrimitiveType}}{{/vars}}
+  end
+{{/hasComplexVars}}
+{{^hasComplexVars}}
+  def decode(value) do
+    value
+  end
+{{/hasComplexVars}}
+end
+
+{{/model}}{{/models}}
