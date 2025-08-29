@@ -11,7 +11,6 @@ defmodule DocuSign.Model.RadioGroup do
   alias DocuSign.Model.PropertyMetadata
   alias DocuSign.Model.Radio
 
-  @derive Jason.Encoder
   defstruct [
     :conditionalParentLabel,
     :conditionalParentLabelMetadata,
@@ -47,6 +46,17 @@ defmodule DocuSign.Model.RadioGroup do
     :value,
     :valueMetadata
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :conditionalParentLabel => String.t() | nil,
@@ -171,5 +181,6 @@ defmodule DocuSign.Model.RadioGroup do
       :struct,
       PropertyMetadata
     )
+    |> then(&struct(__MODULE__, &1))
   end
 end

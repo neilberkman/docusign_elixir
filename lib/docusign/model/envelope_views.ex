@@ -7,16 +7,26 @@ defmodule DocuSign.Model.EnvelopeViews do
   Provides a URL that you can embed in your application to provide access to the Docusign UI.  ### Related topics  - [Embedded signing and sending](/docs/esign-rest-api/esign101/concepts/embedding/) - [Send an envelope via your app](/docs/esign-rest-api/how-to/embedded-sending/) - [Introducing customizable embedded sending](https://www.docusign.com/blog/developers/introducing-customizable-embedded-sending)  
   """
 
-  @derive Jason.Encoder
   defstruct [
     :url
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :url => String.t() | nil
         }
 
   def decode(value) do
-    value
+    struct(__MODULE__, value)
   end
 end

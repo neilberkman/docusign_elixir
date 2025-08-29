@@ -11,7 +11,6 @@ defmodule DocuSign.Model.NotaryJournals do
   alias DocuSign.Model.Jurisdiction
   alias DocuSign.Model.NotaryJournalMetaData
 
-  @derive Jason.Encoder
   defstruct [
     :createdDate,
     :documentName,
@@ -20,6 +19,17 @@ defmodule DocuSign.Model.NotaryJournals do
     :notaryJournalMetaData,
     :signerName
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :createdDate => String.t() | nil,
@@ -42,5 +52,6 @@ defmodule DocuSign.Model.NotaryJournals do
       :struct,
       NotaryJournalMetaData
     )
+    |> then(&struct(__MODULE__, &1))
   end
 end

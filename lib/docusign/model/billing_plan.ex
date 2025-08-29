@@ -13,7 +13,6 @@ defmodule DocuSign.Model.BillingPlan do
   alias DocuSign.Model.FeatureSet
   alias DocuSign.Model.SeatDiscount
 
-  @derive Jason.Encoder
   defstruct [
     :appStoreProducts,
     :currencyPlanPrices,
@@ -31,6 +30,17 @@ defmodule DocuSign.Model.BillingPlan do
     :supportIncidentFee,
     :supportPlanFee
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :appStoreProducts => [AppStoreProduct.t()] | nil,
@@ -72,5 +82,6 @@ defmodule DocuSign.Model.BillingPlan do
       :list,
       SeatDiscount
     )
+    |> then(&struct(__MODULE__, &1))
   end
 end

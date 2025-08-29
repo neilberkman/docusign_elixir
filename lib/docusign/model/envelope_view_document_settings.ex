@@ -7,13 +7,23 @@ defmodule DocuSign.Model.EnvelopeViewDocumentSettings do
 
   """
 
-  @derive Jason.Encoder
   defstruct [
     :showEditDocumentVisibility,
     :showEditDocuments,
     :showEditPages,
     :showSaveAsDocumentCustomField
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :showEditDocumentVisibility => String.t() | nil,
@@ -23,6 +33,6 @@ defmodule DocuSign.Model.EnvelopeViewDocumentSettings do
         }
 
   def decode(value) do
-    value
+    struct(__MODULE__, value)
   end
 end

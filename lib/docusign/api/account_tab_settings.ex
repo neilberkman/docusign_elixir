@@ -26,11 +26,11 @@ defmodule DocuSign.Api.AccountTabSettings do
   ### Returns
 
   - `{:ok, DocuSign.Model.TabAccountSettings.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec tab_settings_get_tab_settings(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, TabAccountSettings.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def tab_settings_get_tab_settings(connection, account_id, _opts \\ []) do
     request =
       %{}
@@ -60,11 +60,11 @@ defmodule DocuSign.Api.AccountTabSettings do
   ### Returns
 
   - `{:ok, DocuSign.Model.TabAccountSettings.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec tab_settings_put_settings(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, TabAccountSettings.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def tab_settings_put_settings(connection, account_id, opts \\ []) do
     optional_params = %{
       :body => :body

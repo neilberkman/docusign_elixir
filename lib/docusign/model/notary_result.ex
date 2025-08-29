@@ -11,11 +11,21 @@ defmodule DocuSign.Model.NotaryResult do
   alias DocuSign.Model.Jurisdiction
   alias DocuSign.Model.Notary
 
-  @derive Jason.Encoder
   defstruct [
     :jurisdictions,
     :notary
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :jurisdictions => [Jurisdiction.t()] | nil,
@@ -34,5 +44,6 @@ defmodule DocuSign.Model.NotaryResult do
       :struct,
       Notary
     )
+    |> then(&struct(__MODULE__, &1))
   end
 end

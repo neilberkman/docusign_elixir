@@ -7,7 +7,6 @@ defmodule DocuSign.Model.ENoteConfigurations do
 
   """
 
-  @derive Jason.Encoder
   defstruct [
     :apiKey,
     :connectConfigured,
@@ -16,6 +15,17 @@ defmodule DocuSign.Model.ENoteConfigurations do
     :password,
     :userName
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :apiKey => String.t() | nil,
@@ -27,6 +37,6 @@ defmodule DocuSign.Model.ENoteConfigurations do
         }
 
   def decode(value) do
-    value
+    struct(__MODULE__, value)
   end
 end

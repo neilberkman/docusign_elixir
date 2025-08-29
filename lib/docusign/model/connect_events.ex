@@ -10,13 +10,23 @@ defmodule DocuSign.Model.ConnectEvents do
   alias DocuSign.Deserializer
   alias DocuSign.Model.ConnectLog
 
-  @derive Jason.Encoder
   defstruct [
     :failures,
     :logs,
     :totalRecords,
     :type
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :failures => [ConnectLog.t()] | nil,
@@ -37,5 +47,6 @@ defmodule DocuSign.Model.ConnectEvents do
       :list,
       ConnectLog
     )
+    |> then(&struct(__MODULE__, &1))
   end
 end

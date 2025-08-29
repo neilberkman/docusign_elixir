@@ -11,11 +11,21 @@ defmodule DocuSign.Model.DocGenFormFieldResponse do
   alias DocuSign.Model.DocGenFormFields
   alias DocuSign.Model.ErrorDetails
 
-  @derive Jason.Encoder
   defstruct [
     :docGenFormFields,
     :errorDetails
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :docGenFormFields => [DocGenFormFields.t()] | nil,
@@ -34,5 +44,6 @@ defmodule DocuSign.Model.DocGenFormFieldResponse do
       :struct,
       ErrorDetails
     )
+    |> then(&struct(__MODULE__, &1))
   end
 end

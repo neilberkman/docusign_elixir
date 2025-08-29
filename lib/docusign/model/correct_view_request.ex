@@ -7,13 +7,23 @@ defmodule DocuSign.Model.CorrectViewRequest do
   The request body for the [EnvelopeViews: createCorrect](/docs/esign-rest-api/reference/envelopes/envelopeviews/createcorrect/) method.
   """
 
-  @derive Jason.Encoder
   defstruct [
     :beginOnTagger,
     :returnUrl,
     :suppressNavigation,
     :viewUrl
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :beginOnTagger => String.t() | nil,
@@ -23,6 +33,6 @@ defmodule DocuSign.Model.CorrectViewRequest do
         }
 
   def decode(value) do
-    value
+    struct(__MODULE__, value)
   end
 end

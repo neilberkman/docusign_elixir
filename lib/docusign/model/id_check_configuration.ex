@@ -10,12 +10,22 @@ defmodule DocuSign.Model.IdCheckConfiguration do
   alias DocuSign.Deserializer
   alias DocuSign.Model.IdCheckSecurityStep
 
-  @derive Jason.Encoder
   defstruct [
     :authSteps,
     :isDefault,
     :name
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :authSteps => [IdCheckSecurityStep.t()] | nil,
@@ -30,5 +40,6 @@ defmodule DocuSign.Model.IdCheckConfiguration do
       :list,
       IdCheckSecurityStep
     )
+    |> then(&struct(__MODULE__, &1))
   end
 end

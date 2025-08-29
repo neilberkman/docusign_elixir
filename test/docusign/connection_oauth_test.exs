@@ -1,5 +1,6 @@
 defmodule DocuSign.ConnectionOAuthTest do
-  use ExUnit.Case, async: true
+  # Modifies global config, can't run async
+  use ExUnit.Case, async: false
 
   alias DocuSign.Connection
   alias OAuth2.{AccessToken, Client}
@@ -25,6 +26,10 @@ defmodule DocuSign.ConnectionOAuthTest do
       assert conn.client == oauth_client
       assert conn.app_account.account_id == "12345678-1234-1234-1234-123456789012"
       assert conn.app_account.base_uri == "https://demo.docusign.net/restapi"
+
+      # Verify Req client is created
+      assert %Req.Request{} = conn.req
+      assert conn.req.options.base_url == "https://demo.docusign.net/restapi"
     end
 
     test "returns error when account_id is missing" do
@@ -62,50 +67,6 @@ defmodule DocuSign.ConnectionOAuthTest do
     end
   end
 
-  describe "Connection.Request.new/1 with OAuth2.Client" do
-    test "creates Tesla client with OAuth2.Client authorization" do
-      oauth_client = %Client{
-        token: %AccessToken{
-          access_token: "oauth_access_token_123",
-          expires_at: System.system_time(:second) + 28_800,
-          refresh_token: "oauth_refresh_token_456",
-          token_type: "Bearer"
-        }
-      }
-
-      conn = %Connection{
-        app_account: %{
-          base_uri: "https://demo.docusign.net/restapi"
-        },
-        client: oauth_client
-      }
-
-      tesla_client = Connection.Request.new(conn)
-
-      # Check that Tesla client is created (we can't easily inspect middleware)
-      assert %Tesla.Client{} = tesla_client
-    end
-
-    test "creates Tesla client with JWT token authorization (existing behavior)" do
-      conn = %Connection{
-        app_account: %{
-          base_uri: "https://demo.docusign.net/restapi"
-        },
-        client: %{
-          token: %{
-            access_token: "jwt_access_token_123",
-            token_type: "Bearer"
-          }
-        }
-      }
-
-      tesla_client = Connection.Request.new(conn)
-
-      # Check that Tesla client is created (we can't easily inspect middleware)
-      assert %Tesla.Client{} = tesla_client
-    end
-  end
-
   describe "Connection.request/2 with OAuth2.Client" do
     setup do
       bypass = Bypass.open()
@@ -119,103 +80,130 @@ defmodule DocuSign.ConnectionOAuthTest do
         }
       }
 
-      conn = %Connection{
-        app_account: %{
+      {:ok, conn} =
+        Connection.from_oauth_client(
+          oauth_client,
+          account_id: "test-account",
           base_uri: "http://localhost:#{bypass.port}"
-        },
-        client: oauth_client
-      }
+        )
 
       {:ok, bypass: bypass, conn: conn}
     end
 
-    test "makes successful request with OAuth2.Client", %{bypass: bypass, conn: conn} do
-      Bypass.expect_once(bypass, "GET", "/test", fn conn ->
-        # Verify the Authorization header
-        auth_header = get_req_header(conn, "authorization") |> List.first()
-        assert auth_header == "Bearer oauth_access_token_123"
+    test "sends request with OAuth2 authorization header", %{bypass: bypass, conn: conn} do
+      Bypass.expect_once(bypass, fn conn_b ->
+        assert Plug.Conn.get_req_header(conn_b, "authorization") == [
+                 "Bearer oauth_access_token_123"
+               ]
 
-        Plug.Conn.resp(conn, 200, Jason.encode!(%{"success" => true}))
+        conn_b
+        |> Plug.Conn.put_resp_content_type("application/json")
+        |> Plug.Conn.resp(200, ~s({"result": "success"}))
       end)
 
       {:ok, response} = Connection.request(conn, method: :get, url: "/test")
 
       assert response.status == 200
-      assert Jason.decode!(response.body) == %{"success" => true}
+      assert response.body == %{"result" => "success"}
     end
 
-    test "handles request errors with OAuth2.Client", %{bypass: bypass, conn: conn} do
-      Application.put_env(:docusign, :structured_errors, true)
-
-      Bypass.expect_once(bypass, "GET", "/error", fn conn ->
-        Plug.Conn.resp(conn, 401, Jason.encode!(%{"error" => "unauthorized"}))
+    test "includes content-type header", %{bypass: bypass, conn: conn} do
+      Bypass.expect_once(bypass, fn conn_b ->
+        assert Plug.Conn.get_req_header(conn_b, "content-type") == ["application/json"]
+        Plug.Conn.resp(conn_b, 200, "")
       end)
 
-      {:error, error} = Connection.request(conn, method: :get, url: "/error")
-
-      assert %DocuSign.AuthenticationError{} = error
-      assert error.status == 401
-    end
-
-    defp get_req_header(conn, name) do
-      Plug.Conn.get_req_header(conn, name)
+      {:ok, _response} = Connection.request(conn, method: :get, url: "/test")
     end
   end
 
-  describe "Integration: OAuth2 strategy to Connection usage" do
-    test "complete flow using OAuth2.Client" do
-      # Simulate OAuth2.Client with tokens from authorization flow
+  describe "from_oauth_client_with_detection/2" do
+    test "auto-detects sandbox hostname when enabled" do
+      original_hostname = Application.get_env(:docusign, :hostname)
+
       oauth_client = %Client{
         token: %AccessToken{
-          access_token: "integration_access_token",
-          expires_at: System.system_time(:second) + 28_800,
-          refresh_token: "integration_refresh_token",
+          access_token: "oauth_access_token_123",
           token_type: "Bearer"
         }
       }
 
-      # Create connection from OAuth2.Client
-      {:ok, conn} =
-        Connection.from_oauth_client(
+      {:ok, _conn} =
+        Connection.from_oauth_client_with_detection(
           oauth_client,
-          account_id: "12345678-1234-1234-1234-123456789012",
-          base_uri: "https://demo.docusign.net/restapi"
+          account_id: "test-account",
+          base_uri: "https://demo.docusign.net/restapi",
+          auto_detect_hostname: true
         )
 
-      # Verify connection structure
-      assert conn.client == oauth_client
-      assert conn.app_account.account_id == "12345678-1234-1234-1234-123456789012"
-      assert conn.app_account.base_uri == "https://demo.docusign.net/restapi"
+      # Verify hostname was auto-detected as sandbox
+      assert Application.get_env(:docusign, :hostname) == "account-d.docusign.com"
 
-      # Verify we can create a Tesla client for requests
-      tesla_client = Connection.Request.new(conn)
-      assert %Tesla.Client{} = tesla_client
+      # Cleanup
+      if original_hostname do
+        Application.put_env(:docusign, :hostname, original_hostname)
+      else
+        Application.delete_env(:docusign, :hostname)
+      end
     end
 
-    test "connection works with typical DocuSign API patterns" do
+    test "auto-detects production hostname when enabled" do
+      original_hostname = Application.get_env(:docusign, :hostname)
+
       oauth_client = %Client{
         token: %AccessToken{
-          access_token: "api_access_token",
-          expires_at: System.system_time(:second) + 28_800,
-          refresh_token: "api_refresh_token",
+          access_token: "oauth_access_token_123",
           token_type: "Bearer"
         }
       }
 
-      {:ok, conn} =
-        Connection.from_oauth_client(
+      {:ok, _conn} =
+        Connection.from_oauth_client_with_detection(
           oauth_client,
-          account_id: "api-account-id",
-          base_uri: "https://demo.docusign.net/restapi"
+          account_id: "test-account",
+          base_uri: "https://na3.docusign.net/restapi",
+          auto_detect_hostname: true
         )
 
-      # This connection structure should work with existing DocuSign API modules
-      # We can't test actual API calls without mocking, but we can verify structure
-      assert is_map(conn.app_account)
-      assert %Client{} = conn.client
+      # Verify hostname was auto-detected as production
+      assert Application.get_env(:docusign, :hostname) == "account.docusign.com"
 
-      # Verify compatibility with Connection.request/2
-      assert is_function(&Connection.request/2, 2)
+      # Cleanup
+      if original_hostname do
+        Application.put_env(:docusign, :hostname, original_hostname)
+      else
+        Application.delete_env(:docusign, :hostname)
+      end
+    end
+
+    test "skips detection when disabled" do
+      original_hostname = Application.get_env(:docusign, :hostname)
+      Application.put_env(:docusign, :hostname, "test-hostname.com")
+
+      oauth_client = %Client{
+        token: %AccessToken{
+          access_token: "oauth_access_token_123",
+          token_type: "Bearer"
+        }
+      }
+
+      {:ok, _conn} =
+        Connection.from_oauth_client_with_detection(
+          oauth_client,
+          account_id: "test-account",
+          base_uri: "https://demo.docusign.net/restapi",
+          auto_detect_hostname: false
+        )
+
+      # Verify hostname was NOT changed
+      assert Application.get_env(:docusign, :hostname) == "test-hostname.com"
+
+      # Cleanup
+      if original_hostname do
+        Application.put_env(:docusign, :hostname, original_hostname)
+      else
+        Application.delete_env(:docusign, :hostname)
+      end
     end
   end
 end

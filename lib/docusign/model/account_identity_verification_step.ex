@@ -7,11 +7,21 @@ defmodule DocuSign.Model.AccountIdentityVerificationStep do
   Information about a specific step in an Identity Verification workflow.
   """
 
-  @derive Jason.Encoder
   defstruct [
     :name,
     :type
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :name => String.t() | nil,
@@ -19,6 +29,6 @@ defmodule DocuSign.Model.AccountIdentityVerificationStep do
         }
 
   def decode(value) do
-    value
+    struct(__MODULE__, value)
   end
 end

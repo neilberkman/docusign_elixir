@@ -30,11 +30,11 @@ defmodule DocuSign.Api.PowerFormData do
   ### Returns
 
   - `{:ok, DocuSign.Model.PowerFormsFormDataResponse.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec power_forms_get_power_form_form_data(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, PowerFormsFormDataResponse.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def power_forms_get_power_form_form_data(connection, account_id, power_form_id, opts \\ []) do
     optional_params = %{
       :data_layout => :query,

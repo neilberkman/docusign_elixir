@@ -10,7 +10,6 @@ defmodule DocuSign.Model.LinkedExternalPrimaryAccount do
   alias DocuSign.Deserializer
   alias DocuSign.Model.ExternalPrimaryAccountRecipientAuthRequirements
 
-  @derive Jason.Encoder
   defstruct [
     :accountName,
     :configurationId,
@@ -25,6 +24,17 @@ defmodule DocuSign.Model.LinkedExternalPrimaryAccount do
     :status,
     :userId
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :accountName => String.t() | nil,
@@ -48,5 +58,6 @@ defmodule DocuSign.Model.LinkedExternalPrimaryAccount do
       :struct,
       ExternalPrimaryAccountRecipientAuthRequirements
     )
+    |> then(&struct(__MODULE__, &1))
   end
 end

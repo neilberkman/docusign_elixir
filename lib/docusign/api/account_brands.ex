@@ -30,11 +30,11 @@ defmodule DocuSign.Api.AccountBrands do
   ### Returns
 
   - `{:ok, nil}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec brand_delete_brand(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, nil}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def brand_delete_brand(connection, account_id, brand_id, _opts \\ []) do
     request =
       %{}
@@ -64,11 +64,11 @@ defmodule DocuSign.Api.AccountBrands do
   ### Returns
 
   - `{:ok, nil}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec brand_export_get_brand_export_file(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, nil}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def brand_export_get_brand_export_file(connection, account_id, brand_id, _opts \\ []) do
     request =
       %{}
@@ -100,11 +100,11 @@ defmodule DocuSign.Api.AccountBrands do
   ### Returns
 
   - `{:ok, DocuSign.Model.Brand.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec brand_get_brand(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, Brand.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def brand_get_brand(connection, account_id, brand_id, opts \\ []) do
     optional_params = %{
       :include_external_references => :query,
@@ -141,11 +141,11 @@ defmodule DocuSign.Api.AccountBrands do
   ### Returns
 
   - `{:ok, nil}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec brand_logo_delete_brand_logo(DocuSign.Connection.t(), String.t(), String.t(), String.t(), keyword()) ::
           {:ok, nil}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def brand_logo_delete_brand_logo(connection, account_id, brand_id, logo_type, _opts \\ []) do
     request =
       %{}
@@ -176,11 +176,11 @@ defmodule DocuSign.Api.AccountBrands do
   ### Returns
 
   - `{:ok, String.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec brand_logo_get_brand_logo(DocuSign.Connection.t(), String.t(), String.t(), String.t(), keyword()) ::
           {:ok, String.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def brand_logo_get_brand_logo(connection, account_id, brand_id, logo_type, _opts \\ []) do
     request =
       %{}
@@ -212,11 +212,11 @@ defmodule DocuSign.Api.AccountBrands do
   ### Returns
 
   - `{:ok, nil}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec brand_logo_put_brand_logo(DocuSign.Connection.t(), String.t(), String.t(), String.t(), String.t(), keyword()) ::
           {:ok, nil}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def brand_logo_put_brand_logo(connection, account_id, brand_id, logo_type, logo_file_bytes, _opts \\ []) do
     request =
       %{}
@@ -249,11 +249,11 @@ defmodule DocuSign.Api.AccountBrands do
   ### Returns
 
   - `{:ok, DocuSign.Model.Brand.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec brand_put_brand(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, Brand.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def brand_put_brand(connection, account_id, brand_id, opts \\ []) do
     optional_params = %{
       :body => :body,
@@ -293,11 +293,11 @@ defmodule DocuSign.Api.AccountBrands do
   ### Returns
 
   - `{:ok, nil}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec brand_resources_get_brand_resources(DocuSign.Connection.t(), String.t(), String.t(), String.t(), keyword()) ::
           {:ok, nil}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def brand_resources_get_brand_resources(connection, account_id, brand_id, resource_content_type, opts \\ []) do
     optional_params = %{
       :langcode => :query,
@@ -333,11 +333,11 @@ defmodule DocuSign.Api.AccountBrands do
   ### Returns
 
   - `{:ok, DocuSign.Model.BrandResourcesList.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec brand_resources_get_brand_resources_list(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, BrandResourcesList.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def brand_resources_get_brand_resources_list(connection, account_id, brand_id, _opts \\ []) do
     request =
       %{}
@@ -369,7 +369,7 @@ defmodule DocuSign.Api.AccountBrands do
   ### Returns
 
   - `{:ok, DocuSign.Model.BrandResources.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec brand_resources_put_brand_resources(
           DocuSign.Connection.t(),
@@ -380,7 +380,7 @@ defmodule DocuSign.Api.AccountBrands do
           keyword()
         ) ::
           {:ok, BrandResources.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def brand_resources_put_brand_resources(
         connection,
         account_id,
@@ -418,11 +418,11 @@ defmodule DocuSign.Api.AccountBrands do
   ### Returns
 
   - `{:ok, DocuSign.Model.AccountBrands.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec brands_delete_brands(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, AccountBrands.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def brands_delete_brands(connection, account_id, opts \\ []) do
     optional_params = %{
       :body => :body
@@ -458,11 +458,11 @@ defmodule DocuSign.Api.AccountBrands do
   ### Returns
 
   - `{:ok, DocuSign.Model.AccountBrands.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec brands_get_brands(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, AccountBrands.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def brands_get_brands(connection, account_id, opts \\ []) do
     optional_params = %{
       :exclude_distributor_brand => :query,
@@ -498,11 +498,11 @@ defmodule DocuSign.Api.AccountBrands do
   ### Returns
 
   - `{:ok, DocuSign.Model.AccountBrands.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec brands_post_brands(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, AccountBrands.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def brands_post_brands(connection, account_id, opts \\ []) do
     optional_params = %{
       :body => :body

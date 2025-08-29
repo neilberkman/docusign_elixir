@@ -29,7 +29,7 @@ defmodule DocuSign.Api.TemplateDocumentFields do
   ### Returns
 
   - `{:ok, DocuSign.Model.DocumentFieldsInformation.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec document_fields_delete_template_document_fields(
           DocuSign.Connection.t(),
@@ -39,7 +39,7 @@ defmodule DocuSign.Api.TemplateDocumentFields do
           keyword()
         ) ::
           {:ok, DocumentFieldsInformation.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def document_fields_delete_template_document_fields(connection, account_id, document_id, template_id, opts \\ []) do
     optional_params = %{
       :body => :body
@@ -75,7 +75,7 @@ defmodule DocuSign.Api.TemplateDocumentFields do
   ### Returns
 
   - `{:ok, DocuSign.Model.DocumentFieldsInformation.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec document_fields_get_template_document_fields(
           DocuSign.Connection.t(),
@@ -85,7 +85,7 @@ defmodule DocuSign.Api.TemplateDocumentFields do
           keyword()
         ) ::
           {:ok, DocumentFieldsInformation.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def document_fields_get_template_document_fields(connection, account_id, document_id, template_id, _opts \\ []) do
     request =
       %{}
@@ -117,7 +117,7 @@ defmodule DocuSign.Api.TemplateDocumentFields do
   ### Returns
 
   - `{:ok, DocuSign.Model.DocumentFieldsInformation.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec document_fields_post_template_document_fields(
           DocuSign.Connection.t(),
@@ -127,7 +127,7 @@ defmodule DocuSign.Api.TemplateDocumentFields do
           keyword()
         ) ::
           {:ok, DocumentFieldsInformation.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def document_fields_post_template_document_fields(connection, account_id, document_id, template_id, opts \\ []) do
     optional_params = %{
       :body => :body
@@ -165,7 +165,7 @@ defmodule DocuSign.Api.TemplateDocumentFields do
   ### Returns
 
   - `{:ok, DocuSign.Model.DocumentFieldsInformation.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec document_fields_put_template_document_fields(
           DocuSign.Connection.t(),
@@ -175,7 +175,7 @@ defmodule DocuSign.Api.TemplateDocumentFields do
           keyword()
         ) ::
           {:ok, DocumentFieldsInformation.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def document_fields_put_template_document_fields(connection, account_id, document_id, template_id, opts \\ []) do
     optional_params = %{
       :body => :body

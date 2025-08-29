@@ -31,67 +31,16 @@ defmodule DocuSign.Connection do
 
   alias DocuSign.Util.Environment
   alias DocuSign.{ClientRegistry, Debug, Error, User}
-  alias OAuth2.Request
-  alias Tesla.Adapter.Finch
-  alias Tesla.Middleware.BaseUrl
-  alias Tesla.Middleware.EncodeJson
-  alias Tesla.Middleware.Headers
 
-  defstruct [:app_account, :client]
+  defstruct [:app_account, :client, :req]
 
   @type t :: %__MODULE__{
           app_account: map() | nil,
-          client: OAuth2.Client.t() | nil
+          client: OAuth2.Client.t() | nil,
+          req: Req.Request.t()
         }
 
   @timeout 30_000
-
-  defmodule Request do
-    @moduledoc """
-    Handle Tesla connections.
-    """
-
-    @doc """
-    Configure a client connection for both JWT impersonation and OAuth2 tokens.
-
-    This function pattern matches on the connection struct to determine whether
-    to use JWT tokens (from ClientRegistry) or OAuth2 tokens (from authorization code flow).
-
-    # Returns
-
-    Tesla.Env.client
-    """
-    @spec new(%{app_account: map(), client: OAuth2.Client.t()}) :: Tesla.Env.client()
-    def new(%{app_account: app, client: %OAuth2.Client{token: %OAuth2.AccessToken{} = token}}) do
-      # OAuth2.Client from authorization code flow
-      middleware =
-        [
-          {BaseUrl, app.base_uri},
-          {Headers, [{"authorization", "#{token.token_type} #{token.access_token}"}]},
-          {EncodeJson, engine: Jason}
-        ] ++ Debug.all_middleware()
-
-      Tesla.client(
-        middleware,
-        Application.get_env(:tesla, :adapter, {Finch, name: DocuSign.Finch})
-      )
-    end
-
-    def new(%{app_account: app, client: %{token: token}}) do
-      # JWT impersonation client
-      middleware =
-        [
-          {BaseUrl, app.base_uri},
-          {Headers, [{"authorization", "#{token.token_type} #{token.access_token}"}]},
-          {EncodeJson, engine: Jason}
-        ] ++ Debug.all_middleware()
-
-      Tesla.client(
-        middleware,
-        Application.get_env(:tesla, :adapter, {Finch, name: DocuSign.Finch})
-      )
-    end
-  end
 
   @doc """
   Create new connection for provided user ID using JWT impersonation.
@@ -109,7 +58,7 @@ defmodule DocuSign.Connection do
           Application.put_env(:docusign, :hostname, hostname)
         end
 
-        connection = struct(__MODULE__, client: client, app_account: account)
+        connection = build_connection(client, account)
         {:ok, connection}
 
       {:error, error} ->
@@ -175,11 +124,7 @@ defmodule DocuSign.Connection do
         base_uri: base_uri
       }
 
-      connection = %__MODULE__{
-        app_account: app_account,
-        client: oauth_client
-      }
-
+      connection = build_connection(oauth_client, app_account)
       {:ok, connection}
     end
   end
@@ -214,13 +159,92 @@ defmodule DocuSign.Connection do
     %{account | base_uri: "#{account.base_uri}/restapi"}
   end
 
+  defp build_connection(client, app_account) do
+    # Get token from either OAuth2.Client or JWT client
+    token =
+      case client do
+        %OAuth2.Client{token: %OAuth2.AccessToken{} = token} ->
+          token
+
+        %{token: token} when not is_nil(token) ->
+          token
+
+        _ ->
+          # Handle case where token might be nil
+          %{access_token: "", token_type: "Bearer"}
+      end
+
+    # Build Req client with base configuration
+    req =
+      Req.new(
+        base_url: app_account.base_uri,
+        headers:
+          [
+            {"authorization", "#{token.token_type} #{token.access_token}"},
+            {"content-type", "application/json"}
+          ] ++ Debug.sdk_headers(),
+        receive_timeout: Application.get_env(:docusign, :timeout, @timeout),
+        retry: false
+      )
+      |> maybe_add_debug_steps()
+
+    %__MODULE__{
+      app_account: app_account,
+      client: client,
+      req: req
+    }
+  end
+
+  defp maybe_add_debug_steps(req) do
+    if Application.get_env(:docusign, :debug, false) do
+      req
+      |> Req.Request.register_options([:debug_body, :debug_headers])
+      |> Req.Request.prepend_request_steps(debug_request: &debug_request/1)
+      |> Req.Request.prepend_response_steps(debug_response: &debug_response/1)
+    else
+      req
+    end
+  end
+
+  defp debug_request(request) do
+    if request.options[:debug_headers] do
+      require Logger
+
+      Logger.debug("Request Headers: #{inspect(request.headers)}")
+    end
+
+    if request.options[:debug_body] do
+      require Logger
+
+      Logger.debug("Request Body: #{inspect(request.body)}")
+    end
+
+    request
+  end
+
+  defp debug_response({request, response}) do
+    if request.options[:debug_headers] do
+      require Logger
+
+      Logger.debug("Response Headers: #{inspect(response.headers)}")
+    end
+
+    if request.options[:debug_body] do
+      require Logger
+
+      Logger.debug("Response Body: #{inspect(response.body)}")
+    end
+
+    {request, response}
+  end
+
   @doc """
   Makes a request.
 
   ## Options
 
   * `:ssl_options` - Override SSL options for this specific request
-  * All other options are passed through to Tesla
+  * All other options are passed through to Req
 
   ## Examples
 
@@ -231,24 +255,35 @@ defmodule DocuSign.Connection do
         ssl_options: [cacertfile: "/custom/ca.pem"]
       )
   """
-  @spec request(t(), Keyword.t()) :: {:ok, Tesla.Env.t()} | {:error, any()}
-  def request(conn, opts \\ []) do
-    timeout = Application.get_env(:docusign, :timeout, @timeout)
-
+  @spec request(t(), Keyword.t()) :: {:ok, Req.Response.t()} | {:error, any()}
+  def request(%__MODULE__{req: req}, opts \\ []) do
     # Extract SSL options if provided
     {ssl_opts, opts} = Keyword.pop(opts, :ssl_options, [])
 
-    # Build adapter options with SSL configuration
-    adapter_opts = build_adapter_options(timeout, ssl_opts)
+    # Apply SSL options if provided
+    req =
+      if ssl_opts == [] do
+        req
+      else
+        # Build the transport options
+        transport_opts =
+          if Code.ensure_loaded?(DocuSign.SSLOptions) do
+            DocuSign.SSLOptions.build(ssl_opts)
+          else
+            ssl_opts
+          end
 
-    # Use the original format with nested adapter key
-    opts = Keyword.put(opts, :opts, adapter: adapter_opts)
+        # Merge with existing req options
+        # Req expects connect_options to contain transport_opts
+        Req.merge(req, connect_options: [transport_opts: transport_opts])
+      end
 
-    case conn |> Request.new() |> Tesla.request(opts) do
-      {:ok, %Tesla.Env{status: status} = response} when status in 200..299 ->
+    # Make the request
+    case Req.request(req, opts) do
+      {:ok, %Req.Response{status: status} = response} when status in 200..299 ->
         {:ok, response}
 
-      {:ok, %Tesla.Env{} = response} ->
+      {:ok, %Req.Response{} = response} ->
         handle_error_response(response)
 
       {:error, reason} ->
@@ -294,24 +329,6 @@ defmodule DocuSign.Connection do
           DocuSign.FileDownloader.download_result()
   def download_file(conn, url, opts \\ []) do
     DocuSign.FileDownloader.download(conn, url, opts)
-  end
-
-  defp build_adapter_options(timeout, ssl_opts) do
-    base_opts = [receive_timeout: timeout]
-
-    if ssl_opts == [] do
-      base_opts
-      # Merge with default SSL options
-    else
-      transport_opts =
-        if Code.ensure_loaded?(DocuSign.SSLOptions) do
-          DocuSign.SSLOptions.build(ssl_opts)
-        else
-          ssl_opts
-        end
-
-      Keyword.put(base_opts, :transport_opts, transport_opts)
-    end
   end
 
   @doc """

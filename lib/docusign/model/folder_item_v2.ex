@@ -10,7 +10,6 @@ defmodule DocuSign.Model.FolderItemV2 do
   alias DocuSign.Deserializer
   alias DocuSign.Model.EnvelopeRecipients
 
-  @derive Jason.Encoder
   defstruct [
     :completedDateTime,
     :createdDateTime,
@@ -34,6 +33,17 @@ defmodule DocuSign.Model.FolderItemV2 do
     :templateId,
     :templateUri
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :completedDateTime => String.t() | nil,
@@ -66,5 +76,6 @@ defmodule DocuSign.Model.FolderItemV2 do
       :struct,
       EnvelopeRecipients
     )
+    |> then(&struct(__MODULE__, &1))
   end
 end

@@ -11,7 +11,6 @@ defmodule DocuSign.Model.Group do
   alias DocuSign.Model.ErrorDetails
   alias DocuSign.Model.UserInfo
 
-  @derive Jason.Encoder
   defstruct [
     :accessType,
     :dsGroupId,
@@ -26,6 +25,17 @@ defmodule DocuSign.Model.Group do
     :users,
     :usersCount
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :accessType => String.t() | nil,
@@ -54,5 +64,6 @@ defmodule DocuSign.Model.Group do
       :list,
       UserInfo
     )
+    |> then(&struct(__MODULE__, &1))
   end
 end

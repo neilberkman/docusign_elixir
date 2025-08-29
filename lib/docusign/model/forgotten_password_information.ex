@@ -7,7 +7,6 @@ defmodule DocuSign.Model.ForgottenPasswordInformation do
   A complex element that has up to four Question/Answer pairs for forgotten password information.
   """
 
-  @derive Jason.Encoder
   defstruct [
     :forgottenPasswordAnswer1,
     :forgottenPasswordAnswer2,
@@ -18,6 +17,17 @@ defmodule DocuSign.Model.ForgottenPasswordInformation do
     :forgottenPasswordQuestion3,
     :forgottenPasswordQuestion4
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :forgottenPasswordAnswer1 => String.t() | nil,
@@ -31,6 +41,6 @@ defmodule DocuSign.Model.ForgottenPasswordInformation do
         }
 
   def decode(value) do
-    value
+    struct(__MODULE__, value)
   end
 end

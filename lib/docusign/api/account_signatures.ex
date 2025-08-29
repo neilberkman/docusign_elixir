@@ -28,11 +28,11 @@ defmodule DocuSign.Api.AccountSignatures do
   ### Returns
 
   - `{:ok, nil}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec account_signatures_delete_account_signature(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, nil}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def account_signatures_delete_account_signature(connection, account_id, signature_id, _opts \\ []) do
     request =
       %{}
@@ -63,7 +63,7 @@ defmodule DocuSign.Api.AccountSignatures do
   ### Returns
 
   - `{:ok, DocuSign.Model.AccountSignature.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec account_signatures_delete_account_signature_image(
           DocuSign.Connection.t(),
@@ -73,7 +73,7 @@ defmodule DocuSign.Api.AccountSignatures do
           keyword()
         ) ::
           {:ok, AccountSignature.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def account_signatures_delete_account_signature_image(connection, account_id, image_type, signature_id, _opts \\ []) do
     request =
       %{}
@@ -103,11 +103,11 @@ defmodule DocuSign.Api.AccountSignatures do
   ### Returns
 
   - `{:ok, DocuSign.Model.AccountSignature.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec account_signatures_get_account_signature(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, AccountSignature.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def account_signatures_get_account_signature(connection, account_id, signature_id, _opts \\ []) do
     request =
       %{}
@@ -139,7 +139,7 @@ defmodule DocuSign.Api.AccountSignatures do
   ### Returns
 
   - `{:ok, String.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec account_signatures_get_account_signature_image(
           DocuSign.Connection.t(),
@@ -149,7 +149,7 @@ defmodule DocuSign.Api.AccountSignatures do
           keyword()
         ) ::
           {:ok, String.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def account_signatures_get_account_signature_image(connection, account_id, image_type, signature_id, opts \\ []) do
     optional_params = %{
       :include_chrome => :query
@@ -186,11 +186,11 @@ defmodule DocuSign.Api.AccountSignatures do
   ### Returns
 
   - `{:ok, DocuSign.Model.AccountSignaturesInformation.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec account_signatures_get_account_signatures(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, AccountSignaturesInformation.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def account_signatures_get_account_signatures(connection, account_id, opts \\ []) do
     optional_params = %{
       :stamp_format => :query,
@@ -228,11 +228,11 @@ defmodule DocuSign.Api.AccountSignatures do
   ### Returns
 
   - `{:ok, DocuSign.Model.AccountSignaturesInformation.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec account_signatures_post_account_signatures(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, AccountSignaturesInformation.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def account_signatures_post_account_signatures(connection, account_id, opts \\ []) do
     optional_params = %{
       :body => :body,
@@ -269,11 +269,11 @@ defmodule DocuSign.Api.AccountSignatures do
   ### Returns
 
   - `{:ok, DocuSign.Model.AccountSignaturesInformation.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec account_signatures_put_account_signature(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, AccountSignaturesInformation.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def account_signatures_put_account_signature(connection, account_id, opts \\ []) do
     optional_params = %{
       :body => :body
@@ -311,11 +311,11 @@ defmodule DocuSign.Api.AccountSignatures do
   ### Returns
 
   - `{:ok, DocuSign.Model.AccountSignature.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec account_signatures_put_account_signature_by_id(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, AccountSignature.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def account_signatures_put_account_signature_by_id(connection, account_id, signature_id, opts \\ []) do
     optional_params = %{
       :body => :body,
@@ -354,7 +354,7 @@ defmodule DocuSign.Api.AccountSignatures do
   ### Returns
 
   - `{:ok, DocuSign.Model.AccountSignature.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec account_signatures_put_account_signature_image(
           DocuSign.Connection.t(),
@@ -364,7 +364,7 @@ defmodule DocuSign.Api.AccountSignatures do
           keyword()
         ) ::
           {:ok, AccountSignature.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def account_signatures_put_account_signature_image(connection, account_id, image_type, signature_id, opts \\ []) do
     optional_params = %{
       :transparent_png => :query

@@ -7,11 +7,21 @@ defmodule DocuSign.Model.RecipientProofFile do
   The proof file of the recipient. [ID Evidence](/docs/idevidence-api/) uses proof files to store the identification data that recipients submit when verifying their ID with [ID Verification](/docs/esign-rest-api/esign101/concepts/documents/)
   """
 
-  @derive Jason.Encoder
   defstruct [
     :hasIdentityAttempts,
     :isInProofFile
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :hasIdentityAttempts => String.t() | nil,
@@ -19,6 +29,6 @@ defmodule DocuSign.Model.RecipientProofFile do
         }
 
   def decode(value) do
-    value
+    struct(__MODULE__, value)
   end
 end

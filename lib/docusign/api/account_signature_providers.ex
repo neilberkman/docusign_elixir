@@ -26,11 +26,11 @@ defmodule DocuSign.Api.AccountSignatureProviders do
   ### Returns
 
   - `{:ok, DocuSign.Model.AccountSignatureProviders.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec account_signature_providers_get_signature_providers(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, AccountSignatureProviders.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def account_signature_providers_get_signature_providers(connection, account_id, _opts \\ []) do
     request =
       %{}

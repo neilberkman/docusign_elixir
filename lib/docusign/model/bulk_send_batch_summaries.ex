@@ -10,7 +10,6 @@ defmodule DocuSign.Model.BulkSendBatchSummaries do
   alias DocuSign.Deserializer
   alias DocuSign.Model.BulkSendBatchSummary
 
-  @derive Jason.Encoder
   defstruct [
     :batchSizeLimit,
     :bulkBatchSummaries,
@@ -25,6 +24,17 @@ defmodule DocuSign.Model.BulkSendBatchSummaries do
     :totalQueued,
     :totalSetSize
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :batchSizeLimit => String.t() | nil,
@@ -48,5 +58,6 @@ defmodule DocuSign.Model.BulkSendBatchSummaries do
       :list,
       BulkSendBatchSummary
     )
+    |> then(&struct(__MODULE__, &1))
   end
 end

@@ -10,11 +10,21 @@ defmodule DocuSign.Model.UserSocialIdResult do
   alias DocuSign.Deserializer
   alias DocuSign.Model.SocialAccountInformation
 
-  @derive Jason.Encoder
   defstruct [
     :socialAccountInformation,
     :userId
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :socialAccountInformation => [SocialAccountInformation.t()] | nil,
@@ -28,5 +38,6 @@ defmodule DocuSign.Model.UserSocialIdResult do
       :list,
       SocialAccountInformation
     )
+    |> then(&struct(__MODULE__, &1))
   end
 end

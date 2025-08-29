@@ -33,7 +33,7 @@ defmodule DocuSign.Api.WorkspaceItems do
   ### Returns
 
   - `{:ok, nil}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec workspace_file_get_workspace_file(
           DocuSign.Connection.t(),
@@ -44,7 +44,7 @@ defmodule DocuSign.Api.WorkspaceItems do
           keyword()
         ) ::
           {:ok, nil}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def workspace_file_get_workspace_file(connection, account_id, file_id, folder_id, workspace_id, opts \\ []) do
     optional_params = %{
       :is_download => :query,
@@ -78,16 +78,16 @@ defmodule DocuSign.Api.WorkspaceItems do
   - `folder_id` (String.t): The ID of the folder.
   - `workspace_id` (String.t): The ID of the workspace.
   - `opts` (keyword): Optional parameters
-    - `:count` (String.t): The maximum number of results to return.  Use `start_position` to specify the number of results to skip.
+    - `:count` (String.t): The maximum number of results to return.  Use `start_position` to specify the number of results to skip. 
     - `:dpi` (String.t): The number of dots per inch (DPI) for the resulting images. Valid values are 1-310 DPI. The default value is 94.
     - `:max_height` (String.t): Sets the maximum height of the returned images in pixels.
     - `:max_width` (String.t): Sets the maximum width of the returned images in pixels.
-    - `:start_position` (String.t): The zero-based index of the result from which to start returning results.  Use with `count` to limit the number of results.  The default value is `0`.
+    - `:start_position` (String.t): The zero-based index of the result from which to start returning results.  Use with `count` to limit the number of results.  The default value is `0`. 
 
   ### Returns
 
   - `{:ok, DocuSign.Model.PageImages.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec workspace_file_pages_get_workspace_file_pages(
           DocuSign.Connection.t(),
@@ -98,7 +98,7 @@ defmodule DocuSign.Api.WorkspaceItems do
           keyword()
         ) ::
           {:ok, PageImages.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def workspace_file_pages_get_workspace_file_pages(
         connection,
         account_id,
@@ -145,17 +145,11 @@ defmodule DocuSign.Api.WorkspaceItems do
   ### Returns
 
   - `{:ok, DocuSign.Model.WorkspaceItem.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
-  @spec workspace_file_post_workspace_files(
-          DocuSign.Connection.t(),
-          String.t(),
-          String.t(),
-          String.t(),
-          keyword()
-        ) ::
+  @spec workspace_file_post_workspace_files(DocuSign.Connection.t(), String.t(), String.t(), String.t(), keyword()) ::
           {:ok, WorkspaceItem.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def workspace_file_post_workspace_files(connection, account_id, folder_id, workspace_id, _opts \\ []) do
     request =
       %{}
@@ -188,7 +182,7 @@ defmodule DocuSign.Api.WorkspaceItems do
   ### Returns
 
   - `{:ok, DocuSign.Model.WorkspaceItem.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec workspace_file_put_workspace_file(
           DocuSign.Connection.t(),
@@ -199,7 +193,7 @@ defmodule DocuSign.Api.WorkspaceItems do
           keyword()
         ) ::
           {:ok, WorkspaceItem.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def workspace_file_put_workspace_file(connection, account_id, file_id, folder_id, workspace_id, _opts \\ []) do
     request =
       %{}
@@ -227,22 +221,16 @@ defmodule DocuSign.Api.WorkspaceItems do
   - `folder_id` (String.t): The ID of the folder.
   - `workspace_id` (String.t): The ID of the workspace.
   - `opts` (keyword): Optional parameters
-    - `:body` (WorkspaceItemList):
+    - `:body` (WorkspaceItemList): 
 
   ### Returns
 
   - `{:ok, nil}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
-  @spec workspace_folder_delete_workspace_items(
-          DocuSign.Connection.t(),
-          String.t(),
-          String.t(),
-          String.t(),
-          keyword()
-        ) ::
+  @spec workspace_folder_delete_workspace_items(DocuSign.Connection.t(), String.t(), String.t(), String.t(), keyword()) ::
           {:ok, nil}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def workspace_folder_delete_workspace_items(connection, account_id, folder_id, workspace_id, opts \\ []) do
     optional_params = %{
       :body => :body
@@ -274,28 +262,22 @@ defmodule DocuSign.Api.WorkspaceItems do
   - `folder_id` (String.t): The ID of the folder.
   - `workspace_id` (String.t): The ID of the workspace.
   - `opts` (keyword): Optional parameters
-    - `:count` (String.t): The maximum number of results to return.  Use `start_position` to specify the number of results to skip.
+    - `:count` (String.t): The maximum number of results to return.  Use `start_position` to specify the number of results to skip. 
     - `:include_files` (String.t): When **true,** the response includes file information (in addition to folder information). The default is **false.**
     - `:include_sub_folders` (String.t): When **true,** the response includes information about the sub-folders of the current folder. The default is **false.**
     - `:include_thumbnails` (String.t): When **true,** the response returns thumbnails.  The default is **false.**
     - `:include_user_detail` (String.t): When **true,** the response includes extended details about the user. The default is **false.**
-    - `:start_position` (String.t): The zero-based index of the result from which to start returning results.  Use with `count` to limit the number of results.  The default value is `0`.
+    - `:start_position` (String.t): The zero-based index of the result from which to start returning results.  Use with `count` to limit the number of results.  The default value is `0`. 
     - `:workspace_user_id` (String.t): If set, the response only includes results associated with the `userId` that you specify.
 
   ### Returns
 
   - `{:ok, DocuSign.Model.WorkspaceFolderContents.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
-  @spec workspace_folder_get_workspace_folder(
-          DocuSign.Connection.t(),
-          String.t(),
-          String.t(),
-          String.t(),
-          keyword()
-        ) ::
+  @spec workspace_folder_get_workspace_folder(DocuSign.Connection.t(), String.t(), String.t(), String.t(), keyword()) ::
           {:ok, WorkspaceFolderContents.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def workspace_folder_get_workspace_folder(connection, account_id, folder_id, workspace_id, opts \\ []) do
     optional_params = %{
       :count => :query,

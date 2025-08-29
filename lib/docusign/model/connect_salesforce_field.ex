@@ -7,7 +7,6 @@ defmodule DocuSign.Model.ConnectSalesforceField do
   This object is used to match a Docusign field to a Salesforce field so that Docusign can send information to your Salesforce account.
   """
 
-  @derive Jason.Encoder
   defstruct [
     :dsAttribute,
     :dsLink,
@@ -18,6 +17,17 @@ defmodule DocuSign.Model.ConnectSalesforceField do
     :sfFolder,
     :sfLockedValue
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :dsAttribute => String.t() | nil,
@@ -31,6 +41,6 @@ defmodule DocuSign.Model.ConnectSalesforceField do
         }
 
   def decode(value) do
-    value
+    struct(__MODULE__, value)
   end
 end

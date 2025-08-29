@@ -10,7 +10,6 @@ defmodule DocuSign.Model.CustomField do
   alias DocuSign.Deserializer
   alias DocuSign.Model.ErrorDetails
 
-  @derive Jason.Encoder
   defstruct [
     :customFieldType,
     :errorDetails,
@@ -21,6 +20,17 @@ defmodule DocuSign.Model.CustomField do
     :show,
     :value
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :customFieldType => String.t() | nil,
@@ -40,5 +50,6 @@ defmodule DocuSign.Model.CustomField do
       :struct,
       ErrorDetails
     )
+    |> then(&struct(__MODULE__, &1))
   end
 end

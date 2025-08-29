@@ -10,7 +10,6 @@ defmodule DocuSign.Model.PaletteSettings do
   alias DocuSign.Deserializer
   alias DocuSign.Model.PaletteItemSettings
 
-  @derive Jason.Encoder
   defstruct [
     :annotations,
     :custom,
@@ -20,6 +19,17 @@ defmodule DocuSign.Model.PaletteSettings do
     :smartContracts,
     :smartSections
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :annotations => PaletteItemSettings.t() | nil,
@@ -68,5 +78,6 @@ defmodule DocuSign.Model.PaletteSettings do
       :struct,
       PaletteItemSettings
     )
+    |> then(&struct(__MODULE__, &1))
   end
 end

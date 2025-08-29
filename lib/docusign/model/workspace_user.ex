@@ -10,7 +10,6 @@ defmodule DocuSign.Model.WorkspaceUser do
   alias DocuSign.Deserializer
   alias DocuSign.Model.ErrorDetails
 
-  @derive Jason.Encoder
   defstruct [
     :accountId,
     :accountName,
@@ -32,6 +31,17 @@ defmodule DocuSign.Model.WorkspaceUser do
     :workspaceUserId,
     :workspaceUserUri
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :accountId => String.t() | nil,
@@ -62,5 +72,6 @@ defmodule DocuSign.Model.WorkspaceUser do
       :struct,
       ErrorDetails
     )
+    |> then(&struct(__MODULE__, &1))
   end
 end

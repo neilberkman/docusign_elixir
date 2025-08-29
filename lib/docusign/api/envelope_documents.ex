@@ -29,11 +29,11 @@ defmodule DocuSign.Api.EnvelopeDocuments do
   ### Returns
 
   - `{:ok, DocuSign.Model.EnvelopeDocumentsResult.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec documents_delete_documents(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, EnvelopeDocumentsResult.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def documents_delete_documents(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
       :body => :body
@@ -78,11 +78,11 @@ defmodule DocuSign.Api.EnvelopeDocuments do
   ### Returns
 
   - `{:ok, String.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec documents_get_document(DocuSign.Connection.t(), String.t(), String.t(), String.t(), keyword()) ::
           {:ok, String.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def documents_get_document(connection, account_id, document_id, envelope_id, opts \\ []) do
     optional_params = %{
       :certificate => :query,
@@ -132,11 +132,11 @@ defmodule DocuSign.Api.EnvelopeDocuments do
   ### Returns
 
   - `{:ok, DocuSign.Model.EnvelopeDocumentsResult.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec documents_get_documents(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, EnvelopeDocumentsResult.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def documents_get_documents(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
       :documents_by_userid => :query,
@@ -179,11 +179,11 @@ defmodule DocuSign.Api.EnvelopeDocuments do
   ### Returns
 
   - `{:ok, DocuSign.Model.EnvelopeDocument.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec documents_put_document(DocuSign.Connection.t(), String.t(), String.t(), String.t(), String.t(), keyword()) ::
           {:ok, EnvelopeDocument.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def documents_put_document(connection, account_id, document_id, envelope_id, document_file_bytes, _opts \\ []) do
     request =
       %{}
@@ -215,11 +215,11 @@ defmodule DocuSign.Api.EnvelopeDocuments do
   ### Returns
 
   - `{:ok, DocuSign.Model.EnvelopeDocumentsResult.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec documents_put_documents(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, EnvelopeDocumentsResult.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def documents_put_documents(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
       :body => :body

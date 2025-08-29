@@ -59,10 +59,19 @@ defmodule DocuSign.OAuth.ImplTest do
   describe "creating new API client" do
     test "create new api client for default user ID" do
       assert %Client{
+               authorize_url: "oauth/auth?response_type=code&scope=signature%20impersonation",
+               client_id: "test_client_id",
+               client_secret: "",
+               headers: [],
+               params: %{},
+               redirect_uri: "",
                ref: %{
+                 hostname: "account-d.docusign.com",
+                 token_expires_in: 3600,
                  user_id: ":user-id:"
                },
                request_opts: [],
+               serializers: %{"application/json" => Jason},
                site: "http://localhost",
                strategy: Impl,
                token: nil,
@@ -73,10 +82,19 @@ defmodule DocuSign.OAuth.ImplTest do
 
     test "create new api client for given user ID" do
       assert %Client{
+               authorize_url: "oauth/auth?response_type=code&scope=signature%20impersonation",
+               client_id: "test_client_id",
+               client_secret: "",
+               headers: [],
+               params: %{},
+               redirect_uri: "",
                ref: %{
+                 hostname: "account-d.docusign.com",
+                 token_expires_in: 3600,
                  user_id: ":other-user-id:"
                },
                request_opts: [],
+               serializers: %{"application/json" => Jason},
                site: "http://localhost",
                strategy: Impl,
                token: nil,

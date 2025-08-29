@@ -7,11 +7,21 @@ defmodule DocuSign.Model.UserAuthorizationUpdateRequest do
   The request object to update a user authorization.
   """
 
-  @derive Jason.Encoder
   defstruct [
     :endDate,
     :startDate
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :endDate => String.t() | nil,
@@ -19,6 +29,6 @@ defmodule DocuSign.Model.UserAuthorizationUpdateRequest do
         }
 
   def decode(value) do
-    value
+    struct(__MODULE__, value)
   end
 end

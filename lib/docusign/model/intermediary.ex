@@ -26,7 +26,6 @@ defmodule DocuSign.Model.Intermediary do
   alias DocuSign.Model.SocialAuthentication
   alias DocuSign.Model.UserInfo
 
-  @derive Jason.Encoder
   defstruct [
     :accessCode,
     :accessCodeMetadata,
@@ -106,6 +105,17 @@ defmodule DocuSign.Model.Intermediary do
     :userId,
     :webFormRecipientViewId
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :accessCode => String.t() | nil,
@@ -339,5 +349,6 @@ defmodule DocuSign.Model.Intermediary do
       :list,
       SocialAuthentication
     )
+    |> then(&struct(__MODULE__, &1))
   end
 end

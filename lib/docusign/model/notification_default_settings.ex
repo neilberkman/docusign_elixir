@@ -11,11 +11,21 @@ defmodule DocuSign.Model.NotificationDefaultSettings do
   alias DocuSign.Model.SenderEmailNotifications
   alias DocuSign.Model.SignerEmailNotifications
 
-  @derive Jason.Encoder
   defstruct [
     :senderEmailNotifications,
     :signerEmailNotifications
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :senderEmailNotifications => SenderEmailNotifications.t() | nil,
@@ -34,5 +44,6 @@ defmodule DocuSign.Model.NotificationDefaultSettings do
       :struct,
       SignerEmailNotifications
     )
+    |> then(&struct(__MODULE__, &1))
   end
 end

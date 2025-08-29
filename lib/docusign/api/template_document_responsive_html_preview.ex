@@ -29,7 +29,7 @@ defmodule DocuSign.Api.TemplateDocumentResponsiveHtmlPreview do
   ### Returns
 
   - `{:ok, DocuSign.Model.DocumentHtmlDefinitions.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec responsive_html_post_template_document_responsive_html_preview(
           DocuSign.Connection.t(),
@@ -39,7 +39,7 @@ defmodule DocuSign.Api.TemplateDocumentResponsiveHtmlPreview do
           keyword()
         ) ::
           {:ok, DocumentHtmlDefinitions.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def responsive_html_post_template_document_responsive_html_preview(
         connection,
         account_id,

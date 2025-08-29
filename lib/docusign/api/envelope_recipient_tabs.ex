@@ -29,11 +29,11 @@ defmodule DocuSign.Api.EnvelopeRecipientTabs do
   ### Returns
 
   - `{:ok, DocuSign.Model.EnvelopeRecipientTabs.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec recipients_delete_recipient_tabs(DocuSign.Connection.t(), String.t(), String.t(), String.t(), keyword()) ::
           {:ok, EnvelopeRecipientTabs.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def recipients_delete_recipient_tabs(connection, account_id, envelope_id, recipient_id, opts \\ []) do
     optional_params = %{
       :body => :body
@@ -71,11 +71,11 @@ defmodule DocuSign.Api.EnvelopeRecipientTabs do
   ### Returns
 
   - `{:ok, DocuSign.Model.EnvelopeRecipientTabs.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec recipients_get_recipient_tabs(DocuSign.Connection.t(), String.t(), String.t(), String.t(), keyword()) ::
           {:ok, EnvelopeRecipientTabs.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def recipients_get_recipient_tabs(connection, account_id, envelope_id, recipient_id, opts \\ []) do
     optional_params = %{
       :include_anchor_tab_locations => :query,
@@ -113,11 +113,11 @@ defmodule DocuSign.Api.EnvelopeRecipientTabs do
   ### Returns
 
   - `{:ok, DocuSign.Model.EnvelopeRecipientTabs.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec recipients_post_recipient_tabs(DocuSign.Connection.t(), String.t(), String.t(), String.t(), keyword()) ::
           {:ok, EnvelopeRecipientTabs.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def recipients_post_recipient_tabs(connection, account_id, envelope_id, recipient_id, opts \\ []) do
     optional_params = %{
       :body => :body
@@ -155,11 +155,11 @@ defmodule DocuSign.Api.EnvelopeRecipientTabs do
   ### Returns
 
   - `{:ok, DocuSign.Model.EnvelopeRecipientTabs.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec recipients_put_recipient_tabs(DocuSign.Connection.t(), String.t(), String.t(), String.t(), keyword()) ::
           {:ok, EnvelopeRecipientTabs.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def recipients_put_recipient_tabs(connection, account_id, envelope_id, recipient_id, opts \\ []) do
     optional_params = %{
       :body => :body

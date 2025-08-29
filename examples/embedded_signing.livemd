@@ -9,15 +9,30 @@ This LiveBook demonstrates how to create a complete embedded signing experience 
 ```elixir
 IO.puts("Installing dependencies...")
 
-# Suppress Tesla deprecation warnings
-Application.put_env(:tesla, :disable_deprecated_builder_warning, true)
-
 Mix.install([
-  {:docusign, "~> 2.2.4"},
+  # For local development/testing:
+  {:docusign, path: Path.join(__DIR__, ".."), app: false},
+  # For released version (uncomment when 3.0 is released):
+  # {:docusign, "~> 3.0"},
   {:kino, "~> 0.16.0"}
 ])
 
 IO.puts("✅ Dependencies installed successfully!")
+```
+
+## Setup for Local Development
+
+When using the local path dependency, we need to start the ClientRegistry:
+
+```elixir
+# Only needed for local development with app: false
+case Process.whereis(DocuSign.ClientRegistry) do
+  nil ->
+    {:ok, _pid} = DocuSign.ClientRegistry.start_link()
+    IO.puts("✅ Started ClientRegistry for local development")
+  pid ->
+    IO.puts("✅ ClientRegistry already running: #{inspect(pid)}")
+end
 ```
 
 ## Introduction
@@ -77,12 +92,20 @@ Application.put_env(:docusign, :client_id, client_id)
 Application.put_env(:docusign, :private_key_contents, private_key_formatted)
 Application.put_env(:docusign, :user_id, user_id)
 
+# Set hostname based on sandbox selection
+hostname = if is_sandbox do
+  "account-d.docusign.com"
+else
+  "account.docusign.com"
+end
+Application.put_env(:docusign, :hostname, hostname)
+
 # Debug: Check configuration
 IO.puts("Configuration set:")
 IO.puts("Client ID: #{client_id}")
 IO.puts("User ID: #{user_id}")
 IO.puts("Private key length: #{String.length(private_key_formatted)} chars")
-IO.puts("Hostname: auto-detected from account info")
+IO.puts("Hostname: #{hostname}")
 IO.puts("Is sandbox: #{is_sandbox}")
 ```
 
@@ -517,7 +540,7 @@ This LiveBook demonstrates how to create a complete embedded signing experience 
 You've learned how to:
 
 1. Create an envelope with a recipient specifically marked for embedded signing
-   - Use status="sent" with a clientUserId to enable embedded signing
+   * Use status="sent" with a clientUserId to enable embedded signing
 2. Generate an embedded signing URL
 3. Automatically monitor the envelope status and download the completed document using the new FileDownloader (v2.2.1+)
 

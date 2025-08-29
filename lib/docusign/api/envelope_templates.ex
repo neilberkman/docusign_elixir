@@ -30,7 +30,7 @@ defmodule DocuSign.Api.EnvelopeTemplates do
   ### Returns
 
   - `{:ok, nil}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec templates_delete_document_templates(
           DocuSign.Connection.t(),
@@ -41,7 +41,7 @@ defmodule DocuSign.Api.EnvelopeTemplates do
           keyword()
         ) ::
           {:ok, nil}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def templates_delete_document_templates(connection, account_id, document_id, envelope_id, template_id, _opts \\ []) do
     request =
       %{}
@@ -73,11 +73,11 @@ defmodule DocuSign.Api.EnvelopeTemplates do
   ### Returns
 
   - `{:ok, DocuSign.Model.TemplateInformation.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec templates_get_document_templates(DocuSign.Connection.t(), String.t(), String.t(), String.t(), keyword()) ::
           {:ok, TemplateInformation.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def templates_get_document_templates(connection, account_id, document_id, envelope_id, opts \\ []) do
     optional_params = %{
       :include => :query
@@ -113,11 +113,11 @@ defmodule DocuSign.Api.EnvelopeTemplates do
   ### Returns
 
   - `{:ok, DocuSign.Model.TemplateInformation.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec templates_get_envelope_templates(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, TemplateInformation.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def templates_get_envelope_templates(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
       :include => :query
@@ -155,11 +155,11 @@ defmodule DocuSign.Api.EnvelopeTemplates do
   ### Returns
 
   - `{:ok, DocuSign.Model.DocumentTemplateList.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec templates_post_document_templates(DocuSign.Connection.t(), String.t(), String.t(), String.t(), keyword()) ::
           {:ok, DocumentTemplateList.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def templates_post_document_templates(connection, account_id, document_id, envelope_id, opts \\ []) do
     optional_params = %{
       :body => :body,
@@ -198,11 +198,11 @@ defmodule DocuSign.Api.EnvelopeTemplates do
   ### Returns
 
   - `{:ok, DocuSign.Model.DocumentTemplateList.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec templates_post_envelope_templates(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, DocumentTemplateList.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def templates_post_envelope_templates(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
       :body => :body,

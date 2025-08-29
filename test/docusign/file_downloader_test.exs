@@ -15,6 +15,10 @@ defmodule DocuSign.FileDownloaderTest do
     test "extracts filename from quoted Content-Disposition header" do
       assert {:ok, "document.pdf"} =
                FileDownloader.extract_filename_from_header("attachment; filename=\"document.pdf\"")
+
+      # Test with spaces in filename
+      assert {:ok, "My Document.pdf"} =
+               FileDownloader.extract_filename_from_header("attachment; filename=\"My Document.pdf\"")
     end
 
     test "extracts filename from RFC 6266 encoded header" do
@@ -85,11 +89,11 @@ defmodule DocuSign.FileDownloaderTest do
 
   describe "download_to_memory/3" do
     test "downloads file to memory with metadata" do
-      mock_response = %Tesla.Env{
+      mock_response = %Req.Response{
         body: "PDF content here",
         headers: [
           {"content-type", "application/pdf"},
-          {"content-disposition", "attachment; filename=test.pdf"}
+          {"content-disposition", ["attachment; filename=test.pdf"]}
         ],
         status: 200
       }
@@ -107,7 +111,7 @@ defmodule DocuSign.FileDownloaderTest do
     end
 
     test "handles missing content-disposition header" do
-      mock_response = %Tesla.Env{
+      mock_response = %Req.Response{
         body: "PDF content",
         headers: [{"content-type", "application/pdf"}],
         status: 200
@@ -129,11 +133,11 @@ defmodule DocuSign.FileDownloaderTest do
 
   describe "download_to_temp/3" do
     test "downloads file to temporary location" do
-      mock_response = %Tesla.Env{
+      mock_response = %Req.Response{
         body: "PDF content here",
         headers: [
           {"content-type", "application/pdf"},
-          {"content-disposition", "attachment; filename=test.pdf"}
+          {"content-disposition", ["attachment; filename=test.pdf"]}
         ],
         status: 200
       }
@@ -156,7 +160,7 @@ defmodule DocuSign.FileDownloaderTest do
     end
 
     test "uses custom temp options" do
-      mock_response = %Tesla.Env{
+      mock_response = %Req.Response{
         body: "content",
         headers: [{"content-type", "text/plain"}],
         status: 200
@@ -188,7 +192,7 @@ defmodule DocuSign.FileDownloaderTest do
 
   describe "download_to_file/4" do
     test "downloads file to specified path" do
-      mock_response = %Tesla.Env{
+      mock_response = %Req.Response{
         body: "file content",
         headers: [{"content-type", "application/pdf"}],
         status: 200
@@ -209,7 +213,7 @@ defmodule DocuSign.FileDownloaderTest do
     end
 
     test "creates directory if it doesn't exist" do
-      mock_response = %Tesla.Env{
+      mock_response = %Req.Response{
         body: "content",
         headers: [{"content-type", "text/plain"}],
         status: 200
@@ -230,7 +234,7 @@ defmodule DocuSign.FileDownloaderTest do
     end
 
     test "handles file write errors" do
-      mock_response = %Tesla.Env{
+      mock_response = %Req.Response{
         body: "content",
         headers: [{"content-type", "text/plain"}],
         status: 200
@@ -255,7 +259,7 @@ defmodule DocuSign.FileDownloaderTest do
     test "validates file size when max_size is set" do
       large_content = String.duplicate("x", 1000)
 
-      mock_response = %Tesla.Env{
+      mock_response = %Req.Response{
         body: large_content,
         headers: [
           {"content-type", "text/plain"},
@@ -273,7 +277,7 @@ defmodule DocuSign.FileDownloaderTest do
     end
 
     test "validates content type when enabled" do
-      mock_response = %Tesla.Env{
+      mock_response = %Req.Response{
         body: "content",
         headers: [{"content-type", "application/javascript"}],
         status: 200
@@ -298,7 +302,7 @@ defmodule DocuSign.FileDownloaderTest do
     end
 
     test "skips content type validation when disabled" do
-      mock_response = %Tesla.Env{
+      mock_response = %Req.Response{
         body: "content",
         headers: [{"content-type", "application/javascript"}],
         status: 200
@@ -313,7 +317,9 @@ defmodule DocuSign.FileDownloaderTest do
             temp_path = "/tmp/test.js"
             {:ok, temp_path}
           end do
-          assert {:ok, temp_path} = FileDownloader.download(mock_conn, "/test/url", validate_content_type: false)
+          assert {:ok, temp_path} =
+                   FileDownloader.download(mock_conn, "/test/url", validate_content_type: false)
+
           assert temp_path == "/tmp/test.js"
         end
       end
@@ -322,7 +328,7 @@ defmodule DocuSign.FileDownloaderTest do
 
   describe "download/3 error handling" do
     test "handles HTTP errors" do
-      mock_response = %Tesla.Env{
+      mock_response = %Req.Response{
         body: "Not found",
         status: 404
       }

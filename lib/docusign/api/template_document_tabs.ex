@@ -30,11 +30,11 @@ defmodule DocuSign.Api.TemplateDocumentTabs do
   ### Returns
 
   - `{:ok, DocuSign.Model.Tabs.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec tabs_delete_template_document_tabs(DocuSign.Connection.t(), String.t(), String.t(), String.t(), keyword()) ::
           {:ok, Tabs.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def tabs_delete_template_document_tabs(connection, account_id, document_id, template_id, opts \\ []) do
     optional_params = %{
       :body => :body
@@ -71,11 +71,11 @@ defmodule DocuSign.Api.TemplateDocumentTabs do
   ### Returns
 
   - `{:ok, DocuSign.Model.TemplateDocumentTabs.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec tabs_get_template_document_tabs(DocuSign.Connection.t(), String.t(), String.t(), String.t(), keyword()) ::
           {:ok, TemplateDocumentTabs.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def tabs_get_template_document_tabs(connection, account_id, document_id, template_id, opts \\ []) do
     optional_params = %{
       :page_numbers => :query
@@ -112,11 +112,11 @@ defmodule DocuSign.Api.TemplateDocumentTabs do
   ### Returns
 
   - `{:ok, DocuSign.Model.TemplateDocumentTabs.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec tabs_get_template_page_tabs(DocuSign.Connection.t(), String.t(), String.t(), String.t(), String.t(), keyword()) ::
           {:ok, TemplateDocumentTabs.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def tabs_get_template_page_tabs(connection, account_id, document_id, page_number, template_id, _opts \\ []) do
     request =
       %{}
@@ -148,11 +148,11 @@ defmodule DocuSign.Api.TemplateDocumentTabs do
   ### Returns
 
   - `{:ok, DocuSign.Model.Tabs.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec tabs_post_template_document_tabs(DocuSign.Connection.t(), String.t(), String.t(), String.t(), keyword()) ::
           {:ok, Tabs.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def tabs_post_template_document_tabs(connection, account_id, document_id, template_id, opts \\ []) do
     optional_params = %{
       :body => :body
@@ -190,11 +190,11 @@ defmodule DocuSign.Api.TemplateDocumentTabs do
   ### Returns
 
   - `{:ok, DocuSign.Model.Tabs.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec tabs_put_template_document_tabs(DocuSign.Connection.t(), String.t(), String.t(), String.t(), keyword()) ::
           {:ok, Tabs.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def tabs_put_template_document_tabs(connection, account_id, document_id, template_id, opts \\ []) do
     optional_params = %{
       :body => :body

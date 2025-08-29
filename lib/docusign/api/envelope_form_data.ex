@@ -27,11 +27,11 @@ defmodule DocuSign.Api.EnvelopeFormData do
   ### Returns
 
   - `{:ok, DocuSign.Model.EnvelopeFormData.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec form_data_get_form_data(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, EnvelopeFormData.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def form_data_get_form_data(connection, account_id, envelope_id, _opts \\ []) do
     request =
       %{}

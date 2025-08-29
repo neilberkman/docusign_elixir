@@ -7,12 +7,22 @@ defmodule DocuSign.Model.BrandLogos do
   The URIs for retrieving the logos that are associated with the brand.  These are read-only properties that provide a URI to logos in use. To update a logo use [AccountBrands: updateLogo](/docs/esign-rest-api/reference/accounts/accountbrands/updatelogo/). 
   """
 
-  @derive Jason.Encoder
   defstruct [
     :email,
     :primary,
     :secondary
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :email => String.t() | nil,
@@ -21,6 +31,6 @@ defmodule DocuSign.Model.BrandLogos do
         }
 
   def decode(value) do
-    value
+    struct(__MODULE__, value)
   end
 end

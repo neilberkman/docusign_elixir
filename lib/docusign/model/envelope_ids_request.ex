@@ -7,11 +7,21 @@ defmodule DocuSign.Model.EnvelopeIdsRequest do
   Lists of envelope and transaction IDs to use in the results.  If you use this request body with Envelopes: listStatus, you must set one or both of the following query parameters to the special value `request_body`:  - `envelope_ids=request_body` - `transaction_ids=request_body` 
   """
 
-  @derive Jason.Encoder
   defstruct [
     :envelopeIds,
     :transactionIds
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :envelopeIds => [String.t()] | nil,
@@ -19,6 +29,6 @@ defmodule DocuSign.Model.EnvelopeIdsRequest do
         }
 
   def decode(value) do
-    value
+    struct(__MODULE__, value)
   end
 end

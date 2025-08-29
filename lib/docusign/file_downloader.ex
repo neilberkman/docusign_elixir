@@ -207,7 +207,13 @@ defmodule DocuSign.FileDownloader do
         {:ok, sanitize_filename(filename)}
 
       # Standard filename (filename="name.pdf" or filename=name.pdf)
-      match = Regex.run(~r/filename=['"]?([^'"\s;]+)['"]?/i, content_disposition) ->
+      # Handle quoted filenames with spaces
+      match = Regex.run(~r/filename=["']([^"']+)["']/i, content_disposition) ->
+        [_, filename] = match
+        {:ok, sanitize_filename(filename)}
+
+      # Handle unquoted filenames (no spaces allowed)
+      match = Regex.run(~r/filename=([^;\s]+)/i, content_disposition) ->
         [_, filename] = match
         {:ok, sanitize_filename(filename)}
 
@@ -291,11 +297,11 @@ defmodule DocuSign.FileDownloader do
         do: Keyword.put(request_opts, :max_body_length, opts[:max_size]),
         else: request_opts
 
-    case DocuSign.Connection.request(conn, method: :get, url: url, opts: request_opts) do
-      {:ok, %Tesla.Env{status: status} = response} when status in 200..299 ->
+    case DocuSign.Connection.request(conn, Keyword.merge([method: :get, url: url], request_opts)) do
+      {:ok, %Req.Response{status: status} = response} when status in 200..299 ->
         {:ok, response}
 
-      {:ok, %Tesla.Env{body: body, status: status}} ->
+      {:ok, %Req.Response{body: body, status: status}} ->
         {:error, {:http_error, status, body}}
 
       {:error, reason} ->
@@ -314,7 +320,7 @@ defmodule DocuSign.FileDownloader do
   end
 
   defp extract_filename_from_response(response) do
-    content_disposition = Tesla.get_header(response, "content-disposition")
+    content_disposition = get_header(response.headers, "content-disposition")
 
     if content_disposition do
       case extract_filename_from_header(content_disposition) do
@@ -327,7 +333,7 @@ defmodule DocuSign.FileDownloader do
   end
 
   defp extract_content_type(response) do
-    content_type = Tesla.get_header(response, "content-type") || "application/octet-stream"
+    content_type = get_header(response.headers, "content-type") || "application/octet-stream"
     # Extract just the media type, ignore charset and other parameters
     media_type = content_type |> String.split(";") |> List.first() |> String.trim()
     {:ok, media_type}
@@ -340,7 +346,7 @@ defmodule DocuSign.FileDownloader do
   end
 
   defp validate_content_size(response, max_size) when is_integer(max_size) do
-    content_length = Tesla.get_header(response, "content-length")
+    content_length = get_header(response.headers, "content-length")
     body_size = byte_size(response.body)
 
     actual_size =
@@ -362,7 +368,7 @@ defmodule DocuSign.FileDownloader do
   defp validate_content_type(_response, false), do: :ok
 
   defp validate_content_type(response, true) do
-    content_type = Tesla.get_header(response, "content-type")
+    content_type = get_header(response.headers, "content-type")
     allowed_types = get_allowed_content_types()
 
     if content_type && allowed_types do
@@ -439,7 +445,7 @@ defmodule DocuSign.FileDownloader do
   end
 
   defp generate_default_filename(response) do
-    content_type = Tesla.get_header(response, "content-type") || "application/octet-stream"
+    content_type = get_header(response.headers, "content-type") || "application/octet-stream"
 
     ext =
       case String.split(content_type, "/") do
@@ -464,6 +470,21 @@ defmodule DocuSign.FileDownloader do
       find_unique_name(dir, basename, ext, counter + 1)
     else
       new_path
+    end
+  end
+
+  defp get_header(headers, name) do
+    value =
+      Enum.find_value(headers, fn {key, value} ->
+        if String.downcase(key) == String.downcase(name), do: value
+      end)
+
+    # Req headers are always lists, even for single values
+    # Extract the first value if it's a list
+    case value do
+      [single_value | _] when is_binary(single_value) -> single_value
+      nil -> nil
+      other -> other
     end
   end
 

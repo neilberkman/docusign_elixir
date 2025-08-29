@@ -31,11 +31,11 @@ defmodule DocuSign.Api.ConnectConfigurations do
   ### Returns
 
   - `{:ok, nil}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec connect_delete_connect_config(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, nil}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def connect_delete_connect_config(connection, account_id, connect_id, _opts \\ []) do
     request =
       %{}
@@ -71,11 +71,11 @@ defmodule DocuSign.Api.ConnectConfigurations do
   ### Returns
 
   - `{:ok, DocuSign.Model.IntegratedConnectUserInfoList.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec connect_get_connect_all_users(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, IntegratedConnectUserInfoList.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def connect_get_connect_all_users(connection, account_id, connect_id, opts \\ []) do
     optional_params = %{
       :count => :query,
@@ -115,11 +115,11 @@ defmodule DocuSign.Api.ConnectConfigurations do
   ### Returns
 
   - `{:ok, DocuSign.Model.ConnectConfigResults.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec connect_get_connect_config(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, ConnectConfigResults.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def connect_get_connect_config(connection, account_id, connect_id, _opts \\ []) do
     request =
       %{}
@@ -148,11 +148,11 @@ defmodule DocuSign.Api.ConnectConfigurations do
   ### Returns
 
   - `{:ok, DocuSign.Model.ConnectConfigResults.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec connect_get_connect_configs(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, ConnectConfigResults.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def connect_get_connect_configs(connection, account_id, _opts \\ []) do
     request =
       %{}
@@ -188,11 +188,11 @@ defmodule DocuSign.Api.ConnectConfigurations do
   ### Returns
 
   - `{:ok, DocuSign.Model.IntegratedUserInfoList.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec connect_get_connect_users(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, IntegratedUserInfoList.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def connect_get_connect_users(connection, account_id, connect_id, opts \\ []) do
     optional_params = %{
       :count => :query,
@@ -231,11 +231,11 @@ defmodule DocuSign.Api.ConnectConfigurations do
   ### Returns
 
   - `{:ok, nil}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec connect_o_auth_config_delete_connect_o_auth_config(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, nil}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def connect_o_auth_config_delete_connect_o_auth_config(connection, account_id, _opts \\ []) do
     request =
       %{}
@@ -264,11 +264,11 @@ defmodule DocuSign.Api.ConnectConfigurations do
   ### Returns
 
   - `{:ok, DocuSign.Model.ConnectOAuthConfig.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec connect_o_auth_config_get_connect_o_auth_config(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, ConnectOAuthConfig.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def connect_o_auth_config_get_connect_o_auth_config(connection, account_id, _opts \\ []) do
     request =
       %{}
@@ -298,11 +298,11 @@ defmodule DocuSign.Api.ConnectConfigurations do
   ### Returns
 
   - `{:ok, DocuSign.Model.ConnectOAuthConfig.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec connect_o_auth_config_post_connect_o_auth_config(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, ConnectOAuthConfig.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def connect_o_auth_config_post_connect_o_auth_config(connection, account_id, opts \\ []) do
     optional_params = %{
       :body => :body
@@ -337,11 +337,11 @@ defmodule DocuSign.Api.ConnectConfigurations do
   ### Returns
 
   - `{:ok, DocuSign.Model.ConnectOAuthConfig.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec connect_o_auth_config_put_connect_o_auth_config(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, ConnectOAuthConfig.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def connect_o_auth_config_put_connect_o_auth_config(connection, account_id, opts \\ []) do
     optional_params = %{
       :body => :body
@@ -377,11 +377,11 @@ defmodule DocuSign.Api.ConnectConfigurations do
   ### Returns
 
   - `{:ok, DocuSign.Model.ConnectCustomConfiguration.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec connect_post_connect_configuration(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, ConnectCustomConfiguration.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def connect_post_connect_configuration(connection, account_id, opts \\ []) do
     optional_params = %{
       :body => :body
@@ -417,11 +417,11 @@ defmodule DocuSign.Api.ConnectConfigurations do
   ### Returns
 
   - `{:ok, DocuSign.Model.ConnectCustomConfiguration.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec connect_put_connect_configuration(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, ConnectCustomConfiguration.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def connect_put_connect_configuration(connection, account_id, opts \\ []) do
     optional_params = %{
       :body => :body

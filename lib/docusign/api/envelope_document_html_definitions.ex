@@ -28,7 +28,7 @@ defmodule DocuSign.Api.EnvelopeDocumentHtmlDefinitions do
   ### Returns
 
   - `{:ok, DocuSign.Model.DocumentHtmlDefinitionOriginals.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec responsive_html_get_envelope_document_html_definitions(
           DocuSign.Connection.t(),
@@ -38,7 +38,7 @@ defmodule DocuSign.Api.EnvelopeDocumentHtmlDefinitions do
           keyword()
         ) ::
           {:ok, DocumentHtmlDefinitionOriginals.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def responsive_html_get_envelope_document_html_definitions(
         connection,
         account_id,

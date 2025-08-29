@@ -27,11 +27,11 @@ defmodule DocuSign.Api.AccountPasswordRules do
   ### Returns
 
   - `{:ok, DocuSign.Model.AccountPasswordRules.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec account_password_rules_get_account_password_rules(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, AccountPasswordRules.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def account_password_rules_get_account_password_rules(connection, account_id, _opts \\ []) do
     request =
       %{}
@@ -61,11 +61,11 @@ defmodule DocuSign.Api.AccountPasswordRules do
   ### Returns
 
   - `{:ok, DocuSign.Model.AccountPasswordRules.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec account_password_rules_put_account_password_rules(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, AccountPasswordRules.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def account_password_rules_put_account_password_rules(connection, account_id, opts \\ []) do
     optional_params = %{
       :body => :body
@@ -98,11 +98,11 @@ defmodule DocuSign.Api.AccountPasswordRules do
   ### Returns
 
   - `{:ok, DocuSign.Model.UserPasswordRules.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec password_rules_get_password_rules(DocuSign.Connection.t(), keyword()) ::
           {:ok, UserPasswordRules.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def password_rules_get_password_rules(connection, _opts \\ []) do
     request =
       %{}

@@ -13,7 +13,6 @@ defmodule DocuSign.Model.Radio do
   alias DocuSign.Model.ExtensionData
   alias DocuSign.Model.PropertyMetadata
 
-  @derive Jason.Encoder
   defstruct [
     :anchorAllowWhiteSpaceInCharacters,
     :anchorAllowWhiteSpaceInCharactersMetadata,
@@ -75,6 +74,17 @@ defmodule DocuSign.Model.Radio do
     :yPosition,
     :yPositionMetadata
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :anchorAllowWhiteSpaceInCharacters => String.t() | nil,
@@ -290,5 +300,6 @@ defmodule DocuSign.Model.Radio do
       :struct,
       PropertyMetadata
     )
+    |> then(&struct(__MODULE__, &1))
   end
 end

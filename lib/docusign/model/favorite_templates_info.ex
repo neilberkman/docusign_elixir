@@ -11,12 +11,22 @@ defmodule DocuSign.Model.FavoriteTemplatesInfo do
   alias DocuSign.Model.ErrorDetails
   alias DocuSign.Model.FavoriteTemplatesContentItem
 
-  @derive Jason.Encoder
   defstruct [
     :errorDetails,
     :favoriteTemplates,
     :templatesUpdatedCount
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :errorDetails => ErrorDetails.t() | nil,
@@ -36,5 +46,6 @@ defmodule DocuSign.Model.FavoriteTemplatesInfo do
       :list,
       FavoriteTemplatesContentItem
     )
+    |> then(&struct(__MODULE__, &1))
   end
 end

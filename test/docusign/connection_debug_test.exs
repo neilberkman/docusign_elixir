@@ -2,130 +2,104 @@ defmodule DocuSign.ConnectionDebugTest do
   use ExUnit.Case, async: false
 
   alias DocuSign.Connection
-  alias DocuSign.Debug
-  alias Tesla.Middleware.BaseUrl
-  alias Tesla.Middleware.EncodeJson
-  alias Tesla.Middleware.Headers
-  alias Tesla.Middleware.Logger
 
-  describe "Tesla client middleware integration" do
+  describe "Req client debug integration" do
     setup do
       # Save original config
-      original_debugging = Application.get_env(:docusign, :debugging)
+      original_debug = Application.get_env(:docusign, :debug)
 
       on_exit(fn ->
         # Restore original config
-        if original_debugging do
-          Application.put_env(:docusign, :debugging, original_debugging)
+        if original_debug do
+          Application.put_env(:docusign, :debug, original_debug)
         else
-          Application.delete_env(:docusign, :debugging)
+          Application.delete_env(:docusign, :debug)
         end
       end)
     end
 
-    test "JWT connection includes debugging middleware when enabled" do
-      Debug.enable_debugging()
+    test "connection includes debug steps when enabled" do
+      Application.put_env(:docusign, :debug, true)
 
-      # Mock a JWT client structure
-      mock_connection = %{
-        app_account: %{base_uri: "https://demo.docusign.net/restapi"},
-        client: %{token: %{access_token: "test-token", token_type: "Bearer"}}
-      }
-
-      client = Connection.Request.new(mock_connection)
-
-      # Verify client was created (this tests middleware compilation)
-      assert %Tesla.Client{} = client
-
-      # The middleware should include debug logging and SDK headers
-      middleware_modules = client.pre |> Enum.map(&elem(&1, 0))
-
-      assert BaseUrl in middleware_modules
-      assert Headers in middleware_modules
-      assert EncodeJson in middleware_modules
-      assert Logger in middleware_modules
-    end
-
-    test "OAuth2 connection includes debugging middleware when enabled" do
-      Debug.enable_debugging()
-
-      # Mock an OAuth2 client structure
-      mock_connection = %{
-        app_account: %{base_uri: "https://demo.docusign.net/restapi"},
-        client: %OAuth2.Client{
-          token: %OAuth2.AccessToken{
-            access_token: "test-oauth-token",
-            token_type: "Bearer"
-          }
+      # Create a connection using the from_oauth_client function
+      oauth_client = %OAuth2.Client{
+        token: %OAuth2.AccessToken{
+          access_token: "test-token",
+          token_type: "Bearer"
         }
       }
 
-      client = Connection.Request.new(mock_connection)
+      {:ok, conn} =
+        Connection.from_oauth_client(
+          oauth_client,
+          account_id: "test-account",
+          base_uri: "https://demo.docusign.net/restapi"
+        )
 
-      # Verify client was created (this tests middleware compilation)
-      assert %Tesla.Client{} = client
+      # Verify the Req client was created with debug steps
+      assert %Connection{req: req} = conn
+      assert %Req.Request{} = req
 
-      # The middleware should include debug logging and SDK headers
-      middleware_modules = client.pre |> Enum.map(&elem(&1, 0))
-
-      assert BaseUrl in middleware_modules
-      assert Headers in middleware_modules
-      assert EncodeJson in middleware_modules
-      assert Logger in middleware_modules
+      # Check that debug steps are registered
+      assert :debug_request in Keyword.keys(req.request_steps)
+      assert :debug_response in Keyword.keys(req.response_steps)
     end
 
-    test "connections exclude debugging middleware when disabled" do
-      Debug.disable_debugging()
+    test "connection excludes debug steps when disabled" do
+      Application.put_env(:docusign, :debug, false)
 
-      # Mock a JWT client structure
-      mock_connection = %{
-        app_account: %{base_uri: "https://demo.docusign.net/restapi"},
-        client: %{token: %{access_token: "test-token", token_type: "Bearer"}}
+      # Create a connection using the from_oauth_client function
+      oauth_client = %OAuth2.Client{
+        token: %OAuth2.AccessToken{
+          access_token: "test-token",
+          token_type: "Bearer"
+        }
       }
 
-      client = Connection.Request.new(mock_connection)
+      {:ok, conn} =
+        Connection.from_oauth_client(
+          oauth_client,
+          account_id: "test-account",
+          base_uri: "https://demo.docusign.net/restapi"
+        )
 
-      # Verify client was created
-      assert %Tesla.Client{} = client
+      # Verify the Req client was created without debug steps
+      assert %Connection{req: req} = conn
+      assert %Req.Request{} = req
 
-      # The middleware should NOT include debug logging
-      middleware_modules = client.pre |> Enum.map(&elem(&1, 0))
-
-      assert BaseUrl in middleware_modules
-      assert Headers in middleware_modules
-      assert EncodeJson in middleware_modules
-      refute Logger in middleware_modules
+      # Check that debug steps are NOT registered
+      refute :debug_request in Keyword.keys(req.request_steps)
+      refute :debug_response in Keyword.keys(req.response_steps)
     end
 
-    test "SDK headers are properly configured in middleware" do
-      # Test that SDK headers middleware is properly configured
-      sdk_middleware = Debug.sdk_headers()
+    test "SDK headers are properly configured" do
+      # Create a connection
+      oauth_client = %OAuth2.Client{
+        token: %OAuth2.AccessToken{
+          access_token: "test-token",
+          token_type: "Bearer"
+        }
+      }
 
-      assert [{Headers, headers}] = sdk_middleware
+      {:ok, conn} =
+        Connection.from_oauth_client(
+          oauth_client,
+          account_id: "test-account",
+          base_uri: "https://demo.docusign.net/restapi"
+        )
 
-      # Check for SDK identification headers
-      sdk_header = List.keyfind(headers, "X-DocuSign-SDK", 0)
-      assert {"X-DocuSign-SDK", value} = sdk_header
-      assert String.starts_with?(value, "Elixir/")
+      # Check that SDK headers are included
+      headers = conn.req.headers
 
-      user_agent_header = List.keyfind(headers, "User-Agent", 0)
-      assert {"User-Agent", value} = user_agent_header
-      assert String.starts_with?(value, "DocuSign-Elixir/")
-    end
-  end
+      # Find SDK header (value might be a list)
+      {_, sdk_value} = Enum.find(headers, fn {k, _} -> String.downcase(k) == "x-docusign-sdk" end)
+      sdk_string = if is_list(sdk_value), do: List.first(sdk_value), else: sdk_value
+      assert sdk_string =~ "Elixir/"
 
-  describe "environment detection functions" do
-    test "determine_hostname delegates to Environment module" do
-      assert Connection.determine_hostname("https://demo.docusign.net/restapi") ==
-               "account-d.docusign.com"
-
-      assert Connection.determine_hostname("https://www.docusign.net/restapi") ==
-               "account.docusign.com"
-    end
-
-    test "detect_environment delegates to Environment module" do
-      assert Connection.detect_environment("https://demo.docusign.net/restapi") == :sandbox
-      assert Connection.detect_environment("https://www.docusign.net/restapi") == :production
+      # Find User-Agent header (value might be a list)
+      {_, ua_value} = Enum.find(headers, fn {k, _} -> String.downcase(k) == "user-agent" end)
+      ua_string = if is_list(ua_value), do: List.first(ua_value), else: ua_value
+      assert ua_string =~ "DocuSign-Elixir/"
     end
   end
 end

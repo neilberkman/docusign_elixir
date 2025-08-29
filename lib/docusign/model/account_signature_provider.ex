@@ -11,7 +11,6 @@ defmodule DocuSign.Model.AccountSignatureProvider do
   alias DocuSign.Model.AccountSignatureProviderOption
   alias DocuSign.Model.SignatureProviderRequiredOption
 
-  @derive Jason.Encoder
   defstruct [
     :isRequired,
     :priority,
@@ -21,6 +20,17 @@ defmodule DocuSign.Model.AccountSignatureProvider do
     :signatureProviderOptionsMetadata,
     :signatureProviderRequiredOptions
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :isRequired => String.t() | nil,
@@ -44,5 +54,6 @@ defmodule DocuSign.Model.AccountSignatureProvider do
       :list,
       SignatureProviderRequiredOption
     )
+    |> then(&struct(__MODULE__, &1))
   end
 end

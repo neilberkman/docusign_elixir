@@ -7,7 +7,6 @@ defmodule DocuSign.Model.Jurisdiction do
   Describes the jurisdiction of a notary. This is read-only object.
   """
 
-  @derive Jason.Encoder
   defstruct [
     :allowSystemCreatedSeal,
     :allowUserUploadedSeal,
@@ -20,6 +19,17 @@ defmodule DocuSign.Model.Jurisdiction do
     :notaryPublicInSeal,
     :stateNameInSeal
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :allowSystemCreatedSeal => String.t() | nil,
@@ -35,6 +45,6 @@ defmodule DocuSign.Model.Jurisdiction do
         }
 
   def decode(value) do
-    value
+    struct(__MODULE__, value)
   end
 end

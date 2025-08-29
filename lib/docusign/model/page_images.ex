@@ -10,7 +10,6 @@ defmodule DocuSign.Model.PageImages do
   alias DocuSign.Deserializer
   alias DocuSign.Model.Page
 
-  @derive Jason.Encoder
   defstruct [
     :endPosition,
     :nextUri,
@@ -20,6 +19,17 @@ defmodule DocuSign.Model.PageImages do
     :startPosition,
     :totalSetSize
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :endPosition => String.t() | nil,
@@ -38,5 +48,6 @@ defmodule DocuSign.Model.PageImages do
       :list,
       Page
     )
+    |> then(&struct(__MODULE__, &1))
   end
 end
