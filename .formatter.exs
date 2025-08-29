@@ -5,7 +5,8 @@
   quokka: [
     # Enable all Quokka features
     autosort: [:map, :defstruct],
-    inefficient_function_rewrites: true,
+    # Use new exclude syntax instead of deprecated inefficient_function_rewrites
+    exclude: [],
     # Explicitly enable all modules to ensure everything is fixed
     only: [
       :blocks,

@@ -43,14 +43,14 @@ defmodule DocuSign.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:tesla, "~> 1.4"},
+      {:tesla, "~> 1.15"},
       {:jason, "~> 1.4.4"},
       {:joken, "~> 2.0"},
       {:oauth2, "~> 2.0"},
-      {:castore, "~> 1.0"},
-      {:finch, "~> 0.19"},
+      {:castore, "~> 1.0.15"},
+      {:finch, "~> 0.20"},
       {:temp, "~> 0.4.9"},
-      {:plug, "~> 1.18"},
+      {:plug, "~> 1.18.1"},
       {:meck, "~> 0.9.2"},
       {:cowlib, "2.15.0"},
 
@@ -58,14 +58,14 @@ defmodule DocuSign.MixProject do
       {:mock, "~> 0.3.2", only: :test},
       {:bypass, "~> 2.1", only: :test},
       {:mox, "~> 1.0", only: :test},
-      {:briefly, "~> 0.4", only: :test},
+      {:briefly, "~> 0.5", only: :test},
 
       # dev
-      {:ex_doc, "~> 0.28", only: :dev},
+      {:ex_doc, "~> 0.38", only: :dev},
       {:credo, "~> 1.0", only: [:dev, :test], runtime: false},
-      {:dialyxir, "~> 1.1", only: [:dev], runtime: false},
+      {:dialyxir, "~> 1.4.6", only: [:dev], runtime: false},
       {:mix_test_watch, "~> 1.0", only: :dev, runtime: false},
-      {:quokka, "~> 2.7.1", only: [:dev, :test], runtime: false}
+      {:quokka, "~> 2.11.2", only: [:dev, :test], runtime: false}
     ]
   end
 

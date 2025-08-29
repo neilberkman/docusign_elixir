@@ -1,7 +1,6 @@
 defmodule DocuSign.ErrorTest do
   use ExUnit.Case, async: true
 
-  alias DocuSign.Connection
   alias DocuSign.Error
 
   describe "Error struct creation" do

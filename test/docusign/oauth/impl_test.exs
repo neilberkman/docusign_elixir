@@ -2,7 +2,6 @@ defmodule DocuSign.OAuth.ImplTest do
   use ExUnit.Case, async: true
 
   import ExUnit.CaptureLog
-  import Mox
 
   alias DocuSign.OAuth
   alias DocuSign.OAuth.Impl
@@ -212,7 +211,9 @@ defmodule DocuSign.OAuth.ImplTest do
       assert_raise RuntimeError,
                    "No private key found in application environment. Please set :private_key_file or :private_key_contents.",
                    fn ->
-                     OAuth.Impl.get_token!(OAuth.Impl.client(site: "http://localhost:#{bypass.port}"))
+                     OAuth.Impl.get_token!(
+                       OAuth.Impl.client(site: "http://localhost:#{bypass.port}")
+                     )
                    end
     end
 
@@ -223,7 +224,9 @@ defmodule DocuSign.OAuth.ImplTest do
       assert_raise RuntimeError,
                    "Multiple DocuSign private keys were provided. Please use only one of :private_key_file or :private_key_contents.",
                    fn ->
-                     OAuth.Impl.get_token!(OAuth.Impl.client(site: "http://localhost:#{bypass.port}"))
+                     OAuth.Impl.get_token!(
+                       OAuth.Impl.client(site: "http://localhost:#{bypass.port}")
+                     )
                    end
     end
   end
