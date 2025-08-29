@@ -36,4 +36,7 @@ swagger-codegen-cli.jar
 # Ignore vscode config
 .vscode
 
+# Ignore OpenAPI spec downloads and generated files
 esignature.rest.swagger-v2.1.json
+/scripts/regen/temp/
+/scripts/regen/generated/

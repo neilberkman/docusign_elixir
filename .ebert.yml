@@ -1,8 +1,0 @@
----
-styleguide: plataformatec/linters
-engines:
-  credo:
-    enabled: true
-exclude_paths:
-  - config
-  - test
