@@ -1,14 +1,51 @@
 # Changelog
 
+## v2.3.0 (Unreleased)
+
+### Major Improvements
+
+- **OpenAPI Generator Integration**: Implement custom Mustache templates for OpenAPI Generator
+  - Custom templates for api, model, request_builder, and deserializer modules
+  - Automatic ModelCleaner integration in generated code
+  - Correct type specifications that pass Dialyzer without warnings
+  - Jason encoder/decoder integration replacing Poison
+  - Generated code now requires minimal post-processing
+
+- **API Updates**: Regenerate entire API from latest DocuSign OpenAPI specification (August 22, 2025)
+  - Uses the most recent spec available from DocuSign's official repository
+  - Added new models: ConnectedData, ConnectedObjectDetails, ConnectionInstance, ExtensionData
+  - Added new template view models: TemplateViewRecipientSettings, TemplateViewSettings
+  - Updated all existing API endpoints with latest DocuSign changes
+  - Downloaded directly from official DocuSign OpenAPI-Specifications repository
+
+### Technical Improvements
+
+- **Code Generation**: Created reusable templates in `scripts/regen/custom_templates/`
+  - Templates produce properly formatted Elixir code (passes mix format)
+  - Type specifications use correct `DocuSign.Connection.t()` types
+  - Automatic nil-value cleaning via ModelCleaner integration
+  - Future API regeneration now requires minimal manual intervention
+
+## v2.2.4
+
+### Improvements
+
+- **Type Specifications**: Fix Dialyzer type errors by correcting API function specs to use `DocuSign.Connection.t()` instead of `Tesla.Env.client()` (#76)
+- **CI/CD**: Add Dialyzer static analysis to CI pipeline to catch type errors early
+- **Dependencies**: Update various dependencies to latest versions
+- **Code Quality**: Fix Quokka formatter deprecation warnings and improve code formatting
+
 ## v2.2.3
 
 ### Enhancements
+
 - **Error Handling**: Add opt-in structured error handling for better debugging and error management
 - **Dependency Updates**: Update jason dependency to ~> 1.4.4
 
 ## v2.2.2
 
 ### New Features
+
 - **Request/Response Debugging**: Comprehensive debugging and logging capabilities matching Ruby client functionality
   - Add `DocuSign.Debug` module for configurable HTTP request/response logging
   - Leverage Tesla's built-in Logger middleware with custom configuration
@@ -22,6 +59,7 @@
 ## v2.2.1
 
 ### New Features
+
 - **Environment Auto-Detection**: Automatic sandbox vs production environment detection based on API URLs
   - Add `DocuSign.Util.Environment` module with hostname detection logic matching Ruby client behavior
   - Automatically determine OAuth hostname (`account-d.docusign.com` vs `account.docusign.com`) from base URIs
@@ -40,6 +78,7 @@
   - Comprehensive test coverage with 31 test cases
 
 ### Enhancements
+
 - Add comprehensive SSL/TLS configuration support
   - Custom CA certificates and certificate validation
   - Client certificate authentication (mutual TLS)
@@ -54,6 +93,7 @@
 - Configurable download validation and security options
 
 ### Documentation
+
 - Add extensive SSL/TLS configuration documentation to README
 - Include security best practices for certificate validation
 - Document connection pooling options
@@ -63,6 +103,7 @@
 ## v2.2.0
 
 ### New Features
+
 - **OAuth2 Authorization Code Flow Support**: Complete implementation of OAuth2 Authorization Code Flow using the battle-tested `oauth2` library
   - Add `DocuSign.OAuth.AuthorizationCodeStrategy` module implementing OAuth2.Strategy behavior
   - Add `DocuSign.Connection.from_oauth_client/2` for creating connections from OAuth2.Client
@@ -76,6 +117,7 @@
   - Production implementation examples and best practices
 
 ### Enhancements
+
 - Add model files to Dialyzer ignore list to prevent analysis of auto-generated code
 - Add IDEAS.md document cataloging potential improvements from Ruby client
 - Add changelog link to Hex package metadata for better discoverability
@@ -84,14 +126,17 @@
 - Add OAuth2 support to README with complete usage patterns
 
 ### Documentation
+
 - Create IDEAS.md to track feature ideas and improvements from other DocuSign clients
 
 ### Breaking Changes
+
 - None (fully backward compatible)
 
 ## v2.1.0
 
 ### Enhancements
+
 - Add support for Elixir 1.18.4 and OTP 28
 - Migrate from Tesla.Builder to runtime configuration to fix deprecation warnings
 - Switch from Mint to Finch adapter for better performance and connection pooling
@@ -112,11 +157,13 @@
   - plug 1.17.0 → 1.18.0 (transitive)
 
 ### Bug Fixes
+
 - Fix deprecated `use Plug.Test` warning by using `import Plug.Test` and `import Plug.Conn`
 - Fix HTTP method case sensitivity for Finch adapter (`:GET` → `:get`)
 - Update timeout configuration to use Finch's `receive_timeout` option
 
 ### Internal Changes
+
 - Start Finch supervisor in both test and production environments
 - Add Tesla deprecation warning suppression to config
 - Remove explicit Mint dependency as it's included transitively via Finch
@@ -129,12 +176,14 @@
 ## v2.0.0
 
 ### Breaking Changes
+
 - Removed deprecated function `DocuSign.Connection.new/0`
 - Removed deprecated function `DocuSign.Connection.default_account/0`
 - Removed deprecated `:private_key` configuration option (use `:private_key_file` or `:private_key_contents`)
 - See [MIGRATING.md](MIGRATING.md) for migration guidance
 
 ### Enhancements
+
 - Improved code organization by removing deprecated code
 - Updated LiveBook example to work with v2.0.0
 - Made LiveBook example more prominently featured in documentation
