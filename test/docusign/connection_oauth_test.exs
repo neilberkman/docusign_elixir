@@ -25,6 +25,8 @@ defmodule DocuSign.ConnectionOAuthTest do
       assert conn.client == oauth_client
       assert conn.app_account.account_id == "12345678-1234-1234-1234-123456789012"
       assert conn.app_account.base_uri == "https://demo.docusign.net/restapi"
+      # Verify Req client was created
+      assert %Req.Request{} = conn.req
     end
 
     test "returns error when account_id is missing" do
@@ -62,8 +64,8 @@ defmodule DocuSign.ConnectionOAuthTest do
     end
   end
 
-  describe "Connection.Request.new/1 with OAuth2.Client" do
-    test "creates Tesla client with OAuth2.Client authorization" do
+  describe "Connection with OAuth2.Client and Req" do
+    test "creates Req client with OAuth2.Client authorization" do
       oauth_client = %Client{
         token: %AccessToken{
           access_token: "oauth_access_token_123",
@@ -73,36 +75,37 @@ defmodule DocuSign.ConnectionOAuthTest do
         }
       }
 
-      conn = %Connection{
-        app_account: %{
+      {:ok, conn} =
+        Connection.from_oauth_client(
+          oauth_client,
+          account_id: "test-account",
           base_uri: "https://demo.docusign.net/restapi"
-        },
-        client: oauth_client
-      }
+        )
 
-      tesla_client = Connection.Request.new(conn)
+      # Check that Req client is created with proper auth headers
+      assert %Req.Request{} = conn.req
+      assert conn.req.options[:base_url] == "https://demo.docusign.net/restapi"
 
-      # Check that Tesla client is created (we can't easily inspect middleware)
-      assert %Tesla.Client{} = tesla_client
+      # Check authorization header (Req stores headers as {name, [values]})
+      auth_header = Enum.find(conn.req.headers, fn {k, _v} -> k == "authorization" end)
+      assert auth_header != nil
+      {_, auth_value} = auth_header
+      # Handle both string and list formats
+      auth_string = if is_list(auth_value), do: List.first(auth_value), else: auth_value
+      assert auth_string == "Bearer oauth_access_token_123"
     end
 
-    test "creates Tesla client with JWT token authorization (existing behavior)" do
-      conn = %Connection{
-        app_account: %{
+    test "creates Req client with JWT token authorization (existing behavior)" do
+      {:ok, conn} =
+        Connection.from_oauth_client(
+          %Client{token: %AccessToken{access_token: "jwt_token", token_type: "Bearer"}},
+          account_id: "test-account",
           base_uri: "https://demo.docusign.net/restapi"
-        },
-        client: %{
-          token: %{
-            access_token: "jwt_access_token_123",
-            token_type: "Bearer"
-          }
-        }
-      }
+        )
 
-      tesla_client = Connection.Request.new(conn)
-
-      # Check that Tesla client is created (we can't easily inspect middleware)
-      assert %Tesla.Client{} = tesla_client
+      # Check that Req client is created
+      assert %Req.Request{} = conn.req
+      assert conn.req.options[:base_url] == "https://demo.docusign.net/restapi"
     end
   end
 
@@ -119,12 +122,13 @@ defmodule DocuSign.ConnectionOAuthTest do
         }
       }
 
-      conn = %Connection{
-        app_account: %{
+      # Create connection properly with Req
+      {:ok, conn} =
+        Connection.from_oauth_client(
+          oauth_client,
+          account_id: "test-account",
           base_uri: "http://localhost:#{bypass.port}"
-        },
-        client: oauth_client
-      }
+        )
 
       {:ok, bypass: bypass, conn: conn}
     end
@@ -141,6 +145,7 @@ defmodule DocuSign.ConnectionOAuthTest do
       {:ok, response} = Connection.request(conn, method: :get, url: "/test")
 
       assert response.status == 200
+      # Req returns JSON as string by default unless configured to decode
       assert Jason.decode!(response.body) == %{"success" => true}
     end
 
@@ -187,9 +192,8 @@ defmodule DocuSign.ConnectionOAuthTest do
       assert conn.app_account.account_id == "12345678-1234-1234-1234-123456789012"
       assert conn.app_account.base_uri == "https://demo.docusign.net/restapi"
 
-      # Verify we can create a Tesla client for requests
-      tesla_client = Connection.Request.new(conn)
-      assert %Tesla.Client{} = tesla_client
+      # Verify we have a Req client for requests
+      assert %Req.Request{} = conn.req
     end
 
     test "connection works with typical DocuSign API patterns" do
@@ -213,6 +217,7 @@ defmodule DocuSign.ConnectionOAuthTest do
       # We can't test actual API calls without mocking, but we can verify structure
       assert is_map(conn.app_account)
       assert %Client{} = conn.client
+      assert %Req.Request{} = conn.req
 
       # Verify compatibility with Connection.request/2
       assert is_function(&Connection.request/2, 2)

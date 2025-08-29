@@ -427,14 +427,25 @@ If you don't specify CA certificates, the library will attempt to use them in th
 3. System CA certificates from common locations
 4. Erlang's built-in CA certificates as a fallback
 
-## Tesla adapter configuration
+## HTTP client configuration
 
-By default, the API is called using `Tesla` with the Finch adapter. You can override the adapter
-to any [Tesla adapter][tesla_adapters]:
+The library provides high-level configuration options that work regardless of the underlying HTTP implementation:
 
 ```elixir
-config :tesla, adapter: {Tesla.Adapter.Hackney, [recv_timeout: 30_000]}
+# Request timeout (default: 30_000 milliseconds)
+config :docusign, :timeout, 60_000
+
+# Connection pool settings
+config :docusign, :pool_size, 10  # connections per pool (default: 10)
+config :docusign, :pool_count, 1   # number of pools (default: 1)
+
+# Enable debug logging
+config :docusign, :debug, true
 ```
+
+### Advanced Configuration
+
+For advanced users who need fine-grained control over the HTTP client, you can pass options directly to Req when making API calls. However, this is rarely needed as the high-level configuration should cover most use cases.
 
 ## DocuSign Connect
 

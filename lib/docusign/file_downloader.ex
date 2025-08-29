@@ -283,19 +283,28 @@ defmodule DocuSign.FileDownloader do
 
   # Private functions
 
+  defp get_header(%Req.Response{headers: headers}, name) do
+    headers
+    |> Enum.find(fn {key, _value} -> String.downcase(key) == String.downcase(name) end)
+    |> case do
+      {_, value} -> value
+      nil -> nil
+    end
+  end
+
   defp make_request(conn, url, opts) do
-    request_opts = []
+    request_opts = [method: :get, url: url]
 
     request_opts =
       if opts[:max_size],
         do: Keyword.put(request_opts, :max_body_length, opts[:max_size]),
         else: request_opts
 
-    case DocuSign.Connection.request(conn, method: :get, url: url, opts: request_opts) do
-      {:ok, %Tesla.Env{status: status} = response} when status in 200..299 ->
+    case DocuSign.Connection.request(conn, request_opts) do
+      {:ok, %Req.Response{status: status} = response} when status in 200..299 ->
         {:ok, response}
 
-      {:ok, %Tesla.Env{body: body, status: status}} ->
+      {:ok, %Req.Response{body: body, status: status}} ->
         {:error, {:http_error, status, body}}
 
       {:error, reason} ->
@@ -314,7 +323,7 @@ defmodule DocuSign.FileDownloader do
   end
 
   defp extract_filename_from_response(response) do
-    content_disposition = Tesla.get_header(response, "content-disposition")
+    content_disposition = get_header(response, "content-disposition")
 
     if content_disposition do
       case extract_filename_from_header(content_disposition) do
@@ -327,7 +336,7 @@ defmodule DocuSign.FileDownloader do
   end
 
   defp extract_content_type(response) do
-    content_type = Tesla.get_header(response, "content-type") || "application/octet-stream"
+    content_type = get_header(response, "content-type") || "application/octet-stream"
     # Extract just the media type, ignore charset and other parameters
     media_type = content_type |> String.split(";") |> List.first() |> String.trim()
     {:ok, media_type}
@@ -340,7 +349,7 @@ defmodule DocuSign.FileDownloader do
   end
 
   defp validate_content_size(response, max_size) when is_integer(max_size) do
-    content_length = Tesla.get_header(response, "content-length")
+    content_length = get_header(response, "content-length")
     body_size = byte_size(response.body)
 
     actual_size =
@@ -362,7 +371,7 @@ defmodule DocuSign.FileDownloader do
   defp validate_content_type(_response, false), do: :ok
 
   defp validate_content_type(response, true) do
-    content_type = Tesla.get_header(response, "content-type")
+    content_type = get_header(response, "content-type")
     allowed_types = get_allowed_content_types()
 
     if content_type && allowed_types do
@@ -439,7 +448,7 @@ defmodule DocuSign.FileDownloader do
   end
 
   defp generate_default_filename(response) do
-    content_type = Tesla.get_header(response, "content-type") || "application/octet-stream"
+    content_type = get_header(response, "content-type") || "application/octet-stream"
 
     ext =
       case String.split(content_type, "/") do

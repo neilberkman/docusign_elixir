@@ -105,7 +105,7 @@ defmodule DocuSign.ConnectionTest do
 
       result = do_request(bypass)
 
-      assert result == {:error, :timeout}
+      assert {:error, %Req.TransportError{reason: :timeout}} = result
 
       # Force bypass expectations to pass to prevent exit :shutdown error
       Bypass.pass(bypass)
@@ -113,9 +113,26 @@ defmodule DocuSign.ConnectionTest do
   end
 
   defp do_request(bypass) do
+    # Create a proper connection with Req client
+    app_account = %AppAccount{base_uri: "http://localhost:#{bypass.port}"}
+    client = %{token: %OAuth2.AccessToken{access_token: "test-token", token_type: "Bearer"}}
+
+    # Build Req client
+    req =
+      Req.new(
+        base_url: app_account.base_uri,
+        headers: [
+          {"authorization", "Bearer test-token"},
+          {"content-type", "application/json"}
+        ],
+        receive_timeout: Application.get_env(:docusign, :timeout, 30_000),
+        retry: false
+      )
+
     conn = %Connection{
-      app_account: %AppAccount{base_uri: "http://localhost:#{bypass.port}"},
-      client: %{token: %OAuth2.AccessToken{}}
+      app_account: app_account,
+      client: client,
+      req: req
     }
 
     opts = [method: :get, url: "/endpoint"]

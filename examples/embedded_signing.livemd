@@ -9,11 +9,11 @@ This LiveBook demonstrates how to create a complete embedded signing experience 
 ```elixir
 IO.puts("Installing dependencies...")
 
-# Suppress Tesla deprecation warnings
-Application.put_env(:tesla, :disable_deprecated_builder_warning, true)
+# No longer need Tesla deprecation warnings suppression with Req
+# Application.put_env(:tesla, :disable_deprecated_builder_warning, true)
 
 Mix.install([
-  {:docusign, "~> 2.2.3"},
+  {:docusign, "~> 2.2.4"},
   {:kino, "~> 0.16.0"}
 ])
 

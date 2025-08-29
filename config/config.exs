@@ -2,8 +2,6 @@
 # and its dependencies with the aid of the Config module.
 import Config
 
-alias Tesla.Adapter.Finch
-
 # Using the recommended approach with proper environment variable naming
 config :docusign, client_id: System.get_env("DOCUSIGN_CLIENT_ID")
 
@@ -15,8 +13,8 @@ config :docusign, user_id: System.get_env("DOCUSIGN_USER_ID")
 
 import_config "#{Mix.env()}.exs"
 
-config :tesla, adapter: {Finch, name: DocuSign.Finch}
-config :tesla, disable_deprecated_builder_warning: true
+# Req uses Finch by default, no explicit configuration needed
+# DocuSign.Finch pools are started in DocuSign.Application
 
 if File.exists?("config/#{Mix.env()}.secret.exs") do
   import_config "#{Mix.env()}.secret.exs"

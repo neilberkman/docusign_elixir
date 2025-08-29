@@ -7,7 +7,6 @@ defmodule DocuSign.ModelCleanerIntegrationTest do
   alias DocuSign.Model.Signer
   alias DocuSign.Model.SignHere
   alias DocuSign.Model.Tabs
-  alias Tesla.Multipart.Part
 
   describe "integration with API calls" do
     test "ModelCleaner is applied to request bodies" do
@@ -55,7 +54,7 @@ defmodule DocuSign.ModelCleanerIntegrationTest do
         }
       }
 
-      # Instead of testing the entire API call chain which involves Tesla client setup,
+      # Instead of testing the entire API call chain,
       # let's directly test the ModelCleaner integration in RequestBuilder
       request = %{}
 
@@ -65,30 +64,34 @@ defmodule DocuSign.ModelCleanerIntegrationTest do
       body_result =
         DocuSign.RequestBuilder.add_optional_params(request, %{body: :body}, body: envelope_definition)
 
-      # Extract the cleaned body
+      # Extract the cleaned body (should be JSON string)
       body = body_result.body
 
-      # For :body parameter, ModelCleaner returns a cleaned map, not a Tesla.Multipart
-      assert is_map(body) and not is_struct(body)
+      # For :body parameter, ModelCleaner returns a JSON string
+      assert is_binary(body)
+
+      # Parse the JSON to check the structure
+      decoded = Jason.decode!(body)
 
       # Check that nil values were removed in the direct body
-      refute Map.has_key?(body, :emailBlurb)
-      document = List.first(body.documents)
-      refute Map.has_key?(document, :transformPdfFields)
-      signer = List.first(body.recipients.signers)
-      sign_here = List.first(signer.tabs.signHereTabs)
-      refute Map.has_key?(sign_here, :anchorYOffset)
-      refute Map.has_key?(signer.tabs, :dateSignedTabs)
-      refute Map.has_key?(body.recipients, :carbonCopies)
+      refute Map.has_key?(decoded, "emailBlurb")
+      document = List.first(decoded["documents"])
+      refute Map.has_key?(document, "transformPdfFields")
+      signer = List.first(decoded["recipients"]["signers"])
+      sign_here = List.first(signer["tabs"]["signHereTabs"])
+      refute Map.has_key?(sign_here, "anchorYOffset")
+      refute Map.has_key?(signer["tabs"], "dateSignedTabs")
+      refute Map.has_key?(decoded["recipients"], "carbonCopies")
 
       # 2. Test with named parameter
       named_result =
         DocuSign.RequestBuilder.add_optional_params(request, %{envelope: :body}, envelope: envelope_definition)
 
-      # Extract and verify the body is now a Tesla.Multipart
-      multipart = named_result.body
-      assert %Tesla.Multipart{parts: [part]} = multipart
-      assert %Part{body: json_body} = part
+      # Extract and verify the body is now form_multipart with Req
+      assert %{form_multipart: parts} = named_result
+      assert [{field_name, json_body, options}] = parts
+      assert field_name == "envelope"
+      assert [content_type: "application/json"] = options
 
       # Parse the JSON
       decoded = Jason.decode!(json_body)
@@ -100,13 +103,13 @@ defmodule DocuSign.ModelCleanerIntegrationTest do
       document = List.first(decoded["documents"])
       refute Map.has_key?(document, "transformPdfFields")
 
-      # Check nested tabs
+      # Check signer and tabs
       signer = List.first(decoded["recipients"]["signers"])
       sign_here = List.first(signer["tabs"]["signHereTabs"])
       refute Map.has_key?(sign_here, "anchorYOffset")
-
-      # Check removed nil lists/maps
       refute Map.has_key?(signer["tabs"], "dateSignedTabs")
+
+      # Check recipients
       refute Map.has_key?(decoded["recipients"], "carbonCopies")
     end
   end

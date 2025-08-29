@@ -30,7 +30,8 @@ defmodule DocuSign.Application do
     ]
   end
 
-  defp finch_pools do
+  @doc false
+  def finch_pools do
     base_pools = %{
       default: [
         size: Application.get_env(:docusign, :pool_size, 10),

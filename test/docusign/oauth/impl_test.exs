@@ -20,6 +20,8 @@ defmodule DocuSign.OAuth.ImplTest do
     Application.delete_env(:docusign, :private_key_contents)
     # Use private_key_file in v2.0.0+ (private_key was removed)
     Application.put_env(:docusign, :private_key_file, "test/support/test_key")
+    # Set client_id for tests that need it
+    Application.put_env(:docusign, :client_id, "test_client_id")
   end
 
   @token ~s({

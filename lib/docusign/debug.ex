@@ -44,15 +44,12 @@ defmodule DocuSign.Debug do
       DocuSign.Debug.enable_debugging()
   """
 
-  alias Tesla.Middleware.Headers
-  alias Tesla.Middleware.Logger
-
   @default_filter_headers ["authorization"]
 
   @doc """
   Enable debugging for DocuSign HTTP requests.
 
-  This will add Tesla.Middleware.Logger with debug options to all DocuSign connections.
+  This will enable debug logging for all DocuSign connections.
   """
   @spec enable_debugging() :: :ok
   def enable_debugging do
@@ -86,48 +83,36 @@ defmodule DocuSign.Debug do
   end
 
   @doc """
-  Build Tesla middleware for debugging based on current configuration.
-
-  Returns a list of middleware to include in Tesla client configuration.
-  If debugging is disabled, returns an empty list.
-  """
-  @spec middleware() :: list()
-  def middleware do
-    if debugging_enabled?() do
-      [
-        {Logger, debug: true, filter_headers: filter_headers(), format: "$method $url -> $status ($time ms)"}
-      ]
-    else
-      []
-    end
-  end
-
-  @doc """
-  Build Tesla middleware for SDK identification headers.
+  Get SDK headers for identifying the Elixir client.
 
   This adds the X-DocuSign-SDK header to identify the Elixir client,
   matching the Ruby client's behavior.
   """
-  @spec sdk_headers() :: list()
+  @spec sdk_headers() :: [{String.t(), String.t()}]
   def sdk_headers do
     version = Application.spec(:docusign, :vsn) |> to_string()
 
     [
-      {Headers,
-       [
-         {"X-DocuSign-SDK", "Elixir/#{version}"},
-         {"User-Agent", "DocuSign-Elixir/#{version}"}
-       ]}
+      {"X-DocuSign-SDK", "Elixir/#{version}"},
+      {"User-Agent", "DocuSign-Elixir/#{version}"}
     ]
   end
 
   @doc """
   Get all middleware for DocuSign connections including debugging and SDK headers.
 
-  This is the main function used by the Connection module to build middleware.
+  Note: This function is now deprecated as Req handles middleware differently.
+  Use sdk_headers() directly if needed.
   """
   @spec all_middleware() :: list()
+  @deprecated "Use sdk_headers() directly with Req configuration"
   def all_middleware do
-    sdk_headers() ++ middleware()
+    []
+  end
+
+  @doc false
+  @deprecated "No longer used with Req"
+  def middleware do
+    []
   end
 end

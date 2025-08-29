@@ -1,0 +1,114 @@
+{{>licenseInfo}}
+defmodule DocuSign.Deserializer do
+  @moduledoc """
+  Helper functions for deserializing responses into models
+  """
+
+  @doc """
+  Update the provided model with a deserialization of a nested value.
+
+  ### Parameters
+
+  - `model` (struct) - The model to be updated
+  - `field` (atom) - The field to be updated
+  - `field_type` (atom) - The type of the field to be updated
+  - `decoder` (function) - A function that can decode the value
+
+  ### Returns
+
+  Struct
+  """
+  @spec deserialize(struct(), atom(), atom(), (any() -> any())) :: struct()
+  def deserialize(model, field, :list, decoder) do
+    value = Map.get(model, field)
+
+    cond do
+      is_nil(value) ->
+        model
+
+      is_list(value) ->
+        update_in(model, [field], fn list ->
+          Enum.map(list, fn item ->
+            if is_map(item) do
+              decoder.decode(item)
+            else
+              item
+            end
+          end)
+        end)
+
+      true ->
+        model
+    end
+  end
+
+  def deserialize(model, field, :struct, decoder) do
+    value = Map.get(model, field)
+
+    cond do
+      is_nil(value) ->
+        model
+
+      is_map(value) ->
+        update_in(model, [field], &decoder.decode/1)
+
+      true ->
+        model
+    end
+  end
+
+  def deserialize(model, field, :map, decoder) do
+    value = Map.get(model, field)
+
+    cond do
+      is_nil(value) ->
+        model
+
+      is_map(value) ->
+        update_in(model, [field], fn the_map ->
+          Map.new(the_map, fn {k, v} ->
+            {k, decoder.decode(v)}
+          end)
+        end)
+
+      true ->
+        model
+    end
+  end
+
+  def deserialize(model, field, :date, _decoder) do
+    value = Map.get(model, field)
+
+    case is_binary(value) do
+      true ->
+        case Date.from_iso8601(value) do
+          {:ok, date} ->
+            Map.put(model, field, date)
+
+          _ ->
+            model
+        end
+
+      _ ->
+        model
+    end
+  end
+
+  def deserialize(model, field, :datetime, _decoder) do
+    value = Map.get(model, field)
+
+    case is_binary(value) do
+      true ->
+        case DateTime.from_iso8601(value) do
+          {:ok, datetime, _offset} ->
+            Map.put(model, field, datetime)
+
+          _ ->
+            model
+        end
+
+      _ ->
+        model
+    end
+  end
+end

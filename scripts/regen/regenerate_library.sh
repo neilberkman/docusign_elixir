@@ -1,137 +1,138 @@
 #!/bin/bash
-# Script to regenerate the DocuSign Elixir library while preserving custom files
+# Clean script to regenerate the DocuSign Elixir library using custom templates
+# This script properly uses OpenAPI Generator with custom templates (no hacks)
 
 set -e  # Exit on any error
 
-echo "Starting DocuSign Elixir library regeneration..."
+echo "Starting DocuSign Elixir library regeneration with custom templates..."
 
-# Define directories using relative paths
+# Define directories
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-DOCUSIGN_DIR="$(cd "$SCRIPT_DIR/../.." && pwd)"
-PRESERVE_DIR="${SCRIPT_DIR}/preserved"
-TEMP_DIR="/tmp/docusign_regen"
-GEN_DIR="${TEMP_DIR}/elixir_api_client"
+PROJECT_ROOT="$( cd "${SCRIPT_DIR}/../.." && pwd )"
+TEMP_DIR="${SCRIPT_DIR}/temp"
+GEN_DIR="${SCRIPT_DIR}/generated"
 
-# Check if OpenAPI spec exists
-if [ ! -f "${TEMP_DIR}/esignature.swagger.json" ]; then
-  echo "ERROR: OpenAPI specification not found at ${TEMP_DIR}/esignature.swagger.json"
-  echo "Please download the specification first:"
-  echo "curl -o /tmp/docusign_regen/esignature.swagger.json https://raw.githubusercontent.com/docusign/eSign-OpenAPI-Specification/master/esignature.rest.swagger-v2.1.json"
-  exit 1
-fi
+# Check for arguments
+DOWNLOAD_SPEC=false
+GENERATE_CODE=false
 
-# Check if OpenAPI generator has been run
-if [ ! -d "${GEN_DIR}" ]; then
-  echo "ERROR: Generated code not found at ${GEN_DIR}"
-  echo "Please generate the client first:"
-  echo "openapi-generator generate -i /tmp/docusign_regen/esignature.swagger.json -g elixir -o /tmp/docusign_regen/elixir_api_client --additional-properties=packageName=docusign_e_signature_restapi"
-  exit 1
-fi
-
-# Create backup and preserve directories
-mkdir -p "${PRESERVE_DIR}"
-mkdir -p "${DOCUSIGN_DIR}/backup/api"
-mkdir -p "${DOCUSIGN_DIR}/backup/model"
-
-# List of files to preserve
-PRESERVE_FILES=(
-  "lib/docusign/model_cleaner.ex"
-  "lib/docusign/model_cleaner_jason.ex"
-  "lib/docusign/model/recipient_view_url.ex"
-  "test/docusign/model_cleaner_test.exs"
-  "test/docusign/model_cleaner_jason_test.exs"
-  "test/docusign/model_cleaner_integration_test.exs"
-)
-
-# Preserve custom files
-echo "Backing up custom files..."
-for file in "${PRESERVE_FILES[@]}"; do
-  if [ -f "${DOCUSIGN_DIR}/${file}" ]; then
-    echo "- Preserving ${file}"
-    cp "${DOCUSIGN_DIR}/${file}" "${PRESERVE_DIR}/$(basename "${file}")"
-  fi
+for arg in "$@"; do
+  case $arg in
+    --download)
+      DOWNLOAD_SPEC=true
+      ;;
+    --generate)
+      GENERATE_CODE=true
+      ;;
+    *)
+      echo "Unknown argument: $arg"
+      echo "Usage: $0 [--download] [--generate]"
+      echo "  --download: Download latest OpenAPI spec"
+      echo "  --generate: Force regeneration"
+      echo "  (default: use existing spec and generated code if available)"
+      exit 1
+      ;;
+  esac
 done
 
-# Backup existing API and model files
-echo "Backing up existing API and model files..."
-cp -r "${DOCUSIGN_DIR}/lib/docusign/api/"* "${DOCUSIGN_DIR}/backup/api/" 2>/dev/null || true
-cp -r "${DOCUSIGN_DIR}/lib/docusign/model/"* "${DOCUSIGN_DIR}/backup/model/" 2>/dev/null || true
+# If no args, check what exists
+if [ "$DOWNLOAD_SPEC" = false ] && [ "$GENERATE_CODE" = false ]; then
+  if [ ! -f "${TEMP_DIR}/esignature.swagger.json" ]; then
+    DOWNLOAD_SPEC=true
+  fi
+  if [ ! -d "${GEN_DIR}" ] || [ -z "$(ls -A ${GEN_DIR} 2>/dev/null)" ]; then
+    GENERATE_CODE=true
+  fi
+fi
 
-# Clean out existing files
-echo "Removing old API and model files..."
-rm -rf "${DOCUSIGN_DIR}/lib/docusign/api/"*
-rm -rf "${DOCUSIGN_DIR}/lib/docusign/model/"*
+# Create temp directory
+mkdir -p "${TEMP_DIR}"
 
-# Copy new generated files
-echo "Copying new API and model files..."
-cp -r "${GEN_DIR}/lib/docusign_e_signature_restapi/api/"* "${DOCUSIGN_DIR}/lib/docusign/api/"
-cp -r "${GEN_DIR}/lib/docusign_e_signature_restapi/model/"* "${DOCUSIGN_DIR}/lib/docusign/model/"
+# Download OpenAPI spec if requested or missing
+if [ "$DOWNLOAD_SPEC" = true ]; then
+  echo "Downloading DocuSign OpenAPI specification..."
+  curl -o "${TEMP_DIR}/esignature.swagger.json" \
+    "https://raw.githubusercontent.com/docusign/OpenAPI-Specifications/master/esignature.rest.swagger-v2.1.json"
+  echo "✅ OpenAPI spec downloaded"
+  GENERATE_CODE=true  # Always regenerate after download
+fi
 
-# Copy and modify core files
-echo "Copying core files with module name adjustments..."
-sed 's/DocusignESignatureRESTAPI/DocuSign/g' "${GEN_DIR}/lib/docusign_e_signature_restapi/request_builder.ex" > "${DOCUSIGN_DIR}/lib/docusign/request_builder.ex"
-sed 's/DocusignESignatureRESTAPI/DocuSign/g' "${GEN_DIR}/lib/docusign_e_signature_restapi/deserializer.ex" > "${DOCUSIGN_DIR}/lib/docusign/deserializer.ex"
+# Generate code if requested or after download
+if [ "$GENERATE_CODE" = true ]; then
+  echo "Generating Elixir client code with custom templates..."
 
-# Update module names in files
-echo "Updating module names in API files..."
-find "${DOCUSIGN_DIR}/lib/docusign/api" -name "*.ex" -exec sed -i '' 's/DocusignESignatureRESTAPI/DocuSign/g' {} \;
+  # Remove old generated directory
+  rm -rf "${GEN_DIR}"
 
-echo "Updating module names in model files..."
-find "${DOCUSIGN_DIR}/lib/docusign/model" -name "*.ex" -exec sed -i '' 's/DocusignESignatureRESTAPI/DocuSign/g' {} \;
+  # Generate using OpenAPI Generator with custom templates
+  openapi-generator generate \
+    -i "${TEMP_DIR}/esignature.swagger.json" \
+    -g elixir \
+    -o "${GEN_DIR}" \
+    -t "${SCRIPT_DIR}/custom_templates" \
+    --additional-properties=packageName=docusign_e_signature_restapi,packageVersion="3.0.0",appName="DocuSign",appVersion="3.0.0",moduleName=DocuSign
 
-# Ensure models use Jason
-echo "Ensuring models use Jason.Encoder..."
-find "${DOCUSIGN_DIR}/lib/docusign/model" -name "*.ex" -exec sed -i '' 's/@derive \[Poison\.Encoder\]/@derive [Jason.Encoder]/g' {} \;
-find "${DOCUSIGN_DIR}/lib/docusign/model" -name "*.ex" -exec sed -i '' 's/defimpl Poison\.Decoder/defimpl Jason.Decoder/g' {} \;
+  echo "✅ Code generation complete"
+fi
 
-# Restore preserved files
-echo "Restoring preserved custom files..."
-for file in "${PRESERVE_DIR}/"*; do
-  base=$(basename "${file}")
-  if [[ "${base}" == "recipient_view_url.ex" ]]; then
-    echo "- Restoring model/${base}"
-    cp "${file}" "${DOCUSIGN_DIR}/lib/docusign/model/"
-  elif [[ "${base}" == *_test.exs ]]; then
-    echo "- Restoring test/docusign/${base}"
-    cp "${file}" "${DOCUSIGN_DIR}/test/docusign/"
-  else
-    echo "- Restoring lib/docusign/${base}"
-    cp "${file}" "${DOCUSIGN_DIR}/lib/docusign/"
+# Clean up target directories
+echo "Cleaning up existing API and model files..."
+rm -rf "${PROJECT_ROOT}/lib/docusign/api"
+rm -rf "${PROJECT_ROOT}/lib/docusign/model"
+mkdir -p "${PROJECT_ROOT}/lib/docusign/api"
+mkdir -p "${PROJECT_ROOT}/lib/docusign/model"
+
+# Copy generated files to project
+echo "Copying generated files to project..."
+cp -r "${GEN_DIR}/lib/docusign_e_signature_restapi/api/"* "${PROJECT_ROOT}/lib/docusign/api/" 2>/dev/null || true
+cp -r "${GEN_DIR}/lib/docusign_e_signature_restapi/model/"* "${PROJECT_ROOT}/lib/docusign/model/" 2>/dev/null || true
+
+# Copy core files if they don't exist (but never overwrite connection.ex)
+echo "Updating core files..."
+for file in deserializer.ex request_builder.ex; do
+  src="${GEN_DIR}/lib/docusign_e_signature_restapi/${file}"
+  dst="${PROJECT_ROOT}/lib/docusign/${file}"
+
+  if [ -f "$src" ]; then
+    # Only copy if destination doesn't exist or is different
+    if [ ! -f "$dst" ] || ! cmp -s "$src" "$dst"; then
+      echo "  Updating $file..."
+      cp "$src" "$dst"
+    else
+      echo "  $file is up to date"
+    fi
   fi
 done
+# Never overwrite the real DocuSign.Connection module
+echo "  Skipping connection.ex (preserving custom implementation)"
 
-# Modify request_builder.ex to integrate ModelCleaner
-echo "Integrating ModelCleaner with request_builder.ex..."
-sed -i '' '/def add_param(request, :body, :body, value)/c\
-  def add_param(request, :body, :body, value) do\
-    # Clean the value using ModelCleaner\
-    cleaned_value = DocuSign.ModelCleaner.clean(value)\
-    Map.put(request, :body, cleaned_value)\
-  end' "${DOCUSIGN_DIR}/lib/docusign/request_builder.ex"
+# Update module names in all copied files
+echo "Updating module names..."
+find "${PROJECT_ROOT}/lib/docusign" -type f -name "*.ex" -exec sed -i '' \
+  -e 's/DocusignESignatureRESTAPI/DocuSign/g' \
+  -e 's/DocuSignESignatureRestapi/DocuSign/g' \
+  -e 's/docusign_e_signature_restapi/docusign/g' {} \;
 
-sed -i '' '/def add_param(request, :body, key, value)/,+8c\
-  def add_param(request, :body, key, value) do\
-    # Clean the value using ModelCleaner before encoding with Jason\
-    cleaned_value = DocuSign.ModelCleaner.clean(value)\
-\
-    request\
-    |> Map.put_new_lazy(:body, \&Tesla.Multipart.new/0)\
-    |> Map.update!(:body, fn multipart ->\
-      Tesla.Multipart.add_field(\
-        multipart,\
-        key,\
-        Jason.encode!(cleaned_value),\
-        headers: [{:"Content-Type", "application/json"}]\
-      )\
-    end)\
-  end' "${DOCUSIGN_DIR}/lib/docusign/request_builder.ex"
-
-# Format and test code
+# Format the code
 echo "Formatting code..."
-cd "${DOCUSIGN_DIR}" && mix format
+cd "${PROJECT_ROOT}" && mix format
 
+# Run Dialyzer to check types
+echo "Running Dialyzer to check type specifications..."
+cd "${PROJECT_ROOT}" && mix dialyzer
+
+# Run tests
 echo "Running tests to verify changes..."
-cd "${DOCUSIGN_DIR}" && mix test || echo "⚠️ Tests failed! Please review the changes."
+cd "${PROJECT_ROOT}" && mix test
 
 echo "✅ Regeneration complete!"
-echo "Please review the changes and make any necessary adjustments."
+echo ""
+echo "Summary:"
+echo "- Used custom templates from ${SCRIPT_DIR}/custom_templates"
+echo "- Generated code with proper Req.Response types"
+echo "- All tests passing"
+echo ""
+echo "Usage:"
+echo "  $0                # Use existing spec and generated code if available"
+echo "  $0 --download     # Download latest spec and regenerate"
+echo "  $0 --generate     # Force regeneration from existing spec"

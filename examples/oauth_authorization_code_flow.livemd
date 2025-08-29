@@ -19,11 +19,11 @@ The Authorization Code Flow is more secure than JWT impersonation for user-facin
 ```elixir
 IO.puts("Installing dependencies...")
 
-# Suppress Tesla deprecation warnings
-Application.put_env(:tesla, :disable_deprecated_builder_warning, true)
+# No longer need Tesla deprecation warnings suppression with Req
+# Application.put_env(:tesla, :disable_deprecated_builder_warning, true)
 
 Mix.install([
-  {:docusign, "~> 2.2.3"},
+  {:docusign, "~> 2.2.4"},
   {:kino, "~> 0.16.0"},
   {:bandit, "~> 1.7"}
 ])
@@ -511,7 +511,7 @@ if conn && user_info do
       Your application is now successfully authenticated with DocuSign using OAuth2 tokens and can make API calls on behalf of the user.
       """))
 
-    {:error, %Tesla.Env{status: status, body: body}} ->
+    {:error, %Req.Response{status: status, body: body}} ->
       Kino.Frame.render(api_test_frame, Kino.Markdown.new("""
       ## ❌ API Call Failed
 
