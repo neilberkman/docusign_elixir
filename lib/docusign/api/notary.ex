@@ -28,7 +28,7 @@ defmodule DocuSign.Api.Notary do
   - `{:ok, DocuSign.Model.NotaryResult.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec notary_get_notary(Tesla.Env.client(), keyword()) ::
+  @spec notary_get_notary(DocuSign.Connection.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, NotaryResult.t()}
           | {:error, Tesla.Env.t()}
@@ -67,7 +67,7 @@ defmodule DocuSign.Api.Notary do
   - `{:ok, DocuSign.Model.Notary.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec notary_post_notary(Tesla.Env.client(), keyword()) ::
+  @spec notary_post_notary(DocuSign.Connection.t(), keyword()) ::
           {:ok, Notary.t()}
           | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
@@ -107,7 +107,7 @@ defmodule DocuSign.Api.Notary do
   - `{:ok, DocuSign.Model.Notary.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec notary_put_notary(Tesla.Env.client(), keyword()) ::
+  @spec notary_put_notary(DocuSign.Connection.t(), keyword()) ::
           {:ok, Notary.t()}
           | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}

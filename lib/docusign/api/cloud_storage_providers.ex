@@ -30,7 +30,7 @@ defmodule DocuSign.Api.CloudStorageProviders do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec cloud_storage_delete_cloud_storage(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),
@@ -72,7 +72,7 @@ defmodule DocuSign.Api.CloudStorageProviders do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec cloud_storage_delete_cloud_storage_providers(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           keyword()
@@ -119,7 +119,7 @@ defmodule DocuSign.Api.CloudStorageProviders do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec cloud_storage_get_cloud_storage(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),
@@ -166,7 +166,7 @@ defmodule DocuSign.Api.CloudStorageProviders do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec cloud_storage_get_cloud_storage_providers(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           keyword()
@@ -211,7 +211,7 @@ defmodule DocuSign.Api.CloudStorageProviders do
   - `{:ok, DocuSign.Model.CloudStorageProviders.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec cloud_storage_post_cloud_storage(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec cloud_storage_post_cloud_storage(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, CloudStorageProviders.t()}
           | {:error, Tesla.Env.t()}

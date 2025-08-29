@@ -30,7 +30,7 @@ defmodule DocuSign.Api.TemplateDocuments do
   - `{:ok, DocuSign.Model.TemplateDocumentsResult.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec documents_delete_template_documents(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec documents_delete_template_documents(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, TemplateDocumentsResult.t()}
           | {:error, Tesla.Env.t()}
@@ -75,7 +75,7 @@ defmodule DocuSign.Api.TemplateDocuments do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec documents_get_template_document(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),
@@ -120,7 +120,7 @@ defmodule DocuSign.Api.TemplateDocuments do
   - `{:ok, DocuSign.Model.TemplateDocumentsResult.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec documents_get_template_documents(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec documents_get_template_documents(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, TemplateDocumentsResult.t()}
           | {:error, Tesla.Env.t()}
@@ -164,7 +164,7 @@ defmodule DocuSign.Api.TemplateDocuments do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec documents_put_template_document(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),
@@ -212,7 +212,7 @@ defmodule DocuSign.Api.TemplateDocuments do
   - `{:ok, DocuSign.Model.TemplateDocumentsResult.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec documents_put_template_documents(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec documents_put_template_documents(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, TemplateDocumentsResult.t()}
           | {:error, Tesla.Env.t()}

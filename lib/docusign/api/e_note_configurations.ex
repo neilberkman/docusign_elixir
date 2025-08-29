@@ -27,7 +27,7 @@ defmodule DocuSign.Api.ENoteConfigurations do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec e_note_configuration_delete_e_note_configuration(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           keyword()
         ) :: {:ok, nil} | {:ok, ErrorDetails.t()} | {:error, Tesla.Env.t()}
@@ -60,7 +60,7 @@ defmodule DocuSign.Api.ENoteConfigurations do
   - `{:ok, DocuSign.Model.ENoteConfiguration.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec e_note_configuration_get_e_note_configuration(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec e_note_configuration_get_e_note_configuration(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, ENoteConfiguration.t()}
           | {:error, Tesla.Env.t()}
@@ -94,7 +94,7 @@ defmodule DocuSign.Api.ENoteConfigurations do
   - `{:ok, DocuSign.Model.ENoteConfiguration.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec e_note_configuration_put_e_note_configuration(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec e_note_configuration_put_e_note_configuration(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, ENoteConfiguration.t()}
           | {:error, Tesla.Env.t()}

@@ -29,7 +29,7 @@ defmodule DocuSign.Api.IdentityVerifications do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec account_identity_verification_get_account_identity_verification(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           keyword()
         ) ::

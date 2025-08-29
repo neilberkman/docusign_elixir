@@ -33,7 +33,7 @@ defmodule DocuSign.Api.TemplateRecipients do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec recipients_delete_template_recipient(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),
@@ -80,7 +80,7 @@ defmodule DocuSign.Api.TemplateRecipients do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec recipients_delete_template_recipients(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           keyword()
@@ -127,7 +127,7 @@ defmodule DocuSign.Api.TemplateRecipients do
   - `{:ok, DocuSign.Model.Recipients.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec recipients_get_template_recipients(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec recipients_get_template_recipients(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, Recipients.t()}
           | {:error, Tesla.Env.t()}
@@ -171,7 +171,7 @@ defmodule DocuSign.Api.TemplateRecipients do
   - `{:ok, DocuSign.Model.Recipients.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec recipients_post_template_recipients(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec recipients_post_template_recipients(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, Recipients.t()}
           | {:error, Tesla.Env.t()}
@@ -215,7 +215,7 @@ defmodule DocuSign.Api.TemplateRecipients do
   - `{:ok, DocuSign.Model.RecipientsUpdateSummary.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec recipients_put_template_recipients(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec recipients_put_template_recipients(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, RecipientsUpdateSummary.t()}
           | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
@@ -259,7 +259,7 @@ defmodule DocuSign.Api.TemplateRecipients do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec views_post_template_recipient_preview(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           keyword()

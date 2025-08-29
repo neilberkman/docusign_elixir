@@ -31,7 +31,7 @@ defmodule DocuSign.Api.TemplateDocumentVisibility do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec recipients_get_template_recipient_document_visibility(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),
@@ -80,7 +80,7 @@ defmodule DocuSign.Api.TemplateDocumentVisibility do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec recipients_put_template_recipient_document_visibility(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),
@@ -134,7 +134,7 @@ defmodule DocuSign.Api.TemplateDocumentVisibility do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec recipients_put_template_recipients_document_visibility(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           keyword()

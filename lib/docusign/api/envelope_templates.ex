@@ -32,7 +32,7 @@ defmodule DocuSign.Api.EnvelopeTemplates do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec templates_delete_document_templates(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),
@@ -73,7 +73,7 @@ defmodule DocuSign.Api.EnvelopeTemplates do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec templates_get_document_templates(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),
@@ -119,7 +119,7 @@ defmodule DocuSign.Api.EnvelopeTemplates do
   - `{:ok, DocuSign.Model.TemplateInformation.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec templates_get_envelope_templates(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec templates_get_envelope_templates(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, TemplateInformation.t()}
           | {:error, Tesla.Env.t()}
@@ -163,7 +163,7 @@ defmodule DocuSign.Api.EnvelopeTemplates do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec templates_post_document_templates(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),
@@ -212,7 +212,7 @@ defmodule DocuSign.Api.EnvelopeTemplates do
   - `{:ok, DocuSign.Model.DocumentTemplateList.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec templates_post_envelope_templates(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec templates_post_envelope_templates(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, DocumentTemplateList.t()}
           | {:error, Tesla.Env.t()}

@@ -28,7 +28,7 @@ defmodule DocuSign.Api.Groups do
   - `{:ok, DocuSign.Model.GroupInformation.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec groups_delete_groups(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec groups_delete_groups(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, GroupInformation.t()}
           | {:error, Tesla.Env.t()}
@@ -72,7 +72,7 @@ defmodule DocuSign.Api.Groups do
   - `{:ok, DocuSign.Model.GroupInformation.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec groups_get_groups(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec groups_get_groups(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, GroupInformation.t()}
           | {:error, Tesla.Env.t()}
@@ -116,7 +116,7 @@ defmodule DocuSign.Api.Groups do
   - `{:ok, DocuSign.Model.GroupInformation.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec groups_post_groups(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec groups_post_groups(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, GroupInformation.t()}
           | {:error, Tesla.Env.t()}
@@ -157,7 +157,7 @@ defmodule DocuSign.Api.Groups do
   - `{:ok, DocuSign.Model.GroupInformation.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec groups_put_groups(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec groups_put_groups(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, GroupInformation.t()}
           | {:error, Tesla.Env.t()}

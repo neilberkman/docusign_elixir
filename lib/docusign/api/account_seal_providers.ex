@@ -26,7 +26,7 @@ defmodule DocuSign.Api.AccountSealProviders do
   - `{:ok, DocuSign.Model.AccountSealProviders.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec account_signature_providers_get_seal_providers(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec account_signature_providers_get_seal_providers(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, AccountSealProviders.t()}
           | {:error, Tesla.Env.t()}

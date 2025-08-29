@@ -29,7 +29,7 @@ defmodule DocuSign.Api.TemplateViews do
   - `{:ok, DocuSign.Model.ViewUrl.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec views_post_template_edit_view(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec views_post_template_edit_view(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, ViewUrl.t()}
           | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}

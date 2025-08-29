@@ -27,7 +27,7 @@ defmodule DocuSign.FileDownloader do
       {:ok, {content, filename, content_type}} = DocuSign.FileDownloader.download_to_memory(conn, url)
 
       # Download with options
-      {:ok, result} = DocuSign.FileDownloader.download(conn, url, 
+      {:ok, result} = DocuSign.FileDownloader.download(conn, url,
         strategy: :file,
         filename: "custom_name.pdf",
         temp_dir: "/custom/temp"
@@ -44,6 +44,8 @@ defmodule DocuSign.FileDownloader do
         track_temp_files: true
 
   """
+
+  alias Connection
 
   require Logger
 
@@ -94,7 +96,7 @@ defmodule DocuSign.FileDownloader do
   ## Examples
 
       # Download envelope document to temporary file
-      {:ok, temp_path} = DocuSign.FileDownloader.download(conn, 
+      {:ok, temp_path} = DocuSign.FileDownloader.download(conn,
         "/v2.1/accounts/123/envelopes/456/documents/1")
 
       # Download with custom temp options
@@ -126,7 +128,7 @@ defmodule DocuSign.FileDownloader do
   @doc """
   Downloads a file to a temporary location.
 
-  Returns `{:ok, filepath}` on success, where filepath is the path to the 
+  Returns `{:ok, filepath}` on success, where filepath is the path to the
   temporary file. The caller is responsible for cleaning up the temporary file.
 
   ## Examples
@@ -136,7 +138,8 @@ defmodule DocuSign.FileDownloader do
       File.rm!(temp_path)  # Clean up
 
   """
-  @spec download_to_temp(DocuSign.Connection.t(), String.t(), keyword()) :: {:ok, String.t()} | {:error, term()}
+  @spec download_to_temp(DocuSign.Connection.t(), String.t(), keyword()) ::
+          {:ok, String.t()} | {:error, term()}
   def download_to_temp(conn, url, opts \\ []) do
     download(conn, url, Keyword.put(opts, :strategy, :temp))
   end
@@ -148,7 +151,7 @@ defmodule DocuSign.FileDownloader do
 
   ## Examples
 
-      {:ok, {pdf_content, "document.pdf", "application/pdf"}} = 
+      {:ok, {pdf_content, "document.pdf", "application/pdf"}} =
         DocuSign.FileDownloader.download_to_memory(conn, url)
 
   """
@@ -284,7 +287,9 @@ defmodule DocuSign.FileDownloader do
     request_opts = []
 
     request_opts =
-      if opts[:max_size], do: Keyword.put(request_opts, :max_body_length, opts[:max_size]), else: request_opts
+      if opts[:max_size],
+        do: Keyword.put(request_opts, :max_body_length, opts[:max_size]),
+        else: request_opts
 
     case DocuSign.Connection.request(conn, method: :get, url: url, opts: request_opts) do
       {:ok, %Tesla.Env{status: status} = response} when status in 200..299 ->

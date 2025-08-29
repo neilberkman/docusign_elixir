@@ -28,7 +28,7 @@ defmodule DocuSign.Api.EnvelopeLocks do
   - `{:ok, DocuSign.Model.EnvelopeLocks.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec lock_delete_envelope_lock(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec lock_delete_envelope_lock(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, EnvelopeLocks.t()}
           | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
@@ -63,7 +63,7 @@ defmodule DocuSign.Api.EnvelopeLocks do
   - `{:ok, DocuSign.Model.EnvelopeLocks.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec lock_get_envelope_lock(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec lock_get_envelope_lock(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, EnvelopeLocks.t()}
           | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
@@ -99,7 +99,7 @@ defmodule DocuSign.Api.EnvelopeLocks do
   - `{:ok, DocuSign.Model.EnvelopeLocks.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec lock_post_envelope_lock(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec lock_post_envelope_lock(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, EnvelopeLocks.t()}
           | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
@@ -141,7 +141,7 @@ defmodule DocuSign.Api.EnvelopeLocks do
   - `{:ok, DocuSign.Model.EnvelopeLocks.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec lock_put_envelope_lock(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec lock_put_envelope_lock(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, EnvelopeLocks.t()}
           | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}

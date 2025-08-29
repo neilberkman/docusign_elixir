@@ -29,7 +29,7 @@ defmodule DocuSign.Api.EnvelopePublish do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec historical_envelope_publish_post_historical_envelope_publish_transaction(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           keyword()
         ) ::

@@ -29,7 +29,7 @@ defmodule DocuSign.Api.DocumentGeneration do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec doc_gen_form_fields_get_envelope_doc_gen_form_fields(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           keyword()
@@ -71,7 +71,7 @@ defmodule DocuSign.Api.DocumentGeneration do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec doc_gen_form_fields_put_envelope_doc_gen_form_fields(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           keyword()

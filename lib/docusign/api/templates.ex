@@ -36,7 +36,7 @@ defmodule DocuSign.Api.Templates do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec notification_get_templates_template_id_notification(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           keyword()
@@ -77,7 +77,7 @@ defmodule DocuSign.Api.Templates do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec notification_put_templates_template_id_notification(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           keyword()
@@ -126,7 +126,7 @@ defmodule DocuSign.Api.Templates do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec pages_delete_template_page(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),
@@ -176,7 +176,7 @@ defmodule DocuSign.Api.Templates do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec pages_get_template_page_image(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),
@@ -233,7 +233,7 @@ defmodule DocuSign.Api.Templates do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec pages_get_template_page_images(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),
@@ -288,7 +288,7 @@ defmodule DocuSign.Api.Templates do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec pages_put_template_page_image(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),
@@ -332,7 +332,7 @@ defmodule DocuSign.Api.Templates do
   - `{:ok, DocuSign.Model.TemplateAutoMatchList.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec templates_auto_match_put_templates(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec templates_auto_match_put_templates(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, TemplateAutoMatchList.t()}
           | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
@@ -376,7 +376,7 @@ defmodule DocuSign.Api.Templates do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec templates_delete_template_part(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),
@@ -422,7 +422,7 @@ defmodule DocuSign.Api.Templates do
   - `{:ok, DocuSign.Model.EnvelopeTemplate.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec templates_get_template(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec templates_get_template(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, EnvelopeTemplate.t()}
           | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
@@ -484,7 +484,7 @@ defmodule DocuSign.Api.Templates do
   - `{:ok, DocuSign.Model.EnvelopeTemplateResults.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec templates_get_templates(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec templates_get_templates(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, EnvelopeTemplateResults.t()}
           | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
@@ -546,7 +546,7 @@ defmodule DocuSign.Api.Templates do
   - `{:ok, DocuSign.Model.TemplateSummary.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec templates_post_templates(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec templates_post_templates(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, TemplateSummary.t()}
           | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
@@ -588,7 +588,7 @@ defmodule DocuSign.Api.Templates do
   - `{:ok, DocuSign.Model.TemplateUpdateSummary.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec templates_put_template(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec templates_put_template(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, TemplateUpdateSummary.t()}
           | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
@@ -632,7 +632,7 @@ defmodule DocuSign.Api.Templates do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec templates_put_template_part(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),
@@ -676,7 +676,7 @@ defmodule DocuSign.Api.Templates do
   - `{:ok, DocuSign.Model.TemplateAutoMatchList.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec templates_put_templates(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec templates_put_templates(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, TemplateAutoMatchList.t()}
           | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}

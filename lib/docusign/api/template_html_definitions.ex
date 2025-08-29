@@ -28,7 +28,7 @@ defmodule DocuSign.Api.TemplateHtmlDefinitions do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec responsive_html_get_template_html_definitions(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           keyword()

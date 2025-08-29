@@ -31,7 +31,7 @@ defmodule DocuSign.Api.AccountBrands do
   - `{:ok, nil}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec brand_delete_brand(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec brand_delete_brand(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, nil} | {:ok, ErrorDetails.t()} | {:error, Tesla.Env.t()}
   def brand_delete_brand(connection, account_id, brand_id, _opts \\ []) do
     request =
@@ -64,7 +64,7 @@ defmodule DocuSign.Api.AccountBrands do
   - `{:ok, nil}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec brand_export_get_brand_export_file(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec brand_export_get_brand_export_file(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, nil} | {:ok, ErrorDetails.t()} | {:error, Tesla.Env.t()}
   def brand_export_get_brand_export_file(connection, account_id, brand_id, _opts \\ []) do
     request =
@@ -99,7 +99,7 @@ defmodule DocuSign.Api.AccountBrands do
   - `{:ok, DocuSign.Model.Brand.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec brand_get_brand(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec brand_get_brand(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, Brand.t()}
           | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
@@ -142,7 +142,7 @@ defmodule DocuSign.Api.AccountBrands do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec brand_logo_delete_brand_logo(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),
@@ -181,7 +181,7 @@ defmodule DocuSign.Api.AccountBrands do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec brand_logo_get_brand_logo(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),
@@ -221,7 +221,7 @@ defmodule DocuSign.Api.AccountBrands do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec brand_logo_put_brand_logo(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),
@@ -262,7 +262,7 @@ defmodule DocuSign.Api.AccountBrands do
   - `{:ok, DocuSign.Model.Brand.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec brand_put_brand(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec brand_put_brand(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, Brand.t()}
           | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
@@ -308,7 +308,7 @@ defmodule DocuSign.Api.AccountBrands do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec brand_resources_get_brand_resources(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),
@@ -352,7 +352,7 @@ defmodule DocuSign.Api.AccountBrands do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec brand_resources_get_brand_resources_list(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           keyword()
@@ -394,7 +394,7 @@ defmodule DocuSign.Api.AccountBrands do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec brand_resources_put_brand_resources(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),
@@ -443,7 +443,7 @@ defmodule DocuSign.Api.AccountBrands do
   - `{:ok, DocuSign.Model.AccountBrands.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec brands_delete_brands(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec brands_delete_brands(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, AccountBrands.t()}
           | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
@@ -484,7 +484,7 @@ defmodule DocuSign.Api.AccountBrands do
   - `{:ok, DocuSign.Model.AccountBrands.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec brands_get_brands(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec brands_get_brands(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, AccountBrands.t()}
           | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
@@ -525,7 +525,7 @@ defmodule DocuSign.Api.AccountBrands do
   - `{:ok, DocuSign.Model.AccountBrands.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec brands_post_brands(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec brands_post_brands(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, AccountBrands.t()}
           | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}

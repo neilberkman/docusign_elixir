@@ -31,7 +31,7 @@ defmodule DocuSign.Api.TemplateDocumentFields do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec document_fields_delete_template_document_fields(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),
@@ -78,7 +78,7 @@ defmodule DocuSign.Api.TemplateDocumentFields do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec document_fields_get_template_document_fields(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),
@@ -121,7 +121,7 @@ defmodule DocuSign.Api.TemplateDocumentFields do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec document_fields_post_template_document_fields(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),
@@ -170,7 +170,7 @@ defmodule DocuSign.Api.TemplateDocumentFields do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec document_fields_put_template_document_fields(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),

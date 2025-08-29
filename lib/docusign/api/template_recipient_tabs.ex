@@ -31,7 +31,7 @@ defmodule DocuSign.Api.TemplateRecipientTabs do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec recipients_delete_template_recipient_tabs(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),
@@ -80,7 +80,7 @@ defmodule DocuSign.Api.TemplateRecipientTabs do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec recipients_get_template_recipient_tabs(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),
@@ -129,7 +129,7 @@ defmodule DocuSign.Api.TemplateRecipientTabs do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec recipients_post_template_recipient_tabs(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),
@@ -178,7 +178,7 @@ defmodule DocuSign.Api.TemplateRecipientTabs do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec recipients_put_template_recipient_tabs(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),

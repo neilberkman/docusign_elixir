@@ -38,7 +38,7 @@ defmodule DocuSign.Api.Folders do
   - `{:ok, DocuSign.Model.FolderItemsResponse.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec folders_get_folder_items(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec folders_get_folder_items(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, FolderItemsResponse.t()}
           | {:error, Tesla.Env.t()}
@@ -91,7 +91,7 @@ defmodule DocuSign.Api.Folders do
   - `{:ok, DocuSign.Model.FoldersResponse.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec folders_get_folders(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec folders_get_folders(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, FoldersResponse.t()}
           | {:error, Tesla.Env.t()}
@@ -138,7 +138,7 @@ defmodule DocuSign.Api.Folders do
   - `{:ok, DocuSign.Model.FoldersResponse.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec folders_put_folder_by_id(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec folders_put_folder_by_id(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, FoldersResponse.t()}
           | {:error, Tesla.Env.t()}
@@ -188,7 +188,7 @@ defmodule DocuSign.Api.Folders do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec search_folders_get_search_folder_contents(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           keyword()
