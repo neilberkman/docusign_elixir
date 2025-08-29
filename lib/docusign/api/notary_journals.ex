@@ -28,7 +28,7 @@ defmodule DocuSign.Api.NotaryJournals do
   - `{:ok, DocuSign.Model.NotaryJournalList.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec notary_journals_get_notary_journals(Tesla.Env.client(), keyword()) ::
+  @spec notary_journals_get_notary_journals(DocuSign.Connection.t(), keyword()) ::
           {:ok, NotaryJournalList.t()}
           | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}

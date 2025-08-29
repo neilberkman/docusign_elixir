@@ -28,7 +28,7 @@ defmodule DocuSign.Api.EnvelopeFormData do
   - `{:ok, DocuSign.Model.EnvelopeFormData.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec form_data_get_form_data(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec form_data_get_form_data(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, EnvelopeFormData.t()}
           | {:error, Tesla.Env.t()}

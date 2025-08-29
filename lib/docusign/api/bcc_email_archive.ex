@@ -31,7 +31,7 @@ defmodule DocuSign.Api.BCCEmailArchive do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec b_cc_email_archive_delete_bcc_email_archive(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           keyword()
@@ -70,7 +70,7 @@ defmodule DocuSign.Api.BCCEmailArchive do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec b_cc_email_archive_get_bcc_email_archive_history_list(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           keyword()
@@ -116,7 +116,7 @@ defmodule DocuSign.Api.BCCEmailArchive do
   - `{:ok, DocuSign.Model.BccEmailArchiveList.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec b_cc_email_archive_get_bcc_email_archive_list(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec b_cc_email_archive_get_bcc_email_archive_list(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, BccEmailArchiveList.t()}
           | {:error, Tesla.Env.t()}
@@ -157,7 +157,7 @@ defmodule DocuSign.Api.BCCEmailArchive do
   - `{:ok, DocuSign.Model.BccEmailArchive.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec b_cc_email_archive_post_bcc_email_archive(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec b_cc_email_archive_post_bcc_email_archive(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, BccEmailArchive.t()}
           | {:error, Tesla.Env.t()}

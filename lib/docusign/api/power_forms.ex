@@ -30,7 +30,7 @@ defmodule DocuSign.Api.PowerForms do
   - `{:ok, nil}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec power_forms_delete_power_form(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec power_forms_delete_power_form(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, nil} | {:ok, ErrorDetails.t()} | {:error, Tesla.Env.t()}
   def power_forms_delete_power_form(connection, account_id, power_form_id, _opts \\ []) do
     request =
@@ -63,7 +63,7 @@ defmodule DocuSign.Api.PowerForms do
   - `{:ok, DocuSign.Model.PowerFormsResponse.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec power_forms_delete_power_forms_list(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec power_forms_delete_power_forms_list(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, PowerFormsResponse.t()}
           | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
@@ -103,7 +103,7 @@ defmodule DocuSign.Api.PowerForms do
   - `{:ok, DocuSign.Model.PowerForm.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec power_forms_get_power_form(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec power_forms_get_power_form(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, PowerForm.t()}
           | {:error, Tesla.Env.t()}
@@ -145,7 +145,7 @@ defmodule DocuSign.Api.PowerForms do
   - `{:ok, DocuSign.Model.PowerFormsResponse.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec power_forms_get_power_forms_list(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec power_forms_get_power_forms_list(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, PowerFormsResponse.t()}
           | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
@@ -192,7 +192,7 @@ defmodule DocuSign.Api.PowerForms do
   - `{:ok, DocuSign.Model.PowerFormSendersResponse.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec power_forms_get_power_forms_senders(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec power_forms_get_power_forms_senders(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, PowerFormSendersResponse.t()}
           | {:error, Tesla.Env.t()}
@@ -232,7 +232,7 @@ defmodule DocuSign.Api.PowerForms do
   - `{:ok, DocuSign.Model.PowerForm.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec power_forms_post_power_form(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec power_forms_post_power_form(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, PowerForm.t()}
           | {:error, Tesla.Env.t()}
@@ -274,7 +274,7 @@ defmodule DocuSign.Api.PowerForms do
   - `{:ok, DocuSign.Model.PowerForm.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec power_forms_put_power_form(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec power_forms_put_power_form(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, PowerForm.t()}
           | {:error, Tesla.Env.t()}

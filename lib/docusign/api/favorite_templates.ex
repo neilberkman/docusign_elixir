@@ -27,7 +27,7 @@ defmodule DocuSign.Api.FavoriteTemplates do
   - `{:ok, DocuSign.Model.FavoriteTemplatesInfo.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec favorite_templates_get_favorite_templates(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec favorite_templates_get_favorite_templates(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, FavoriteTemplatesInfo.t()}
           | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
@@ -62,7 +62,7 @@ defmodule DocuSign.Api.FavoriteTemplates do
   - `{:ok, DocuSign.Model.FavoriteTemplatesInfo.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec favorite_templates_put_favorite_template(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec favorite_templates_put_favorite_template(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, FavoriteTemplatesInfo.t()}
           | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
@@ -103,7 +103,7 @@ defmodule DocuSign.Api.FavoriteTemplates do
   - `{:ok, DocuSign.Model.FavoriteTemplatesInfo.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec favorite_templates_un_favorite_template(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec favorite_templates_un_favorite_template(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, FavoriteTemplatesInfo.t()}
           | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}

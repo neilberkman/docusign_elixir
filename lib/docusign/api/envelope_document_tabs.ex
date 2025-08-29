@@ -32,7 +32,7 @@ defmodule DocuSign.Api.EnvelopeDocumentTabs do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec tabs_delete_document_tabs(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),
@@ -80,7 +80,7 @@ defmodule DocuSign.Api.EnvelopeDocumentTabs do
   - `{:ok, DocuSign.Model.EnvelopeDocumentTabs.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec tabs_get_document_tabs(Tesla.Env.client(), String.t(), String.t(), String.t(), keyword()) ::
+  @spec tabs_get_document_tabs(DocuSign.Connection.t(), String.t(), String.t(), String.t(), keyword()) ::
           {:ok, EnvelopeDocumentTabs.t()}
           | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
@@ -124,7 +124,7 @@ defmodule DocuSign.Api.EnvelopeDocumentTabs do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec tabs_get_page_tabs(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),
@@ -167,7 +167,7 @@ defmodule DocuSign.Api.EnvelopeDocumentTabs do
   - `{:ok, DocuSign.Model.Tabs.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec tabs_post_document_tabs(Tesla.Env.client(), String.t(), String.t(), String.t(), keyword()) ::
+  @spec tabs_post_document_tabs(DocuSign.Connection.t(), String.t(), String.t(), String.t(), keyword()) ::
           {:ok, Tabs.t()}
           | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
@@ -210,7 +210,7 @@ defmodule DocuSign.Api.EnvelopeDocumentTabs do
   - `{:ok, DocuSign.Model.Tabs.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec tabs_put_document_tabs(Tesla.Env.client(), String.t(), String.t(), String.t(), keyword()) ::
+  @spec tabs_put_document_tabs(DocuSign.Connection.t(), String.t(), String.t(), String.t(), keyword()) ::
           {:ok, Tabs.t()}
           | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}

@@ -31,7 +31,7 @@ defmodule DocuSign.Api.UserSignatures do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec user_signatures_delete_user_signature(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),
@@ -71,7 +71,7 @@ defmodule DocuSign.Api.UserSignatures do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec user_signatures_delete_user_signature_image(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),
@@ -121,7 +121,7 @@ defmodule DocuSign.Api.UserSignatures do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec user_signatures_get_user_signature(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),
@@ -165,7 +165,7 @@ defmodule DocuSign.Api.UserSignatures do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec user_signatures_get_user_signature_image(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),
@@ -209,7 +209,7 @@ defmodule DocuSign.Api.UserSignatures do
   - `{:ok, DocuSign.Model.UserSignaturesInformation.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec user_signatures_get_user_signatures(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec user_signatures_get_user_signatures(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, UserSignaturesInformation.t()}
           | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
@@ -251,7 +251,7 @@ defmodule DocuSign.Api.UserSignatures do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec user_signatures_post_user_signatures(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           keyword()
@@ -296,7 +296,7 @@ defmodule DocuSign.Api.UserSignatures do
   - `{:ok, DocuSign.Model.UserSignaturesInformation.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec user_signatures_put_user_signature(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec user_signatures_put_user_signature(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, UserSignaturesInformation.t()}
           | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
@@ -341,7 +341,7 @@ defmodule DocuSign.Api.UserSignatures do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec user_signatures_put_user_signature_by_id(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),
@@ -393,7 +393,7 @@ defmodule DocuSign.Api.UserSignatures do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec user_signatures_put_user_signature_image(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),

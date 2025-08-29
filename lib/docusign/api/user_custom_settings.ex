@@ -30,7 +30,7 @@ defmodule DocuSign.Api.UserCustomSettings do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec user_custom_settings_delete_custom_settings(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           keyword()
@@ -75,7 +75,7 @@ defmodule DocuSign.Api.UserCustomSettings do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec user_custom_settings_get_custom_settings(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           keyword()
@@ -116,7 +116,7 @@ defmodule DocuSign.Api.UserCustomSettings do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec user_custom_settings_put_custom_settings(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           keyword()

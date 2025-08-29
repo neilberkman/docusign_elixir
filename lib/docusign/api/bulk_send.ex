@@ -35,7 +35,7 @@ defmodule DocuSign.Api.BulkSend do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec bulk_send_v2_batch_get_bulk_send_batch_status(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           keyword()
@@ -81,7 +81,7 @@ defmodule DocuSign.Api.BulkSend do
   - `{:ok, DocuSign.Model.BulkSendBatchSummaries.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec bulk_send_v2_batch_get_bulk_send_batches(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec bulk_send_v2_batch_get_bulk_send_batches(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, BulkSendBatchSummaries.t()}
           | {:error, Tesla.Env.t()}
@@ -131,7 +131,7 @@ defmodule DocuSign.Api.BulkSend do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec bulk_send_v2_batch_put_bulk_send_batch_action(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),
@@ -179,7 +179,7 @@ defmodule DocuSign.Api.BulkSend do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec bulk_send_v2_batch_put_bulk_send_batch_status(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           keyword()
@@ -225,7 +225,7 @@ defmodule DocuSign.Api.BulkSend do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec bulk_send_v2_crud_delete_bulk_send_list(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           keyword()
@@ -265,7 +265,7 @@ defmodule DocuSign.Api.BulkSend do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec bulk_send_v2_crud_get_bulk_send_list(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           keyword()
@@ -303,7 +303,7 @@ defmodule DocuSign.Api.BulkSend do
   - `{:ok, DocuSign.Model.BulkSendingListSummaries.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec bulk_send_v2_crud_get_bulk_send_lists(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec bulk_send_v2_crud_get_bulk_send_lists(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, BulkSendingListSummaries.t()}
           | {:error, Tesla.Env.t()}
@@ -338,7 +338,7 @@ defmodule DocuSign.Api.BulkSend do
   - `{:ok, DocuSign.Model.BulkSendingList.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec bulk_send_v2_crud_post_bulk_send_list(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec bulk_send_v2_crud_post_bulk_send_list(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, BulkSendingList.t()}
           | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
@@ -381,7 +381,7 @@ defmodule DocuSign.Api.BulkSend do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec bulk_send_v2_crud_put_bulk_send_list(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           keyword()
@@ -434,7 +434,7 @@ defmodule DocuSign.Api.BulkSend do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec bulk_send_v2_envelopes_get_bulk_send_batch_envelopes(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           keyword()
@@ -486,7 +486,7 @@ defmodule DocuSign.Api.BulkSend do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec bulk_send_v2_send_post_bulk_send_request(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           keyword()
@@ -533,7 +533,7 @@ defmodule DocuSign.Api.BulkSend do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec bulk_send_v2_test_post_bulk_send_test_request(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           keyword()

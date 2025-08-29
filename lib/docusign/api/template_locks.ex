@@ -29,7 +29,7 @@ defmodule DocuSign.Api.TemplateLocks do
   - `{:ok, DocuSign.Model.LockInformation.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec lock_delete_template_lock(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec lock_delete_template_lock(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, LockInformation.t()}
           | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
@@ -69,7 +69,7 @@ defmodule DocuSign.Api.TemplateLocks do
   - `{:ok, DocuSign.Model.LockInformation.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec lock_get_template_lock(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec lock_get_template_lock(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, LockInformation.t()}
           | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
@@ -105,7 +105,7 @@ defmodule DocuSign.Api.TemplateLocks do
   - `{:ok, DocuSign.Model.LockInformation.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec lock_post_template_lock(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec lock_post_template_lock(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, LockInformation.t()}
           | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
@@ -147,7 +147,7 @@ defmodule DocuSign.Api.TemplateLocks do
   - `{:ok, DocuSign.Model.LockInformation.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec lock_put_template_lock(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec lock_put_template_lock(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, LockInformation.t()}
           | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}

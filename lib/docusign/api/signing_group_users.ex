@@ -30,7 +30,7 @@ defmodule DocuSign.Api.SigningGroupUsers do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec signing_groups_delete_signing_group_users(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           keyword()
@@ -75,7 +75,7 @@ defmodule DocuSign.Api.SigningGroupUsers do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec signing_groups_get_signing_group_users(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           keyword()
@@ -116,7 +116,7 @@ defmodule DocuSign.Api.SigningGroupUsers do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec signing_groups_put_signing_group_users(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           keyword()

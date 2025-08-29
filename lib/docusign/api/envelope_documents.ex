@@ -30,7 +30,7 @@ defmodule DocuSign.Api.EnvelopeDocuments do
   - `{:ok, DocuSign.Model.EnvelopeDocumentsResult.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec documents_delete_documents(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec documents_delete_documents(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, EnvelopeDocumentsResult.t()}
           | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
@@ -80,7 +80,7 @@ defmodule DocuSign.Api.EnvelopeDocuments do
   - `{:ok, String.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec documents_get_document(Tesla.Env.client(), String.t(), String.t(), String.t(), keyword()) ::
+  @spec documents_get_document(DocuSign.Connection.t(), String.t(), String.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()} | {:ok, String.t()} | {:error, Tesla.Env.t()}
   def documents_get_document(connection, account_id, document_id, envelope_id, opts \\ []) do
     optional_params = %{
@@ -132,7 +132,7 @@ defmodule DocuSign.Api.EnvelopeDocuments do
   - `{:ok, DocuSign.Model.EnvelopeDocumentsResult.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec documents_get_documents(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec documents_get_documents(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, EnvelopeDocumentsResult.t()}
           | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
@@ -180,7 +180,7 @@ defmodule DocuSign.Api.EnvelopeDocuments do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec documents_put_document(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),
@@ -223,7 +223,7 @@ defmodule DocuSign.Api.EnvelopeDocuments do
   - `{:ok, DocuSign.Model.EnvelopeDocumentsResult.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec documents_put_documents(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec documents_put_documents(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, EnvelopeDocumentsResult.t()}
           | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}

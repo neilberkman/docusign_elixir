@@ -27,7 +27,7 @@ defmodule DocuSign.Api.RequestLogs do
   - `{:ok, nil}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec a_pi_request_log_delete_request_logs(Tesla.Env.client(), keyword()) ::
+  @spec a_pi_request_log_delete_request_logs(DocuSign.Connection.t(), keyword()) ::
           {:ok, nil} | {:ok, ErrorDetails.t()} | {:error, Tesla.Env.t()}
   def a_pi_request_log_delete_request_logs(connection, _opts \\ []) do
     request =
@@ -59,7 +59,7 @@ defmodule DocuSign.Api.RequestLogs do
   - `{:ok, String.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec a_pi_request_log_get_request_log(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec a_pi_request_log_get_request_log(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()} | {:ok, String.t()} | {:error, Tesla.Env.t()}
   def a_pi_request_log_get_request_log(connection, request_log_id, _opts \\ []) do
     request =
@@ -90,7 +90,7 @@ defmodule DocuSign.Api.RequestLogs do
   - `{:ok, DocuSign.Model.DiagnosticsSettingsInformation.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec a_pi_request_log_get_request_log_settings(Tesla.Env.client(), keyword()) ::
+  @spec a_pi_request_log_get_request_log_settings(DocuSign.Connection.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, DiagnosticsSettingsInformation.t()}
           | {:error, Tesla.Env.t()}
@@ -124,7 +124,7 @@ defmodule DocuSign.Api.RequestLogs do
   - `{:ok, DocuSign.Model.ApiRequestLogsResult.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec a_pi_request_log_get_request_logs(Tesla.Env.client(), keyword()) ::
+  @spec a_pi_request_log_get_request_logs(DocuSign.Connection.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, ApiRequestLogsResult.t()}
           | {:error, Tesla.Env.t()}
@@ -163,7 +163,7 @@ defmodule DocuSign.Api.RequestLogs do
   - `{:ok, DocuSign.Model.DiagnosticsSettingsInformation.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec a_pi_request_log_put_request_log_settings(Tesla.Env.client(), keyword()) ::
+  @spec a_pi_request_log_put_request_log_settings(DocuSign.Connection.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, DiagnosticsSettingsInformation.t()}
           | {:error, Tesla.Env.t()}

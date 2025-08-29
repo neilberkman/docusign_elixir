@@ -32,7 +32,7 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec envelope_workflow_definition_v2_delete_envelope_workflow_definition(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           keyword()
@@ -74,7 +74,7 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec envelope_workflow_definition_v2_get_envelope_workflow_definition(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           keyword()
@@ -115,7 +115,7 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec envelope_workflow_definition_v2_put_envelope_workflow_definition(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           keyword()
@@ -162,7 +162,7 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec envelope_workflow_delayed_routing_delete_envelope_delayed_routing_definition(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),
@@ -207,7 +207,7 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec envelope_workflow_delayed_routing_get_envelope_delayed_routing_definition(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),
@@ -256,7 +256,7 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec envelope_workflow_delayed_routing_put_envelope_delayed_routing_definition(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),
@@ -309,7 +309,7 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec envelope_workflow_scheduled_sending_delete_envelope_scheduled_sending_definition(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           keyword()
@@ -351,7 +351,7 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec envelope_workflow_scheduled_sending_get_envelope_scheduled_sending_definition(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           keyword()
@@ -397,7 +397,7 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec envelope_workflow_scheduled_sending_put_envelope_scheduled_sending_definition(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           keyword()
@@ -449,7 +449,7 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec envelope_workflow_step_delete_envelope_workflow_step_definition(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),
@@ -494,7 +494,7 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec envelope_workflow_step_get_envelope_workflow_step_definition(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),
@@ -542,7 +542,7 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec envelope_workflow_step_post_envelope_workflow_step_definition(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           keyword()
@@ -590,7 +590,7 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec envelope_workflow_step_put_envelope_workflow_step_definition(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),
@@ -643,7 +643,7 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec template_workflow_definition_delete_template_workflow_definition(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           keyword()
@@ -680,7 +680,7 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec template_workflow_definition_get_template_workflow_definition(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           keyword()
@@ -721,7 +721,7 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec template_workflow_definition_put_template_workflow_definition(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           keyword()
@@ -768,7 +768,7 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec template_workflow_delayed_routing_delete_template_delayed_routing_definition(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),
@@ -813,7 +813,7 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec template_workflow_delayed_routing_get_template_delayed_routing_definition(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),
@@ -862,7 +862,7 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec template_workflow_delayed_routing_put_template_delayed_routing_definition(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),
@@ -915,7 +915,7 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec template_workflow_scheduled_sending_delete_template_scheduled_sending_definition(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           keyword()
@@ -957,7 +957,7 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec template_workflow_scheduled_sending_get_template_scheduled_sending_definition(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           keyword()
@@ -1002,7 +1002,7 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec template_workflow_scheduled_sending_put_template_scheduled_sending_definition(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           keyword()
@@ -1054,7 +1054,7 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec template_workflow_step_delete_template_workflow_step_definition(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),
@@ -1099,7 +1099,7 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec template_workflow_step_get_template_workflow_step_definition(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),
@@ -1147,7 +1147,7 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec template_workflow_step_post_template_workflow_step_definition(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           keyword()
@@ -1195,7 +1195,7 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec template_workflow_step_put_template_workflow_step_definition(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),

@@ -35,7 +35,7 @@ defmodule DocuSign.Api.Envelopes do
   - `{:ok, DocuSign.Model.EnvelopeAuditEventResponse.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec audit_events_get_audit_events(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec audit_events_get_audit_events(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, EnvelopeAuditEventResponse.t()}
           | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
@@ -73,7 +73,7 @@ defmodule DocuSign.Api.Envelopes do
   - `{:ok, DocuSign.Model.Envelope.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec envelopes_get_envelope(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec envelopes_get_envelope(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, Envelope.t()}
           | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
@@ -145,7 +145,7 @@ defmodule DocuSign.Api.Envelopes do
   - `{:ok, DocuSign.Model.EnvelopesInformation.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec envelopes_get_envelopes(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec envelopes_get_envelopes(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, EnvelopesInformation.t()}
           | {:error, Tesla.Env.t()}
@@ -219,7 +219,7 @@ defmodule DocuSign.Api.Envelopes do
   - `{:ok, DocuSign.Model.EnvelopeSummary.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec envelopes_post_envelopes(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec envelopes_post_envelopes(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, EnvelopeSummary.t()}
           | {:error, Tesla.Env.t()}
@@ -268,7 +268,7 @@ defmodule DocuSign.Api.Envelopes do
   - `{:ok, DocuSign.Model.EnvelopeUpdateSummary.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec envelopes_put_envelope(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec envelopes_put_envelope(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, EnvelopeUpdateSummary.t()}
           | {:error, Tesla.Env.t()}
@@ -324,7 +324,7 @@ defmodule DocuSign.Api.Envelopes do
   - `{:ok, DocuSign.Model.EnvelopesInformation.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec envelopes_put_status(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec envelopes_put_status(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, EnvelopesInformation.t()}
           | {:error, Tesla.Env.t()}
@@ -378,7 +378,7 @@ defmodule DocuSign.Api.Envelopes do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec notification_get_envelopes_envelope_id_notification(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           keyword()
@@ -419,7 +419,7 @@ defmodule DocuSign.Api.Envelopes do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec notification_put_envelopes_envelope_id_notification(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           keyword()
@@ -467,7 +467,7 @@ defmodule DocuSign.Api.Envelopes do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec pages_delete_page(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),
@@ -512,7 +512,7 @@ defmodule DocuSign.Api.Envelopes do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec pages_get_page_image(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),
@@ -568,7 +568,7 @@ defmodule DocuSign.Api.Envelopes do
   - `{:ok, DocuSign.Model.PageImages.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec pages_get_page_images(Tesla.Env.client(), String.t(), String.t(), String.t(), keyword()) ::
+  @spec pages_get_page_images(DocuSign.Connection.t(), String.t(), String.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, PageImages.t()}
           | {:error, Tesla.Env.t()}
@@ -618,7 +618,7 @@ defmodule DocuSign.Api.Envelopes do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec pages_put_page_image(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),
@@ -667,7 +667,7 @@ defmodule DocuSign.Api.Envelopes do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec recipients_get_recipient_initials_image(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),
@@ -711,7 +711,7 @@ defmodule DocuSign.Api.Envelopes do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec recipients_get_recipient_signature(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),
@@ -754,7 +754,7 @@ defmodule DocuSign.Api.Envelopes do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec recipients_get_recipient_signature_image(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),
@@ -798,7 +798,7 @@ defmodule DocuSign.Api.Envelopes do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec recipients_put_recipient_initials_image(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),
@@ -838,7 +838,7 @@ defmodule DocuSign.Api.Envelopes do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec recipients_put_recipient_signature_image(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),

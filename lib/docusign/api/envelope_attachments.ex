@@ -29,7 +29,7 @@ defmodule DocuSign.Api.EnvelopeAttachments do
   - `{:ok, DocuSign.Model.EnvelopeAttachmentsResult.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec attachments_delete_attachments(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec attachments_delete_attachments(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, EnvelopeAttachmentsResult.t()}
           | {:error, Tesla.Env.t()}
@@ -71,7 +71,7 @@ defmodule DocuSign.Api.EnvelopeAttachments do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec attachments_get_attachment(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),
@@ -108,7 +108,7 @@ defmodule DocuSign.Api.EnvelopeAttachments do
   - `{:ok, DocuSign.Model.EnvelopeAttachmentsResult.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec attachments_get_attachments(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec attachments_get_attachments(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, EnvelopeAttachmentsResult.t()}
           | {:error, Tesla.Env.t()}
@@ -146,7 +146,7 @@ defmodule DocuSign.Api.EnvelopeAttachments do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec attachments_put_attachment(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),
@@ -193,7 +193,7 @@ defmodule DocuSign.Api.EnvelopeAttachments do
   - `{:ok, DocuSign.Model.EnvelopeAttachmentsResult.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec attachments_put_attachments(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec attachments_put_attachments(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, EnvelopeAttachmentsResult.t()}
           | {:error, Tesla.Env.t()}

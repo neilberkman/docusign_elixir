@@ -39,7 +39,7 @@ defmodule DocuSign.Api.Authorizations do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec user_agent_authorizations_get_agent_user_authorizations(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           keyword()
@@ -91,7 +91,7 @@ defmodule DocuSign.Api.Authorizations do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec user_authorization_create_user_authorization(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           keyword()
@@ -138,7 +138,7 @@ defmodule DocuSign.Api.Authorizations do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec user_authorization_delete_user_authorization(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),
@@ -177,7 +177,7 @@ defmodule DocuSign.Api.Authorizations do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec user_authorization_get_user_authorization(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),
@@ -220,7 +220,7 @@ defmodule DocuSign.Api.Authorizations do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec user_authorization_update_user_authorization(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),
@@ -268,7 +268,7 @@ defmodule DocuSign.Api.Authorizations do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec user_authorizations_delete_user_authorizations(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           keyword()
@@ -320,7 +320,7 @@ defmodule DocuSign.Api.Authorizations do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec user_authorizations_get_principal_user_authorizations(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           keyword()
@@ -372,7 +372,7 @@ defmodule DocuSign.Api.Authorizations do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec user_authorizations_post_user_authorizations(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           keyword()

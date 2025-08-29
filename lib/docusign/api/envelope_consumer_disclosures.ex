@@ -31,7 +31,7 @@ defmodule DocuSign.Api.EnvelopeConsumerDisclosures do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec consumer_disclosure_get_consumer_disclosure_envelope_id_recipient_id(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),
@@ -86,7 +86,7 @@ defmodule DocuSign.Api.EnvelopeConsumerDisclosures do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec consumer_disclosure_get_consumer_disclosure_envelope_id_recipient_id_lang_code(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           String.t(),

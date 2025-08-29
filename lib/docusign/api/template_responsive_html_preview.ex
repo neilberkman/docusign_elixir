@@ -30,7 +30,7 @@ defmodule DocuSign.Api.TemplateResponsiveHtmlPreview do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec responsive_html_post_template_responsive_html_preview(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           keyword()

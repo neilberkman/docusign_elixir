@@ -32,7 +32,7 @@ defmodule DocuSign.Api.ConnectConfigurations do
   - `{:ok, nil}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec connect_delete_connect_config(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec connect_delete_connect_config(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, nil} | {:ok, ErrorDetails.t()} | {:error, Tesla.Env.t()}
   def connect_delete_connect_config(connection, account_id, connect_id, _opts \\ []) do
     request =
@@ -71,7 +71,7 @@ defmodule DocuSign.Api.ConnectConfigurations do
   - `{:ok, DocuSign.Model.IntegratedConnectUserInfoList.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec connect_get_connect_all_users(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec connect_get_connect_all_users(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, IntegratedConnectUserInfoList.t()}
           | {:error, Tesla.Env.t()}
@@ -116,7 +116,7 @@ defmodule DocuSign.Api.ConnectConfigurations do
   - `{:ok, DocuSign.Model.ConnectConfigResults.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec connect_get_connect_config(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec connect_get_connect_config(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, ConnectConfigResults.t()}
           | {:error, Tesla.Env.t()}
@@ -150,7 +150,7 @@ defmodule DocuSign.Api.ConnectConfigurations do
   - `{:ok, DocuSign.Model.ConnectConfigResults.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec connect_get_connect_configs(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec connect_get_connect_configs(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, ConnectConfigResults.t()}
           | {:error, Tesla.Env.t()}
@@ -191,7 +191,7 @@ defmodule DocuSign.Api.ConnectConfigurations do
   - `{:ok, DocuSign.Model.IntegratedUserInfoList.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec connect_get_connect_users(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec connect_get_connect_users(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, IntegratedUserInfoList.t()}
           | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
@@ -236,7 +236,7 @@ defmodule DocuSign.Api.ConnectConfigurations do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec connect_o_auth_config_delete_connect_o_auth_config(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           keyword()
         ) :: {:ok, nil} | {:ok, ErrorDetails.t()} | {:error, Tesla.Env.t()}
@@ -270,7 +270,7 @@ defmodule DocuSign.Api.ConnectConfigurations do
   - `{:ok, DocuSign.Model.ConnectOAuthConfig.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec connect_o_auth_config_get_connect_o_auth_config(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec connect_o_auth_config_get_connect_o_auth_config(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, ConnectOAuthConfig.t()}
           | {:error, Tesla.Env.t()}
@@ -306,7 +306,7 @@ defmodule DocuSign.Api.ConnectConfigurations do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec connect_o_auth_config_post_connect_o_auth_config(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           keyword()
         ) ::
@@ -349,7 +349,7 @@ defmodule DocuSign.Api.ConnectConfigurations do
   - `{:ok, DocuSign.Model.ConnectOAuthConfig.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec connect_o_auth_config_put_connect_o_auth_config(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec connect_o_auth_config_put_connect_o_auth_config(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, ConnectOAuthConfig.t()}
           | {:error, Tesla.Env.t()}
@@ -390,7 +390,7 @@ defmodule DocuSign.Api.ConnectConfigurations do
   - `{:ok, DocuSign.Model.ConnectCustomConfiguration.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec connect_post_connect_configuration(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec connect_post_connect_configuration(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, ConnectCustomConfiguration.t()}
           | {:error, Tesla.Env.t()}
@@ -431,7 +431,7 @@ defmodule DocuSign.Api.ConnectConfigurations do
   - `{:ok, DocuSign.Model.ConnectCustomConfiguration.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec connect_put_connect_configuration(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec connect_put_connect_configuration(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, ConnectCustomConfiguration.t()}
           | {:error, Tesla.Env.t()}

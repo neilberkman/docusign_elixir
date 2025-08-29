@@ -27,7 +27,7 @@ defmodule DocuSign.Api.AccountWatermarks do
   - `{:ok, DocuSign.Model.Watermark.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec watermark_get_watermark(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec watermark_get_watermark(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, Watermark.t()}
           | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
@@ -62,7 +62,7 @@ defmodule DocuSign.Api.AccountWatermarks do
   - `{:ok, DocuSign.Model.Watermark.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec watermark_preview_put_watermark_preview(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec watermark_preview_put_watermark_preview(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, Watermark.t()}
           | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
@@ -103,7 +103,7 @@ defmodule DocuSign.Api.AccountWatermarks do
   - `{:ok, DocuSign.Model.Watermark.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec watermark_put_watermark(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec watermark_put_watermark(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, Watermark.t()}
           | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}

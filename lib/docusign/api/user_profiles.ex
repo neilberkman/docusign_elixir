@@ -28,7 +28,7 @@ defmodule DocuSign.Api.UserProfiles do
   - `{:ok, DocuSign.Model.UserProfile.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec user_profile_get_profile(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec user_profile_get_profile(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, UserProfile.t()}
           | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
@@ -64,7 +64,7 @@ defmodule DocuSign.Api.UserProfiles do
   - `{:ok, nil}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec user_profile_put_profile(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec user_profile_put_profile(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, nil} | {:ok, ErrorDetails.t()} | {:error, Tesla.Env.t()}
   def user_profile_put_profile(connection, account_id, user_id, opts \\ []) do
     optional_params = %{

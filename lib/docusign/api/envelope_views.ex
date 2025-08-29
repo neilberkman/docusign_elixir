@@ -30,7 +30,7 @@ defmodule DocuSign.Api.EnvelopeViews do
   - `{:ok, nil}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec views_delete_envelope_correct_view(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec views_delete_envelope_correct_view(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, nil} | {:ok, ErrorDetails.t()} | {:error, Tesla.Env.t()}
   def views_delete_envelope_correct_view(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
@@ -68,7 +68,7 @@ defmodule DocuSign.Api.EnvelopeViews do
   - `{:ok, DocuSign.Model.EnvelopeViews.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec views_post_account_console_view(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec views_post_account_console_view(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, EnvelopeViews.t()}
           | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
@@ -110,7 +110,7 @@ defmodule DocuSign.Api.EnvelopeViews do
   - `{:ok, DocuSign.Model.EnvelopeViews.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec views_post_envelope_correct_view(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec views_post_envelope_correct_view(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, EnvelopeViews.t()}
           | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
@@ -152,7 +152,7 @@ defmodule DocuSign.Api.EnvelopeViews do
   - `{:ok, DocuSign.Model.EnvelopeViews.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec views_post_envelope_edit_view(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec views_post_envelope_edit_view(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, EnvelopeViews.t()}
           | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
@@ -195,7 +195,7 @@ defmodule DocuSign.Api.EnvelopeViews do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec views_post_envelope_recipient_shared_view(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           keyword()
@@ -241,7 +241,7 @@ defmodule DocuSign.Api.EnvelopeViews do
   - `{:ok, DocuSign.Model.EnvelopeViews.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec views_post_envelope_recipient_view(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec views_post_envelope_recipient_view(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, EnvelopeViews.t()}
           | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
@@ -283,7 +283,7 @@ defmodule DocuSign.Api.EnvelopeViews do
   - `{:ok, DocuSign.Model.EnvelopeViews.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec views_post_envelope_sender_view(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec views_post_envelope_sender_view(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, EnvelopeViews.t()}
           | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}

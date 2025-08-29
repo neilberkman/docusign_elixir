@@ -29,7 +29,7 @@ defmodule DocuSign.Api.EnvelopeEmailSettings do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec email_settings_delete_email_settings(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           keyword()
@@ -68,7 +68,7 @@ defmodule DocuSign.Api.EnvelopeEmailSettings do
   - `{:ok, DocuSign.Model.EmailSettings.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec email_settings_get_email_settings(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec email_settings_get_email_settings(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, EmailSettings.t()}
           | {:error, Tesla.Env.t()}
@@ -104,7 +104,7 @@ defmodule DocuSign.Api.EnvelopeEmailSettings do
   - `{:ok, DocuSign.Model.EmailSettings.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec email_settings_post_email_settings(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec email_settings_post_email_settings(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, EmailSettings.t()}
           | {:error, Tesla.Env.t()}
@@ -146,7 +146,7 @@ defmodule DocuSign.Api.EnvelopeEmailSettings do
   - `{:ok, DocuSign.Model.EmailSettings.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec email_settings_put_email_settings(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec email_settings_put_email_settings(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, EmailSettings.t()}
           | {:error, Tesla.Env.t()}

@@ -30,7 +30,7 @@ defmodule DocuSign.Api.Payments do
   - `{:ok, DocuSign.Model.BillingPaymentItem.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec billing_payments_get_payment(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec billing_payments_get_payment(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, BillingPaymentItem.t()}
           | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
@@ -66,7 +66,7 @@ defmodule DocuSign.Api.Payments do
   - `{:ok, DocuSign.Model.BillingPaymentsResponse.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec billing_payments_get_payment_list(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec billing_payments_get_payment_list(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, BillingPaymentsResponse.t()}
           | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
@@ -107,7 +107,7 @@ defmodule DocuSign.Api.Payments do
   - `{:ok, DocuSign.Model.BillingPaymentResponse.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec billing_payments_post_payment(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec billing_payments_post_payment(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, BillingPaymentResponse.t()}
           | {:error, Tesla.Env.t()}

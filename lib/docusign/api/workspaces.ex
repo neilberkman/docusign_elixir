@@ -29,7 +29,7 @@ defmodule DocuSign.Api.Workspaces do
   - `{:ok, DocuSign.Model.Workspace.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec workspace_delete_workspace(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec workspace_delete_workspace(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, Workspace.t()}
           | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
@@ -64,7 +64,7 @@ defmodule DocuSign.Api.Workspaces do
   - `{:ok, DocuSign.Model.Workspace.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec workspace_get_workspace(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec workspace_get_workspace(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, Workspace.t()}
           | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
@@ -98,7 +98,7 @@ defmodule DocuSign.Api.Workspaces do
   - `{:ok, DocuSign.Model.WorkspaceList.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec workspace_get_workspaces(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec workspace_get_workspaces(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, WorkspaceList.t()}
           | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
@@ -133,7 +133,7 @@ defmodule DocuSign.Api.Workspaces do
   - `{:ok, DocuSign.Model.Workspace.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec workspace_post_workspace(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec workspace_post_workspace(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, Workspace.t()}
           | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
@@ -175,7 +175,7 @@ defmodule DocuSign.Api.Workspaces do
   - `{:ok, DocuSign.Model.Workspace.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec workspace_put_workspace(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec workspace_put_workspace(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, Workspace.t()}
           | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}

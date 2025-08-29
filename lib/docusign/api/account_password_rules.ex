@@ -29,7 +29,7 @@ defmodule DocuSign.Api.AccountPasswordRules do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec account_password_rules_get_account_password_rules(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           keyword()
         ) ::
@@ -68,7 +68,7 @@ defmodule DocuSign.Api.AccountPasswordRules do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec account_password_rules_put_account_password_rules(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           keyword()
         ) ::
@@ -109,7 +109,7 @@ defmodule DocuSign.Api.AccountPasswordRules do
   - `{:ok, DocuSign.Model.UserPasswordRules.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec password_rules_get_password_rules(Tesla.Env.client(), keyword()) ::
+  @spec password_rules_get_password_rules(DocuSign.Connection.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, UserPasswordRules.t()}
           | {:error, Tesla.Env.t()}

@@ -39,7 +39,7 @@ defmodule DocuSign.Api.Accounts do
   - `{:ok, nil}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec accounts_delete_account(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec accounts_delete_account(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, nil} | {:ok, ErrorDetails.t()} | {:error, Tesla.Env.t()}
   def accounts_delete_account(connection, account_id, opts \\ []) do
     optional_params = %{
@@ -77,7 +77,7 @@ defmodule DocuSign.Api.Accounts do
   - `{:ok, DocuSign.Model.AccountInformation.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec accounts_get_account(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec accounts_get_account(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, AccountInformation.t()}
           | {:error, Tesla.Env.t()}
@@ -115,7 +115,7 @@ defmodule DocuSign.Api.Accounts do
   - `{:ok, DocuSign.Model.ProvisioningInformation.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec accounts_get_provisioning(Tesla.Env.client(), keyword()) ::
+  @spec accounts_get_provisioning(DocuSign.Connection.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, ProvisioningInformation.t()}
           | {:error, Tesla.Env.t()}
@@ -149,7 +149,7 @@ defmodule DocuSign.Api.Accounts do
   - `{:ok, DocuSign.Model.NewAccountSummary.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec accounts_post_accounts(Tesla.Env.client(), keyword()) ::
+  @spec accounts_post_accounts(DocuSign.Connection.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, NewAccountSummary.t()}
           | {:error, Tesla.Env.t()}
@@ -190,7 +190,7 @@ defmodule DocuSign.Api.Accounts do
   - `{:ok, DocuSign.Model.BillingChargeResponse.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec billing_charges_get_account_billing_charges(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec billing_charges_get_account_billing_charges(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, BillingChargeResponse.t()}
           | {:error, Tesla.Env.t()}
@@ -232,7 +232,7 @@ defmodule DocuSign.Api.Accounts do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec captive_recipients_delete_captive_recipients_part(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           keyword()
@@ -276,7 +276,7 @@ defmodule DocuSign.Api.Accounts do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec envelope_purge_configuration_get_envelope_purge_configuration(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           keyword()
         ) ::
@@ -315,7 +315,7 @@ defmodule DocuSign.Api.Accounts do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec envelope_purge_configuration_put_envelope_purge_configuration(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           keyword()
         ) ::
@@ -358,7 +358,7 @@ defmodule DocuSign.Api.Accounts do
   - `{:ok, DocuSign.Model.NotificationDefaults.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec notification_defaults_get_notification_defaults(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec notification_defaults_get_notification_defaults(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, NotificationDefaults.t()}
           | {:error, Tesla.Env.t()}
@@ -393,7 +393,7 @@ defmodule DocuSign.Api.Accounts do
   - `{:ok, DocuSign.Model.NotificationDefaults.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec notification_defaults_put_notification_defaults(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec notification_defaults_put_notification_defaults(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, NotificationDefaults.t()}
           | {:error, Tesla.Env.t()}
@@ -434,7 +434,7 @@ defmodule DocuSign.Api.Accounts do
   - `{:ok, DocuSign.Model.RecipientNamesResponse.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec recipient_names_get_recipient_names(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec recipient_names_get_recipient_names(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, RecipientNamesResponse.t()}
           | {:error, Tesla.Env.t()}
@@ -473,7 +473,7 @@ defmodule DocuSign.Api.Accounts do
   - `{:ok, DocuSign.Model.AccountSettingsInformation.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec settings_get_settings(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec settings_get_settings(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, AccountSettingsInformation.t()}
           | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
@@ -508,7 +508,7 @@ defmodule DocuSign.Api.Accounts do
   - `{:ok, nil}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec settings_put_settings(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec settings_put_settings(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, nil} | {:ok, ErrorDetails.t()} | {:error, Tesla.Env.t()}
   def settings_put_settings(connection, account_id, opts \\ []) do
     optional_params = %{
@@ -554,7 +554,7 @@ defmodule DocuSign.Api.Accounts do
   - `{:ok, DocuSign.Model.AccountSharedAccess.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec shared_access_get_shared_access(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec shared_access_get_shared_access(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, AccountSharedAccess.t()}
           | {:error, Tesla.Env.t()}
@@ -604,7 +604,7 @@ defmodule DocuSign.Api.Accounts do
   - `{:ok, DocuSign.Model.AccountSharedAccess.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec shared_access_put_shared_access(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec shared_access_put_shared_access(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, AccountSharedAccess.t()}
           | {:error, Tesla.Env.t()}
@@ -647,7 +647,7 @@ defmodule DocuSign.Api.Accounts do
   - `{:ok, DocuSign.Model.SupportedLanguages.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec supported_languages_get_supported_languages(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec supported_languages_get_supported_languages(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, SupportedLanguages.t()}
           | {:error, Tesla.Env.t()}
@@ -682,7 +682,7 @@ defmodule DocuSign.Api.Accounts do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec unsupported_file_types_get_unsupported_file_types(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           keyword()
         ) ::

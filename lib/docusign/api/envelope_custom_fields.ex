@@ -30,7 +30,7 @@ defmodule DocuSign.Api.EnvelopeCustomFields do
   - `{:ok, DocuSign.Model.EnvelopeCustomFields.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec custom_fields_delete_custom_fields(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec custom_fields_delete_custom_fields(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, EnvelopeCustomFields.t()}
           | {:error, Tesla.Env.t()}
@@ -70,7 +70,7 @@ defmodule DocuSign.Api.EnvelopeCustomFields do
   - `{:ok, DocuSign.Model.CustomFieldsEnvelope.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec custom_fields_get_custom_fields(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec custom_fields_get_custom_fields(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, CustomFieldsEnvelope.t()}
           | {:error, Tesla.Env.t()}
@@ -106,7 +106,7 @@ defmodule DocuSign.Api.EnvelopeCustomFields do
   - `{:ok, DocuSign.Model.EnvelopeCustomFields.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec custom_fields_post_custom_fields(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec custom_fields_post_custom_fields(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, EnvelopeCustomFields.t()}
           | {:error, Tesla.Env.t()}
@@ -148,7 +148,7 @@ defmodule DocuSign.Api.EnvelopeCustomFields do
   - `{:ok, DocuSign.Model.EnvelopeCustomFields.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec custom_fields_put_custom_fields(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec custom_fields_put_custom_fields(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, EnvelopeCustomFields.t()}
           | {:error, Tesla.Env.t()}

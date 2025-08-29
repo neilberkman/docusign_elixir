@@ -29,7 +29,7 @@ defmodule DocuSign.Api.AccountConsumerDisclosures do
   - `{:ok, DocuSign.Model.AccountConsumerDisclosures.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec consumer_disclosure_get_consumer_disclosure(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec consumer_disclosure_get_consumer_disclosure(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, AccountConsumerDisclosures.t()}
           | {:error, Tesla.Env.t()}
@@ -70,7 +70,7 @@ defmodule DocuSign.Api.AccountConsumerDisclosures do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec consumer_disclosure_get_consumer_disclosure_lang_code(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           keyword()
@@ -112,7 +112,7 @@ defmodule DocuSign.Api.AccountConsumerDisclosures do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec consumer_disclosure_put_consumer_disclosure(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           keyword()

@@ -34,7 +34,7 @@ defmodule DocuSign.Api.Users do
   - `{:ok, DocuSign.Model.UserInformation.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec user_get_user(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec user_get_user(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, UserInformation.t()}
           | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
@@ -76,7 +76,7 @@ defmodule DocuSign.Api.Users do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec user_profile_image_delete_user_profile_image(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           keyword()
@@ -114,7 +114,7 @@ defmodule DocuSign.Api.Users do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec user_profile_image_get_user_profile_image(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           keyword()
@@ -156,7 +156,7 @@ defmodule DocuSign.Api.Users do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec user_profile_image_put_user_profile_image(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           keyword()
@@ -195,7 +195,7 @@ defmodule DocuSign.Api.Users do
   - `{:ok, DocuSign.Model.UserInformation.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec user_put_user(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec user_put_user(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, UserInformation.t()}
           | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
@@ -237,7 +237,7 @@ defmodule DocuSign.Api.Users do
   - `{:ok, DocuSign.Model.UserSettingsInformation.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec user_settings_get_user_settings(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec user_settings_get_user_settings(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, UserSettingsInformation.t()}
           | {:error, Tesla.Env.t()}
@@ -274,7 +274,7 @@ defmodule DocuSign.Api.Users do
   - `{:ok, nil}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec user_settings_put_user_settings(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec user_settings_put_user_settings(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, nil} | {:ok, ErrorDetails.t()} | {:error, Tesla.Env.t()}
   def user_settings_put_user_settings(connection, account_id, user_id, opts \\ []) do
     optional_params = %{
@@ -315,7 +315,7 @@ defmodule DocuSign.Api.Users do
   - `{:ok, DocuSign.Model.UsersResponse.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec users_delete_users(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec users_delete_users(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, UsersResponse.t()}
           | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
@@ -368,7 +368,7 @@ defmodule DocuSign.Api.Users do
   - `{:ok, DocuSign.Model.UserInformationList.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec users_get_users(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec users_get_users(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, UserInformationList.t()}
           | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}
@@ -420,7 +420,7 @@ defmodule DocuSign.Api.Users do
   - `{:ok, DocuSign.Model.NewUsersSummary.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec users_post_users(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec users_post_users(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, NewUsersSummary.t()}
           | {:error, Tesla.Env.t()}
@@ -462,7 +462,7 @@ defmodule DocuSign.Api.Users do
   - `{:ok, DocuSign.Model.UserInformationList.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec users_put_users(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec users_put_users(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, UserInformationList.t()}
           | {:ok, ErrorDetails.t()}
           | {:error, Tesla.Env.t()}

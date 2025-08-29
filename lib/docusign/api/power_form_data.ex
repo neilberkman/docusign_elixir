@@ -32,7 +32,7 @@ defmodule DocuSign.Api.PowerFormData do
   - `{:error, Tesla.Env.t}` on failure
   """
   @spec power_forms_get_power_form_form_data(
-          Tesla.Env.client(),
+          DocuSign.Connection.t(),
           String.t(),
           String.t(),
           keyword()

@@ -29,7 +29,7 @@ defmodule DocuSign.Api.Contacts do
   - `{:ok, DocuSign.Model.ContactUpdateResponse.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec contacts_delete_contact_with_id(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec contacts_delete_contact_with_id(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, ContactUpdateResponse.t()}
           | {:error, Tesla.Env.t()}
@@ -64,7 +64,7 @@ defmodule DocuSign.Api.Contacts do
   - `{:ok, DocuSign.Model.ContactUpdateResponse.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec contacts_delete_contacts(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec contacts_delete_contacts(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, ContactUpdateResponse.t()}
           | {:error, Tesla.Env.t()}
@@ -105,7 +105,7 @@ defmodule DocuSign.Api.Contacts do
   - `{:ok, DocuSign.Model.ContactGetResponse.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec contacts_get_contact_by_id(Tesla.Env.client(), String.t(), String.t(), keyword()) ::
+  @spec contacts_get_contact_by_id(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, ContactGetResponse.t()}
           | {:error, Tesla.Env.t()}
@@ -145,7 +145,7 @@ defmodule DocuSign.Api.Contacts do
   - `{:ok, DocuSign.Model.ContactUpdateResponse.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec contacts_post_contacts(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec contacts_post_contacts(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, ContactUpdateResponse.t()}
           | {:error, Tesla.Env.t()}
@@ -186,7 +186,7 @@ defmodule DocuSign.Api.Contacts do
   - `{:ok, DocuSign.Model.ContactUpdateResponse.t}` on success
   - `{:error, Tesla.Env.t}` on failure
   """
-  @spec contacts_put_contacts(Tesla.Env.client(), String.t(), keyword()) ::
+  @spec contacts_put_contacts(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, ErrorDetails.t()}
           | {:ok, ContactUpdateResponse.t()}
           | {:error, Tesla.Env.t()}
