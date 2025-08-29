@@ -29,7 +29,7 @@ defmodule DocuSign.Api.EnvelopeConsumerDisclosures do
   ### Returns
 
   - `{:ok, DocuSign.Model.ConsumerDisclosure.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec consumer_disclosure_get_consumer_disclosure_envelope_id_recipient_id(
           DocuSign.Connection.t(),
@@ -39,7 +39,7 @@ defmodule DocuSign.Api.EnvelopeConsumerDisclosures do
           keyword()
         ) ::
           {:ok, ConsumerDisclosure.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def consumer_disclosure_get_consumer_disclosure_envelope_id_recipient_id(
         connection,
         account_id,
@@ -83,7 +83,7 @@ defmodule DocuSign.Api.EnvelopeConsumerDisclosures do
   ### Returns
 
   - `{:ok, DocuSign.Model.ConsumerDisclosure.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec consumer_disclosure_get_consumer_disclosure_envelope_id_recipient_id_lang_code(
           DocuSign.Connection.t(),
@@ -94,7 +94,7 @@ defmodule DocuSign.Api.EnvelopeConsumerDisclosures do
           keyword()
         ) ::
           {:ok, ConsumerDisclosure.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def consumer_disclosure_get_consumer_disclosure_envelope_id_recipient_id_lang_code(
         connection,
         account_id,

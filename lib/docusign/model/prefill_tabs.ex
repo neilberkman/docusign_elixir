@@ -17,7 +17,6 @@ defmodule DocuSign.Model.PrefillTabs do
   alias DocuSign.Model.Text
   alias DocuSign.Model.Zip
 
-  @derive Jason.Encoder
   defstruct [
     :checkboxTabs,
     :dateTabs,
@@ -31,6 +30,17 @@ defmodule DocuSign.Model.PrefillTabs do
     :textTabs,
     :zipTabs
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :checkboxTabs => [Checkbox.t()] | nil,
@@ -88,5 +98,6 @@ defmodule DocuSign.Model.PrefillTabs do
       :list,
       Zip
     )
+    |> then(&struct(__MODULE__, &1))
   end
 end

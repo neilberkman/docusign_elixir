@@ -10,17 +10,14 @@ This LiveBook demonstrates how to implement the OAuth2 Authorization Code Flow w
 
 The Authorization Code Flow is more secure than JWT impersonation for user-facing applications because:
 
-- Users grant permission explicitly through DocuSign's consent screen
-- No need for admin pre-approval (like JWT impersonation requires)
-- Tokens can be refreshed without user interaction
-- Standard OAuth2 compliance
-- Uses proven OAuth2 library patterns
+* Users grant permission explicitly through DocuSign's consent screen
+* No need for admin pre-approval (like JWT impersonation requires)
+* Tokens can be refreshed without user interaction
+* Standard OAuth2 compliance
+* Uses proven OAuth2 library patterns
 
 ```elixir
 IO.puts("Installing dependencies...")
-
-# Suppress Tesla deprecation warnings
-Application.put_env(:tesla, :disable_deprecated_builder_warning, true)
 
 Mix.install([
   {:docusign, "~> 2.2.4"},
@@ -511,7 +508,7 @@ if conn && user_info do
       Your application is now successfully authenticated with DocuSign using OAuth2 tokens and can make API calls on behalf of the user.
       """))
 
-    {:error, %Tesla.Env{status: status, body: body}} ->
+    {:error, %Req.Response{status: status, body: body}} ->
       Kino.Frame.render(api_test_frame, Kino.Markdown.new("""
       ## ❌ API Call Failed
 
@@ -662,19 +659,19 @@ For production Phoenix applications, refer to the comprehensive examples in the 
 
 ### Key Benefits of OAuth2 Authorization Code Flow:
 
-- **User Control**: Users explicitly grant permission through DocuSign's interface
-- **No Admin Pre-approval**: Unlike JWT impersonation, no admin setup required
-- **Standard Compliance**: Uses industry-standard OAuth2 flow
-- **Token Refresh**: Long-term access through refresh tokens
-- **Secure**: Follows OAuth2 security best practices
+* **User Control**: Users explicitly grant permission through DocuSign's interface
+* **No Admin Pre-approval**: Unlike JWT impersonation, no admin setup required
+* **Standard Compliance**: Uses industry-standard OAuth2 flow
+* **Token Refresh**: Long-term access through refresh tokens
+* **Secure**: Follows OAuth2 security best practices
 
 ### Next Steps:
 
-- Implement this flow in your web application
-- Set up secure token storage and management
-- Handle token refresh and expiration gracefully
-- Add error handling and user feedback
-- Consider implementing webhook notifications for document status updates
+* Implement this flow in your web application
+* Set up secure token storage and management
+* Handle token refresh and expiration gracefully
+* Add error handling and user feedback
+* Consider implementing webhook notifications for document status updates
 
 For more information, check out the [DocuSign Elixir GitHub repository](https://github.com/neilberkman/docusign_elixir) and the [official DocuSign API documentation](https://developers.docusign.com/).
 

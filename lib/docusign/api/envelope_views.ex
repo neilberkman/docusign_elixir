@@ -29,11 +29,11 @@ defmodule DocuSign.Api.EnvelopeViews do
   ### Returns
 
   - `{:ok, nil}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec views_delete_envelope_correct_view(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, nil}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def views_delete_envelope_correct_view(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
       :body => :body
@@ -68,11 +68,11 @@ defmodule DocuSign.Api.EnvelopeViews do
   ### Returns
 
   - `{:ok, DocuSign.Model.EnvelopeViews.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec views_post_account_console_view(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, EnvelopeViews.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def views_post_account_console_view(connection, account_id, opts \\ []) do
     optional_params = %{
       :body => :body
@@ -109,11 +109,11 @@ defmodule DocuSign.Api.EnvelopeViews do
   ### Returns
 
   - `{:ok, DocuSign.Model.EnvelopeViews.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec views_post_envelope_correct_view(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, EnvelopeViews.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def views_post_envelope_correct_view(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
       :body => :body
@@ -150,11 +150,11 @@ defmodule DocuSign.Api.EnvelopeViews do
   ### Returns
 
   - `{:ok, DocuSign.Model.EnvelopeViews.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec views_post_envelope_edit_view(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, EnvelopeViews.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def views_post_envelope_edit_view(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
       :body => :body
@@ -191,11 +191,11 @@ defmodule DocuSign.Api.EnvelopeViews do
   ### Returns
 
   - `{:ok, DocuSign.Model.ViewUrl.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec views_post_envelope_recipient_shared_view(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, ViewUrl.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def views_post_envelope_recipient_shared_view(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
       :body => :body
@@ -232,11 +232,11 @@ defmodule DocuSign.Api.EnvelopeViews do
   ### Returns
 
   - `{:ok, DocuSign.Model.EnvelopeViews.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec views_post_envelope_recipient_view(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, EnvelopeViews.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def views_post_envelope_recipient_view(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
       :body => :body
@@ -273,11 +273,11 @@ defmodule DocuSign.Api.EnvelopeViews do
   ### Returns
 
   - `{:ok, DocuSign.Model.EnvelopeViews.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec views_post_envelope_sender_view(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, EnvelopeViews.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def views_post_envelope_sender_view(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
       :body => :body

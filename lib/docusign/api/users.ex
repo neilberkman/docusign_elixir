@@ -34,11 +34,11 @@ defmodule DocuSign.Api.Users do
   ### Returns
 
   - `{:ok, DocuSign.Model.UserInformation.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec user_get_user(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, UserInformation.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def user_get_user(connection, account_id, user_id, opts \\ []) do
     optional_params = %{
       :additional_info => :query,
@@ -75,11 +75,11 @@ defmodule DocuSign.Api.Users do
   ### Returns
 
   - `{:ok, nil}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec user_profile_image_delete_user_profile_image(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, nil}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def user_profile_image_delete_user_profile_image(connection, account_id, user_id, _opts \\ []) do
     request =
       %{}
@@ -110,11 +110,11 @@ defmodule DocuSign.Api.Users do
   ### Returns
 
   - `{:ok, String.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec user_profile_image_get_user_profile_image(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, String.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def user_profile_image_get_user_profile_image(connection, account_id, user_id, opts \\ []) do
     optional_params = %{
       :encoding => :query
@@ -149,11 +149,11 @@ defmodule DocuSign.Api.Users do
   ### Returns
 
   - `{:ok, nil}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec user_profile_image_put_user_profile_image(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, nil}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def user_profile_image_put_user_profile_image(connection, account_id, user_id, _opts \\ []) do
     request =
       %{}
@@ -186,11 +186,11 @@ defmodule DocuSign.Api.Users do
   ### Returns
 
   - `{:ok, DocuSign.Model.UserInformation.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec user_put_user(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, UserInformation.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def user_put_user(connection, account_id, user_id, opts \\ []) do
     optional_params = %{
       :allow_all_languages => :query,
@@ -227,11 +227,11 @@ defmodule DocuSign.Api.Users do
   ### Returns
 
   - `{:ok, DocuSign.Model.UserSettingsInformation.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec user_settings_get_user_settings(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, UserSettingsInformation.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def user_settings_get_user_settings(connection, account_id, user_id, _opts \\ []) do
     request =
       %{}
@@ -263,11 +263,11 @@ defmodule DocuSign.Api.Users do
   ### Returns
 
   - `{:ok, nil}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec user_settings_put_user_settings(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, nil}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def user_settings_put_user_settings(connection, account_id, user_id, opts \\ []) do
     optional_params = %{
       :allow_all_languages => :query,
@@ -305,11 +305,11 @@ defmodule DocuSign.Api.Users do
   ### Returns
 
   - `{:ok, DocuSign.Model.UsersResponse.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec users_delete_users(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, UsersResponse.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def users_delete_users(connection, account_id, opts \\ []) do
     optional_params = %{
       :body => :body,
@@ -358,11 +358,11 @@ defmodule DocuSign.Api.Users do
   ### Returns
 
   - `{:ok, DocuSign.Model.UserInformationList.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec users_get_users(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, UserInformationList.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def users_get_users(connection, account_id, opts \\ []) do
     optional_params = %{
       :additional_info => :query,
@@ -410,11 +410,11 @@ defmodule DocuSign.Api.Users do
   ### Returns
 
   - `{:ok, DocuSign.Model.NewUsersSummary.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec users_post_users(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, NewUsersSummary.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def users_post_users(connection, account_id, opts \\ []) do
     optional_params = %{
       :body => :body
@@ -451,11 +451,11 @@ defmodule DocuSign.Api.Users do
   ### Returns
 
   - `{:ok, DocuSign.Model.UserInformationList.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec users_put_users(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, UserInformationList.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def users_put_users(connection, account_id, opts \\ []) do
     optional_params = %{
       :allow_all_languages => :query,

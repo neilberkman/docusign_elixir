@@ -10,7 +10,6 @@ defmodule DocuSign.Model.BillingPlanUpdateResponse do
   alias DocuSign.Deserializer
   alias DocuSign.Model.BillingPlanPreview
 
-  @derive Jason.Encoder
   defstruct [
     :accountPaymentMethod,
     :billingPlanPreview,
@@ -21,6 +20,17 @@ defmodule DocuSign.Model.BillingPlanUpdateResponse do
     :planId,
     :planName
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :accountPaymentMethod => String.t() | nil,
@@ -40,5 +50,6 @@ defmodule DocuSign.Model.BillingPlanUpdateResponse do
       :struct,
       BillingPlanPreview
     )
+    |> then(&struct(__MODULE__, &1))
   end
 end

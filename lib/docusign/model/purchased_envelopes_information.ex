@@ -7,7 +7,6 @@ defmodule DocuSign.Model.PurchasedEnvelopesInformation do
 
   """
 
-  @derive Jason.Encoder
   defstruct [
     :amount,
     :appName,
@@ -19,6 +18,17 @@ defmodule DocuSign.Model.PurchasedEnvelopesInformation do
     :storeName,
     :transactionId
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :amount => String.t() | nil,
@@ -33,6 +43,6 @@ defmodule DocuSign.Model.PurchasedEnvelopesInformation do
         }
 
   def decode(value) do
-    value
+    struct(__MODULE__, value)
   end
 end

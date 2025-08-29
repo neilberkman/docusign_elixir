@@ -25,11 +25,11 @@ defmodule DocuSign.Api.ENoteConfigurations do
   ### Returns
 
   - `{:ok, nil}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec e_note_configuration_delete_e_note_configuration(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, nil}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def e_note_configuration_delete_e_note_configuration(connection, account_id, _opts \\ []) do
     request =
       %{}
@@ -57,11 +57,11 @@ defmodule DocuSign.Api.ENoteConfigurations do
   ### Returns
 
   - `{:ok, DocuSign.Model.ENoteConfiguration.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec e_note_configuration_get_e_note_configuration(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, ENoteConfiguration.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def e_note_configuration_get_e_note_configuration(connection, account_id, _opts \\ []) do
     request =
       %{}
@@ -90,11 +90,11 @@ defmodule DocuSign.Api.ENoteConfigurations do
   ### Returns
 
   - `{:ok, DocuSign.Model.ENoteConfiguration.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec e_note_configuration_put_e_note_configuration(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, ENoteConfiguration.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def e_note_configuration_put_e_note_configuration(connection, account_id, opts \\ []) do
     optional_params = %{
       :body => :body

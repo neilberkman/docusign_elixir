@@ -27,11 +27,11 @@ defmodule DocuSign.Api.IdentityVerifications do
   ### Returns
 
   - `{:ok, DocuSign.Model.AccountIdentityVerificationResponse.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec account_identity_verification_get_account_identity_verification(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, AccountIdentityVerificationResponse.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def account_identity_verification_get_account_identity_verification(connection, account_id, opts \\ []) do
     optional_params = %{
       :identity_verification_workflow_status => :query

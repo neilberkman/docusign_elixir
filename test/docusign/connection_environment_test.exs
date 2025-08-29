@@ -1,17 +1,24 @@
 defmodule DocuSign.ConnectionEnvironmentTest do
-  use ExUnit.Case, async: true
+  # Modifies global config, can't run async
+  use ExUnit.Case, async: false
 
   alias DocuSign.Connection
 
   describe "determine_hostname/1" do
     test "delegates to Environment module for sandbox detection" do
-      assert Connection.determine_hostname("https://demo.docusign.net/restapi") == "account-d.docusign.com"
-      assert Connection.determine_hostname("https://apps-d.docusign.com") == "account-d.docusign.com"
+      assert Connection.determine_hostname("https://demo.docusign.net/restapi") ==
+               "account-d.docusign.com"
+
+      assert Connection.determine_hostname("https://apps-d.docusign.com") ==
+               "account-d.docusign.com"
     end
 
     test "delegates to Environment module for production detection" do
-      assert Connection.determine_hostname("https://na3.docusign.net/restapi") == "account.docusign.com"
-      assert Connection.determine_hostname("https://eu.docusign.net/restapi") == "account.docusign.com"
+      assert Connection.determine_hostname("https://na3.docusign.net/restapi") ==
+               "account.docusign.com"
+
+      assert Connection.determine_hostname("https://eu.docusign.net/restapi") ==
+               "account.docusign.com"
     end
   end
 
@@ -62,7 +69,9 @@ defmodule DocuSign.ConnectionEnvironmentTest do
       end
     end
 
-    test "automatically detects and sets sandbox hostname when enabled", %{oauth_client: oauth_client} do
+    test "automatically detects and sets sandbox hostname when enabled", %{
+      oauth_client: oauth_client
+    } do
       # Store original hostname
       original_hostname = Application.get_env(:docusign, :hostname)
 
@@ -90,7 +99,9 @@ defmodule DocuSign.ConnectionEnvironmentTest do
       end
     end
 
-    test "automatically detects and sets production hostname when enabled", %{oauth_client: oauth_client} do
+    test "automatically detects and sets production hostname when enabled", %{
+      oauth_client: oauth_client
+    } do
       # Store original hostname
       original_hostname = Application.get_env(:docusign, :hostname)
 
@@ -118,7 +129,9 @@ defmodule DocuSign.ConnectionEnvironmentTest do
       end
     end
 
-    test "handles missing base_uri gracefully with auto-detection enabled", %{oauth_client: oauth_client} do
+    test "handles missing base_uri gracefully with auto-detection enabled", %{
+      oauth_client: oauth_client
+    } do
       # Store original hostname
       original_hostname = Application.get_env(:docusign, :hostname)
 

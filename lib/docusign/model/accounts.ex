@@ -12,7 +12,6 @@ defmodule DocuSign.Model.Accounts do
   alias DocuSign.Model.AccountSettingsInformation
   alias DocuSign.Model.RecipientDomain
 
-  @derive Jason.Encoder
   defstruct [
     :accountIdGuid,
     :accountName,
@@ -55,6 +54,17 @@ defmodule DocuSign.Model.Accounts do
     :suspensionStatus,
     :useDisplayAppliance
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :accountIdGuid => String.t() | nil,
@@ -116,5 +126,6 @@ defmodule DocuSign.Model.Accounts do
       :list,
       RecipientDomain
     )
+    |> then(&struct(__MODULE__, &1))
   end
 end

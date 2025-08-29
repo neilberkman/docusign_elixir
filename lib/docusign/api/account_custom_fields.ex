@@ -23,21 +23,16 @@ defmodule DocuSign.Api.AccountCustomFields do
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `custom_field_id` (String.t): The ID of the custom field.
   - `opts` (keyword): Optional parameters
-    - `:apply_to_templates` (String.t):
+    - `:apply_to_templates` (String.t): 
 
   ### Returns
 
   - `{:ok, nil}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
-  @spec account_custom_fields_delete_account_custom_fields(
-          DocuSign.Connection.t(),
-          String.t(),
-          String.t(),
-          keyword()
-        ) ::
+  @spec account_custom_fields_delete_account_custom_fields(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, nil}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def account_custom_fields_delete_account_custom_fields(connection, account_id, custom_field_id, opts \\ []) do
     optional_params = %{
       :apply_to_templates => :query
@@ -71,15 +66,11 @@ defmodule DocuSign.Api.AccountCustomFields do
   ### Returns
 
   - `{:ok, DocuSign.Model.AccountCustomFields.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
-  @spec account_custom_fields_get_account_custom_fields(
-          DocuSign.Connection.t(),
-          String.t(),
-          keyword()
-        ) ::
+  @spec account_custom_fields_get_account_custom_fields(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, AccountCustomFields.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def account_custom_fields_get_account_custom_fields(connection, account_id, _opts \\ []) do
     request =
       %{}
@@ -105,20 +96,16 @@ defmodule DocuSign.Api.AccountCustomFields do
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `opts` (keyword): Optional parameters
     - `:apply_to_templates` (String.t): (Optional) When **true,** the new custom field is applied to all of the templates on the account.
-    - `:body` (CustomField):
+    - `:body` (CustomField): 
 
   ### Returns
 
   - `{:ok, DocuSign.Model.AccountCustomFields.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
-  @spec account_custom_fields_post_account_custom_fields(
-          DocuSign.Connection.t(),
-          String.t(),
-          keyword()
-        ) ::
+  @spec account_custom_fields_post_account_custom_fields(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, AccountCustomFields.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def account_custom_fields_post_account_custom_fields(connection, account_id, opts \\ []) do
     optional_params = %{
       :apply_to_templates => :query,
@@ -151,22 +138,17 @@ defmodule DocuSign.Api.AccountCustomFields do
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `custom_field_id` (String.t): The ID of the custom field.
   - `opts` (keyword): Optional parameters
-    - `:apply_to_templates` (String.t):
-    - `:body` (CustomField):
+    - `:apply_to_templates` (String.t): 
+    - `:body` (CustomField): 
 
   ### Returns
 
   - `{:ok, DocuSign.Model.AccountCustomFields.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
-  @spec account_custom_fields_put_account_custom_fields(
-          DocuSign.Connection.t(),
-          String.t(),
-          String.t(),
-          keyword()
-        ) ::
+  @spec account_custom_fields_put_account_custom_fields(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, AccountCustomFields.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def account_custom_fields_put_account_custom_fields(connection, account_id, custom_field_id, opts \\ []) do
     optional_params = %{
       :apply_to_templates => :query,

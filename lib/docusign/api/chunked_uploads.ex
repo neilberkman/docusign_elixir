@@ -27,11 +27,11 @@ defmodule DocuSign.Api.ChunkedUploads do
   ### Returns
 
   - `{:ok, DocuSign.Model.ChunkedUploadResponse.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec chunked_uploads_delete_chunked_upload(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, ChunkedUploadResponse.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def chunked_uploads_delete_chunked_upload(connection, account_id, chunked_upload_id, _opts \\ []) do
     request =
       %{}
@@ -62,11 +62,11 @@ defmodule DocuSign.Api.ChunkedUploads do
   ### Returns
 
   - `{:ok, DocuSign.Model.ChunkedUploadResponse.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec chunked_uploads_get_chunked_upload(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, ChunkedUploadResponse.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def chunked_uploads_get_chunked_upload(connection, account_id, chunked_upload_id, opts \\ []) do
     optional_params = %{
       :include => :query
@@ -101,11 +101,11 @@ defmodule DocuSign.Api.ChunkedUploads do
   ### Returns
 
   - `{:ok, DocuSign.Model.ChunkedUploadResponse.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec chunked_uploads_post_chunked_uploads(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, ChunkedUploadResponse.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def chunked_uploads_post_chunked_uploads(connection, account_id, opts \\ []) do
     optional_params = %{
       :body => :body
@@ -143,11 +143,11 @@ defmodule DocuSign.Api.ChunkedUploads do
   ### Returns
 
   - `{:ok, DocuSign.Model.ChunkedUploadResponse.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec chunked_uploads_put_chunked_upload_part(DocuSign.Connection.t(), String.t(), String.t(), String.t(), keyword()) ::
           {:ok, ChunkedUploadResponse.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def chunked_uploads_put_chunked_upload_part(
         connection,
         account_id,
@@ -190,11 +190,11 @@ defmodule DocuSign.Api.ChunkedUploads do
   ### Returns
 
   - `{:ok, DocuSign.Model.ChunkedUploadResponse.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec chunked_uploads_put_chunked_uploads(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, ChunkedUploadResponse.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def chunked_uploads_put_chunked_uploads(connection, account_id, chunked_upload_id, opts \\ []) do
     optional_params = %{
       :action => :query

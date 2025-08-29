@@ -28,11 +28,11 @@ defmodule DocuSign.Api.SigningGroupUsers do
   ### Returns
 
   - `{:ok, DocuSign.Model.SigningGroupUsers.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec signing_groups_delete_signing_group_users(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, SigningGroupUsers.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def signing_groups_delete_signing_group_users(connection, account_id, signing_group_id, opts \\ []) do
     optional_params = %{
       :body => :body
@@ -67,11 +67,11 @@ defmodule DocuSign.Api.SigningGroupUsers do
   ### Returns
 
   - `{:ok, DocuSign.Model.SigningGroupUsers.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec signing_groups_get_signing_group_users(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, SigningGroupUsers.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def signing_groups_get_signing_group_users(connection, account_id, signing_group_id, _opts \\ []) do
     request =
       %{}
@@ -102,11 +102,11 @@ defmodule DocuSign.Api.SigningGroupUsers do
   ### Returns
 
   - `{:ok, DocuSign.Model.SigningGroupUsers.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec signing_groups_put_signing_group_users(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, SigningGroupUsers.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def signing_groups_put_signing_group_users(connection, account_id, signing_group_id, opts \\ []) do
     optional_params = %{
       :body => :body

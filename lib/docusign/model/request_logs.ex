@@ -7,12 +7,22 @@ defmodule DocuSign.Model.RequestLogs do
   Request logs
   """
 
-  @derive Jason.Encoder
   defstruct [
     :apiRequestLogMaxEntries,
     :apiRequestLogRemainingEntries,
     :apiRequestLogging
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :apiRequestLogMaxEntries => String.t() | nil,
@@ -21,6 +31,6 @@ defmodule DocuSign.Model.RequestLogs do
         }
 
   def decode(value) do
-    value
+    struct(__MODULE__, value)
   end
 end

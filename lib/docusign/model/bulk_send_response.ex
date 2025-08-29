@@ -7,7 +7,6 @@ defmodule DocuSign.Model.BulkSendResponse do
   The object contains the response to a bulk send request.
   """
 
-  @derive Jason.Encoder
   defstruct [
     :batchId,
     :batchName,
@@ -18,6 +17,17 @@ defmodule DocuSign.Model.BulkSendResponse do
     :queueLimit,
     :totalQueued
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :batchId => String.t() | nil,
@@ -31,6 +41,6 @@ defmodule DocuSign.Model.BulkSendResponse do
         }
 
   def decode(value) do
-    value
+    struct(__MODULE__, value)
   end
 end

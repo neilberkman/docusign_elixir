@@ -11,7 +11,6 @@ defmodule DocuSign.Model.NotaryJurisdiction do
   alias DocuSign.Model.ErrorDetails
   alias DocuSign.Model.Jurisdiction
 
-  @derive Jason.Encoder
   defstruct [
     :commissionExpiration,
     :commissionId,
@@ -21,6 +20,17 @@ defmodule DocuSign.Model.NotaryJurisdiction do
     :registeredName,
     :sealType
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :commissionExpiration => String.t() | nil,
@@ -44,5 +54,6 @@ defmodule DocuSign.Model.NotaryJurisdiction do
       :struct,
       Jurisdiction
     )
+    |> then(&struct(__MODULE__, &1))
   end
 end

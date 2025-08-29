@@ -26,11 +26,11 @@ defmodule DocuSign.Api.PaymentGatewayAccounts do
   ### Returns
 
   - `{:ok, DocuSign.Model.PaymentGatewayAccountsInfo.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec payment_gateway_accounts_get_all_payment_gateway_accounts(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, PaymentGatewayAccountsInfo.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def payment_gateway_accounts_get_all_payment_gateway_accounts(connection, account_id, _opts \\ []) do
     request =
       %{}

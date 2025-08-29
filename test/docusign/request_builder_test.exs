@@ -4,7 +4,6 @@ defmodule DocuSign.RequestBuilderTest do
   alias DocuSign.Model.EnvelopeRecipientTabs
   alias DocuSign.Model.Text
   alias DocuSign.RequestBuilder
-  alias Tesla.Multipart.Part
 
   describe "adding optional params to request" do
     test "struct with nil values returns a map with nil values excluded" do
@@ -20,10 +19,8 @@ defmodule DocuSign.RequestBuilderTest do
 
       result = RequestBuilder.add_optional_params(request, optional_params, opts)
 
-      # With Tesla.Multipart, we can't directly compare the entire structure
-      # So instead we extract and verify the JSON content
-      assert %{body: %Tesla.Multipart{parts: [part]}} = result
-      assert %Part{body: json_body} = part
+      assert %{form_multipart: [part]} = result
+      assert {"EnvelopeRecipientTabs", json_body, [content_type: "application/json"]} = part
 
       # Parse the JSON body and check the structure
       decoded = Jason.decode!(json_body)

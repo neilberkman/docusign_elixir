@@ -28,11 +28,11 @@ defmodule DocuSign.Api.CloudStorageProviders do
   ### Returns
 
   - `{:ok, DocuSign.Model.CloudStorageProviders.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec cloud_storage_delete_cloud_storage(DocuSign.Connection.t(), String.t(), String.t(), String.t(), keyword()) ::
           {:ok, CloudStorageProviders.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def cloud_storage_delete_cloud_storage(connection, account_id, service_id, user_id, _opts \\ []) do
     request =
       %{}
@@ -63,11 +63,11 @@ defmodule DocuSign.Api.CloudStorageProviders do
   ### Returns
 
   - `{:ok, DocuSign.Model.CloudStorageProviders.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec cloud_storage_delete_cloud_storage_providers(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, CloudStorageProviders.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def cloud_storage_delete_cloud_storage_providers(connection, account_id, user_id, opts \\ []) do
     optional_params = %{
       :body => :body
@@ -104,11 +104,11 @@ defmodule DocuSign.Api.CloudStorageProviders do
   ### Returns
 
   - `{:ok, DocuSign.Model.CloudStorageProviders.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec cloud_storage_get_cloud_storage(DocuSign.Connection.t(), String.t(), String.t(), String.t(), keyword()) ::
           {:ok, CloudStorageProviders.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def cloud_storage_get_cloud_storage(connection, account_id, service_id, user_id, opts \\ []) do
     optional_params = %{
       :redirectUrl => :query
@@ -144,11 +144,11 @@ defmodule DocuSign.Api.CloudStorageProviders do
   ### Returns
 
   - `{:ok, DocuSign.Model.CloudStorageProviders.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec cloud_storage_get_cloud_storage_providers(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, CloudStorageProviders.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def cloud_storage_get_cloud_storage_providers(connection, account_id, user_id, opts \\ []) do
     optional_params = %{
       :redirectUrl => :query
@@ -184,11 +184,11 @@ defmodule DocuSign.Api.CloudStorageProviders do
   ### Returns
 
   - `{:ok, DocuSign.Model.CloudStorageProviders.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec cloud_storage_post_cloud_storage(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, CloudStorageProviders.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def cloud_storage_post_cloud_storage(connection, account_id, user_id, opts \\ []) do
     optional_params = %{
       :body => :body

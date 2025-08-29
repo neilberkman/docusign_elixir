@@ -31,11 +31,11 @@ defmodule DocuSign.Api.TemplateRecipients do
   ### Returns
 
   - `{:ok, DocuSign.Model.Recipients.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec recipients_delete_template_recipient(DocuSign.Connection.t(), String.t(), String.t(), String.t(), keyword()) ::
           {:ok, Recipients.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def recipients_delete_template_recipient(connection, account_id, recipient_id, template_id, opts \\ []) do
     optional_params = %{
       :body => :body
@@ -71,11 +71,11 @@ defmodule DocuSign.Api.TemplateRecipients do
   ### Returns
 
   - `{:ok, DocuSign.Model.Recipients.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec recipients_delete_template_recipients(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, Recipients.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def recipients_delete_template_recipients(connection, account_id, template_id, opts \\ []) do
     optional_params = %{
       :body => :body
@@ -113,11 +113,11 @@ defmodule DocuSign.Api.TemplateRecipients do
   ### Returns
 
   - `{:ok, DocuSign.Model.Recipients.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec recipients_get_template_recipients(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, Recipients.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def recipients_get_template_recipients(connection, account_id, template_id, opts \\ []) do
     optional_params = %{
       :include_anchor_tab_locations => :query,
@@ -156,11 +156,11 @@ defmodule DocuSign.Api.TemplateRecipients do
   ### Returns
 
   - `{:ok, DocuSign.Model.Recipients.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec recipients_post_template_recipients(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, Recipients.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def recipients_post_template_recipients(connection, account_id, template_id, opts \\ []) do
     optional_params = %{
       :body => :body,
@@ -199,11 +199,11 @@ defmodule DocuSign.Api.TemplateRecipients do
   ### Returns
 
   - `{:ok, DocuSign.Model.RecipientsUpdateSummary.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec recipients_put_template_recipients(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, RecipientsUpdateSummary.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def recipients_put_template_recipients(connection, account_id, template_id, opts \\ []) do
     optional_params = %{
       :body => :body,
@@ -241,11 +241,11 @@ defmodule DocuSign.Api.TemplateRecipients do
   ### Returns
 
   - `{:ok, DocuSign.Model.ViewUrl.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec views_post_template_recipient_preview(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, ViewUrl.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def views_post_template_recipient_preview(connection, account_id, template_id, opts \\ []) do
     optional_params = %{
       :body => :body

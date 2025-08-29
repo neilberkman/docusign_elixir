@@ -7,12 +7,22 @@ defmodule DocuSign.Model.DocGenSyntaxError do
   Describes document generation errors.
   """
 
-  @derive Jason.Encoder
   defstruct [
     :errorCode,
     :message,
     :tagIdentifier
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :errorCode => String.t() | nil,
@@ -21,6 +31,6 @@ defmodule DocuSign.Model.DocGenSyntaxError do
         }
 
   def decode(value) do
-    value
+    struct(__MODULE__, value)
   end
 end

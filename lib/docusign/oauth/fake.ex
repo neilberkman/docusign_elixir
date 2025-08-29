@@ -24,7 +24,10 @@ defmodule DocuSign.OAuth.Fake do
 
   @impl DocuSign.OAuth
   def get_token!(client, _params \\ [], _headers \\ [], _opts \\ []) do
-    %{client | token: OAuth2.AccessToken.new(":token:")}
+    %{
+      client
+      | token: OAuth2.AccessToken.new(%{"access_token" => ":token:", "token_type" => "Bearer"})
+    }
   end
 
   @impl DocuSign.OAuth
@@ -34,7 +37,14 @@ defmodule DocuSign.OAuth.Fake do
 
   @impl DocuSign.OAuth
   def refresh_token!(client, _force \\ false) do
-    %{client | token: OAuth2.AccessToken.new(":refreshed-token:")}
+    %{
+      client
+      | token:
+          OAuth2.AccessToken.new(%{
+            "access_token" => ":refreshed-token:",
+            "token_type" => "Bearer"
+          })
+    }
   end
 
   @impl DocuSign.OAuth
@@ -42,21 +52,46 @@ defmodule DocuSign.OAuth.Fake do
 
   @impl DocuSign.OAuth
   def get_client_info(_client) do
-    %{
-      "accounts" => [
-        %{
-          "account_id" => ":account-id:",
-          "account_name" => ":account-name:",
-          "base_uri" => "https://demo.docusign.net",
-          "is_default" => true
-        }
-      ],
-      "created" => "2018-09-07T23:49:34.163",
-      "email" => ":email:",
-      "family_name" => ":family-name:",
-      "given_name" => ":given-name:",
-      "name" => ":name:",
-      "sub" => ":user-id:"
-    }
+    # Get the test hostname from config for integration tests
+    hostname = Application.get_env(:docusign, :hostname, "demo.docusign.net")
+
+    # Return different data based on whether we're running integration tests
+    if String.contains?(hostname, "localhost") do
+      # Integration test data
+      %{
+        "accounts" => [
+          %{
+            "account_id" => "17035828",
+            "account_name" => "Test Account",
+            "base_uri" => "http://#{hostname}",
+            "is_default" => true
+          }
+        ],
+        "created" => "2018-09-07T23:49:34.163",
+        "email" => "test@example.com",
+        "family_name" => "Test",
+        "given_name" => "Test",
+        "name" => "Test User",
+        "sub" => "test_user_id"
+      }
+    else
+      # Regular test data (for unit tests)
+      %{
+        "accounts" => [
+          %{
+            "account_id" => ":account-id:",
+            "account_name" => ":account-name:",
+            "base_uri" => "https://demo.docusign.net",
+            "is_default" => true
+          }
+        ],
+        "created" => "2018-09-07T23:49:34.163",
+        "email" => ":email:",
+        "family_name" => ":family-name:",
+        "given_name" => ":given-name:",
+        "name" => ":name:",
+        "sub" => ":user-id:"
+      }
+    end
   end
 end

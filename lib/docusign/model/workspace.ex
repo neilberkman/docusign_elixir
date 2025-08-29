@@ -11,7 +11,6 @@ defmodule DocuSign.Model.Workspace do
   alias DocuSign.Model.WorkspaceSettings
   alias DocuSign.Model.WorkspaceUser
 
-  @derive Jason.Encoder
   defstruct [
     :billableAccountId,
     :callerInformation,
@@ -27,6 +26,17 @@ defmodule DocuSign.Model.Workspace do
     :workspaceName,
     :workspaceUri
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :billableAccountId => String.t() | nil,
@@ -66,5 +76,6 @@ defmodule DocuSign.Model.Workspace do
       :struct,
       WorkspaceSettings
     )
+    |> then(&struct(__MODULE__, &1))
   end
 end

@@ -13,7 +13,6 @@ defmodule DocuSign.Model.TemplateViewSettings do
   alias DocuSign.Model.EnvelopeViewTaggerSettings
   alias DocuSign.Model.TemplateViewRecipientSettings
 
-  @derive Jason.Encoder
   defstruct [
     :backButtonAction,
     :documentSettings,
@@ -27,6 +26,17 @@ defmodule DocuSign.Model.TemplateViewSettings do
     :startingScreen,
     :taggerSettings
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :backButtonAction => String.t() | nil,
@@ -64,5 +74,6 @@ defmodule DocuSign.Model.TemplateViewSettings do
       :struct,
       EnvelopeViewTaggerSettings
     )
+    |> then(&struct(__MODULE__, &1))
   end
 end

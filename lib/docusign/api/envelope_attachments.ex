@@ -28,11 +28,11 @@ defmodule DocuSign.Api.EnvelopeAttachments do
   ### Returns
 
   - `{:ok, DocuSign.Model.EnvelopeAttachmentsResult.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec attachments_delete_attachments(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, EnvelopeAttachmentsResult.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def attachments_delete_attachments(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
       :body => :body
@@ -68,11 +68,11 @@ defmodule DocuSign.Api.EnvelopeAttachments do
   ### Returns
 
   - `{:ok, String.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec attachments_get_attachment(DocuSign.Connection.t(), String.t(), String.t(), String.t(), keyword()) ::
           {:ok, String.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def attachments_get_attachment(connection, account_id, attachment_id, envelope_id, _opts \\ []) do
     request =
       %{}
@@ -102,11 +102,11 @@ defmodule DocuSign.Api.EnvelopeAttachments do
   ### Returns
 
   - `{:ok, DocuSign.Model.EnvelopeAttachmentsResult.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec attachments_get_attachments(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, EnvelopeAttachmentsResult.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def attachments_get_attachments(connection, account_id, envelope_id, _opts \\ []) do
     request =
       %{}
@@ -138,11 +138,11 @@ defmodule DocuSign.Api.EnvelopeAttachments do
   ### Returns
 
   - `{:ok, DocuSign.Model.EnvelopeAttachmentsResult.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec attachments_put_attachment(DocuSign.Connection.t(), String.t(), String.t(), String.t(), keyword()) ::
           {:ok, EnvelopeAttachmentsResult.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def attachments_put_attachment(connection, account_id, attachment_id, envelope_id, opts \\ []) do
     optional_params = %{
       :body => :body
@@ -179,11 +179,11 @@ defmodule DocuSign.Api.EnvelopeAttachments do
   ### Returns
 
   - `{:ok, DocuSign.Model.EnvelopeAttachmentsResult.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec attachments_put_attachments(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, EnvelopeAttachmentsResult.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def attachments_put_attachments(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
       :body => :body

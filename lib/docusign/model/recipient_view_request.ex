@@ -10,7 +10,6 @@ defmodule DocuSign.Model.RecipientViewRequest do
   alias DocuSign.Deserializer
   alias DocuSign.Model.RecipientTokenClientUrls
 
-  @derive Jason.Encoder
   defstruct [
     :assertionId,
     :authenticationInstant,
@@ -31,6 +30,17 @@ defmodule DocuSign.Model.RecipientViewRequest do
     :xFrameOptions,
     :xFrameOptionsAllowFromUrl
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :assertionId => String.t() | nil,
@@ -60,5 +70,6 @@ defmodule DocuSign.Model.RecipientViewRequest do
       :struct,
       RecipientTokenClientUrls
     )
+    |> then(&struct(__MODULE__, &1))
   end
 end

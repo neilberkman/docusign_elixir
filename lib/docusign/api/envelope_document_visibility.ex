@@ -28,7 +28,7 @@ defmodule DocuSign.Api.EnvelopeDocumentVisibility do
   ### Returns
 
   - `{:ok, DocuSign.Model.DocumentVisibilityList.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec recipients_get_recipient_document_visibility(
           DocuSign.Connection.t(),
@@ -38,7 +38,7 @@ defmodule DocuSign.Api.EnvelopeDocumentVisibility do
           keyword()
         ) ::
           {:ok, DocumentVisibilityList.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def recipients_get_recipient_document_visibility(connection, account_id, envelope_id, recipient_id, _opts \\ []) do
     request =
       %{}
@@ -70,7 +70,7 @@ defmodule DocuSign.Api.EnvelopeDocumentVisibility do
   ### Returns
 
   - `{:ok, DocuSign.Model.DocumentVisibilityList.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec recipients_put_recipient_document_visibility(
           DocuSign.Connection.t(),
@@ -80,7 +80,7 @@ defmodule DocuSign.Api.EnvelopeDocumentVisibility do
           keyword()
         ) ::
           {:ok, DocumentVisibilityList.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def recipients_put_recipient_document_visibility(connection, account_id, envelope_id, recipient_id, opts \\ []) do
     optional_params = %{
       :body => :body
@@ -117,11 +117,11 @@ defmodule DocuSign.Api.EnvelopeDocumentVisibility do
   ### Returns
 
   - `{:ok, DocuSign.Model.DocumentVisibilityList.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec recipients_put_recipients_document_visibility(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, DocumentVisibilityList.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def recipients_put_recipients_document_visibility(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
       :body => :body

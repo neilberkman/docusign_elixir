@@ -27,11 +27,11 @@ defmodule DocuSign.Api.NotaryJournals do
   ### Returns
 
   - `{:ok, DocuSign.Model.NotaryJournalList.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec notary_journals_get_notary_journals(DocuSign.Connection.t(), keyword()) ::
           {:ok, NotaryJournalList.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def notary_journals_get_notary_journals(connection, opts \\ []) do
     optional_params = %{
       :count => :query,

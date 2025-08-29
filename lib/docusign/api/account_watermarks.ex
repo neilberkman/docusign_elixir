@@ -26,11 +26,11 @@ defmodule DocuSign.Api.AccountWatermarks do
   ### Returns
 
   - `{:ok, DocuSign.Model.Watermark.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec watermark_get_watermark(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, Watermark.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def watermark_get_watermark(connection, account_id, _opts \\ []) do
     request =
       %{}
@@ -60,11 +60,11 @@ defmodule DocuSign.Api.AccountWatermarks do
   ### Returns
 
   - `{:ok, DocuSign.Model.Watermark.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec watermark_preview_put_watermark_preview(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, Watermark.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def watermark_preview_put_watermark_preview(connection, account_id, opts \\ []) do
     optional_params = %{
       :body => :body
@@ -100,11 +100,11 @@ defmodule DocuSign.Api.AccountWatermarks do
   ### Returns
 
   - `{:ok, DocuSign.Model.Watermark.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec watermark_put_watermark(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, Watermark.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def watermark_put_watermark(connection, account_id, opts \\ []) do
     optional_params = %{
       :body => :body

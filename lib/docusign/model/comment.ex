@@ -7,7 +7,6 @@ defmodule DocuSign.Model.Comment do
 
   """
 
-  @derive Jason.Encoder
   defstruct [
     :envelopeId,
     :hmac,
@@ -31,6 +30,17 @@ defmodule DocuSign.Model.Comment do
     :timestamp,
     :visibleTo
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :envelopeId => String.t() | nil,
@@ -57,6 +67,6 @@ defmodule DocuSign.Model.Comment do
         }
 
   def decode(value) do
-    value
+    struct(__MODULE__, value)
   end
 end

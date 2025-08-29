@@ -14,7 +14,6 @@ defmodule DocuSign.Model.MemberSharedItems do
   alias DocuSign.Model.TemplateSharedItem
   alias DocuSign.Model.UserInfo
 
-  @derive Jason.Encoder
   defstruct [
     :envelopes,
     :errorDetails,
@@ -22,6 +21,17 @@ defmodule DocuSign.Model.MemberSharedItems do
     :templates,
     :user
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :envelopes => [SharedItem.t()] | nil,
@@ -58,5 +68,6 @@ defmodule DocuSign.Model.MemberSharedItems do
       :struct,
       UserInfo
     )
+    |> then(&struct(__MODULE__, &1))
   end
 end

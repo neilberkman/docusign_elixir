@@ -28,11 +28,11 @@ defmodule DocuSign.Api.AccountConsumerDisclosures do
   ### Returns
 
   - `{:ok, DocuSign.Model.AccountConsumerDisclosures.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec consumer_disclosure_get_consumer_disclosure(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, AccountConsumerDisclosures.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def consumer_disclosure_get_consumer_disclosure(connection, account_id, opts \\ []) do
     optional_params = %{
       :langCode => :query
@@ -67,7 +67,7 @@ defmodule DocuSign.Api.AccountConsumerDisclosures do
   ### Returns
 
   - `{:ok, DocuSign.Model.AccountConsumerDisclosures.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec consumer_disclosure_get_consumer_disclosure_lang_code(
           DocuSign.Connection.t(),
@@ -76,7 +76,7 @@ defmodule DocuSign.Api.AccountConsumerDisclosures do
           keyword()
         ) ::
           {:ok, AccountConsumerDisclosures.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def consumer_disclosure_get_consumer_disclosure_lang_code(connection, account_id, lang_code, _opts \\ []) do
     request =
       %{}
@@ -108,11 +108,11 @@ defmodule DocuSign.Api.AccountConsumerDisclosures do
   ### Returns
 
   - `{:ok, DocuSign.Model.ConsumerDisclosure.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec consumer_disclosure_put_consumer_disclosure(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, ConsumerDisclosure.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def consumer_disclosure_put_consumer_disclosure(connection, account_id, lang_code, opts \\ []) do
     optional_params = %{
       :body => :body,

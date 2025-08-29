@@ -12,7 +12,6 @@ defmodule DocuSign.Model.EventNotification do
   alias DocuSign.Model.EnvelopeEvent
   alias DocuSign.Model.RecipientEvent
 
-  @derive Jason.Encoder
   defstruct [
     :deliveryMode,
     :envelopeEvents,
@@ -36,6 +35,17 @@ defmodule DocuSign.Model.EventNotification do
     :url,
     :useSoapInterface
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :deliveryMode => String.t() | nil,
@@ -78,5 +88,6 @@ defmodule DocuSign.Model.EventNotification do
       :list,
       RecipientEvent
     )
+    |> then(&struct(__MODULE__, &1))
   end
 end

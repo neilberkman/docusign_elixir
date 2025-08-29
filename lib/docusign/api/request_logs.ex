@@ -26,11 +26,11 @@ defmodule DocuSign.Api.RequestLogs do
   ### Returns
 
   - `{:ok, nil}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec a_pi_request_log_delete_request_logs(DocuSign.Connection.t(), keyword()) ::
           {:ok, nil}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def a_pi_request_log_delete_request_logs(connection, _opts \\ []) do
     request =
       %{}
@@ -59,11 +59,11 @@ defmodule DocuSign.Api.RequestLogs do
   ### Returns
 
   - `{:ok, String.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec a_pi_request_log_get_request_log(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, String.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def a_pi_request_log_get_request_log(connection, request_log_id, _opts \\ []) do
     request =
       %{}
@@ -91,11 +91,11 @@ defmodule DocuSign.Api.RequestLogs do
   ### Returns
 
   - `{:ok, DocuSign.Model.DiagnosticsSettingsInformation.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec a_pi_request_log_get_request_log_settings(DocuSign.Connection.t(), keyword()) ::
           {:ok, DiagnosticsSettingsInformation.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def a_pi_request_log_get_request_log_settings(connection, _opts \\ []) do
     request =
       %{}
@@ -124,11 +124,11 @@ defmodule DocuSign.Api.RequestLogs do
   ### Returns
 
   - `{:ok, DocuSign.Model.ApiRequestLogsResult.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec a_pi_request_log_get_request_logs(DocuSign.Connection.t(), keyword()) ::
           {:ok, ApiRequestLogsResult.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def a_pi_request_log_get_request_logs(connection, opts \\ []) do
     optional_params = %{
       :encoding => :query
@@ -162,11 +162,11 @@ defmodule DocuSign.Api.RequestLogs do
   ### Returns
 
   - `{:ok, DocuSign.Model.DiagnosticsSettingsInformation.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec a_pi_request_log_put_request_log_settings(DocuSign.Connection.t(), keyword()) ::
           {:ok, DiagnosticsSettingsInformation.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def a_pi_request_log_put_request_log_settings(connection, opts \\ []) do
     optional_params = %{
       :body => :body

@@ -5,8 +5,8 @@ defmodule DocuSign.ErrorTest do
 
   describe "Error struct creation" do
     test "creates ApiError for generic errors" do
-      env = %Tesla.Env{body: %{"message" => "Server error"}, status: 500}
-      error = Error.new(env)
+      response = %Req.Response{body: %{"message" => "Server error"}, status: 500}
+      error = Error.new(response)
 
       assert %DocuSign.ApiError{} = error
       assert error.status == 500
@@ -14,8 +14,8 @@ defmodule DocuSign.ErrorTest do
     end
 
     test "creates AuthenticationError for 401" do
-      env = %Tesla.Env{body: %{"message" => "Unauthorized"}, status: 401}
-      error = Error.new(env)
+      response = %Req.Response{body: %{"message" => "Unauthorized"}, status: 401}
+      error = Error.new(response)
 
       assert %DocuSign.AuthenticationError{} = error
       assert error.status == 401
@@ -23,8 +23,8 @@ defmodule DocuSign.ErrorTest do
     end
 
     test "creates RateLimitError for 429" do
-      env = %Tesla.Env{body: %{"message" => "Rate limit exceeded"}, status: 429}
-      error = Error.new(env)
+      response = %Req.Response{body: %{"message" => "Rate limit exceeded"}, status: 429}
+      error = Error.new(response)
 
       assert %DocuSign.RateLimitError{} = error
       assert error.status == 429
@@ -32,8 +32,8 @@ defmodule DocuSign.ErrorTest do
     end
 
     test "creates ValidationError for 400" do
-      env = %Tesla.Env{body: %{"message" => "Invalid request"}, status: 400}
-      error = Error.new(env)
+      response = %Req.Response{body: %{"message" => "Invalid request"}, status: 400}
+      error = Error.new(response)
 
       assert %DocuSign.ValidationError{} = error
       assert error.status == 400

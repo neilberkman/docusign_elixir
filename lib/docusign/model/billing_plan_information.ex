@@ -16,7 +16,6 @@ defmodule DocuSign.Model.BillingPlanInformation do
   alias DocuSign.Model.PlanInformation
   alias DocuSign.Model.ReferralInformation
 
-  @derive Jason.Encoder
   defstruct [
     :appStoreReceipt,
     :billingAddress,
@@ -41,6 +40,17 @@ defmodule DocuSign.Model.BillingPlanInformation do
     :saleDiscountSeatPriceOverride,
     :taxExemptId
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :appStoreReceipt => AppStoreReceipt.t() | nil,
@@ -104,5 +114,6 @@ defmodule DocuSign.Model.BillingPlanInformation do
       :struct,
       ReferralInformation
     )
+    |> then(&struct(__MODULE__, &1))
   end
 end

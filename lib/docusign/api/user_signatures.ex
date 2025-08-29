@@ -29,17 +29,11 @@ defmodule DocuSign.Api.UserSignatures do
   ### Returns
 
   - `{:ok, nil}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
-  @spec user_signatures_delete_user_signature(
-          DocuSign.Connection.t(),
-          String.t(),
-          String.t(),
-          String.t(),
-          keyword()
-        ) ::
+  @spec user_signatures_delete_user_signature(DocuSign.Connection.t(), String.t(), String.t(), String.t(), keyword()) ::
           {:ok, nil}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def user_signatures_delete_user_signature(connection, account_id, signature_id, user_id, _opts \\ []) do
     request =
       %{}
@@ -71,7 +65,7 @@ defmodule DocuSign.Api.UserSignatures do
   ### Returns
 
   - `{:ok, DocuSign.Model.UserSignature.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec user_signatures_delete_user_signature_image(
           DocuSign.Connection.t(),
@@ -82,7 +76,7 @@ defmodule DocuSign.Api.UserSignatures do
           keyword()
         ) ::
           {:ok, UserSignature.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def user_signatures_delete_user_signature_image(
         connection,
         account_id,
@@ -120,17 +114,11 @@ defmodule DocuSign.Api.UserSignatures do
   ### Returns
 
   - `{:ok, DocuSign.Model.UserSignature.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
-  @spec user_signatures_get_user_signature(
-          DocuSign.Connection.t(),
-          String.t(),
-          String.t(),
-          String.t(),
-          keyword()
-        ) ::
+  @spec user_signatures_get_user_signature(DocuSign.Connection.t(), String.t(), String.t(), String.t(), keyword()) ::
           {:ok, UserSignature.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def user_signatures_get_user_signature(connection, account_id, signature_id, user_id, _opts \\ []) do
     request =
       %{}
@@ -163,7 +151,7 @@ defmodule DocuSign.Api.UserSignatures do
   ### Returns
 
   - `{:ok, String.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec user_signatures_get_user_signature_image(
           DocuSign.Connection.t(),
@@ -174,7 +162,7 @@ defmodule DocuSign.Api.UserSignatures do
           keyword()
         ) ::
           {:ok, String.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def user_signatures_get_user_signature_image(connection, account_id, image_type, signature_id, user_id, opts \\ []) do
     optional_params = %{
       :include_chrome => :query
@@ -210,16 +198,11 @@ defmodule DocuSign.Api.UserSignatures do
   ### Returns
 
   - `{:ok, DocuSign.Model.UserSignaturesInformation.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
-  @spec user_signatures_get_user_signatures(
-          DocuSign.Connection.t(),
-          String.t(),
-          String.t(),
-          keyword()
-        ) ::
+  @spec user_signatures_get_user_signatures(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, UserSignaturesInformation.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def user_signatures_get_user_signatures(connection, account_id, user_id, opts \\ []) do
     optional_params = %{
       :stamp_type => :query
@@ -250,21 +233,16 @@ defmodule DocuSign.Api.UserSignatures do
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `user_id` (String.t): The ID of the user to access.  **Note:** Users can only access their own information. A user, even one with Admin rights, cannot access another user's settings.
   - `opts` (keyword): Optional parameters
-    - `:body` (UserSignaturesInformation):
+    - `:body` (UserSignaturesInformation): 
 
   ### Returns
 
   - `{:ok, DocuSign.Model.UserSignaturesInformation.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
-  @spec user_signatures_post_user_signatures(
-          DocuSign.Connection.t(),
-          String.t(),
-          String.t(),
-          keyword()
-        ) ::
+  @spec user_signatures_post_user_signatures(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, UserSignaturesInformation.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def user_signatures_post_user_signatures(connection, account_id, user_id, opts \\ []) do
     optional_params = %{
       :body => :body
@@ -295,21 +273,16 @@ defmodule DocuSign.Api.UserSignatures do
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `user_id` (String.t): The ID of the user to access.  **Note:** Users can only access their own information. A user, even one with Admin rights, cannot access another user's settings.
   - `opts` (keyword): Optional parameters
-    - `:body` (UserSignaturesInformation):
+    - `:body` (UserSignaturesInformation): 
 
   ### Returns
 
   - `{:ok, DocuSign.Model.UserSignaturesInformation.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
-  @spec user_signatures_put_user_signature(
-          DocuSign.Connection.t(),
-          String.t(),
-          String.t(),
-          keyword()
-        ) ::
+  @spec user_signatures_put_user_signature(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, UserSignaturesInformation.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def user_signatures_put_user_signature(connection, account_id, user_id, opts \\ []) do
     optional_params = %{
       :body => :body
@@ -343,22 +316,16 @@ defmodule DocuSign.Api.UserSignatures do
   - `user_id` (String.t): The ID of the user to access.  **Note:** Users can only access their own information. A user, even one with Admin rights, cannot access another user's settings.
   - `opts` (keyword): Optional parameters
     - `:close_existing_signature` (String.t): When **true,** closes the current signature.
-    - `:body` (UserSignatureDefinition):
+    - `:body` (UserSignatureDefinition): 
 
   ### Returns
 
   - `{:ok, DocuSign.Model.UserSignature.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
-  @spec user_signatures_put_user_signature_by_id(
-          DocuSign.Connection.t(),
-          String.t(),
-          String.t(),
-          String.t(),
-          keyword()
-        ) ::
+  @spec user_signatures_put_user_signature_by_id(DocuSign.Connection.t(), String.t(), String.t(), String.t(), keyword()) ::
           {:ok, UserSignature.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def user_signatures_put_user_signature_by_id(connection, account_id, signature_id, user_id, opts \\ []) do
     optional_params = %{
       :body => :body,
@@ -383,7 +350,7 @@ defmodule DocuSign.Api.UserSignatures do
 
   @doc """
   Updates the user signature image or user initials image for the specified user.
-  Updates the user signature image or user initials image for the specified user. The supported image formats for this file are: gif, png, jpeg, and bmp. The file must be less than 200K.  The userId property specified in the endpoint must match the authenticated user's user ID and the user must be a member of the account.  The `signatureId` parameter accepts a signature ID or a signature name. Docusign recommends you use signature ID (`signatureId`), since some names contain characters that do not properly encode into a URL. If you use the user name, it is likely that the name includes spaces. In that case, URL encode the name before using it in the endpoint.   For example encode \"Bob Smith\" as \"Bob%20Smith\".
+  Updates the user signature image or user initials image for the specified user. The supported image formats for this file are: gif, png, jpeg, and bmp. The file must be less than 200K.  The userId property specified in the endpoint must match the authenticated user's user ID and the user must be a member of the account.  The `signatureId` parameter accepts a signature ID or a signature name. Docusign recommends you use signature ID (`signatureId`), since some names contain characters that do not properly encode into a URL. If you use the user name, it is likely that the name includes spaces. In that case, URL encode the name before using it in the endpoint.   For example encode \"Bob Smith\" as \"Bob%20Smith\". 
 
   ### Parameters
 
@@ -394,12 +361,12 @@ defmodule DocuSign.Api.UserSignatures do
   - `user_id` (String.t): The ID of the user to access.  **Note:** Users can only access their own information. A user, even one with Admin rights, cannot access another user's settings.
   - `image_bytes` (String.t): Updated image content.
   - `opts` (keyword): Optional parameters
-    - `:transparent_png` (String.t):
+    - `:transparent_png` (String.t): 
 
   ### Returns
 
   - `{:ok, DocuSign.Model.UserSignature.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec user_signatures_put_user_signature_image(
           DocuSign.Connection.t(),
@@ -411,7 +378,7 @@ defmodule DocuSign.Api.UserSignatures do
           keyword()
         ) ::
           {:ok, UserSignature.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def user_signatures_put_user_signature_image(
         connection,
         account_id,

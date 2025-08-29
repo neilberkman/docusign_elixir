@@ -12,40 +12,31 @@ Before running the scripts, ensure:
 
 ## Using the Regeneration Scripts
 
-### Complete Process
+### Quick Start
 
-For a complete regeneration, follow these steps:
+The regeneration script handles everything automatically:
 
-1. Download the latest specification:
-```bash
-curl -o esignature.swagger.json https://raw.githubusercontent.com/docusign/eSign-OpenAPI-Specification/master/esignature.rest.swagger-v2.1.json
-```
-
-2. Generate the API client code:
-```bash
-openapi-generator generate \
-  -i esignature.swagger.json \
-  -g elixir \
-  -o /tmp/docusign_regen/elixir_api_client \
-  --additional-properties=packageName=docusign_e_signature_restapi
-```
-
-3. Run the modernized regeneration script:
 ```bash
 cd scripts/regen
-chmod +x modernized_regenerate_library.sh
-./modernized_regenerate_library.sh
+./regenerate_library.sh
 ```
 
-## Available Scripts
+This will:
 
-1. `regenerate_library.sh` - Basic regeneration script (original)
-2. `enhanced_regenerate_library.sh` - Preserves the ModelCleaner while regenerating
-3. `modernized_regenerate_library.sh` - Updates to use Jason instead of Poison and preserves ModelCleaner
+1. Download the latest OpenAPI specification (if not present)
+2. Generate the client code with custom templates
+3. Update the library while preserving customizations
+4. Run tests to verify everything works
+
+### Options
+
+- `./regenerate_library.sh` - Use cached spec and generated code if available
+- `./regenerate_library.sh --download` - Force download latest spec and regenerate
+- `./regenerate_library.sh --generate` - Force regeneration using existing spec
 
 ## Script Details
 
-### modernized_regenerate_library.sh
+### regenerate_library.sh
 
 This script:
 

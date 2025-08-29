@@ -10,7 +10,6 @@ defmodule DocuSign.Model.UserAccountManagementGranularInformation do
   alias DocuSign.Deserializer
   alias DocuSign.Model.SettingsMetadata
 
-  @derive Jason.Encoder
   defstruct [
     :canManageAccountSecuritySettings,
     :canManageAccountSecuritySettingsMetadata,
@@ -40,6 +39,17 @@ defmodule DocuSign.Model.UserAccountManagementGranularInformation do
     :canManageUsersMetadata,
     :canViewUsers
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :canManageAccountSecuritySettings => String.t() | nil,
@@ -138,5 +148,6 @@ defmodule DocuSign.Model.UserAccountManagementGranularInformation do
       :struct,
       SettingsMetadata
     )
+    |> then(&struct(__MODULE__, &1))
   end
 end

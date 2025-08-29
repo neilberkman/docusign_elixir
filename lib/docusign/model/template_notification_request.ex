@@ -11,13 +11,23 @@ defmodule DocuSign.Model.TemplateNotificationRequest do
   alias DocuSign.Model.Expirations
   alias DocuSign.Model.Reminders
 
-  @derive Jason.Encoder
   defstruct [
     :expirations,
     :password,
     :reminders,
     :useAccountDefaults
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :expirations => Expirations.t() | nil,
@@ -38,5 +48,6 @@ defmodule DocuSign.Model.TemplateNotificationRequest do
       :struct,
       Reminders
     )
+    |> then(&struct(__MODULE__, &1))
   end
 end

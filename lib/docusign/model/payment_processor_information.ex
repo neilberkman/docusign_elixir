@@ -10,12 +10,22 @@ defmodule DocuSign.Model.PaymentProcessorInformation do
   alias DocuSign.Deserializer
   alias DocuSign.Model.AddressInformation
 
-  @derive Jason.Encoder
   defstruct [
     :address,
     :billingAgreementId,
     :email
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :address => AddressInformation.t() | nil,
@@ -30,5 +40,6 @@ defmodule DocuSign.Model.PaymentProcessorInformation do
       :struct,
       AddressInformation
     )
+    |> then(&struct(__MODULE__, &1))
   end
 end

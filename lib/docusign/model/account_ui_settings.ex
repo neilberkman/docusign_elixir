@@ -12,7 +12,6 @@ defmodule DocuSign.Model.AccountUiSettings do
   alias DocuSign.Model.AskAnAdmin
   alias DocuSign.Model.SettingsMetadata
 
-  @derive Jason.Encoder
   defstruct [
     :adminMessage,
     :allowUsersToEditSharedAccess,
@@ -51,6 +50,17 @@ defmodule DocuSign.Model.AccountUiSettings do
     :uploadNewImageToSignOrInitial,
     :uploadNewImageToSignOrInitialMetadata
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :adminMessage => AdminMessage.t() | nil,
@@ -188,5 +198,6 @@ defmodule DocuSign.Model.AccountUiSettings do
       :struct,
       SettingsMetadata
     )
+    |> then(&struct(__MODULE__, &1))
   end
 end

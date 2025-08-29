@@ -28,11 +28,11 @@ defmodule DocuSign.Api.TemplateViews do
   ### Returns
 
   - `{:ok, DocuSign.Model.ViewUrl.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec views_post_template_edit_view(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, ViewUrl.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def views_post_template_edit_view(connection, account_id, template_id, opts \\ []) do
     optional_params = %{
       :body => :body

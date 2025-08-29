@@ -12,7 +12,6 @@ defmodule DocuSign.Model.Contact do
   alias DocuSign.Model.ErrorDetails
   alias DocuSign.Model.NotaryContactDetails
 
-  @derive Jason.Encoder
   defstruct [
     :cloudProvider,
     :cloudProviderContainerId,
@@ -30,6 +29,17 @@ defmodule DocuSign.Model.Contact do
     :signingGroup,
     :signingGroupName
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :cloudProvider => String.t() | nil,
@@ -66,5 +76,6 @@ defmodule DocuSign.Model.Contact do
       :struct,
       NotaryContactDetails
     )
+    |> then(&struct(__MODULE__, &1))
   end
 end

@@ -28,11 +28,11 @@ defmodule DocuSign.Api.UserCustomSettings do
   ### Returns
 
   - `{:ok, DocuSign.Model.CustomSettingsInformation.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec user_custom_settings_delete_custom_settings(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, CustomSettingsInformation.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def user_custom_settings_delete_custom_settings(connection, account_id, user_id, opts \\ []) do
     optional_params = %{
       :body => :body
@@ -67,11 +67,11 @@ defmodule DocuSign.Api.UserCustomSettings do
   ### Returns
 
   - `{:ok, DocuSign.Model.CustomSettingsInformation.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec user_custom_settings_get_custom_settings(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, CustomSettingsInformation.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def user_custom_settings_get_custom_settings(connection, account_id, user_id, _opts \\ []) do
     request =
       %{}
@@ -102,11 +102,11 @@ defmodule DocuSign.Api.UserCustomSettings do
   ### Returns
 
   - `{:ok, DocuSign.Model.CustomSettingsInformation.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec user_custom_settings_put_custom_settings(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, CustomSettingsInformation.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def user_custom_settings_put_custom_settings(connection, account_id, user_id, opts \\ []) do
     optional_params = %{
       :body => :body

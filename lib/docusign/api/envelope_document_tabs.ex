@@ -30,11 +30,11 @@ defmodule DocuSign.Api.EnvelopeDocumentTabs do
   ### Returns
 
   - `{:ok, DocuSign.Model.Tabs.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec tabs_delete_document_tabs(DocuSign.Connection.t(), String.t(), String.t(), String.t(), keyword()) ::
           {:ok, Tabs.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def tabs_delete_document_tabs(connection, account_id, document_id, envelope_id, opts \\ []) do
     optional_params = %{
       :body => :body
@@ -72,11 +72,11 @@ defmodule DocuSign.Api.EnvelopeDocumentTabs do
   ### Returns
 
   - `{:ok, DocuSign.Model.EnvelopeDocumentTabs.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec tabs_get_document_tabs(DocuSign.Connection.t(), String.t(), String.t(), String.t(), keyword()) ::
           {:ok, EnvelopeDocumentTabs.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def tabs_get_document_tabs(connection, account_id, document_id, envelope_id, opts \\ []) do
     optional_params = %{
       :include_metadata => :query,
@@ -114,11 +114,11 @@ defmodule DocuSign.Api.EnvelopeDocumentTabs do
   ### Returns
 
   - `{:ok, DocuSign.Model.EnvelopeDocumentTabs.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec tabs_get_page_tabs(DocuSign.Connection.t(), String.t(), String.t(), String.t(), String.t(), keyword()) ::
           {:ok, EnvelopeDocumentTabs.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def tabs_get_page_tabs(connection, account_id, document_id, envelope_id, page_number, _opts \\ []) do
     request =
       %{}
@@ -150,11 +150,11 @@ defmodule DocuSign.Api.EnvelopeDocumentTabs do
   ### Returns
 
   - `{:ok, DocuSign.Model.Tabs.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec tabs_post_document_tabs(DocuSign.Connection.t(), String.t(), String.t(), String.t(), keyword()) ::
           {:ok, Tabs.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def tabs_post_document_tabs(connection, account_id, document_id, envelope_id, opts \\ []) do
     optional_params = %{
       :body => :body
@@ -192,11 +192,11 @@ defmodule DocuSign.Api.EnvelopeDocumentTabs do
   ### Returns
 
   - `{:ok, DocuSign.Model.Tabs.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec tabs_put_document_tabs(DocuSign.Connection.t(), String.t(), String.t(), String.t(), keyword()) ::
           {:ok, Tabs.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def tabs_put_document_tabs(connection, account_id, document_id, envelope_id, opts \\ []) do
     optional_params = %{
       :body => :body

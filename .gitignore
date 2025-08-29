@@ -37,3 +37,4 @@ swagger-codegen-cli.jar
 .vscode
 
 esignature.rest.swagger-v2.1.json
+scripts/capture_responses.exs

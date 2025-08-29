@@ -7,11 +7,21 @@ defmodule DocuSign.Model.ContactPhoneNumber do
   Details about the phone numbers associated with a specific contact.
   """
 
-  @derive Jason.Encoder
   defstruct [
     :phoneNumber,
     :phoneType
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :phoneNumber => String.t() | nil,
@@ -19,6 +29,6 @@ defmodule DocuSign.Model.ContactPhoneNumber do
         }
 
   def decode(value) do
-    value
+    struct(__MODULE__, value)
   end
 end

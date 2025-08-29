@@ -23,7 +23,6 @@ defmodule DocuSign.Model.Templates do
   alias DocuSign.Model.UserInfo
   alias DocuSign.Model.Workflow
 
-  @derive Jason.Encoder
   defstruct [
     :accessControlListBase64,
     :allowComments,
@@ -130,6 +129,17 @@ defmodule DocuSign.Model.Templates do
     :voidedReason,
     :workflow
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :accessControlListBase64 => String.t() | nil,
@@ -325,5 +335,6 @@ defmodule DocuSign.Model.Templates do
       :struct,
       Workflow
     )
+    |> then(&struct(__MODULE__, &1))
   end
 end

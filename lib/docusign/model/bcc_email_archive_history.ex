@@ -10,7 +10,6 @@ defmodule DocuSign.Model.BccEmailArchiveHistory do
   alias DocuSign.Deserializer
   alias DocuSign.Model.UserInfo
 
-  @derive Jason.Encoder
   defstruct [
     :accountId,
     :action,
@@ -19,6 +18,17 @@ defmodule DocuSign.Model.BccEmailArchiveHistory do
     :modifiedBy,
     :status
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :accountId => String.t() | nil,
@@ -36,5 +46,6 @@ defmodule DocuSign.Model.BccEmailArchiveHistory do
       :struct,
       UserInfo
     )
+    |> then(&struct(__MODULE__, &1))
   end
 end

@@ -11,13 +11,23 @@ defmodule DocuSign.Model.RecipientIdentityVerification do
   alias DocuSign.Model.PropertyMetadata
   alias DocuSign.Model.RecipientIdentityInputOption
 
-  @derive Jason.Encoder
   defstruct [
     :inputOptions,
     :workflowId,
     :workflowIdMetadata,
     :workflowLabel
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :inputOptions => [RecipientIdentityInputOption.t()] | nil,
@@ -38,5 +48,6 @@ defmodule DocuSign.Model.RecipientIdentityVerification do
       :struct,
       PropertyMetadata
     )
+    |> then(&struct(__MODULE__, &1))
   end
 end

@@ -7,7 +7,6 @@ defmodule DocuSign.Model.SenderEmailNotifications do
   Contains the settings for the email notifications that senders receive about the envelopes that they send.
   """
 
-  @derive Jason.Encoder
   defstruct [
     :changedSigner,
     :clickwrapResponsesLimitNotificationEmail,
@@ -22,6 +21,17 @@ defmodule DocuSign.Model.SenderEmailNotifications do
     :senderEnvelopeDeclined,
     :withdrawnConsent
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :changedSigner => String.t() | nil,
@@ -39,6 +49,6 @@ defmodule DocuSign.Model.SenderEmailNotifications do
         }
 
   def decode(value) do
-    value
+    struct(__MODULE__, value)
   end
 end

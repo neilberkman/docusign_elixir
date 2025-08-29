@@ -12,7 +12,6 @@ defmodule DocuSign.Model.EnvelopeFormData do
   alias DocuSign.Model.PrefillFormData
   alias DocuSign.Model.RecipientFormData
 
-  @derive Jason.Encoder
   defstruct [
     :emailSubject,
     :envelopeId,
@@ -22,6 +21,17 @@ defmodule DocuSign.Model.EnvelopeFormData do
     :sentDateTime,
     :status
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :emailSubject => String.t() | nil,
@@ -50,5 +60,6 @@ defmodule DocuSign.Model.EnvelopeFormData do
       :list,
       RecipientFormData
     )
+    |> then(&struct(__MODULE__, &1))
   end
 end

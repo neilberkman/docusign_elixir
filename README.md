@@ -427,14 +427,25 @@ If you don't specify CA certificates, the library will attempt to use them in th
 3. System CA certificates from common locations
 4. Erlang's built-in CA certificates as a fallback
 
-## Tesla adapter configuration
+## HTTP Client Configuration
 
-By default, the API is called using `Tesla` with the Finch adapter. You can override the adapter
-to any [Tesla adapter][tesla_adapters]:
+The library uses [Req](https://hexdocs.pm/req) with [Finch](https://hexdocs.pm/finch) as the underlying HTTP client.
+Req automatically manages its own Finch instance named `Req.Finch`.
+
+### Advanced Configuration
+
+To configure advanced HTTP options (connection pools, timeouts, etc.), you can configure the global Req.Finch instance:
 
 ```elixir
-config :tesla, adapter: {Tesla.Adapter.Hackney, [recv_timeout: 30_000]}
+config :req, :finch_options, [
+  pools: %{
+    :default => [size: 50, count: 1],
+    "https://demo.docusign.net" => [size: 10, count: 2]
+  }
+]
 ```
+
+See the [Finch documentation](https://hexdocs.pm/finch/Finch.html#start_link/1) for all available options.
 
 ## DocuSign Connect
 
@@ -448,37 +459,11 @@ For information about migrating between versions, please see [MIGRATING.md](MIGR
 
 ## Regenerating the Library
 
-### Using Regeneration Scripts
-
-The DocuSign Elixir library can be regenerated using the provided script in the `scripts/regen` directory. This script handles:
-
-1. Preserving custom functionality (like ModelCleaner)
-2. Updating generated code from the latest OpenAPI specification
-3. Adjusting module names and references
-4. Running tests to verify everything works
-
-To regenerate the library:
-
-1. Download the latest OpenAPI specification:
-
-```bash
-curl -o /tmp/docusign_regen/esignature.swagger.json https://raw.githubusercontent.com/docusign/eSign-OpenAPI-Specification/master/esignature.rest.swagger-v2.1.json
-```
-
-2. Generate the client code:
-
-```bash
-openapi-generator generate -i /tmp/docusign_regen/esignature.swagger.json -g elixir -o /tmp/docusign_regen/elixir_api_client --additional-properties=packageName=docusign_e_signature_restapi
-```
-
-3. Run the regeneration script:
+The DocuSign Elixir library can be regenerated from the latest OpenAPI specification using the provided scripts.
 
 ```bash
 cd scripts/regen
-chmod +x regenerate_library.sh
 ./regenerate_library.sh
 ```
 
-See the [regeneration README](scripts/regen/README.md) for more details.
-
-[tesla_adapters]: https://hexdocs.pm/tesla/readme.html#adapters
+See the [regeneration README](scripts/regen/README.md) for details.

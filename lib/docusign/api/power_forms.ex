@@ -29,11 +29,11 @@ defmodule DocuSign.Api.PowerForms do
   ### Returns
 
   - `{:ok, nil}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec power_forms_delete_power_form(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, nil}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def power_forms_delete_power_form(connection, account_id, power_form_id, _opts \\ []) do
     request =
       %{}
@@ -63,11 +63,11 @@ defmodule DocuSign.Api.PowerForms do
   ### Returns
 
   - `{:ok, DocuSign.Model.PowerFormsResponse.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec power_forms_delete_power_forms_list(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, PowerFormsResponse.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def power_forms_delete_power_forms_list(connection, account_id, opts \\ []) do
     optional_params = %{
       :body => :body
@@ -102,11 +102,11 @@ defmodule DocuSign.Api.PowerForms do
   ### Returns
 
   - `{:ok, DocuSign.Model.PowerForm.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec power_forms_get_power_form(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, PowerForm.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def power_forms_get_power_form(connection, account_id, power_form_id, _opts \\ []) do
     request =
       %{}
@@ -143,11 +143,11 @@ defmodule DocuSign.Api.PowerForms do
   ### Returns
 
   - `{:ok, DocuSign.Model.PowerFormsResponse.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec power_forms_get_power_forms_list(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, PowerFormsResponse.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def power_forms_get_power_forms_list(connection, account_id, opts \\ []) do
     optional_params = %{
       :count => :query,
@@ -189,11 +189,11 @@ defmodule DocuSign.Api.PowerForms do
   ### Returns
 
   - `{:ok, DocuSign.Model.PowerFormSendersResponse.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec power_forms_get_power_forms_senders(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, PowerFormSendersResponse.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def power_forms_get_power_forms_senders(connection, account_id, opts \\ []) do
     optional_params = %{
       :start_position => :query
@@ -228,11 +228,11 @@ defmodule DocuSign.Api.PowerForms do
   ### Returns
 
   - `{:ok, DocuSign.Model.PowerForm.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec power_forms_post_power_form(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, PowerForm.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def power_forms_post_power_form(connection, account_id, opts \\ []) do
     optional_params = %{
       :body => :body
@@ -269,11 +269,11 @@ defmodule DocuSign.Api.PowerForms do
   ### Returns
 
   - `{:ok, DocuSign.Model.PowerForm.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec power_forms_put_power_form(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, PowerForm.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def power_forms_put_power_form(connection, account_id, power_form_id, opts \\ []) do
     optional_params = %{
       :body => :body

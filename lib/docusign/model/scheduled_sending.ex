@@ -10,13 +10,23 @@ defmodule DocuSign.Model.ScheduledSending do
   alias DocuSign.Deserializer
   alias DocuSign.Model.EnvelopeDelayRule
 
-  @derive Jason.Encoder
   defstruct [
     :bulkListId,
     :resumeDate,
     :rules,
     :status
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :bulkListId => String.t() | nil,
@@ -32,5 +42,6 @@ defmodule DocuSign.Model.ScheduledSending do
       :list,
       EnvelopeDelayRule
     )
+    |> then(&struct(__MODULE__, &1))
   end
 end

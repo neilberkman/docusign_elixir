@@ -26,11 +26,11 @@ defmodule DocuSign.Api.TabsBlob do
   ### Returns
 
   - `{:ok, nil}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec tabs_blob_get_tabs_blob(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, nil}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def tabs_blob_get_tabs_blob(connection, account_id, envelope_id, _opts \\ []) do
     request =
       %{}
@@ -60,11 +60,11 @@ defmodule DocuSign.Api.TabsBlob do
   ### Returns
 
   - `{:ok, nil}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec tabs_blob_put_tabs_blob(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, nil}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def tabs_blob_put_tabs_blob(connection, account_id, envelope_id, _opts \\ []) do
     request =
       %{}

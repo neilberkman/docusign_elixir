@@ -28,11 +28,11 @@ defmodule DocuSign.Api.Workspaces do
   ### Returns
 
   - `{:ok, DocuSign.Model.Workspace.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec workspace_delete_workspace(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, Workspace.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def workspace_delete_workspace(connection, account_id, workspace_id, _opts \\ []) do
     request =
       %{}
@@ -62,11 +62,11 @@ defmodule DocuSign.Api.Workspaces do
   ### Returns
 
   - `{:ok, DocuSign.Model.Workspace.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec workspace_get_workspace(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, Workspace.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def workspace_get_workspace(connection, account_id, workspace_id, _opts \\ []) do
     request =
       %{}
@@ -95,11 +95,11 @@ defmodule DocuSign.Api.Workspaces do
   ### Returns
 
   - `{:ok, DocuSign.Model.WorkspaceList.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec workspace_get_workspaces(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, WorkspaceList.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def workspace_get_workspaces(connection, account_id, _opts \\ []) do
     request =
       %{}
@@ -129,11 +129,11 @@ defmodule DocuSign.Api.Workspaces do
   ### Returns
 
   - `{:ok, DocuSign.Model.Workspace.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec workspace_post_workspace(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, Workspace.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def workspace_post_workspace(connection, account_id, opts \\ []) do
     optional_params = %{
       :body => :body
@@ -170,11 +170,11 @@ defmodule DocuSign.Api.Workspaces do
   ### Returns
 
   - `{:ok, DocuSign.Model.Workspace.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec workspace_put_workspace(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, Workspace.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def workspace_put_workspace(connection, account_id, workspace_id, opts \\ []) do
     optional_params = %{
       :body => :body

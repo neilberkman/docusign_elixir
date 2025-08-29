@@ -12,7 +12,6 @@ defmodule DocuSign.Model.EnvelopeTransferRuleRequest do
   alias DocuSign.Model.Group
   alias DocuSign.Model.UserInformation
 
-  @derive Jason.Encoder
   defstruct [
     :carbonCopyOriginalOwner,
     :enabled,
@@ -25,6 +24,17 @@ defmodule DocuSign.Model.EnvelopeTransferRuleRequest do
     :toFolder,
     :toUser
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :carbonCopyOriginalOwner => String.t() | nil,
@@ -66,5 +76,6 @@ defmodule DocuSign.Model.EnvelopeTransferRuleRequest do
       :struct,
       UserInformation
     )
+    |> then(&struct(__MODULE__, &1))
   end
 end

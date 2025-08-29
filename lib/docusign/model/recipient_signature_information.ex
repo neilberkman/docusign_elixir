@@ -7,12 +7,22 @@ defmodule DocuSign.Model.RecipientSignatureInformation do
   Allows the sender to pre-specify the signature name, signature initials and signature font used in the signature stamp for the recipient.  Used only with recipient types In Person Signers and Signers.
   """
 
-  @derive Jason.Encoder
   defstruct [
     :fontStyle,
     :signatureInitials,
     :signatureName
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :fontStyle => String.t() | nil,
@@ -21,6 +31,6 @@ defmodule DocuSign.Model.RecipientSignatureInformation do
         }
 
   def decode(value) do
-    value
+    struct(__MODULE__, value)
   end
 end

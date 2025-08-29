@@ -28,11 +28,11 @@ defmodule DocuSign.Api.TemplateLocks do
   ### Returns
 
   - `{:ok, DocuSign.Model.LockInformation.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec lock_delete_template_lock(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, LockInformation.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def lock_delete_template_lock(connection, account_id, template_id, opts \\ []) do
     optional_params = %{
       :body => :body
@@ -67,11 +67,11 @@ defmodule DocuSign.Api.TemplateLocks do
   ### Returns
 
   - `{:ok, DocuSign.Model.LockInformation.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec lock_get_template_lock(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, LockInformation.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def lock_get_template_lock(connection, account_id, template_id, _opts \\ []) do
     request =
       %{}
@@ -102,11 +102,11 @@ defmodule DocuSign.Api.TemplateLocks do
   ### Returns
 
   - `{:ok, DocuSign.Model.LockInformation.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec lock_post_template_lock(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, LockInformation.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def lock_post_template_lock(connection, account_id, template_id, opts \\ []) do
     optional_params = %{
       :body => :body
@@ -143,11 +143,11 @@ defmodule DocuSign.Api.TemplateLocks do
   ### Returns
 
   - `{:ok, DocuSign.Model.LockInformation.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec lock_put_template_lock(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, LockInformation.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def lock_put_template_lock(connection, account_id, template_id, opts \\ []) do
     optional_params = %{
       :body => :body

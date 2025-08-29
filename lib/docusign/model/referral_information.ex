@@ -7,7 +7,6 @@ defmodule DocuSign.Model.ReferralInformation do
   A complex type that contains the following information for entering referral and discount information. The following items are included in the referral information (all string content): enableSupport, includedSeats, saleDiscountPercent, saleDiscountAmount, saleDiscountFixedAmount, saleDiscountPeriods, saleDiscountSeatPriceOverride, planStartMonth, referralCode, referrerName, advertisementId, publisherId, shopperId, promoCode, groupMemberId, idType, and industry  **Note:** saleDiscountPercent, saleDiscountAmount, saleDiscountFixedAmount, saleDiscountPeriods, and saleDiscountSeatPriceOverride are reserved for Docusign use only.
   """
 
-  @derive Jason.Encoder
   defstruct [
     :advertisementId,
     :enableSupport,
@@ -28,6 +27,17 @@ defmodule DocuSign.Model.ReferralInformation do
     :saleDiscountSeatPriceOverride,
     :shopperId
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :advertisementId => String.t() | nil,
@@ -51,6 +61,6 @@ defmodule DocuSign.Model.ReferralInformation do
         }
 
   def decode(value) do
-    value
+    struct(__MODULE__, value)
   end
 end

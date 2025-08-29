@@ -27,11 +27,11 @@ defmodule DocuSign.Api.Groups do
   ### Returns
 
   - `{:ok, DocuSign.Model.GroupInformation.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec groups_delete_groups(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, GroupInformation.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def groups_delete_groups(connection, account_id, opts \\ []) do
     optional_params = %{
       :body => :body
@@ -70,11 +70,11 @@ defmodule DocuSign.Api.Groups do
   ### Returns
 
   - `{:ok, DocuSign.Model.GroupInformation.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec groups_get_groups(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, GroupInformation.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def groups_get_groups(connection, account_id, opts \\ []) do
     optional_params = %{
       :count => :query,
@@ -113,11 +113,11 @@ defmodule DocuSign.Api.Groups do
   ### Returns
 
   - `{:ok, DocuSign.Model.GroupInformation.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec groups_post_groups(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, GroupInformation.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def groups_post_groups(connection, account_id, opts \\ []) do
     optional_params = %{
       :body => :body
@@ -153,11 +153,11 @@ defmodule DocuSign.Api.Groups do
   ### Returns
 
   - `{:ok, DocuSign.Model.GroupInformation.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec groups_put_groups(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, GroupInformation.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def groups_put_groups(connection, account_id, opts \\ []) do
     optional_params = %{
       :body => :body

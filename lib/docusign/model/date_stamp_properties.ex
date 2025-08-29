@@ -7,13 +7,23 @@ defmodule DocuSign.Model.DateStampProperties do
   Specifies the area in which a date stamp is placed. This parameter uses pixel positioning to draw a rectangle at the center of the stamp area. The stamp is superimposed on top of this central area.  This property contains the following information about the central rectangle:  - `DateAreaX`: The X axis position of the top-left corner. - `DateAreaY`: The Y axis position of the top-left corner. - `DateAreaWidth`: The width of the rectangle. - `DateAreaHeight`: The height of the rectangle.
   """
 
-  @derive Jason.Encoder
   defstruct [
     :dateAreaHeight,
     :dateAreaWidth,
     :dateAreaX,
     :dateAreaY
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :dateAreaHeight => String.t() | nil,
@@ -23,6 +33,6 @@ defmodule DocuSign.Model.DateStampProperties do
         }
 
   def decode(value) do
-    value
+    struct(__MODULE__, value)
   end
 end

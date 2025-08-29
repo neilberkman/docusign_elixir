@@ -11,7 +11,6 @@ defmodule DocuSign.Model.BillingCharge do
   alias DocuSign.Model.BillingDiscount
   alias DocuSign.Model.BillingPrice
 
-  @derive Jason.Encoder
   defstruct [
     :allowedQuantity,
     :blocked,
@@ -27,6 +26,17 @@ defmodule DocuSign.Model.BillingCharge do
     :unitPrice,
     :usedQuantity
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :allowedQuantity => String.t() | nil,
@@ -56,5 +66,6 @@ defmodule DocuSign.Model.BillingCharge do
       :list,
       BillingPrice
     )
+    |> then(&struct(__MODULE__, &1))
   end
 end
