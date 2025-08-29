@@ -64,24 +64,6 @@ defmodule DocuSign.DebugTest do
     end
   end
 
-  describe "middleware compatibility" do
-    test "middleware/0 returns empty list (deprecated)" do
-      Application.put_env(:docusign, :debugging, true)
-      assert Debug.middleware() == []
-
-      Application.put_env(:docusign, :debugging, false)
-      assert Debug.middleware() == []
-    end
-
-    test "all_middleware/0 returns empty list (deprecated)" do
-      Application.put_env(:docusign, :debugging, true)
-      assert Debug.all_middleware() == []
-
-      Application.put_env(:docusign, :debugging, false)
-      assert Debug.all_middleware() == []
-    end
-  end
-
   describe "SDK headers format" do
     test "SDK headers are properly formatted" do
       headers = Debug.sdk_headers()

@@ -38,7 +38,9 @@
           # Exclude generated model files
           ~r"/lib/docusign/model/",
           # Exclude generated API files due to auto-generated long @spec lines
-          ~r"/lib/docusign/api/"
+          ~r"/lib/docusign/api/",
+          # Exclude auto-generated deserializer with deep nesting
+          "lib/docusign/deserializer.ex"
         ]
       },
       #
