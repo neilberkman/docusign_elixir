@@ -34,11 +34,11 @@ defmodule DocuSign.Api.Templates do
   ### Returns
 
   - `{:ok, DocuSign.Model.Notification.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec notification_get_templates_template_id_notification(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, Notification.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def notification_get_templates_template_id_notification(connection, account_id, template_id, _opts \\ []) do
     request =
       %{}
@@ -69,11 +69,11 @@ defmodule DocuSign.Api.Templates do
   ### Returns
 
   - `{:ok, DocuSign.Model.Notification.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec notification_put_templates_template_id_notification(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, Notification.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def notification_put_templates_template_id_notification(connection, account_id, template_id, opts \\ []) do
     optional_params = %{
       :body => :body
@@ -112,11 +112,11 @@ defmodule DocuSign.Api.Templates do
   ### Returns
 
   - `{:ok, nil}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec pages_delete_template_page(DocuSign.Connection.t(), String.t(), String.t(), String.t(), String.t(), keyword()) ::
           {:ok, nil}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def pages_delete_template_page(connection, account_id, document_id, page_number, template_id, opts \\ []) do
     optional_params = %{
       :body => :body
@@ -157,7 +157,7 @@ defmodule DocuSign.Api.Templates do
   ### Returns
 
   - `{:ok, String.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec pages_get_template_page_image(
           DocuSign.Connection.t(),
@@ -168,7 +168,7 @@ defmodule DocuSign.Api.Templates do
           keyword()
         ) ::
           {:ok, String.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def pages_get_template_page_image(connection, account_id, document_id, page_number, template_id, opts \\ []) do
     optional_params = %{
       :dpi => :query,
@@ -216,11 +216,11 @@ defmodule DocuSign.Api.Templates do
   ### Returns
 
   - `{:ok, DocuSign.Model.PageImages.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec pages_get_template_page_images(DocuSign.Connection.t(), String.t(), String.t(), String.t(), keyword()) ::
           {:ok, PageImages.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def pages_get_template_page_images(connection, account_id, document_id, template_id, opts \\ []) do
     optional_params = %{
       :count => :query,
@@ -264,7 +264,7 @@ defmodule DocuSign.Api.Templates do
   ### Returns
 
   - `{:ok, nil}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec pages_put_template_page_image(
           DocuSign.Connection.t(),
@@ -275,7 +275,7 @@ defmodule DocuSign.Api.Templates do
           keyword()
         ) ::
           {:ok, nil}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def pages_put_template_page_image(connection, account_id, document_id, page_number, template_id, opts \\ []) do
     optional_params = %{
       :body => :body
@@ -311,11 +311,11 @@ defmodule DocuSign.Api.Templates do
   ### Returns
 
   - `{:ok, DocuSign.Model.TemplateAutoMatchList.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec templates_auto_match_put_templates(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, TemplateAutoMatchList.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def templates_auto_match_put_templates(connection, account_id, opts \\ []) do
     optional_params = %{
       :body => :body
@@ -353,11 +353,11 @@ defmodule DocuSign.Api.Templates do
   ### Returns
 
   - `{:ok, DocuSign.Model.GroupInformation.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec templates_delete_template_part(DocuSign.Connection.t(), String.t(), String.t(), String.t(), keyword()) ::
           {:ok, GroupInformation.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def templates_delete_template_part(connection, account_id, template_id, template_part, opts \\ []) do
     optional_params = %{
       :body => :body
@@ -393,11 +393,11 @@ defmodule DocuSign.Api.Templates do
   ### Returns
 
   - `{:ok, DocuSign.Model.EnvelopeTemplate.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec templates_get_template(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, EnvelopeTemplate.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def templates_get_template(connection, account_id, template_id, opts \\ []) do
     optional_params = %{
       :include => :query
@@ -454,11 +454,11 @@ defmodule DocuSign.Api.Templates do
   ### Returns
 
   - `{:ok, DocuSign.Model.EnvelopeTemplateResults.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec templates_get_templates(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, EnvelopeTemplateResults.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def templates_get_templates(connection, account_id, opts \\ []) do
     optional_params = %{
       :count => :query,
@@ -515,11 +515,11 @@ defmodule DocuSign.Api.Templates do
   ### Returns
 
   - `{:ok, DocuSign.Model.TemplateSummary.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec templates_post_templates(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, TemplateSummary.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def templates_post_templates(connection, account_id, opts \\ []) do
     optional_params = %{
       :body => :body
@@ -556,11 +556,11 @@ defmodule DocuSign.Api.Templates do
   ### Returns
 
   - `{:ok, DocuSign.Model.TemplateUpdateSummary.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec templates_put_template(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, TemplateUpdateSummary.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def templates_put_template(connection, account_id, template_id, opts \\ []) do
     optional_params = %{
       :body => :body
@@ -598,11 +598,11 @@ defmodule DocuSign.Api.Templates do
   ### Returns
 
   - `{:ok, DocuSign.Model.GroupInformation.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec templates_put_template_part(DocuSign.Connection.t(), String.t(), String.t(), String.t(), keyword()) ::
           {:ok, GroupInformation.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def templates_put_template_part(connection, account_id, template_id, template_part, opts \\ []) do
     optional_params = %{
       :body => :body
@@ -636,11 +636,11 @@ defmodule DocuSign.Api.Templates do
   ### Returns
 
   - `{:ok, DocuSign.Model.TemplateAutoMatchList.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec templates_put_templates(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, TemplateAutoMatchList.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def templates_put_templates(connection, account_id, opts \\ []) do
     optional_params = %{
       :body => :body

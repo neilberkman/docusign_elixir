@@ -1,7 +1,7 @@
 {{>licenseInfo}}
 defmodule DocuSign.RequestBuilder do
   @moduledoc """
-  Helper functions for building Tesla requests
+  Helper functions for building Req requests
   """
 
   @doc """
@@ -24,7 +24,7 @@ defmodule DocuSign.RequestBuilder do
   end
 
   @doc """
-  Specify the request URL when building a request.
+  Specify the request `url` when building a request.
 
   Does not override the `url` if one has already been specified.
 
@@ -43,7 +43,7 @@ defmodule DocuSign.RequestBuilder do
   end
 
   @doc """
-  Add optional parameters to the request.
+  Add optional parameters to a request
 
   ### Parameters
 
@@ -55,7 +55,7 @@ defmodule DocuSign.RequestBuilder do
 
   Map
   """
-  @spec add_optional_params(map(), %{optional(atom) => atom()}, keyword()) :: map()
+  @spec add_optional_params(map(), %{optional(atom()) => atom()}, keyword()) :: map()
   def add_optional_params(request, _, []), do: request
 
   def add_optional_params(request, definitions, [{key, value} | tail]) do
@@ -71,7 +71,7 @@ defmodule DocuSign.RequestBuilder do
   end
 
   @doc """
-  Add non-optional parameters to the request.
+  Add non-optional parameters to a request
 
   ### Parameters
 
@@ -86,24 +86,15 @@ defmodule DocuSign.RequestBuilder do
   """
   @spec add_param(map(), atom(), atom(), any()) :: map()
   def add_param(request, :body, :body, value) do
-    # CUSTOM: Clean the value using ModelCleaner to remove nil values
-    cleaned_value = DocuSign.ModelCleaner.clean(value)
-    Map.put(request, :body, cleaned_value)
+    # Models now handle nil stripping via custom Jason.Encoder
+    Map.put(request, :body, Jason.encode!(value))
   end
 
   def add_param(request, :body, key, value) do
-    # CUSTOM: Clean the value using ModelCleaner before encoding with Jason
-    cleaned_value = DocuSign.ModelCleaner.clean(value)
-
     request
-    |> Map.put_new_lazy(:body, &Tesla.Multipart.new/0)
-    |> Map.update!(:body, fn multipart ->
-      Tesla.Multipart.add_field(
-        multipart,
-        key,
-        Jason.encode!(cleaned_value),
-        headers: [{:"Content-Type", "application/json"}]
-      )
+    |> Map.put_new(:form_multipart, [])
+    |> Map.update!(:form_multipart, fn parts ->
+      parts ++ [{to_string(key), Jason.encode!(value), content_type: "application/json"}]
     end)
   end
 
@@ -119,50 +110,82 @@ defmodule DocuSign.RequestBuilder do
 
   def add_param(request, :file, key, value) do
     request
-    |> Map.put_new_lazy(:body, &Tesla.Multipart.new/0)
-    |> Map.update!(:body, &Tesla.Multipart.add_file(&1, value, name: key))
+    |> Map.put_new(:form_multipart, [])
+    |> Map.update!(:form_multipart, fn parts ->
+      parts ++ [{to_string(key), File.read!(value)}]
+    end)
   end
 
   def add_param(request, :form, key, value) do
     request
-    |> Map.put_new_lazy(:body, &Tesla.Multipart.new/0)
-    |> Map.update!(:body, &Tesla.Multipart.add_field(&1, key, value))
+    |> Map.put_new(:form_multipart, [])
+    |> Map.update!(:form_multipart, fn parts ->
+      parts ++ [{to_string(key), value}]
+    end)
   end
 
   @doc """
-  Handle the response for a Tesla request.
+  Handle the response for a Req request.
 
   ### Parameters
 
-  - `response` (Tesla.Env.t) - The response object
+  - `response` (Req.Response.t) - The response object
 
   ### Returns
 
   {:ok, any()} on success
-  {:error, Tesla.Env.t} on failure
+  {:error, Req.Response.t} on failure
   """
-  @spec evaluate_response({:ok, Tesla.Env.t()} | {:error, any()}, list({integer(), any()})) ::
-          {:ok, any()} | {:error, Tesla.Env.t()}
-  def evaluate_response({:ok, %Tesla.Env{status: status} = env}, mapping) do
+  @spec evaluate_response({:ok, Req.Response.t()} | {:error, any()}, list({integer(), any()})) ::
+          {:ok, any()} | {:error, Req.Response.t()}
+  def evaluate_response({:ok, %Req.Response{status: status} = response}, mapping) do
     case Enum.find(mapping, fn {code, _} -> code == status end) do
       {_, nil} ->
         {:ok, nil}
 
-      {_, decoder} ->
-        decoder.(env.body)
+      {_, false} ->
+        # Special case for endpoints that return raw data
+        {:ok, response.body}
+
+      {_, decoder} when is_function(decoder) ->
+        decoder.(response.body)
+
+      {_, module} when is_atom(module) ->
+        # Handle module names (like EnvelopeSummary)
+        # Convert string keys to atoms and decode with module's decode function
+        atomized = atomize_keys(response.body)
+        {:ok, module.decode(atomized)}
 
       nil ->
-        {:error, env}
+        {:error, response}
     end
   end
 
   def evaluate_response({:error, _reason} = error, _mapping), do: error
 
-  @doc """
-  Ensure that the request has a body.
+  defp atomize_keys(map) when is_map(map) do
+    Map.new(map, fn {k, v} ->
+      {String.to_existing_atom(k), atomize_keys(v)}
+    end)
+  rescue
+    ArgumentError ->
+      # If atom doesn't exist, fall back to creating it (careful with memory)
+      Map.new(map, fn {k, v} ->
+        {String.to_atom(k), atomize_keys(v)}
+      end)
+  end
 
-  This is a workaround for Tesla/Hackney when the request body is empty
-  and the Content-Type header is set.
+  defp atomize_keys(list) when is_list(list) do
+    Enum.map(list, &atomize_keys/1)
+  end
+
+  defp atomize_keys(value), do: value
+
+  @doc """
+  This function ensures that the `body` parameter is always set.
+
+  This handles cases where POST, PATCH and PUT requests require a body
+  even when it's empty.
 
   ### Parameters
 
@@ -174,6 +197,9 @@ defmodule DocuSign.RequestBuilder do
   """
   @spec ensure_body(map()) :: map()
   def ensure_body(request) do
-    Map.put_new(request, :body, "")
+    case Map.get(request, :body) do
+      nil -> Map.put(request, :body, Jason.encode!(%{}))
+      _ -> request
+    end
   end
 end

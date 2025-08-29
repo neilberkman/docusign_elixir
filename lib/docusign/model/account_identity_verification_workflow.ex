@@ -11,7 +11,6 @@ defmodule DocuSign.Model.AccountIdentityVerificationWorkflow do
   alias DocuSign.Model.AccountIdentityInputOption
   alias DocuSign.Model.AccountSignatureProvider
 
-  @derive Jason.Encoder
   defstruct [
     :defaultDescription,
     :defaultName,
@@ -23,6 +22,17 @@ defmodule DocuSign.Model.AccountIdentityVerificationWorkflow do
     :workflowLabel,
     :workflowResourceKey
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :defaultDescription => String.t() | nil,
@@ -48,5 +58,6 @@ defmodule DocuSign.Model.AccountIdentityVerificationWorkflow do
       :struct,
       AccountSignatureProvider
     )
+    |> then(&struct(__MODULE__, &1))
   end
 end

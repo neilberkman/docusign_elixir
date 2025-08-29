@@ -7,11 +7,21 @@ defmodule DocuSign.Model.BulkSendingCopyCustomField do
   This object contains details about a custom field for a bulk send copy. In a bulk send request, each custom field in the bulk send list must match a custom field in the envelope or template that you want to send.
   """
 
-  @derive Jason.Encoder
   defstruct [
     :name,
     :value
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :name => String.t() | nil,
@@ -19,6 +29,6 @@ defmodule DocuSign.Model.BulkSendingCopyCustomField do
         }
 
   def decode(value) do
-    value
+    struct(__MODULE__, value)
   end
 end

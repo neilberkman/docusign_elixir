@@ -16,7 +16,6 @@ defmodule DocuSign.Model.TemplateUpdateSummary do
   alias DocuSign.Model.RecipientUpdateResponse
   alias DocuSign.Model.TextCustomField
 
-  @derive Jason.Encoder
   defstruct [
     :bulkEnvelopeStatus,
     :envelopeId,
@@ -28,6 +27,17 @@ defmodule DocuSign.Model.TemplateUpdateSummary do
     :tabUpdateResults,
     :textCustomFieldUpdateResults
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :bulkEnvelopeStatus => BulkEnvelopeStatus.t() | nil,
@@ -78,5 +88,6 @@ defmodule DocuSign.Model.TemplateUpdateSummary do
       :list,
       TextCustomField
     )
+    |> then(&struct(__MODULE__, &1))
   end
 end

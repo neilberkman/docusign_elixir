@@ -44,7 +44,6 @@ defmodule DocuSign.Model.TemplateTabs do
   alias DocuSign.Model.View
   alias DocuSign.Model.Zip
 
-  @derive Jason.Encoder
   defstruct [
     :approveTabs,
     :checkboxTabs,
@@ -86,6 +85,17 @@ defmodule DocuSign.Model.TemplateTabs do
     :viewTabs,
     :zipTabs
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :approveTabs => [Approve.t()] | nil,
@@ -311,5 +321,6 @@ defmodule DocuSign.Model.TemplateTabs do
       :list,
       Zip
     )
+    |> then(&struct(__MODULE__, &1))
   end
 end

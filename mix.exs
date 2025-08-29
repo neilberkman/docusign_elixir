@@ -43,7 +43,7 @@ defmodule DocuSign.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:tesla, "~> 1.15"},
+      {:req, "~> 0.5"},
       {:jason, "~> 1.4.4"},
       {:joken, "~> 2.0"},
       {:oauth2, "~> 2.0"},

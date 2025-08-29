@@ -7,13 +7,23 @@ defmodule DocuSign.Model.BrandResourceUrls do
   Brands use resource files to style the following experiences:   - Email - Sending - Signing - Captive (embedded) signing   You can modify these resource files to customize these experiences.
   """
 
-  @derive Jason.Encoder
   defstruct [
     :email,
     :sending,
     :signing,
     :signingCaptive
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :email => String.t() | nil,
@@ -23,6 +33,6 @@ defmodule DocuSign.Model.BrandResourceUrls do
         }
 
   def decode(value) do
-    value
+    struct(__MODULE__, value)
   end
 end

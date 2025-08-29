@@ -26,11 +26,11 @@ defmodule DocuSign.Api.FavoriteTemplates do
   ### Returns
 
   - `{:ok, DocuSign.Model.FavoriteTemplatesInfo.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec favorite_templates_get_favorite_templates(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, FavoriteTemplatesInfo.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def favorite_templates_get_favorite_templates(connection, account_id, _opts \\ []) do
     request =
       %{}
@@ -60,11 +60,11 @@ defmodule DocuSign.Api.FavoriteTemplates do
   ### Returns
 
   - `{:ok, DocuSign.Model.FavoriteTemplatesInfo.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec favorite_templates_put_favorite_template(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, FavoriteTemplatesInfo.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def favorite_templates_put_favorite_template(connection, account_id, opts \\ []) do
     optional_params = %{
       :body => :body
@@ -100,11 +100,11 @@ defmodule DocuSign.Api.FavoriteTemplates do
   ### Returns
 
   - `{:ok, DocuSign.Model.FavoriteTemplatesInfo.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec favorite_templates_un_favorite_template(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, FavoriteTemplatesInfo.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def favorite_templates_un_favorite_template(connection, account_id, opts \\ []) do
     optional_params = %{
       :body => :body

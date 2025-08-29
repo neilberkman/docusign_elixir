@@ -33,11 +33,11 @@ defmodule DocuSign.Api.BulkSend do
   ### Returns
 
   - `{:ok, DocuSign.Model.BulkSendBatchStatus.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec bulk_send_v2_batch_get_bulk_send_batch_status(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, BulkSendBatchStatus.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def bulk_send_v2_batch_get_bulk_send_batch_status(connection, account_id, bulk_send_batch_id, _opts \\ []) do
     request =
       %{}
@@ -74,11 +74,11 @@ defmodule DocuSign.Api.BulkSend do
   ### Returns
 
   - `{:ok, DocuSign.Model.BulkSendBatchSummaries.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec bulk_send_v2_batch_get_bulk_send_batches(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, BulkSendBatchSummaries.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def bulk_send_v2_batch_get_bulk_send_batches(connection, account_id, opts \\ []) do
     optional_params = %{
       :batch_ids => :query,
@@ -122,7 +122,7 @@ defmodule DocuSign.Api.BulkSend do
   ### Returns
 
   - `{:ok, DocuSign.Model.BulkSendBatchStatus.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec bulk_send_v2_batch_put_bulk_send_batch_action(
           DocuSign.Connection.t(),
@@ -132,7 +132,7 @@ defmodule DocuSign.Api.BulkSend do
           keyword()
         ) ::
           {:ok, BulkSendBatchStatus.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def bulk_send_v2_batch_put_bulk_send_batch_action(connection, account_id, bulk_action, bulk_send_batch_id, opts \\ []) do
     optional_params = %{
       :body => :body
@@ -169,11 +169,11 @@ defmodule DocuSign.Api.BulkSend do
   ### Returns
 
   - `{:ok, DocuSign.Model.BulkSendBatchStatus.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec bulk_send_v2_batch_put_bulk_send_batch_status(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, BulkSendBatchStatus.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def bulk_send_v2_batch_put_bulk_send_batch_status(connection, account_id, bulk_send_batch_id, opts \\ []) do
     optional_params = %{
       :body => :body
@@ -209,11 +209,11 @@ defmodule DocuSign.Api.BulkSend do
   ### Returns
 
   - `{:ok, DocuSign.Model.BulkSendingListSummaries.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec bulk_send_v2_crud_delete_bulk_send_list(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, BulkSendingListSummaries.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def bulk_send_v2_crud_delete_bulk_send_list(connection, account_id, bulk_send_list_id, _opts \\ []) do
     request =
       %{}
@@ -243,11 +243,11 @@ defmodule DocuSign.Api.BulkSend do
   ### Returns
 
   - `{:ok, DocuSign.Model.BulkSendingList.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec bulk_send_v2_crud_get_bulk_send_list(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, BulkSendingList.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def bulk_send_v2_crud_get_bulk_send_list(connection, account_id, bulk_send_list_id, _opts \\ []) do
     request =
       %{}
@@ -276,11 +276,11 @@ defmodule DocuSign.Api.BulkSend do
   ### Returns
 
   - `{:ok, DocuSign.Model.BulkSendingListSummaries.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec bulk_send_v2_crud_get_bulk_send_lists(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, BulkSendingListSummaries.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def bulk_send_v2_crud_get_bulk_send_lists(connection, account_id, _opts \\ []) do
     request =
       %{}
@@ -310,11 +310,11 @@ defmodule DocuSign.Api.BulkSend do
   ### Returns
 
   - `{:ok, DocuSign.Model.BulkSendingList.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec bulk_send_v2_crud_post_bulk_send_list(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, BulkSendingList.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def bulk_send_v2_crud_post_bulk_send_list(connection, account_id, opts \\ []) do
     optional_params = %{
       :body => :body
@@ -351,11 +351,11 @@ defmodule DocuSign.Api.BulkSend do
   ### Returns
 
   - `{:ok, DocuSign.Model.BulkSendingList.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec bulk_send_v2_crud_put_bulk_send_list(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, BulkSendingList.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def bulk_send_v2_crud_put_bulk_send_list(connection, account_id, bulk_send_list_id, opts \\ []) do
     optional_params = %{
       :body => :body
@@ -398,11 +398,11 @@ defmodule DocuSign.Api.BulkSend do
   ### Returns
 
   - `{:ok, DocuSign.Model.EnvelopesInformation.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec bulk_send_v2_envelopes_get_bulk_send_batch_envelopes(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, EnvelopesInformation.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def bulk_send_v2_envelopes_get_bulk_send_batch_envelopes(connection, account_id, bulk_send_batch_id, opts \\ []) do
     optional_params = %{
       :count => :query,
@@ -444,11 +444,11 @@ defmodule DocuSign.Api.BulkSend do
   ### Returns
 
   - `{:ok, DocuSign.Model.BulkSendResponse.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec bulk_send_v2_send_post_bulk_send_request(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, BulkSendResponse.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def bulk_send_v2_send_post_bulk_send_request(connection, account_id, bulk_send_list_id, opts \\ []) do
     optional_params = %{
       :body => :body
@@ -485,11 +485,11 @@ defmodule DocuSign.Api.BulkSend do
   ### Returns
 
   - `{:ok, DocuSign.Model.BulkSendTestResponse.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec bulk_send_v2_test_post_bulk_send_test_request(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, BulkSendTestResponse.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def bulk_send_v2_test_post_bulk_send_test_request(connection, account_id, bulk_send_list_id, opts \\ []) do
     optional_params = %{
       :body => :body

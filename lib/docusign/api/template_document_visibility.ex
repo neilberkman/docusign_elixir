@@ -29,7 +29,7 @@ defmodule DocuSign.Api.TemplateDocumentVisibility do
   ### Returns
 
   - `{:ok, DocuSign.Model.DocumentVisibilityList.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec recipients_get_template_recipient_document_visibility(
           DocuSign.Connection.t(),
@@ -39,7 +39,7 @@ defmodule DocuSign.Api.TemplateDocumentVisibility do
           keyword()
         ) ::
           {:ok, DocumentVisibilityList.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def recipients_get_template_recipient_document_visibility(
         connection,
         account_id,
@@ -77,7 +77,7 @@ defmodule DocuSign.Api.TemplateDocumentVisibility do
   ### Returns
 
   - `{:ok, DocuSign.Model.TemplateDocumentVisibilityList.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec recipients_put_template_recipient_document_visibility(
           DocuSign.Connection.t(),
@@ -87,7 +87,7 @@ defmodule DocuSign.Api.TemplateDocumentVisibility do
           keyword()
         ) ::
           {:ok, TemplateDocumentVisibilityList.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def recipients_put_template_recipient_document_visibility(
         connection,
         account_id,
@@ -130,7 +130,7 @@ defmodule DocuSign.Api.TemplateDocumentVisibility do
   ### Returns
 
   - `{:ok, DocuSign.Model.TemplateDocumentVisibilityList.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec recipients_put_template_recipients_document_visibility(
           DocuSign.Connection.t(),
@@ -139,7 +139,7 @@ defmodule DocuSign.Api.TemplateDocumentVisibility do
           keyword()
         ) ::
           {:ok, TemplateDocumentVisibilityList.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def recipients_put_template_recipients_document_visibility(connection, account_id, template_id, opts \\ []) do
     optional_params = %{
       :body => :body

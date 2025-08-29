@@ -27,7 +27,7 @@ defmodule DocuSign.Api.EnvelopePublish do
   ### Returns
 
   - `{:ok, DocuSign.Model.EnvelopePublishTransaction.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec historical_envelope_publish_post_historical_envelope_publish_transaction(
           DocuSign.Connection.t(),
@@ -35,7 +35,7 @@ defmodule DocuSign.Api.EnvelopePublish do
           keyword()
         ) ::
           {:ok, EnvelopePublishTransaction.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def historical_envelope_publish_post_historical_envelope_publish_transaction(connection, account_id, opts \\ []) do
     optional_params = %{
       :body => :body

@@ -10,10 +10,20 @@ defmodule DocuSign.Model.BulkSendingListSummaries do
   alias DocuSign.Deserializer
   alias DocuSign.Model.BulkSendingListSummary
 
-  @derive Jason.Encoder
   defstruct [
     :bulkListSummaries
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :bulkListSummaries => [BulkSendingListSummary.t()] | nil
@@ -26,5 +36,6 @@ defmodule DocuSign.Model.BulkSendingListSummaries do
       :list,
       BulkSendingListSummary
     )
+    |> then(&struct(__MODULE__, &1))
   end
 end

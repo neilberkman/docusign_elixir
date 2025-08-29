@@ -11,7 +11,6 @@ defmodule DocuSign.Model.WorkflowStep do
   alias DocuSign.Model.DelayedRouting
   alias DocuSign.Model.RecipientRouting
 
-  @derive Jason.Encoder
   defstruct [
     :action,
     :completedDate,
@@ -23,6 +22,17 @@ defmodule DocuSign.Model.WorkflowStep do
     :triggeredDate,
     :workflowStepId
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :action => String.t() | nil,
@@ -48,5 +58,6 @@ defmodule DocuSign.Model.WorkflowStep do
       :struct,
       RecipientRouting
     )
+    |> then(&struct(__MODULE__, &1))
   end
 end

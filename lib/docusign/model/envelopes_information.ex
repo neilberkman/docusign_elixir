@@ -12,7 +12,6 @@ defmodule DocuSign.Model.EnvelopesInformation do
   alias DocuSign.Model.EnvelopeTransactionStatus
   alias DocuSign.Model.Folder
 
-  @derive Jason.Encoder
   defstruct [
     :continuationToken,
     :endPosition,
@@ -27,6 +26,17 @@ defmodule DocuSign.Model.EnvelopesInformation do
     :startPosition,
     :totalSetSize
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :continuationToken => String.t() | nil,
@@ -60,5 +70,6 @@ defmodule DocuSign.Model.EnvelopesInformation do
       :list,
       Folder
     )
+    |> then(&struct(__MODULE__, &1))
   end
 end

@@ -10,7 +10,6 @@ defmodule DocuSign.Model.EnvelopeTransferRules do
   alias DocuSign.Deserializer
   alias DocuSign.Model.EnvelopeTransferRule
 
-  @derive Jason.Encoder
   defstruct [
     :endPosition,
     :envelopeTransferRules,
@@ -20,6 +19,17 @@ defmodule DocuSign.Model.EnvelopeTransferRules do
     :startPosition,
     :totalSetSize
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :endPosition => String.t() | nil,
@@ -38,5 +48,6 @@ defmodule DocuSign.Model.EnvelopeTransferRules do
       :list,
       EnvelopeTransferRule
     )
+    |> then(&struct(__MODULE__, &1))
   end
 end

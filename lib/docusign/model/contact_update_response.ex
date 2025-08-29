@@ -10,10 +10,20 @@ defmodule DocuSign.Model.ContactUpdateResponse do
   alias DocuSign.Deserializer
   alias DocuSign.Model.Contact
 
-  @derive Jason.Encoder
   defstruct [
     :contacts
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :contacts => [Contact.t()] | nil
@@ -26,5 +36,6 @@ defmodule DocuSign.Model.ContactUpdateResponse do
       :list,
       Contact
     )
+    |> then(&struct(__MODULE__, &1))
   end
 end

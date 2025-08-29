@@ -14,7 +14,6 @@ defmodule DocuSign.Model.Document do
   alias DocuSign.Model.MatchBox
   alias DocuSign.Model.NameValue
 
-  @derive Jason.Encoder
   defstruct [
     :applyAnchorTabs,
     :assignTabsToRecipientId,
@@ -47,6 +46,17 @@ defmodule DocuSign.Model.Document do
     :transformPdfFields,
     :uri
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :applyAnchorTabs => String.t() | nil,
@@ -108,5 +118,6 @@ defmodule DocuSign.Model.Document do
       :struct,
       EnvelopeRecipientTabs
     )
+    |> then(&struct(__MODULE__, &1))
   end
 end

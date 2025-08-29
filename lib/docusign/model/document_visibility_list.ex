@@ -10,10 +10,20 @@ defmodule DocuSign.Model.DocumentVisibilityList do
   alias DocuSign.Deserializer
   alias DocuSign.Model.DocumentVisibility
 
-  @derive Jason.Encoder
   defstruct [
     :documentVisibility
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :documentVisibility => [DocumentVisibility.t()] | nil
@@ -26,5 +36,6 @@ defmodule DocuSign.Model.DocumentVisibilityList do
       :list,
       DocumentVisibility
     )
+    |> then(&struct(__MODULE__, &1))
   end
 end

@@ -7,7 +7,6 @@ defmodule DocuSign.Model.SettingsMetadata do
   Metadata that indicates whether a property is editable and describes setting-specific options.
   """
 
-  @derive Jason.Encoder
   defstruct [
     :is21CFRPart11,
     :options,
@@ -16,6 +15,17 @@ defmodule DocuSign.Model.SettingsMetadata do
     :uiOrder,
     :uiType
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :is21CFRPart11 => String.t() | nil,
@@ -27,6 +37,6 @@ defmodule DocuSign.Model.SettingsMetadata do
         }
 
   def decode(value) do
-    value
+    struct(__MODULE__, value)
   end
 end

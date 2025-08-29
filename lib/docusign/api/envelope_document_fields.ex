@@ -29,11 +29,11 @@ defmodule DocuSign.Api.EnvelopeDocumentFields do
   ### Returns
 
   - `{:ok, DocuSign.Model.EnvelopeDocumentFields.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec document_fields_delete_document_fields(DocuSign.Connection.t(), String.t(), String.t(), String.t(), keyword()) ::
           {:ok, EnvelopeDocumentFields.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def document_fields_delete_document_fields(connection, account_id, document_id, envelope_id, opts \\ []) do
     optional_params = %{
       :body => :body
@@ -69,11 +69,11 @@ defmodule DocuSign.Api.EnvelopeDocumentFields do
   ### Returns
 
   - `{:ok, DocuSign.Model.EnvelopeDocumentFields.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec document_fields_get_document_fields(DocuSign.Connection.t(), String.t(), String.t(), String.t(), keyword()) ::
           {:ok, EnvelopeDocumentFields.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def document_fields_get_document_fields(connection, account_id, document_id, envelope_id, _opts \\ []) do
     request =
       %{}
@@ -105,11 +105,11 @@ defmodule DocuSign.Api.EnvelopeDocumentFields do
   ### Returns
 
   - `{:ok, DocuSign.Model.EnvelopeDocumentFields.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec document_fields_post_document_fields(DocuSign.Connection.t(), String.t(), String.t(), String.t(), keyword()) ::
           {:ok, EnvelopeDocumentFields.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def document_fields_post_document_fields(connection, account_id, document_id, envelope_id, opts \\ []) do
     optional_params = %{
       :body => :body
@@ -147,11 +147,11 @@ defmodule DocuSign.Api.EnvelopeDocumentFields do
   ### Returns
 
   - `{:ok, DocuSign.Model.EnvelopeDocumentFields.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec document_fields_put_document_fields(DocuSign.Connection.t(), String.t(), String.t(), String.t(), keyword()) ::
           {:ok, EnvelopeDocumentFields.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def document_fields_put_document_fields(connection, account_id, document_id, envelope_id, opts \\ []) do
     optional_params = %{
       :body => :body

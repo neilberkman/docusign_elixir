@@ -12,7 +12,6 @@ defmodule DocuSign.Model.WorkspaceItem do
   alias DocuSign.Model.WorkspaceUser
   alias DocuSign.Model.WorkspaceUserAuthorization
 
-  @derive Jason.Encoder
   defstruct [
     :callerAuthorization,
     :contentType,
@@ -39,6 +38,17 @@ defmodule DocuSign.Model.WorkspaceItem do
     :uri,
     :userAuthorization
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :callerAuthorization => WorkspaceUserAuthorization.t() | nil,
@@ -94,5 +104,6 @@ defmodule DocuSign.Model.WorkspaceItem do
       :struct,
       WorkspaceUserAuthorization
     )
+    |> then(&struct(__MODULE__, &1))
   end
 end

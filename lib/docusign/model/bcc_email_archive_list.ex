@@ -10,7 +10,6 @@ defmodule DocuSign.Model.BccEmailArchiveList do
   alias DocuSign.Deserializer
   alias DocuSign.Model.BccEmailArchive
 
-  @derive Jason.Encoder
   defstruct [
     :bccEmailArchives,
     :endPosition,
@@ -20,6 +19,17 @@ defmodule DocuSign.Model.BccEmailArchiveList do
     :startPosition,
     :totalSetSize
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :bccEmailArchives => [BccEmailArchive.t()] | nil,
@@ -38,5 +48,6 @@ defmodule DocuSign.Model.BccEmailArchiveList do
       :list,
       BccEmailArchive
     )
+    |> then(&struct(__MODULE__, &1))
   end
 end

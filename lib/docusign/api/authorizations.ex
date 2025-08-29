@@ -37,7 +37,7 @@ defmodule DocuSign.Api.Authorizations do
   ### Returns
 
   - `{:ok, DocuSign.Model.UserAuthorizations.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec user_agent_authorizations_get_agent_user_authorizations(
           DocuSign.Connection.t(),
@@ -46,7 +46,7 @@ defmodule DocuSign.Api.Authorizations do
           keyword()
         ) ::
           {:ok, UserAuthorizations.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def user_agent_authorizations_get_agent_user_authorizations(connection, account_id, user_id, opts \\ []) do
     optional_params = %{
       :active_only => :query,
@@ -88,11 +88,11 @@ defmodule DocuSign.Api.Authorizations do
   ### Returns
 
   - `{:ok, DocuSign.Model.UserAuthorization.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec user_authorization_create_user_authorization(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, UserAuthorization.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def user_authorization_create_user_authorization(connection, account_id, user_id, opts \\ []) do
     optional_params = %{
       :body => :body
@@ -129,7 +129,7 @@ defmodule DocuSign.Api.Authorizations do
   ### Returns
 
   - `{:ok, nil}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec user_authorization_delete_user_authorization(
           DocuSign.Connection.t(),
@@ -139,7 +139,7 @@ defmodule DocuSign.Api.Authorizations do
           keyword()
         ) ::
           {:ok, nil}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def user_authorization_delete_user_authorization(connection, account_id, authorization_id, user_id, _opts \\ []) do
     request =
       %{}
@@ -170,7 +170,7 @@ defmodule DocuSign.Api.Authorizations do
   ### Returns
 
   - `{:ok, DocuSign.Model.UserAuthorization.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec user_authorization_get_user_authorization(
           DocuSign.Connection.t(),
@@ -180,7 +180,7 @@ defmodule DocuSign.Api.Authorizations do
           keyword()
         ) ::
           {:ok, UserAuthorization.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def user_authorization_get_user_authorization(connection, account_id, authorization_id, user_id, _opts \\ []) do
     request =
       %{}
@@ -212,7 +212,7 @@ defmodule DocuSign.Api.Authorizations do
   ### Returns
 
   - `{:ok, DocuSign.Model.UserAuthorization.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec user_authorization_update_user_authorization(
           DocuSign.Connection.t(),
@@ -222,7 +222,7 @@ defmodule DocuSign.Api.Authorizations do
           keyword()
         ) ::
           {:ok, UserAuthorization.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def user_authorization_update_user_authorization(connection, account_id, authorization_id, user_id, opts \\ []) do
     optional_params = %{
       :body => :body
@@ -259,11 +259,11 @@ defmodule DocuSign.Api.Authorizations do
   ### Returns
 
   - `{:ok, DocuSign.Model.UserAuthorizationsDeleteResponse.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec user_authorizations_delete_user_authorizations(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, UserAuthorizationsDeleteResponse.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def user_authorizations_delete_user_authorizations(connection, account_id, user_id, opts \\ []) do
     optional_params = %{
       :body => :body
@@ -305,7 +305,7 @@ defmodule DocuSign.Api.Authorizations do
   ### Returns
 
   - `{:ok, DocuSign.Model.UserAuthorizations.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec user_authorizations_get_principal_user_authorizations(
           DocuSign.Connection.t(),
@@ -314,7 +314,7 @@ defmodule DocuSign.Api.Authorizations do
           keyword()
         ) ::
           {:ok, UserAuthorizations.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def user_authorizations_get_principal_user_authorizations(connection, account_id, user_id, opts \\ []) do
     optional_params = %{
       :active_only => :query,
@@ -356,11 +356,11 @@ defmodule DocuSign.Api.Authorizations do
   ### Returns
 
   - `{:ok, DocuSign.Model.UserAuthorizationsResponse.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec user_authorizations_post_user_authorizations(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, UserAuthorizationsResponse.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def user_authorizations_post_user_authorizations(connection, account_id, user_id, opts \\ []) do
     optional_params = %{
       :body => :body

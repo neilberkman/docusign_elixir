@@ -7,16 +7,26 @@ defmodule DocuSign.Model.WorkspaceSettings do
   This object provides information about the settings for the workspace.
   """
 
-  @derive Jason.Encoder
   defstruct [
     :commentsAllowed
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :commentsAllowed => String.t() | nil
         }
 
   def decode(value) do
-    value
+    struct(__MODULE__, value)
   end
 end

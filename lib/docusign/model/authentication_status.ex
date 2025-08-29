@@ -10,7 +10,6 @@ defmodule DocuSign.Model.AuthenticationStatus do
   alias DocuSign.Deserializer
   alias DocuSign.Model.EventResult
 
-  @derive Jason.Encoder
   defstruct [
     :accessCodeResult,
     :ageVerifyResult,
@@ -32,6 +31,17 @@ defmodule DocuSign.Model.AuthenticationStatus do
     :twitterResult,
     :yahooResult
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :accessCodeResult => EventResult.t() | nil,
@@ -152,5 +162,6 @@ defmodule DocuSign.Model.AuthenticationStatus do
       :struct,
       EventResult
     )
+    |> then(&struct(__MODULE__, &1))
   end
 end

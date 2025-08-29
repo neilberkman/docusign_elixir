@@ -38,11 +38,11 @@ defmodule DocuSign.Api.Accounts do
   ### Returns
 
   - `{:ok, nil}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec accounts_delete_account(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, nil}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def accounts_delete_account(connection, account_id, opts \\ []) do
     optional_params = %{
       :redact_user_data => :query
@@ -78,11 +78,11 @@ defmodule DocuSign.Api.Accounts do
   ### Returns
 
   - `{:ok, DocuSign.Model.AccountInformation.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec accounts_get_account(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, AccountInformation.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def accounts_get_account(connection, account_id, opts \\ []) do
     optional_params = %{
       :include_account_settings => :query,
@@ -116,11 +116,11 @@ defmodule DocuSign.Api.Accounts do
   ### Returns
 
   - `{:ok, DocuSign.Model.ProvisioningInformation.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec accounts_get_provisioning(DocuSign.Connection.t(), keyword()) ::
           {:ok, ProvisioningInformation.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def accounts_get_provisioning(connection, _opts \\ []) do
     request =
       %{}
@@ -149,11 +149,11 @@ defmodule DocuSign.Api.Accounts do
   ### Returns
 
   - `{:ok, DocuSign.Model.NewAccountSummary.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec accounts_post_accounts(DocuSign.Connection.t(), keyword()) ::
           {:ok, NewAccountSummary.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def accounts_post_accounts(connection, opts \\ []) do
     optional_params = %{
       :body => :body
@@ -189,11 +189,11 @@ defmodule DocuSign.Api.Accounts do
   ### Returns
 
   - `{:ok, DocuSign.Model.BillingChargeResponse.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec billing_charges_get_account_billing_charges(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, BillingChargeResponse.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def billing_charges_get_account_billing_charges(connection, account_id, opts \\ []) do
     optional_params = %{
       :include_charges => :query
@@ -229,11 +229,11 @@ defmodule DocuSign.Api.Accounts do
   ### Returns
 
   - `{:ok, DocuSign.Model.CaptiveRecipientInformation.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec captive_recipients_delete_captive_recipients_part(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, CaptiveRecipientInformation.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def captive_recipients_delete_captive_recipients_part(connection, account_id, recipient_part, opts \\ []) do
     optional_params = %{
       :body => :body
@@ -267,11 +267,11 @@ defmodule DocuSign.Api.Accounts do
   ### Returns
 
   - `{:ok, DocuSign.Model.EnvelopePurgeConfiguration.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec envelope_purge_configuration_get_envelope_purge_configuration(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, EnvelopePurgeConfiguration.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def envelope_purge_configuration_get_envelope_purge_configuration(connection, account_id, _opts \\ []) do
     request =
       %{}
@@ -301,11 +301,11 @@ defmodule DocuSign.Api.Accounts do
   ### Returns
 
   - `{:ok, DocuSign.Model.EnvelopePurgeConfiguration.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec envelope_purge_configuration_put_envelope_purge_configuration(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, EnvelopePurgeConfiguration.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def envelope_purge_configuration_put_envelope_purge_configuration(connection, account_id, opts \\ []) do
     optional_params = %{
       :body => :body
@@ -340,11 +340,11 @@ defmodule DocuSign.Api.Accounts do
   ### Returns
 
   - `{:ok, DocuSign.Model.NotificationDefaults.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec notification_defaults_get_notification_defaults(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, NotificationDefaults.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def notification_defaults_get_notification_defaults(connection, account_id, _opts \\ []) do
     request =
       %{}
@@ -374,11 +374,11 @@ defmodule DocuSign.Api.Accounts do
   ### Returns
 
   - `{:ok, DocuSign.Model.NotificationDefaults.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec notification_defaults_put_notification_defaults(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, NotificationDefaults.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def notification_defaults_put_notification_defaults(connection, account_id, opts \\ []) do
     optional_params = %{
       :body => :body
@@ -414,11 +414,11 @@ defmodule DocuSign.Api.Accounts do
   ### Returns
 
   - `{:ok, DocuSign.Model.RecipientNamesResponse.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec recipient_names_get_recipient_names(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, RecipientNamesResponse.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def recipient_names_get_recipient_names(connection, account_id, opts \\ []) do
     optional_params = %{
       :email => :query
@@ -452,11 +452,11 @@ defmodule DocuSign.Api.Accounts do
   ### Returns
 
   - `{:ok, DocuSign.Model.AccountSettingsInformation.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec settings_get_settings(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, AccountSettingsInformation.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def settings_get_settings(connection, account_id, _opts \\ []) do
     request =
       %{}
@@ -486,11 +486,11 @@ defmodule DocuSign.Api.Accounts do
   ### Returns
 
   - `{:ok, nil}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec settings_put_settings(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, nil}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def settings_put_settings(connection, account_id, opts \\ []) do
     optional_params = %{
       :body => :body
@@ -533,11 +533,11 @@ defmodule DocuSign.Api.Accounts do
   ### Returns
 
   - `{:ok, DocuSign.Model.AccountSharedAccess.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec shared_access_get_shared_access(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, AccountSharedAccess.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def shared_access_get_shared_access(connection, account_id, opts \\ []) do
     optional_params = %{
       :count => :query,
@@ -582,11 +582,11 @@ defmodule DocuSign.Api.Accounts do
   ### Returns
 
   - `{:ok, DocuSign.Model.AccountSharedAccess.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec shared_access_put_shared_access(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, AccountSharedAccess.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def shared_access_put_shared_access(connection, account_id, opts \\ []) do
     optional_params = %{
       :body => :body,
@@ -624,11 +624,11 @@ defmodule DocuSign.Api.Accounts do
   ### Returns
 
   - `{:ok, DocuSign.Model.SupportedLanguages.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec supported_languages_get_supported_languages(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, SupportedLanguages.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def supported_languages_get_supported_languages(connection, account_id, _opts \\ []) do
     request =
       %{}
@@ -657,11 +657,11 @@ defmodule DocuSign.Api.Accounts do
   ### Returns
 
   - `{:ok, DocuSign.Model.FileTypeList.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec unsupported_file_types_get_unsupported_file_types(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, FileTypeList.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def unsupported_file_types_get_unsupported_file_types(connection, account_id, _opts \\ []) do
     request =
       %{}

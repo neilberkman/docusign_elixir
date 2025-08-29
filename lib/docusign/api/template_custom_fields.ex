@@ -28,11 +28,11 @@ defmodule DocuSign.Api.TemplateCustomFields do
   ### Returns
 
   - `{:ok, DocuSign.Model.CustomFields.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec custom_fields_delete_template_custom_fields(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, CustomFields.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def custom_fields_delete_template_custom_fields(connection, account_id, template_id, opts \\ []) do
     optional_params = %{
       :body => :body
@@ -67,11 +67,11 @@ defmodule DocuSign.Api.TemplateCustomFields do
   ### Returns
 
   - `{:ok, DocuSign.Model.CustomFields.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec custom_fields_get_template_custom_fields(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, CustomFields.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def custom_fields_get_template_custom_fields(connection, account_id, template_id, _opts \\ []) do
     request =
       %{}
@@ -102,11 +102,11 @@ defmodule DocuSign.Api.TemplateCustomFields do
   ### Returns
 
   - `{:ok, DocuSign.Model.CustomFields.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec custom_fields_post_template_custom_fields(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, CustomFields.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def custom_fields_post_template_custom_fields(connection, account_id, template_id, opts \\ []) do
     optional_params = %{
       :body => :body
@@ -143,11 +143,11 @@ defmodule DocuSign.Api.TemplateCustomFields do
   ### Returns
 
   - `{:ok, DocuSign.Model.CustomFields.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec custom_fields_put_template_custom_fields(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, CustomFields.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def custom_fields_put_template_custom_fields(connection, account_id, template_id, opts \\ []) do
     optional_params = %{
       :body => :body

@@ -28,11 +28,11 @@ defmodule DocuSign.Api.GroupUsers do
   ### Returns
 
   - `{:ok, DocuSign.Model.UsersResponse.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec groups_delete_group_users(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, UsersResponse.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def groups_delete_group_users(connection, account_id, group_id, opts \\ []) do
     optional_params = %{
       :body => :body
@@ -69,11 +69,11 @@ defmodule DocuSign.Api.GroupUsers do
   ### Returns
 
   - `{:ok, DocuSign.Model.UsersResponse.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec groups_get_group_users(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, UsersResponse.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def groups_get_group_users(connection, account_id, group_id, opts \\ []) do
     optional_params = %{
       :count => :query,
@@ -110,11 +110,11 @@ defmodule DocuSign.Api.GroupUsers do
   ### Returns
 
   - `{:ok, DocuSign.Model.UsersResponse.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec groups_put_group_users(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, UsersResponse.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def groups_put_group_users(connection, account_id, group_id, opts \\ []) do
     optional_params = %{
       :body => :body

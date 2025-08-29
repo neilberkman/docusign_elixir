@@ -37,7 +37,7 @@ defmodule DocuSign.Api.CloudStorage do
   ### Returns
 
   - `{:ok, DocuSign.Model.ExternalFolder.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec cloud_storage_folder_get_cloud_storage_folder(
           DocuSign.Connection.t(),
@@ -48,7 +48,7 @@ defmodule DocuSign.Api.CloudStorage do
           keyword()
         ) ::
           {:ok, ExternalFolder.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def cloud_storage_folder_get_cloud_storage_folder(connection, account_id, folder_id, service_id, user_id, opts \\ []) do
     optional_params = %{
       :cloud_storage_folder_path => :query,
@@ -97,7 +97,7 @@ defmodule DocuSign.Api.CloudStorage do
   ### Returns
 
   - `{:ok, DocuSign.Model.ExternalFolder.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec cloud_storage_folder_get_cloud_storage_folder_all(
           DocuSign.Connection.t(),
@@ -107,7 +107,7 @@ defmodule DocuSign.Api.CloudStorage do
           keyword()
         ) ::
           {:ok, ExternalFolder.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def cloud_storage_folder_get_cloud_storage_folder_all(connection, account_id, service_id, user_id, opts \\ []) do
     optional_params = %{
       :cloud_storage_folder_path => :query,

@@ -7,11 +7,21 @@ defmodule DocuSign.Model.ConnectFailureFilter do
   A list of failed envelope IDs to retry.
   """
 
-  @derive Jason.Encoder
   defstruct [
     :envelopeIds,
     :synchronous
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :envelopeIds => [String.t()] | nil,
@@ -19,6 +29,6 @@ defmodule DocuSign.Model.ConnectFailureFilter do
         }
 
   def decode(value) do
-    value
+    struct(__MODULE__, value)
   end
 end

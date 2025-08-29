@@ -27,11 +27,11 @@ defmodule DocuSign.Api.Comments do
   ### Returns
 
   - `{:ok, String.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec comments_get_comments_transcript(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, String.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def comments_get_comments_transcript(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
       :encoding => :query

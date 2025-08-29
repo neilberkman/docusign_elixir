@@ -10,10 +10,20 @@ defmodule DocuSign.Model.UserSignaturesInformation do
   alias DocuSign.Deserializer
   alias DocuSign.Model.UserSignature
 
-  @derive Jason.Encoder
   defstruct [
     :userSignatures
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :userSignatures => [UserSignature.t()] | nil
@@ -26,5 +36,6 @@ defmodule DocuSign.Model.UserSignaturesInformation do
       :list,
       UserSignature
     )
+    |> then(&struct(__MODULE__, &1))
   end
 end

@@ -7,7 +7,6 @@ defmodule DocuSign.Model.BillingInvoiceItem do
   Contains information about an item on a billing invoice.
   """
 
-  @derive Jason.Encoder
   defstruct [
     :chargeAmount,
     :chargeName,
@@ -17,6 +16,17 @@ defmodule DocuSign.Model.BillingInvoiceItem do
     :taxExemptAmount,
     :unitPrice
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :chargeAmount => String.t() | nil,
@@ -29,6 +39,6 @@ defmodule DocuSign.Model.BillingInvoiceItem do
         }
 
   def decode(value) do
-    value
+    struct(__MODULE__, value)
   end
 end

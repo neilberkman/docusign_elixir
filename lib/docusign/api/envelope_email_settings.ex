@@ -27,11 +27,11 @@ defmodule DocuSign.Api.EnvelopeEmailSettings do
   ### Returns
 
   - `{:ok, DocuSign.Model.EmailSettings.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec email_settings_delete_email_settings(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, EmailSettings.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def email_settings_delete_email_settings(connection, account_id, envelope_id, _opts \\ []) do
     request =
       %{}
@@ -61,11 +61,11 @@ defmodule DocuSign.Api.EnvelopeEmailSettings do
   ### Returns
 
   - `{:ok, DocuSign.Model.EmailSettings.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec email_settings_get_email_settings(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, EmailSettings.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def email_settings_get_email_settings(connection, account_id, envelope_id, _opts \\ []) do
     request =
       %{}
@@ -96,11 +96,11 @@ defmodule DocuSign.Api.EnvelopeEmailSettings do
   ### Returns
 
   - `{:ok, DocuSign.Model.EmailSettings.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec email_settings_post_email_settings(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, EmailSettings.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def email_settings_post_email_settings(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
       :body => :body
@@ -137,11 +137,11 @@ defmodule DocuSign.Api.EnvelopeEmailSettings do
   ### Returns
 
   - `{:ok, DocuSign.Model.EmailSettings.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec email_settings_put_email_settings(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, EmailSettings.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def email_settings_put_email_settings(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
       :body => :body

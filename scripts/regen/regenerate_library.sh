@@ -10,37 +10,41 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 DOCUSIGN_DIR="$(cd "$SCRIPT_DIR/../.." && pwd)"
 PRESERVE_DIR="${SCRIPT_DIR}/preserved"
 TEMP_DIR="/tmp/docusign_regen"
-GEN_DIR="${TEMP_DIR}/elixir_api_client"
+GEN_DIR="${TEMP_DIR}/custom_gen"
 
-# Check if OpenAPI spec exists
-if [ ! -f "${TEMP_DIR}/esignature.swagger.json" ]; then
-  echo "ERROR: OpenAPI specification not found at ${TEMP_DIR}/esignature.swagger.json"
-  echo "Please download the specification first:"
-  echo "curl -o /tmp/docusign_regen/esignature.swagger.json https://raw.githubusercontent.com/docusign/eSign-OpenAPI-Specification/master/esignature.rest.swagger-v2.1.json"
+# Check if custom templates exist
+CUSTOM_TEMPLATES="${SCRIPT_DIR}/custom_templates"
+if [ ! -d "${CUSTOM_TEMPLATES}" ]; then
+  echo "ERROR: Custom templates not found at ${CUSTOM_TEMPLATES}"
   exit 1
 fi
 
-# Check if OpenAPI generator has been run
-if [ ! -d "${GEN_DIR}" ]; then
-  echo "ERROR: Generated code not found at ${GEN_DIR}"
-  echo "Please generate the client first:"
-  echo "openapi-generator generate -i /tmp/docusign_regen/esignature.swagger.json -g elixir -o /tmp/docusign_regen/elixir_api_client --additional-properties=packageName=docusign_e_signature_restapi"
-  exit 1
+# Create temp directory if it doesn't exist
+mkdir -p "${TEMP_DIR}"
+
+# Download OpenAPI spec if not present or if --download flag is passed
+if [ ! -f "${TEMP_DIR}/esignature.swagger.json" ] || [ "$1" == "--download" ]; then
+  echo "Downloading latest OpenAPI specification..."
+  curl -o "${TEMP_DIR}/esignature.swagger.json" https://raw.githubusercontent.com/docusign/eSign-OpenAPI-Specification/master/esignature.rest.swagger-v2.1.json
 fi
 
-# Create backup and preserve directories
+# Generate the client code if not present or if --generate flag is passed
+if [ ! -d "${GEN_DIR}" ] || [ "$1" == "--generate" ] || [ "$1" == "--download" ]; then
+  echo "Generating client code with custom templates..."
+  openapi-generator generate \
+    -i "${TEMP_DIR}/esignature.swagger.json" \
+    -g elixir \
+    -t "${CUSTOM_TEMPLATES}" \
+    -o "${GEN_DIR}" \
+    --additional-properties=packageName=docusign_e_signature_restapi
+fi
+
+# Create preserve directory
 mkdir -p "${PRESERVE_DIR}"
-mkdir -p "${DOCUSIGN_DIR}/backup/api"
-mkdir -p "${DOCUSIGN_DIR}/backup/model"
 
 # List of files to preserve
 PRESERVE_FILES=(
-  "lib/docusign/model_cleaner.ex"
-  "lib/docusign/model_cleaner_jason.ex"
   "lib/docusign/model/recipient_view_url.ex"
-  "test/docusign/model_cleaner_test.exs"
-  "test/docusign/model_cleaner_jason_test.exs"
-  "test/docusign/model_cleaner_integration_test.exs"
 )
 
 # Preserve custom files
@@ -52,10 +56,6 @@ for file in "${PRESERVE_FILES[@]}"; do
   fi
 done
 
-# Backup existing API and model files
-echo "Backing up existing API and model files..."
-cp -r "${DOCUSIGN_DIR}/lib/docusign/api/"* "${DOCUSIGN_DIR}/backup/api/" 2>/dev/null || true
-cp -r "${DOCUSIGN_DIR}/lib/docusign/model/"* "${DOCUSIGN_DIR}/backup/model/" 2>/dev/null || true
 
 # Clean out existing files
 echo "Removing old API and model files..."
@@ -100,31 +100,8 @@ for file in "${PRESERVE_DIR}/"*; do
   fi
 done
 
-# Modify request_builder.ex to integrate ModelCleaner
-echo "Integrating ModelCleaner with request_builder.ex..."
-sed -i '' '/def add_param(request, :body, :body, value)/c\
-  def add_param(request, :body, :body, value) do\
-    # Clean the value using ModelCleaner\
-    cleaned_value = DocuSign.ModelCleaner.clean(value)\
-    Map.put(request, :body, cleaned_value)\
-  end' "${DOCUSIGN_DIR}/lib/docusign/request_builder.ex"
-
-sed -i '' '/def add_param(request, :body, key, value)/,+8c\
-  def add_param(request, :body, key, value) do\
-    # Clean the value using ModelCleaner before encoding with Jason\
-    cleaned_value = DocuSign.ModelCleaner.clean(value)\
-\
-    request\
-    |> Map.put_new_lazy(:body, \&Tesla.Multipart.new/0)\
-    |> Map.update!(:body, fn multipart ->\
-      Tesla.Multipart.add_field(\
-        multipart,\
-        key,\
-        Jason.encode!(cleaned_value),\
-        headers: [{:"Content-Type", "application/json"}]\
-      )\
-    end)\
-  end' "${DOCUSIGN_DIR}/lib/docusign/request_builder.ex"
+# Custom templates already include ModelCleaner integration
+echo "Custom templates include ModelCleaner integration..."
 
 # Format and test code
 echo "Formatting code..."

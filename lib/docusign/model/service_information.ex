@@ -10,7 +10,6 @@ defmodule DocuSign.Model.ServiceInformation do
   alias DocuSign.Deserializer
   alias DocuSign.Model.ServiceVersion
 
-  @derive Jason.Encoder
   defstruct [
     :buildBranch,
     :buildBranchDeployedDateTime,
@@ -19,6 +18,17 @@ defmodule DocuSign.Model.ServiceInformation do
     :linkedSites,
     :serviceVersions
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :buildBranch => String.t() | nil,
@@ -36,5 +46,6 @@ defmodule DocuSign.Model.ServiceInformation do
       :list,
       ServiceVersion
     )
+    |> then(&struct(__MODULE__, &1))
   end
 end

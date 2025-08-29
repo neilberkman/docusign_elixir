@@ -28,11 +28,11 @@ defmodule DocuSign.Api.Contacts do
   ### Returns
 
   - `{:ok, DocuSign.Model.ContactUpdateResponse.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec contacts_delete_contact_with_id(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, ContactUpdateResponse.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def contacts_delete_contact_with_id(connection, account_id, contact_id, _opts \\ []) do
     request =
       %{}
@@ -62,11 +62,11 @@ defmodule DocuSign.Api.Contacts do
   ### Returns
 
   - `{:ok, DocuSign.Model.ContactUpdateResponse.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec contacts_delete_contacts(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, ContactUpdateResponse.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def contacts_delete_contacts(connection, account_id, opts \\ []) do
     optional_params = %{
       :body => :body
@@ -102,11 +102,11 @@ defmodule DocuSign.Api.Contacts do
   ### Returns
 
   - `{:ok, DocuSign.Model.ContactGetResponse.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec contacts_get_contact_by_id(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, ContactGetResponse.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def contacts_get_contact_by_id(connection, account_id, contact_id, opts \\ []) do
     optional_params = %{
       :cloud_provider => :query
@@ -141,11 +141,11 @@ defmodule DocuSign.Api.Contacts do
   ### Returns
 
   - `{:ok, DocuSign.Model.ContactUpdateResponse.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec contacts_post_contacts(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, ContactUpdateResponse.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def contacts_post_contacts(connection, account_id, opts \\ []) do
     optional_params = %{
       :body => :body
@@ -181,11 +181,11 @@ defmodule DocuSign.Api.Contacts do
   ### Returns
 
   - `{:ok, DocuSign.Model.ContactUpdateResponse.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec contacts_put_contacts(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, ContactUpdateResponse.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def contacts_put_contacts(connection, account_id, opts \\ []) do
     optional_params = %{
       :body => :body

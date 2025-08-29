@@ -27,11 +27,11 @@ defmodule DocuSign.Api.DocumentGeneration do
   ### Returns
 
   - `{:ok, DocuSign.Model.DocGenFormFieldResponse.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec doc_gen_form_fields_get_envelope_doc_gen_form_fields(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, DocGenFormFieldResponse.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def doc_gen_form_fields_get_envelope_doc_gen_form_fields(connection, account_id, envelope_id, _opts \\ []) do
     request =
       %{}
@@ -63,11 +63,11 @@ defmodule DocuSign.Api.DocumentGeneration do
   ### Returns
 
   - `{:ok, DocuSign.Model.DocGenFormFieldResponse.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec doc_gen_form_fields_put_envelope_doc_gen_form_fields(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, DocGenFormFieldResponse.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def doc_gen_form_fields_put_envelope_doc_gen_form_fields(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
       :body => :body,

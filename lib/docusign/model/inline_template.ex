@@ -13,7 +13,6 @@ defmodule DocuSign.Model.InlineTemplate do
   alias DocuSign.Model.Envelope
   alias DocuSign.Model.EnvelopeRecipients
 
-  @derive Jason.Encoder
   defstruct [
     :customFields,
     :documents,
@@ -21,6 +20,17 @@ defmodule DocuSign.Model.InlineTemplate do
     :recipients,
     :sequence
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :customFields => AccountCustomFields.t() | nil,
@@ -52,5 +62,6 @@ defmodule DocuSign.Model.InlineTemplate do
       :struct,
       EnvelopeRecipients
     )
+    |> then(&struct(__MODULE__, &1))
   end
 end

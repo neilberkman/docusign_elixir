@@ -13,7 +13,6 @@ defmodule DocuSign.Model.UserProfiles do
   alias DocuSign.Model.UsageHistory
   alias DocuSign.Model.UserInformation
 
-  @derive Jason.Encoder
   defstruct [
     :address,
     :authenticationMethods,
@@ -28,6 +27,17 @@ defmodule DocuSign.Model.UserProfiles do
     :userDetails,
     :userProfileLastModifiedDate
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :address => AddressInformation.t() | nil,
@@ -66,5 +76,6 @@ defmodule DocuSign.Model.UserProfiles do
       :struct,
       UserInformation
     )
+    |> then(&struct(__MODULE__, &1))
   end
 end

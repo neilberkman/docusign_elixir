@@ -7,7 +7,6 @@ defmodule DocuSign.Model.DowngradePlanUpdateResponse do
 
   """
 
-  @derive Jason.Encoder
   defstruct [
     :accountPaymentMethod,
     :discountApplied,
@@ -23,6 +22,17 @@ defmodule DocuSign.Model.DowngradePlanUpdateResponse do
     :saleDiscountPeriods,
     :saleDiscountType
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :accountPaymentMethod => String.t() | nil,
@@ -41,6 +51,6 @@ defmodule DocuSign.Model.DowngradePlanUpdateResponse do
         }
 
   def decode(value) do
-    value
+    struct(__MODULE__, value)
   end
 end

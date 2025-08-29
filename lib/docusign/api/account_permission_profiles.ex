@@ -29,11 +29,11 @@ defmodule DocuSign.Api.AccountPermissionProfiles do
   ### Returns
 
   - `{:ok, nil}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec permission_profiles_delete_permission_profiles(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, nil}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def permission_profiles_delete_permission_profiles(connection, account_id, permission_profile_id, opts \\ []) do
     optional_params = %{
       :move_users_to => :query
@@ -69,11 +69,11 @@ defmodule DocuSign.Api.AccountPermissionProfiles do
   ### Returns
 
   - `{:ok, DocuSign.Model.PermissionProfile.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec permission_profiles_get_permission_profile(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, PermissionProfile.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def permission_profiles_get_permission_profile(connection, account_id, permission_profile_id, opts \\ []) do
     optional_params = %{
       :include => :query
@@ -108,11 +108,11 @@ defmodule DocuSign.Api.AccountPermissionProfiles do
   ### Returns
 
   - `{:ok, DocuSign.Model.PermissionProfileInformation.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec permission_profiles_get_permission_profiles(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, PermissionProfileInformation.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def permission_profiles_get_permission_profiles(connection, account_id, opts \\ []) do
     optional_params = %{
       :include => :query
@@ -148,11 +148,11 @@ defmodule DocuSign.Api.AccountPermissionProfiles do
   ### Returns
 
   - `{:ok, DocuSign.Model.PermissionProfile.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec permission_profiles_post_permission_profiles(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, PermissionProfile.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def permission_profiles_post_permission_profiles(connection, account_id, opts \\ []) do
     optional_params = %{
       :body => :body,
@@ -191,11 +191,11 @@ defmodule DocuSign.Api.AccountPermissionProfiles do
   ### Returns
 
   - `{:ok, DocuSign.Model.PermissionProfile.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec permission_profiles_put_permission_profiles(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, PermissionProfile.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def permission_profiles_put_permission_profiles(connection, account_id, permission_profile_id, opts \\ []) do
     optional_params = %{
       :body => :body,

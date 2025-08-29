@@ -7,7 +7,6 @@ defmodule DocuSign.Model.LocalePolicyTab do
   Allows you to customize locale settings.
   """
 
-  @derive Jason.Encoder
   defstruct [
     :addressFormat,
     :calendarType,
@@ -24,6 +23,17 @@ defmodule DocuSign.Model.LocalePolicyTab do
     :timeZone,
     :useLongCurrencyFormat
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :addressFormat => String.t() | nil,
@@ -43,6 +53,6 @@ defmodule DocuSign.Model.LocalePolicyTab do
         }
 
   def decode(value) do
-    value
+    struct(__MODULE__, value)
   end
 end

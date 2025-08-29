@@ -7,7 +7,6 @@ defmodule DocuSign.Model.CurrencyFeatureSetPrice do
   Information about the price and currency associated with the feature set. Reserved for internal Docusign use only.
   """
 
-  @derive Jason.Encoder
   defstruct [
     :currencyCode,
     :currencySymbol,
@@ -15,6 +14,17 @@ defmodule DocuSign.Model.CurrencyFeatureSetPrice do
     :fixedFee,
     :seatFee
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :currencyCode => String.t() | nil,
@@ -25,6 +35,6 @@ defmodule DocuSign.Model.CurrencyFeatureSetPrice do
         }
 
   def decode(value) do
-    value
+    struct(__MODULE__, value)
   end
 end

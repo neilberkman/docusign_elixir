@@ -7,11 +7,21 @@ defmodule DocuSign.Model.EnvelopeDelayRule do
   A user-specified object that describes the envelope delay.  To indicate a relative delay, use `delay`. To indicate the exact datetime the envelope should be sent, use `resumeDate`. Only one of the two properties can be used.
   """
 
-  @derive Jason.Encoder
   defstruct [
     :delay,
     :resumeDate
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :delay => String.t() | nil,
@@ -19,6 +29,6 @@ defmodule DocuSign.Model.EnvelopeDelayRule do
         }
 
   def decode(value) do
-    value
+    struct(__MODULE__, value)
   end
 end

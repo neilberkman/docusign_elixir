@@ -28,7 +28,7 @@ defmodule DocuSign.Api.EnvelopeTransferRules do
   ### Returns
 
   - `{:ok, nil}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec envelope_transfer_rules_delete_envelope_transfer_rules(
           DocuSign.Connection.t(),
@@ -37,7 +37,7 @@ defmodule DocuSign.Api.EnvelopeTransferRules do
           keyword()
         ) ::
           {:ok, nil}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def envelope_transfer_rules_delete_envelope_transfer_rules(
         connection,
         account_id,
@@ -73,11 +73,11 @@ defmodule DocuSign.Api.EnvelopeTransferRules do
   ### Returns
 
   - `{:ok, DocuSign.Model.EnvelopeTransferRuleInformation.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec envelope_transfer_rules_get_envelope_transfer_rules(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, EnvelopeTransferRuleInformation.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def envelope_transfer_rules_get_envelope_transfer_rules(connection, account_id, opts \\ []) do
     optional_params = %{
       :count => :query,
@@ -113,11 +113,11 @@ defmodule DocuSign.Api.EnvelopeTransferRules do
   ### Returns
 
   - `{:ok, DocuSign.Model.EnvelopeTransferRuleInformation.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec envelope_transfer_rules_post_envelope_transfer_rules(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, EnvelopeTransferRuleInformation.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def envelope_transfer_rules_post_envelope_transfer_rules(connection, account_id, opts \\ []) do
     optional_params = %{
       :body => :body
@@ -154,11 +154,11 @@ defmodule DocuSign.Api.EnvelopeTransferRules do
   ### Returns
 
   - `{:ok, DocuSign.Model.EnvelopeTransferRule.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec envelope_transfer_rules_put_envelope_transfer_rule(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, EnvelopeTransferRule.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def envelope_transfer_rules_put_envelope_transfer_rule(connection, account_id, envelope_transfer_rule_id, opts \\ []) do
     optional_params = %{
       :body => :body
@@ -194,11 +194,11 @@ defmodule DocuSign.Api.EnvelopeTransferRules do
   ### Returns
 
   - `{:ok, DocuSign.Model.EnvelopeTransferRuleInformation.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec envelope_transfer_rules_put_envelope_transfer_rules(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, EnvelopeTransferRuleInformation.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def envelope_transfer_rules_put_envelope_transfer_rules(connection, account_id, opts \\ []) do
     optional_params = %{
       :body => :body

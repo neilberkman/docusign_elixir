@@ -10,7 +10,6 @@ defmodule DocuSign.Model.NewUser do
   alias DocuSign.Deserializer
   alias DocuSign.Model.ErrorDetails
 
-  @derive Jason.Encoder
   defstruct [
     :apiPassword,
     :createdDateTime,
@@ -26,6 +25,17 @@ defmodule DocuSign.Model.NewUser do
     :userName,
     :userStatus
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :apiPassword => String.t() | nil,
@@ -50,5 +60,6 @@ defmodule DocuSign.Model.NewUser do
       :struct,
       ErrorDetails
     )
+    |> then(&struct(__MODULE__, &1))
   end
 end

@@ -7,12 +7,22 @@ defmodule DocuSign.Model.Reminders do
   A complex element that specifies reminder settings for the envelope.
   """
 
-  @derive Jason.Encoder
   defstruct [
     :reminderDelay,
     :reminderEnabled,
     :reminderFrequency
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :reminderDelay => String.t() | nil,
@@ -21,6 +31,6 @@ defmodule DocuSign.Model.Reminders do
         }
 
   def decode(value) do
-    value
+    struct(__MODULE__, value)
   end
 end

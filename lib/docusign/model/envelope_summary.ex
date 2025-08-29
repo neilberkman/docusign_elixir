@@ -11,7 +11,6 @@ defmodule DocuSign.Model.EnvelopeSummary do
   alias DocuSign.Model.BulkEnvelopeStatus
   alias DocuSign.Model.ErrorDetails
 
-  @derive Jason.Encoder
   defstruct [
     :bulkEnvelopeStatus,
     :envelopeId,
@@ -22,6 +21,17 @@ defmodule DocuSign.Model.EnvelopeSummary do
     :statusDateTime,
     :uri
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :bulkEnvelopeStatus => BulkEnvelopeStatus.t() | nil,
@@ -46,5 +56,6 @@ defmodule DocuSign.Model.EnvelopeSummary do
       :struct,
       ErrorDetails
     )
+    |> then(&struct(__MODULE__, &1))
   end
 end

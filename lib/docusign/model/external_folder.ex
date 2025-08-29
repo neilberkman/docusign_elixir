@@ -11,7 +11,6 @@ defmodule DocuSign.Model.ExternalFolder do
   alias DocuSign.Model.ExternalDocServiceErrorDetails
   alias DocuSign.Model.ExternalFile
 
-  @derive Jason.Encoder
   defstruct [
     :endPosition,
     :errorDetails,
@@ -25,6 +24,17 @@ defmodule DocuSign.Model.ExternalFolder do
     :startPosition,
     :totalSetSize
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :endPosition => String.t() | nil,
@@ -52,5 +62,6 @@ defmodule DocuSign.Model.ExternalFolder do
       :list,
       ExternalFile
     )
+    |> then(&struct(__MODULE__, &1))
   end
 end

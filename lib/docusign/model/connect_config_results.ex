@@ -10,11 +10,21 @@ defmodule DocuSign.Model.ConnectConfigResults do
   alias DocuSign.Deserializer
   alias DocuSign.Model.ConnectCustomConfiguration
 
-  @derive Jason.Encoder
   defstruct [
     :configurations,
     :totalRecords
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :configurations => [ConnectCustomConfiguration.t()] | nil,
@@ -28,5 +38,6 @@ defmodule DocuSign.Model.ConnectConfigResults do
       :list,
       ConnectCustomConfiguration
     )
+    |> then(&struct(__MODULE__, &1))
   end
 end

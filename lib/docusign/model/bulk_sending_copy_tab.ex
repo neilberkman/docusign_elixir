@@ -7,11 +7,21 @@ defmodule DocuSign.Model.BulkSendingCopyTab do
   A tab associated with the bulk send recipient. In a bulk send request, each recipient tab must match a recipient tab on the envelope or template that you want to send. To match up, the `tabLabel` for this tab and the `tabLabel` for the corresponding tab on the envelope or template must be the same.  For example, if the envelope has a placeholder text tab with the `tabLabel` `childName`, you must assign the same `tabLabel` `childName` to the tab here that you are populating with that information.
   """
 
-  @derive Jason.Encoder
   defstruct [
     :initialValue,
     :tabLabel
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :initialValue => String.t() | nil,
@@ -19,6 +29,6 @@ defmodule DocuSign.Model.BulkSendingCopyTab do
         }
 
   def decode(value) do
-    value
+    struct(__MODULE__, value)
   end
 end

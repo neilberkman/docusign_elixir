@@ -12,7 +12,6 @@ defmodule DocuSign.Model.BulkSendingCopy do
   alias DocuSign.Model.BulksendingCopyDocGenFormField
   alias DocuSign.Model.BulkSendingCopyRecipient
 
-  @derive Jason.Encoder
   defstruct [
     :customFields,
     :docGenFormFields,
@@ -20,6 +19,17 @@ defmodule DocuSign.Model.BulkSendingCopy do
     :emailSubject,
     :recipients
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :customFields => [BulkSendingCopyCustomField.t()] | nil,
@@ -46,5 +56,6 @@ defmodule DocuSign.Model.BulkSendingCopy do
       :list,
       BulkSendingCopyRecipient
     )
+    |> then(&struct(__MODULE__, &1))
   end
 end

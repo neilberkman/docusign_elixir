@@ -25,11 +25,11 @@ defmodule DocuSign.Api.Services do
   ### Returns
 
   - `{:ok, DocuSign.Model.ServiceInformation.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec service_information_get_service_information(DocuSign.Connection.t(), keyword()) ::
           {:ok, ServiceInformation.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def service_information_get_service_information(connection, _opts \\ []) do
     request =
       %{}

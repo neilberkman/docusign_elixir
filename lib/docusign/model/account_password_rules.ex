@@ -16,7 +16,6 @@ defmodule DocuSign.Model.AccountPasswordRules do
   alias DocuSign.Model.AccountPasswordQuestionsRequired
   alias DocuSign.Model.AccountPasswordStrengthType
 
-  @derive Jason.Encoder
   defstruct [
     :expirePassword,
     :expirePasswordDays,
@@ -39,6 +38,17 @@ defmodule DocuSign.Model.AccountPasswordRules do
     :questionsRequired,
     :questionsRequiredMetadata
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :expirePassword => String.t() | nil,
@@ -100,5 +110,6 @@ defmodule DocuSign.Model.AccountPasswordRules do
       :struct,
       AccountPasswordQuestionsRequired
     )
+    |> then(&struct(__MODULE__, &1))
   end
 end

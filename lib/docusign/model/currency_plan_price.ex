@@ -10,7 +10,6 @@ defmodule DocuSign.Model.CurrencyPlanPrice do
   alias DocuSign.Deserializer
   alias DocuSign.Model.CreditCardTypes
 
-  @derive Jason.Encoder
   defstruct [
     :currencyCode,
     :currencySymbol,
@@ -19,6 +18,17 @@ defmodule DocuSign.Model.CurrencyPlanPrice do
     :supportPlanFee,
     :supportedCardTypes
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :currencyCode => String.t() | nil,
@@ -36,5 +46,6 @@ defmodule DocuSign.Model.CurrencyPlanPrice do
       :struct,
       CreditCardTypes
     )
+    |> then(&struct(__MODULE__, &1))
   end
 end

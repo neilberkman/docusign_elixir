@@ -37,11 +37,11 @@ defmodule DocuSign.Api.Folders do
   ### Returns
 
   - `{:ok, DocuSign.Model.FolderItemsResponse.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec folders_get_folder_items(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, FolderItemsResponse.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def folders_get_folder_items(connection, account_id, folder_id, opts \\ []) do
     optional_params = %{
       :from_date => :query,
@@ -89,11 +89,11 @@ defmodule DocuSign.Api.Folders do
   ### Returns
 
   - `{:ok, DocuSign.Model.FoldersResponse.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec folders_get_folders(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, FoldersResponse.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def folders_get_folders(connection, account_id, opts \\ []) do
     optional_params = %{
       :count => :query,
@@ -135,11 +135,11 @@ defmodule DocuSign.Api.Folders do
   ### Returns
 
   - `{:ok, DocuSign.Model.FoldersResponse.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec folders_put_folder_by_id(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, FoldersResponse.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def folders_put_folder_by_id(connection, account_id, folder_id, opts \\ []) do
     optional_params = %{
       :body => :body
@@ -183,11 +183,11 @@ defmodule DocuSign.Api.Folders do
   ### Returns
 
   - `{:ok, DocuSign.Model.FolderItemResponse.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec search_folders_get_search_folder_contents(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, FolderItemResponse.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def search_folders_get_search_folder_contents(connection, account_id, search_folder_id, opts \\ []) do
     optional_params = %{
       :all => :query,

@@ -29,11 +29,11 @@ defmodule DocuSign.Api.BCCEmailArchive do
   ### Returns
 
   - `{:ok, nil}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec b_cc_email_archive_delete_bcc_email_archive(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
           {:ok, nil}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def b_cc_email_archive_delete_bcc_email_archive(connection, account_id, bcc_email_archive_id, _opts \\ []) do
     request =
       %{}
@@ -65,7 +65,7 @@ defmodule DocuSign.Api.BCCEmailArchive do
   ### Returns
 
   - `{:ok, DocuSign.Model.BccEmailArchiveHistoryList.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec b_cc_email_archive_get_bcc_email_archive_history_list(
           DocuSign.Connection.t(),
@@ -74,7 +74,7 @@ defmodule DocuSign.Api.BCCEmailArchive do
           keyword()
         ) ::
           {:ok, BccEmailArchiveHistoryList.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def b_cc_email_archive_get_bcc_email_archive_history_list(connection, account_id, bcc_email_archive_id, opts \\ []) do
     optional_params = %{
       :count => :query,
@@ -111,11 +111,11 @@ defmodule DocuSign.Api.BCCEmailArchive do
   ### Returns
 
   - `{:ok, DocuSign.Model.BccEmailArchiveList.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec b_cc_email_archive_get_bcc_email_archive_list(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, BccEmailArchiveList.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def b_cc_email_archive_get_bcc_email_archive_list(connection, account_id, opts \\ []) do
     optional_params = %{
       :count => :query,
@@ -151,11 +151,11 @@ defmodule DocuSign.Api.BCCEmailArchive do
   ### Returns
 
   - `{:ok, DocuSign.Model.BccEmailArchive.t}` on success
-  - `{:error, Tesla.Env.t}` on failure
+  - `{:error, Req.Response.t}` on failure
   """
   @spec b_cc_email_archive_post_bcc_email_archive(DocuSign.Connection.t(), String.t(), keyword()) ::
           {:ok, BccEmailArchive.t()}
-          | {:error, Tesla.Env.t()}
+          | {:error, Req.Response.t()}
   def b_cc_email_archive_post_bcc_email_archive(connection, account_id, opts \\ []) do
     optional_params = %{
       :body => :body

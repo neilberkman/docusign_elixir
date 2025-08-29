@@ -7,7 +7,6 @@ defmodule DocuSign.Model.SignerEmailNotifications do
   An array of email notifications that specifies the email the user receives when they are a recipient. When the specific email notification is set to true, the user receives those types of email notifications from Docusign. The user inherits the default account email notification settings when the user is created. 
   """
 
-  @derive Jason.Encoder
   defstruct [
     :agentNotification,
     :carbonCopyNotification,
@@ -26,6 +25,17 @@ defmodule DocuSign.Model.SignerEmailNotifications do
     :reassignedSigner,
     :whenSigningGroupMember
   ]
+
+  @doc false
+  defimpl Jason.Encoder, for: __MODULE__ do
+    def encode(struct, opts) do
+      struct
+      |> Map.from_struct()
+      |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      |> Map.new()
+      |> Jason.Encode.map(opts)
+    end
+  end
 
   @type t :: %__MODULE__{
           :agentNotification => String.t() | nil,
@@ -47,6 +57,6 @@ defmodule DocuSign.Model.SignerEmailNotifications do
         }
 
   def decode(value) do
-    value
+    struct(__MODULE__, value)
   end
 end
