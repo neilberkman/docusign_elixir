@@ -262,6 +262,7 @@ defmodule DocuSign.FileDownloader do
   @spec cleanup_temp_files() :: :ok
   def cleanup_temp_files do
     Temp.cleanup()
+    :ok
   end
 
   @doc """
@@ -289,13 +290,11 @@ defmodule DocuSign.FileDownloader do
 
   # Private functions
 
-  defp make_request(conn, url, opts) do
+  defp make_request(conn, url, _opts) do
     request_opts = []
 
-    request_opts =
-      if opts[:max_size],
-        do: Keyword.put(request_opts, :max_body_length, opts[:max_size]),
-        else: request_opts
+    # Note: max_size validation is handled in validate_content_size/2 after response is received
+    # The :max_body_length option is not supported by Req
 
     case DocuSign.Connection.request(conn, Keyword.merge([method: :get, url: url], request_opts)) do
       {:ok, %Req.Response{status: status} = response} when status in 200..299 ->
