@@ -230,6 +230,19 @@ defmodule DocuSign.Connection do
     # Check for Retry-After header
     retry_after = get_retry_after(response.headers)
 
+    # Emit telemetry event for rate limit
+    if retry_after do
+      # Try to get metadata from finch_private or use defaults
+      finch_private = request.options[:finch_private] || %{}
+
+      metadata = %{
+        account_id: finch_private[:account_id] || "unknown",
+        operation: finch_private[:operation] || "unknown"
+      }
+
+      DocuSign.Telemetry.execute_rate_limit(metadata.operation, retry_after, metadata)
+    end
+
     if retry_after && request.private[:retry_count] < request.options[:max_retries] do
       # Wait for the specified time before retrying
       Process.sleep(retry_after * 1000)
@@ -314,6 +327,7 @@ defmodule DocuSign.Connection do
   ## Options
 
   * `:ssl_options` - Override SSL options for this specific request
+  * `:telemetry_metadata` - Additional metadata to include in telemetry events
   * All other options are passed through to Req
 
   ## Examples
@@ -324,40 +338,139 @@ defmodule DocuSign.Connection do
         url: "/accounts",
         ssl_options: [cacertfile: "/custom/ca.pem"]
       )
+
+      # With telemetry metadata
+      DocuSign.Connection.request(conn,
+        method: :get,
+        url: "/accounts",
+        telemetry_metadata: %{operation: "list_accounts"}
+      )
   """
   @spec request(t(), Keyword.t()) :: {:ok, Req.Response.t()} | {:error, any()}
-  def request(%__MODULE__{req: req}, opts \\ []) do
-    # Extract SSL options if provided
+  def request(%__MODULE__{app_account: app_account, req: req}, opts \\ []) do
+    {ssl_opts, opts, telemetry_meta} = extract_options(opts)
+    {operation, metadata, start_time} = setup_telemetry(app_account, opts, telemetry_meta)
+
+    req = apply_ssl_options(req, ssl_opts)
+    opts = add_telemetry_to_opts(opts, operation, app_account)
+
+    execute_request_with_telemetry(req, opts, operation, metadata, start_time)
+  end
+
+  # Extract SSL and telemetry options from opts
+  defp extract_options(opts) do
     {ssl_opts, opts} = Keyword.pop(opts, :ssl_options, [])
+    {telemetry_meta, opts} = Keyword.pop(opts, :telemetry_metadata, %{})
+    {ssl_opts, opts, telemetry_meta}
+  end
 
-    # Apply SSL options if provided
-    req =
-      if ssl_opts == [] do
-        req
-      else
-        # Build the transport options
-        transport_opts =
-          if Code.ensure_loaded?(DocuSign.SSLOptions) do
-            DocuSign.SSLOptions.build(ssl_opts)
-          else
-            ssl_opts
-          end
+  # Setup telemetry metadata and start timing
+  defp setup_telemetry(app_account, opts, telemetry_meta) do
+    method = opts[:method] || :get
+    path = opts[:url] || "/"
+    operation = telemetry_meta[:operation] || extract_operation_name(method, path)
 
-        # Merge with existing req options
-        # Req expects connect_options to contain transport_opts
-        Req.merge(req, connect_options: [transport_opts: transport_opts])
+    account_id =
+      case app_account do
+        %{account_id: id} -> id
+        _ -> nil
       end
 
-    # Make the request
-    case Req.request(req, opts) do
-      {:ok, %Req.Response{status: status} = response} when status in 200..299 ->
-        {:ok, response}
+    metadata =
+      Map.merge(telemetry_meta, %{
+        account_id: account_id,
+        method: method,
+        path: path
+      })
 
-      {:ok, %Req.Response{} = response} ->
-        handle_error_response(response)
+    start_time = System.monotonic_time()
+    DocuSign.Telemetry.execute_api_start(operation, metadata)
 
-      {:error, reason} ->
-        {:error, reason}
+    {operation, metadata, start_time}
+  end
+
+  # Apply SSL options to req if provided
+  defp apply_ssl_options(req, []), do: req
+
+  defp apply_ssl_options(req, ssl_opts) do
+    transport_opts =
+      if Code.ensure_loaded?(DocuSign.SSLOptions) do
+        DocuSign.SSLOptions.build(ssl_opts)
+      else
+        ssl_opts
+      end
+
+    Req.merge(req, connect_options: [transport_opts: transport_opts])
+  end
+
+  # Add telemetry metadata to Finch private options for correlation
+  defp add_telemetry_to_opts(opts, operation, app_account) do
+    account_id =
+      case app_account do
+        %{account_id: id} -> id
+        _ -> nil
+      end
+
+    Keyword.update(opts, :finch_private, %{operation: operation}, fn existing ->
+      Map.merge(existing, %{account_id: account_id, operation: operation})
+    end)
+  end
+
+  # Execute the request with proper telemetry handling
+  defp execute_request_with_telemetry(req, opts, operation, metadata, start_time) do
+    handle_request_response(Req.request(req, opts), operation, metadata, start_time)
+  rescue
+    exception ->
+      DocuSign.Telemetry.execute_api_exception(
+        operation,
+        start_time,
+        :error,
+        exception,
+        __STACKTRACE__,
+        metadata
+      )
+
+      reraise exception, __STACKTRACE__
+  end
+
+  # Handle the various response cases
+  defp handle_request_response({:ok, %Req.Response{status: status} = response}, operation, metadata, start_time)
+       when status in 200..299 do
+    stop_metadata = Map.put(metadata, :status, status)
+    DocuSign.Telemetry.execute_api_stop(operation, start_time, stop_metadata)
+    {:ok, response}
+  end
+
+  defp handle_request_response({:ok, %Req.Response{status: status} = response}, operation, metadata, start_time) do
+    stop_metadata = Map.put(metadata, :status, status)
+    DocuSign.Telemetry.execute_api_stop(operation, start_time, stop_metadata)
+    handle_error_response(response)
+  end
+
+  defp handle_request_response({:error, reason} = error, operation, metadata, start_time) do
+    DocuSign.Telemetry.execute_api_exception(
+      operation,
+      start_time,
+      :error,
+      reason,
+      [],
+      metadata
+    )
+
+    error
+  end
+
+  defp extract_operation_name(method, path) do
+    # Extract a meaningful operation name from the path
+    # e.g., "/v2.1/accounts/123/envelopes" -> "envelopes"
+    # e.g., "/v2.1/accounts/123/envelopes/456" -> "envelope"
+    path
+    |> String.split("/")
+    |> Enum.reject(&(&1 == "" or String.starts_with?(&1, "v")))
+    |> List.last()
+    |> case do
+      nil -> "unknown"
+      name -> "#{method}_#{name}" |> String.downcase()
     end
   end
 
