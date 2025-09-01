@@ -4,25 +4,6 @@ This document contains ideas for meaningful improvements to the DocuSign Elixir 
 
 ## High Priority Improvements
 
-### 1. Retry Logic and Resilience
-
-**Description**: Automatic retry for transient failures
-**Features**:
-
-- Configurable retry counts
-- Exponential backoff
-- Circuit breaker pattern
-- Rate limit handling
-  **Implementation**:
-
-```elixir
-config :docusign, :retry_options, [
-  max_retries: 3,
-  backoff_factor: 2,
-  max_delay: 30_000
-]
-```
-
 ## Medium Priority Improvements
 
 ### 2. Collection Parameter Formatting

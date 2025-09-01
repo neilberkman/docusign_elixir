@@ -183,9 +183,9 @@ defmodule DocuSign.Connection do
             {"authorization", "#{token.token_type} #{token.access_token}"},
             {"content-type", "application/json"}
           ] ++ Debug.sdk_headers(),
-        receive_timeout: Application.get_env(:docusign, :timeout, @timeout),
-        retry: false
+        receive_timeout: Application.get_env(:docusign, :timeout, @timeout)
       )
+      |> configure_retry()
       |> maybe_add_debug_steps()
 
     %__MODULE__{
@@ -194,6 +194,76 @@ defmodule DocuSign.Connection do
       req: req
     }
   end
+
+  defp configure_retry(req) do
+    retry_options = Application.get_env(:docusign, :retry_options, [])
+
+    if retry_options[:enabled] == false do
+      # Explicitly disabled
+      Req.merge(req, retry: false)
+    else
+      # Configure retry with defaults and user options
+      max_retries = retry_options[:max_retries] || 3
+      backoff_factor = retry_options[:backoff_factor] || 2
+      max_delay = retry_options[:max_delay] || 30_000
+
+      req
+      |> Req.merge(
+        retry: :transient,
+        max_retries: max_retries,
+        retry_delay: &calculate_retry_delay(&1, backoff_factor, max_delay)
+      )
+      |> Req.Request.prepend_error_steps(handle_rate_limit: &handle_rate_limit_error/1)
+    end
+  end
+
+  defp calculate_retry_delay(attempt, backoff_factor, max_delay) do
+    # Exponential backoff with jitter
+    # Ensure non-negative exponent (attempt starts from 0 in Req)
+    exponent = max(0, attempt)
+    base_delay = Integer.pow(backoff_factor, exponent) * 1000
+    jittered = base_delay + :rand.uniform(1000)
+    min(jittered, max_delay)
+  end
+
+  defp handle_rate_limit_error({request, %Req.Response{status: 429} = response}) do
+    # Check for Retry-After header
+    retry_after = get_retry_after(response.headers)
+
+    if retry_after && request.private[:retry_count] < request.options[:max_retries] do
+      # Wait for the specified time before retrying
+      Process.sleep(retry_after * 1000)
+      {request, {:retry, response}}
+    else
+      {request, response}
+    end
+  end
+
+  defp handle_rate_limit_error({request, response_or_error}) do
+    {request, response_or_error}
+  end
+
+  defp get_retry_after(headers) do
+    case List.keyfind(headers, "retry-after", 0) do
+      {"retry-after", value} when is_list(value) ->
+        value |> List.first() |> parse_retry_after()
+
+      {"retry-after", value} when is_binary(value) ->
+        parse_retry_after(value)
+
+      _ ->
+        nil
+    end
+  end
+
+  defp parse_retry_after(value) when is_binary(value) do
+    case Integer.parse(value) do
+      {seconds, ""} -> seconds
+      _ -> nil
+    end
+  end
+
+  defp parse_retry_after(_), do: nil
 
   defp maybe_add_debug_steps(req) do
     if Application.get_env(:docusign, :debug, false) do
