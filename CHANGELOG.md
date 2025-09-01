@@ -1,12 +1,25 @@
 # Changelog
 
-## v2.3.0 (Unreleased)
+## v3.0.0 (2025-09-01)
+
+### Breaking Changes
+
+- **HTTP Client Migration**: Replace Tesla with Req HTTP client
+  - Error responses now return `{:error, Req.Response}` instead of `{:error, Tesla.Env}`
+  - Connection module internally uses Req instead of Tesla
+  - Removed Tesla middleware system in favor of Req's request/response steps
+  - Debug module's middleware functions are deprecated (use `sdk_headers()` directly)
+  - Any code directly accessing error response structures will need updates
 
 ### Major Improvements
 
+- **Removed Internal Workarounds**:
+  - Eliminated ModelCleaner hack - Req properly handles nil values in request bodies
+  - No more INVALID_REQUEST_BODY errors from nil values
+  - Cleaner codebase without internal workarounds
+
 - **OpenAPI Generator Integration**: Implement custom Mustache templates for OpenAPI Generator
   - Custom templates for api, model, request_builder, and deserializer modules
-  - Automatic ModelCleaner integration in generated code
   - Correct type specifications that pass Dialyzer without warnings
   - Jason encoder/decoder integration replacing Poison
   - Generated code now requires minimal post-processing
@@ -20,11 +33,23 @@
 
 ### Technical Improvements
 
+- **Modern HTTP Client**: Req provides better performance and simpler configuration
+  - Built-in retry logic with exponential backoff
+  - Automatic JSON encoding/decoding
+  - Simplified request/response pipeline
+  - Better error handling and response structures
+
 - **Code Generation**: Created reusable templates in `scripts/regen/custom_templates/`
   - Templates produce properly formatted Elixir code (passes mix format)
   - Type specifications use correct `DocuSign.Connection.t()` types
-  - Automatic nil-value cleaning via ModelCleaner integration
+  - No longer need ModelCleaner workaround for nil values
   - Future API regeneration now requires minimal manual intervention
+
+### Bug Fixes
+
+- **FileDownloader**: Fixed header handling for Req's list-based format
+- **Filename Extraction**: Fixed regex to properly handle quoted filenames with spaces
+- **Connection Options**: Corrected option passing to avoid `:opts` key error
 
 ## v2.2.4
 
