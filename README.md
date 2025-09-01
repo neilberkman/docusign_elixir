@@ -465,6 +465,67 @@ config :docusign, :retry_options, enabled: false
 
 The client automatically handles rate limits (429 responses) by honoring the `Retry-After` header when present.
 
+## Telemetry and Monitoring
+
+The DocuSign client emits telemetry events for observability and monitoring. These events allow you to track API performance, error rates, and usage patterns.
+
+### Available Events
+
+The following telemetry events are emitted:
+
+- `[:docusign, :api, :start]` - Fired when an API call begins
+- `[:docusign, :api, :stop]` - Fired when an API call completes successfully
+- `[:docusign, :api, :exception]` - Fired when an API call fails
+- `[:docusign, :rate_limit, :hit]` - Fired when rate limited by DocuSign
+
+Additionally, since the client uses Finch for HTTP, you also get:
+
+- `[:finch, :request, :start]` - HTTP request started
+- `[:finch, :request, :stop]` - HTTP request completed
+
+### Basic Usage
+
+Attach handlers to telemetry events:
+
+```elixir
+:telemetry.attach(
+  "log-docusign-requests",
+  [:docusign, :api, :stop],
+  fn _event, measurements, metadata, _config ->
+    IO.puts("API call to #{metadata.operation} took #{measurements.duration / 1_000_000}ms")
+  end,
+  nil
+)
+```
+
+### Integration with Telemetry.Metrics
+
+For production monitoring with tools like LiveDashboard:
+
+```elixir
+defmodule MyApp.Telemetry do
+  import Telemetry.Metrics
+
+  def metrics do
+    [
+      # API performance
+      summary("docusign.api.duration",
+        unit: {:native, :millisecond},
+        tags: [:operation, :status]
+      ),
+
+      # Request counts
+      counter("docusign.api.count", tags: [:operation]),
+
+      # Error rates
+      counter("docusign.api.exception.count", tags: [:operation])
+    ]
+  end
+end
+```
+
+See `DocuSign.Telemetry` module documentation for complete details.
+
 ## DocuSign Connect
 
 To receive webhooks from DocuSign Connect, you can use `DocuSign.WebhookPlug` with
