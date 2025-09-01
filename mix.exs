@@ -51,11 +51,9 @@ defmodule DocuSign.MixProject do
       {:finch, "~> 0.20"},
       {:temp, "~> 0.4.9"},
       {:plug, "~> 1.18.1"},
-      {:meck, "~> 0.9.2"},
       {:cowlib, "2.15.0"},
 
       # test
-      {:mock, "~> 0.3.2", only: :test},
       {:bypass, "~> 2.1", only: :test},
       {:mox, "~> 1.0", only: :test},
       {:briefly, "~> 0.5", only: :test},
