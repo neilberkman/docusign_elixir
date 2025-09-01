@@ -11,9 +11,9 @@ IO.puts("Installing dependencies...")
 
 Mix.install([
   # For local development/testing:
-  {:docusign, path: Path.join(__DIR__, ".."), app: false},
-  # For released version (uncomment when 3.0 is released):
-  # {:docusign, "~> 3.0"},
+  # {:docusign, path: Path.join(__DIR__, ".."), app: false},
+  # For released version:
+  {:docusign, "~> 3.0"},
   {:kino, "~> 0.16.0"}
 ])
 

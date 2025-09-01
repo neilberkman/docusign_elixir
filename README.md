@@ -42,7 +42,7 @@ The package can be installed by adding `docusign` to your list of dependencies i
 ```elixir
 def deps do
   [
-    {:docusign, "~> 2.2.2"}
+    {:docusign, "~> 3.0.0"}
   ]
 end
 ```
@@ -250,7 +250,7 @@ Example debug output:
 
 ```
 [debug] GET https://demo.docusign.net/restapi/v2.1/accounts -> 200 (145.2 ms)
-[debug] Request headers: [{"authorization", "[FILTERED]"}, {"X-DocuSign-SDK", "Elixir/2.2.2"}]
+[debug] Request headers: [{"authorization", "[FILTERED]"}, {"X-DocuSign-SDK", "Elixir/3.0.0"}]
 [debug] Response body: {"accounts": [...]}
 ```
 
