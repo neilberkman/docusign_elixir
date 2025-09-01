@@ -53,23 +53,7 @@ config :docusign, :pool_options, [
 ]
 ```
 
-### 6. Metrics and Monitoring
-
-**Description**: Built-in observability features
-**Features**:
-
-- Request duration metrics
-- Success/failure rates
-- Rate limit tracking
-- Telemetry events
-  **Implementation**:
-
-```elixir
-# Telemetry events
-:telemetry.execute([:docusign, :request, :success], measurements, metadata)
-```
-
-### 7. SDK Version Management
+### 6. SDK Version Management
 
 **Description**: Proper SDK identification and version handling
 **Features**:
