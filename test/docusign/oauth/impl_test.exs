@@ -204,7 +204,10 @@ defmodule DocuSign.OAuth.ImplTest do
     test "uses private_key_file configuration", %{bypass: bypass} do
       Application.put_env(:docusign, :private_key_file, "test/support/test_key")
 
-      assert log_of_get_token!(bypass) == ""
+      # Check no OAuth/private key related warnings (ignore FileDownloader info logs)
+      log = log_of_get_token!(bypass)
+      refute log =~ "private_key"
+      refute log =~ "warning"
     end
 
     test "can be configured with private_key_file only", %{bypass: bypass} do
@@ -212,7 +215,10 @@ defmodule DocuSign.OAuth.ImplTest do
       Application.delete_env(:docusign, :private_key_contents)
       Application.put_env(:docusign, :private_key_file, "test/support/test_key")
 
-      assert log_of_get_token!(bypass) == ""
+      # Check no OAuth/private key related warnings (ignore FileDownloader info logs)
+      log = log_of_get_token!(bypass)
+      refute log =~ "private_key"
+      refute log =~ "warning"
     end
 
     test "can be configured with private_key_contents only", %{bypass: bypass} do
@@ -220,7 +226,10 @@ defmodule DocuSign.OAuth.ImplTest do
       Application.delete_env(:docusign, :private_key_file)
       Application.put_env(:docusign, :private_key_contents, File.read!("test/support/test_key"))
 
-      assert log_of_get_token!(bypass) == ""
+      # Check no OAuth/private key related warnings (ignore FileDownloader info logs)
+      log = log_of_get_token!(bypass)
+      refute log =~ "private_key"
+      refute log =~ "warning"
     end
 
     test "raises without private key configuration", %{bypass: bypass} do

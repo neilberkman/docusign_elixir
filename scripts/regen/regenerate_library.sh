@@ -102,9 +102,10 @@ if [ ! -d "${GEN_DIR}" ] || [ "$FORCE_GENERATE" = true ]; then
 fi
 
 # Check that generation produced expected files
-if [ ! -d "${GEN_DIR}/lib/docusign/api" ]; then
+# The generator creates files under docusign_e_signature_restapi by default
+if [ ! -d "${GEN_DIR}/lib/docusign_e_signature_restapi/api" ]; then
   echo "ERROR: Generated code not found at expected location"
-  echo "Looking for: ${GEN_DIR}/lib/docusign/api"
+  echo "Looking for: ${GEN_DIR}/lib/docusign_e_signature_restapi/api"
   exit 1
 fi
 
@@ -121,17 +122,17 @@ echo "Removing old API and model files..."
 rm -rf "${DOCUSIGN_DIR}/lib/docusign/api/"*.ex
 rm -rf "${DOCUSIGN_DIR}/lib/docusign/model/"*.ex
 
-# Copy new generated files
+# Copy new generated files from the actual generated paths
 echo "Copying new API files..."
-cp -r "${GEN_DIR}/lib/docusign/api/"*.ex "${DOCUSIGN_DIR}/lib/docusign/api/"
+cp -r "${GEN_DIR}/lib/docusign_e_signature_restapi/api/"*.ex "${DOCUSIGN_DIR}/lib/docusign/api/"
 
 echo "Copying new model files..."
-cp -r "${GEN_DIR}/lib/docusign/model/"*.ex "${DOCUSIGN_DIR}/lib/docusign/model/"
+cp -r "${GEN_DIR}/lib/docusign_e_signature_restapi/model/"*.ex "${DOCUSIGN_DIR}/lib/docusign/model/"
 
 # Copy core files (RequestBuilder and Deserializer)
 echo "Updating core files..."
-cp "${GEN_DIR}/lib/docusign/request_builder.ex" "${DOCUSIGN_DIR}/lib/docusign/request_builder.ex"
-cp "${GEN_DIR}/lib/docusign/deserializer.ex" "${DOCUSIGN_DIR}/lib/docusign/deserializer.ex"
+cp "${GEN_DIR}/lib/docusign_e_signature_restapi/request_builder.ex" "${DOCUSIGN_DIR}/lib/docusign/request_builder.ex"
+cp "${GEN_DIR}/lib/docusign_e_signature_restapi/deserializer.ex" "${DOCUSIGN_DIR}/lib/docusign/deserializer.ex"
 
 # Apply any post-processing fixes if needed
 echo "Applying post-processing..."
