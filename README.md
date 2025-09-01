@@ -447,6 +447,24 @@ config :req, :finch_options, [
 
 See the [Finch documentation](https://hexdocs.pm/finch/Finch.html#start_link/1) for all available options.
 
+## Retry Configuration
+
+The client includes automatic retry logic for transient failures. By default, it retries up to 3 times with exponential backoff.
+
+### Configuration
+
+```elixir
+config :docusign, :retry_options,
+  max_retries: 3,         # Maximum retry attempts (default: 3)
+  backoff_factor: 2,      # Exponential backoff multiplier (default: 2)
+  max_delay: 30_000       # Maximum delay between retries in ms (default: 30_000)
+
+# Disable retries entirely
+config :docusign, :retry_options, enabled: false
+```
+
+The client automatically handles rate limits (429 responses) by honoring the `Retry-After` header when present.
+
 ## DocuSign Connect
 
 To receive webhooks from DocuSign Connect, you can use `DocuSign.WebhookPlug` with
