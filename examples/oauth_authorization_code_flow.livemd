@@ -20,7 +20,7 @@ The Authorization Code Flow is more secure than JWT impersonation for user-facin
 IO.puts("Installing dependencies...")
 
 Mix.install([
-  {:docusign, "~> 2.2.4"},
+  {:docusign, "~> 3.0"},
   {:kino, "~> 0.16.0"},
   {:bandit, "~> 1.7"}
 ])
