@@ -31,6 +31,7 @@
 - **Documentation**: Add CLAUDE.md with critical CI requirements
 - **Regeneration Script**: Update to handle correct OpenAPI Generator output paths
 - **Removed Files**: Remove unused RecipientViewUrl model (API uses EnvelopeViews instead)
+- **Dependencies**: Update ex_doc from 0.38.2 to 0.38.3
 
 ## v3.0.0 (2025-09-01)
 
