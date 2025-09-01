@@ -1,5 +1,28 @@
 # Changelog
 
+## Unreleased
+
+### Improvements
+
+- **Retry Logic**: Add configurable retry logic with exponential backoff
+  - Automatic retry on transient failures (5xx errors, network issues)
+  - Rate limit handling with Retry-After header support
+  - Configurable max retries, backoff factor, and max delay
+  - Can be disabled by setting `retry_options: [enabled: false]`
+
+### Bug Fixes
+
+- **Test Stability**: Fix flaky async tests caused by Mock library
+  - Replace Mock-based tests with Bypass integration tests
+  - Fix OAuth test log assertions to handle concurrent test execution
+  - All tests now pass consistently with async: true
+
+### Internal Changes
+
+- **Documentation**: Add CLAUDE.md with critical CI requirements
+- **Regeneration Script**: Update to handle correct OpenAPI Generator output paths
+- **Removed Files**: Remove unused RecipientViewUrl model (API uses EnvelopeViews instead)
+
 ## v3.0.0 (2025-09-01)
 
 ### Breaking Changes
