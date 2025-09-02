@@ -38,3 +38,7 @@ swagger-codegen-cli.jar
 
 esignature.rest.swagger-v2.1.json
 scripts/capture_responses.exs
+
+# Test scripts with credentials
+test_connection_pooling.exs
+test_with_real_api.exs

@@ -185,6 +185,7 @@ defmodule DocuSign.Connection do
           ] ++ Debug.sdk_headers(),
         receive_timeout: Application.get_env(:docusign, :timeout, @timeout)
       )
+      |> configure_pooling()
       |> configure_retry()
       |> maybe_add_debug_steps()
 
@@ -193,6 +194,16 @@ defmodule DocuSign.Connection do
       client: client,
       req: req
     }
+  end
+
+  defp configure_pooling(req) do
+    if DocuSign.ConnectionPool.enabled?() do
+      # Use custom Finch instance with pooling configuration
+      Req.merge(req, finch: DocuSign.ConnectionPool.finch_name())
+    else
+      # Use default Req.Finch without custom pooling
+      req
+    end
   end
 
   defp configure_retry(req) do

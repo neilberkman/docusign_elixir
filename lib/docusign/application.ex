@@ -21,10 +21,22 @@ defmodule DocuSign.Application do
 
   defp children(_env) do
     # For all non-test environments, start the ClientRegistry
-    # Req will handle its own Finch instance
-    [
+    # and optionally a custom Finch instance for connection pooling
+    base_children = [
       {DocuSign.ClientRegistry, []}
     ]
+
+    # Add custom Finch supervisor if connection pooling is enabled
+    if DocuSign.ConnectionPool.enabled?() do
+      finch_spec = {
+        Finch,
+        name: DocuSign.Finch, pools: DocuSign.ConnectionPool.finch_pool_config()
+      }
+
+      [finch_spec | base_children]
+    else
+      base_children
+    end
   end
 
   defp get_app_env do

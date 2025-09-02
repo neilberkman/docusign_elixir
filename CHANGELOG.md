@@ -4,6 +4,15 @@
 
 ### Improvements
 
+- **Connection Pooling**: Add optimized connection pooling for high-throughput applications
+  - Configurable pool size and count for concurrent request handling
+  - Connection reuse to reduce HTTPS handshake overhead
+  - Automatic cleanup of idle connections with configurable timeout
+  - Health monitoring through `DocuSign.ConnectionPool.health()`
+  - Seamless integration with existing Connection module
+  - Custom Finch supervisor when pooling is enabled
+  - Full SSL/TLS support with pooled connections
+
 - **Retry Logic**: Add configurable retry logic with exponential backoff
   - Automatic retry on transient failures (5xx errors, network issues)
   - Rate limit handling with Retry-After header support
