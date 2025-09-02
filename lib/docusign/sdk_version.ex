@@ -6,7 +6,7 @@ defmodule DocuSign.SDKVersion do
   and formats the User-Agent header for API requests.
   """
 
-  @sdk_version "3.0.0"
+  @sdk_version "3.1.0"
   @api_version "v2.1"
   @sdk_name "docusign-elixir"
 
@@ -16,7 +16,7 @@ defmodule DocuSign.SDKVersion do
   ## Examples
 
       iex> DocuSign.SDKVersion.version()
-      "3.0.0"
+      "3.1.0"
 
   """
   @spec version() :: String.t()
