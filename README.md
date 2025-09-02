@@ -403,12 +403,39 @@ DocuSign.Connection.request(conn,
 
 ### Connection Pooling
 
-Configure the underlying Finch connection pools:
+Optimize HTTP connections for high-throughput applications:
 
 ```elixir
-config :docusign,
-  pool_size: 10,      # Number of connections per pool (default: 10)
-  pool_count: 1       # Number of pools (default: 1)
+# Enable connection pooling with custom configuration
+config :docusign, :pool_options, [
+  size: 50,               # Number of connections per pool (default: 10)
+  count: 2,               # Number of pools for concurrency (default: 1)
+  max_idle_time: 600_000, # Keep connections alive for 10 minutes (default: 5 minutes)
+  timeout: 30_000         # Connection timeout in ms (default: 30 seconds)
+]
+```
+
+Benefits of connection pooling:
+
+- **Connection reuse** - Reduces overhead of establishing new HTTPS connections
+- **Better throughput** - Multiple pools allow concurrent request handling
+- **Resource management** - Automatic cleanup of idle connections
+- **Performance monitoring** - Track pool health with `DocuSign.ConnectionPool.health()`
+
+Example usage:
+
+```elixir
+# Check if pooling is enabled
+DocuSign.ConnectionPool.enabled?()
+#=> true
+
+# Get current pool configuration
+DocuSign.ConnectionPool.config()
+#=> %{size: 50, count: 2, max_idle_time: 600_000, timeout: 30_000, enabled: true}
+
+# Monitor pool health
+{:ok, health} = DocuSign.ConnectionPool.health()
+#=> {:ok, %{status: :healthy, message: "Connection pooling is active", config: %{...}}}
 ```
 
 ### Security Best Practices
