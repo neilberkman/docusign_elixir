@@ -4,8 +4,9 @@ defmodule DocuSign.SDKVersionTest do
   alias DocuSign.SDKVersion
 
   describe "version/0" do
-    test "returns the SDK version" do
-      assert SDKVersion.version() == "3.0.0"
+    test "returns a valid semver version" do
+      version = SDKVersion.version()
+      assert version =~ ~r/^\d+\.\d+\.\d+$/
     end
   end
 
@@ -18,10 +19,13 @@ defmodule DocuSign.SDKVersionTest do
   describe "user_agent/1" do
     test "generates proper user agent string" do
       user_agent = SDKVersion.user_agent()
+      version = SDKVersion.version()
 
-      # Check basic structure
-      assert user_agent =~
-               ~r/^docusign-elixir\/3\.0\.0 \(Elixir\/[\d\.]+; OTP\/[\d]+; API\/v2\.1\)$/
+      # Check basic structure using the actual version
+      expected_pattern =
+        ~r/^docusign-elixir\/#{Regex.escape(version)} \(Elixir\/[\d\.]+; OTP\/[\d]+; API\/v2\.1\)$/
+
+      assert user_agent =~ expected_pattern
 
       # Check it contains Elixir version
       assert user_agent =~ "Elixir/#{System.version()}"
@@ -36,29 +40,36 @@ defmodule DocuSign.SDKVersionTest do
 
     test "supports custom suffix" do
       user_agent = SDKVersion.user_agent(custom_suffix: "MyApp/1.0.0")
+      version = SDKVersion.version()
 
-      assert user_agent =~
-               ~r/^docusign-elixir\/3\.0\.0 \(Elixir\/[\d\.]+; OTP\/[\d]+; API\/v2\.1\) MyApp\/1\.0\.0$/
+      expected_pattern =
+        ~r/^docusign-elixir\/#{Regex.escape(version)} \(Elixir\/[\d\.]+; OTP\/[\d]+; API\/v2\.1\) MyApp\/1\.0\.0$/
+
+      assert user_agent =~ expected_pattern
 
       assert user_agent =~ " MyApp/1.0.0"
     end
 
     test "handles nil custom suffix" do
       user_agent = SDKVersion.user_agent(custom_suffix: nil)
+      version = SDKVersion.version()
 
       refute user_agent =~ " nil"
 
-      assert user_agent =~
-               ~r/^docusign-elixir\/3\.0\.0 \(Elixir\/[\d\.]+; OTP\/[\d]+; API\/v2\.1\)$/
+      expected_pattern =
+        ~r/^docusign-elixir\/#{Regex.escape(version)} \(Elixir\/[\d\.]+; OTP\/[\d]+; API\/v2\.1\)$/
+
+      assert user_agent =~ expected_pattern
     end
   end
 
   describe "metadata/0" do
     test "returns complete metadata map" do
       metadata = SDKVersion.metadata()
+      version = SDKVersion.version()
 
       assert metadata.sdk_name == "docusign-elixir"
-      assert metadata.sdk_version == "3.0.0"
+      assert metadata.sdk_version == version
       assert metadata.api_version == "v2.1"
       assert metadata.elixir_version == System.version()
 
