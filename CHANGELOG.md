@@ -19,6 +19,13 @@
   - Automatic operation name extraction from API paths
   - Detailed metadata including account ID, operation, status codes
 
+- **SDK Version Management**: Add proper SDK identification and version reporting
+  - User-Agent header includes SDK version, API version, and runtime info
+  - Format: `docusign-elixir/3.0.0 (Elixir/1.18.4; OTP/28; API/v2.1)`
+  - SDK metadata included in all telemetry events
+  - Support for custom User-Agent suffix for app identification
+  - Matches Ruby SDK pattern for version reporting
+
 ### Bug Fixes
 
 - **Test Stability**: Fix flaky async tests caused by Mock library

@@ -53,15 +53,6 @@ config :docusign, :pool_options, [
 ]
 ```
 
-### 6. SDK Version Management
-
-**Description**: Proper SDK identification and version handling
-**Features**:
-
-- User-Agent header management
-- SDK version reporting
-- API version compatibility checks
-
 ## Architecture Principles to Maintain
 
 ### Keep Superior Elixir Patterns
@@ -98,7 +89,7 @@ config :docusign, :pool_options, [
 - Unit tests for individual modules
 - Integration tests with DocuSign sandbox
 - Property-based testing where applicable
-- Mocking for external dependencies
+- Use Bypass for HTTP mocking
 
 ## Long-term Vision
 
