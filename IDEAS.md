@@ -35,24 +35,6 @@ def format_collection_param(values, format \\ :csv)
 - Batch event processing
 - Dead letter queue support
 
-### 5. Connection Pooling
-
-**Description**: Optimize HTTP connections for high-throughput applications
-**Features**:
-
-- Connection reuse
-- Pool size configuration
-- Health monitoring
-  **Implementation**:
-
-```elixir
-config :docusign, :pool_options, [
-  size: 10,
-  max_overflow: 5,
-  timeout: 5_000
-]
-```
-
 ## Architecture Principles to Maintain
 
 ### Keep Superior Elixir Patterns
