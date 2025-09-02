@@ -99,7 +99,7 @@ defmodule DocuSign.ConnectionDebugTest do
       # Find User-Agent header (value might be a list)
       {_, ua_value} = Enum.find(headers, fn {k, _} -> String.downcase(k) == "user-agent" end)
       ua_string = if is_list(ua_value), do: List.first(ua_value), else: ua_value
-      assert ua_string =~ "DocuSign-Elixir/"
+      assert ua_string =~ "docusign-elixir/"
     end
   end
 end

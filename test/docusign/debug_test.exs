@@ -63,7 +63,7 @@ defmodule DocuSign.DebugTest do
 
       # Check for User-Agent header
       assert {"User-Agent", user_agent} = List.keyfind(headers, "User-Agent", 0)
-      assert user_agent =~ ~r/^DocuSign-Elixir\/\d+\.\d+\.\d+/
+      assert user_agent =~ ~r/^docusign-elixir\/\d+\.\d+\.\d+/
     end
   end
 

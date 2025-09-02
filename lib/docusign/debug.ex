@@ -90,11 +90,12 @@ defmodule DocuSign.Debug do
   """
   @spec sdk_headers() :: [{String.t(), String.t()}]
   def sdk_headers do
-    version = Application.spec(:docusign, :vsn) |> to_string()
+    user_agent = DocuSign.SDKVersion.user_agent()
+    sdk_version = DocuSign.SDKVersion.version()
 
     [
-      {"X-DocuSign-SDK", "Elixir/#{version}"},
-      {"User-Agent", "DocuSign-Elixir/#{version}"}
+      {"X-DocuSign-SDK", "Elixir/#{sdk_version}"},
+      {"User-Agent", user_agent}
     ]
   end
 

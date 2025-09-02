@@ -377,11 +377,13 @@ defmodule DocuSign.Connection do
       end
 
     metadata =
-      Map.merge(telemetry_meta, %{
+      telemetry_meta
+      |> Map.merge(%{
         account_id: account_id,
         method: method,
         path: path
       })
+      |> Map.merge(DocuSign.SDKVersion.metadata())
 
     start_time = System.monotonic_time()
     DocuSign.Telemetry.execute_api_start(operation, metadata)
