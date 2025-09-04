@@ -60,6 +60,8 @@ DocuSign Elixir supports two authentication methods:
 
 **Recommended for user-facing applications** where users need to grant permission for your app to access their DocuSign account.
 
+> **Using Überauth?** Check out [ueberauth_docusign](https://github.com/neilberkman/ueberauth_docusign) for seamless DocuSign OAuth integration with Phoenix applications!
+
 #### Benefits
 
 - Users explicitly grant permission through DocuSign's consent screen
