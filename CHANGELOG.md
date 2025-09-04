@@ -1,5 +1,12 @@
 # Changelog
 
+## v3.1.1 (2025-09-04)
+
+### Documentation
+
+- Add reference to [ueberauth_docusign](https://github.com/neilberkman/ueberauth_docusign) package for Überauth integration
+- Update README to guide Phoenix developers to the appropriate OAuth solution
+
 ## v3.1.0 (2025-09-01)
 
 ### Improvements
