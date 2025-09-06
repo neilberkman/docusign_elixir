@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+### CI/Testing
+
+- Add Elixir 1.19-rc.0 to test matrix for early compatibility testing
+- Fix test regex patterns to support RC version formats
+
 ## v3.1.1 (2025-09-04)
 
 ### Documentation
