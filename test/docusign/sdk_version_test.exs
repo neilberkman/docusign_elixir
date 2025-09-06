@@ -23,7 +23,7 @@ defmodule DocuSign.SDKVersionTest do
 
       # Check basic structure using the actual version
       expected_pattern =
-        ~r/^docusign-elixir\/#{Regex.escape(version)} \(Elixir\/[\d\.]+; OTP\/[\d]+; API\/v2\.1\)$/
+        ~r/^docusign-elixir\/#{Regex.escape(version)} \(Elixir\/[\d\.\-\w]+; OTP\/[\d]+; API\/v2\.1\)$/
 
       assert user_agent =~ expected_pattern
 
@@ -43,7 +43,7 @@ defmodule DocuSign.SDKVersionTest do
       version = SDKVersion.version()
 
       expected_pattern =
-        ~r/^docusign-elixir\/#{Regex.escape(version)} \(Elixir\/[\d\.]+; OTP\/[\d]+; API\/v2\.1\) MyApp\/1\.0\.0$/
+        ~r/^docusign-elixir\/#{Regex.escape(version)} \(Elixir\/[\d\.\-\w]+; OTP\/[\d]+; API\/v2\.1\) MyApp\/1\.0\.0$/
 
       assert user_agent =~ expected_pattern
 
@@ -57,7 +57,7 @@ defmodule DocuSign.SDKVersionTest do
       refute user_agent =~ " nil"
 
       expected_pattern =
-        ~r/^docusign-elixir\/#{Regex.escape(version)} \(Elixir\/[\d\.]+; OTP\/[\d]+; API\/v2\.1\)$/
+        ~r/^docusign-elixir\/#{Regex.escape(version)} \(Elixir\/[\d\.\-\w]+; OTP\/[\d]+; API\/v2\.1\)$/
 
       assert user_agent =~ expected_pattern
     end

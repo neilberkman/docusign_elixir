@@ -22,6 +22,9 @@ jobs:
           # Latest 1.18 series with OTP 28
           - elixir: "1.18.4"
             otp: "28.0"
+          # Testing with 1.19 RC
+          - elixir: "1.19.0-rc.0"
+            otp: "28.0"
     steps:
       - uses: actions/checkout@v3
 
