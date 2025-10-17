@@ -4,8 +4,9 @@
 
 ### CI/Testing
 
-- Add Elixir 1.19-rc.0 to test matrix for early compatibility testing
-- Fix test regex patterns to support RC version formats
+- Add Elixir 1.19.0 and OTP 28.1 to test matrix
+- Update .tool-versions to Elixir 1.19.0 and OTP 28.1
+- Update CI formatting and dialyzer checks to run on Elixir 1.19.0
 
 ## v3.1.1 (2025-09-04)
 
