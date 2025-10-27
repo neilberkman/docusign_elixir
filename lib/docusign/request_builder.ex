@@ -107,8 +107,8 @@ defmodule DocuSign.RequestBuilder do
   end
 
   def add_param(request, :query, key, value) do
-    query_params = Map.get(request, :query, [])
-    Map.put(request, :query, [{key, value} | query_params])
+    query_params = Map.get(request, :params, [])
+    Map.put(request, :params, [{key, value} | query_params])
   end
 
   def add_param(request, :file, key, value) do
