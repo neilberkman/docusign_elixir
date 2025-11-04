@@ -6,11 +6,17 @@
 
 - Fix custom opts in API requests - change `:query` to `:params` to match Req API requirements
 
+### Dependencies
+
+- Update Erlang to 28.1.1 and Elixir to 1.19.2
+- Relax dependency version constraints to allow latest patch versions automatically
+- Add Elixir 1.19 support to mix.exs version constraint
+
 ### CI/Testing
 
-- Add Elixir 1.19.0 and OTP 28.1 to test matrix
-- Update .tool-versions to Elixir 1.19.0 and OTP 28.1
-- Update CI formatting and dialyzer checks to run on Elixir 1.19.0
+- Update CI test matrix to include Elixir 1.19.2 with OTP 28.1.1
+- Update .tool-versions to Erlang 28.1.1 and Elixir 1.19.2
+- Update CI format check and dialyzer conditions for new versions
 
 ## v3.1.1 (2025-09-04)
 
