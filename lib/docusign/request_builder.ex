@@ -54,12 +54,39 @@ defmodule DocuSign.RequestBuilder do
   - `definitions` (Map) - Map of parameter name to parameter location.
   - `options` (KeywordList) - The provided optional parameters
 
+  ### Special Parameters
+
+  - `:headers` - A map of custom headers to add to the request. These will be merged
+    with the default headers. This is useful for DocuSign-specific headers like
+    `X-DocuSign-Edit` which are required for certain operations on locked envelopes.
+
   ### Returns
 
   Map
+
+  ### Examples
+
+      # Add custom headers for locked envelope operations
+      optional_params = %{body: :body}
+      opts = [
+        body: envelope_data,
+        headers: %{"X-DocuSign-Edit" => ~s({"LockToken": "abc123", "LockDurationInSeconds": "600"})}
+      ]
+      add_optional_params(request, optional_params, opts)
+
   """
   @spec add_optional_params(map(), %{optional(atom()) => atom()}, keyword()) :: map()
   def add_optional_params(request, _, []), do: request
+
+  def add_optional_params(request, definitions, [{:headers, custom_headers} | tail]) when is_map(custom_headers) do
+    # Handle custom headers specially - merge them with existing headers
+    request =
+      Enum.reduce(custom_headers, request, fn {key, value}, acc ->
+        add_param(acc, :headers, key, value)
+      end)
+
+    add_optional_params(request, definitions, tail)
+  end
 
   def add_optional_params(request, definitions, [{key, value} | tail]) do
     case definitions do

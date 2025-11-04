@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Features
+
+- Add support for custom headers in API requests via `:headers` option parameter. Useful for DocuSign-specific headers like `X-DocuSign-Edit` required for locked envelope operations.
+
 ### Bug Fixes
 
 - Fix custom opts in API requests - change `:query` to `:params` to match Req API requirements
