@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Bug Fixes
+
+- Fix custom opts in API requests - change `:query` to `:params` to match Req API requirements
+
 ### CI/Testing
 
 - Add Elixir 1.19.0 and OTP 28.1 to test matrix
