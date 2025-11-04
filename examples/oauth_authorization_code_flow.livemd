@@ -1,8 +1,6 @@
-# Untitled notebook
+# DocuSign OAuth2 Authorization Code Flow with Elixir
 
-## DocuSign OAuth2 Authorization Code Flow with Elixir
-
-### Introduction
+## Introduction
 
 [![Run in Livebook](https://livebook.dev/badge/v1/blue.svg)](https://livebook.dev/run?url=https://github.com/neilberkman/docusign_elixir/blob/main/examples/oauth_authorization_code_flow.livemd)
 

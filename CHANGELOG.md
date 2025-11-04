@@ -1,10 +1,21 @@
 # Changelog
 
-## Unreleased
+## v3.2.0 (TBD)
 
 ### Features
 
 - Add support for custom headers in API requests via `:headers` option parameter. Useful for DocuSign-specific headers like `X-DocuSign-Edit` required for locked envelope operations.
+
+### API Updates
+
+- Regenerate API from latest DocuSign OpenAPI specification (October 15, 2025)
+  - Add new AI-related settings (enableAISuggestedFields, enableAISuggestedFieldsAutoPlace)
+  - Add Navigator API configuration options (enableNavigatorAPIDataIn, enableNavigatorAPIDataOut, enableNavigatorAPIUtilities)
+  - Add CFR rapid signing embedded auth settings
+  - Add Connect envelope reminder sent event UI option
+  - Add legacy KBA disable settings
+  - Add new model: BrandLogoIds
+  - Update custom headers support in regeneration template for future regenerations
 
 ### Bug Fixes
 

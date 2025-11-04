@@ -10,6 +10,7 @@ defmodule DocuSign.Model.Brand do
   alias DocuSign.Deserializer
   alias DocuSign.Model.BrandEmailContent
   alias DocuSign.Model.BrandLink
+  alias DocuSign.Model.BrandLogoIds
   alias DocuSign.Model.BrandLogos
   alias DocuSign.Model.BrandResourceUrls
   alias DocuSign.Model.ErrorDetails
@@ -30,6 +31,7 @@ defmodule DocuSign.Model.Brand do
     :isSigningDefault,
     :landingPages,
     :links,
+    :logoIds,
     :logos,
     :organizationBrandLogo,
     :resources
@@ -61,6 +63,7 @@ defmodule DocuSign.Model.Brand do
           :isSigningDefault => boolean() | nil,
           :landingPages => [NameValue.t()] | nil,
           :links => [BrandLink.t()] | nil,
+          :logoIds => BrandLogoIds.t() | nil,
           :logos => BrandLogos.t() | nil,
           :organizationBrandLogo => String.t() | nil,
           :resources => BrandResourceUrls.t() | nil
@@ -92,6 +95,11 @@ defmodule DocuSign.Model.Brand do
       :links,
       :list,
       BrandLink
+    )
+    |> Deserializer.deserialize(
+      :logoIds,
+      :struct,
+      BrandLogoIds
     )
     |> Deserializer.deserialize(
       :logos,

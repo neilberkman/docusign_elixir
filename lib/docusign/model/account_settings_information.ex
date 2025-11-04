@@ -71,6 +71,7 @@ defmodule DocuSign.Model.AccountSettingsInformation do
     :allowConnectAgreementUI,
     :allowConnectAgreementUIMetadata,
     :allowConnectAuthoritativeCopyReadyEventUI,
+    :allowConnectEnvelopeReminderSentEventUI,
     :allowConnectEnvelopeRemovedEvent,
     :allowConnectExtensionUI,
     :allowConnectHttpListenerConfigs,
@@ -318,6 +319,8 @@ defmodule DocuSign.Model.AccountSettingsInformation do
     :defaultToAdvancedEnvelopesFilterFormMetadata,
     :disableAutoTemplateMatching,
     :disableAutoTemplateMatchingMetadata,
+    :disableLegacyKba,
+    :disableLegacyKbaMetadata,
     :disableLegacySharedEnvelopes,
     :disableLegacySharedEnvelopesMetadata,
     :disableMobileApp,
@@ -359,10 +362,10 @@ defmodule DocuSign.Model.AccountSettingsInformation do
     :enableAIContractReviewMetadata,
     :enableAISenderMessage,
     :enableAISenderMessageMetadata,
-    :enableAISuggestedFieldsAdvanced,
-    :enableAISuggestedFieldsAdvancedMetadata,
-    :enableAISuggestedFieldsBasic,
-    :enableAISuggestedFieldsBasicMetadata,
+    :enableAISuggestedFields,
+    :enableAISuggestedFieldsAutoPlace,
+    :enableAISuggestedFieldsAutoPlaceMetadata,
+    :enableAISuggestedFieldsMetadata,
     :enableAccessCodeGenerator,
     :enableAccessCodeGeneratorMetadata,
     :enableAccountWideSearch,
@@ -391,6 +394,8 @@ defmodule DocuSign.Model.AccountSettingsInformation do
     :enableBatchUpdateEnvelopeTypesMetadata,
     :enableBccDummyLink,
     :enableBccDummyLinkMetadata,
+    :enableCFRRapidSigningEmbeddedAuth,
+    :enableCFRRapidSigningEmbeddedAuthMetadata,
     :enableCalculatedFields,
     :enableCalculatedFieldsMetadata,
     :enableClickPlus,
@@ -481,6 +486,12 @@ defmodule DocuSign.Model.AccountSettingsInformation do
     :enableMicrosoftDynamics365ExtensionMetadata,
     :enableMultiUserRepositoryFeatures,
     :enableMultiUserRepositoryFeaturesMetadata,
+    :enableNavigatorAPIDataIn,
+    :enableNavigatorAPIDataInMetadata,
+    :enableNavigatorAPIDataOut,
+    :enableNavigatorAPIDataOutMetadata,
+    :enableNavigatorAPIUtilities,
+    :enableNavigatorAPIUtilitiesMetadata,
     :enableNavigatorForHR,
     :enableNavigatorForHRMetadata,
     :enableNavigatorPartialIngestion,
@@ -908,6 +919,7 @@ defmodule DocuSign.Model.AccountSettingsInformation do
           :allowConnectAgreementUI => String.t() | nil,
           :allowConnectAgreementUIMetadata => SettingsMetadata.t() | nil,
           :allowConnectAuthoritativeCopyReadyEventUI => String.t() | nil,
+          :allowConnectEnvelopeReminderSentEventUI => String.t() | nil,
           :allowConnectEnvelopeRemovedEvent => String.t() | nil,
           :allowConnectExtensionUI => String.t() | nil,
           :allowConnectHttpListenerConfigs => String.t() | nil,
@@ -1155,6 +1167,8 @@ defmodule DocuSign.Model.AccountSettingsInformation do
           :defaultToAdvancedEnvelopesFilterFormMetadata => SettingsMetadata.t() | nil,
           :disableAutoTemplateMatching => String.t() | nil,
           :disableAutoTemplateMatchingMetadata => SettingsMetadata.t() | nil,
+          :disableLegacyKba => String.t() | nil,
+          :disableLegacyKbaMetadata => SettingsMetadata.t() | nil,
           :disableLegacySharedEnvelopes => String.t() | nil,
           :disableLegacySharedEnvelopesMetadata => SettingsMetadata.t() | nil,
           :disableMobileApp => String.t() | nil,
@@ -1196,10 +1210,10 @@ defmodule DocuSign.Model.AccountSettingsInformation do
           :enableAIContractReviewMetadata => SettingsMetadata.t() | nil,
           :enableAISenderMessage => String.t() | nil,
           :enableAISenderMessageMetadata => SettingsMetadata.t() | nil,
-          :enableAISuggestedFieldsAdvanced => String.t() | nil,
-          :enableAISuggestedFieldsAdvancedMetadata => SettingsMetadata.t() | nil,
-          :enableAISuggestedFieldsBasic => String.t() | nil,
-          :enableAISuggestedFieldsBasicMetadata => SettingsMetadata.t() | nil,
+          :enableAISuggestedFields => String.t() | nil,
+          :enableAISuggestedFieldsAutoPlace => String.t() | nil,
+          :enableAISuggestedFieldsAutoPlaceMetadata => SettingsMetadata.t() | nil,
+          :enableAISuggestedFieldsMetadata => SettingsMetadata.t() | nil,
           :enableAccessCodeGenerator => String.t() | nil,
           :enableAccessCodeGeneratorMetadata => SettingsMetadata.t() | nil,
           :enableAccountWideSearch => String.t() | nil,
@@ -1228,6 +1242,8 @@ defmodule DocuSign.Model.AccountSettingsInformation do
           :enableBatchUpdateEnvelopeTypesMetadata => SettingsMetadata.t() | nil,
           :enableBccDummyLink => String.t() | nil,
           :enableBccDummyLinkMetadata => SettingsMetadata.t() | nil,
+          :enableCFRRapidSigningEmbeddedAuth => String.t() | nil,
+          :enableCFRRapidSigningEmbeddedAuthMetadata => SettingsMetadata.t() | nil,
           :enableCalculatedFields => String.t() | nil,
           :enableCalculatedFieldsMetadata => SettingsMetadata.t() | nil,
           :enableClickPlus => String.t() | nil,
@@ -1318,6 +1334,12 @@ defmodule DocuSign.Model.AccountSettingsInformation do
           :enableMicrosoftDynamics365ExtensionMetadata => SettingsMetadata.t() | nil,
           :enableMultiUserRepositoryFeatures => String.t() | nil,
           :enableMultiUserRepositoryFeaturesMetadata => SettingsMetadata.t() | nil,
+          :enableNavigatorAPIDataIn => String.t() | nil,
+          :enableNavigatorAPIDataInMetadata => SettingsMetadata.t() | nil,
+          :enableNavigatorAPIDataOut => String.t() | nil,
+          :enableNavigatorAPIDataOutMetadata => SettingsMetadata.t() | nil,
+          :enableNavigatorAPIUtilities => String.t() | nil,
+          :enableNavigatorAPIUtilitiesMetadata => SettingsMetadata.t() | nil,
           :enableNavigatorForHR => String.t() | nil,
           :enableNavigatorForHRMetadata => SettingsMetadata.t() | nil,
           :enableNavigatorPartialIngestion => String.t() | nil,
@@ -2400,6 +2422,11 @@ defmodule DocuSign.Model.AccountSettingsInformation do
       SettingsMetadata
     )
     |> Deserializer.deserialize(
+      :disableLegacyKbaMetadata,
+      :struct,
+      SettingsMetadata
+    )
+    |> Deserializer.deserialize(
       :disableLegacySharedEnvelopesMetadata,
       :struct,
       SettingsMetadata
@@ -2550,12 +2577,12 @@ defmodule DocuSign.Model.AccountSettingsInformation do
       SettingsMetadata
     )
     |> Deserializer.deserialize(
-      :enableAISuggestedFieldsAdvancedMetadata,
+      :enableAISuggestedFieldsAutoPlaceMetadata,
       :struct,
       SettingsMetadata
     )
     |> Deserializer.deserialize(
-      :enableAISuggestedFieldsBasicMetadata,
+      :enableAISuggestedFieldsMetadata,
       :struct,
       SettingsMetadata
     )
@@ -2576,6 +2603,11 @@ defmodule DocuSign.Model.AccountSettingsInformation do
     )
     |> Deserializer.deserialize(
       :enableCalculatedFieldsMetadata,
+      :struct,
+      SettingsMetadata
+    )
+    |> Deserializer.deserialize(
+      :enableCFRRapidSigningEmbeddedAuthMetadata,
       :struct,
       SettingsMetadata
     )
@@ -2796,6 +2828,21 @@ defmodule DocuSign.Model.AccountSettingsInformation do
     )
     |> Deserializer.deserialize(
       :enableMultiUserRepositoryFeaturesMetadata,
+      :struct,
+      SettingsMetadata
+    )
+    |> Deserializer.deserialize(
+      :enableNavigatorAPIDataInMetadata,
+      :struct,
+      SettingsMetadata
+    )
+    |> Deserializer.deserialize(
+      :enableNavigatorAPIDataOutMetadata,
+      :struct,
+      SettingsMetadata
+    )
+    |> Deserializer.deserialize(
+      :enableNavigatorAPIUtilitiesMetadata,
       :struct,
       SettingsMetadata
     )

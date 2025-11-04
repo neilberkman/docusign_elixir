@@ -9,6 +9,7 @@ defmodule DocuSign.Model.ConnectConfigurations do
 
   alias DocuSign.Deserializer
   alias DocuSign.Model.ConnectEventData
+  alias DocuSign.Model.ConnectOAuthConfig
   alias DocuSign.Model.ConnectSalesforceObject
 
   defstruct [
@@ -21,6 +22,7 @@ defmodule DocuSign.Model.ConnectConfigurations do
     :deliveryMode,
     :disabledBy,
     :enableLog,
+    :enableOAuthPerConfiguration,
     :envelopeEvents,
     :eventData,
     :events,
@@ -38,6 +40,7 @@ defmodule DocuSign.Model.ConnectConfigurations do
     :includeTimeZoneInformation,
     :integratorManaged,
     :name,
+    :oAuthConfiguration,
     :password,
     :pausePublish,
     :recipientEvents,
@@ -79,6 +82,7 @@ defmodule DocuSign.Model.ConnectConfigurations do
           :deliveryMode => String.t() | nil,
           :disabledBy => String.t() | nil,
           :enableLog => String.t() | nil,
+          :enableOAuthPerConfiguration => String.t() | nil,
           :envelopeEvents => [String.t()] | nil,
           :eventData => ConnectEventData.t() | nil,
           :events => [String.t()] | nil,
@@ -96,6 +100,7 @@ defmodule DocuSign.Model.ConnectConfigurations do
           :includeTimeZoneInformation => String.t() | nil,
           :integratorManaged => String.t() | nil,
           :name => String.t() | nil,
+          :oAuthConfiguration => ConnectOAuthConfig.t() | nil,
           :password => String.t() | nil,
           :pausePublish => String.t() | nil,
           :recipientEvents => [String.t()] | nil,
@@ -122,6 +127,11 @@ defmodule DocuSign.Model.ConnectConfigurations do
       :eventData,
       :struct,
       ConnectEventData
+    )
+    |> Deserializer.deserialize(
+      :oAuthConfiguration,
+      :struct,
+      ConnectOAuthConfig
     )
     |> Deserializer.deserialize(
       :sfObjects,

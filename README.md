@@ -221,6 +221,35 @@ account_id = "ACCOUNT_ID"
 {:ok, users} = DocuSign.Api.Users.users_get_users(conn, account_id)
 ```
 
+## Custom Headers
+
+For certain DocuSign operations, you may need to pass custom headers. The most common use case is the `X-DocuSign-Edit` header required when working with locked envelopes.
+
+### Usage
+
+Pass custom headers using the `:headers` option:
+
+```elixir
+# Working with locked envelopes
+lock_token = "your-lock-token"
+lock_duration = "600"
+
+lock_header = Jason.encode!(%{
+  "LockToken" => lock_token,
+  "LockDurationInSeconds" => lock_duration
+})
+
+DocuSign.Api.EnvelopeLocks.lock_put_envelope_lock(
+  conn,
+  account_id,
+  envelope_id,
+  body: %{"lockDurationInSeconds" => lock_duration},
+  headers: %{"X-DocuSign-Edit" => lock_header}
+)
+```
+
+Custom headers are merged with the default headers (authorization, content-type, etc.) and can be used with any API endpoint that accepts optional parameters.
+
 ## Request/Response Debugging
 
 The DocuSign Elixir client provides comprehensive debugging capabilities for HTTP requests and responses, similar to the Ruby client's debugging features.

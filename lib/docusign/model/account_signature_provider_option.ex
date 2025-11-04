@@ -9,8 +9,10 @@ defmodule DocuSign.Model.AccountSignatureProviderOption do
 
   defstruct [
     :signatureProviderOptionDisplayName,
+    :signatureProviderOptionHintOverrideValue,
     :signatureProviderOptionId,
-    :signatureProviderOptionName
+    :signatureProviderOptionName,
+    :signatureProviderOptionRegexValidationPattern
   ]
 
   @doc false
@@ -26,8 +28,10 @@ defmodule DocuSign.Model.AccountSignatureProviderOption do
 
   @type t :: %__MODULE__{
           :signatureProviderOptionDisplayName => String.t() | nil,
+          :signatureProviderOptionHintOverrideValue => String.t() | nil,
           :signatureProviderOptionId => String.t() | nil,
-          :signatureProviderOptionName => String.t() | nil
+          :signatureProviderOptionName => String.t() | nil,
+          :signatureProviderOptionRegexValidationPattern => String.t() | nil
         }
 
   def decode(value) do
