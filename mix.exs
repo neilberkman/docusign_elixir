@@ -13,7 +13,7 @@ defmodule DocuSign.MixProject do
       name: "DocuSign",
       app: :docusign,
       version: @version,
-      elixir: "~> 1.16 or ~> 1.17 or ~> 1.18",
+      elixir: "~> 1.16 or ~> 1.17 or ~> 1.18 or ~> 1.19",
       package: package(),
       source_url: @url,
       maintainers: @maintainers,
@@ -44,13 +44,13 @@ defmodule DocuSign.MixProject do
   defp deps do
     [
       {:req, "~> 0.5"},
-      {:jason, "~> 1.4.4"},
+      {:jason, "~> 1.4"},
       {:joken, "~> 2.0"},
       {:oauth2, "~> 2.0"},
-      {:castore, "~> 1.0.15"},
+      {:castore, "~> 1.0"},
       {:finch, "~> 0.20"},
-      {:temp, "~> 0.4.9"},
-      {:plug, "~> 1.18.1"},
+      {:temp, "~> 0.4"},
+      {:plug, "~> 1.18"},
       {:cowlib, "2.15.0"},
 
       # test
@@ -59,11 +59,11 @@ defmodule DocuSign.MixProject do
       {:briefly, "~> 0.5", only: :test},
 
       # dev
-      {:ex_doc, "~> 0.38.3", only: :dev},
+      {:ex_doc, "~> 0.38", only: :dev},
       {:credo, "~> 1.0", only: [:dev, :test], runtime: false},
-      {:dialyxir, "~> 1.4.6", only: [:dev], runtime: false},
+      {:dialyxir, "~> 1.4", only: [:dev], runtime: false},
       {:mix_test_watch, "~> 1.0", only: :dev, runtime: false},
-      {:quokka, "~> 2.11.2", only: [:dev, :test], runtime: false}
+      {:quokka, "~> 2.11", only: [:dev, :test], runtime: false}
     ]
   end
 

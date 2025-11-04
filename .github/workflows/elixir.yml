@@ -23,8 +23,8 @@ jobs:
           - elixir: "1.18.4"
             otp: "28.0"
           # Latest 1.19 series with OTP 28
-          - elixir: "1.19.0"
-            otp: "28.1"
+          - elixir: "1.19.2"
+            otp: "28.1.1"
     steps:
       - uses: actions/checkout@v3
 
@@ -75,9 +75,9 @@ jobs:
           mix test --trace
 
       - name: Check formatting
-        if: matrix.elixir == '1.19.0' && matrix.otp == '28.1'
+        if: matrix.elixir == '1.19.2' && matrix.otp == '28.1.1'
         run: mix format --check-formatted
 
       - name: Run Dialyzer
-        if: matrix.elixir == '1.19.0' && matrix.otp == '28.1'
+        if: matrix.elixir == '1.19.2' && matrix.otp == '28.1.1'
         run: mix dialyzer
