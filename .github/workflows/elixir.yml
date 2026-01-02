@@ -7,13 +7,7 @@ jobs:
     strategy:
       matrix:
         include:
-          # Earliest supported version
-          - elixir: "1.16.0"
-            otp: "26.0"
-          # Latest 1.16 series
-          - elixir: "1.16.3"
-            otp: "26.2"
-          # Latest 1.17 series
+          # Earliest supported version (1.17)
           - elixir: "1.17.3"
             otp: "27.1"
           # Latest 1.18 series with OTP 27
@@ -23,8 +17,8 @@ jobs:
           - elixir: "1.18.4"
             otp: "28.0"
           # Latest 1.19 series with OTP 28
-          - elixir: "1.19.2"
-            otp: "28.1.1"
+          - elixir: "1.19.4"
+            otp: "28.3"
     steps:
       - uses: actions/checkout@v3
 
@@ -75,9 +69,9 @@ jobs:
           mix test --trace
 
       - name: Check formatting
-        if: matrix.elixir == '1.19.2' && matrix.otp == '28.1.1'
+        if: matrix.elixir == '1.19.4' && matrix.otp == '28.3'
         run: mix format --check-formatted
 
       - name: Run Dialyzer
-        if: matrix.elixir == '1.19.2' && matrix.otp == '28.1.1'
+        if: matrix.elixir == '1.19.4' && matrix.otp == '28.3'
         run: mix dialyzer

@@ -29,8 +29,11 @@ defmodule DocuSign.Connection do
       {:ok, %DocuSign.Model.UserInformationList{...}}
   """
 
+  alias DocuSign.ClientRegistry
+  alias DocuSign.Debug
+  alias DocuSign.Error
+  alias DocuSign.User
   alias DocuSign.Util.Environment
-  alias DocuSign.{ClientRegistry, Debug, Error, User}
 
   defstruct [:app_account, :client, :req]
 
