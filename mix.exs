@@ -13,7 +13,7 @@ defmodule DocuSign.MixProject do
       name: "DocuSign",
       app: :docusign,
       version: @version,
-      elixir: "~> 1.16 or ~> 1.17 or ~> 1.18 or ~> 1.19",
+      elixir: "~> 1.17 or ~> 1.18 or ~> 1.19",
       package: package(),
       source_url: @url,
       maintainers: @maintainers,
@@ -51,7 +51,7 @@ defmodule DocuSign.MixProject do
       {:finch, "~> 0.20"},
       {:temp, "~> 0.4"},
       {:plug, "~> 1.18"},
-      {:cowlib, "2.15.0"},
+      {:cowlib, "2.16.0"},
 
       # test
       {:bypass, "~> 2.1", only: :test},
@@ -59,10 +59,10 @@ defmodule DocuSign.MixProject do
       {:briefly, "~> 0.5", only: :test},
 
       # dev
-      {:ex_doc, "~> 0.38", only: :dev},
-      {:credo, "~> 1.0", only: [:dev, :test], runtime: false},
+      {:ex_doc, "~> 0.39", only: :dev},
+      {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
       {:dialyxir, "~> 1.4", only: [:dev], runtime: false},
-      {:mix_test_watch, "~> 1.0", only: :dev, runtime: false},
+      {:mix_test_watch, "~> 1.4", only: :dev, runtime: false},
       {:quokka, "~> 2.11", only: [:dev, :test], runtime: false}
     ]
   end

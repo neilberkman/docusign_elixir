@@ -23,15 +23,25 @@
 
 ### Dependencies
 
-- Update Erlang to 28.1.1 and Elixir to 1.19.2
+- Update Erlang to 28.3 and Elixir to 1.19.4
+- Update castore to 1.0.17
+- Update cowboy to 2.14.2
+- Update cowlib to 2.16.0
+- Update credo to 1.7.15
+- Update dialyxir to 1.4.7
+- Update ex_doc to 0.39.3
+- Update jose to 1.11.12
+- Update mix_test_watch to 1.4.0
+- Update plug to 1.19.1
+- Update plug_cowboy to 2.7.5
+- Update req to 0.5.16
 - Relax dependency version constraints to allow latest patch versions automatically
 - Add Elixir 1.19 support to mix.exs version constraint
 
 ### CI/Testing
 
-- Update CI test matrix to include Elixir 1.19.2 with OTP 28.1.1
-- Update .tool-versions to Erlang 28.1.1 and Elixir 1.19.2
-- Update CI format check and dialyzer conditions for new versions
+- Update CI test matrix to use Elixir 1.19.4 with OTP 28.3 for format/dialyzer checks
+- Update .tool-versions to Erlang 28.3 and Elixir 1.19.4
 
 ## v3.1.1 (2025-09-04)
 
