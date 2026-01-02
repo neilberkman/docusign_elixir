@@ -36,11 +36,11 @@
 - Update plug_cowboy to 2.7.5
 - Update req to 0.5.16
 - Relax dependency version constraints to allow latest patch versions automatically
-- Add Elixir 1.19 support to mix.exs version constraint
+- Drop Elixir 1.16 support (now requires 1.17+)
 
 ### CI/Testing
 
-- Update CI test matrix to use Elixir 1.19.4 with OTP 28.3 for format/dialyzer checks
+- Update CI test matrix: drop 1.16, test 1.17-1.19 with OTP 27-28
 - Update .tool-versions to Erlang 28.3 and Elixir 1.19.4
 
 ## v3.1.1 (2025-09-04)

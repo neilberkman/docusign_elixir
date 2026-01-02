@@ -7,13 +7,7 @@ jobs:
     strategy:
       matrix:
         include:
-          # Earliest supported version
-          - elixir: "1.16.0"
-            otp: "26.0"
-          # Latest 1.16 series
-          - elixir: "1.16.3"
-            otp: "26.2"
-          # Latest 1.17 series
+          # Earliest supported version (1.17)
           - elixir: "1.17.3"
             otp: "27.1"
           # Latest 1.18 series with OTP 27
