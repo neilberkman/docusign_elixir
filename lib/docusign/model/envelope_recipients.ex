@@ -15,6 +15,7 @@ defmodule DocuSign.Model.EnvelopeRecipients do
   alias DocuSign.Model.InPersonSigner
   alias DocuSign.Model.Intermediary
   alias DocuSign.Model.NotaryRecipient
+  alias DocuSign.Model.NotaryWitness
   alias DocuSign.Model.Participant
   alias DocuSign.Model.SealSign
   alias DocuSign.Model.Signer
@@ -30,6 +31,7 @@ defmodule DocuSign.Model.EnvelopeRecipients do
     :inPersonSigners,
     :intermediaries,
     :notaries,
+    :notaryWitnesses,
     :participants,
     :recipientCount,
     :seals,
@@ -58,6 +60,7 @@ defmodule DocuSign.Model.EnvelopeRecipients do
           :inPersonSigners => [InPersonSigner.t()] | nil,
           :intermediaries => [Intermediary.t()] | nil,
           :notaries => [NotaryRecipient.t()] | nil,
+          :notaryWitnesses => [NotaryWitness.t()] | nil,
           :participants => [Participant.t()] | nil,
           :recipientCount => String.t() | nil,
           :seals => [SealSign.t()] | nil,
@@ -106,6 +109,11 @@ defmodule DocuSign.Model.EnvelopeRecipients do
       :notaries,
       :list,
       NotaryRecipient
+    )
+    |> Deserializer.deserialize(
+      :notaryWitnesses,
+      :list,
+      NotaryWitness
     )
     |> Deserializer.deserialize(
       :participants,
