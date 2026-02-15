@@ -1,6 +1,10 @@
 # Changelog
 
-## v3.2.0 (TBD)
+## v3.3.0 (TBD)
+
+### Release
+
+- Bump library minor version to `3.3.0`.
 
 ### Features
 
