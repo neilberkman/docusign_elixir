@@ -8,9 +8,13 @@ defmodule DocuSign.Model.AccountRoleSettings do
   """
 
   alias DocuSign.Deserializer
+  alias DocuSign.Model.AccountManagementGranular
   alias DocuSign.Model.SettingsMetadata
 
   defstruct [
+    :accountAgreementsAccessType,
+    :accountAgreementsAccessTypeMetadata,
+    :accountManagementGranular,
     :allowAccountManagement,
     :allowAccountManagementMetadata,
     :allowApiAccess,
@@ -59,6 +63,8 @@ defmodule DocuSign.Model.AccountRoleSettings do
     :allowedTemplateAccessMetadata,
     :allowedToBeEnvelopeTransferRecipient,
     :allowedToBeEnvelopeTransferRecipientMetadata,
+    :canBulkUploadAgreements,
+    :canBulkUploadAgreementsMetadata,
     :canCreateTransaction,
     :canCreateTransactionMetadata,
     :canCreateWorkspaces,
@@ -67,6 +73,10 @@ defmodule DocuSign.Model.AccountRoleSettings do
     :canDeleteDocumentsInTransactionMetadata,
     :canDeleteTransaction,
     :canDeleteTransactionMetadata,
+    :canManageAgreementDeskRequest,
+    :canManageAgreementDeskRequestMetadata,
+    :canManageAgreementDeskRequestSetting,
+    :canManageAgreementDeskRequestSettingMetadata,
     :canSendEnvelopesViaSMS,
     :canSendEnvelopesViaSMSMetadata,
     :disableDocumentUpload,
@@ -83,6 +93,8 @@ defmodule DocuSign.Model.AccountRoleSettings do
     :enableSequentialSigningInterfaceMetadata,
     :enableTransactionPointIntegration,
     :enableTransactionPointIntegrationMetadata,
+    :playbookAccess,
+    :playbookAccessMetadata,
     :powerFormRole,
     :powerFormRoleMetadata,
     :receiveCompletedSelfSignedDocumentsAsEmailLinks,
@@ -116,6 +128,9 @@ defmodule DocuSign.Model.AccountRoleSettings do
   end
 
   @type t :: %__MODULE__{
+          :accountAgreementsAccessType => String.t() | nil,
+          :accountAgreementsAccessTypeMetadata => SettingsMetadata.t() | nil,
+          :accountManagementGranular => AccountManagementGranular.t() | nil,
           :allowAccountManagement => String.t() | nil,
           :allowAccountManagementMetadata => SettingsMetadata.t() | nil,
           :allowApiAccess => String.t() | nil,
@@ -164,6 +179,8 @@ defmodule DocuSign.Model.AccountRoleSettings do
           :allowedTemplateAccessMetadata => SettingsMetadata.t() | nil,
           :allowedToBeEnvelopeTransferRecipient => String.t() | nil,
           :allowedToBeEnvelopeTransferRecipientMetadata => SettingsMetadata.t() | nil,
+          :canBulkUploadAgreements => String.t() | nil,
+          :canBulkUploadAgreementsMetadata => SettingsMetadata.t() | nil,
           :canCreateTransaction => String.t() | nil,
           :canCreateTransactionMetadata => SettingsMetadata.t() | nil,
           :canCreateWorkspaces => String.t() | nil,
@@ -172,6 +189,10 @@ defmodule DocuSign.Model.AccountRoleSettings do
           :canDeleteDocumentsInTransactionMetadata => SettingsMetadata.t() | nil,
           :canDeleteTransaction => String.t() | nil,
           :canDeleteTransactionMetadata => SettingsMetadata.t() | nil,
+          :canManageAgreementDeskRequest => String.t() | nil,
+          :canManageAgreementDeskRequestMetadata => SettingsMetadata.t() | nil,
+          :canManageAgreementDeskRequestSetting => String.t() | nil,
+          :canManageAgreementDeskRequestSettingMetadata => SettingsMetadata.t() | nil,
           :canSendEnvelopesViaSMS => String.t() | nil,
           :canSendEnvelopesViaSMSMetadata => SettingsMetadata.t() | nil,
           :disableDocumentUpload => String.t() | nil,
@@ -188,6 +209,8 @@ defmodule DocuSign.Model.AccountRoleSettings do
           :enableSequentialSigningInterfaceMetadata => SettingsMetadata.t() | nil,
           :enableTransactionPointIntegration => String.t() | nil,
           :enableTransactionPointIntegrationMetadata => SettingsMetadata.t() | nil,
+          :playbookAccess => String.t() | nil,
+          :playbookAccessMetadata => SettingsMetadata.t() | nil,
           :powerFormRole => String.t() | nil,
           :powerFormRoleMetadata => SettingsMetadata.t() | nil,
           :receiveCompletedSelfSignedDocumentsAsEmailLinks => String.t() | nil,
@@ -211,6 +234,16 @@ defmodule DocuSign.Model.AccountRoleSettings do
 
   def decode(value) do
     value
+    |> Deserializer.deserialize(
+      :accountAgreementsAccessTypeMetadata,
+      :struct,
+      SettingsMetadata
+    )
+    |> Deserializer.deserialize(
+      :accountManagementGranular,
+      :struct,
+      AccountManagementGranular
+    )
     |> Deserializer.deserialize(
       :allowAccountManagementMetadata,
       :struct,
@@ -332,6 +365,11 @@ defmodule DocuSign.Model.AccountRoleSettings do
       SettingsMetadata
     )
     |> Deserializer.deserialize(
+      :canBulkUploadAgreementsMetadata,
+      :struct,
+      SettingsMetadata
+    )
+    |> Deserializer.deserialize(
       :canCreateTransactionMetadata,
       :struct,
       SettingsMetadata
@@ -348,6 +386,16 @@ defmodule DocuSign.Model.AccountRoleSettings do
     )
     |> Deserializer.deserialize(
       :canDeleteTransactionMetadata,
+      :struct,
+      SettingsMetadata
+    )
+    |> Deserializer.deserialize(
+      :canManageAgreementDeskRequestMetadata,
+      :struct,
+      SettingsMetadata
+    )
+    |> Deserializer.deserialize(
+      :canManageAgreementDeskRequestSettingMetadata,
       :struct,
       SettingsMetadata
     )
@@ -388,6 +436,11 @@ defmodule DocuSign.Model.AccountRoleSettings do
     )
     |> Deserializer.deserialize(
       :enableTransactionPointIntegrationMetadata,
+      :struct,
+      SettingsMetadata
+    )
+    |> Deserializer.deserialize(
+      :playbookAccessMetadata,
       :struct,
       SettingsMetadata
     )

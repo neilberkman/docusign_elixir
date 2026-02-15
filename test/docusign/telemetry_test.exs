@@ -28,6 +28,7 @@ defmodule DocuSign.TelemetryTest do
   end
 
   describe "telemetry events" do
+    @tag capture_log: true
     test "emits api start and stop events for successful requests", %{bypass: bypass, conn: conn} do
       # Set up telemetry handler to capture events
       test_pid = self()
@@ -80,6 +81,7 @@ defmodule DocuSign.TelemetryTest do
       :telemetry.detach(handler_id)
     end
 
+    @tag capture_log: true
     test "emits api exception event for connection failures", %{bypass: bypass, conn: conn} do
       handler_id = "test-handler-#{System.unique_integer()}"
 
@@ -192,6 +194,7 @@ defmodule DocuSign.TelemetryTest do
       Agent.stop(agent)
     end
 
+    @tag capture_log: true
     test "automatically extracts operation name from path", %{bypass: bypass, conn: conn} do
       handler_id = "test-handler-#{System.unique_integer()}"
 
@@ -236,6 +239,7 @@ defmodule DocuSign.TelemetryTest do
   end
 
   describe "telemetry span" do
+    @tag capture_log: true
     test "wraps operations with start/stop events" do
       handler_id = "test-handler-#{System.unique_integer()}"
 
@@ -292,6 +296,7 @@ defmodule DocuSign.TelemetryTest do
       :ets.delete(captured_events)
     end
 
+    @tag capture_log: true
     test "emits exception event when operation fails" do
       handler_id = "test-handler-#{System.unique_integer()}"
 
@@ -330,6 +335,7 @@ defmodule DocuSign.TelemetryTest do
   end
 
   describe "finch telemetry integration" do
+    @tag capture_log: true
     test "finch events are emitted alongside docusign events", %{bypass: bypass, conn: conn} do
       handler_id = "test-handler-#{System.unique_integer()}"
 

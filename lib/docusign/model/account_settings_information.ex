@@ -21,6 +21,7 @@ defmodule DocuSign.Model.AccountSettingsInformation do
 
   defstruct [
     :AllowConnectIdentityVerificationUI,
+    :EnableSigningAIFeaturesPlan,
     :EnvelopeLimitsTotalDocumentSizeAllowedInMB,
     :EnvelopeLimitsTotalDocumentSizeAllowedInMBEnabled,
     :EnvelopeLimitsTotalDocumentSizeAllowedInMBEnabledMetadata,
@@ -133,6 +134,8 @@ defmodule DocuSign.Model.AccountSettingsInformation do
     :allowIDVLevel3Metadata,
     :allowIDVPlatform,
     :allowIDVPlatformMetadata,
+    :allowIdvRiskAssessment,
+    :allowIdvRiskAssessmentMetadata,
     :allowInPerson,
     :allowInPersonElectronicNotary,
     :allowInPersonElectronicNotaryMetadata,
@@ -498,6 +501,8 @@ defmodule DocuSign.Model.AccountSettingsInformation do
     :enableNavigatorPartialIngestionMetadata,
     :enableNavigatorTrial,
     :enableNavigatorTrialMetadata,
+    :enableNotaryOnDemandWitness,
+    :enableNotaryOnDemandWitnessMetadata,
     :enableObligationManagement,
     :enableObligationManagementMetadata,
     :enablePDFAConversion,
@@ -556,7 +561,6 @@ defmodule DocuSign.Model.AccountSettingsInformation do
     :enableSignWithNotaryMetadata,
     :enableSignerAttachments,
     :enableSignerAttachmentsMetadata,
-    :enableSigningAIFeaturesPlan,
     :enableSigningAIFeaturesPlanMetadata,
     :enableSigningAIFeaturesSetting,
     :enableSigningAIFeaturesSettingMetadata,
@@ -869,6 +873,7 @@ defmodule DocuSign.Model.AccountSettingsInformation do
 
   @type t :: %__MODULE__{
           :AllowConnectIdentityVerificationUI => String.t() | nil,
+          :EnableSigningAIFeaturesPlan => String.t() | nil,
           :EnvelopeLimitsTotalDocumentSizeAllowedInMB => String.t() | nil,
           :EnvelopeLimitsTotalDocumentSizeAllowedInMBEnabled => String.t() | nil,
           :EnvelopeLimitsTotalDocumentSizeAllowedInMBEnabledMetadata => SettingsMetadata.t() | nil,
@@ -981,6 +986,8 @@ defmodule DocuSign.Model.AccountSettingsInformation do
           :allowIDVLevel3Metadata => SettingsMetadata.t() | nil,
           :allowIDVPlatform => String.t() | nil,
           :allowIDVPlatformMetadata => SettingsMetadata.t() | nil,
+          :allowIdvRiskAssessment => String.t() | nil,
+          :allowIdvRiskAssessmentMetadata => SettingsMetadata.t() | nil,
           :allowInPerson => String.t() | nil,
           :allowInPersonElectronicNotary => String.t() | nil,
           :allowInPersonElectronicNotaryMetadata => SettingsMetadata.t() | nil,
@@ -1346,6 +1353,8 @@ defmodule DocuSign.Model.AccountSettingsInformation do
           :enableNavigatorPartialIngestionMetadata => SettingsMetadata.t() | nil,
           :enableNavigatorTrial => String.t() | nil,
           :enableNavigatorTrialMetadata => SettingsMetadata.t() | nil,
+          :enableNotaryOnDemandWitness => String.t() | nil,
+          :enableNotaryOnDemandWitnessMetadata => SettingsMetadata.t() | nil,
           :enableObligationManagement => String.t() | nil,
           :enableObligationManagementMetadata => SettingsMetadata.t() | nil,
           :enablePDFAConversion => String.t() | nil,
@@ -1404,7 +1413,6 @@ defmodule DocuSign.Model.AccountSettingsInformation do
           :enableSignWithNotaryMetadata => SettingsMetadata.t() | nil,
           :enableSignerAttachments => String.t() | nil,
           :enableSignerAttachmentsMetadata => SettingsMetadata.t() | nil,
-          :enableSigningAIFeaturesPlan => String.t() | nil,
           :enableSigningAIFeaturesPlanMetadata => SettingsMetadata.t() | nil,
           :enableSigningAIFeaturesSetting => String.t() | nil,
           :enableSigningAIFeaturesSettingMetadata => SettingsMetadata.t() | nil,
@@ -1963,6 +1971,11 @@ defmodule DocuSign.Model.AccountSettingsInformation do
     )
     |> Deserializer.deserialize(
       :allowIDVPlatformMetadata,
+      :struct,
+      SettingsMetadata
+    )
+    |> Deserializer.deserialize(
+      :allowIdvRiskAssessmentMetadata,
       :struct,
       SettingsMetadata
     )
@@ -2858,6 +2871,11 @@ defmodule DocuSign.Model.AccountSettingsInformation do
     )
     |> Deserializer.deserialize(
       :enableNavigatorTrialMetadata,
+      :struct,
+      SettingsMetadata
+    )
+    |> Deserializer.deserialize(
+      :enableNotaryOnDemandWitnessMetadata,
       :struct,
       SettingsMetadata
     )

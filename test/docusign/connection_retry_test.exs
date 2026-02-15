@@ -57,6 +57,7 @@ defmodule DocuSign.ConnectionRetryTest do
   end
 
   describe "retry configuration" do
+    @tag capture_log: true
     test "retries on transient failures", %{bypass: bypass, conn: conn} do
       # Configure retry with shorter delays for testing
       Application.put_env(:docusign, :retry_options,
@@ -103,6 +104,7 @@ defmodule DocuSign.ConnectionRetryTest do
       assert Agent.get(agent, & &1) == 3
     end
 
+    @tag capture_log: true
     test "handles rate limits with Retry-After header", %{bypass: bypass, conn: conn} do
       Application.put_env(:docusign, :retry_options,
         max_retries: 2,
@@ -165,6 +167,7 @@ defmodule DocuSign.ConnectionRetryTest do
                )
     end
 
+    @tag capture_log: true
     test "respects max_retries configuration", %{bypass: bypass, conn: conn} do
       Application.put_env(:docusign, :retry_options,
         max_retries: 1,
@@ -193,6 +196,7 @@ defmodule DocuSign.ConnectionRetryTest do
       assert Agent.get(agent, & &1) == 2
     end
 
+    @tag capture_log: true
     test "applies exponential backoff", %{bypass: bypass, conn: conn} do
       Application.put_env(:docusign, :retry_options,
         max_retries: 2,

@@ -73,6 +73,7 @@ defmodule DocuSign.Api.Envelopes do
     - `:advanced_update` (String.t): When **true,** envelope information can be added or modified.
     - `:include` (String.t): Specifies additional information about the envelope to return. Enter a comma-separated list, such as `tabs,recipients`. Valid values are:  - `custom_fields`: The custom fields associated with the envelope. - `documents`: The documents associated with the envelope. - `attachments`: The attachments associated with the envelope. - `extensions`: The email settings associated with the envelope. - `folders`: The folder where the envelope exists. - `recipients`: The recipients associated with the envelope. - `powerform`: The PowerForms associated with the envelope. - `prefill_tabs`: The pre-filled tabs associated with the envelope. - `tabs`: The tabs associated with the envelope. - `payment_tabs`: The payment tabs associated with the envelope. - `workflow`: The workflow definition associated with the envelope. 
     - `:include_anchor_tab_locations` (String.t): When **true,** all tabs with anchor tab properties are included in the response. The default value is **false.**
+    - `:user_id` (String.t): 
 
   ### Returns
 
@@ -86,7 +87,8 @@ defmodule DocuSign.Api.Envelopes do
     optional_params = %{
       :advanced_update => :query,
       :include => :query,
-      :include_anchor_tab_locations => :query
+      :include_anchor_tab_locations => :query,
+      :user_id => :query
     }
 
     request =

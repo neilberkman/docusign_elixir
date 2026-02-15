@@ -1,6 +1,10 @@
 # Changelog
 
-## v3.2.0 (TBD)
+## v3.3.0 (TBD)
+
+### Release
+
+- Bump library minor version to `3.3.0`.
 
 ### Features
 
@@ -8,13 +12,16 @@
 
 ### API Updates
 
-- Regenerate API from latest DocuSign OpenAPI specification (October 15, 2025)
+- Regenerate API from latest DocuSign OpenAPI specification (January 27, 2026)
   - Add new AI-related settings (enableAISuggestedFields, enableAISuggestedFieldsAutoPlace)
   - Add Navigator API configuration options (enableNavigatorAPIDataIn, enableNavigatorAPIDataOut, enableNavigatorAPIUtilities)
   - Add CFR rapid signing embedded auth settings
   - Add Connect envelope reminder sent event UI option
   - Add legacy KBA disable settings
   - Add new model: BrandLogoIds
+  - Add new models: AccountManagementGranular, NotaryWitness
+  - Add notary witness recipient lists to envelope/template recipient models
+  - Add envelope get query support for `user_id`
   - Update custom headers support in regeneration template for future regenerations
 
 ### Bug Fixes
@@ -27,14 +34,16 @@
 - Update castore to 1.0.17
 - Update cowboy to 2.14.2
 - Update cowlib to 2.16.0
-- Update credo to 1.7.15
+- Update credo to 1.7.16
 - Update dialyxir to 1.4.7
-- Update ex_doc to 0.39.3
+- Update ex_doc to 0.40.1
+- Update finch to 0.21.0
 - Update jose to 1.11.12
 - Update mix_test_watch to 1.4.0
 - Update plug to 1.19.1
 - Update plug_cowboy to 2.7.5
-- Update req to 0.5.16
+- Update quokka to 2.12.1
+- Update req to 0.5.17
 - Relax dependency version constraints to allow latest patch versions automatically
 - Drop Elixir 1.16 support (now requires 1.17+)
 

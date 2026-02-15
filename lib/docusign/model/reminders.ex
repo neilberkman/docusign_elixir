@@ -8,6 +8,7 @@ defmodule DocuSign.Model.Reminders do
   """
 
   defstruct [
+    :maximumReminderCount,
     :reminderDelay,
     :reminderEnabled,
     :reminderFrequency
@@ -25,6 +26,7 @@ defmodule DocuSign.Model.Reminders do
   end
 
   @type t :: %__MODULE__{
+          :maximumReminderCount => String.t() | nil,
           :reminderDelay => String.t() | nil,
           :reminderEnabled => String.t() | nil,
           :reminderFrequency => String.t() | nil
