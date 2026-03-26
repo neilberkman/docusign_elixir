@@ -21,7 +21,6 @@ defmodule DocuSign.Model.AccountSettingsInformation do
 
   defstruct [
     :AllowConnectIdentityVerificationUI,
-    :EnableSigningAIFeaturesPlan,
     :EnvelopeLimitsTotalDocumentSizeAllowedInMB,
     :EnvelopeLimitsTotalDocumentSizeAllowedInMBEnabled,
     :EnvelopeLimitsTotalDocumentSizeAllowedInMBEnabledMetadata,
@@ -65,6 +64,8 @@ defmodule DocuSign.Model.AccountSettingsInformation do
     :allowAutoNavSettingsMetadata,
     :allowAutoTagging,
     :allowAutoTaggingMetadata,
+    :allowBYOIDV,
+    :allowBYOIDVMetadata,
     :allowBulkSend,
     :allowBulkSendMetadata,
     :allowCDWithdraw,
@@ -122,6 +123,10 @@ defmodule DocuSign.Model.AccountSettingsInformation do
     :allowExternalLinkedAccountsMetadata,
     :allowExternalSignaturePad,
     :allowExternalSignaturePadMetadata,
+    :allowFedRampIDVLevel1,
+    :allowFedRampIDVLevel1Metadata,
+    :allowFedRampIDVLevel2,
+    :allowFedRampIDVLevel2Metadata,
     :allowIDVForEUQualifiedSignatures,
     :allowIDVForEUQualifiedSignaturesMetadata,
     :allowIDVLevel1,
@@ -356,7 +361,6 @@ defmodule DocuSign.Model.AccountSettingsInformation do
     :documentVisibilityMetadata,
     :draftEnvelopeRetention,
     :draftEnvelopeRetentionMetadata,
-    :dss_SCOREFDN_196_Rebrand_DocuSignIsNotAVerb,
     :dss_SIGN_28411_EnableLeavePagePrompt_RadminOption,
     :dss_SIGN_29182_SlideUpBar_RadminOption,
     :emailTemplateVersion,
@@ -497,6 +501,8 @@ defmodule DocuSign.Model.AccountSettingsInformation do
     :enableNavigatorAPIUtilitiesMetadata,
     :enableNavigatorForHR,
     :enableNavigatorForHRMetadata,
+    :enableNavigatorHierarchyAI,
+    :enableNavigatorHierarchyAIMetadata,
     :enableNavigatorPartialIngestion,
     :enableNavigatorPartialIngestionMetadata,
     :enableNavigatorTrial,
@@ -561,9 +567,8 @@ defmodule DocuSign.Model.AccountSettingsInformation do
     :enableSignWithNotaryMetadata,
     :enableSignerAttachments,
     :enableSignerAttachmentsMetadata,
+    :enableSigningAIFeaturesPlan,
     :enableSigningAIFeaturesPlanMetadata,
-    :enableSigningAIFeaturesSetting,
-    :enableSigningAIFeaturesSettingMetadata,
     :enableSigningExtensionComments,
     :enableSigningExtensionCommentsMetadata,
     :enableSigningExtensionConversations,
@@ -873,7 +878,6 @@ defmodule DocuSign.Model.AccountSettingsInformation do
 
   @type t :: %__MODULE__{
           :AllowConnectIdentityVerificationUI => String.t() | nil,
-          :EnableSigningAIFeaturesPlan => String.t() | nil,
           :EnvelopeLimitsTotalDocumentSizeAllowedInMB => String.t() | nil,
           :EnvelopeLimitsTotalDocumentSizeAllowedInMBEnabled => String.t() | nil,
           :EnvelopeLimitsTotalDocumentSizeAllowedInMBEnabledMetadata => SettingsMetadata.t() | nil,
@@ -917,6 +921,8 @@ defmodule DocuSign.Model.AccountSettingsInformation do
           :allowAutoNavSettingsMetadata => SettingsMetadata.t() | nil,
           :allowAutoTagging => String.t() | nil,
           :allowAutoTaggingMetadata => SettingsMetadata.t() | nil,
+          :allowBYOIDV => String.t() | nil,
+          :allowBYOIDVMetadata => SettingsMetadata.t() | nil,
           :allowBulkSend => String.t() | nil,
           :allowBulkSendMetadata => SettingsMetadata.t() | nil,
           :allowCDWithdraw => String.t() | nil,
@@ -974,6 +980,10 @@ defmodule DocuSign.Model.AccountSettingsInformation do
           :allowExternalLinkedAccountsMetadata => SettingsMetadata.t() | nil,
           :allowExternalSignaturePad => String.t() | nil,
           :allowExternalSignaturePadMetadata => SettingsMetadata.t() | nil,
+          :allowFedRampIDVLevel1 => String.t() | nil,
+          :allowFedRampIDVLevel1Metadata => SettingsMetadata.t() | nil,
+          :allowFedRampIDVLevel2 => String.t() | nil,
+          :allowFedRampIDVLevel2Metadata => SettingsMetadata.t() | nil,
           :allowIDVForEUQualifiedSignatures => String.t() | nil,
           :allowIDVForEUQualifiedSignaturesMetadata => SettingsMetadata.t() | nil,
           :allowIDVLevel1 => String.t() | nil,
@@ -1208,7 +1218,6 @@ defmodule DocuSign.Model.AccountSettingsInformation do
           :documentVisibilityMetadata => SettingsMetadata.t() | nil,
           :draftEnvelopeRetention => String.t() | nil,
           :draftEnvelopeRetentionMetadata => SettingsMetadata.t() | nil,
-          :dss_SCOREFDN_196_Rebrand_DocuSignIsNotAVerb => String.t() | nil,
           :dss_SIGN_28411_EnableLeavePagePrompt_RadminOption => String.t() | nil,
           :dss_SIGN_29182_SlideUpBar_RadminOption => String.t() | nil,
           :emailTemplateVersion => String.t() | nil,
@@ -1349,6 +1358,8 @@ defmodule DocuSign.Model.AccountSettingsInformation do
           :enableNavigatorAPIUtilitiesMetadata => SettingsMetadata.t() | nil,
           :enableNavigatorForHR => String.t() | nil,
           :enableNavigatorForHRMetadata => SettingsMetadata.t() | nil,
+          :enableNavigatorHierarchyAI => String.t() | nil,
+          :enableNavigatorHierarchyAIMetadata => SettingsMetadata.t() | nil,
           :enableNavigatorPartialIngestion => String.t() | nil,
           :enableNavigatorPartialIngestionMetadata => SettingsMetadata.t() | nil,
           :enableNavigatorTrial => String.t() | nil,
@@ -1413,9 +1424,8 @@ defmodule DocuSign.Model.AccountSettingsInformation do
           :enableSignWithNotaryMetadata => SettingsMetadata.t() | nil,
           :enableSignerAttachments => String.t() | nil,
           :enableSignerAttachmentsMetadata => SettingsMetadata.t() | nil,
+          :enableSigningAIFeaturesPlan => String.t() | nil,
           :enableSigningAIFeaturesPlanMetadata => SettingsMetadata.t() | nil,
-          :enableSigningAIFeaturesSetting => String.t() | nil,
-          :enableSigningAIFeaturesSettingMetadata => SettingsMetadata.t() | nil,
           :enableSigningExtensionComments => String.t() | nil,
           :enableSigningExtensionCommentsMetadata => SettingsMetadata.t() | nil,
           :enableSigningExtensionConversations => String.t() | nil,
@@ -1825,6 +1835,11 @@ defmodule DocuSign.Model.AccountSettingsInformation do
       SettingsMetadata
     )
     |> Deserializer.deserialize(
+      :allowBYOIDVMetadata,
+      :struct,
+      SettingsMetadata
+    )
+    |> Deserializer.deserialize(
       :allowCDWithdrawMetadata,
       :struct,
       SettingsMetadata
@@ -1941,6 +1956,16 @@ defmodule DocuSign.Model.AccountSettingsInformation do
     )
     |> Deserializer.deserialize(
       :allowExternalSignaturePadMetadata,
+      :struct,
+      SettingsMetadata
+    )
+    |> Deserializer.deserialize(
+      :allowFedRampIDVLevel1Metadata,
+      :struct,
+      SettingsMetadata
+    )
+    |> Deserializer.deserialize(
+      :allowFedRampIDVLevel2Metadata,
       :struct,
       SettingsMetadata
     )
@@ -2865,6 +2890,11 @@ defmodule DocuSign.Model.AccountSettingsInformation do
       SettingsMetadata
     )
     |> Deserializer.deserialize(
+      :enableNavigatorHierarchyAIMetadata,
+      :struct,
+      SettingsMetadata
+    )
+    |> Deserializer.deserialize(
       :enableNavigatorPartialIngestionMetadata,
       :struct,
       SettingsMetadata
@@ -3001,11 +3031,6 @@ defmodule DocuSign.Model.AccountSettingsInformation do
     )
     |> Deserializer.deserialize(
       :enableSigningAIFeaturesPlanMetadata,
-      :struct,
-      SettingsMetadata
-    )
-    |> Deserializer.deserialize(
-      :enableSigningAIFeaturesSettingMetadata,
       :struct,
       SettingsMetadata
     )
