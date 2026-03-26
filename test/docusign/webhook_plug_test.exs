@@ -72,6 +72,13 @@ defmodule DocuSign.WebhookPlugTest do
                            hmac_secret_key: "sample-hmac-key"
                          )
 
+  @opts_with_read_body_opts WebhookPlug.init(
+                              at: "/webhook/docusign",
+                              handler: __MODULE__.StubHandler,
+                              hmac_secret_key: "sample-hmac-key",
+                              read_body_opts: [length: 20_000_000]
+                            )
+
   defmodule StubHandler do
     @moduledoc """
     Webhook handler that always returns ok.
@@ -246,6 +253,30 @@ defmodule DocuSign.WebhookPlugTest do
           at: "/webhook/docusign",
           handler: __MODULE__.StubHandler,
           hmac_secret_key: fn -> @hmac256_key end
+        )
+
+      conn = WebhookPlug.call(conn, opts)
+      assert {200, _, "Webhook received."} = sent_resp(conn)
+    end
+
+    test "accepts read_body_opts configuration" do
+      conn = build_request(@webhook_event, @hmac256_key)
+      conn = WebhookPlug.call(conn, @opts_with_read_body_opts)
+      assert {200, _, "Webhook received."} = sent_resp(conn)
+    end
+
+    test "handles chunked body reading" do
+      # Simulate a large payload that would be returned in chunks by read_body
+      large_data = String.duplicate("x", 1_000)
+      payload = Map.put(@webhook_event, "largeField", large_data)
+      conn = build_request(payload, @hmac256_key)
+      # With a tiny length limit, Plug.Conn.read_body will return {:more, ...}
+      opts =
+        WebhookPlug.init(
+          at: "/webhook/docusign",
+          handler: __MODULE__.StubHandler,
+          hmac_secret_key: @hmac256_key,
+          read_body_opts: [length: 100]
         )
 
       conn = WebhookPlug.call(conn, opts)

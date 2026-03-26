@@ -29,6 +29,9 @@ defmodule DocuSign.WebhookPlug do
     and processes them within your application. You must create this module.
   - `secret`: Webhook HMAC secret obtained from the DocuSign Connect dashboard.
     This can also be a function or a tuple for runtime configuration.
+  - `read_body_opts`: Options passed to `Plug.Conn.read_body/2`. This can be
+    used to increase the `:length` limit (default 8MB) for large webhook payloads.
+    For example: `read_body_opts: [length: 20_000_000]` to allow up to ~20MB.
 
   ## Handling events
 
@@ -139,6 +142,7 @@ defmodule DocuSign.WebhookPlug do
     opts
     |> Map.new()
     |> Map.put_new(:path_info, path_info)
+    |> Map.put_new(:read_body_opts, [])
   end
 
   # sobelow_skip ["XSS"]
@@ -147,10 +151,11 @@ defmodule DocuSign.WebhookPlug do
   def call(%Conn{method: "POST", path_info: path_info} = conn, %{
         handler: handler,
         hmac_secret_key: hmac_secret_key,
-        path_info: path_info
+        path_info: path_info,
+        read_body_opts: read_body_opts
       }) do
     secret = parse_secret!(hmac_secret_key)
-    {:ok, payload, conn} = Conn.read_body(conn)
+    {:ok, payload, conn} = read_full_body(conn, read_body_opts)
 
     with :ok <- verify_signatures(payload, secret, signatures(conn)),
          {:ok, %{} = event} <- parse_payload(payload),
@@ -169,6 +174,26 @@ defmodule DocuSign.WebhookPlug do
 
   @impl true
   def call(conn, _), do: conn
+
+  defp read_full_body(conn, opts) do
+    case Conn.read_body(conn, opts) do
+      {:ok, body, conn} ->
+        {:ok, body, conn}
+
+      {:more, body, conn} ->
+        read_full_body(conn, opts, body)
+    end
+  end
+
+  defp read_full_body(conn, opts, acc) do
+    case Conn.read_body(conn, opts) do
+      {:ok, body, conn} ->
+        {:ok, acc <> body, conn}
+
+      {:more, body, conn} ->
+        read_full_body(conn, opts, acc <> body)
+    end
+  end
 
   defp parse_secret!({m, f, a}), do: apply(m, f, a)
   defp parse_secret!(fun) when is_function(fun), do: fun.()

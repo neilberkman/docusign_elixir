@@ -1,5 +1,13 @@
 # Changelog
 
+## v3.4.0 (TBD)
+
+### Bug Fixes
+
+- **Webhook Large Body Support**: Fix `MatchError` when webhook payloads exceed the default 8MB `Plug.Conn.read_body/2` limit ([#100](https://github.com/neilberkman/docusign_elixir/issues/100))
+  - Handle `{:more, body, conn}` return value by reading the body in a loop until complete
+  - Add `read_body_opts` option to `DocuSign.WebhookPlug` to allow configuring `Plug.Conn.read_body/2` options (e.g., increasing the `:length` limit)
+
 ## v3.3.0 (TBD)
 
 ### Release
