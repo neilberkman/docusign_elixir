@@ -9,6 +9,7 @@ defmodule DocuSign.Model.DocGenFormField do
 
   alias DocuSign.Deserializer
   alias DocuSign.Model.ConnectedObjectDetails
+  alias DocuSign.Model.DocGenFormat
   alias DocuSign.Model.DocGenFormFieldOption
   alias DocuSign.Model.DocGenFormFieldRowValue
   alias DocuSign.Model.DocGenFormFieldValidation
@@ -16,12 +17,15 @@ defmodule DocuSign.Model.DocGenFormField do
   defstruct [
     :connectedObjectDetails,
     :description,
+    :format,
     :fullyQualifiedPath,
+    :hidden,
     :label,
     :name,
     :options,
     :order,
     :predefinedValidation,
+    :readOnly,
     :required,
     :rowValues,
     :type,
@@ -43,12 +47,15 @@ defmodule DocuSign.Model.DocGenFormField do
   @type t :: %__MODULE__{
           :connectedObjectDetails => ConnectedObjectDetails.t() | nil,
           :description => String.t() | nil,
+          :format => DocGenFormat.t() | nil,
           :fullyQualifiedPath => String.t() | nil,
+          :hidden => String.t() | nil,
           :label => String.t() | nil,
           :name => String.t() | nil,
           :options => [DocGenFormFieldOption.t()] | nil,
           :order => String.t() | nil,
           :predefinedValidation => String.t() | nil,
+          :readOnly => String.t() | nil,
           :required => String.t() | nil,
           :rowValues => [DocGenFormFieldRowValue.t()] | nil,
           :type => String.t() | nil,
@@ -62,6 +69,11 @@ defmodule DocuSign.Model.DocGenFormField do
       :connectedObjectDetails,
       :struct,
       ConnectedObjectDetails
+    )
+    |> Deserializer.deserialize(
+      :format,
+      :struct,
+      DocGenFormat
     )
     |> Deserializer.deserialize(
       :options,
