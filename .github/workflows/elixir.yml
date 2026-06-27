@@ -17,9 +17,9 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          # Earliest supported version (1.17)
+          # Earliest supported Elixir series on a current OTP 27 patch
           - elixir: "1.17.3"
-            otp: "27.1"
+            otp: "27.3"
             quality: false
           # Latest 1.18 series
           - elixir: "1.18.4"
