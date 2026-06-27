@@ -256,8 +256,8 @@ defmodule DocuSign.Api.AccountBrands do
           | {:error, Req.Response.t()}
   def brand_put_brand(connection, account_id, brand_id, opts \\ []) do
     optional_params = %{
-      :body => :body,
-      :replace_brand => :query
+      :replace_brand => :query,
+      :body => :body
     }
 
     request =

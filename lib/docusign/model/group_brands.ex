@@ -11,9 +11,9 @@ defmodule DocuSign.Model.GroupBrands do
   alias DocuSign.Model.Brand
 
   defstruct [
-    :brandOptions,
     :recipientBrandIdDefault,
-    :senderBrandIdDefault
+    :senderBrandIdDefault,
+    :brandOptions
   ]
 
   @doc false
@@ -28,9 +28,9 @@ defmodule DocuSign.Model.GroupBrands do
   end
 
   @type t :: %__MODULE__{
-          :brandOptions => [Brand.t()] | nil,
           :recipientBrandIdDefault => String.t() | nil,
-          :senderBrandIdDefault => String.t() | nil
+          :senderBrandIdDefault => String.t() | nil,
+          :brandOptions => [Brand.t()] | nil
         }
 
   def decode(value) do

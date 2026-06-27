@@ -13,10 +13,10 @@ defmodule DocuSign.Model.ConnectCustomConfiguration do
   alias DocuSign.Model.ConnectSalesforceObject
 
   defstruct [
-    :allUsers,
-    :allUsersExcept,
     :allowEnvelopePublish,
     :allowSalesforcePublish,
+    :allUsers,
+    :allUsersExcept,
     :configurationType,
     :connectId,
     :deliveryMode,
@@ -29,8 +29,8 @@ defmodule DocuSign.Model.ConnectCustomConfiguration do
     :externalFolderId,
     :externalFolderLabel,
     :groupIds,
-    :includeCertSoapHeader,
     :includeCertificateOfCompletion,
+    :includeCertSoapHeader,
     :includeDocumentFields,
     :includeDocuments,
     :includeEnvelopeVoidReason,
@@ -56,9 +56,9 @@ defmodule DocuSign.Model.ConnectCustomConfiguration do
     :signMessageWithX509Certificate,
     :soapNamespace,
     :urlToPublishTo,
-    :useSoapInterface,
     :userIds,
-    :userName
+    :userName,
+    :useSoapInterface
   ]
 
   @doc false
@@ -73,10 +73,10 @@ defmodule DocuSign.Model.ConnectCustomConfiguration do
   end
 
   @type t :: %__MODULE__{
-          :allUsers => String.t() | nil,
-          :allUsersExcept => String.t() | nil,
           :allowEnvelopePublish => String.t() | nil,
           :allowSalesforcePublish => String.t() | nil,
+          :allUsers => String.t() | nil,
+          :allUsersExcept => String.t() | nil,
           :configurationType => String.t() | nil,
           :connectId => String.t() | nil,
           :deliveryMode => String.t() | nil,
@@ -89,8 +89,8 @@ defmodule DocuSign.Model.ConnectCustomConfiguration do
           :externalFolderId => String.t() | nil,
           :externalFolderLabel => String.t() | nil,
           :groupIds => [String.t()] | nil,
-          :includeCertSoapHeader => String.t() | nil,
           :includeCertificateOfCompletion => String.t() | nil,
+          :includeCertSoapHeader => String.t() | nil,
           :includeDocumentFields => String.t() | nil,
           :includeDocuments => String.t() | nil,
           :includeEnvelopeVoidReason => String.t() | nil,
@@ -116,9 +116,9 @@ defmodule DocuSign.Model.ConnectCustomConfiguration do
           :signMessageWithX509Certificate => String.t() | nil,
           :soapNamespace => String.t() | nil,
           :urlToPublishTo => String.t() | nil,
-          :useSoapInterface => String.t() | nil,
           :userIds => [String.t()] | nil,
-          :userName => String.t() | nil
+          :userName => String.t() | nil,
+          :useSoapInterface => String.t() | nil
         }
 
   def decode(value) do

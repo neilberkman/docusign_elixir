@@ -10,6 +10,7 @@ defmodule DocuSign.Model.BulkSendingCopy do
   alias DocuSign.Deserializer
   alias DocuSign.Model.BulkSendingCopyCustomField
   alias DocuSign.Model.BulksendingCopyDocGenFormField
+  alias DocuSign.Model.BulkSendingCopyPrefillTab
   alias DocuSign.Model.BulkSendingCopyRecipient
 
   defstruct [
@@ -17,6 +18,7 @@ defmodule DocuSign.Model.BulkSendingCopy do
     :docGenFormFields,
     :emailBlurb,
     :emailSubject,
+    :prefillTabs,
     :recipients
   ]
 
@@ -36,6 +38,7 @@ defmodule DocuSign.Model.BulkSendingCopy do
           :docGenFormFields => [BulksendingCopyDocGenFormField.t()] | nil,
           :emailBlurb => String.t() | nil,
           :emailSubject => String.t() | nil,
+          :prefillTabs => [BulkSendingCopyPrefillTab.t()] | nil,
           :recipients => [BulkSendingCopyRecipient.t()] | nil
         }
 
@@ -50,6 +53,11 @@ defmodule DocuSign.Model.BulkSendingCopy do
       :docGenFormFields,
       :list,
       BulksendingCopyDocGenFormField
+    )
+    |> Deserializer.deserialize(
+      :prefillTabs,
+      :list,
+      BulkSendingCopyPrefillTab
     )
     |> Deserializer.deserialize(
       :recipients,

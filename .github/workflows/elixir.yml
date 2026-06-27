@@ -1,26 +1,41 @@
 name: docusign_elixir CI
-on: push
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
 
 jobs:
   build:
+    name: OTP ${{ matrix.otp }} / Elixir ${{ matrix.elixir }}
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         include:
           # Earliest supported version (1.17)
           - elixir: "1.17.3"
             otp: "27.1"
-          # Latest 1.18 series with OTP 27
-          - elixir: "1.18.1"
-            otp: "27.2"
-          # Latest 1.18 series with OTP 28
+            quality: false
+          # Latest 1.18 series
           - elixir: "1.18.4"
-            otp: "28.0"
+            otp: "27.3"
+            quality: false
           # Latest 1.19 series with OTP 28
-          - elixir: "1.19.4"
-            otp: "28.3"
+          - elixir: "1.19.5"
+            otp: "28.5"
+            quality: false
+          # Latest 1.20 series with OTP 29
+          - elixir: "1.20.1"
+            otp: "29.0"
+            quality: true
+
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Install Elixir
         uses: erlef/setup-beam@v1
@@ -28,50 +43,47 @@ jobs:
           otp-version: ${{ matrix.otp }}
           elixir-version: ${{ matrix.elixir }}
 
-      # Standard caching pattern based on Phoenix Framework
       - name: Cache deps
-        id: cache-deps
-        uses: actions/cache@v3
-        env:
-          cache-name: deps-v3
+        uses: actions/cache@v4
         with:
           path: deps
-          key: ${{ runner.os }}-mix-${{ env.cache-name }}-${{ matrix.elixir }}-${{ matrix.otp }}-${{ hashFiles('mix.lock', 'mix.exs') }}
+          key: ${{ runner.os }}-mix-deps-${{ matrix.elixir }}-${{ matrix.otp }}-${{ hashFiles('mix.lock', 'mix.exs') }}
           restore-keys: |
-            ${{ runner.os }}-mix-${{ env.cache-name }}-${{ matrix.elixir }}-${{ matrix.otp }}-
+            ${{ runner.os }}-mix-deps-${{ matrix.elixir }}-${{ matrix.otp }}-
 
       - name: Cache compiled build
-        id: cache-build
-        uses: actions/cache@v3
-        env:
-          cache-name: build-v3
+        uses: actions/cache@v4
         with:
           path: _build
-          key: ${{ runner.os }}-mix-${{ env.cache-name }}-${{ matrix.elixir }}-${{ matrix.otp }}-${{ hashFiles('mix.lock', 'mix.exs') }}
+          key: ${{ runner.os }}-mix-build-${{ matrix.elixir }}-${{ matrix.otp }}-${{ hashFiles('mix.lock', 'mix.exs') }}
           restore-keys: |
-            ${{ runner.os }}-mix-${{ env.cache-name }}-${{ matrix.elixir }}-${{ matrix.otp }}-
+            ${{ runner.os }}-mix-build-${{ matrix.elixir }}-${{ matrix.otp }}-
 
-      # Only clean if cache not found
-      - name: Install Dependencies
-        run: |
-          if [ ! -d "deps" ]; then
-            echo "Cache not found, performing clean install"
-            mix local.hex --force
-          fi
-          mix deps.get
+      - name: Install dependencies
+        run: mix deps.get
 
       - name: Compile app
         run: MIX_ENV=test mix compile --warnings-as-errors
 
-      - name: Run Tests
-        run: |
-          set +e
-          mix test --trace
+      - name: Run tests
+        run: mix test
 
       - name: Check formatting
-        if: matrix.elixir == '1.19.4' && matrix.otp == '28.3'
+        if: matrix.quality
         run: mix format --check-formatted
 
+      - name: Run Credo
+        if: matrix.quality
+        run: mix credo --strict
+
       - name: Run Dialyzer
-        if: matrix.elixir == '1.19.4' && matrix.otp == '28.3'
+        if: matrix.quality
         run: mix dialyzer
+
+      - name: Build docs
+        if: matrix.quality
+        run: mix docs
+
+      - name: Build package
+        if: matrix.quality
+        run: mix hex.build

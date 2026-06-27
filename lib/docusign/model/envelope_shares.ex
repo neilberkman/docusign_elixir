@@ -8,10 +8,23 @@ defmodule DocuSign.Model.EnvelopeShares do
   """
 
   alias DocuSign.Deserializer
-  alias DocuSign.Model.EnvelopesSharesResponseItem
+  alias DocuSign.Model.Envelope
+  alias DocuSign.Model.EnvelopeTransactionStatus
+  alias DocuSign.Model.Folder
 
   defstruct [
-    :shares
+    :continuationToken,
+    :endPosition,
+    :envelopes,
+    :envelopeSearchSource,
+    :envelopeTransactionStatuses,
+    :folders,
+    :lastQueriedDateTime,
+    :nextUri,
+    :previousUri,
+    :resultSetSize,
+    :startPosition,
+    :totalSetSize
   ]
 
   @doc false
@@ -26,15 +39,36 @@ defmodule DocuSign.Model.EnvelopeShares do
   end
 
   @type t :: %__MODULE__{
-          :shares => [EnvelopesSharesResponseItem.t()] | nil
+          :continuationToken => String.t() | nil,
+          :endPosition => String.t() | nil,
+          :envelopes => [Envelope.t()] | nil,
+          :envelopeSearchSource => String.t() | nil,
+          :envelopeTransactionStatuses => [EnvelopeTransactionStatus.t()] | nil,
+          :folders => [Folder.t()] | nil,
+          :lastQueriedDateTime => String.t() | nil,
+          :nextUri => String.t() | nil,
+          :previousUri => String.t() | nil,
+          :resultSetSize => String.t() | nil,
+          :startPosition => String.t() | nil,
+          :totalSetSize => String.t() | nil
         }
 
   def decode(value) do
     value
     |> Deserializer.deserialize(
-      :shares,
+      :envelopes,
       :list,
-      EnvelopesSharesResponseItem
+      Envelope
+    )
+    |> Deserializer.deserialize(
+      :envelopeTransactionStatuses,
+      :list,
+      EnvelopeTransactionStatus
+    )
+    |> Deserializer.deserialize(
+      :folders,
+      :list,
+      Folder
     )
     |> then(&struct(__MODULE__, &1))
   end

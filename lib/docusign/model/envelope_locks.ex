@@ -14,11 +14,11 @@ defmodule DocuSign.Model.EnvelopeLocks do
   defstruct [
     :errorDetails,
     :lockDurationInSeconds,
-    :lockToken,
-    :lockType,
     :lockedByApp,
     :lockedByUser,
     :lockedUntilDateTime,
+    :lockToken,
+    :lockType,
     :useScratchPad
   ]
 
@@ -36,11 +36,11 @@ defmodule DocuSign.Model.EnvelopeLocks do
   @type t :: %__MODULE__{
           :errorDetails => ErrorDetails.t() | nil,
           :lockDurationInSeconds => String.t() | nil,
-          :lockToken => String.t() | nil,
-          :lockType => String.t() | nil,
           :lockedByApp => String.t() | nil,
           :lockedByUser => UserInfo.t() | nil,
           :lockedUntilDateTime => String.t() | nil,
+          :lockToken => String.t() | nil,
+          :lockType => String.t() | nil,
           :useScratchPad => String.t() | nil
         }
 

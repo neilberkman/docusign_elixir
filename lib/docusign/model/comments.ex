@@ -26,8 +26,8 @@ defmodule DocuSign.Model.Comments do
     :text,
     :threadId,
     :threadOriginatorId,
-    :timeStampFormatted,
     :timestamp,
+    :timeStampFormatted,
     :visibleTo
   ]
 
@@ -61,8 +61,8 @@ defmodule DocuSign.Model.Comments do
           :text => String.t() | nil,
           :threadId => String.t() | nil,
           :threadOriginatorId => String.t() | nil,
-          :timeStampFormatted => String.t() | nil,
           :timestamp => String.t() | nil,
+          :timeStampFormatted => String.t() | nil,
           :visibleTo => [String.t()] | nil
         }
 

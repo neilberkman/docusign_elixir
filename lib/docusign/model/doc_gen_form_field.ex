@@ -16,7 +16,9 @@ defmodule DocuSign.Model.DocGenFormField do
 
   defstruct [
     :connectedObjectDetails,
+    :defaultValue,
     :description,
+    :filter,
     :format,
     :fullyQualifiedPath,
     :hidden,
@@ -46,7 +48,9 @@ defmodule DocuSign.Model.DocGenFormField do
 
   @type t :: %__MODULE__{
           :connectedObjectDetails => ConnectedObjectDetails.t() | nil,
+          :defaultValue => String.t() | nil,
           :description => String.t() | nil,
+          :filter => String.t() | nil,
           :format => DocGenFormat.t() | nil,
           :fullyQualifiedPath => String.t() | nil,
           :hidden => String.t() | nil,

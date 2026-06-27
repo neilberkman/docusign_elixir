@@ -13,6 +13,7 @@ defmodule DocuSign.Model.Contacts do
   alias DocuSign.Model.NotaryContactDetails
 
   defstruct [
+    :canManage,
     :cloudProvider,
     :cloudProviderContainerId,
     :contactId,
@@ -42,6 +43,7 @@ defmodule DocuSign.Model.Contacts do
   end
 
   @type t :: %__MODULE__{
+          :canManage => String.t() | nil,
           :cloudProvider => String.t() | nil,
           :cloudProviderContainerId => String.t() | nil,
           :contactId => String.t() | nil,

@@ -163,8 +163,8 @@ defmodule DocuSign.Api.TemplateRecipients do
           | {:error, Req.Response.t()}
   def recipients_post_template_recipients(connection, account_id, template_id, opts \\ []) do
     optional_params = %{
-      :body => :body,
-      :resend_envelope => :query
+      :resend_envelope => :query,
+      :body => :body
     }
 
     request =
@@ -206,8 +206,8 @@ defmodule DocuSign.Api.TemplateRecipients do
           | {:error, Req.Response.t()}
   def recipients_put_template_recipients(connection, account_id, template_id, opts \\ []) do
     optional_params = %{
-      :body => :body,
-      :resend_envelope => :query
+      :resend_envelope => :query,
+      :body => :body
     }
 
     request =

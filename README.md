@@ -42,7 +42,7 @@ The package can be installed by adding `docusign` to your list of dependencies i
 ```elixir
 def deps do
   [
-    {:docusign, "~> 3.0.0"}
+    {:docusign, "~> 3.5"}
   ]
 end
 ```
@@ -259,7 +259,7 @@ The DocuSign Elixir client provides comprehensive debugging capabilities for HTT
 Enable debugging in your configuration to log HTTP request/response details:
 
 ```elixir
-config :docusign, debugging: true
+config :docusign, debug: true
 ```
 
 Or enable it at runtime:
@@ -281,7 +281,7 @@ Example debug output:
 
 ```
 [debug] GET https://demo.docusign.net/restapi/v2.1/accounts -> 200 (145.2 ms)
-[debug] Request headers: [{"authorization", "[FILTERED]"}, {"X-DocuSign-SDK", "Elixir/3.0.0"}]
+[debug] Request headers: [{"authorization", "[FILTERED]"}, {"X-DocuSign-SDK", "Elixir/3.5.0"}]
 [debug] Response body: {"accounts": [...]}
 ```
 
@@ -297,8 +297,8 @@ config :docusign, :debug_filter_headers, ["authorization", "x-api-key", "x-custo
 
 The client automatically includes SDK identification headers with all requests:
 
-- `X-DocuSign-SDK: Elixir/2.2.2` - Identifies the SDK and version
-- `User-Agent: DocuSign-Elixir/2.2.2` - Standard user agent header
+- `X-DocuSign-SDK: Elixir/3.5.0` - Identifies the SDK and version
+- `User-Agent: DocuSign-Elixir/3.5.0` - Standard user agent header
 
 These headers help DocuSign track API usage and provide better support.
 
@@ -306,7 +306,7 @@ These headers help DocuSign track API usage and provide better support.
 
 ```elixir
 config :docusign,
-  debugging: true,                    # Enable/disable debug logging
+  debug: true,                        # Enable/disable debug logging
   debug_filter_headers: [             # Headers to filter in logs
     "authorization",
     "x-api-key"

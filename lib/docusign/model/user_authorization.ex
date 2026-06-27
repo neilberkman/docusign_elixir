@@ -20,7 +20,9 @@ defmodule DocuSign.Model.UserAuthorization do
     :modifiedBy,
     :permission,
     :principalUser,
-    :startDate
+    :startDate,
+    :taskSource,
+    :taskType
   ]
 
   @doc false
@@ -44,7 +46,9 @@ defmodule DocuSign.Model.UserAuthorization do
           :modifiedBy => String.t() | nil,
           :permission => String.t() | nil,
           :principalUser => AuthorizationUser.t() | nil,
-          :startDate => String.t() | nil
+          :startDate => String.t() | nil,
+          :taskSource => String.t() | nil,
+          :taskType => String.t() | nil
         }
 
   def decode(value) do

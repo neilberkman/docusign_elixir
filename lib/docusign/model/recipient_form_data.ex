@@ -13,12 +13,12 @@ defmodule DocuSign.Model.RecipientFormData do
   defstruct [
     :DeclinedTime,
     :DeliveredTime,
-    :SentTime,
-    :SignedTime,
     :email,
     :formData,
     :name,
-    :recipientId
+    :recipientId,
+    :SentTime,
+    :SignedTime
   ]
 
   @doc false
@@ -35,12 +35,12 @@ defmodule DocuSign.Model.RecipientFormData do
   @type t :: %__MODULE__{
           :DeclinedTime => String.t() | nil,
           :DeliveredTime => String.t() | nil,
-          :SentTime => String.t() | nil,
-          :SignedTime => String.t() | nil,
           :email => String.t() | nil,
           :formData => [FormDataItem.t()] | nil,
           :name => String.t() | nil,
-          :recipientId => String.t() | nil
+          :recipientId => String.t() | nil,
+          :SentTime => String.t() | nil,
+          :SignedTime => String.t() | nil
         }
 
   def decode(value) do

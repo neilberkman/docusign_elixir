@@ -8,6 +8,7 @@ defmodule DocuSign.Model.EnvelopeRecipients do
   """
 
   alias DocuSign.Deserializer
+  alias DocuSign.Model.AuthorizedSignatory
   alias DocuSign.Model.CarbonCopy
   alias DocuSign.Model.CertifiedDelivery
   alias DocuSign.Model.Editor
@@ -23,6 +24,7 @@ defmodule DocuSign.Model.EnvelopeRecipients do
 
   defstruct [
     :agents,
+    :authorizedSignatories,
     :carbonCopies,
     :certifiedDeliveries,
     :currentRoutingOrder,
@@ -52,6 +54,7 @@ defmodule DocuSign.Model.EnvelopeRecipients do
 
   @type t :: %__MODULE__{
           :agents => [DocuSign.Model.Agent.t()] | nil,
+          :authorizedSignatories => [AuthorizedSignatory.t()] | nil,
           :carbonCopies => [CarbonCopy.t()] | nil,
           :certifiedDeliveries => [CertifiedDelivery.t()] | nil,
           :currentRoutingOrder => String.t() | nil,
@@ -74,6 +77,11 @@ defmodule DocuSign.Model.EnvelopeRecipients do
       :agents,
       :list,
       DocuSign.Model.Agent
+    )
+    |> Deserializer.deserialize(
+      :authorizedSignatories,
+      :list,
+      AuthorizedSignatory
     )
     |> Deserializer.deserialize(
       :carbonCopies,

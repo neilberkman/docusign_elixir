@@ -2,7 +2,7 @@ defmodule DocuSign.MixProject do
   @moduledoc false
   use Mix.Project
 
-  @version "3.4.0"
+  @version "3.5.0"
   @url "https://github.com/neilberkman/docusign_elixir"
   @maintainers [
     "Neil Berkman"
@@ -13,7 +13,7 @@ defmodule DocuSign.MixProject do
       name: "DocuSign",
       app: :docusign,
       version: @version,
-      elixir: "~> 1.17 or ~> 1.18 or ~> 1.19",
+      elixir: "~> 1.17 or ~> 1.18 or ~> 1.19 or ~> 1.20",
       package: package(),
       source_url: @url,
       maintainers: @maintainers,
@@ -25,6 +25,15 @@ defmodule DocuSign.MixProject do
       dialyzer: [
         ignore_warnings: ".dialyzer_ignore.exs",
         plt_add_apps: [:mix]
+      ],
+      aliases: aliases()
+    ]
+  end
+
+  def cli do
+    [
+      preferred_envs: [
+        precommit: :test
       ]
     ]
   end
@@ -64,6 +73,17 @@ defmodule DocuSign.MixProject do
       {:dialyxir, "~> 1.4", only: [:dev], runtime: false},
       {:mix_test_watch, "~> 1.4", only: :dev, runtime: false},
       {:quokka, "~> 2.12", only: [:dev, :test], runtime: false}
+    ]
+  end
+
+  defp aliases do
+    [
+      precommit: [
+        "format --check-formatted",
+        "compile --warnings-as-errors",
+        "credo --strict",
+        "test"
+      ]
     ]
   end
 

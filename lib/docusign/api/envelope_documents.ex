@@ -124,6 +124,7 @@ defmodule DocuSign.Api.EnvelopeDocuments do
     - `:documents_by_userid` (String.t): When **true,** allows recipients to get documents by their user id. For example, if a user is included in two different routing orders with different visibilities, using this parameter returns all of the documents from both routing orders.
     - `:include_agreement_type` (String.t): 
     - `:include_docgen_formfields` (String.t): Reserved for Docusign.
+    - `:include_is_edited` (String.t): 
     - `:include_metadata` (String.t): When **true,** the response includes metadata that indicates which properties the sender can edit.
     - `:include_tabs` (String.t): Reserved for Docusign.
     - `:recipient_id` (String.t): Allows the sender to retrieve the documents as one of the recipients that they control. The `documents_by_userid` parameter must be set to **false** for this to work.
@@ -142,6 +143,7 @@ defmodule DocuSign.Api.EnvelopeDocuments do
       :documents_by_userid => :query,
       :include_agreement_type => :query,
       :include_docgen_formfields => :query,
+      :include_is_edited => :query,
       :include_metadata => :query,
       :include_tabs => :query,
       :recipient_id => :query,

@@ -1,6 +1,32 @@
 # Changelog
 
-## v3.4.0 (TBD)
+## v3.5.0 (2026-06-27)
+
+### API Updates
+
+- Regenerate API from latest DocuSign OpenAPI specification (June 24, 2026).
+- Replace the stale tracked regeneration spec payload with the real upstream OpenAPI JSON.
+- Add envelope share APIs for retrieving, creating/updating, and deleting individual or bulk envelope shares, plus shared envelope listing.
+- Add Connect HMAC secret APIs for creating, retrieving, and deleting Connect secrets.
+- Add new generated models including `AdditionalSetting`, `AuthorizedSignatory`, `BulkSendingCopyPrefillTab`, `EnvelopesShareRequest`, `EnvelopesSharePermissionRequest`, `EnvelopesShareResponse`, `GroupUserInfo`, `GroupUsersResponse`, `SenderCompletionInfo`, `TemplateCompletionInfo`, `TemplateCompletionRateResponse`, and `UserCompletionRateResponse`.
+- Update envelope share request/response models to use the new singular share item models from the upstream spec.
+- Add newly generated account settings, recipient, tab, completion-rate, and group user fields.
+- Remove the generated `Accounts.recipient_names_get_recipient_names/3` endpoint because it is no longer present in the upstream spec.
+
+### Dependencies
+
+- Add Elixir 1.20 / OTP 29 support.
+- Update dependency lockfile, including Req 0.6.2, Finch 0.23.0, Plug 1.20.1, Cowboy 2.16.1, Credo 1.7.19, Quokka 2.13.1, and ExDoc 0.40.3.
+
+### CI/Testing
+
+- Add an Elixir 1.20.1 / OTP 29.0 CI lane.
+- Update GitHub Actions to `actions/checkout@v4` and `actions/cache@v4`.
+- Fix the test step so failing tests fail CI.
+- Run Credo, docs generation, and package build checks on the primary CI lane.
+- Add a `mix precommit` alias for local format, compile, Credo, and test checks.
+
+## v3.4.0 (2026-03-26)
 
 ### API Updates
 

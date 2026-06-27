@@ -14,7 +14,9 @@ defmodule DocuSign.Model.UserAuthorizationCreateRequest do
     :agentUser,
     :endDate,
     :permission,
-    :startDate
+    :startDate,
+    :taskSource,
+    :taskType
   ]
 
   @doc false
@@ -32,7 +34,9 @@ defmodule DocuSign.Model.UserAuthorizationCreateRequest do
           :agentUser => AuthorizationUser.t() | nil,
           :endDate => String.t() | nil,
           :permission => String.t() | nil,
-          :startDate => String.t() | nil
+          :startDate => String.t() | nil,
+          :taskSource => String.t() | nil,
+          :taskType => String.t() | nil
         }
 
   def decode(value) do

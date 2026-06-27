@@ -155,8 +155,8 @@ defmodule DocuSign.Api.AccountPermissionProfiles do
           | {:error, Req.Response.t()}
   def permission_profiles_post_permission_profiles(connection, account_id, opts \\ []) do
     optional_params = %{
-      :body => :body,
-      :include => :query
+      :include => :query,
+      :body => :body
     }
 
     request =
@@ -198,8 +198,8 @@ defmodule DocuSign.Api.AccountPermissionProfiles do
           | {:error, Req.Response.t()}
   def permission_profiles_put_permission_profiles(connection, account_id, permission_profile_id, opts \\ []) do
     optional_params = %{
-      :body => :body,
-      :include => :query
+      :include => :query,
+      :body => :body
     }
 
     request =

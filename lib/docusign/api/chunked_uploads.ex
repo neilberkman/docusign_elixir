@@ -96,7 +96,8 @@ defmodule DocuSign.Api.ChunkedUploads do
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `opts` (keyword): Optional parameters
-    - `:body` (ChunkedUploadRequest): 
+    - `:chunkedUploadId` (String.t): The ID of the chunked upload.  **Note:** This property is ignored in requests, and overridden with an auto-generated value in responses.
+    - `:data` (String.t): A base64-encoded representation of the content that is used to upload the file.   Maximum size: 50 MB. However, data is also subject to REST API limits regarding request sizes, and Internet Information Systems (IIS) might place further constraints on file size.
 
   ### Returns
 
@@ -108,7 +109,8 @@ defmodule DocuSign.Api.ChunkedUploads do
           | {:error, Req.Response.t()}
   def chunked_uploads_post_chunked_uploads(connection, account_id, opts \\ []) do
     optional_params = %{
-      :body => :body
+      :chunkedUploadId => :form,
+      :data => :form
     }
 
     request =

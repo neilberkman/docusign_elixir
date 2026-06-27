@@ -10,8 +10,146 @@ defmodule DocuSign.Api.EnvelopeShares do
   import DocuSign.RequestBuilder
 
   alias DocuSign.Connection
+  alias DocuSign.Model.EnvelopesInformation
+  alias DocuSign.Model.EnvelopesShareResponse
   alias DocuSign.Model.EnvelopesSharesResponse
   alias DocuSign.Model.ErrorDetails
+
+  @doc """
+
+  ### Parameters
+
+  - `connection` (DocuSign.Connection): Connection to server
+  - `account_id` (String.t): The external account number (int) or account ID GUID.
+  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec` 
+  - `share_id` (String.t): 
+  - `opts` (keyword): Optional parameters
+
+  ### Returns
+
+  - `{:ok, nil}` on success
+  - `{:error, Req.Response.t}` on failure
+  """
+  @spec envelopes_shares_delete_envelopes_share(DocuSign.Connection.t(), String.t(), String.t(), String.t(), keyword()) ::
+          {:ok, nil}
+          | {:error, Req.Response.t()}
+  def envelopes_shares_delete_envelopes_share(connection, account_id, envelope_id, share_id, _opts \\ []) do
+    request =
+      %{}
+      |> method(:delete)
+      |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/shares/#{share_id}")
+      |> Enum.to_list()
+
+    connection
+    |> Connection.request(request)
+    |> evaluate_response([
+      {200, false},
+      {400, ErrorDetails}
+    ])
+  end
+
+  @doc """
+
+  ### Parameters
+
+  - `connection` (DocuSign.Connection): Connection to server
+  - `account_id` (String.t): The external account number (int) or account ID GUID.
+  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec` 
+  - `opts` (keyword): Optional parameters
+    - `:body` (EnvelopesSharesRequest): 
+
+  ### Returns
+
+  - `{:ok, nil}` on success
+  - `{:error, Req.Response.t}` on failure
+  """
+  @spec envelopes_shares_delete_envelopes_shares(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
+          {:ok, nil}
+          | {:error, Req.Response.t()}
+  def envelopes_shares_delete_envelopes_shares(connection, account_id, envelope_id, opts \\ []) do
+    optional_params = %{
+      :body => :body
+    }
+
+    request =
+      %{}
+      |> method(:delete)
+      |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/shares")
+      |> add_optional_params(optional_params, opts)
+      |> Enum.to_list()
+
+    connection
+    |> Connection.request(request)
+    |> evaluate_response([
+      {200, false},
+      {400, ErrorDetails}
+    ])
+  end
+
+  @doc """
+
+  ### Parameters
+
+  - `connection` (DocuSign.Connection): Connection to server
+  - `account_id` (String.t): The external account number (int) or account ID GUID.
+  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec` 
+  - `share_id` (String.t): 
+  - `opts` (keyword): Optional parameters
+
+  ### Returns
+
+  - `{:ok, DocuSign.Model.EnvelopesShareResponse.t}` on success
+  - `{:error, Req.Response.t}` on failure
+  """
+  @spec envelopes_shares_get_envelopes_share(DocuSign.Connection.t(), String.t(), String.t(), String.t(), keyword()) ::
+          {:ok, EnvelopesShareResponse.t()}
+          | {:error, Req.Response.t()}
+  def envelopes_shares_get_envelopes_share(connection, account_id, envelope_id, share_id, _opts \\ []) do
+    request =
+      %{}
+      |> method(:get)
+      |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/shares/#{share_id}")
+      |> Enum.to_list()
+
+    connection
+    |> Connection.request(request)
+    |> evaluate_response([
+      {200, EnvelopesShareResponse},
+      {400, ErrorDetails}
+    ])
+  end
+
+  @doc """
+
+  ### Parameters
+
+  - `connection` (DocuSign.Connection): Connection to server
+  - `account_id` (String.t): The external account number (int) or account ID GUID.
+  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec` 
+  - `opts` (keyword): Optional parameters
+
+  ### Returns
+
+  - `{:ok, DocuSign.Model.EnvelopesSharesResponse.t}` on success
+  - `{:error, Req.Response.t}` on failure
+  """
+  @spec envelopes_shares_get_envelopes_shares(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
+          {:ok, EnvelopesSharesResponse.t()}
+          | {:error, Req.Response.t()}
+  def envelopes_shares_get_envelopes_shares(connection, account_id, envelope_id, _opts \\ []) do
+    request =
+      %{}
+      |> method(:get)
+      |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/shares")
+      |> Enum.to_list()
+
+    connection
+    |> Connection.request(request)
+    |> evaluate_response([
+      {200, EnvelopesSharesResponse},
+      {400, ErrorDetails}
+    ])
+  end
 
   @doc """
 
@@ -48,6 +186,138 @@ defmodule DocuSign.Api.EnvelopeShares do
     |> Connection.request(request)
     |> evaluate_response([
       {201, EnvelopesSharesResponse},
+      {400, ErrorDetails}
+    ])
+  end
+
+  @doc """
+
+  ### Parameters
+
+  - `connection` (DocuSign.Connection): Connection to server
+  - `account_id` (String.t): The external account number (int) or account ID GUID.
+  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec` 
+  - `share_id` (String.t): 
+  - `opts` (keyword): Optional parameters
+    - `:body` (EnvelopesSharePermissionRequest): 
+
+  ### Returns
+
+  - `{:ok, DocuSign.Model.EnvelopesShareResponse.t}` on success
+  - `{:error, Req.Response.t}` on failure
+  """
+  @spec envelopes_shares_put_envelopes_share(DocuSign.Connection.t(), String.t(), String.t(), String.t(), keyword()) ::
+          {:ok, EnvelopesShareResponse.t()}
+          | {:error, Req.Response.t()}
+  def envelopes_shares_put_envelopes_share(connection, account_id, envelope_id, share_id, opts \\ []) do
+    optional_params = %{
+      :body => :body
+    }
+
+    request =
+      %{}
+      |> method(:put)
+      |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/shares/#{share_id}")
+      |> add_optional_params(optional_params, opts)
+      |> ensure_body()
+      |> Enum.to_list()
+
+    connection
+    |> Connection.request(request)
+    |> evaluate_response([
+      {200, EnvelopesShareResponse},
+      {400, ErrorDetails}
+    ])
+  end
+
+  @doc """
+
+  ### Parameters
+
+  - `connection` (DocuSign.Connection): Connection to server
+  - `account_id` (String.t): The external account number (int) or account ID GUID.
+  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec` 
+  - `opts` (keyword): Optional parameters
+    - `:body` (EnvelopesSharesRequest): 
+
+  ### Returns
+
+  - `{:ok, DocuSign.Model.EnvelopesSharesResponse.t}` on success
+  - `{:error, Req.Response.t}` on failure
+  """
+  @spec envelopes_shares_put_envelopes_shares(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
+          {:ok, EnvelopesSharesResponse.t()}
+          | {:error, Req.Response.t()}
+  def envelopes_shares_put_envelopes_shares(connection, account_id, envelope_id, opts \\ []) do
+    optional_params = %{
+      :body => :body
+    }
+
+    request =
+      %{}
+      |> method(:put)
+      |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/shares")
+      |> add_optional_params(optional_params, opts)
+      |> ensure_body()
+      |> Enum.to_list()
+
+    connection
+    |> Connection.request(request)
+    |> evaluate_response([
+      {200, EnvelopesSharesResponse},
+      {400, ErrorDetails}
+    ])
+  end
+
+  @doc """
+
+  ### Parameters
+
+  - `connection` (DocuSign.Connection): Connection to server
+  - `account_id` (String.t): The external account number (int) or account ID GUID.
+  - `opts` (keyword): Optional parameters
+    - `:count` (String.t): The maximum number of results to return.
+    - `:from_date` (String.t): The start date for a date range in UTC DateTime format.  **Note:** If this property is null, no date filtering is applied.
+    - `:include` (String.t): 
+    - `:order` (String.t): The order in which to sort the results.  Valid values are:    * `asc`: Ascending order. * `desc`: Descending order. 
+    - `:order_by` (String.t): The file attribute to use to sort the results.  Valid values are:   * `modified` * `name`
+    - `:search_text` (String.t): Use this parameter to search for specific text.
+    - `:start_position` (String.t): The position within the total result set from which to start returning values. The value **thumbnail** may be used to return the page image.
+    - `:status` (String.t): The status of the item.
+    - `:to_date` (String.t): The end of a search date range in UTC DateTime format. When you use this parameter, only templates created up to this date and time are returned.  **Note:** If this property is null, the value defaults to the current date.
+
+  ### Returns
+
+  - `{:ok, DocuSign.Model.EnvelopesInformation.t}` on success
+  - `{:error, Req.Response.t}` on failure
+  """
+  @spec shared_envelopes_list_get_shared_envelopes(DocuSign.Connection.t(), String.t(), keyword()) ::
+          {:ok, EnvelopesInformation.t()}
+          | {:error, Req.Response.t()}
+  def shared_envelopes_list_get_shared_envelopes(connection, account_id, opts \\ []) do
+    optional_params = %{
+      :count => :query,
+      :from_date => :query,
+      :include => :query,
+      :order => :query,
+      :order_by => :query,
+      :search_text => :query,
+      :start_position => :query,
+      :status => :query,
+      :to_date => :query
+    }
+
+    request =
+      %{}
+      |> method(:get)
+      |> url("/v2.1/accounts/#{account_id}/envelopes/shared")
+      |> add_optional_params(optional_params, opts)
+      |> Enum.to_list()
+
+    connection
+    |> Connection.request(request)
+    |> evaluate_response([
+      {200, EnvelopesInformation},
       {400, ErrorDetails}
     ])
   end

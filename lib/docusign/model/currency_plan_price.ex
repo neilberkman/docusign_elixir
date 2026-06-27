@@ -14,9 +14,9 @@ defmodule DocuSign.Model.CurrencyPlanPrice do
     :currencyCode,
     :currencySymbol,
     :perSeatPrice,
+    :supportedCardTypes,
     :supportIncidentFee,
-    :supportPlanFee,
-    :supportedCardTypes
+    :supportPlanFee
   ]
 
   @doc false
@@ -34,9 +34,9 @@ defmodule DocuSign.Model.CurrencyPlanPrice do
           :currencyCode => String.t() | nil,
           :currencySymbol => String.t() | nil,
           :perSeatPrice => String.t() | nil,
+          :supportedCardTypes => CreditCardTypes.t() | nil,
           :supportIncidentFee => String.t() | nil,
-          :supportPlanFee => String.t() | nil,
-          :supportedCardTypes => CreditCardTypes.t() | nil
+          :supportPlanFee => String.t() | nil
         }
 
   def decode(value) do

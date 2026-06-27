@@ -8,8 +8,8 @@ defmodule DocuSign.Model.EnvelopeViewDocumentSettings do
   """
 
   defstruct [
-    :showEditDocumentVisibility,
     :showEditDocuments,
+    :showEditDocumentVisibility,
     :showEditPages,
     :showSaveAsDocumentCustomField
   ]
@@ -26,8 +26,8 @@ defmodule DocuSign.Model.EnvelopeViewDocumentSettings do
   end
 
   @type t :: %__MODULE__{
-          :showEditDocumentVisibility => String.t() | nil,
           :showEditDocuments => String.t() | nil,
+          :showEditDocumentVisibility => String.t() | nil,
           :showEditPages => String.t() | nil,
           :showSaveAsDocumentCustomField => String.t() | nil
         }

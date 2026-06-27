@@ -328,8 +328,8 @@ defmodule DocuSign.Api.UserSignatures do
           | {:error, Req.Response.t()}
   def user_signatures_put_user_signature_by_id(connection, account_id, signature_id, user_id, opts \\ []) do
     optional_params = %{
-      :body => :body,
-      :close_existing_signature => :query
+      :close_existing_signature => :query,
+      :body => :body
     }
 
     request =

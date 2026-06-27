@@ -4,13 +4,12 @@
   inputs: ["{mix,.formatter}.exs", "{config,lib,test}/**/*.{ex,exs}", "priv/*/seeds.exs"],
   quokka: [
     # Enable all Quokka features
-    autosort: [:map, :defstruct],
+    autosort: [:comment_directives, :defstruct, :map],
     # Use new exclude syntax instead of deprecated inefficient_function_rewrites
     exclude: [],
     # Explicitly enable all modules to ensure everything is fixed
     only: [
       :blocks,
-      :comment_directives,
       :configs,
       :defs,
       :deprecations,

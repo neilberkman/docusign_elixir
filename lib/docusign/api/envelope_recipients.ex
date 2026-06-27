@@ -208,8 +208,8 @@ defmodule DocuSign.Api.EnvelopeRecipients do
           | {:error, Req.Response.t()}
   def recipients_post_recipients(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
-      :body => :body,
-      :resend_envelope => :query
+      :resend_envelope => :query,
+      :body => :body
     }
 
     request =
@@ -253,10 +253,10 @@ defmodule DocuSign.Api.EnvelopeRecipients do
           | {:error, Req.Response.t()}
   def recipients_put_recipients(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
-      :body => :body,
       :combine_same_order_recipients => :query,
       :offline_signing => :query,
-      :resend_envelope => :query
+      :resend_envelope => :query,
+      :body => :body
     }
 
     request =

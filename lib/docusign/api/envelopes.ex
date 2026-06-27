@@ -230,11 +230,11 @@ defmodule DocuSign.Api.Envelopes do
           | {:error, Req.Response.t()}
   def envelopes_post_envelopes(connection, account_id, opts \\ []) do
     optional_params = %{
-      :body => :body,
       :cdse_mode => :query,
       :change_routing_order => :query,
       :completed_documents_only => :query,
-      :merge_roles_on_draft => :query
+      :merge_roles_on_draft => :query,
+      :body => :body
     }
 
     request =
@@ -279,9 +279,9 @@ defmodule DocuSign.Api.Envelopes do
   def envelopes_put_envelope(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
       :advanced_update => :query,
-      :body => :body,
       :recycle_on_void => :query,
-      :resend_envelope => :query
+      :resend_envelope => :query,
+      :body => :body
     }
 
     request =
@@ -335,7 +335,6 @@ defmodule DocuSign.Api.Envelopes do
     optional_params = %{
       :ac_status => :query,
       :block => :query,
-      :body => :body,
       :count => :query,
       :email => :query,
       :envelope_ids => :query,
@@ -345,7 +344,8 @@ defmodule DocuSign.Api.Envelopes do
       :status => :query,
       :to_date => :query,
       :transaction_ids => :query,
-      :user_name => :query
+      :user_name => :query,
+      :body => :body
     }
 
     request =

@@ -13,6 +13,7 @@ defmodule DocuSign.Model.TemplateRole do
   alias DocuSign.Model.RecipientEmailNotification
   alias DocuSign.Model.RecipientPhoneNumber
   alias DocuSign.Model.RecipientSignatureProvider
+  alias DocuSign.Model.UserInfo
 
   defstruct [
     :accessCode,
@@ -30,6 +31,9 @@ defmodule DocuSign.Model.TemplateRole do
     :roleName,
     :routingOrder,
     :signingGroupId,
+    :signingGroupName,
+    :signingGroupType,
+    :signingGroupUsers,
     :tabs
   ]
 
@@ -60,6 +64,9 @@ defmodule DocuSign.Model.TemplateRole do
           :roleName => String.t() | nil,
           :routingOrder => String.t() | nil,
           :signingGroupId => String.t() | nil,
+          :signingGroupName => String.t() | nil,
+          :signingGroupType => String.t() | nil,
+          :signingGroupUsers => [UserInfo.t()] | nil,
           :tabs => EnvelopeRecipientTabs.t() | nil
         }
 
@@ -84,6 +91,11 @@ defmodule DocuSign.Model.TemplateRole do
       :recipientSignatureProviders,
       :list,
       RecipientSignatureProvider
+    )
+    |> Deserializer.deserialize(
+      :signingGroupUsers,
+      :list,
+      UserInfo
     )
     |> Deserializer.deserialize(
       :tabs,

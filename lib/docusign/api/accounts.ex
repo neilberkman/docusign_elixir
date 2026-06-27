@@ -21,7 +21,6 @@ defmodule DocuSign.Api.Accounts do
   alias DocuSign.Model.NewAccountSummary
   alias DocuSign.Model.NotificationDefaults
   alias DocuSign.Model.ProvisioningInformation
-  alias DocuSign.Model.RecipientNamesResponse
   alias DocuSign.Model.SupportedLanguages
 
   @doc """
@@ -401,45 +400,6 @@ defmodule DocuSign.Api.Accounts do
   end
 
   @doc """
-  Gets the recipient names associated with an email address.
-  Retrieves a list of all of the names associated with the email address that you pass in. This list can include variants of a single recipient's name that are used for signing, as well as the names of multiple different recipients.
-
-  ### Parameters
-
-  - `connection` (DocuSign.Connection): Connection to server
-  - `account_id` (String.t): The external account number (int) or account ID GUID.
-  - `opts` (keyword): Optional parameters
-    - `:email` (String.t): (Required) The email address for which you want to retrieve recipient names.
-
-  ### Returns
-
-  - `{:ok, DocuSign.Model.RecipientNamesResponse.t}` on success
-  - `{:error, Req.Response.t}` on failure
-  """
-  @spec recipient_names_get_recipient_names(DocuSign.Connection.t(), String.t(), keyword()) ::
-          {:ok, RecipientNamesResponse.t()}
-          | {:error, Req.Response.t()}
-  def recipient_names_get_recipient_names(connection, account_id, opts \\ []) do
-    optional_params = %{
-      :email => :query
-    }
-
-    request =
-      %{}
-      |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/recipient_names")
-      |> add_optional_params(optional_params, opts)
-      |> Enum.to_list()
-
-    connection
-    |> Connection.request(request)
-    |> evaluate_response([
-      {200, RecipientNamesResponse},
-      {400, ErrorDetails}
-    ])
-  end
-
-  @doc """
   Gets account settings information.
   Retrieves the account settings information for the specified account.
 
@@ -589,10 +549,10 @@ defmodule DocuSign.Api.Accounts do
           | {:error, Req.Response.t()}
   def shared_access_put_shared_access(connection, account_id, opts \\ []) do
     optional_params = %{
-      :body => :body,
       :item_type => :query,
       :preserve_existing_shared_access => :query,
-      :user_ids => :query
+      :user_ids => :query,
+      :body => :body
     }
 
     request =

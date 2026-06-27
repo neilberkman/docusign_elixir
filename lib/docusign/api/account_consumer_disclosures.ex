@@ -115,8 +115,8 @@ defmodule DocuSign.Api.AccountConsumerDisclosures do
           | {:error, Req.Response.t()}
   def consumer_disclosure_put_consumer_disclosure(connection, account_id, lang_code, opts \\ []) do
     optional_params = %{
-      :body => :body,
-      :include_metadata => :query
+      :include_metadata => :query,
+      :body => :body
     }
 
     request =

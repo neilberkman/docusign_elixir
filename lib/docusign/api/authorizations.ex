@@ -32,6 +32,8 @@ defmodule DocuSign.Api.Authorizations do
     - `:include_closed_users` (String.t): When **true,** returns active and scheduled authorizations of closed users. The default value is **true.** This value is only applied when `active_only` is **false.**
     - `:permissions` (String.t): 
     - `:start_position` (String.t): The position within the total result set from which to start returning values. The value **thumbnail** may be used to return the page image.
+    - `:task_source` (String.t): 
+    - `:task_type` (String.t): 
     - `:user_name_substring` (String.t): Filters results based on a full or partial user name.  **Note:** When you enter a partial user name, you do not use a wildcard character.
 
   ### Returns
@@ -55,6 +57,8 @@ defmodule DocuSign.Api.Authorizations do
       :include_closed_users => :query,
       :permissions => :query,
       :start_position => :query,
+      :task_source => :query,
+      :task_type => :query,
       :user_name_substring => :query
     }
 
@@ -300,6 +304,8 @@ defmodule DocuSign.Api.Authorizations do
     - `:include_closed_users` (String.t): When **true,** returns active and scheduled authorizations of closed users. The default value is **true.** This value is only applied when `active_only` is **false.**
     - `:permissions` (String.t): Filters results by authorization permission. Valid values: * `Send` * `Manage` * `Sign`
     - `:start_position` (String.t): The position within the total result set from which to start returning values. The value **thumbnail** may be used to return the page image.
+    - `:task_source` (String.t): 
+    - `:task_type` (String.t): 
     - `:user_name_substring` (String.t): Filters results based on a full or partial user name.  **Note:** When you enter a partial user name, you do not use a wildcard character.
 
   ### Returns
@@ -323,6 +329,8 @@ defmodule DocuSign.Api.Authorizations do
       :include_closed_users => :query,
       :permissions => :query,
       :start_position => :query,
+      :task_source => :query,
+      :task_type => :query,
       :user_name_substring => :query
     }
 

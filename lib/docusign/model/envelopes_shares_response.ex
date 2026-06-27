@@ -8,7 +8,7 @@ defmodule DocuSign.Model.EnvelopesSharesResponse do
   """
 
   alias DocuSign.Deserializer
-  alias DocuSign.Model.EnvelopesSharesResponseItem
+  alias DocuSign.Model.EnvelopesShareResponse
 
   defstruct [
     :shares
@@ -26,7 +26,7 @@ defmodule DocuSign.Model.EnvelopesSharesResponse do
   end
 
   @type t :: %__MODULE__{
-          :shares => [EnvelopesSharesResponseItem.t()] | nil
+          :shares => [EnvelopesShareResponse.t()] | nil
         }
 
   def decode(value) do
@@ -34,7 +34,7 @@ defmodule DocuSign.Model.EnvelopesSharesResponse do
     |> Deserializer.deserialize(
       :shares,
       :list,
-      EnvelopesSharesResponseItem
+      EnvelopesShareResponse
     )
     |> then(&struct(__MODULE__, &1))
   end

@@ -14,6 +14,7 @@ defmodule DocuSign.Model.AccountIdentityVerificationWorkflow do
   defstruct [
     :defaultDescription,
     :defaultName,
+    :displayOrder,
     :inputOptions,
     :isDisabled,
     :ownerType,
@@ -37,6 +38,7 @@ defmodule DocuSign.Model.AccountIdentityVerificationWorkflow do
   @type t :: %__MODULE__{
           :defaultDescription => String.t() | nil,
           :defaultName => String.t() | nil,
+          :displayOrder => integer() | nil,
           :inputOptions => [AccountIdentityInputOption.t()] | nil,
           :isDisabled => String.t() | nil,
           :ownerType => String.t() | nil,

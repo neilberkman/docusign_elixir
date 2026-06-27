@@ -219,6 +219,103 @@ defmodule DocuSign.Api.ConnectConfigurations do
   end
 
   @doc """
+  Generates a new connect HMAC Secret.
+
+  ### Parameters
+
+  - `connection` (DocuSign.Connection): Connection to server
+  - `account_id` (String.t): The external account number (int) or account ID GUID.
+  - `opts` (keyword): Optional parameters
+
+  ### Returns
+
+  - `{:ok, nil}` on success
+  - `{:error, Req.Response.t}` on failure
+  """
+  @spec connect_hmac_create_connect_secret(DocuSign.Connection.t(), String.t(), keyword()) ::
+          {:ok, nil}
+          | {:error, Req.Response.t()}
+  def connect_hmac_create_connect_secret(connection, account_id, _opts \\ []) do
+    request =
+      %{}
+      |> method(:post)
+      |> url("/v2.1/accounts/#{account_id}/connect/secret")
+      |> ensure_body()
+      |> Enum.to_list()
+
+    connection
+    |> Connection.request(request)
+    |> evaluate_response([
+      {201, false},
+      {400, ErrorDetails}
+    ])
+  end
+
+  @doc """
+  Deletes the connect HMAC Secret for specified account.
+
+  ### Parameters
+
+  - `connection` (DocuSign.Connection): Connection to server
+  - `account_id` (String.t): The external account number (int) or account ID GUID.
+  - `key_id` (String.t): 
+  - `opts` (keyword): Optional parameters
+
+  ### Returns
+
+  - `{:ok, nil}` on success
+  - `{:error, Req.Response.t}` on failure
+  """
+  @spec connect_hmac_delete_connect_secret(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
+          {:ok, nil}
+          | {:error, Req.Response.t()}
+  def connect_hmac_delete_connect_secret(connection, account_id, key_id, _opts \\ []) do
+    request =
+      %{}
+      |> method(:delete)
+      |> url("/v2.1/accounts/#{account_id}/connect/secret/#{key_id}")
+      |> Enum.to_list()
+
+    connection
+    |> Connection.request(request)
+    |> evaluate_response([
+      {200, false},
+      {400, ErrorDetails}
+    ])
+  end
+
+  @doc """
+
+  ### Parameters
+
+  - `connection` (DocuSign.Connection): Connection to server
+  - `account_id` (String.t): The external account number (int) or account ID GUID.
+  - `opts` (keyword): Optional parameters
+
+  ### Returns
+
+  - `{:ok, nil}` on success
+  - `{:error, Req.Response.t}` on failure
+  """
+  @spec connect_hmac_get_connect_secret(DocuSign.Connection.t(), String.t(), keyword()) ::
+          {:ok, nil}
+          | {:error, Req.Response.t()}
+  def connect_hmac_get_connect_secret(connection, account_id, _opts \\ []) do
+    request =
+      %{}
+      |> method(:get)
+      |> url("/v2.1/accounts/#{account_id}/connect/secret")
+      |> Enum.to_list()
+
+    connection
+    |> Connection.request(request)
+    |> evaluate_response([
+      {200, false},
+      {400, ErrorDetails}
+    ])
+  end
+
+  @doc """
   Delete the Connect OAuth configuration.
   Deletes the Connect OAuth configuration for the specified account.  <ds-inlinemessage> To use this method, you must be an account administrator and Connect must be enabled on your account. </ds-inlinemessage>  ## Related topics: - [OAuth for Docusign Connect](/platform/webhooks/connect/validation-and-security/oauth-connect/) 
 

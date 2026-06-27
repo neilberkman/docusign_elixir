@@ -15,9 +15,9 @@ defmodule DocuSign.Model.EnvelopesInformation do
   defstruct [
     :continuationToken,
     :endPosition,
+    :envelopes,
     :envelopeSearchSource,
     :envelopeTransactionStatuses,
-    :envelopes,
     :folders,
     :lastQueriedDateTime,
     :nextUri,
@@ -41,9 +41,9 @@ defmodule DocuSign.Model.EnvelopesInformation do
   @type t :: %__MODULE__{
           :continuationToken => String.t() | nil,
           :endPosition => String.t() | nil,
+          :envelopes => [Envelope.t()] | nil,
           :envelopeSearchSource => String.t() | nil,
           :envelopeTransactionStatuses => [EnvelopeTransactionStatus.t()] | nil,
-          :envelopes => [Envelope.t()] | nil,
           :folders => [Folder.t()] | nil,
           :lastQueriedDateTime => String.t() | nil,
           :nextUri => String.t() | nil,

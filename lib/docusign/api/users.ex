@@ -312,8 +312,8 @@ defmodule DocuSign.Api.Users do
           | {:error, Req.Response.t()}
   def users_delete_users(connection, account_id, opts \\ []) do
     optional_params = %{
-      :body => :body,
-      :delete => :query
+      :delete => :query,
+      :body => :body
     }
 
     request =

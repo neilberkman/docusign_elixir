@@ -436,6 +436,7 @@ defmodule DocuSign.Api.Templates do
     - `:include` (String.t): A comma-separated list of additional template attributes to include in the response. Valid values are:  - `powerforms`: Includes details about the PowerForms associated with the templates. - `documents`: Includes information about template documents. - `folders`: Includes information about the folder that holds the template. - `favorite_template_status`: Includes the template `favoritedByMe` property. **Note:** You can mark a template as a favorite only in eSignature v2.1. - `advanced_templates`: Includes information about advanced templates. - `recipients`: Includes information about template recipients. - `custom_fields`: Includes information about template custom fields. - `notifications`: Includes information about the notification settings for templates.
     - `:is_deleted_template_only` (String.t): When **true,** retrieves templates that have been permanently deleted. The default is **false.**  **Note:** After you delete a template, you can see it in the `Deleted` bin in the UI for 24 hours. After 24 hours, the template is permanently deleted. 
     - `:is_download` (String.t): When **true,** downloads the templates listed in `template_ids` as a collection of JSON definitions in a single zip file.  The `Content-Disposition` header is set in the response. The value of the header provides the filename of the file.  The default is **false.**  **Note:** This parameter only works when you specify a list of templates in the `template_ids` parameter.
+    - `:link_configuration_id` (String.t): 
     - `:modified_from_date` (String.t): Lists templates modified on or after this date.
     - `:modified_to_date` (String.t): Lists templates modified before this date.
     - `:order` (String.t): Specifies the sort order of the search results. Valid values are:  - `asc`: Ascending (A to Z) - `desc`: Descending (Z to A)
@@ -470,6 +471,7 @@ defmodule DocuSign.Api.Templates do
       :include => :query,
       :is_deleted_template_only => :query,
       :is_download => :query,
+      :link_configuration_id => :query,
       :modified_from_date => :query,
       :modified_to_date => :query,
       :order => :query,

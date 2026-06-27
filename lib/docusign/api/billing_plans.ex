@@ -153,8 +153,8 @@ defmodule DocuSign.Api.BillingPlans do
           | {:error, Req.Response.t()}
   def billing_plan_put_billing_plan(connection, account_id, opts \\ []) do
     optional_params = %{
-      :body => :body,
-      :preview_billing_plan => :query
+      :preview_billing_plan => :query,
+      :body => :body
     }
 
     request =

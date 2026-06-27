@@ -70,8 +70,8 @@ defmodule DocuSign.Api.DocumentGeneration do
           | {:error, Req.Response.t()}
   def doc_gen_form_fields_put_envelope_doc_gen_form_fields(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
-      :body => :body,
-      :update_docgen_formfields_only => :query
+      :update_docgen_formfields_only => :query,
+      :body => :body
     }
 
     request =

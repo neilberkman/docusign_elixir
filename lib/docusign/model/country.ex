@@ -13,8 +13,8 @@ defmodule DocuSign.Model.Country do
   defstruct [
     :isoCode,
     :name,
-    :provinceValidated,
-    :provinces
+    :provinces,
+    :provinceValidated
   ]
 
   @doc false
@@ -31,8 +31,8 @@ defmodule DocuSign.Model.Country do
   @type t :: %__MODULE__{
           :isoCode => String.t() | nil,
           :name => String.t() | nil,
-          :provinceValidated => String.t() | nil,
-          :provinces => [Province.t()] | nil
+          :provinces => [Province.t()] | nil,
+          :provinceValidated => String.t() | nil
         }
 
   def decode(value) do

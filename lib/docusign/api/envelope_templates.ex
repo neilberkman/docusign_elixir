@@ -162,8 +162,8 @@ defmodule DocuSign.Api.EnvelopeTemplates do
           | {:error, Req.Response.t()}
   def templates_post_document_templates(connection, account_id, document_id, envelope_id, opts \\ []) do
     optional_params = %{
-      :body => :body,
-      :preserve_template_recipient => :query
+      :preserve_template_recipient => :query,
+      :body => :body
     }
 
     request =
@@ -205,8 +205,8 @@ defmodule DocuSign.Api.EnvelopeTemplates do
           | {:error, Req.Response.t()}
   def templates_post_envelope_templates(connection, account_id, envelope_id, opts \\ []) do
     optional_params = %{
-      :body => :body,
-      :preserve_template_recipient => :query
+      :preserve_template_recipient => :query,
+      :body => :body
     }
 
     request =

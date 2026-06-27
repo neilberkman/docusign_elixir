@@ -9,8 +9,8 @@ defmodule DocuSign.Model.LockRequest do
 
   defstruct [
     :lockDurationInSeconds,
-    :lockType,
     :lockedByApp,
+    :lockType,
     :templatePassword,
     :useScratchPad
   ]
@@ -28,8 +28,8 @@ defmodule DocuSign.Model.LockRequest do
 
   @type t :: %__MODULE__{
           :lockDurationInSeconds => String.t() | nil,
-          :lockType => String.t() | nil,
           :lockedByApp => String.t() | nil,
+          :lockType => String.t() | nil,
           :templatePassword => String.t() | nil,
           :useScratchPad => String.t() | nil
         }

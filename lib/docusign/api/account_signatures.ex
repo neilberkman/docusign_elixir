@@ -235,8 +235,8 @@ defmodule DocuSign.Api.AccountSignatures do
           | {:error, Req.Response.t()}
   def account_signatures_post_account_signatures(connection, account_id, opts \\ []) do
     optional_params = %{
-      :body => :body,
-      :decode_only => :query
+      :decode_only => :query,
+      :body => :body
     }
 
     request =
@@ -318,8 +318,8 @@ defmodule DocuSign.Api.AccountSignatures do
           | {:error, Req.Response.t()}
   def account_signatures_put_account_signature_by_id(connection, account_id, signature_id, opts \\ []) do
     optional_params = %{
-      :body => :body,
-      :close_existing_signature => :query
+      :close_existing_signature => :query,
+      :body => :body
     }
 
     request =

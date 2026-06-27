@@ -32,8 +32,8 @@ defmodule DocuSign.Model.WorkspaceItem do
     :parentFolderUri,
     :sha256,
     :thumbHeight,
-    :thumbWidth,
     :thumbnail,
+    :thumbWidth,
     :type,
     :uri,
     :userAuthorization
@@ -70,8 +70,8 @@ defmodule DocuSign.Model.WorkspaceItem do
           :parentFolderUri => String.t() | nil,
           :sha256 => String.t() | nil,
           :thumbHeight => String.t() | nil,
-          :thumbWidth => String.t() | nil,
           :thumbnail => Page.t() | nil,
+          :thumbWidth => String.t() | nil,
           :type => String.t() | nil,
           :uri => String.t() | nil,
           :userAuthorization => WorkspaceUserAuthorization.t() | nil

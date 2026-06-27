@@ -8,9 +8,9 @@ defmodule DocuSign.Model.RequestLogs do
   """
 
   defstruct [
+    :apiRequestLogging,
     :apiRequestLogMaxEntries,
-    :apiRequestLogRemainingEntries,
-    :apiRequestLogging
+    :apiRequestLogRemainingEntries
   ]
 
   @doc false
@@ -25,9 +25,9 @@ defmodule DocuSign.Model.RequestLogs do
   end
 
   @type t :: %__MODULE__{
+          :apiRequestLogging => String.t() | nil,
           :apiRequestLogMaxEntries => String.t() | nil,
-          :apiRequestLogRemainingEntries => String.t() | nil,
-          :apiRequestLogging => String.t() | nil
+          :apiRequestLogRemainingEntries => String.t() | nil
         }
 
   def decode(value) do

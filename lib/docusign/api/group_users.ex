@@ -11,6 +11,7 @@ defmodule DocuSign.Api.GroupUsers do
 
   alias DocuSign.Connection
   alias DocuSign.Model.ErrorDetails
+  alias DocuSign.Model.GroupUsersResponse
   alias DocuSign.Model.UsersResponse
 
   @doc """
@@ -68,11 +69,11 @@ defmodule DocuSign.Api.GroupUsers do
 
   ### Returns
 
-  - `{:ok, DocuSign.Model.UsersResponse.t}` on success
+  - `{:ok, DocuSign.Model.GroupUsersResponse.t}` on success
   - `{:error, Req.Response.t}` on failure
   """
   @spec groups_get_group_users(DocuSign.Connection.t(), String.t(), String.t(), keyword()) ::
-          {:ok, UsersResponse.t()}
+          {:ok, GroupUsersResponse.t()}
           | {:error, Req.Response.t()}
   def groups_get_group_users(connection, account_id, group_id, opts \\ []) do
     optional_params = %{
@@ -90,7 +91,7 @@ defmodule DocuSign.Api.GroupUsers do
     connection
     |> Connection.request(request)
     |> evaluate_response([
-      {200, UsersResponse},
+      {200, GroupUsersResponse},
       {400, ErrorDetails}
     ])
   end

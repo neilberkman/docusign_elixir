@@ -18,8 +18,8 @@ defmodule DocuSign.Model.WorkflowStep do
     :itemId,
     :recipientRouting,
     :status,
-    :triggerOnItem,
     :triggeredDate,
+    :triggerOnItem,
     :workflowStepId
   ]
 
@@ -41,8 +41,8 @@ defmodule DocuSign.Model.WorkflowStep do
           :itemId => String.t() | nil,
           :recipientRouting => RecipientRouting.t() | nil,
           :status => String.t() | nil,
-          :triggerOnItem => String.t() | nil,
           :triggeredDate => String.t() | nil,
+          :triggerOnItem => String.t() | nil,
           :workflowStepId => String.t() | nil
         }
 

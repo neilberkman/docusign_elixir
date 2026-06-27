@@ -91,7 +91,7 @@ defmodule DocuSign.ConnectionTest do
 
       result = do_request(bypass)
 
-      refute result == :timeout
+      assert {:ok, %Req.Response{status: 200}} = result
     end
 
     test "request with timeout less than 2s returns :timeout", %{bypass: bypass} do

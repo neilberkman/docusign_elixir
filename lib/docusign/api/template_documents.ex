@@ -110,6 +110,7 @@ defmodule DocuSign.Api.TemplateDocuments do
   - `template_id` (String.t): The ID of the template.
   - `opts` (keyword): Optional parameters
     - `:include_agreement_type` (String.t): 
+    - `:include_is_edited` (String.t): 
     - `:include_tabs` (String.t): Reserved for Docusign.
 
   ### Returns
@@ -123,6 +124,7 @@ defmodule DocuSign.Api.TemplateDocuments do
   def documents_get_template_documents(connection, account_id, template_id, opts \\ []) do
     optional_params = %{
       :include_agreement_type => :query,
+      :include_is_edited => :query,
       :include_tabs => :query
     }
 
@@ -165,8 +167,8 @@ defmodule DocuSign.Api.TemplateDocuments do
           | {:error, Req.Response.t()}
   def documents_put_template_document(connection, account_id, document_id, template_id, opts \\ []) do
     optional_params = %{
-      :body => :body,
-      :is_envelope_definition => :query
+      :is_envelope_definition => :query,
+      :body => :body
     }
 
     request =

@@ -11,7 +11,8 @@ defmodule DocuSign.Model.Reminders do
     :maximumReminderCount,
     :reminderDelay,
     :reminderEnabled,
-    :reminderFrequency
+    :reminderFrequency,
+    :smartReminderEnabled
   ]
 
   @doc false
@@ -29,7 +30,8 @@ defmodule DocuSign.Model.Reminders do
           :maximumReminderCount => String.t() | nil,
           :reminderDelay => String.t() | nil,
           :reminderEnabled => String.t() | nil,
-          :reminderFrequency => String.t() | nil
+          :reminderFrequency => String.t() | nil,
+          :smartReminderEnabled => String.t() | nil
         }
 
   def decode(value) do
