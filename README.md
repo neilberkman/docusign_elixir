@@ -281,7 +281,7 @@ Example debug output:
 
 ```
 [debug] GET https://demo.docusign.net/restapi/v2.1/accounts -> 200 (145.2 ms)
-[debug] Request headers: [{"authorization", "[FILTERED]"}, {"X-DocuSign-SDK", "Elixir/3.5.0"}]
+[debug] Request headers: [{"authorization", "[FILTERED]"}, {"X-DocuSign-SDK", "Elixir/3.5.1"}]
 [debug] Response body: {"accounts": [...]}
 ```
 
@@ -297,8 +297,8 @@ config :docusign, :debug_filter_headers, ["authorization", "x-api-key", "x-custo
 
 The client automatically includes SDK identification headers with all requests:
 
-- `X-DocuSign-SDK: Elixir/3.5.0` - Identifies the SDK and version
-- `User-Agent: DocuSign-Elixir/3.5.0` - Standard user agent header
+- `X-DocuSign-SDK: Elixir/3.5.1` - Identifies the SDK and version
+- `User-Agent: DocuSign-Elixir/3.5.1` - Standard user agent header
 
 These headers help DocuSign track API usage and provide better support.
 
