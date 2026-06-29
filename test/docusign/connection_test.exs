@@ -79,41 +79,41 @@ defmodule DocuSign.ConnectionTest do
 
   describe "requesting with a configured timeout" do
     setup do
-      bypass = Bypass.open()
+      server = DocuSign.TestHTTPServer.open()
 
-      {:ok, bypass: bypass}
+      {:ok, server: server}
     end
 
-    test "request without timeout returns payload", %{bypass: bypass} do
-      Bypass.expect_once(bypass, fn conn ->
+    test "request without timeout returns payload", %{server: server} do
+      DocuSign.TestHTTPServer.expect_once(server, fn conn ->
         Plug.Conn.resp(conn, 200, "")
       end)
 
-      result = do_request(bypass)
+      result = do_request(server)
 
       assert {:ok, %Req.Response{status: 200}} = result
     end
 
-    test "request with timeout less than 2s returns :timeout", %{bypass: bypass} do
+    test "request with timeout less than 2s returns :timeout", %{server: server} do
       # By default, Mint times out after 2s
       put_env(:docusign, :timeout, 500)
 
-      Bypass.expect_once(bypass, fn conn ->
+      DocuSign.TestHTTPServer.expect_once(server, fn conn ->
         Process.sleep(1_000)
         Plug.Conn.resp(conn, 200, "")
       end)
 
-      result = do_request(bypass)
+      result = do_request(server)
 
       assert {:error, %Req.TransportError{reason: :timeout}} = result
 
-      # Force bypass expectations to pass to prevent exit :shutdown error
-      Bypass.pass(bypass)
+      # Force server expectations to pass to prevent exit :shutdown error
+      DocuSign.TestHTTPServer.pass(server)
     end
   end
 
-  defp do_request(bypass) do
-    base_url = "http://localhost:#{bypass.port}"
+  defp do_request(server) do
+    base_url = "http://localhost:#{server.port}"
     timeout = Application.get_env(:docusign, :timeout, 30_000)
 
     req =

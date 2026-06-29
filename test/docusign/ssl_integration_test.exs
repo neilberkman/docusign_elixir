@@ -5,23 +5,23 @@ defmodule DocuSign.SSLIntegrationTest do
   alias DocuSign.Connection
   alias DocuSign.SSLOptions
 
-  describe "SSL configuration with Bypass" do
+  describe "SSL configuration with local test server" do
     setup do
-      # Bypass creates a real HTTP server we can test against
-      bypass = Bypass.open()
-      {:ok, bypass: bypass}
+      # Local test server creates a real HTTP server we can test against
+      server = DocuSign.TestHTTPServer.open()
+      {:ok, server: server}
     end
 
-    test "SSL options are passed through to the HTTP layer", %{bypass: bypass} do
+    test "SSL options are passed through to the HTTP layer", %{server: server} do
       # Set up a response
-      Bypass.expect_once(bypass, "GET", "/test", fn conn ->
+      DocuSign.TestHTTPServer.expect_once(server, "GET", "/test", fn conn ->
         conn
         |> Plug.Conn.put_resp_content_type("application/json")
         |> Plug.Conn.resp(200, ~s({"status": "ok"}))
       end)
 
       # Create a connection pointing to our test server
-      base_url = "http://localhost:#{bypass.port}"
+      base_url = "http://localhost:#{server.port}"
 
       req =
         Req.new(
@@ -52,17 +52,17 @@ defmodule DocuSign.SSLIntegrationTest do
       assert response.body == %{"status" => "ok"}
     end
 
-    test "per-request SSL options override defaults", %{bypass: bypass} do
+    test "per-request SSL options override defaults", %{server: server} do
       # This test verifies that options are built correctly
-      # We can't actually test SSL over HTTP with Bypass
+      # We can't actually test SSL over HTTP with local test server
 
-      Bypass.expect_once(bypass, "GET", "/test", fn conn ->
+      DocuSign.TestHTTPServer.expect_once(server, "GET", "/test", fn conn ->
         conn
         |> Plug.Conn.put_resp_content_type("text/plain")
         |> Plug.Conn.resp(200, "ok")
       end)
 
-      base_url = "http://localhost:#{bypass.port}"
+      base_url = "http://localhost:#{server.port}"
 
       req =
         Req.new(

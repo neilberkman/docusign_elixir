@@ -60,10 +60,9 @@ defmodule DocuSign.MixProject do
       {:finch, "~> 0.21"},
       {:temp, "~> 0.4"},
       {:plug, "~> 1.18"},
-      {:cowlib, "2.16.0"},
 
       # test
-      {:bypass, "~> 2.1", only: :test},
+      {:bandit, "~> 1.12", only: :test},
       {:mox, "~> 1.0", only: :test},
       {:briefly, "~> 0.5", only: :test},
 

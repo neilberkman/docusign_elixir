@@ -6,24 +6,24 @@ defmodule DocuSign.FileDownloaderTest do
   alias DocuSign.User.AppAccount
 
   setup do
-    # Start bypass server for HTTP mocking
-    bypass = Bypass.open()
+    # Start server server for HTTP mocking
+    server = DocuSign.TestHTTPServer.open()
 
-    # Create a Req request that points to our bypass server
+    # Create a Req request that points to our server server
     req =
       Req.new(
-        base_url: "http://localhost:#{bypass.port}",
+        base_url: "http://localhost:#{server.port}",
         headers: [{"authorization", "Bearer test_token"}]
       )
 
     # Create a connection struct
     conn = %Connection{
-      app_account: %AppAccount{base_uri: "http://localhost:#{bypass.port}"},
+      app_account: %AppAccount{base_uri: "http://localhost:#{server.port}"},
       client: %{token: %OAuth2.AccessToken{access_token: "test_token"}},
       req: req
     }
 
-    {:ok, bypass: bypass, conn: conn}
+    {:ok, server: server, conn: conn}
   end
 
   describe "extract_filename_from_header/1" do
@@ -128,8 +128,8 @@ defmodule DocuSign.FileDownloaderTest do
   end
 
   describe "download_to_memory/3" do
-    test "downloads file to memory with metadata", %{bypass: bypass, conn: conn} do
-      Bypass.expect_once(bypass, "GET", "/test/url", fn conn ->
+    test "downloads file to memory with metadata", %{server: server, conn: conn} do
+      DocuSign.TestHTTPServer.expect_once(server, "GET", "/test/url", fn conn ->
         conn
         |> Plug.Conn.put_resp_header("content-type", "application/pdf")
         |> Plug.Conn.put_resp_header("content-disposition", "attachment; filename=test.pdf")
@@ -144,8 +144,8 @@ defmodule DocuSign.FileDownloaderTest do
       assert content_type == "application/pdf"
     end
 
-    test "handles missing content-disposition header", %{bypass: bypass, conn: conn} do
-      Bypass.expect_once(bypass, "GET", "/test/url", fn conn ->
+    test "handles missing content-disposition header", %{server: server, conn: conn} do
+      DocuSign.TestHTTPServer.expect_once(server, "GET", "/test/url", fn conn ->
         conn
         |> Plug.Conn.put_resp_header("content-type", "application/pdf")
         |> Plug.Conn.resp(200, "PDF content")
@@ -162,8 +162,8 @@ defmodule DocuSign.FileDownloaderTest do
   end
 
   describe "download_to_temp/3" do
-    test "downloads file to temporary location", %{bypass: bypass, conn: conn} do
-      Bypass.expect_once(bypass, "GET", "/test/url", fn conn ->
+    test "downloads file to temporary location", %{server: server, conn: conn} do
+      DocuSign.TestHTTPServer.expect_once(server, "GET", "/test/url", fn conn ->
         conn
         |> Plug.Conn.put_resp_header("content-type", "application/pdf")
         |> Plug.Conn.put_resp_header("content-disposition", "attachment; filename=test.pdf")
@@ -178,8 +178,8 @@ defmodule DocuSign.FileDownloaderTest do
       assert String.ends_with?(temp_path, ".pdf")
     end
 
-    test "uses custom temp options", %{bypass: bypass, conn: conn} do
-      Bypass.expect_once(bypass, "GET", "/test/url", fn conn ->
+    test "uses custom temp options", %{server: server, conn: conn} do
+      DocuSign.TestHTTPServer.expect_once(server, "GET", "/test/url", fn conn ->
         conn
         |> Plug.Conn.put_resp_header("content-type", "text/plain")
         |> Plug.Conn.resp(200, "content")
@@ -196,10 +196,10 @@ defmodule DocuSign.FileDownloaderTest do
   end
 
   describe "download_to_file/4" do
-    test "downloads file to specified path", %{bypass: bypass, conn: conn} do
+    test "downloads file to specified path", %{server: server, conn: conn} do
       file_path = "/tmp/test_download_#{:rand.uniform(10_000)}.pdf"
 
-      Bypass.expect_once(bypass, "GET", "/test/url", fn conn ->
+      DocuSign.TestHTTPServer.expect_once(server, "GET", "/test/url", fn conn ->
         conn
         |> Plug.Conn.put_resp_header("content-type", "application/pdf")
         |> Plug.Conn.resp(200, "file content")
@@ -216,11 +216,11 @@ defmodule DocuSign.FileDownloaderTest do
       end
     end
 
-    test "creates directory if it doesn't exist", %{bypass: bypass, conn: conn} do
+    test "creates directory if it doesn't exist", %{server: server, conn: conn} do
       base_dir = "/tmp/test_dir_#{:rand.uniform(10_000)}"
       file_path = Path.join(base_dir, "file.txt")
 
-      Bypass.expect_once(bypass, "GET", "/test/url", fn conn ->
+      DocuSign.TestHTTPServer.expect_once(server, "GET", "/test/url", fn conn ->
         conn
         |> Plug.Conn.put_resp_header("content-type", "text/plain")
         |> Plug.Conn.resp(200, "content")
@@ -237,11 +237,11 @@ defmodule DocuSign.FileDownloaderTest do
       end
     end
 
-    test "handles file write errors", %{bypass: bypass, conn: conn} do
+    test "handles file write errors", %{server: server, conn: conn} do
       # Try to write to a non-existent directory with permissions that prevent creation
       file_path = "/root/readonly_#{:rand.uniform(10_000)}/file.txt"
 
-      Bypass.expect_once(bypass, "GET", "/test/url", fn conn ->
+      DocuSign.TestHTTPServer.expect_once(server, "GET", "/test/url", fn conn ->
         conn
         |> Plug.Conn.put_resp_header("content-type", "text/plain")
         |> Plug.Conn.resp(200, "content")
@@ -253,10 +253,10 @@ defmodule DocuSign.FileDownloaderTest do
   end
 
   describe "download/3 with validation" do
-    test "validates file size when max_size is set", %{bypass: bypass, conn: conn} do
+    test "validates file size when max_size is set", %{server: server, conn: conn} do
       large_content = String.duplicate("x", 1000)
 
-      Bypass.expect_once(bypass, "GET", "/test/url", fn conn ->
+      DocuSign.TestHTTPServer.expect_once(server, "GET", "/test/url", fn conn ->
         conn
         |> Plug.Conn.put_resp_header("content-type", "text/plain")
         |> Plug.Conn.put_resp_header("content-length", "1000")
@@ -267,14 +267,14 @@ defmodule DocuSign.FileDownloaderTest do
                FileDownloader.download(conn, "/test/url", max_size: 500)
     end
 
-    test "validates content type when enabled", %{bypass: bypass, conn: conn} do
+    test "validates content type when enabled", %{server: server, conn: conn} do
       # Set up configuration for content type validation
       old_config = Application.get_env(:docusign, :file_downloader, [])
 
       Application.put_env(:docusign, :file_downloader, allowed_content_types: ["application/pdf", "text/html"])
 
       try do
-        Bypass.expect_once(bypass, "GET", "/test/url", fn conn ->
+        DocuSign.TestHTTPServer.expect_once(server, "GET", "/test/url", fn conn ->
           conn
           |> Plug.Conn.put_resp_header("content-type", "application/javascript")
           |> Plug.Conn.resp(200, "content")
@@ -287,8 +287,8 @@ defmodule DocuSign.FileDownloaderTest do
       end
     end
 
-    test "skips content type validation when disabled", %{bypass: bypass, conn: conn} do
-      Bypass.expect_once(bypass, "GET", "/test/url", fn conn ->
+    test "skips content type validation when disabled", %{server: server, conn: conn} do
+      DocuSign.TestHTTPServer.expect_once(server, "GET", "/test/url", fn conn ->
         conn
         |> Plug.Conn.put_resp_header("content-type", "application/javascript")
         |> Plug.Conn.resp(200, "content")
@@ -303,8 +303,8 @@ defmodule DocuSign.FileDownloaderTest do
   end
 
   describe "download/3 error handling" do
-    test "handles HTTP errors", %{bypass: bypass, conn: conn} do
-      Bypass.expect_once(bypass, "GET", "/test/url", fn conn ->
+    test "handles HTTP errors", %{server: server, conn: conn} do
+      DocuSign.TestHTTPServer.expect_once(server, "GET", "/test/url", fn conn ->
         Plug.Conn.resp(conn, 404, "Not found")
       end)
 

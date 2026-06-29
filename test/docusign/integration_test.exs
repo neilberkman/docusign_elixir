@@ -5,7 +5,7 @@ defmodule DocuSign.IntegrationTest do
   alias DocuSign.OAuth.Fake
 
   setup do
-    bypass = Bypass.open()
+    server = DocuSign.TestHTTPServer.open()
 
     # Store original config for cleanup
     original_hostname = Application.get_env(:docusign, :hostname)
@@ -15,7 +15,7 @@ defmodule DocuSign.IntegrationTest do
     original_oauth_implementation = Application.get_env(:docusign, :oauth_implementation)
 
     # Configure the app to use our test server
-    Application.put_env(:docusign, :hostname, "localhost:#{bypass.port}")
+    Application.put_env(:docusign, :hostname, "localhost:#{server.port}")
     Application.put_env(:docusign, :client_id, "test_client_id")
     Application.put_env(:docusign, :user_id, "test_user_id")
     Application.put_env(:docusign, :private_key_file, "test/support/test_key")
@@ -66,11 +66,11 @@ defmodule DocuSign.IntegrationTest do
       end
     end)
 
-    {:ok, bypass: bypass}
+    {:ok, server: server}
   end
 
   describe "envelope creation workflow" do
-    test "creates envelope, gets recipient view, and retrieves status", %{bypass: bypass} do
+    test "creates envelope, gets recipient view, and retrieves status", %{server: server} do
       # Load fixtures
       create_envelope_response =
         File.read!("test/fixtures/api_responses/create_envelope_201.json")
@@ -82,7 +82,7 @@ defmodule DocuSign.IntegrationTest do
 
       # Mock OAuth token endpoint (not needed with Fake OAuth but kept for completeness)
       # Using stub instead of expect since Fake OAuth doesn't make HTTP calls
-      Bypass.stub(bypass, "POST", "/oauth/token", fn conn ->
+      DocuSign.TestHTTPServer.stub(server, "POST", "/oauth/token", fn conn ->
         conn
         |> Plug.Conn.put_resp_content_type("application/json")
         |> Plug.Conn.resp(
@@ -97,7 +97,7 @@ defmodule DocuSign.IntegrationTest do
 
       # Mock user info endpoint (not needed with Fake OAuth but kept for completeness)
       # Using stub instead of expect since Fake OAuth doesn't make HTTP calls
-      Bypass.stub(bypass, "GET", "/oauth/userinfo", fn conn ->
+      DocuSign.TestHTTPServer.stub(server, "GET", "/oauth/userinfo", fn conn ->
         conn
         |> Plug.Conn.put_resp_content_type("application/json")
         |> Plug.Conn.resp(
@@ -107,7 +107,7 @@ defmodule DocuSign.IntegrationTest do
               %{
                 "account_id" => "17035828",
                 "account_name" => "Test Account",
-                "base_uri" => "http://localhost:#{bypass.port}",
+                "base_uri" => "http://localhost:#{server.port}",
                 "is_default" => true
               }
             ],
@@ -122,7 +122,7 @@ defmodule DocuSign.IntegrationTest do
       {:ok, conn} = DocuSign.Connection.get("test_user_id")
 
       # Test 1: Create envelope
-      Bypass.expect_once(bypass, "POST", "/restapi/v2.1/accounts/17035828/envelopes", fn conn ->
+      DocuSign.TestHTTPServer.expect_once(server, "POST", "/restapi/v2.1/accounts/17035828/envelopes", fn conn ->
         {:ok, body, conn} = Plug.Conn.read_body(conn)
         request_body = Jason.decode!(body)
 
@@ -172,8 +172,8 @@ defmodule DocuSign.IntegrationTest do
       envelope_id = response.body["envelopeId"]
 
       # Test 2: Get recipient view
-      Bypass.expect_once(
-        bypass,
+      DocuSign.TestHTTPServer.expect_once(
+        server,
         "POST",
         "/restapi/v2.1/accounts/17035828/envelopes/#{envelope_id}/views/recipient",
         fn conn ->
@@ -212,8 +212,8 @@ defmodule DocuSign.IntegrationTest do
       assert response.body["url"]
 
       # Test 3: Get envelope status
-      Bypass.expect_once(
-        bypass,
+      DocuSign.TestHTTPServer.expect_once(
+        server,
         "GET",
         "/restapi/v2.1/accounts/17035828/envelopes/#{envelope_id}",
         fn conn ->
@@ -236,9 +236,9 @@ defmodule DocuSign.IntegrationTest do
   end
 
   describe "response body handling" do
-    test "correctly handles string keys in response", %{bypass: bypass} do
+    test "correctly handles string keys in response", %{server: server} do
       # Mock OAuth endpoints
-      Bypass.stub(bypass, "POST", "/oauth/token", fn conn ->
+      DocuSign.TestHTTPServer.stub(server, "POST", "/oauth/token", fn conn ->
         conn
         |> Plug.Conn.put_resp_content_type("application/json")
         |> Plug.Conn.resp(
@@ -251,7 +251,7 @@ defmodule DocuSign.IntegrationTest do
         )
       end)
 
-      Bypass.stub(bypass, "GET", "/oauth/userinfo", fn conn ->
+      DocuSign.TestHTTPServer.stub(server, "GET", "/oauth/userinfo", fn conn ->
         conn
         |> Plug.Conn.put_resp_content_type("application/json")
         |> Plug.Conn.resp(
@@ -260,7 +260,7 @@ defmodule DocuSign.IntegrationTest do
             "accounts" => [
               %{
                 "account_id" => "12345",
-                "base_uri" => "http://localhost:#{bypass.port}",
+                "base_uri" => "http://localhost:#{server.port}",
                 "is_default" => true
               }
             ]
@@ -271,7 +271,7 @@ defmodule DocuSign.IntegrationTest do
       {:ok, conn} = DocuSign.Connection.get("test_user_id")
 
       # Test that response body has string keys
-      Bypass.expect_once(bypass, "GET", "/restapi/test", fn conn ->
+      DocuSign.TestHTTPServer.expect_once(server, "GET", "/restapi/test", fn conn ->
         conn
         |> Plug.Conn.put_resp_content_type("application/json")
         |> Plug.Conn.resp(

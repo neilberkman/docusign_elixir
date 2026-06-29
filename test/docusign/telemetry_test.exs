@@ -4,12 +4,12 @@ defmodule DocuSign.TelemetryTest do
   alias DocuSign.Telemetry
 
   setup do
-    bypass = Bypass.open()
+    server = DocuSign.TestHTTPServer.open()
 
     # Create a test connection
     req =
       Req.new(
-        base_url: "http://localhost:#{bypass.port}",
+        base_url: "http://localhost:#{server.port}",
         headers: [
           {"authorization", "Bearer test-token"},
           {"content-type", "application/json"}
@@ -19,17 +19,17 @@ defmodule DocuSign.TelemetryTest do
     conn = %DocuSign.Connection{
       app_account: %{
         account_id: "test-account-123",
-        base_uri: "http://localhost:#{bypass.port}"
+        base_uri: "http://localhost:#{server.port}"
       },
       req: req
     }
 
-    {:ok, bypass: bypass, conn: conn}
+    {:ok, server: server, conn: conn}
   end
 
   describe "telemetry events" do
     @tag capture_log: true
-    test "emits api start and stop events for successful requests", %{bypass: bypass, conn: conn} do
+    test "emits api start and stop events for successful requests", %{server: server, conn: conn} do
       # Set up telemetry handler to capture events
       test_pid = self()
       handler_id = "test-handler-#{System.unique_integer()}"
@@ -47,7 +47,7 @@ defmodule DocuSign.TelemetryTest do
       )
 
       # Mock successful response
-      Bypass.expect_once(bypass, "GET", "/v2.1/accounts/test-account-123/envelopes", fn conn ->
+      DocuSign.TestHTTPServer.expect_once(server, "GET", "/v2.1/accounts/test-account-123/envelopes", fn conn ->
         Plug.Conn.resp(conn, 200, ~s({"envelopes": []}))
       end)
 
@@ -82,7 +82,7 @@ defmodule DocuSign.TelemetryTest do
     end
 
     @tag capture_log: true
-    test "emits api exception event for connection failures", %{bypass: bypass, conn: conn} do
+    test "emits api exception event for connection failures", %{server: server, conn: conn} do
       handler_id = "test-handler-#{System.unique_integer()}"
 
       captured_events = :ets.new(:captured_events, [:public, :bag])
@@ -96,8 +96,8 @@ defmodule DocuSign.TelemetryTest do
         nil
       )
 
-      # Stop bypass to force connection error
-      Bypass.down(bypass)
+      # Stop server to force connection error
+      DocuSign.TestHTTPServer.down(server)
 
       # Make request that will fail due to connection refused
       {:error, _reason} =
@@ -125,7 +125,7 @@ defmodule DocuSign.TelemetryTest do
     end
 
     @tag :skip
-    test "emits rate limit event when hitting 429", %{bypass: bypass, conn: conn} do
+    test "emits rate limit event when hitting 429", %{server: server, conn: conn} do
       handler_id = "test-handler-#{System.unique_integer()}"
 
       captured_events = :ets.new(:captured_events, [:public, :bag])
@@ -149,7 +149,7 @@ defmodule DocuSign.TelemetryTest do
       # Mock rate limit response
       {:ok, agent} = Agent.start_link(fn -> 0 end)
 
-      Bypass.expect(bypass, "GET", "/test", fn conn ->
+      DocuSign.TestHTTPServer.expect(server, "GET", "/test", fn conn ->
         count = Agent.get_and_update(agent, fn c -> {c, c + 1} end)
 
         case count do
@@ -195,7 +195,7 @@ defmodule DocuSign.TelemetryTest do
     end
 
     @tag capture_log: true
-    test "automatically extracts operation name from path", %{bypass: bypass, conn: conn} do
+    test "automatically extracts operation name from path", %{server: server, conn: conn} do
       handler_id = "test-handler-#{System.unique_integer()}"
 
       captured_events = :ets.new(:captured_events, [:public, :bag])
@@ -210,7 +210,7 @@ defmodule DocuSign.TelemetryTest do
       )
 
       # Mock response
-      Bypass.expect_once(bypass, "POST", "/v2.1/accounts/123/envelopes", fn conn ->
+      DocuSign.TestHTTPServer.expect_once(server, "POST", "/v2.1/accounts/123/envelopes", fn conn ->
         Plug.Conn.resp(conn, 201, ~s({"envelopeId": "abc123"}))
       end)
 
@@ -336,7 +336,7 @@ defmodule DocuSign.TelemetryTest do
 
   describe "finch telemetry integration" do
     @tag capture_log: true
-    test "finch events are emitted alongside docusign events", %{bypass: bypass, conn: conn} do
+    test "finch events are emitted alongside docusign events", %{server: server, conn: conn} do
       handler_id = "test-handler-#{System.unique_integer()}"
 
       captured_events = :ets.new(:captured_events, [:public, :bag])
@@ -356,7 +356,7 @@ defmodule DocuSign.TelemetryTest do
       )
 
       # Mock response
-      Bypass.expect_once(bypass, "GET", "/test", fn conn ->
+      DocuSign.TestHTTPServer.expect_once(server, "GET", "/test", fn conn ->
         Plug.Conn.resp(conn, 200, ~s({"ok": true}))
       end)
 
