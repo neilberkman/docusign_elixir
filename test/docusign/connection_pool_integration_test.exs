@@ -21,11 +21,11 @@ defmodule DocuSign.ConnectionPoolIntegrationTest do
 
   describe "connection pooling configuration" do
     setup do
-      bypass = Bypass.open()
-      {:ok, bypass: bypass}
+      server = DocuSign.TestHTTPServer.open()
+      {:ok, server: server}
     end
 
-    test "connection pooling is disabled by default", %{bypass: bypass} do
+    test "connection pooling is disabled by default", %{server: server} do
       Application.delete_env(:docusign, :pool_options)
 
       # Create connection
@@ -40,7 +40,7 @@ defmodule DocuSign.ConnectionPoolIntegrationTest do
         Connection.from_oauth_client(
           oauth_client,
           account_id: "test-account",
-          base_uri: "http://localhost:#{bypass.port}"
+          base_uri: "http://localhost:#{server.port}"
         )
 
       # Should use default Req.Finch when pooling is not configured
@@ -48,7 +48,7 @@ defmodule DocuSign.ConnectionPoolIntegrationTest do
       assert ConnectionPool.enabled?() == false
     end
 
-    test "connection uses custom Finch name when pooling is configured", %{bypass: bypass} do
+    test "connection uses custom Finch name when pooling is configured", %{server: server} do
       # Enable pooling (note: we won't actually start the Finch process in tests)
       Application.put_env(:docusign, :pool_options,
         size: 5,
@@ -76,16 +76,16 @@ defmodule DocuSign.ConnectionPoolIntegrationTest do
         Connection.from_oauth_client(
           oauth_client,
           account_id: "test-account",
-          base_uri: "http://localhost:#{bypass.port}"
+          base_uri: "http://localhost:#{server.port}"
         )
 
       # Should be configured to use custom DocuSign.Finch
       assert conn.req.options[:finch] == DocuSign.Finch
     end
 
-    test "connection makes successful requests", %{bypass: bypass} do
-      # Setup bypass to respond to requests
-      Bypass.expect_once(bypass, "GET", "/test", fn conn ->
+    test "connection makes successful requests", %{server: server} do
+      # Setup server to respond to requests
+      DocuSign.TestHTTPServer.expect_once(server, "GET", "/test", fn conn ->
         Plug.Conn.send_resp(conn, 200, Jason.encode!(%{status: "ok"}))
       end)
 
@@ -101,7 +101,7 @@ defmodule DocuSign.ConnectionPoolIntegrationTest do
         Connection.from_oauth_client(
           oauth_client,
           account_id: "test-account",
-          base_uri: "http://localhost:#{bypass.port}"
+          base_uri: "http://localhost:#{server.port}"
         )
 
       # Make a request

@@ -164,11 +164,11 @@ defmodule DocuSign.ConnectionPoolTest do
 
   describe "integration with Connection" do
     setup do
-      bypass = Bypass.open()
-      {:ok, bypass: bypass}
+      server = DocuSign.TestHTTPServer.open()
+      {:ok, server: server}
     end
 
-    test "connection uses custom Finch when pooling is enabled", %{bypass: bypass} do
+    test "connection uses custom Finch when pooling is enabled", %{server: server} do
       Application.put_env(:docusign, :pool_options, size: 15)
 
       # Create a connection
@@ -183,14 +183,14 @@ defmodule DocuSign.ConnectionPoolTest do
         DocuSign.Connection.from_oauth_client(
           oauth_client,
           account_id: "test-account",
-          base_uri: "http://localhost:#{bypass.port}"
+          base_uri: "http://localhost:#{server.port}"
         )
 
       # Check that the connection is configured with custom Finch
       assert conn.req.options[:finch] == DocuSign.Finch
     end
 
-    test "connection uses default Finch when pooling is disabled", %{bypass: bypass} do
+    test "connection uses default Finch when pooling is disabled", %{server: server} do
       Application.delete_env(:docusign, :pool_options)
 
       # Create a connection
@@ -205,7 +205,7 @@ defmodule DocuSign.ConnectionPoolTest do
         DocuSign.Connection.from_oauth_client(
           oauth_client,
           account_id: "test-account",
-          base_uri: "http://localhost:#{bypass.port}"
+          base_uri: "http://localhost:#{server.port}"
         )
 
       # Check that the connection uses default Finch (nil or Req.Finch)

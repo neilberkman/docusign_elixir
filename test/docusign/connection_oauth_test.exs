@@ -69,7 +69,7 @@ defmodule DocuSign.ConnectionOAuthTest do
 
   describe "Connection.request/2 with OAuth2.Client" do
     setup do
-      bypass = Bypass.open()
+      server = DocuSign.TestHTTPServer.open()
 
       oauth_client = %Client{
         token: %AccessToken{
@@ -84,14 +84,14 @@ defmodule DocuSign.ConnectionOAuthTest do
         Connection.from_oauth_client(
           oauth_client,
           account_id: "test-account",
-          base_uri: "http://localhost:#{bypass.port}"
+          base_uri: "http://localhost:#{server.port}"
         )
 
-      {:ok, bypass: bypass, conn: conn}
+      {:ok, server: server, conn: conn}
     end
 
-    test "sends request with OAuth2 authorization header", %{bypass: bypass, conn: conn} do
-      Bypass.expect_once(bypass, fn conn_b ->
+    test "sends request with OAuth2 authorization header", %{server: server, conn: conn} do
+      DocuSign.TestHTTPServer.expect_once(server, fn conn_b ->
         assert Plug.Conn.get_req_header(conn_b, "authorization") == [
                  "Bearer oauth_access_token_123"
                ]
@@ -107,8 +107,8 @@ defmodule DocuSign.ConnectionOAuthTest do
       assert response.body == %{"result" => "success"}
     end
 
-    test "includes content-type header", %{bypass: bypass, conn: conn} do
-      Bypass.expect_once(bypass, fn conn_b ->
+    test "includes content-type header", %{server: server, conn: conn} do
+      DocuSign.TestHTTPServer.expect_once(server, fn conn_b ->
         assert Plug.Conn.get_req_header(conn_b, "content-type") == ["application/json"]
         Plug.Conn.resp(conn_b, 200, "")
       end)

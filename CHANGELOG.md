@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+### Dependencies
+
+- Remove direct `cowlib` dependency. The package was not used directly, and the exact pin leaked an unnecessary version constraint to downstream applications.
+- Replace Bypass test servers with a local Bandit-backed test helper, removing the test-only Cowboy dependency stack.
+
 ## v3.5.0 (2026-06-27)
 
 ### API Updates

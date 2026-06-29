@@ -6,25 +6,25 @@ defmodule DocuSign.ApiResponseTest do
   alias DocuSign.Model.EnvelopeSummary
 
   setup do
-    bypass = Bypass.open()
-    {:ok, bypass: bypass}
+    server = DocuSign.TestHTTPServer.open()
+    {:ok, server: server}
   end
 
   describe "real API response handling" do
-    test "handles real create envelope response", %{bypass: bypass} do
+    test "handles real create envelope response", %{server: server} do
       # Load real response fixture
       real_response = File.read!("test/fixtures/api_responses/create_envelope_201.json")
 
-      Bypass.expect_once(bypass, "POST", "/envelopes", fn conn ->
+      DocuSign.TestHTTPServer.expect_once(server, "POST", "/envelopes", fn conn ->
         conn
         |> Plug.Conn.put_resp_content_type("application/json")
         |> Plug.Conn.resp(201, real_response)
       end)
 
-      # Create a test connection pointing to our bypass server
+      # Create a test connection pointing to our server server
       req =
         Req.new(
-          base_url: "http://localhost:#{bypass.port}",
+          base_url: "http://localhost:#{server.port}",
           headers: [
             {"authorization", "Bearer test_token"},
             {"content-type", "application/json"}
@@ -32,7 +32,7 @@ defmodule DocuSign.ApiResponseTest do
         )
 
       conn = %DocuSign.Connection{
-        app_account: %{base_uri: "http://localhost:#{bypass.port}"},
+        app_account: %{base_uri: "http://localhost:#{server.port}"},
         client: %OAuth2.Client{
           token: %OAuth2.AccessToken{
             access_token: "test_token",
@@ -58,11 +58,11 @@ defmodule DocuSign.ApiResponseTest do
       assert response.body["uri"] == "/envelopes/b24e6c1c-4269-4098-a84d-06d4c072a915"
     end
 
-    test "handles real recipient view response", %{bypass: bypass} do
+    test "handles real recipient view response", %{server: server} do
       # Load real response fixture
       real_response = File.read!("test/fixtures/api_responses/recipient_view_201.json")
 
-      Bypass.expect_once(bypass, "POST", "/views/recipient", fn conn ->
+      DocuSign.TestHTTPServer.expect_once(server, "POST", "/views/recipient", fn conn ->
         conn
         |> Plug.Conn.put_resp_content_type("application/json")
         |> Plug.Conn.resp(201, real_response)
@@ -70,7 +70,7 @@ defmodule DocuSign.ApiResponseTest do
 
       req =
         Req.new(
-          base_url: "http://localhost:#{bypass.port}",
+          base_url: "http://localhost:#{server.port}",
           headers: [
             {"authorization", "Bearer test_token"},
             {"content-type", "application/json"}
@@ -78,7 +78,7 @@ defmodule DocuSign.ApiResponseTest do
         )
 
       conn = %DocuSign.Connection{
-        app_account: %{base_uri: "http://localhost:#{bypass.port}"},
+        app_account: %{base_uri: "http://localhost:#{server.port}"},
         client: %OAuth2.Client{
           token: %OAuth2.AccessToken{
             access_token: "test_token",
@@ -101,11 +101,11 @@ defmodule DocuSign.ApiResponseTest do
       assert String.starts_with?(response.body["url"], "https://demo.docusign.net/Signing/")
     end
 
-    test "handles real envelope status response", %{bypass: bypass} do
+    test "handles real envelope status response", %{server: server} do
       # Load real response fixture
       real_response = File.read!("test/fixtures/api_responses/envelope_status_200.json")
 
-      Bypass.expect_once(bypass, "GET", "/envelopes/test-id", fn conn ->
+      DocuSign.TestHTTPServer.expect_once(server, "GET", "/envelopes/test-id", fn conn ->
         conn
         |> Plug.Conn.put_resp_content_type("application/json")
         |> Plug.Conn.resp(200, real_response)
@@ -113,7 +113,7 @@ defmodule DocuSign.ApiResponseTest do
 
       req =
         Req.new(
-          base_url: "http://localhost:#{bypass.port}",
+          base_url: "http://localhost:#{server.port}",
           headers: [
             {"authorization", "Bearer test_token"},
             {"content-type", "application/json"}
@@ -121,7 +121,7 @@ defmodule DocuSign.ApiResponseTest do
         )
 
       conn = %DocuSign.Connection{
-        app_account: %{base_uri: "http://localhost:#{bypass.port}"},
+        app_account: %{base_uri: "http://localhost:#{server.port}"},
         client: %OAuth2.Client{
           token: %OAuth2.AccessToken{
             access_token: "test_token",
@@ -154,7 +154,7 @@ defmodule DocuSign.ApiResponseTest do
       assert response.body["expireAfter"] == "120"
     end
 
-    test "verifies Req auto-decodes JSON with string keys", %{bypass: bypass} do
+    test "verifies Req auto-decodes JSON with string keys", %{server: server} do
       # Create a response with various data types
       json_response =
         Jason.encode!(%{
@@ -171,7 +171,7 @@ defmodule DocuSign.ApiResponseTest do
           "string" => "value"
         })
 
-      Bypass.expect_once(bypass, "GET", "/test", fn conn ->
+      DocuSign.TestHTTPServer.expect_once(server, "GET", "/test", fn conn ->
         conn
         |> Plug.Conn.put_resp_content_type("application/json")
         |> Plug.Conn.resp(200, json_response)
@@ -179,12 +179,12 @@ defmodule DocuSign.ApiResponseTest do
 
       req =
         Req.new(
-          base_url: "http://localhost:#{bypass.port}",
+          base_url: "http://localhost:#{server.port}",
           headers: [{"authorization", "Bearer test"}]
         )
 
       conn = %DocuSign.Connection{
-        app_account: %{base_uri: "http://localhost:#{bypass.port}"},
+        app_account: %{base_uri: "http://localhost:#{server.port}"},
         client: %OAuth2.Client{
           token: %OAuth2.AccessToken{
             access_token: "test",
@@ -216,11 +216,11 @@ defmodule DocuSign.ApiResponseTest do
   end
 
   describe "API method integration" do
-    test "EnvelopeSummary model decoding with real response", %{bypass: bypass} do
+    test "EnvelopeSummary model decoding with real response", %{server: server} do
       # Use the real create envelope response
       real_response = File.read!("test/fixtures/api_responses/create_envelope_201.json")
 
-      Bypass.expect_once(bypass, "POST", "/v2.1/accounts/123/envelopes", fn conn ->
+      DocuSign.TestHTTPServer.expect_once(server, "POST", "/v2.1/accounts/123/envelopes", fn conn ->
         conn
         |> Plug.Conn.put_resp_content_type("application/json")
         |> Plug.Conn.resp(201, real_response)
@@ -228,7 +228,7 @@ defmodule DocuSign.ApiResponseTest do
 
       req =
         Req.new(
-          base_url: "http://localhost:#{bypass.port}",
+          base_url: "http://localhost:#{server.port}",
           headers: [
             {"authorization", "Bearer test_token"},
             {"content-type", "application/json"}
@@ -236,7 +236,7 @@ defmodule DocuSign.ApiResponseTest do
         )
 
       conn = %DocuSign.Connection{
-        app_account: %{base_uri: "http://localhost:#{bypass.port}"},
+        app_account: %{base_uri: "http://localhost:#{server.port}"},
         client: %OAuth2.Client{
           token: %OAuth2.AccessToken{
             access_token: "test_token",

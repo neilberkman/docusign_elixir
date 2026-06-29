@@ -13,12 +13,12 @@ defmodule DocuSign.FullLivebookEquivalentTest do
   alias DocuSign.Connection
 
   setup do
-    bypass = Bypass.open()
-    {:ok, bypass: bypass}
+    server = DocuSign.TestHTTPServer.open()
+    {:ok, server: server}
   end
 
   describe "FULL Livebook equivalent test" do
-    test "complete embedded signing flow with document download", %{bypass: bypass} do
+    test "complete embedded signing flow with document download", %{server: server} do
       # This test simulates the EXACT flow from embedded_signing.livemd
       # using REAL DocuSign response formats
 
@@ -28,8 +28,8 @@ defmodule DocuSign.FullLivebookEquivalentTest do
       # 3. Mock envelope creation with REAL response format
       envelope_id = "test-envelope-#{:rand.uniform(1000)}"
 
-      Bypass.expect_once(
-        bypass,
+      DocuSign.TestHTTPServer.expect_once(
+        server,
         "POST",
         "/v2.1/accounts/test-account/envelopes",
         fn conn ->
@@ -48,8 +48,8 @@ defmodule DocuSign.FullLivebookEquivalentTest do
       )
 
       # 4. Mock recipient view (embedded signing URL) with REAL response format
-      Bypass.expect_once(
-        bypass,
+      DocuSign.TestHTTPServer.expect_once(
+        server,
         "POST",
         "/v2.1/accounts/test-account/envelopes/#{envelope_id}/views/recipient",
         fn conn ->
@@ -65,8 +65,8 @@ defmodule DocuSign.FullLivebookEquivalentTest do
       )
 
       # 5. Mock envelope status check with REAL response format
-      Bypass.expect(
-        bypass,
+      DocuSign.TestHTTPServer.expect(
+        server,
         "GET",
         "/v2.1/accounts/test-account/envelopes/#{envelope_id}",
         fn conn ->
@@ -85,8 +85,8 @@ defmodule DocuSign.FullLivebookEquivalentTest do
       )
 
       # 6. Mock document list with REAL response format
-      Bypass.expect_once(
-        bypass,
+      DocuSign.TestHTTPServer.expect_once(
+        server,
         "GET",
         "/v2.1/accounts/test-account/envelopes/#{envelope_id}/documents",
         fn conn ->
@@ -122,8 +122,8 @@ defmodule DocuSign.FullLivebookEquivalentTest do
       # 7. THE CRITICAL PART - Mock document download with REAL DocuSign header format!
       # This is what the real DocuSign API returns - headers as lists in Req!
       # Using expect (not expect_once) because we test this twice
-      Bypass.expect(
-        bypass,
+      DocuSign.TestHTTPServer.expect(
+        server,
         "GET",
         "/v2.1/accounts/test-account/envelopes/#{envelope_id}/documents/1",
         fn conn ->
@@ -145,7 +145,7 @@ defmodule DocuSign.FullLivebookEquivalentTest do
       conn = %Connection{
         req:
           Req.new(
-            base_url: "http://localhost:#{bypass.port}",
+            base_url: "http://localhost:#{server.port}",
             headers: [{"authorization", "Bearer fake_jwt_token"}]
           )
       }
@@ -248,7 +248,7 @@ defmodule DocuSign.FullLivebookEquivalentTest do
       assert content_type == "application/pdf"
     end
 
-    test "handles all DocuSign header format variations", %{bypass: bypass} do
+    test "handles all DocuSign header format variations", %{server: server} do
       # Test various REAL header formats DocuSign uses
       test_cases = [
         # Standard envelope document
@@ -266,7 +266,7 @@ defmodule DocuSign.FullLivebookEquivalentTest do
       Enum.each(test_cases, fn {header_value, expected_filename} ->
         path = "/document/#{:rand.uniform(1000)}"
 
-        Bypass.expect_once(bypass, "GET", path, fn conn ->
+        DocuSign.TestHTTPServer.expect_once(server, "GET", path, fn conn ->
           conn
           |> Plug.Conn.put_resp_header("content-type", "application/pdf")
           |> Plug.Conn.put_resp_header("content-disposition", header_value)
@@ -274,7 +274,7 @@ defmodule DocuSign.FullLivebookEquivalentTest do
         end)
 
         conn = %Connection{
-          req: Req.new(base_url: "http://localhost:#{bypass.port}")
+          req: Req.new(base_url: "http://localhost:#{server.port}")
         }
 
         # Test Connection.download_file backward compatibility with memory strategy (as used in Livebook)
@@ -284,7 +284,7 @@ defmodule DocuSign.FullLivebookEquivalentTest do
         assert filename == expected_filename
 
         # Reset for FileDownloader test
-        Bypass.expect_once(bypass, "GET", path, fn conn ->
+        DocuSign.TestHTTPServer.expect_once(server, "GET", path, fn conn ->
           conn
           |> Plug.Conn.put_resp_header("content-type", "application/pdf")
           |> Plug.Conn.put_resp_header("content-disposition", header_value)

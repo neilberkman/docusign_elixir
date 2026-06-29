@@ -9,8 +9,8 @@ defmodule DocuSign.OAuth.ImplTest do
   alias Plug.Conn
 
   setup do
-    bypass = Bypass.open()
-    {:ok, bypass: bypass}
+    server = DocuSign.TestHTTPServer.open()
+    {:ok, server: server}
   end
 
   setup do
@@ -30,12 +30,12 @@ defmodule DocuSign.OAuth.ImplTest do
     "refresh_token": "ISSUED_REFRESH_TOKEN",
     "expires_in": 28800})
 
-  test "get_token!", %{bypass: bypass} do
-    Bypass.expect_once(bypass, "POST", "/oauth/token", fn conn ->
+  test "get_token!", %{server: server} do
+    DocuSign.TestHTTPServer.expect_once(server, "POST", "/oauth/token", fn conn ->
       Conn.resp(conn, 200, @token)
     end)
 
-    client = OAuth.Impl.get_token!(OAuth.Impl.client(site: "http://localhost:#{bypass.port}"))
+    client = OAuth.Impl.get_token!(OAuth.Impl.client(site: "http://localhost:#{server.port}"))
 
     assert %OAuth2.AccessToken{
              access_token: "ISSUED_ACCESS_TOKEN",
@@ -113,19 +113,19 @@ defmodule DocuSign.OAuth.ImplTest do
            } = OAuth.Impl.get_token(OAuth.Impl.client(site: "http://localhost"), [], [])
   end
 
-  test "refresh_token!", %{bypass: bypass} do
+  test "refresh_token!", %{server: server} do
     now = :erlang.system_time(:second)
 
     client =
       OAuth.Impl.client(
-        site: "http://localhost:#{bypass.port}",
+        site: "http://localhost:#{server.port}",
         token: %AccessToken{
           access_token: "TEST_TOKEN",
           expires_at: now + 3600
         }
       )
 
-    Bypass.expect(bypass, "POST", "/oauth/token", fn conn ->
+    DocuSign.TestHTTPServer.expect(server, "POST", "/oauth/token", fn conn ->
       Conn.resp(conn, 200, @token)
     end)
 
@@ -147,7 +147,7 @@ defmodule DocuSign.OAuth.ImplTest do
     assert OAuth.Impl.interval_refresh_token(client) == 3590
   end
 
-  test "get_client_info", %{bypass: bypass} do
+  test "get_client_info", %{server: server} do
     user_info = ~s({
       "accounts": [
         {
@@ -165,13 +165,13 @@ defmodule DocuSign.OAuth.ImplTest do
       "sub": "84a39dd2-b972-48b2-929a-cf743466a4d5"
     })
 
-    Bypass.expect_once(bypass, "GET", "/oauth/userinfo", fn conn ->
+    DocuSign.TestHTTPServer.expect_once(server, "GET", "/oauth/userinfo", fn conn ->
       conn
       |> Conn.put_resp_header("content-type", "application/json")
       |> Conn.resp(200, user_info)
     end)
 
-    client = OAuth.Impl.client(site: "http://localhost:#{bypass.port}")
+    client = OAuth.Impl.client(site: "http://localhost:#{server.port}")
 
     info = OAuth.Impl.get_client_info(client)
 
@@ -195,44 +195,44 @@ defmodule DocuSign.OAuth.ImplTest do
   end
 
   describe "private key configuration" do
-    setup %{bypass: bypass} do
-      stub_token_request(bypass)
+    setup %{server: server} do
+      stub_token_request(server)
       :ok
     end
 
     # In v2.0.0, the :private_key option was removed
-    test "uses private_key_file configuration", %{bypass: bypass} do
+    test "uses private_key_file configuration", %{server: server} do
       Application.put_env(:docusign, :private_key_file, "test/support/test_key")
 
       # Check no OAuth/private key related warnings (ignore FileDownloader info logs)
-      log = log_of_get_token!(bypass)
+      log = log_of_get_token!(server)
       refute log =~ "private_key"
       refute log =~ "warning"
     end
 
-    test "can be configured with private_key_file only", %{bypass: bypass} do
+    test "can be configured with private_key_file only", %{server: server} do
       # Only set private_key_file
       Application.delete_env(:docusign, :private_key_contents)
       Application.put_env(:docusign, :private_key_file, "test/support/test_key")
 
       # Check no OAuth/private key related warnings (ignore FileDownloader info logs)
-      log = log_of_get_token!(bypass)
+      log = log_of_get_token!(server)
       refute log =~ "private_key"
       refute log =~ "warning"
     end
 
-    test "can be configured with private_key_contents only", %{bypass: bypass} do
+    test "can be configured with private_key_contents only", %{server: server} do
       # Only set private_key_contents
       Application.delete_env(:docusign, :private_key_file)
       Application.put_env(:docusign, :private_key_contents, File.read!("test/support/test_key"))
 
       # Check no OAuth/private key related warnings (ignore FileDownloader info logs)
-      log = log_of_get_token!(bypass)
+      log = log_of_get_token!(server)
       refute log =~ "private_key"
       refute log =~ "warning"
     end
 
-    test "raises without private key configuration", %{bypass: bypass} do
+    test "raises without private key configuration", %{server: server} do
       # Remove all private key configs
       Application.delete_env(:docusign, :private_key_file)
       Application.delete_env(:docusign, :private_key_contents)
@@ -240,32 +240,32 @@ defmodule DocuSign.OAuth.ImplTest do
       assert_raise RuntimeError,
                    "No private key found in application environment. Please set :private_key_file or :private_key_contents.",
                    fn ->
-                     OAuth.Impl.get_token!(OAuth.Impl.client(site: "http://localhost:#{bypass.port}"))
+                     OAuth.Impl.get_token!(OAuth.Impl.client(site: "http://localhost:#{server.port}"))
                    end
     end
 
-    test "raises if multiple private key configuration keys are used", %{bypass: bypass} do
+    test "raises if multiple private key configuration keys are used", %{server: server} do
       Application.put_env(:docusign, :private_key_file, "test/support/test_key")
       Application.put_env(:docusign, :private_key_contents, File.read!("test/support/test_key"))
 
       assert_raise RuntimeError,
                    "Multiple DocuSign private keys were provided. Please use only one of :private_key_file or :private_key_contents.",
                    fn ->
-                     OAuth.Impl.get_token!(OAuth.Impl.client(site: "http://localhost:#{bypass.port}"))
+                     OAuth.Impl.get_token!(OAuth.Impl.client(site: "http://localhost:#{server.port}"))
                    end
     end
   end
 
-  defp stub_token_request(bypass) do
-    Bypass.stub(bypass, "POST", "/oauth/token", fn conn ->
+  defp stub_token_request(server) do
+    DocuSign.TestHTTPServer.stub(server, "POST", "/oauth/token", fn conn ->
       Conn.resp(conn, 200, @token)
     end)
   end
 
-  defp log_of_get_token!(bypass) do
+  defp log_of_get_token!(server) do
     {_client, log} =
       with_log(fn ->
-        OAuth.Impl.get_token!(OAuth.Impl.client(site: "http://localhost:#{bypass.port}"))
+        OAuth.Impl.get_token!(OAuth.Impl.client(site: "http://localhost:#{server.port}"))
       end)
 
     log

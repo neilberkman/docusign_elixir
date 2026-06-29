@@ -5,7 +5,7 @@ defmodule DocuSign.CustomHeadersIntegrationTest do
   alias DocuSign.OAuth.Fake
 
   setup do
-    bypass = Bypass.open()
+    server = DocuSign.TestHTTPServer.open()
 
     # Store original config for cleanup
     original_hostname = Application.get_env(:docusign, :hostname)
@@ -15,7 +15,7 @@ defmodule DocuSign.CustomHeadersIntegrationTest do
     original_oauth_implementation = Application.get_env(:docusign, :oauth_implementation)
 
     # Configure the app to use our test server
-    Application.put_env(:docusign, :hostname, "localhost:#{bypass.port}")
+    Application.put_env(:docusign, :hostname, "localhost:#{server.port}")
     Application.put_env(:docusign, :client_id, "test_client_id")
     Application.put_env(:docusign, :user_id, "test_user_id")
     Application.put_env(:docusign, :private_key_file, "test/support/test_key")
@@ -66,12 +66,12 @@ defmodule DocuSign.CustomHeadersIntegrationTest do
       end
     end)
 
-    {:ok, bypass: bypass}
+    {:ok, server: server}
   end
 
   describe "custom headers support" do
     test "X-DocuSign-Edit header is sent in PUT requests for locked envelopes", %{
-      bypass: bypass
+      server: server
     } do
       # Setup - Get connection
       {:ok, conn} = DocuSign.Connection.get("test_user_id")
@@ -88,8 +88,8 @@ defmodule DocuSign.CustomHeadersIntegrationTest do
         })
 
       # Mock the envelope lock update endpoint
-      Bypass.expect_once(
-        bypass,
+      DocuSign.TestHTTPServer.expect_once(
+        server,
         "PUT",
         "/restapi/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/lock",
         fn conn ->
@@ -142,7 +142,7 @@ defmodule DocuSign.CustomHeadersIntegrationTest do
       assert lock_info.lockDurationInSeconds == lock_duration
     end
 
-    test "multiple custom headers are sent correctly", %{bypass: bypass} do
+    test "multiple custom headers are sent correctly", %{server: server} do
       {:ok, conn} = DocuSign.Connection.get("test_user_id")
 
       account_id = "17035828"
@@ -152,8 +152,8 @@ defmodule DocuSign.CustomHeadersIntegrationTest do
       custom_header_2_value = "custom-value-2"
 
       # Mock endpoint that expects multiple custom headers
-      Bypass.expect_once(
-        bypass,
+      DocuSign.TestHTTPServer.expect_once(
+        server,
         "PUT",
         "/restapi/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/lock",
         fn conn ->
@@ -193,7 +193,7 @@ defmodule DocuSign.CustomHeadersIntegrationTest do
       assert {:ok, _lock_info} = result
     end
 
-    test "custom headers work with POST requests", %{bypass: bypass} do
+    test "custom headers work with POST requests", %{server: server} do
       {:ok, conn} = DocuSign.Connection.get("test_user_id")
 
       account_id = "17035828"
@@ -202,8 +202,8 @@ defmodule DocuSign.CustomHeadersIntegrationTest do
       custom_header_value = "post-custom-value"
 
       # Mock the envelope lock creation endpoint
-      Bypass.expect_once(
-        bypass,
+      DocuSign.TestHTTPServer.expect_once(
+        server,
         "POST",
         "/restapi/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/lock",
         fn conn ->

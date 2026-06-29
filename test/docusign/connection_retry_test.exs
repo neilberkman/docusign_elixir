@@ -32,12 +32,12 @@ defmodule DocuSign.ConnectionRetryTest do
   defp get_content_type(_), do: nil
 
   setup do
-    bypass = Bypass.open()
+    server = DocuSign.TestHTTPServer.open()
 
-    # Create a test connection with bypass URL
+    # Create a test connection with server URL
     req =
       Req.new(
-        base_url: "http://localhost:#{bypass.port}",
+        base_url: "http://localhost:#{server.port}",
         headers: [
           {"authorization", "Bearer test-token"},
           {"content-type", "application/json"}
@@ -48,17 +48,17 @@ defmodule DocuSign.ConnectionRetryTest do
     conn = %DocuSign.Connection{
       app_account: %{
         account_id: "test-account",
-        base_uri: "http://localhost:#{bypass.port}"
+        base_uri: "http://localhost:#{server.port}"
       },
       req: req
     }
 
-    {:ok, bypass: bypass, conn: conn}
+    {:ok, server: server, conn: conn}
   end
 
   describe "retry configuration" do
     @tag capture_log: true
-    test "retries on transient failures", %{bypass: bypass, conn: conn} do
+    test "retries on transient failures", %{server: server, conn: conn} do
       # Configure retry with shorter delays for testing
       Application.put_env(:docusign, :retry_options,
         max_retries: 2,
@@ -69,7 +69,7 @@ defmodule DocuSign.ConnectionRetryTest do
       # First two attempts fail with 500, third succeeds
       {:ok, agent} = Agent.start_link(fn -> 0 end)
 
-      Bypass.expect(bypass, "GET", "/test", fn conn ->
+      DocuSign.TestHTTPServer.expect(server, "GET", "/test", fn conn ->
         count = Agent.get_and_update(agent, fn c -> {c, c + 1} end)
 
         case count do
@@ -105,7 +105,7 @@ defmodule DocuSign.ConnectionRetryTest do
     end
 
     @tag capture_log: true
-    test "handles rate limits with Retry-After header", %{bypass: bypass, conn: conn} do
+    test "handles rate limits with Retry-After header", %{server: server, conn: conn} do
       Application.put_env(:docusign, :retry_options,
         max_retries: 2,
         backoff_factor: 1,
@@ -114,7 +114,7 @@ defmodule DocuSign.ConnectionRetryTest do
 
       {:ok, agent} = Agent.start_link(fn -> 0 end)
 
-      Bypass.expect(bypass, "GET", "/test", fn conn ->
+      DocuSign.TestHTTPServer.expect(server, "GET", "/test", fn conn ->
         count = Agent.get_and_update(agent, fn c -> {c, c + 1} end)
 
         case count do
@@ -149,10 +149,10 @@ defmodule DocuSign.ConnectionRetryTest do
       assert elapsed >= 1000
     end
 
-    test "disables retry when configured", %{bypass: bypass, conn: conn} do
+    test "disables retry when configured", %{server: server, conn: conn} do
       Application.put_env(:docusign, :retry_options, enabled: false)
 
-      Bypass.expect_once(bypass, "GET", "/test", fn conn ->
+      DocuSign.TestHTTPServer.expect_once(server, "GET", "/test", fn conn ->
         Plug.Conn.resp(conn, 500, "Server Error")
       end)
 
@@ -168,7 +168,7 @@ defmodule DocuSign.ConnectionRetryTest do
     end
 
     @tag capture_log: true
-    test "respects max_retries configuration", %{bypass: bypass, conn: conn} do
+    test "respects max_retries configuration", %{server: server, conn: conn} do
       Application.put_env(:docusign, :retry_options,
         max_retries: 1,
         backoff_factor: 1,
@@ -177,7 +177,7 @@ defmodule DocuSign.ConnectionRetryTest do
 
       {:ok, agent} = Agent.start_link(fn -> 0 end)
 
-      Bypass.expect(bypass, "GET", "/test", fn conn ->
+      DocuSign.TestHTTPServer.expect(server, "GET", "/test", fn conn ->
         Agent.update(agent, &(&1 + 1))
         Plug.Conn.resp(conn, 500, "Server Error")
       end)
@@ -197,7 +197,7 @@ defmodule DocuSign.ConnectionRetryTest do
     end
 
     @tag capture_log: true
-    test "applies exponential backoff", %{bypass: bypass, conn: conn} do
+    test "applies exponential backoff", %{server: server, conn: conn} do
       Application.put_env(:docusign, :retry_options,
         max_retries: 2,
         backoff_factor: 2,
@@ -206,7 +206,7 @@ defmodule DocuSign.ConnectionRetryTest do
 
       {:ok, agent} = Agent.start_link(fn -> [] end)
 
-      Bypass.expect(bypass, "GET", "/test", fn conn ->
+      DocuSign.TestHTTPServer.expect(server, "GET", "/test", fn conn ->
         timestamp = System.monotonic_time(:millisecond)
         Agent.update(agent, &(&1 ++ [timestamp]))
 

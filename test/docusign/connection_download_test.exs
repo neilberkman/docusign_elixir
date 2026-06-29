@@ -12,10 +12,10 @@ defmodule DocuSign.ConnectionDownloadTest do
   describe "download_file/3" do
     test "calls FileDownloader.download with correct arguments" do
       # Since download_file is just a delegation, we test it with a real HTTP call
-      # using Bypass to ensure arguments are passed correctly
-      bypass = Bypass.open()
+      # using a local test server to ensure arguments are passed correctly
+      server = DocuSign.TestHTTPServer.open()
 
-      Bypass.expect_once(bypass, "GET", "/test/document.pdf", fn conn ->
+      DocuSign.TestHTTPServer.expect_once(server, "GET", "/test/document.pdf", fn conn ->
         conn
         |> Plug.Conn.put_resp_header("content-disposition", ~s(attachment; filename="doc.pdf"))
         |> Plug.Conn.put_resp_header("content-type", "application/pdf")
@@ -23,7 +23,7 @@ defmodule DocuSign.ConnectionDownloadTest do
       end)
 
       conn = %Connection{
-        req: Req.new(base_url: "http://localhost:#{bypass.port}")
+        req: Req.new(base_url: "http://localhost:#{server.port}")
       }
 
       # Test that arguments are passed through correctly
@@ -33,14 +33,14 @@ defmodule DocuSign.ConnectionDownloadTest do
 
     test "passes through errors from FileDownloader" do
       # Test error handling
-      bypass = Bypass.open()
+      server = DocuSign.TestHTTPServer.open()
 
-      Bypass.expect_once(bypass, "GET", "/missing", fn conn ->
+      DocuSign.TestHTTPServer.expect_once(server, "GET", "/missing", fn conn ->
         Plug.Conn.resp(conn, 404, "Not found")
       end)
 
       conn = %Connection{
-        req: Req.new(base_url: "http://localhost:#{bypass.port}")
+        req: Req.new(base_url: "http://localhost:#{server.port}")
       }
 
       assert {:error, {:http_error, 404, "Not found"}} =
@@ -51,16 +51,16 @@ defmodule DocuSign.ConnectionDownloadTest do
       # Create a temp file to test file strategy
       temp_path = Path.join(System.tmp_dir!(), "test_download_#{:rand.uniform(10_000)}.pdf")
 
-      bypass = Bypass.open()
+      server = DocuSign.TestHTTPServer.open()
 
-      Bypass.expect_once(bypass, "GET", "/download", fn conn ->
+      DocuSign.TestHTTPServer.expect_once(server, "GET", "/download", fn conn ->
         conn
         |> Plug.Conn.put_resp_header("content-type", "application/pdf")
         |> Plug.Conn.resp(200, "File content")
       end)
 
       conn = %Connection{
-        req: Req.new(base_url: "http://localhost:#{bypass.port}")
+        req: Req.new(base_url: "http://localhost:#{server.port}")
       }
 
       # Test with various options to ensure they're passed through
