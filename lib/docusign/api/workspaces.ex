@@ -50,7 +50,7 @@ defmodule DocuSign.Api.Workspaces do
 
   @doc """
   Get Workspace
-  Retrieves properties about a workspace given a unique workspaceId. 
+  Retrieves properties about a workspace given a unique workspaceId.
 
   ### Parameters
 
@@ -124,7 +124,7 @@ defmodule DocuSign.Api.Workspaces do
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `opts` (keyword): Optional parameters
-    - `:body` (Workspace): 
+    - `:body` (Workspace):
 
   ### Returns
 
@@ -165,7 +165,7 @@ defmodule DocuSign.Api.Workspaces do
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `workspace_id` (String.t): The ID of the workspace.
   - `opts` (keyword): Optional parameters
-    - `:body` (Workspace): 
+    - `:body` (Workspace):
 
   ### Returns
 

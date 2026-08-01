@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.CorrectViewRequest do
   @moduledoc """
-  The request body for the [EnvelopeViews: createCorrect](/docs/esign-rest-api/reference/envelopes/envelopeviews/createcorrect/) method.
+  The request body for the [EnvelopeViews: createCorrect](https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/envelopeviews/createcorrect/) method.
   """
 
   defstruct [

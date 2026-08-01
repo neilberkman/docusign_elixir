@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.RecipientSignatureProvider do
   @moduledoc """
-  An Electronic or Standards Based Signature (digital signature) provider for the signer to use. [More information](/docs/esign-rest-api/esign101/concepts/standards-based-signatures/). 
+  An Electronic or Standards Based Signature (digital signature) provider for the signer to use. [More information](https://developers.docusign.com/docs/esign-rest-api/esign101/concepts/standards-based-signatures/).
   """
 
   alias DocuSign.Deserializer

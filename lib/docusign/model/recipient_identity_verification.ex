@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.RecipientIdentityVerification do
   @moduledoc """
-  Specifies ID Verification applied on an envelope by workflow ID. See the [list](/docs/esign-rest-api/reference/accounts/identityverifications/list/) method in the [IdentityVerifications](/docs/esign-rest-api/reference/accounts/identityverifications/) resource for more information on how to retrieve workflow IDs available for an account. This can be used in addition to other [recipient authentication](https://support.docusign.com/s/document-item?bundleId=gav1643676262430&topicId=kzp1578456318101.html) methods.
+  Specifies ID Verification applied on an envelope by workflow ID. See the [list](https://developers.docusign.com/docs/esign-rest-api/reference/accounts/identityverifications/list/) method in the [IdentityVerifications](https://developers.docusign.com/docs/esign-rest-api/reference/accounts/identityverifications/) resource for more information on how to retrieve workflow IDs available for an account. This can be used in addition to other [recipient authentication](https://support.docusign.com/s/document-item?bundleId=gav1643676262430&topicId=kzp1578456318101.html) methods.
   """
 
   alias DocuSign.Deserializer

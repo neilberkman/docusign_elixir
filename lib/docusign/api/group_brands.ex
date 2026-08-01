@@ -23,7 +23,7 @@ defmodule DocuSign.Api.GroupBrands do
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `group_id` (String.t): The ID of the group.
   - `opts` (keyword): Optional parameters
-    - `:body` (BrandsRequest): 
+    - `:body` (BrandsRequest):
 
   ### Returns
 
@@ -97,7 +97,7 @@ defmodule DocuSign.Api.GroupBrands do
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `group_id` (String.t): The ID of the group being accessed.
   - `opts` (keyword): Optional parameters
-    - `:body` (BrandsRequest): 
+    - `:body` (BrandsRequest):
 
   ### Returns
 

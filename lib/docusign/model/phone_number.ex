@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.PhoneNumber do
   @moduledoc """
-  A Phone Number tab enables a recipient to enter a phone number.  **Note:** This tab can only be assigned to a remote notary recipient using [Docusign Notary][notary].  [notary]: /docs/notary-api/
+  A Phone Number tab enables a recipient to enter a phone number.  **Note:** This tab can only be assigned to a remote notary recipient using [Docusign Notary][notary].  [notary]: https://developers.docusign.com/docs/notary-api/
   """
 
   alias DocuSign.Deserializer

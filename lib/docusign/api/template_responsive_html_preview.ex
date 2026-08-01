@@ -15,7 +15,7 @@ defmodule DocuSign.Api.TemplateResponsiveHtmlPreview do
 
   @doc """
   Creates a preview of the responsive versions of all of the documents associated with a template.
-  Creates a preview of the [responsive](/docs/esign-rest-api/esign101/concepts/responsive/), HTML versions of all of the documents associated with a template. This method enables you to preview the PDF document conversions to responsive HTML across device types prior to sending.  The request body is a `documentHtmlDefinition` object, which holds the responsive signing parameters that define how to generate the HTML version of the documents.
+  Creates a preview of the [responsive](https://developers.docusign.com/docs/esign-rest-api/esign101/concepts/responsive/), HTML versions of all of the documents associated with a template. This method enables you to preview the PDF document conversions to responsive HTML across device types prior to sending.  The request body is a `documentHtmlDefinition` object, which holds the responsive signing parameters that define how to generate the HTML version of the documents.
 
   ### Parameters
 
@@ -23,7 +23,7 @@ defmodule DocuSign.Api.TemplateResponsiveHtmlPreview do
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `template_id` (String.t): The ID of the template.
   - `opts` (keyword): Optional parameters
-    - `:body` (DocumentHtmlDefinition): 
+    - `:body` (DocumentHtmlDefinition):
 
   ### Returns
 

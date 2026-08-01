@@ -58,7 +58,7 @@ defmodule DocuSign.Api.CloudStorageProviders do
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `user_id` (String.t): The ID of the user to access.  **Note:** Users can only access their own information. A user, even one with Admin rights, cannot access another user's settings.
   - `opts` (keyword): Optional parameters
-    - `:body` (CloudStorageProviders): 
+    - `:body` (CloudStorageProviders):
 
   ### Returns
 
@@ -99,7 +99,7 @@ defmodule DocuSign.Api.CloudStorageProviders do
   - `service_id` (String.t): The ID of the service to access.   Valid values are the service name (\"Box\") or the numerical serviceId (\"4136\").
   - `user_id` (String.t): The ID of the user to access.  **Note:** Users can only access their own information. A user, even one with Admin rights, cannot access another user's settings.
   - `opts` (keyword): Optional parameters
-    - `:redirectUrl` (String.t):  The URL the user is redirected to after the cloud storage provider authenticates the user. Using this will append the redirectUrl to the authenticationUrl.  The redirectUrl is restricted to URLs in the docusign.com or docusign.net domains.  
+    - `:redirectUrl` (String.t):  The URL the user is redirected to after the cloud storage provider authenticates the user. Using this will append the redirectUrl to the authenticationUrl.  The redirectUrl is restricted to URLs in the docusign.com or docusign.net domains.
 
   ### Returns
 
@@ -131,7 +131,7 @@ defmodule DocuSign.Api.CloudStorageProviders do
 
   @doc """
   Get the Cloud Storage Provider configuration for the specified user.
-  Retrieves the list of cloud storage providers enabled for the account and the configuration information for the user. 
+  Retrieves the list of cloud storage providers enabled for the account and the configuration information for the user.
 
   ### Parameters
 
@@ -139,7 +139,7 @@ defmodule DocuSign.Api.CloudStorageProviders do
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `user_id` (String.t): The ID of the user to access.  **Note:** Users can only access their own information. A user, even one with Admin rights, cannot access another user's settings.
   - `opts` (keyword): Optional parameters
-    - `:redirectUrl` (String.t):  The URL the user is redirected to after the cloud storage provider authenticates the user. Using this will append the redirectUrl to the authenticationUrl.  The redirectUrl is restricted to URLs in the docusign.com or docusign.net domains.  
+    - `:redirectUrl` (String.t):  The URL the user is redirected to after the cloud storage provider authenticates the user. Using this will append the redirectUrl to the authenticationUrl.  The redirectUrl is restricted to URLs in the docusign.com or docusign.net domains.
 
   ### Returns
 
@@ -179,7 +179,7 @@ defmodule DocuSign.Api.CloudStorageProviders do
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `user_id` (String.t): The ID of the user to access.  **Note:** Users can only access their own information. A user, even one with Admin rights, cannot access another user's settings.
   - `opts` (keyword): Optional parameters
-    - `:body` (CloudStorageProviders): 
+    - `:body` (CloudStorageProviders):
 
   ### Returns
 

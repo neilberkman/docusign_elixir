@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.AccountRoleSettings do
   @moduledoc """
-  This object defines account permissions for users who are associated with the account permission profile. 
+  This object defines account permissions for users who are associated with the account permission profile.
   """
 
   alias DocuSign.Deserializer

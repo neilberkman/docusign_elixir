@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.RecipientViewRequest do
   @moduledoc """
-  The request body for the [EnvelopeViews: createRecipient](/docs/esign-rest-api/reference/envelopes/envelopeviews/createrecipient/) and [EnvelopeViews: createSharedRecipient](/docs/esign-rest-api/reference/envelopes/envelopeviews/createsharedrecipient/) methods.
+  The request body for the [EnvelopeViews: createRecipient](https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/envelopeviews/createrecipient/) and [EnvelopeViews: createSharedRecipient](https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/envelopeviews/createsharedrecipient/) methods.
   """
 
   alias DocuSign.Deserializer

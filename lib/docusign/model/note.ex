@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.Note do
   @moduledoc """
-  A tab that displays additional information, in the form of a note, for the recipient. 
+  A tab that displays additional information, in the form of a note, for the recipient.
   """
 
   alias DocuSign.Deserializer

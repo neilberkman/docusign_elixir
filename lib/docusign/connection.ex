@@ -223,15 +223,59 @@ defmodule DocuSign.Connection do
 
       req
       |> Req.merge(
-        retry: :transient,
-        max_retries: max_retries,
-        retry_delay: &calculate_retry_delay(&1, backoff_factor, max_delay)
+        retry: &handle_retry(&1, &2, backoff_factor, max_delay),
+        max_retries: max_retries
       )
-      |> Req.Request.prepend_error_steps(handle_rate_limit: &handle_rate_limit_error/1)
     end
   end
 
-  defp calculate_retry_delay(attempt, backoff_factor, max_delay) do
+  defp handle_retry(request, %Req.Response{status: status} = response, backoff_factor, max_delay)
+       when status in [408, 429, 500, 502, 503, 504] do
+    retry_after = get_retry_after(response.headers)
+
+    if retry_after do
+      execute_rate_limit_telemetry(request, retry_after)
+      {:delay, retry_after * 1000}
+    else
+      retry_delay = calculate_retry_delay(request, backoff_factor, max_delay)
+      {:delay, retry_delay}
+    end
+  end
+
+  defp handle_retry(request, %Req.TransportError{reason: reason}, backoff_factor, max_delay)
+       when reason in [:timeout, :econnrefused, :closed] do
+    retry_delay = calculate_retry_delay(request, backoff_factor, max_delay)
+    {:delay, retry_delay}
+  end
+
+  defp handle_retry(request, %Req.HTTPError{protocol: :http2, reason: reason}, backoff_factor, max_delay)
+       when reason in [:unprocessed, :pool_not_available] do
+    retry_delay = calculate_retry_delay(request, backoff_factor, max_delay)
+    {:delay, retry_delay}
+  end
+
+  defp handle_retry(_, _response_or_error, _backoff_factor, _max_delay), do: false
+
+  defp execute_rate_limit_telemetry(request, retry_after) do
+    # Try to get metadata from finch_private or use defaults
+    finch_private = request.options[:finch_private] || %{}
+
+    metadata = %{
+      account_id: finch_private[:account_id] || "unknown",
+      operation: finch_private[:operation] || "unknown"
+    }
+
+    DocuSign.Telemetry.execute_rate_limit(metadata.operation, retry_after, metadata)
+  end
+
+  defp calculate_retry_delay(request_or_attempt, backoff_factor, max_delay) do
+    attempt =
+      if is_map(request_or_attempt) do
+        Req.Request.get_private(request_or_attempt, :req_retry_count, 0)
+      else
+        request_or_attempt
+      end
+
     # Exponential backoff with jitter
     # Ensure non-negative exponent (attempt starts from 0 in Req)
     exponent = max(0, attempt)
@@ -240,57 +284,12 @@ defmodule DocuSign.Connection do
     min(jittered, max_delay)
   end
 
-  defp handle_rate_limit_error({request, %Req.Response{status: 429} = response}) do
-    # Check for Retry-After header
-    retry_after = get_retry_after(response.headers)
-
-    # Emit telemetry event for rate limit
-    if retry_after do
-      # Try to get metadata from finch_private or use defaults
-      finch_private = request.options[:finch_private] || %{}
-
-      metadata = %{
-        account_id: finch_private[:account_id] || "unknown",
-        operation: finch_private[:operation] || "unknown"
-      }
-
-      DocuSign.Telemetry.execute_rate_limit(metadata.operation, retry_after, metadata)
-    end
-
-    if retry_after && request.private[:retry_count] < request.options[:max_retries] do
-      # Wait for the specified time before retrying
-      Process.sleep(retry_after * 1000)
-      {request, {:retry, response}}
-    else
-      {request, response}
-    end
-  end
-
-  defp handle_rate_limit_error({request, response_or_error}) do
-    {request, response_or_error}
-  end
-
   defp get_retry_after(headers) do
-    case List.keyfind(headers, "retry-after", 0) do
-      {"retry-after", value} when is_list(value) ->
-        value |> List.first() |> parse_retry_after()
-
-      {"retry-after", value} when is_binary(value) ->
-        parse_retry_after(value)
-
-      _ ->
-        nil
+    case Req.Response.get_retry_after(%Req.Response{headers: headers}) do
+      nil -> nil
+      ms when is_integer(ms) -> div(ms, 1000)
     end
   end
-
-  defp parse_retry_after(value) when is_binary(value) do
-    case Integer.parse(value) do
-      {seconds, ""} -> seconds
-      _ -> nil
-    end
-  end
-
-  defp parse_retry_after(_), do: nil
 
   defp maybe_add_debug_steps(req) do
     if Application.get_env(:docusign, :debug, false) do

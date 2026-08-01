@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.EmailAddress do
   @moduledoc """
-  A tab that displays the recipient's email as entered in the recipient information. 
+  A tab that displays the recipient's email as entered in the recipient information.
   """
 
   alias DocuSign.Deserializer

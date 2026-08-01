@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.Text do
   @moduledoc """
-  A tab that allows the recipient to enter any type of text. 
+  A tab that allows the recipient to enter any type of text.
   """
 
   alias DocuSign.Deserializer

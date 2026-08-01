@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.RecipientSignatureProviderOptions do
   @moduledoc """
-  Option settings for the signature provider. Different providers require or use different options. [The current provider list and the options they require.](/docs/esign-rest-api/esign101/concepts/standards-based-signatures/)
+  Option settings for the signature provider. Different providers require or use different options. [The current provider list and the options they require.](https://developers.docusign.com/docs/esign-rest-api/esign101/concepts/standards-based-signatures/)
   """
 
   alias DocuSign.Deserializer

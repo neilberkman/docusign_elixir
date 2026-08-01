@@ -163,8 +163,8 @@ defmodule DocuSign.RequestBuilder do
 
   ### Returns
 
-  {:ok, any()} on success
-  {:error, Req.Response.t} on failure
+  - `{:ok, any()}` on success
+  - `{:error, Req.Response.t()}` on failure
   """
   @spec evaluate_response({:ok, Req.Response.t()} | {:error, any()}, list({integer(), any()})) ::
           {:ok, any()} | {:error, Req.Response.t()}

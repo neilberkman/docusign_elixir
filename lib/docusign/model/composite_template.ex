@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.CompositeTemplate do
   @moduledoc """
-  This object contains information about a [composite template][composite], which you can use to to apply multiple templates to a single envelope, combine templates with PDF forms, and combine templates with documents from cloud sources.  [composite]: /docs/esign-rest-api/esign101/concepts/templates/composite/
+  This object contains information about a [composite template][composite], which you can use to to apply multiple templates to a single envelope, combine templates with PDF forms, and combine templates with documents from cloud sources.  [composite]: https://developers.docusign.com/docs/esign-rest-api/esign101/concepts/templates/composite/
   """
 
   alias DocuSign.Deserializer

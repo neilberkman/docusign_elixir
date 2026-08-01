@@ -57,7 +57,7 @@ defmodule DocuSign.Api.Contacts do
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `opts` (keyword): Optional parameters
-    - `:body` (ContactModRequest): 
+    - `:body` (ContactModRequest):
 
   ### Returns
 
@@ -89,7 +89,7 @@ defmodule DocuSign.Api.Contacts do
 
   @doc """
   Gets one or more contacts.
-  This method returns one or more contacts associated with a Docusign account. You can also retrieve contacts from connected [cloud storage][CloudStorage] providers by using the `cloud_provider` query parameter. By default, contacts are retrieved from the Docusign account's default address book.  To return a specific contact, use the `contactId` query parameter. To return all contacts associated with an account, omit this parameter.  [CloudStorage]: /docs/esign-rest-api/reference/cloudstorage/
+  This method returns one or more contacts associated with a Docusign account. You can also retrieve contacts from connected [cloud storage][CloudStorage] providers by using the `cloud_provider` query parameter. By default, contacts are retrieved from the Docusign account's default address book.  To return a specific contact, use the `contactId` query parameter. To return all contacts associated with an account, omit this parameter.  [CloudStorage]: https://developers.docusign.com/docs/esign-rest-api/reference/cloudstorage/
 
   ### Parameters
 
@@ -136,7 +136,7 @@ defmodule DocuSign.Api.Contacts do
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `opts` (keyword): Optional parameters
-    - `:body` (ContactModRequest): 
+    - `:body` (ContactModRequest):
 
   ### Returns
 
@@ -176,7 +176,7 @@ defmodule DocuSign.Api.Contacts do
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `opts` (keyword): Optional parameters
-    - `:body` (ContactModRequest): 
+    - `:body` (ContactModRequest):
 
   ### Returns
 

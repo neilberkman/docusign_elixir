@@ -48,14 +48,14 @@ defmodule DocuSign.Api.FavoriteTemplates do
 
   @doc """
   Set one or more templates as account favorites.
-  Set one or more templates as account favorites.  Your request should include each template as a separate `favoriteTemplatesContentItem` JSON object, like this: ``` {     \"favoriteTemplates\": [         {             \"templateId\": \"6bc0584f-xxxx-xxxx-xxxx-35ab28cc44e1\"         },         {             \"templateId\": \"8ae9b3452-xxxx-xxxx-xxx-ac0de23fa57f\"         }     ] } ``` 
+  Set one or more templates as account favorites.  Your request should include each template as a separate `favoriteTemplatesContentItem` JSON object, like this: ``` {     \"favoriteTemplates\": [         {             \"templateId\": \"6bc0584f-xxxx-xxxx-xxxx-35ab28cc44e1\"         },         {             \"templateId\": \"8ae9b3452-xxxx-xxxx-xxx-ac0de23fa57f\"         }     ] } ```
 
   ### Parameters
 
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `opts` (keyword): Optional parameters
-    - `:body` (FavoriteTemplatesInfo): 
+    - `:body` (FavoriteTemplatesInfo):
 
   ### Returns
 
@@ -88,14 +88,14 @@ defmodule DocuSign.Api.FavoriteTemplates do
 
   @doc """
   Remove one or more templates from the account favorites.
-  Remove one or more templates from the account favorites.   Your request should include each template to remove as a separate `favoriteTemplatesContentItem` JSON object, like this: ``` {     \"favoriteTemplates\": [         {             \"templateId\": \"6bc0584f-xxxx-xxxx-xxxx-35ab28cc44e1\"         },         {             \"templateId\": \"8ae9b3452-xxxx-xxxx-xxx-ac0de23fa57f\"         }     ] } ```  The response includes the IDs of the templates that were successfully removed from your favorites. To get the account's remaining favorite templates, use the [getFavoriteTemplates](/docs/esign-rest-api/reference/accounts/favoritetemplates/getfavoritetemplates/) endpoint.
+  Remove one or more templates from the account favorites.   Your request should include each template to remove as a separate `favoriteTemplatesContentItem` JSON object, like this: ``` {     \"favoriteTemplates\": [         {             \"templateId\": \"6bc0584f-xxxx-xxxx-xxxx-35ab28cc44e1\"         },         {             \"templateId\": \"8ae9b3452-xxxx-xxxx-xxx-ac0de23fa57f\"         }     ] } ```  The response includes the IDs of the templates that were successfully removed from your favorites. To get the account's remaining favorite templates, use the [getFavoriteTemplates](https://developers.docusign.com/docs/esign-rest-api/reference/accounts/favoritetemplates/getfavoritetemplates/) endpoint.
 
   ### Parameters
 
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `opts` (keyword): Optional parameters
-    - `:body` (FavoriteTemplatesInfo): 
+    - `:body` (FavoriteTemplatesInfo):
 
   ### Returns
 

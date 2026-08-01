@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.DocumentHtmlDefinition do
   @moduledoc """
-  Holds the properties that define how to generate the responsive-formatted HTML for the document. See [Responsive signing](/docs/esign-rest-api/esign101/concepts/responsive/) in the [eSignature concepts guide](/docs/esign-rest-api/esign101/concepts/).
+  Holds the properties that define how to generate the responsive-formatted HTML for the document. See [Responsive signing](https://developers.docusign.com/docs/esign-rest-api/esign101/concepts/responsive/) in the [eSignature concepts guide](https://developers.docusign.com/docs/esign-rest-api/esign101/concepts/).
   """
 
   alias DocuSign.Deserializer

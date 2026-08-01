@@ -57,7 +57,7 @@ defmodule DocuSign.Api.UserProfiles do
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `user_id` (String.t): The ID of the user to access.  **Note:** Users can only access their own information. A user, even one with Admin rights, cannot access another user's settings.
   - `opts` (keyword): Optional parameters
-    - `:body` (UserProfile): 
+    - `:body` (UserProfile):
 
   ### Returns
 

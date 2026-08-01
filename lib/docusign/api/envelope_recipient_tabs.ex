@@ -14,17 +14,17 @@ defmodule DocuSign.Api.EnvelopeRecipientTabs do
   alias DocuSign.Model.ErrorDetails
 
   @doc """
-  Deletes the tabs associated with a recipient.  **Note:** It is an error to delete a tab that has the `templateLocked` property set to true. This property corresponds to the **Restrict changes** option in the web app.  
+  Deletes the tabs associated with a recipient.  **Note:** It is an error to delete a tab that has the `templateLocked` property set to true. This property corresponds to the **Restrict changes** option in the web app.
   Deletes one or more tabs associated with a recipient in a draft envelope.
 
   ### Parameters
 
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
-  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec` 
-  - `recipient_id` (String.t): A local reference used to map recipients to other objects, such as specific document tabs.  A `recipientId` must be either an integer or a GUID, and the `recipientId` must be unique within an envelope.  For example, many envelopes assign the first recipient a `recipientId` of `1`. 
+  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec`
+  - `recipient_id` (String.t): A local reference used to map recipients to other objects, such as specific document tabs.  A `recipientId` must be either an integer or a GUID, and the `recipientId` must be unique within an envelope.  For example, many envelopes assign the first recipient a `recipientId` of `1`.
   - `opts` (keyword): Optional parameters
-    - `:body` (EnvelopeRecipientTabs): 
+    - `:body` (EnvelopeRecipientTabs):
 
   ### Returns
 
@@ -56,14 +56,14 @@ defmodule DocuSign.Api.EnvelopeRecipientTabs do
 
   @doc """
   Gets the tabs information for a signer or sign-in-person recipient in an envelope.
-  Retrieves information about the tabs associated with a recipient. You can make a single API call to get all the tab values and information from a given, completed envelope in addition to draft ones.  Tab values can be retrieved by using the [EnvelopeRecipients:list method](/docs/esign-rest-api/reference/envelopes/enveloperecipients/list/) with query parameter `include_tabs` set to **true.**
+  Retrieves information about the tabs associated with a recipient. You can make a single API call to get all the tab values and information from a given, completed envelope in addition to draft ones.  Tab values can be retrieved by using the [EnvelopeRecipients:list method](https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/enveloperecipients/list/) with query parameter `include_tabs` set to **true.**
 
   ### Parameters
 
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
-  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec` 
-  - `recipient_id` (String.t): A local reference used to map recipients to other objects, such as specific document tabs.  A `recipientId` must be either an integer or a GUID, and the `recipientId` must be unique within an envelope.  For example, many envelopes assign the first recipient a `recipientId` of `1`. 
+  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec`
+  - `recipient_id` (String.t): A local reference used to map recipients to other objects, such as specific document tabs.  A `recipientId` must be either an integer or a GUID, and the `recipientId` must be unique within an envelope.  For example, many envelopes assign the first recipient a `recipientId` of `1`.
   - `opts` (keyword): Optional parameters
     - `:include_anchor_tab_locations` (String.t): When **true,** all tabs with anchor tab properties are included in the response. The default value is **false.**
     - `:include_metadata` (String.t): When **true,** the response includes metadata indicating which properties are editable.
@@ -105,10 +105,10 @@ defmodule DocuSign.Api.EnvelopeRecipientTabs do
 
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
-  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec` 
-  - `recipient_id` (String.t): A local reference used to map recipients to other objects, such as specific document tabs.  A `recipientId` must be either an integer or a GUID, and the `recipientId` must be unique within an envelope.  For example, many envelopes assign the first recipient a `recipientId` of `1`. 
+  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec`
+  - `recipient_id` (String.t): A local reference used to map recipients to other objects, such as specific document tabs.  A `recipientId` must be either an integer or a GUID, and the `recipientId` must be unique within an envelope.  For example, many envelopes assign the first recipient a `recipientId` of `1`.
   - `opts` (keyword): Optional parameters
-    - `:body` (EnvelopeRecipientTabs): 
+    - `:body` (EnvelopeRecipientTabs):
 
   ### Returns
 
@@ -140,17 +140,17 @@ defmodule DocuSign.Api.EnvelopeRecipientTabs do
   end
 
   @doc """
-  Updates the tabs for a recipient.  
-  Updates one or more tabs for a recipient in a draft envelope. A draft envelope is one that is not yet complete.  **Note:** It is an error to update a tab that has the `templateLocked` property set to true. This property corresponds to the **Restrict changes** option in the web app.  
+  Updates the tabs for a recipient.
+  Updates one or more tabs for a recipient in a draft envelope. A draft envelope is one that is not yet complete.  **Note:** It is an error to update a tab that has the `templateLocked` property set to true. This property corresponds to the **Restrict changes** option in the web app.
 
   ### Parameters
 
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
-  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec` 
-  - `recipient_id` (String.t): A local reference used to map recipients to other objects, such as specific document tabs.  A `recipientId` must be either an integer or a GUID, and the `recipientId` must be unique within an envelope.  For example, many envelopes assign the first recipient a `recipientId` of `1`. 
+  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec`
+  - `recipient_id` (String.t): A local reference used to map recipients to other objects, such as specific document tabs.  A `recipientId` must be either an integer or a GUID, and the `recipientId` must be unique within an envelope.  For example, many envelopes assign the first recipient a `recipientId` of `1`.
   - `opts` (keyword): Optional parameters
-    - `:body` (EnvelopeRecipientTabs): 
+    - `:body` (EnvelopeRecipientTabs):
 
   ### Returns
 

@@ -18,13 +18,13 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
 
   @doc """
   Delete the workflow definition for an envelope.
-  Deletes the specified envelope's workflow definition if it has one.  **Note:** If the envelope was scheduled to be sent, this endpoint will cancel the scheduled send and the envelope status will be reset to  `created`. To resend the envelope, call the update the status to `sent` with the [Envelopes::Update](/docs/esign-rest-api/reference/envelopes/envelopes/update/) method. 
+  Deletes the specified envelope's workflow definition if it has one.  **Note:** If the envelope was scheduled to be sent, this endpoint will cancel the scheduled send and the envelope status will be reset to  `created`. To resend the envelope, call the update the status to `sent` with the [Envelopes::Update](https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/envelopes/update/) method.
 
   ### Parameters
 
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
-  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec` 
+  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec`
   - `opts` (keyword): Optional parameters
 
   ### Returns
@@ -62,13 +62,13 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
 
   @doc """
   Returns the workflow definition for an envelope.
-  Returns the workflow definition for the envelope specified by `envelopeId`. If the envelope does not have a workflow object, this method returns a 404. 
+  Returns the workflow definition for the envelope specified by `envelopeId`. If the envelope does not have a workflow object, this method returns a 404.
 
   ### Parameters
 
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
-  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec` 
+  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec`
   - `opts` (keyword): Optional parameters
 
   ### Returns
@@ -107,9 +107,9 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
 
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
-  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec` 
+  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec`
   - `opts` (keyword): Optional parameters
-    - `:body` (Workflow): 
+    - `:body` (Workflow):
 
   ### Returns
 
@@ -147,13 +147,13 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
 
   @doc """
   Deletes the delayed routing rules for the specified envelope workflow step.
-  Delete the delayed routing object for an envelope's workflow step. You cannot call this endpoint once the delay is in progress. As a workaround, you can update the delay or send time to one minute in the future using the [updateEnvelopeDelayedRoutingDefinition](/docs/esign-rest-api/reference/envelopes/envelopeworkflowdefinition/updateEnvelopeDelayedRoutingDefinition/) endpoint.   **Note:** After deleting the delayed routing object, the workflow step still contains the `pause_before` action. Once the workflow step is reached, you will need to [unpause the envelope](/docs/esign-rest-api/how-to/unpause-workflow/). If you want to delete the step entirely, use [deleteEnvelopeWorkflowStepDefinition](/docs/esign-rest-api/reference/envelopes/envelopeworkflowdefinition/deleteenvelopeworkflowstepdefinition/) instead. 
+  Delete the delayed routing object for an envelope's workflow step. You cannot call this endpoint once the delay is in progress. As a workaround, you can update the delay or send time to one minute in the future using the [updateEnvelopeDelayedRoutingDefinition](https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/envelopeworkflowdefinition/updateEnvelopeDelayedRoutingDefinition/) endpoint.   **Note:** After deleting the delayed routing object, the workflow step still contains the `pause_before` action. Once the workflow step is reached, you will need to [unpause the envelope](https://developers.docusign.com/docs/esign-rest-api/how-to/unpause-workflow/). If you want to delete the step entirely, use [deleteEnvelopeWorkflowStepDefinition](https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/envelopeworkflowdefinition/deleteenvelopeworkflowstepdefinition/) instead.
 
   ### Parameters
 
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
-  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec` 
+  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec`
   - `workflow_step_id` (String.t): The ID of the workflow step.
   - `opts` (keyword): Optional parameters
 
@@ -200,7 +200,7 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
 
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
-  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec` 
+  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec`
   - `workflow_step_id` (String.t): The ID of the workflow step.
   - `opts` (keyword): Optional parameters
 
@@ -247,7 +247,7 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
 
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
-  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec` 
+  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec`
   - `workflow_step_id` (String.t): The ID of the workflow step.
   - `opts` (keyword): Optional parameters
     - `:body` (DelayedRouting): A complex element that specifies the delayed routing settings for the workflow step.
@@ -301,7 +301,7 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
 
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
-  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec` 
+  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec`
   - `opts` (keyword): Optional parameters
 
   ### Returns
@@ -345,7 +345,7 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
 
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
-  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec` 
+  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec`
   - `opts` (keyword): Optional parameters
 
   ### Returns
@@ -389,7 +389,7 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
 
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
-  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec` 
+  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec`
   - `opts` (keyword): Optional parameters
     - `:body` (ScheduledSending): An object that describes the settings for scheduled sending.
 
@@ -440,7 +440,7 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
 
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
-  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec` 
+  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec`
   - `workflow_step_id` (String.t): The ID of the workflow step.
   - `opts` (keyword): Optional parameters
 
@@ -487,7 +487,7 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
 
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
-  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec` 
+  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec`
   - `workflow_step_id` (String.t): The ID of the workflow step.
   - `opts` (keyword): Optional parameters
 
@@ -534,9 +534,9 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
 
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
-  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec` 
+  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec`
   - `opts` (keyword): Optional parameters
-    - `:body` (WorkflowStep): 
+    - `:body` (WorkflowStep):
 
   ### Returns
 
@@ -580,10 +580,10 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
 
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
-  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec` 
+  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec`
   - `workflow_step_id` (String.t): The ID of the workflow step.
   - `opts` (keyword): Optional parameters
-    - `:body` (WorkflowStep): 
+    - `:body` (WorkflowStep):
 
   ### Returns
 
@@ -667,7 +667,7 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
 
   @doc """
   Returns the workflow definition for a template.
-  Returns the workflow definition for the template specified by `templateId`. If the template does not have a workflow object, this method returns a 404. 
+  Returns the workflow definition for the template specified by `templateId`. If the template does not have a workflow object, this method returns a 404.
 
   ### Parameters
 
@@ -714,7 +714,7 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `template_id` (String.t): The ID of the template.
   - `opts` (keyword): Optional parameters
-    - `:body` (Workflow): 
+    - `:body` (Workflow):
 
   ### Returns
 
@@ -1140,7 +1140,7 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
   - `account_id` (String.t): The external account number (int) or account ID GUID.
   - `template_id` (String.t): The ID of the template.
   - `opts` (keyword): Optional parameters
-    - `:body` (WorkflowStep): 
+    - `:body` (WorkflowStep):
 
   ### Returns
 
@@ -1187,7 +1187,7 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
   - `template_id` (String.t): The ID of the template.
   - `workflow_step_id` (String.t): The ID of the workflow step.
   - `opts` (keyword): Optional parameters
-    - `:body` (WorkflowStep): 
+    - `:body` (WorkflowStep):
 
   ### Returns
 

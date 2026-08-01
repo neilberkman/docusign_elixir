@@ -60,7 +60,7 @@ defmodule DocuSign.Api.Notary do
 
   - `connection` (DocuSign.Connection): Connection to server
   - `opts` (keyword): Optional parameters
-    - `:body` (Notary): 
+    - `:body` (Notary):
 
   ### Returns
 
@@ -99,7 +99,7 @@ defmodule DocuSign.Api.Notary do
 
   - `connection` (DocuSign.Connection): Connection to server
   - `opts` (keyword): Optional parameters
-    - `:body` (Notary): 
+    - `:body` (Notary):
 
   ### Returns
 

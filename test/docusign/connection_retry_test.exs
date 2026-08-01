@@ -259,44 +259,79 @@ defmodule DocuSign.ConnectionRetryTest do
 
       req
       |> Req.merge(
-        retry: :transient,
         max_retries: max_retries,
-        retry_delay: fn attempt ->
-          # Ensure non-negative exponent (attempt starts from 0 in Req)
-          exponent = max(0, attempt)
-          base_delay = Integer.pow(backoff_factor, exponent) * 1000
-          jittered = base_delay + :rand.uniform(1000)
-          min(jittered, max_delay)
-        end
+        retry: &handle_retry_for_test(&1, &2, backoff_factor, max_delay)
       )
-      |> Req.Request.prepend_error_steps(handle_rate_limit: &handle_rate_limit_error_for_test/1)
     end
   end
 
-  defp handle_rate_limit_error_for_test({request, %Req.Response{status: 429} = response}) do
+  defp handle_retry_for_test(request, %Req.Response{status: 429} = response, backoff_factor, max_delay) do
     # Check for Retry-After header
     retry_after = get_retry_after_for_test(response.headers)
 
-    if retry_after && request.private[:retry_count] < request.options[:max_retries] do
-      # Wait for the specified time before retrying
-      Process.sleep(retry_after * 1000)
-      {request, {:retry, response}}
+    if retry_after do
+      {:delay, retry_after * 1000}
     else
-      {request, response}
+      retry_delay = calculate_retry_delay_for_test(request, backoff_factor, max_delay)
+      {:delay, retry_delay}
     end
   end
 
-  defp handle_rate_limit_error_for_test({request, response_or_error}) do
-    {request, response_or_error}
+  defp handle_retry_for_test(request, %Req.TransportError{reason: reason}, backoff_factor, max_delay)
+       when reason in [:timeout, :econnrefused, :closed] do
+    retry_delay = calculate_retry_delay_for_test(request, backoff_factor, max_delay)
+    {:delay, retry_delay}
+  end
+
+  defp handle_retry_for_test(request, %Req.HTTPError{protocol: :http2, reason: reason}, backoff_factor, max_delay)
+       when reason in [:unprocessed, :pool_not_available] do
+    retry_delay = calculate_retry_delay_for_test(request, backoff_factor, max_delay)
+    {:delay, retry_delay}
+  end
+
+  defp handle_retry_for_test(request, %Req.Response{status: status}, backoff_factor, max_delay)
+       when status in [408, 500, 502, 503, 504] do
+    retry_delay = calculate_retry_delay_for_test(request, backoff_factor, max_delay)
+    {:delay, retry_delay}
+  end
+
+  defp handle_retry_for_test(_request, _response_or_error, _backoff_factor, _max_delay) do
+    false
+  end
+
+  defp calculate_retry_delay_for_test(request, backoff_factor, max_delay) do
+    retry_count = Req.Request.get_private(request, :req_retry_count, 0)
+    exponent = max(0, retry_count)
+    base_delay = Integer.pow(backoff_factor, exponent) * 1000
+    jittered = base_delay + :rand.uniform(1000)
+    min(jittered, max_delay)
   end
 
   defp get_retry_after_for_test(headers) do
-    case List.keyfind(headers, "retry-after", 0) do
-      {"retry-after", value} when is_list(value) ->
-        value |> List.first() |> parse_retry_after_for_test()
+    case headers do
+      h when is_list(h) ->
+        case List.keyfind(h, "retry-after", 0) do
+          {"retry-after", value} when is_list(value) ->
+            value |> List.first() |> parse_retry_after_for_test()
 
-      {"retry-after", value} when is_binary(value) ->
-        parse_retry_after_for_test(value)
+          {"retry-after", value} when is_binary(value) ->
+            parse_retry_after_for_test(value)
+
+          _ ->
+            nil
+        end
+
+      h when is_map(h) ->
+        case Map.get(h, "retry-after") do
+          value when is_list(value) ->
+            value |> List.first() |> parse_retry_after_for_test()
+
+          value when is_binary(value) ->
+            parse_retry_after_for_test(value)
+
+          _ ->
+            nil
+        end
 
       _ ->
         nil

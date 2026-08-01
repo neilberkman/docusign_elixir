@@ -21,8 +21,8 @@ defmodule DocuSign.Api.EnvelopeShares do
 
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
-  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec` 
-  - `share_id` (String.t): 
+  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec`
+  - `share_id` (String.t):
   - `opts` (keyword): Optional parameters
 
   ### Returns
@@ -54,9 +54,9 @@ defmodule DocuSign.Api.EnvelopeShares do
 
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
-  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec` 
+  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec`
   - `opts` (keyword): Optional parameters
-    - `:body` (EnvelopesSharesRequest): 
+    - `:body` (EnvelopesSharesRequest):
 
   ### Returns
 
@@ -92,8 +92,8 @@ defmodule DocuSign.Api.EnvelopeShares do
 
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
-  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec` 
-  - `share_id` (String.t): 
+  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec`
+  - `share_id` (String.t):
   - `opts` (keyword): Optional parameters
 
   ### Returns
@@ -125,7 +125,7 @@ defmodule DocuSign.Api.EnvelopeShares do
 
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
-  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec` 
+  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec`
   - `opts` (keyword): Optional parameters
 
   ### Returns
@@ -157,9 +157,9 @@ defmodule DocuSign.Api.EnvelopeShares do
 
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
-  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec` 
+  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec`
   - `opts` (keyword): Optional parameters
-    - `:body` (EnvelopesSharesRequest): 
+    - `:body` (EnvelopesSharesRequest):
 
   ### Returns
 
@@ -196,10 +196,10 @@ defmodule DocuSign.Api.EnvelopeShares do
 
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
-  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec` 
-  - `share_id` (String.t): 
+  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec`
+  - `share_id` (String.t):
   - `opts` (keyword): Optional parameters
-    - `:body` (EnvelopesSharePermissionRequest): 
+    - `:body` (EnvelopesSharePermissionRequest):
 
   ### Returns
 
@@ -236,9 +236,9 @@ defmodule DocuSign.Api.EnvelopeShares do
 
   - `connection` (DocuSign.Connection): Connection to server
   - `account_id` (String.t): The external account number (int) or account ID GUID.
-  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec` 
+  - `envelope_id` (String.t): The envelope's GUID.   Example: `93be49ab-xxxx-xxxx-xxxx-f752070d71ec`
   - `opts` (keyword): Optional parameters
-    - `:body` (EnvelopesSharesRequest): 
+    - `:body` (EnvelopesSharesRequest):
 
   ### Returns
 
@@ -278,8 +278,8 @@ defmodule DocuSign.Api.EnvelopeShares do
   - `opts` (keyword): Optional parameters
     - `:count` (String.t): The maximum number of results to return.
     - `:from_date` (String.t): The start date for a date range in UTC DateTime format.  **Note:** If this property is null, no date filtering is applied.
-    - `:include` (String.t): 
-    - `:order` (String.t): The order in which to sort the results.  Valid values are:    * `asc`: Ascending order. * `desc`: Descending order. 
+    - `:include` (String.t):
+    - `:order` (String.t): The order in which to sort the results.  Valid values are:    * `asc`: Ascending order. * `desc`: Descending order.
     - `:order_by` (String.t): The file attribute to use to sort the results.  Valid values are:   * `modified` * `name`
     - `:search_text` (String.t): Use this parameter to search for specific text.
     - `:start_position` (String.t): The position within the total result set from which to start returning values. The value **thumbnail** may be used to return the page image.

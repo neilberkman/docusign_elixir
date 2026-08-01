@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.NotarySeal do
   @moduledoc """
-  A Notary Seal tab enables the recipient to notarize a document. This tab can only be assigned to a remote notary recipient using [Docusign Notary][notary].  [notary]: /docs/notary-api/
+  A Notary Seal tab enables the recipient to notarize a document. This tab can only be assigned to a remote notary recipient using [Docusign Notary][notary].  [notary]: https://developers.docusign.com/docs/notary-api/
   """
 
   alias DocuSign.Deserializer

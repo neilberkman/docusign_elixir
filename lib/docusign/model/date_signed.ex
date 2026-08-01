@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.DateSigned do
   @moduledoc """
-  A tab that displays the date that the recipient signed the document. 
+  A tab that displays the date that the recipient signed the document.
   """
 
   alias DocuSign.Deserializer

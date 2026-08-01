@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.EventNotification do
   @moduledoc """
-  Use this object to configure a [Docusign Connect webhook](/platform/webhooks/connect/).
+  Use this object to configure a [Docusign Connect webhook](https://developers.docusign.com/platform/webhooks/connect/).
   """
 
   alias DocuSign.Deserializer

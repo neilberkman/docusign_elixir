@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.List do
   @moduledoc """
-  This tab offers a list of options to choose from. The `listItems` property contains a list of [`listItem`](/docs/esign-rest-api/reference/envelopes/enveloperecipienttabs/create/) objects to specify the selectable options. 
+  This tab offers a list of options to choose from. The `listItems` property contains a list of [`listItem`](https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/enveloperecipienttabs/create/) objects to specify the selectable options.
   """
 
   alias DocuSign.Deserializer

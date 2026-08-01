@@ -488,11 +488,11 @@ If you don't specify CA certificates, the library will attempt to use them in th
 ## HTTP Client Configuration
 
 The library uses [Req](https://hexdocs.pm/req) with [Finch](https://hexdocs.pm/finch) as the underlying HTTP client.
-Req automatically manages its own Finch instance named `Req.Finch`.
+Req automatically manages its own Finch instance internally.
 
 ### Advanced Configuration
 
-To configure advanced HTTP options (connection pools, timeouts, etc.), you can configure the global Req.Finch instance:
+To configure advanced HTTP options (connection pools, timeouts, etc.), you can configure Req's global Finch options:
 
 ```elixir
 config :req, :finch_options, [

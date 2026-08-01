@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.ListItem do
   @moduledoc """
-  One of the selectable items in the `listItems` property of a [`list`](/docs/esign-rest-api/reference/envelopes/enveloperecipienttabs/create/) tab.
+  One of the selectable items in the `listItems` property of a [`list`](https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/enveloperecipienttabs/create/) tab.
   """
 
   alias DocuSign.Deserializer

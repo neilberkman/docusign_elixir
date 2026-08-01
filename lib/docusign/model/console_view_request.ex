@@ -4,7 +4,7 @@
 
 defmodule DocuSign.Model.ConsoleViewRequest do
   @moduledoc """
-  The request object for the [EnvelopeViews: createConsole](/docs/esign-rest-api/reference/envelopes/envelopeviews/createconsole/) method.
+  The request object for the [EnvelopeViews: createConsole](https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/envelopeviews/createconsole/) method.
   """
 
   defstruct [

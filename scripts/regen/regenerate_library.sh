@@ -150,6 +150,13 @@ find "${DOCUSIGN_DIR}/lib/docusign/model" -name "*.ex" -exec grep -l "Poison" {}
   sed -i '' 's/Poison\./Jason./g' "$file"
 done
 
+# Convert DocuSign developer-site links from root-relative paths to absolute URLs.
+find "${DOCUSIGN_DIR}/lib/docusign/api" "${DOCUSIGN_DIR}/lib/docusign/model" -name "*.ex" -exec perl -0pi -e \
+  's{(?<![A-Za-z0-9.])/docs/}{https://developers.docusign.com/docs/}g; s{(?<![A-Za-z0-9.])/platform/}{https://developers.docusign.com/platform/}g' {} +
+
+# Remove trailing whitespace copied from the OpenAPI descriptions.
+find "${DOCUSIGN_DIR}/lib/docusign/api" "${DOCUSIGN_DIR}/lib/docusign/model" -name "*.ex" -exec perl -0pi -e 's/[ \t]+$//mg' {} +
+
 # Format all generated code
 echo "Formatting generated code..."
 cd "${DOCUSIGN_DIR}"
