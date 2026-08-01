@@ -307,36 +307,27 @@ defmodule DocuSign.ConnectionRetryTest do
     min(jittered, max_delay)
   end
 
-  defp get_retry_after_for_test(headers) do
-    case headers do
-      h when is_list(h) ->
-        case List.keyfind(h, "retry-after", 0) do
-          {"retry-after", value} when is_list(value) ->
-            value |> List.first() |> parse_retry_after_for_test()
-
-          {"retry-after", value} when is_binary(value) ->
-            parse_retry_after_for_test(value)
-
-          _ ->
-            nil
-        end
-
-      h when is_map(h) ->
-        case Map.get(h, "retry-after") do
-          value when is_list(value) ->
-            value |> List.first() |> parse_retry_after_for_test()
-
-          value when is_binary(value) ->
-            parse_retry_after_for_test(value)
-
-          _ ->
-            nil
-        end
-
-      _ ->
-        nil
-    end
+  defp get_retry_after_for_test(headers) when is_list(headers) do
+    headers
+    |> List.keyfind("retry-after", 0)
+    |> parse_retry_after_value_for_test()
   end
+
+  defp get_retry_after_for_test(headers) when is_map(headers) do
+    headers
+    |> Map.get("retry-after")
+    |> parse_retry_after_value_for_test()
+  end
+
+  defp get_retry_after_for_test(_), do: nil
+
+  defp parse_retry_after_value_for_test({"retry-after", value}), do: parse_retry_after_value_for_test(value)
+
+  defp parse_retry_after_value_for_test(value) when is_list(value),
+    do: value |> List.first() |> parse_retry_after_for_test()
+
+  defp parse_retry_after_value_for_test(value) when is_binary(value), do: parse_retry_after_for_test(value)
+  defp parse_retry_after_value_for_test(_), do: nil
 
   defp parse_retry_after_for_test(value) when is_binary(value) do
     case Integer.parse(value) do
