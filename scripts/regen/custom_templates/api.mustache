@@ -1,11 +1,11 @@
 {{>licenseInfo}}
-defmodule DocuSign.Api.{{classname}} do
+defmodule {{moduleName}}.Api.{{classname}} do
   @moduledoc """
   API calls for all endpoints tagged `{{baseName}}`.
   """
 
-  alias DocuSign.Connection
-  import DocuSign.RequestBuilder
+  alias {{moduleName}}.Connection
+  import {{moduleName}}.RequestBuilder
 {{#operations}}
 {{#operation}}
 
@@ -19,7 +19,7 @@ defmodule DocuSign.Api.{{classname}} do
 
   ### Parameters
 
-  - `connection` (DocuSign.Connection): Connection to server
+  - `connection` ({{&moduleName}}.Connection): Connection to server
 {{#requiredParams}}
   - `{{#underscored}}{{&paramName}}{{/underscored}}` ({{&dataType}}): {{&description}}
 {{/requiredParams}}
@@ -38,8 +38,8 @@ defmodule DocuSign.Api.{{classname}} do
   - `{:ok, {{#isArray}}[%{{&returnBaseType}}{}, ...]{{/isArray}}{{#isMap}}%{}{{/isMap}}{{^returnType}}nil{{/returnType}}{{#returnSimpleType}}{{#returnType}}{{{.}}}{{/returnType}}{{/returnSimpleType}}}` on success
   - `{:error, Req.Response.t}` on failure
   """
-  @spec {{{operationId}}}(DocuSign.Connection.t(), {{#requiredParams}}{{&dataType}}, {{/requiredParams}}keyword()) ::
-          {:ok, {{#isArray}}[DocuSign.Model.{{&returnBaseType}}.t()]{{/isArray}}{{#isMap}}map(){{/isMap}}{{^returnType}}nil{{/returnType}}{{#returnSimpleType}}{{#returnType}}{{{returnType}}}{{/returnType}}{{/returnSimpleType}}}
+  @spec {{{operationId}}}({{moduleName}}.Connection.t(), {{#requiredParams}}{{&dataType}}, {{/requiredParams}}keyword()) ::
+          {:ok, {{#isArray}}[{{moduleName}}.Model.{{&returnBaseType}}.t()]{{/isArray}}{{#isMap}}map(){{/isMap}}{{^returnType}}nil{{/returnType}}{{#returnSimpleType}}{{#returnType}}{{{returnType}}}{{/returnType}}{{/returnSimpleType}}}
           | {:error, Req.Response.t()}
   def {{{operationId}}}(connection, {{#requiredParams}}{{#underscored}}{{{paramName}}}{{/underscored}}, {{/requiredParams}}{{^hasOptionalParams}}_{{/hasOptionalParams}}opts \\ []) do
 {{#optionalParams}}
