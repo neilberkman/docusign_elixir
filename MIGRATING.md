@@ -12,6 +12,14 @@ these model structs now.
 Jason is no longer a direct dependency of `docusign`. Applications that relied on
 Jason being available transitively must add Jason to their own dependencies.
 
+The minimum Req version is now `~> 0.7`.
+
+Any value passed as a request body through a generated API function (`opts[:body]`)
+or `DocuSign.RequestBuilder.add_param/4` is now encoded with `JSON.encode!/1`.
+Custom structs used as request bodies must implement `JSON.Encoder`, for example
+with `@derive JSON.Encoder`. A struct that only implements `Jason.Encoder` raises
+`Protocol.UndefinedError` even when Jason is still installed.
+
 ## Migrating to `v2.0` from `v1.x`
 
 Version 2.0.0 removes previously deprecated functionality. If you're still using any of these functions or configuration options, you'll need to update your code:

@@ -67,7 +67,8 @@ defmodule DocuSign.Telemetry do
   * `[:docusign, :rate_limit, :hit]` - Executed when hitting a rate limit
 
     Measurements:
-    * `:retry_after` - Seconds to wait before retry (from header)
+    * `:retry_after` - Seconds to wait before retry (from header), or `nil` when
+      the 429 response has no usable `Retry-After` header
 
     Metadata:
     * `:operation` - The API operation that hit the limit

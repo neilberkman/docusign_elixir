@@ -18,7 +18,7 @@ jobs:
       matrix:
         include:
           # Latest 1.18 series
-          - elixir: "1.18.4"
+          - elixir: "1.18.5"
             otp: "27.3"
             quality: false
           # Latest 1.19 series with OTP 28

@@ -48,4 +48,4 @@
 
 - `cd scripts/regen && ./regenerate_library.sh` - Regenerate API from OpenAPI spec
 - Use `--download` flag to force download latest spec
-- Use `--generate` flag to force regeneration
+- The script uses the tracked spec and always cleans and regenerates the generated output

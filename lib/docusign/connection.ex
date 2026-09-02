@@ -231,11 +231,16 @@ defmodule DocuSign.Connection do
 
   defp handle_retry(request, %Req.Response{status: status} = response, backoff_factor, max_delay)
        when status in [408, 429, 500, 502, 503, 504] do
-    retry_after = get_retry_after(response.headers)
+    retry_after = parse_retry_after(response.headers)
+
+    if status == 429 do
+      retry_after_seconds = retry_after && elem(retry_after, 1)
+      execute_rate_limit_telemetry(request, retry_after_seconds)
+    end
 
     if retry_after do
-      execute_rate_limit_telemetry(request, retry_after)
-      {:delay, retry_after * 1000}
+      {retry_after_ms, _retry_after_seconds} = retry_after
+      {:delay, min(retry_after_ms, max_delay)}
     else
       retry_delay = calculate_retry_delay(request, backoff_factor, max_delay)
       {:delay, retry_delay}
@@ -284,10 +289,60 @@ defmodule DocuSign.Connection do
     min(jittered, max_delay)
   end
 
-  defp get_retry_after(headers) do
-    case Req.Response.get_retry_after(%Req.Response{headers: headers}) do
-      nil -> nil
-      ms when is_integer(ms) -> div(ms, 1000)
+  defp parse_retry_after(headers) do
+    case retry_after_header_value(headers) do
+      value when is_binary(value) ->
+        case Integer.parse(value) do
+          {seconds, ""} when seconds >= 0 ->
+            {seconds * 1000, seconds}
+
+          {_seconds, ""} ->
+            nil
+
+          _ ->
+            parse_retry_after_date(value)
+        end
+
+      _ ->
+        nil
+    end
+  rescue
+    _ -> nil
+  end
+
+  defp retry_after_header_value(headers) when is_map(headers) do
+    case Map.get(headers, "retry-after") do
+      [value] when is_binary(value) -> value
+      value when is_binary(value) -> value
+      _ -> nil
+    end
+  end
+
+  defp retry_after_header_value(headers) when is_list(headers) do
+    case Enum.filter(headers, fn
+           {name, _value} when is_binary(name) -> String.downcase(name) == "retry-after"
+           _ -> false
+         end) do
+      [{_name, value}] when is_binary(value) -> value
+      [{_name, [value]}] when is_binary(value) -> value
+      _ -> nil
+    end
+  end
+
+  defp retry_after_header_value(_headers), do: nil
+
+  defp parse_retry_after_date(value) do
+    case :httpd_util.convert_request_date(String.to_charlist(value)) do
+      {{_year, _month, _day}, {_hour, _minute, _second}} = date_time ->
+        target_ms =
+          (:calendar.datetime_to_gregorian_seconds(date_time) -
+             :calendar.datetime_to_gregorian_seconds({{1970, 1, 1}, {0, 0, 0}})) * 1000
+
+        delay_ms = max(0, target_ms - System.system_time(:millisecond))
+        {delay_ms, div(delay_ms, 1000)}
+
+      :bad_date ->
+        nil
     end
   end
 
@@ -426,7 +481,7 @@ defmodule DocuSign.Connection do
         _ -> nil
       end
 
-    Keyword.update(opts, :finch_private, %{operation: operation}, fn existing ->
+    Keyword.update(opts, :finch_private, %{account_id: account_id, operation: operation}, fn existing ->
       Map.merge(existing, %{account_id: account_id, operation: operation})
     end)
   end

@@ -5,7 +5,7 @@
 
 Mix.install([
   {:docusign, path: ".", override: true},
-  {:req, "~> 0.5"}
+  {:req, "~> 0.7"}
 ])
 
 defmodule CaptureRealResponses do
@@ -82,7 +82,7 @@ defmodule CaptureRealResponses do
   defp save_response(name, response) do
     File.mkdir_p!("test/fixtures/real_responses")
     path = "test/fixtures/real_responses/#{name}.json"
-    File.write!(path, JSON.encode!(response, pretty: true))
+    File.write!(path, JSON.encode!(response))
     IO.puts("Saved response to #{path}")
   end
 end

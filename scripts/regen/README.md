@@ -21,7 +21,7 @@ cd scripts/regen
 
 This will:
 
-1. Download the latest OpenAPI specification from DocuSign's official repository
+1. Use the tracked OpenAPI specification in `esignature-rest-api-v2.1.json`
 2. Generate the client code using our custom Mustache templates
 3. Apply necessary post-processing (module naming, formatting)
 4. Run tests to verify everything works
@@ -45,9 +45,11 @@ Templates included:
 
 ## Script Options
 
-- `./regenerate_library.sh` - Standard regeneration
-- `./regenerate_library.sh --download` - Force download latest spec
-- `./regenerate_library.sh --clean` - Clean all generated files first
+- `./regenerate_library.sh` - Regenerate from the tracked specification
+- `./regenerate_library.sh --download` - Download the latest spec into the tracked specification, then regenerate
+
+The generated directory is cleaned before every generation. The tracked
+specification is never replaced unless `--download` is explicitly provided.
 
 ## What Gets Generated
 
@@ -81,7 +83,7 @@ After generation, the script automatically:
 - The custom templates eliminate the need for ModelCleaner (Req handles nil values properly)
 - Generated code requires minimal manual intervention
 - Tests should pass immediately after regeneration
-- The latest spec is downloaded from: https://github.com/docusign/OpenAPI-Specifications
+- With `--download`, the latest spec is downloaded from: https://github.com/docusign/OpenAPI-Specifications
 
 ## Troubleshooting
 

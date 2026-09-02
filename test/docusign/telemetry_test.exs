@@ -5,6 +5,15 @@ defmodule DocuSign.TelemetryTest do
 
   setup do
     server = DocuSign.TestHTTPServer.open()
+    previous_retry_options = Application.get_env(:docusign, :retry_options)
+
+    on_exit(fn ->
+      if is_nil(previous_retry_options) do
+        Application.delete_env(:docusign, :retry_options)
+      else
+        Application.put_env(:docusign, :retry_options, previous_retry_options)
+      end
+    end)
 
     # Create a test connection
     req =
@@ -124,10 +133,8 @@ defmodule DocuSign.TelemetryTest do
       :ets.delete(captured_events)
     end
 
-    @tag :skip
-    test "emits rate limit event when hitting 429", %{server: server, conn: conn} do
+    test "emits rate limit event when hitting 429", %{server: server} do
       handler_id = "test-handler-#{System.unique_integer()}"
-
       captured_events = :ets.new(:captured_events, [:public, :bag])
 
       :telemetry.attach(
@@ -139,20 +146,19 @@ defmodule DocuSign.TelemetryTest do
         nil
       )
 
-      # Configure retry to handle rate limit
+      on_exit(fn -> :telemetry.detach(handler_id) end)
+
       Application.put_env(:docusign, :retry_options,
         max_retries: 1,
         backoff_factor: 1,
         max_delay: 100
       )
 
-      # Mock rate limit response
+      conn = build_connection(server, "test-account-123")
       {:ok, agent} = Agent.start_link(fn -> 0 end)
 
       DocuSign.TestHTTPServer.expect(server, "GET", "/test", fn conn ->
-        count = Agent.get_and_update(agent, fn c -> {c, c + 1} end)
-
-        case count do
+        case Agent.get_and_update(agent, fn c -> {c, c + 1} end) do
           0 ->
             conn
             |> Plug.Conn.put_resp_header("retry-after", "1")
@@ -163,35 +169,19 @@ defmodule DocuSign.TelemetryTest do
         end
       end)
 
-      # Rebuild connection with retry config using the private function
-      updated_conn = rebuild_conn_with_retry(conn)
+      assert {:ok, _response} =
+               DocuSign.Connection.request(conn,
+                 method: :get,
+                 url: "/test",
+                 telemetry_metadata: %{operation: "test_operation"}
+               )
 
-      # Make request that will hit rate limit then succeed
-      # The finch_private metadata needs to be set for rate limit telemetry
-      {:ok, _response} =
-        DocuSign.Connection.request(updated_conn,
-          method: :get,
-          url: "/test",
-          telemetry_metadata: %{operation: "test_operation"},
-          finch_private: %{account_id: "test-account-123", operation: "test_operation"}
-        )
+      assert [{[:docusign, :rate_limit, :hit], %{retry_after: 1}, metadata}] =
+               :ets.tab2list(captured_events)
 
-      # Allow time for async telemetry
-      Process.sleep(100)
-
-      # Verify rate limit event
-      events = :ets.tab2list(captured_events)
-      assert length(events) == 1
-
-      [{[:docusign, :rate_limit, :hit], measurements, metadata}] = events
-      assert measurements[:retry_after] == 1
       assert metadata[:operation] == "test_operation"
       assert metadata[:account_id] == "test-account-123"
-
-      # Cleanup
-      :telemetry.detach(handler_id)
       :ets.delete(captured_events)
-      Agent.stop(agent)
     end
 
     @tag capture_log: true
@@ -236,6 +226,17 @@ defmodule DocuSign.TelemetryTest do
       :telemetry.detach(handler_id)
       :ets.delete(captured_events)
     end
+  end
+
+  defp build_connection(server, account_id) do
+    {:ok, conn} =
+      DocuSign.Connection.from_oauth_client(
+        OAuth2.Client.new(token: "test-token"),
+        account_id: account_id,
+        base_uri: "http://localhost:#{server.port}"
+      )
+
+    conn
   end
 
   describe "telemetry span" do
@@ -405,33 +406,5 @@ defmodule DocuSign.TelemetryTest do
       :telemetry.detach(handler_id)
       :ets.delete(captured_events)
     end
-  end
-
-  # Helper to rebuild connection with retry config
-  defp rebuild_conn_with_retry(conn) do
-    retry_options = Application.get_env(:docusign, :retry_options, [])
-
-    updated_req =
-      if retry_options[:enabled] == false do
-        Req.merge(conn.req, retry: false)
-      else
-        max_retries = retry_options[:max_retries] || 3
-        backoff_factor = retry_options[:backoff_factor] || 2
-        max_delay = retry_options[:max_delay] || 30_000
-
-        conn.req
-        |> Req.merge(
-          retry: :transient,
-          max_retries: max_retries,
-          retry_delay: fn attempt ->
-            exponent = max(0, attempt)
-            base_delay = Integer.pow(backoff_factor, exponent) * 1000
-            jittered = base_delay + :rand.uniform(1000)
-            min(jittered, max_delay)
-          end
-        )
-      end
-
-    %{conn | req: updated_req}
   end
 end

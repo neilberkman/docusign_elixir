@@ -1,72 +1,31 @@
 defmodule DocuSign.ConnectionRetryTest do
-  use ExUnit.Case
-
-  defp decode_json_step({request, response}) do
-    case get_content_type(response.headers) do
-      content_type when content_type in ["application/json", "text/json"] ->
-        case JSON.decode(response.body) do
-          {:ok, decoded} -> {request, %{response | body: decoded}}
-          {:error, _} -> {request, response}
-        end
-
-      _ ->
-        {request, response}
-    end
-  end
-
-  defp get_content_type(headers) when is_map(headers) do
-    case Map.get(headers, "content-type") do
-      [value | _] -> String.split(value, ";") |> List.first() |> String.trim()
-      value when is_binary(value) -> String.split(value, ";") |> List.first() |> String.trim()
-      _ -> nil
-    end
-  end
-
-  defp get_content_type(headers) when is_list(headers) do
-    case List.keyfind(headers, "content-type", 0) do
-      {"content-type", value} -> String.split(value, ";") |> List.first() |> String.trim()
-      _ -> nil
-    end
-  end
-
-  defp get_content_type(_), do: nil
+  use ExUnit.Case, async: false
 
   setup do
     server = DocuSign.TestHTTPServer.open()
+    previous_retry_options = Application.get_env(:docusign, :retry_options)
 
-    # Create a test connection with server URL
-    req =
-      Req.new(
-        base_url: "http://localhost:#{server.port}",
-        headers: [
-          {"authorization", "Bearer test-token"},
-          {"content-type", "application/json"}
-        ]
-      )
-      |> Req.Request.prepend_response_steps(decode_json: &decode_json_step/1)
+    on_exit(fn ->
+      if is_nil(previous_retry_options) do
+        Application.delete_env(:docusign, :retry_options)
+      else
+        Application.put_env(:docusign, :retry_options, previous_retry_options)
+      end
+    end)
 
-    conn = %DocuSign.Connection{
-      app_account: %{
-        account_id: "test-account",
-        base_uri: "http://localhost:#{server.port}"
-      },
-      req: req
-    }
-
-    {:ok, server: server, conn: conn}
+    {:ok, server: server}
   end
 
   describe "retry configuration" do
     @tag capture_log: true
-    test "retries on transient failures", %{server: server, conn: conn} do
-      # Configure retry with shorter delays for testing
+    test "retries on transient failures", %{server: server} do
       Application.put_env(:docusign, :retry_options,
         max_retries: 2,
         backoff_factor: 1,
         max_delay: 100
       )
 
-      # First two attempts fail with 500, third succeeds
+      conn = build_connection(server)
       {:ok, agent} = Agent.start_link(fn -> 0 end)
 
       DocuSign.TestHTTPServer.expect(server, "GET", "/test", fn conn ->
@@ -86,38 +45,30 @@ defmodule DocuSign.ConnectionRetryTest do
         end
       end)
 
-      # Rebuild connection with retry config
-      req = configure_retry_for_test(conn.req)
-      updated_conn = %{conn | req: req}
-
-      # Should eventually succeed after retries
       assert {:ok, response} =
-               DocuSign.Connection.request(updated_conn,
+               DocuSign.Connection.request(conn,
                  method: :get,
                  url: "/test"
                )
 
       assert response.status == 200
       assert response.body == %{"success" => true}
-
-      # Verify all attempts were made
       assert Agent.get(agent, & &1) == 3
     end
 
     @tag capture_log: true
-    test "handles rate limits with Retry-After header", %{server: server, conn: conn} do
+    test "caps a Retry-After delay at max_delay", %{server: server} do
       Application.put_env(:docusign, :retry_options,
-        max_retries: 2,
+        max_retries: 1,
         backoff_factor: 1,
-        max_delay: 100
+        max_delay: 150
       )
 
+      conn = build_connection(server)
       {:ok, agent} = Agent.start_link(fn -> 0 end)
 
       DocuSign.TestHTTPServer.expect(server, "GET", "/test", fn conn ->
-        count = Agent.get_and_update(agent, fn c -> {c, c + 1} end)
-
-        case count do
+        case Agent.get_and_update(agent, fn c -> {c, c + 1} end) do
           0 ->
             conn
             |> Plug.Conn.put_resp_header("retry-after", "1")
@@ -130,51 +81,254 @@ defmodule DocuSign.ConnectionRetryTest do
         end
       end)
 
-      req = configure_retry_for_test(conn.req)
-      updated_conn = %{conn | req: req}
+      started_at = System.monotonic_time(:millisecond)
 
-      # Should succeed after respecting Retry-After
-      start_time = System.monotonic_time(:millisecond)
+      assert {:ok, %{status: 200}} =
+               DocuSign.Connection.request(conn, method: :get, url: "/test")
 
-      assert {:ok, response} =
-               DocuSign.Connection.request(updated_conn,
-                 method: :get,
-                 url: "/test"
-               )
-
-      elapsed = System.monotonic_time(:millisecond) - start_time
-
-      assert response.status == 200
-      # Should have waited at least 1 second as specified by Retry-After
-      assert elapsed >= 1000
-    end
-
-    test "disables retry when configured", %{server: server, conn: conn} do
-      Application.put_env(:docusign, :retry_options, enabled: false)
-
-      DocuSign.TestHTTPServer.expect_once(server, "GET", "/test", fn conn ->
-        Plug.Conn.resp(conn, 500, "Server Error")
-      end)
-
-      req = configure_retry_for_test(conn.req)
-      updated_conn = %{conn | req: req}
-
-      # Should fail immediately without retry
-      assert {:error, {:http_error, 500, "Server Error"}} =
-               DocuSign.Connection.request(updated_conn,
-                 method: :get,
-                 url: "/test"
-               )
+      elapsed = System.monotonic_time(:millisecond) - started_at
+      assert elapsed >= 100
+      assert elapsed < 800
     end
 
     @tag capture_log: true
-    test "respects max_retries configuration", %{server: server, conn: conn} do
+    test "falls back to backoff for a malformed Retry-After header", %{server: server} do
+      Application.put_env(:docusign, :retry_options,
+        max_retries: 1,
+        backoff_factor: 1,
+        max_delay: 150
+      )
+
+      conn = build_connection(server)
+      {:ok, agent} = Agent.start_link(fn -> 0 end)
+
+      DocuSign.TestHTTPServer.expect(server, "GET", "/test", fn conn ->
+        case Agent.get_and_update(agent, fn c -> {c, c + 1} end) do
+          0 ->
+            conn
+            |> Plug.Conn.put_resp_header("retry-after", "nonsense")
+            |> Plug.Conn.resp(429, "Rate Limited")
+
+          1 ->
+            Plug.Conn.resp(conn, 200, ~s({"success": true}))
+        end
+      end)
+
+      started_at = System.monotonic_time(:millisecond)
+
+      assert {:ok, %{status: 200}} =
+               DocuSign.Connection.request(conn, method: :get, url: "/test")
+
+      elapsed = System.monotonic_time(:millisecond) - started_at
+      assert elapsed >= 100
+      assert elapsed < 800
+      assert Agent.get(agent, & &1) == 2
+    end
+
+    @tag capture_log: true
+    test "handles future and past HTTP-date Retry-After values", %{server: server} do
+      Application.put_env(:docusign, :retry_options,
+        max_retries: 1,
+        backoff_factor: 1,
+        max_delay: 150
+      )
+
+      conn = build_connection(server)
+      {:ok, agent} = Agent.start_link(fn -> 0 end)
+      future = retry_after_date(1)
+      past = retry_after_date(-1)
+
+      DocuSign.TestHTTPServer.expect(server, "GET", "/future", fn conn ->
+        case Agent.get_and_update(agent, fn c -> {c, c + 1} end) do
+          0 ->
+            conn
+            |> Plug.Conn.put_resp_header("retry-after", future)
+            |> Plug.Conn.resp(429, "Rate Limited")
+
+          1 ->
+            Plug.Conn.resp(conn, 200, "ok")
+        end
+      end)
+
+      assert {:ok, %{status: 200}} =
+               DocuSign.Connection.request(conn, method: :get, url: "/future")
+
+      DocuSign.TestHTTPServer.expect(server, "GET", "/past", fn conn ->
+        case Agent.get_and_update(agent, fn c -> {c, c + 1} end) do
+          2 ->
+            conn
+            |> Plug.Conn.put_resp_header("retry-after", past)
+            |> Plug.Conn.resp(429, "Rate Limited")
+
+          3 ->
+            Plug.Conn.resp(conn, 200, "ok")
+        end
+      end)
+
+      started_at = System.monotonic_time(:millisecond)
+
+      assert {:ok, %{status: 200}} =
+               DocuSign.Connection.request(conn, method: :get, url: "/past")
+
+      elapsed = System.monotonic_time(:millisecond) - started_at
+      assert elapsed < 500
+      assert Agent.get(agent, & &1) == 4
+    end
+
+    @tag capture_log: true
+    test "falls back to backoff for a negative Retry-After value", %{server: server} do
+      Application.put_env(:docusign, :retry_options,
+        max_retries: 1,
+        backoff_factor: 1,
+        max_delay: 150
+      )
+
+      conn = build_connection(server)
+      {:ok, agent} = Agent.start_link(fn -> 0 end)
+
+      DocuSign.TestHTTPServer.expect(server, "GET", "/test", fn conn ->
+        case Agent.get_and_update(agent, fn c -> {c, c + 1} end) do
+          0 ->
+            conn
+            |> Plug.Conn.put_resp_header("retry-after", "-1")
+            |> Plug.Conn.resp(429, "Rate Limited")
+
+          1 ->
+            Plug.Conn.resp(conn, 200, "ok")
+        end
+      end)
+
+      started_at = System.monotonic_time(:millisecond)
+
+      assert {:ok, %{status: 200}} =
+               DocuSign.Connection.request(conn, method: :get, url: "/test")
+
+      elapsed = System.monotonic_time(:millisecond) - started_at
+      assert elapsed >= 100
+      assert elapsed < 800
+    end
+
+    test "handles rate limits with Retry-After telemetry", %{server: server} do
+      attach_rate_limit_handler()
+
       Application.put_env(:docusign, :retry_options,
         max_retries: 1,
         backoff_factor: 1,
         max_delay: 100
       )
 
+      conn = build_connection(server)
+      {:ok, agent} = Agent.start_link(fn -> 0 end)
+
+      DocuSign.TestHTTPServer.expect(server, "GET", "/with-header", fn conn ->
+        case Agent.get_and_update(agent, fn c -> {c, c + 1} end) do
+          0 ->
+            conn
+            |> Plug.Conn.put_resp_header("retry-after", "1")
+            |> Plug.Conn.resp(429, "Rate Limited")
+
+          1 ->
+            Plug.Conn.resp(conn, 200, "ok")
+        end
+      end)
+
+      assert {:ok, %{status: 200}} =
+               DocuSign.Connection.request(conn, method: :get, url: "/with-header")
+
+      assert_receive {
+                       :rate_limit,
+                       [:docusign, :rate_limit, :hit],
+                       %{retry_after: 1},
+                       %{account_id: "test-account"}
+                     },
+                     1_000
+
+      refute_receive {:rate_limit, [:docusign, :rate_limit, :hit], _, _}, 50
+    end
+
+    test "does not emit rate-limit telemetry for a 503", %{server: server} do
+      attach_rate_limit_handler()
+
+      Application.put_env(:docusign, :retry_options,
+        max_retries: 1,
+        backoff_factor: 1,
+        max_delay: 100
+      )
+
+      conn = build_connection(server)
+
+      DocuSign.TestHTTPServer.expect(server, "GET", "/test", fn conn ->
+        conn
+        |> Plug.Conn.put_resp_header("retry-after", "0")
+        |> Plug.Conn.resp(503, "Service Unavailable")
+      end)
+
+      assert {:error, {:http_error, 503, "Service Unavailable"}} =
+               DocuSign.Connection.request(conn, method: :get, url: "/test")
+
+      refute_receive {:rate_limit, [:docusign, :rate_limit, :hit], _, _}, 100
+    end
+
+    test "emits rate-limit telemetry with nil for a 429 without Retry-After", %{server: server} do
+      attach_rate_limit_handler()
+
+      Application.put_env(:docusign, :retry_options,
+        max_retries: 1,
+        backoff_factor: 1,
+        max_delay: 100
+      )
+
+      conn = build_connection(server)
+      {:ok, agent} = Agent.start_link(fn -> 0 end)
+
+      DocuSign.TestHTTPServer.expect(server, "GET", "/test", fn conn ->
+        case Agent.get_and_update(agent, fn c -> {c, c + 1} end) do
+          0 ->
+            Plug.Conn.resp(conn, 429, "Rate Limited")
+
+          1 ->
+            Plug.Conn.resp(conn, 200, "ok")
+        end
+      end)
+
+      assert {:ok, %{status: 200}} =
+               DocuSign.Connection.request(conn, method: :get, url: "/test")
+
+      assert_receive {
+                       :rate_limit,
+                       [:docusign, :rate_limit, :hit],
+                       %{retry_after: nil},
+                       %{account_id: "test-account"}
+                     },
+                     1_000
+
+      refute_receive {:rate_limit, [:docusign, :rate_limit, :hit], _, _}, 50
+    end
+
+    test "disables retry when configured", %{server: server} do
+      Application.put_env(:docusign, :retry_options, enabled: false)
+      conn = build_connection(server)
+
+      DocuSign.TestHTTPServer.expect_once(server, "GET", "/test", fn conn ->
+        Plug.Conn.resp(conn, 500, "Server Error")
+      end)
+
+      assert {:error, {:http_error, 500, "Server Error"}} =
+               DocuSign.Connection.request(conn,
+                 method: :get,
+                 url: "/test"
+               )
+    end
+
+    @tag capture_log: true
+    test "respects max_retries configuration", %{server: server} do
+      Application.put_env(:docusign, :retry_options,
+        max_retries: 1,
+        backoff_factor: 1,
+        max_delay: 100
+      )
+
+      conn = build_connection(server)
       {:ok, agent} = Agent.start_link(fn -> 0 end)
 
       DocuSign.TestHTTPServer.expect(server, "GET", "/test", fn conn ->
@@ -182,28 +336,24 @@ defmodule DocuSign.ConnectionRetryTest do
         Plug.Conn.resp(conn, 500, "Server Error")
       end)
 
-      req = configure_retry_for_test(conn.req)
-      updated_conn = %{conn | req: req}
-
-      # Should fail after max_retries attempts
       assert {:error, {:http_error, 500, "Server Error"}} =
-               DocuSign.Connection.request(updated_conn,
+               DocuSign.Connection.request(conn,
                  method: :get,
                  url: "/test"
                )
 
-      # Should have made 2 attempts (initial + 1 retry)
       assert Agent.get(agent, & &1) == 2
     end
 
     @tag capture_log: true
-    test "applies exponential backoff", %{server: server, conn: conn} do
+    test "applies exponential backoff within max_delay", %{server: server} do
       Application.put_env(:docusign, :retry_options,
         max_retries: 2,
         backoff_factor: 2,
-        max_delay: 5000
+        max_delay: 150
       )
 
+      conn = build_connection(server)
       {:ok, agent} = Agent.start_link(fn -> [] end)
 
       DocuSign.TestHTTPServer.expect(server, "GET", "/test", fn conn ->
@@ -213,128 +363,57 @@ defmodule DocuSign.ConnectionRetryTest do
         if length(Agent.get(agent, & &1)) < 3 do
           Plug.Conn.resp(conn, 500, "Server Error")
         else
-          conn
-          |> Plug.Conn.put_resp_header("content-type", "application/json")
-          |> Plug.Conn.resp(200, ~s({"success": true}))
+          Plug.Conn.resp(conn, 200, ~s({"success": true}))
         end
       end)
 
-      req = configure_retry_for_test(conn.req)
-      updated_conn = %{conn | req: req}
-
       assert {:ok, _response} =
-               DocuSign.Connection.request(updated_conn,
+               DocuSign.Connection.request(conn,
                  method: :get,
                  url: "/test"
                )
 
-      timestamps = Agent.get(agent, & &1)
-      assert length(timestamps) == 3
-
-      # Check delays between attempts (with tolerance for jitter)
-      delay1 = Enum.at(timestamps, 1) - Enum.at(timestamps, 0)
-      delay2 = Enum.at(timestamps, 2) - Enum.at(timestamps, 1)
-
-      # First retry: ~1-2 seconds (1000ms base + jitter)
-      assert delay1 >= 1000 and delay1 <= 2500
-
-      # Second retry: ~2-3 seconds (2000ms base + jitter)
-      assert delay2 >= 2000 and delay2 <= 3500
-
-      # Second delay should be roughly double the first (exponential)
-      assert delay2 > delay1
+      [first, second, third] = Agent.get(agent, & &1)
+      assert second - first >= 100
+      assert third - second >= 100
+      assert third - first < 800
     end
   end
 
-  # Private helper to configure retry manually for testing
-  defp configure_retry_for_test(req) do
-    retry_options = Application.get_env(:docusign, :retry_options, [])
-
-    if retry_options[:enabled] == false do
-      Req.merge(req, retry: false)
-    else
-      max_retries = retry_options[:max_retries] || 3
-      backoff_factor = retry_options[:backoff_factor] || 2
-      max_delay = retry_options[:max_delay] || 30_000
-
-      req
-      |> Req.merge(
-        max_retries: max_retries,
-        retry: &handle_retry_for_test(&1, &2, backoff_factor, max_delay)
+  defp build_connection(server) do
+    {:ok, conn} =
+      DocuSign.Connection.from_oauth_client(
+        OAuth2.Client.new(token: "test-token"),
+        account_id: "test-account",
+        base_uri: "http://localhost:#{server.port}"
       )
-    end
+
+    conn
   end
 
-  defp handle_retry_for_test(request, %Req.Response{status: 429} = response, backoff_factor, max_delay) do
-    # Check for Retry-After header
-    retry_after = get_retry_after_for_test(response.headers)
+  defp retry_after_date(offset_seconds) do
+    now = :calendar.universal_time()
+    seconds = :calendar.datetime_to_gregorian_seconds(now) + offset_seconds
 
-    if retry_after do
-      {:delay, retry_after * 1000}
-    else
-      retry_delay = calculate_retry_delay_for_test(request, backoff_factor, max_delay)
-      {:delay, retry_delay}
-    end
+    seconds
+    |> :calendar.gregorian_seconds_to_datetime()
+    |> :httpd_util.rfc1123_date()
+    |> List.to_string()
   end
 
-  defp handle_retry_for_test(request, %Req.TransportError{reason: reason}, backoff_factor, max_delay)
-       when reason in [:timeout, :econnrefused, :closed] do
-    retry_delay = calculate_retry_delay_for_test(request, backoff_factor, max_delay)
-    {:delay, retry_delay}
+  defp attach_rate_limit_handler do
+    test_pid = self()
+    handler_id = "rate-limit-handler-#{System.unique_integer()}"
+
+    :telemetry.attach(
+      handler_id,
+      [:docusign, :rate_limit, :hit],
+      fn event, measurements, metadata, _config ->
+        send(test_pid, {:rate_limit, event, measurements, metadata})
+      end,
+      nil
+    )
+
+    on_exit(fn -> :telemetry.detach(handler_id) end)
   end
-
-  defp handle_retry_for_test(request, %Req.HTTPError{protocol: :http2, reason: reason}, backoff_factor, max_delay)
-       when reason in [:unprocessed, :pool_not_available] do
-    retry_delay = calculate_retry_delay_for_test(request, backoff_factor, max_delay)
-    {:delay, retry_delay}
-  end
-
-  defp handle_retry_for_test(request, %Req.Response{status: status}, backoff_factor, max_delay)
-       when status in [408, 500, 502, 503, 504] do
-    retry_delay = calculate_retry_delay_for_test(request, backoff_factor, max_delay)
-    {:delay, retry_delay}
-  end
-
-  defp handle_retry_for_test(_request, _response_or_error, _backoff_factor, _max_delay) do
-    false
-  end
-
-  defp calculate_retry_delay_for_test(request, backoff_factor, max_delay) do
-    retry_count = Req.Request.get_private(request, :req_retry_count, 0)
-    exponent = max(0, retry_count)
-    base_delay = Integer.pow(backoff_factor, exponent) * 1000
-    jittered = base_delay + :rand.uniform(1000)
-    min(jittered, max_delay)
-  end
-
-  defp get_retry_after_for_test(headers) when is_list(headers) do
-    headers
-    |> List.keyfind("retry-after", 0)
-    |> parse_retry_after_value_for_test()
-  end
-
-  defp get_retry_after_for_test(headers) when is_map(headers) do
-    headers
-    |> Map.get("retry-after")
-    |> parse_retry_after_value_for_test()
-  end
-
-  defp get_retry_after_for_test(_), do: nil
-
-  defp parse_retry_after_value_for_test({"retry-after", value}), do: parse_retry_after_value_for_test(value)
-
-  defp parse_retry_after_value_for_test(value) when is_list(value),
-    do: value |> List.first() |> parse_retry_after_for_test()
-
-  defp parse_retry_after_value_for_test(value) when is_binary(value), do: parse_retry_after_for_test(value)
-  defp parse_retry_after_value_for_test(_), do: nil
-
-  defp parse_retry_after_for_test(value) when is_binary(value) do
-    case Integer.parse(value) do
-      {seconds, ""} -> seconds
-      _ -> nil
-    end
-  end
-
-  defp parse_retry_after_for_test(_), do: nil
 end

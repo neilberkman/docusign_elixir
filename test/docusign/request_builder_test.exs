@@ -24,10 +24,34 @@ defmodule DocuSign.RequestBuilderTest do
 
       # Parse the JSON body and check the structure
       decoded = JSON.decode!(json_body)
-      assert %{"textTabs" => [%{"tabId" => ":id:", "value" => ":value:"}]} = decoded
 
-      # Check that nil values were removed
-      refute Map.has_key?(decoded, "approveTabs")
+      assert decoded == %{
+               "textTabs" => [%{"tabId" => ":id:", "value" => ":value:"}]
+             }
+    end
+
+    test "encodes a model nested inside a plain map" do
+      body = %{"tab" => %Text{status: nil, tabId: ":id:", value: ":value:"}}
+
+      assert JSON.decode!(JSON.encode!(body)) == %{
+               "tab" => %{"tabId" => ":id:", "value" => ":value:"}
+             }
+    end
+
+    test "encodes models used as map values" do
+      body = %{
+        "first" => %Text{status: nil, tabId: "1"},
+        "second" => %Text{status: nil, value: "2"}
+      }
+
+      assert JSON.decode!(JSON.encode!(body)) == %{
+               "first" => %{"tabId" => "1"},
+               "second" => %{"value" => "2"}
+             }
+    end
+
+    test "encodes an all-nil model as an empty object" do
+      assert JSON.decode!(JSON.encode!(%Text{})) == %{}
     end
   end
 

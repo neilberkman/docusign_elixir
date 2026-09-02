@@ -11,6 +11,7 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 DOCUSIGN_DIR="$(cd "$SCRIPT_DIR/../.." && pwd)"
 TEMP_DIR="/tmp/docusign_regen"
 GEN_DIR="${TEMP_DIR}/generated"
+SPEC_FILE="${SCRIPT_DIR}/esignature-rest-api-v2.1.json"
 
 # Check if custom templates exist
 CUSTOM_TEMPLATES="${SCRIPT_DIR}/custom_templates"
@@ -35,40 +36,29 @@ fi
 
 # Parse command line arguments
 FORCE_DOWNLOAD=false
-FORCE_GENERATE=false
-CLEAN_FIRST=false
 
 for arg in "$@"; do
   case $arg in
     --download)
       FORCE_DOWNLOAD=true
-      FORCE_GENERATE=true
-      ;;
-    --generate)
-      FORCE_GENERATE=true
-      ;;
-    --clean)
-      CLEAN_FIRST=true
       ;;
     --help)
       echo "Usage: $0 [OPTIONS]"
       echo ""
       echo "Options:"
-      echo "  --download    Force download latest OpenAPI spec and regenerate"
-      echo "  --generate    Force regeneration using existing spec"
-      echo "  --clean       Clean generated directory before generating"
+      echo "  --download    Download the latest OpenAPI spec into the tracked spec file"
       echo "  --help        Show this help message"
       exit 0
+      ;;
+    *)
+      echo "ERROR: Unknown option: $arg"
+      exit 1
       ;;
   esac
 done
 
-# Create temp directory if it doesn't exist
-mkdir -p "${TEMP_DIR}"
-
-# Download OpenAPI spec if needed
-SPEC_FILE="${TEMP_DIR}/esignature.swagger.json"
-if [ ! -f "${SPEC_FILE}" ] || [ "$FORCE_DOWNLOAD" = true ]; then
+# Download OpenAPI spec if requested
+if [ "$FORCE_DOWNLOAD" = true ]; then
   echo "Downloading latest OpenAPI specification from DocuSign..."
   # Using the official DocuSign OpenAPI Specifications repository
   curl -L -o "${SPEC_FILE}" \
@@ -79,27 +69,22 @@ if [ ! -f "${SPEC_FILE}" ] || [ "$FORCE_DOWNLOAD" = true ]; then
   echo "✓ OpenAPI spec downloaded"
 fi
 
-# Clean generated directory if requested
-if [ "$CLEAN_FIRST" = true ] && [ -d "${GEN_DIR}" ]; then
-  echo "Cleaning generated directory..."
-  rm -rf "${GEN_DIR}"
-fi
+echo "Cleaning generated directory..."
+mkdir -p "${TEMP_DIR}"
+rm -rf "${GEN_DIR}"
 
-# Generate the client code if needed
-if [ ! -d "${GEN_DIR}" ] || [ "$FORCE_GENERATE" = true ]; then
-  echo "Generating client code with custom templates..."
-  ${OPENAPI_CMD} generate \
-    -i "${SPEC_FILE}" \
-    -g elixir \
-    -t "${CUSTOM_TEMPLATES}" \
-    -o "${GEN_DIR}" \
-    --additional-properties=packageName=docusign \
-    --additional-properties=invokerPackage=DocuSign || {
-    echo "ERROR: Code generation failed"
-    exit 1
-  }
-  echo "✓ Code generated successfully"
-fi
+echo "Generating client code with custom templates..."
+${OPENAPI_CMD} generate \
+  -i "${SPEC_FILE}" \
+  -g elixir \
+  -t "${CUSTOM_TEMPLATES}" \
+  -o "${GEN_DIR}" \
+  --additional-properties=packageName=docusign \
+  --additional-properties=invokerPackage=DocuSign || {
+  echo "ERROR: Code generation failed"
+  exit 1
+}
+echo "✓ Code generated successfully"
 
 # Check that generation produced expected files
 # The invokerPackage option makes the generator create files under docu_sign.
@@ -140,14 +125,7 @@ echo "Applying post-processing..."
 # Fix any lingering module name issues (shouldn't be needed with correct templates)
 find "${DOCUSIGN_DIR}/lib/docusign" -name "*.ex" -exec grep -l "DocusignESignatureRESTAPI" {} \; | while read file; do
   echo "  Fixing module name in $(basename $file)"
-  sed -i '' 's/DocusignESignatureRESTAPI/DocuSign/g' "$file"
-done
-
-# Ensure correct JSON library (should already be JSON from templates)
-find "${DOCUSIGN_DIR}/lib/docusign/model" -name "*.ex" -exec grep -l "Poison" {} \; | while read file; do
-  echo "  Fixing JSON library in $(basename $file)"
-  sed -i '' 's/@derive \[Poison\.Encoder\]/@derive [JSON.Encoder]/g' "$file"
-  sed -i '' 's/Poison\./JSON./g' "$file"
+  perl -pi -e 's/DocusignESignatureRESTAPI/DocuSign/g' "$file"
 done
 
 # Convert DocuSign developer-site links from root-relative paths to absolute URLs.

@@ -521,7 +521,7 @@ config :docusign, :retry_options,
 config :docusign, :retry_options, enabled: false
 ```
 
-The client automatically handles rate limits (429 responses) by honoring the `Retry-After` header when present.
+The client automatically handles rate limits (429 responses) by honoring the `Retry-After` header when present. The configured `max_delay` caps both `Retry-After` delays and exponential-backoff delays. Missing or malformed `Retry-After` headers fall back to exponential backoff.
 
 ## Telemetry and Monitoring
 
