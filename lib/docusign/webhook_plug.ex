@@ -229,7 +229,7 @@ defmodule DocuSign.WebhookPlug do
   end
 
   defp parse_payload(payload) do
-    case Jason.decode(payload) do
+    case JSON.decode(payload) do
       {:ok, payload} -> {:ok, payload}
       {:error, _} -> {:error, "Invalid JSON payload."}
     end

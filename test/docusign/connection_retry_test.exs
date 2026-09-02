@@ -4,7 +4,7 @@ defmodule DocuSign.ConnectionRetryTest do
   defp decode_json_step({request, response}) do
     case get_content_type(response.headers) do
       content_type when content_type in ["application/json", "text/json"] ->
-        case Jason.decode(response.body) do
+        case JSON.decode(response.body) do
           {:ok, decoded} -> {request, %{response | body: decoded}}
           {:error, _} -> {request, response}
         end

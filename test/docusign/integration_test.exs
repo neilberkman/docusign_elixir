@@ -87,7 +87,7 @@ defmodule DocuSign.IntegrationTest do
         |> Plug.Conn.put_resp_content_type("application/json")
         |> Plug.Conn.resp(
           200,
-          Jason.encode!(%{
+          JSON.encode!(%{
             "access_token" => "test_access_token",
             "expires_in" => 3600,
             "token_type" => "Bearer"
@@ -102,7 +102,7 @@ defmodule DocuSign.IntegrationTest do
         |> Plug.Conn.put_resp_content_type("application/json")
         |> Plug.Conn.resp(
           200,
-          Jason.encode!(%{
+          JSON.encode!(%{
             "accounts" => [
               %{
                 "account_id" => "17035828",
@@ -124,7 +124,7 @@ defmodule DocuSign.IntegrationTest do
       # Test 1: Create envelope
       DocuSign.TestHTTPServer.expect_once(server, "POST", "/restapi/v2.1/accounts/17035828/envelopes", fn conn ->
         {:ok, body, conn} = Plug.Conn.read_body(conn)
-        request_body = Jason.decode!(body)
+        request_body = JSON.decode!(body)
 
         # Verify request structure
         assert request_body["emailSubject"]
@@ -178,7 +178,7 @@ defmodule DocuSign.IntegrationTest do
         "/restapi/v2.1/accounts/17035828/envelopes/#{envelope_id}/views/recipient",
         fn conn ->
           {:ok, body, conn} = Plug.Conn.read_body(conn)
-          request_body = Jason.decode!(body)
+          request_body = JSON.decode!(body)
 
           # Verify request structure
           assert request_body["returnUrl"]
@@ -243,7 +243,7 @@ defmodule DocuSign.IntegrationTest do
         |> Plug.Conn.put_resp_content_type("application/json")
         |> Plug.Conn.resp(
           200,
-          Jason.encode!(%{
+          JSON.encode!(%{
             "access_token" => "test_token",
             "expires_in" => 3600,
             "token_type" => "Bearer"
@@ -256,7 +256,7 @@ defmodule DocuSign.IntegrationTest do
         |> Plug.Conn.put_resp_content_type("application/json")
         |> Plug.Conn.resp(
           200,
-          Jason.encode!(%{
+          JSON.encode!(%{
             "accounts" => [
               %{
                 "account_id" => "12345",
@@ -276,7 +276,7 @@ defmodule DocuSign.IntegrationTest do
         |> Plug.Conn.put_resp_content_type("application/json")
         |> Plug.Conn.resp(
           200,
-          Jason.encode!(%{
+          JSON.encode!(%{
             "arrayField" => [1, 2, 3],
             "nestedObject" => %{
               "innerKey" => "innerValue"

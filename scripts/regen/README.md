@@ -32,7 +32,7 @@ The `custom_templates/` directory contains our customized Mustache templates tha
 
 - Proper Elixir module naming conventions
 - Correct type specifications that pass Dialyzer
-- Jason encoder/decoder integration (replacing Poison)
+- Built-in JSON encoder/decoder integration (replacing Poison)
 - Req.Response types instead of Tesla.Env
 - Clean, formatted code that passes `mix format`
 

@@ -143,11 +143,11 @@ find "${DOCUSIGN_DIR}/lib/docusign" -name "*.ex" -exec grep -l "DocusignESignatu
   sed -i '' 's/DocusignESignatureRESTAPI/DocuSign/g' "$file"
 done
 
-# Ensure correct JSON library (should already be Jason from templates)
+# Ensure correct JSON library (should already be JSON from templates)
 find "${DOCUSIGN_DIR}/lib/docusign/model" -name "*.ex" -exec grep -l "Poison" {} \; | while read file; do
   echo "  Fixing JSON library in $(basename $file)"
-  sed -i '' 's/@derive \[Poison\.Encoder\]/@derive [Jason.Encoder]/g' "$file"
-  sed -i '' 's/Poison\./Jason./g' "$file"
+  sed -i '' 's/@derive \[Poison\.Encoder\]/@derive [JSON.Encoder]/g' "$file"
+  sed -i '' 's/Poison\./JSON./g' "$file"
 done
 
 # Convert DocuSign developer-site links from root-relative paths to absolute URLs.

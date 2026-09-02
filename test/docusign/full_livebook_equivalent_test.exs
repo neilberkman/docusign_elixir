@@ -37,7 +37,7 @@ defmodule DocuSign.FullLivebookEquivalentTest do
           |> Plug.Conn.put_resp_header("content-type", "application/json")
           |> Plug.Conn.resp(
             201,
-            Jason.encode!(%{
+            JSON.encode!(%{
               "envelopeId" => envelope_id,
               "status" => "sent",
               "statusDateTime" => "2024-01-01T00:00:00.0000000Z",
@@ -57,7 +57,7 @@ defmodule DocuSign.FullLivebookEquivalentTest do
           |> Plug.Conn.put_resp_header("content-type", "application/json")
           |> Plug.Conn.resp(
             201,
-            Jason.encode!(%{
+            JSON.encode!(%{
               "url" => "https://demo.docusign.net/Signing/StartInSession.aspx?t=test-token"
             })
           )
@@ -74,7 +74,7 @@ defmodule DocuSign.FullLivebookEquivalentTest do
           |> Plug.Conn.put_resp_header("content-type", "application/json")
           |> Plug.Conn.resp(
             200,
-            Jason.encode!(%{
+            JSON.encode!(%{
               "completedDateTime" => "2024-01-01T00:01:00.0000000Z",
               "envelopeId" => envelope_id,
               "status" => "completed",
@@ -94,7 +94,7 @@ defmodule DocuSign.FullLivebookEquivalentTest do
           |> Plug.Conn.put_resp_header("content-type", "application/json")
           |> Plug.Conn.resp(
             200,
-            Jason.encode!(%{
+            JSON.encode!(%{
               "envelopeDocuments" => [
                 %{
                   "documentId" => "1",

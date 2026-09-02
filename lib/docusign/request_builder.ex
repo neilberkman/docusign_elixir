@@ -116,15 +116,15 @@ defmodule DocuSign.RequestBuilder do
   """
   @spec add_param(map(), atom(), atom(), any()) :: map()
   def add_param(request, :body, :body, value) do
-    # Models now handle nil stripping via custom Jason.Encoder
-    Map.put(request, :body, Jason.encode!(value))
+    # Models now handle nil stripping via custom JSON.Encoder
+    Map.put(request, :body, JSON.encode!(value))
   end
 
   def add_param(request, :body, key, value) do
     request
     |> Map.put_new(:form_multipart, [])
     |> Map.update!(:form_multipart, fn parts ->
-      parts ++ [{to_string(key), Jason.encode!(value), content_type: "application/json"}]
+      parts ++ [{to_string(key), JSON.encode!(value), content_type: "application/json"}]
     end)
   end
 
@@ -228,7 +228,7 @@ defmodule DocuSign.RequestBuilder do
   @spec ensure_body(map()) :: map()
   def ensure_body(request) do
     case Map.get(request, :body) do
-      nil -> Map.put(request, :body, Jason.encode!(%{}))
+      nil -> Map.put(request, :body, JSON.encode!(%{}))
       _ -> request
     end
   end

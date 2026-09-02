@@ -23,7 +23,7 @@ defmodule DocuSign.RequestBuilderTest do
       assert {"EnvelopeRecipientTabs", json_body, [content_type: "application/json"]} = part
 
       # Parse the JSON body and check the structure
-      decoded = Jason.decode!(json_body)
+      decoded = JSON.decode!(json_body)
       assert %{"textTabs" => [%{"tabId" => ":id:", "value" => ":value:"}]} = decoded
 
       # Check that nil values were removed
@@ -89,7 +89,7 @@ defmodule DocuSign.RequestBuilderTest do
       request = %{}
       optional_params = %{body: :body}
 
-      body_data = %{test: "data"}
+      body_data = %{"test" => "data"}
 
       opts = [
         body: body_data,
@@ -99,7 +99,7 @@ defmodule DocuSign.RequestBuilderTest do
       result = RequestBuilder.add_optional_params(request, optional_params, opts)
 
       assert %{body: body, headers: headers} = result
-      assert body == Jason.encode!(body_data)
+      assert JSON.decode!(body) == body_data
       assert {"X-Custom-Header", "custom-value"} in headers
     end
 

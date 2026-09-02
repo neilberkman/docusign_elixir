@@ -86,7 +86,7 @@ defmodule DocuSign.ConnectionPoolIntegrationTest do
     test "connection makes successful requests", %{server: server} do
       # Setup server to respond to requests
       DocuSign.TestHTTPServer.expect_once(server, "GET", "/test", fn conn ->
-        Plug.Conn.send_resp(conn, 200, Jason.encode!(%{status: "ok"}))
+        Plug.Conn.send_resp(conn, 200, JSON.encode!(%{status: "ok"}))
       end)
 
       # Create connection
@@ -110,7 +110,7 @@ defmodule DocuSign.ConnectionPoolIntegrationTest do
       # Verify response
       assert response.status == 200
       # Body is returned as JSON string, decode it
-      assert Jason.decode!(response.body) == %{"status" => "ok"}
+      assert JSON.decode!(response.body) == %{"status" => "ok"}
     end
 
     test "pool health monitoring works" do

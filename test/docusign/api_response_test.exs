@@ -157,7 +157,7 @@ defmodule DocuSign.ApiResponseTest do
     test "verifies Req auto-decodes JSON with string keys", %{server: server} do
       # Create a response with various data types
       json_response =
-        Jason.encode!(%{
+        JSON.encode!(%{
           "array" => [1, 2, 3],
           "boolean" => true,
           "float" => 3.14,

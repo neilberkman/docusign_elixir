@@ -1,5 +1,17 @@
 # Migration Guide
 
+## Migrating to v4.0.0
+
+Elixir 1.18 or newer is required.
+
+Model structs now implement `JSON.Encoder` instead of `Jason.Encoder`. If your
+application called `Jason.encode!(%DocuSign.Model.X{})`, switch to
+`JSON.encode!(%DocuSign.Model.X{})`. Jason will raise `Protocol.UndefinedError` for
+these model structs now.
+
+Jason is no longer a direct dependency of `docusign`. Applications that relied on
+Jason being available transitively must add Jason to their own dependencies.
+
 ## Migrating to `v2.0` from `v1.x`
 
 Version 2.0.0 removes previously deprecated functionality. If you're still using any of these functions or configuration options, you'll need to update your code:

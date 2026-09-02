@@ -42,7 +42,7 @@ The package can be installed by adding `docusign` to your list of dependencies i
 ```elixir
 def deps do
   [
-    {:docusign, "~> 3.5"}
+    {:docusign, "~> 4.0"}
   ]
 end
 ```
@@ -234,7 +234,7 @@ Pass custom headers using the `:headers` option:
 lock_token = "your-lock-token"
 lock_duration = "600"
 
-lock_header = Jason.encode!(%{
+lock_header = JSON.encode!(%{
   "LockToken" => lock_token,
   "LockDurationInSeconds" => lock_duration
 })

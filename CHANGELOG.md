@@ -1,5 +1,30 @@
 # Changelog
 
+## v4.0.0 (2026-09-01)
+
+### Breaking Changes
+
+- Require Elixir 1.18 or newer.
+- Replace Jason with Elixir's built-in `JSON` module for encoding and decoding.
+  Generated models now implement `JSON.Encoder` and continue to omit nil fields from
+  encoded request bodies.
+- Jason is no longer a direct dependency. Applications that use Jason directly must
+  declare it themselves.
+
+### Improvements
+
+- Rewrite retry handling to use Req's retry-callback style. Retries now cover HTTP
+  408, 429, 500, 502, 503, and 504 responses plus timeout, connection-refused, and
+  closed transport errors. `Retry-After` is honored for 429 responses, and retry
+  delays are no longer performed inside an error step.
+- Fix three mangled MDN links in generated API documentation.
+- Make the generator templates portable by using the configured module name and
+  passing `invokerPackage` to the generator.
+
+### Dependencies
+
+- Update Req to the 0.7.x series.
+
 ## v3.5.1 (2026-06-29)
 
 ### Dependencies

@@ -2,7 +2,7 @@ defmodule DocuSign.MixProject do
   @moduledoc false
   use Mix.Project
 
-  @version "3.5.1"
+  @version "4.0.0"
   @url "https://github.com/neilberkman/docusign_elixir"
   @maintainers [
     "Neil Berkman"
@@ -13,7 +13,7 @@ defmodule DocuSign.MixProject do
       name: "DocuSign",
       app: :docusign,
       version: @version,
-      elixir: "~> 1.17 or ~> 1.18 or ~> 1.19 or ~> 1.20",
+      elixir: ">= 1.18.0",
       package: package(),
       source_url: @url,
       maintainers: @maintainers,
@@ -53,7 +53,6 @@ defmodule DocuSign.MixProject do
   defp deps do
     [
       {:req, "~> 0.5"},
-      {:jason, "~> 1.4"},
       {:joken, "~> 2.0"},
       {:oauth2, "~> 2.0"},
       {:castore, "~> 1.0"},

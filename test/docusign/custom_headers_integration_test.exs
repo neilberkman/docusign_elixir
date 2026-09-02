@@ -82,7 +82,7 @@ defmodule DocuSign.CustomHeadersIntegrationTest do
       lock_duration = "600"
 
       lock_edit_header =
-        Jason.encode!(%{
+        JSON.encode!(%{
           "LockDurationInSeconds" => lock_duration,
           "LockToken" => lock_token
         })
@@ -101,7 +101,7 @@ defmodule DocuSign.CustomHeadersIntegrationTest do
 
           # Read and verify body
           {:ok, body, conn} = Plug.Conn.read_body(conn)
-          request_body = Jason.decode!(body)
+          request_body = JSON.decode!(body)
 
           # Verify request structure
           assert request_body["lockDurationInSeconds"]
@@ -118,7 +118,7 @@ defmodule DocuSign.CustomHeadersIntegrationTest do
 
           conn
           |> Plug.Conn.put_resp_content_type("application/json")
-          |> Plug.Conn.resp(200, Jason.encode!(response))
+          |> Plug.Conn.resp(200, JSON.encode!(response))
         end
       )
 
@@ -164,7 +164,7 @@ defmodule DocuSign.CustomHeadersIntegrationTest do
           assert headers["x-custom-header-2"] == custom_header_2_value
 
           {:ok, body, conn} = Plug.Conn.read_body(conn)
-          Jason.decode!(body)
+          JSON.decode!(body)
 
           response = %{
             "lockDurationInSeconds" => "300",
@@ -173,7 +173,7 @@ defmodule DocuSign.CustomHeadersIntegrationTest do
 
           conn
           |> Plug.Conn.put_resp_content_type("application/json")
-          |> Plug.Conn.resp(200, Jason.encode!(response))
+          |> Plug.Conn.resp(200, JSON.encode!(response))
         end
       )
 
@@ -213,7 +213,7 @@ defmodule DocuSign.CustomHeadersIntegrationTest do
           assert headers["x-custom-header"] == custom_header_value
 
           {:ok, body, conn} = Plug.Conn.read_body(conn)
-          Jason.decode!(body)
+          JSON.decode!(body)
 
           response = %{
             "lockDurationInSeconds" => "600",
@@ -222,7 +222,7 @@ defmodule DocuSign.CustomHeadersIntegrationTest do
 
           conn
           |> Plug.Conn.put_resp_content_type("application/json")
-          |> Plug.Conn.resp(201, Jason.encode!(response))
+          |> Plug.Conn.resp(201, JSON.encode!(response))
         end
       )
 

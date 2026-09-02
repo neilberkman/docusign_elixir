@@ -43,7 +43,7 @@ defmodule DocuSign.OAuth.Impl do
     ]
     |> Keyword.merge(opts)
     |> Client.new()
-    |> Client.put_serializer("application/json", Jason)
+    |> Client.put_serializer("application/json", JSON)
   end
 
   defp get_default_user_id do

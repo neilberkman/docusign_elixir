@@ -228,7 +228,7 @@ defmodule DocuSign.WebhookPlugTest do
     end
 
     test "rejects non-POST requests" do
-      payload = Jason.encode!(@webhook_event)
+      payload = JSON.encode!(@webhook_event)
 
       conn =
         conn(:get, "/webhook/docusign", payload)
@@ -313,7 +313,7 @@ defmodule DocuSign.WebhookPlugTest do
   end
 
   defp build_request(payload, hmac256_key_or_keys) when is_map(payload) do
-    build_request(Jason.encode!(payload), hmac256_key_or_keys)
+    build_request(JSON.encode!(payload), hmac256_key_or_keys)
   end
 
   defp build_request(payload, hmac256_key_or_keys) when is_binary(payload) do

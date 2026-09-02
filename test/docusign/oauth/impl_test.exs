@@ -71,7 +71,7 @@ defmodule DocuSign.OAuth.ImplTest do
                  user_id: ":user-id:"
                },
                request_opts: [],
-               serializers: %{"application/json" => Jason},
+               serializers: %{"application/json" => JSON},
                site: "http://localhost",
                strategy: Impl,
                token: nil,
@@ -94,7 +94,7 @@ defmodule DocuSign.OAuth.ImplTest do
                  user_id: ":other-user-id:"
                },
                request_opts: [],
-               serializers: %{"application/json" => Jason},
+               serializers: %{"application/json" => JSON},
                site: "http://localhost",
                strategy: Impl,
                token: nil,
