@@ -23,7 +23,6 @@ defmodule DocuSign.MixProject do
       elixirc_paths: elixirc_paths(Mix.env()),
       docs: docs(),
       dialyzer: [
-        ignore_warnings: ".dialyzer_ignore.exs",
         plt_add_apps: [:mix]
       ],
       aliases: aliases()

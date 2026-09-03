@@ -1,5 +1,15 @@
 # Changelog
 
+## Unreleased
+
+### Improvements
+
+- Fix the generated `DocuSign.Deserializer.deserialize/4` typespec, which declared its
+  fourth argument as a function while every generated model passes a module. Dialyzer
+  now analyses the 605 generated model modules cleanly, so the blanket
+  `.dialyzer_ignore.exs` entry for `lib/docusign/model` has been removed along with the
+  file itself. `mix dialyzer` reports zero errors with nothing suppressed.
+
 ## v4.0.0 (2026-09-01)
 
 ### Breaking Changes

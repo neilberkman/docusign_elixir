@@ -12,13 +12,15 @@ defmodule {{moduleName}}.Deserializer do
   - `model` (struct) - The model to be updated
   - `field` (atom) - The field to be updated
   - `field_type` (atom) - The type of the field to be updated
-  - `decoder` (function) - A function that can decode the value
+  - `decoder` (module) - The model module whose `decode/1` builds the nested value,
+    or `nil` for `:date` and `:datetime` fields
 
   ### Returns
 
   Struct
   """
-  @spec deserialize(struct(), atom(), atom(), (any() -> any())) :: struct()
+  @spec deserialize(struct(), atom(), :date | :datetime | :list | :map | :struct, module() | nil) ::
+          struct()
   def deserialize(model, field, :list, decoder) do
     value = Map.get(model, field)
 
