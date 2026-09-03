@@ -2,6 +2,18 @@
 
 ## Unreleased
 
+### Internal
+
+- Stop vendoring the Req client templates. The Elixir generator gained a `req`
+  library upstream (openapi-generator PRs #24840 and #24841), so the API, request
+  builder, deserializer and connection templates now come from the generator
+  itself. `scripts/regen/custom_templates` keeps a single `model.mustache`
+  override, which omits nil fields when encoding rather than deriving
+  `JSON.Encoder`; DocuSign treats an explicit `null` as "clear this field".
+  Regeneration now requires OpenAPI Generator 7.26.0 or newer and the script
+  fails early on older versions. No generated code changes until the library is
+  regenerated against 7.26.0.
+
 ### Improvements
 
 - Fix the generated `DocuSign.Deserializer.deserialize/4` typespec, which declared its

@@ -26,15 +26,27 @@ This will:
 3. Apply necessary post-processing (module naming, formatting)
 4. Run tests to verify everything works
 
-## Custom Templates
+## Templates
 
-The `custom_templates/` directory contains our customized Mustache templates that produce:
+The Req-based Elixir client is now upstream in OpenAPI Generator, selected with
+`--library=req` (added in PRs
+[#24840](https://github.com/OpenAPITools/openapi-generator/pull/24840) and
+[#24841](https://github.com/OpenAPITools/openapi-generator/pull/24841), shipping
+in 7.26.0). The API, request builder, deserializer and connection templates all
+come from upstream, so they are no longer vendored here.
 
-- Proper Elixir module naming conventions
-- Correct type specifications that pass Dialyzer
-- Built-in JSON encoder/decoder integration (replacing Poison)
-- Req.Response types instead of Tesla.Env
-- Clean, formatted code that passes `mix format`
+`custom_templates/` therefore holds a single override:
+
+- `model.mustache` — upstream's model template with one change: generated models
+  omit nil fields when encoding instead of deriving `JSON.Encoder` directly.
+  DocuSign treats an explicit `null` as "clear this field" and its models are very
+  wide (`EnvelopeDefinition` has 90 fields, `Signer` 101), so serializing unset
+  fields as `null` would both bloat requests and risk wiping data on updates.
+
+Everything else resolves from the generator's built-in templates.
+
+**The regeneration script requires OpenAPI Generator 7.26.0 or newer** and fails
+early on older releases, which would silently fall back to the Tesla templates.
 
 Templates included:
 

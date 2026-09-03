@@ -4,10 +4,15 @@
   {{&description}}
   """
 
-  defstruct [{{#vars}}
-    {{#atom}}{{&baseName}}{{/atom}}{{^-last}},{{/-last}}{{/vars}}
+  defstruct [
+    {{#vars}}{{#atom}}{{&baseName}}{{/atom}}{{^-last}},
+    {{/-last}}{{/vars}}
   ]
 
+  # DocuSign treats an explicit null as "clear this field", and its models are
+  # wide (EnvelopeDefinition has 90 fields, Signer 101), so unset fields are
+  # omitted from request bodies rather than serialized as null. This is the only
+  # deviation from the upstream elixir/model.mustache template.
   @doc false
   defimpl JSON.Encoder, for: __MODULE__ do
     def encode(struct, encoder) do
@@ -20,26 +25,26 @@
   end
 
   @type t :: %__MODULE__{
-{{#vars}}          :{{&baseName}} => {{{datatype}}}{{#isNullable}} | nil{{/isNullable}}{{^isNullable}}{{^required}} | nil{{/required}}{{/isNullable}}{{^-last}},{{/-last}}
-{{/vars}}        }
+    {{#vars}}{{#atom}}{{&baseName}}{{/atom}} => {{{datatype}}}{{#isNullable}} | nil{{/isNullable}}{{^isNullable}}{{^required}} | nil{{/required}}{{/isNullable}}{{^-last}},
+    {{/-last}}{{/vars}}
+  }
 
 {{#hasComplexVars}}
-  alias {{moduleName}}.Deserializer
+  alias {{&moduleName}}.Deserializer
 
   def decode(value) do
-    value{{#vars}}{{^isPrimitiveType}}{{#baseType}}
-    |> Deserializer.deserialize(
-      {{#atom}}{{&baseName}}{{/atom}},
-      {{#isArray}}:list, {{moduleName}}.Model.{{{items.baseType}}}{{/isArray}}{{#isMap}}:map, {{moduleName}}.Model.{{{items.baseType}}}{{/isMap}}{{#isDate}}:date, nil{{/isDate}}{{#isDateTime}}:datetime, nil{{/isDateTime}}{{^isDate}}{{^isDateTime}}{{^isMap}}{{^isArray}}:struct, {{moduleName}}.Model.{{baseType}}{{/isArray}}{{/isMap}}{{/isDateTime}}{{/isDate}}
-    ){{/baseType}}{{/isPrimitiveType}}{{/vars}}
-    |> then(&struct(__MODULE__, &1))
-  end
+    value
+    {{#vars}}
+    {{^isPrimitiveType}}
+    {{#baseType}} |> Deserializer.deserialize({{#atom}}{{&baseName}}{{/atom}}, {{#isArray}}:list, {{&moduleName}}.Model.{{{items.baseType}}}{{/isArray}}{{#isMap}}:map, {{&moduleName}}.Model.{{{items.baseType}}}{{/isMap}}{{#isDate}}:date, nil{{/isDate}}{{#isDateTime}}:datetime, nil{{/isDateTime}}{{^isDate}}{{^isDateTime}}{{^isMap}}{{^isArray}}:struct, {{moduleName}}.Model.{{baseType}}{{/isArray}}{{/isMap}}{{/isDateTime}}{{/isDate}})
+    {{/baseType}}
+    {{/isPrimitiveType}}
+    {{/vars}}
 {{/hasComplexVars}}
 {{^hasComplexVars}}
   def decode(value) do
-    struct(__MODULE__, value)
-  end
+    value
 {{/hasComplexVars}}
+  end
 end
-
 {{/model}}{{/models}}

@@ -34,6 +34,22 @@ else
   OPENAPI_CMD="openapi-generator"
 fi
 
+# The Elixir generator only grew the Req client (--library=req) after 7.25.0.
+# Earlier versions silently fall back to the Tesla templates, which would
+# produce a client that does not match this library's hand-written code.
+GENERATOR_VERSION="$(${OPENAPI_CMD} version 2>/dev/null | tail -1 | tr -d '[:space:]')"
+REQUIRED_VERSION="7.26.0"
+if [ -n "${GENERATOR_VERSION}" ] && [ "${GENERATOR_VERSION%-SNAPSHOT}" = "${GENERATOR_VERSION}" ]; then
+  OLDEST="$(printf '%s\n%s\n' "${REQUIRED_VERSION}" "${GENERATOR_VERSION}" | sort -V | head -1)"
+  if [ "${OLDEST}" != "${REQUIRED_VERSION}" ]; then
+    echo "ERROR: OpenAPI Generator ${GENERATOR_VERSION} is too old."
+    echo "       This library generates the Req client via --library=req, which"
+    echo "       landed after 7.25.0 (PRs #24840 and #24841) and ships in ${REQUIRED_VERSION}."
+    echo "       Upgrade the generator, or pin a ${REQUIRED_VERSION}-SNAPSHOT build."
+    exit 1
+  fi
+fi
+
 # Parse command line arguments
 FORCE_DOWNLOAD=false
 
@@ -80,7 +96,8 @@ ${OPENAPI_CMD} generate \
   -t "${CUSTOM_TEMPLATES}" \
   -o "${GEN_DIR}" \
   --additional-properties=packageName=docusign \
-  --additional-properties=invokerPackage=DocuSign || {
+  --additional-properties=invokerPackage=DocuSign \
+  --additional-properties=library=req || {
   echo "ERROR: Code generation failed"
   exit 1
 }

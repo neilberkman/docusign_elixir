@@ -49,3 +49,5 @@
 - `cd scripts/regen && ./regenerate_library.sh` - Regenerate API from OpenAPI spec
 - Use `--download` flag to force download latest spec
 - The script uses the tracked spec and always cleans and regenerates the generated output
+- Requires OpenAPI Generator 7.26.0+ (the `--library=req` Elixir client landed after 7.25.0); the script fails early on older versions
+- Only `model.mustache` is overridden locally (to omit nil fields); all other templates come from upstream
