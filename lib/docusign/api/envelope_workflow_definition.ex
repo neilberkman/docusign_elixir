@@ -49,7 +49,7 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
     request =
       %{}
       |> method(:delete)
-      |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/workflow")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/envelopes/#{encode_path_param(envelope_id)}/workflow")
       |> Enum.to_list()
 
     connection
@@ -88,7 +88,7 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/workflow")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/envelopes/#{encode_path_param(envelope_id)}/workflow")
       |> Enum.to_list()
 
     connection
@@ -132,7 +132,7 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
     request =
       %{}
       |> method(:put)
-      |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/workflow")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/envelopes/#{encode_path_param(envelope_id)}/workflow")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()
@@ -181,7 +181,9 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
     request =
       %{}
       |> method(:delete)
-      |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/workflow/steps/#{workflow_step_id}/delayedRouting")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/envelopes/#{encode_path_param(envelope_id)}/workflow/steps/#{encode_path_param(workflow_step_id)}/delayedRouting"
+      )
       |> Enum.to_list()
 
     connection
@@ -228,7 +230,9 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/workflow/steps/#{workflow_step_id}/delayedRouting")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/envelopes/#{encode_path_param(envelope_id)}/workflow/steps/#{encode_path_param(workflow_step_id)}/delayedRouting"
+      )
       |> Enum.to_list()
 
     connection
@@ -280,7 +284,9 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
     request =
       %{}
       |> method(:put)
-      |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/workflow/steps/#{workflow_step_id}/delayedRouting")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/envelopes/#{encode_path_param(envelope_id)}/workflow/steps/#{encode_path_param(workflow_step_id)}/delayedRouting"
+      )
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()
@@ -326,7 +332,9 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
     request =
       %{}
       |> method(:delete)
-      |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/workflow/scheduledSending")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/envelopes/#{encode_path_param(envelope_id)}/workflow/scheduledSending"
+      )
       |> Enum.to_list()
 
     connection
@@ -370,7 +378,9 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/workflow/scheduledSending")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/envelopes/#{encode_path_param(envelope_id)}/workflow/scheduledSending"
+      )
       |> Enum.to_list()
 
     connection
@@ -419,7 +429,9 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
     request =
       %{}
       |> method(:put)
-      |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/workflow/scheduledSending")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/envelopes/#{encode_path_param(envelope_id)}/workflow/scheduledSending"
+      )
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()
@@ -468,7 +480,9 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
     request =
       %{}
       |> method(:delete)
-      |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/workflow/steps/#{workflow_step_id}")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/envelopes/#{encode_path_param(envelope_id)}/workflow/steps/#{encode_path_param(workflow_step_id)}"
+      )
       |> Enum.to_list()
 
     connection
@@ -515,7 +529,9 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/workflow/steps/#{workflow_step_id}")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/envelopes/#{encode_path_param(envelope_id)}/workflow/steps/#{encode_path_param(workflow_step_id)}"
+      )
       |> Enum.to_list()
 
     connection
@@ -559,7 +575,9 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
     request =
       %{}
       |> method(:post)
-      |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/workflow/steps")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/envelopes/#{encode_path_param(envelope_id)}/workflow/steps"
+      )
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()
@@ -613,7 +631,9 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
     request =
       %{}
       |> method(:put)
-      |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/workflow/steps/#{workflow_step_id}")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/envelopes/#{encode_path_param(envelope_id)}/workflow/steps/#{encode_path_param(workflow_step_id)}"
+      )
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()
@@ -654,7 +674,7 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
     request =
       %{}
       |> method(:delete)
-      |> url("/v2.1/accounts/#{account_id}/templates/#{template_id}/workflow")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/templates/#{encode_path_param(template_id)}/workflow")
       |> Enum.to_list()
 
     connection
@@ -693,7 +713,7 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/templates/#{template_id}/workflow")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/templates/#{encode_path_param(template_id)}/workflow")
       |> Enum.to_list()
 
     connection
@@ -737,7 +757,7 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
     request =
       %{}
       |> method(:put)
-      |> url("/v2.1/accounts/#{account_id}/templates/#{template_id}/workflow")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/templates/#{encode_path_param(template_id)}/workflow")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()
@@ -786,7 +806,9 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
     request =
       %{}
       |> method(:delete)
-      |> url("/v2.1/accounts/#{account_id}/templates/#{template_id}/workflow/steps/#{workflow_step_id}/delayedRouting")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/templates/#{encode_path_param(template_id)}/workflow/steps/#{encode_path_param(workflow_step_id)}/delayedRouting"
+      )
       |> Enum.to_list()
 
     connection
@@ -833,7 +855,9 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/templates/#{template_id}/workflow/steps/#{workflow_step_id}/delayedRouting")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/templates/#{encode_path_param(template_id)}/workflow/steps/#{encode_path_param(workflow_step_id)}/delayedRouting"
+      )
       |> Enum.to_list()
 
     connection
@@ -885,7 +909,9 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
     request =
       %{}
       |> method(:put)
-      |> url("/v2.1/accounts/#{account_id}/templates/#{template_id}/workflow/steps/#{workflow_step_id}/delayedRouting")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/templates/#{encode_path_param(template_id)}/workflow/steps/#{encode_path_param(workflow_step_id)}/delayedRouting"
+      )
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()
@@ -931,7 +957,9 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
     request =
       %{}
       |> method(:delete)
-      |> url("/v2.1/accounts/#{account_id}/templates/#{template_id}/workflow/scheduledSending")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/templates/#{encode_path_param(template_id)}/workflow/scheduledSending"
+      )
       |> Enum.to_list()
 
     connection
@@ -975,7 +1003,9 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/templates/#{template_id}/workflow/scheduledSending")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/templates/#{encode_path_param(template_id)}/workflow/scheduledSending"
+      )
       |> Enum.to_list()
 
     connection
@@ -1023,7 +1053,9 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
     request =
       %{}
       |> method(:put)
-      |> url("/v2.1/accounts/#{account_id}/templates/#{template_id}/workflow/scheduledSending")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/templates/#{encode_path_param(template_id)}/workflow/scheduledSending"
+      )
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()
@@ -1072,7 +1104,9 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
     request =
       %{}
       |> method(:delete)
-      |> url("/v2.1/accounts/#{account_id}/templates/#{template_id}/workflow/steps/#{workflow_step_id}")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/templates/#{encode_path_param(template_id)}/workflow/steps/#{encode_path_param(workflow_step_id)}"
+      )
       |> Enum.to_list()
 
     connection
@@ -1119,7 +1153,9 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/templates/#{template_id}/workflow/steps/#{workflow_step_id}")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/templates/#{encode_path_param(template_id)}/workflow/steps/#{encode_path_param(workflow_step_id)}"
+      )
       |> Enum.to_list()
 
     connection
@@ -1163,7 +1199,9 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
     request =
       %{}
       |> method(:post)
-      |> url("/v2.1/accounts/#{account_id}/templates/#{template_id}/workflow/steps")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/templates/#{encode_path_param(template_id)}/workflow/steps"
+      )
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()
@@ -1217,7 +1255,9 @@ defmodule DocuSign.Api.EnvelopeWorkflowDefinition do
     request =
       %{}
       |> method(:put)
-      |> url("/v2.1/accounts/#{account_id}/templates/#{template_id}/workflow/steps/#{workflow_step_id}")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/templates/#{encode_path_param(template_id)}/workflow/steps/#{encode_path_param(workflow_step_id)}"
+      )
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()

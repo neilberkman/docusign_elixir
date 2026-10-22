@@ -40,7 +40,7 @@ defmodule DocuSign.Api.IdentityVerifications do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/identity_verification")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/identity_verification")
       |> add_optional_params(optional_params, opts)
       |> Enum.to_list()
 

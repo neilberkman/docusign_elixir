@@ -40,7 +40,7 @@ defmodule DocuSign.Api.ConnectConfigurations do
     request =
       %{}
       |> method(:delete)
-      |> url("/v2.1/accounts/#{account_id}/connect/#{connect_id}")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/connect/#{encode_path_param(connect_id)}")
       |> Enum.to_list()
 
     connection
@@ -89,7 +89,7 @@ defmodule DocuSign.Api.ConnectConfigurations do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/connect/#{connect_id}/all/users")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/connect/#{encode_path_param(connect_id)}/all/users")
       |> add_optional_params(optional_params, opts)
       |> Enum.to_list()
 
@@ -124,7 +124,7 @@ defmodule DocuSign.Api.ConnectConfigurations do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/connect/#{connect_id}")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/connect/#{encode_path_param(connect_id)}")
       |> Enum.to_list()
 
     connection
@@ -157,7 +157,7 @@ defmodule DocuSign.Api.ConnectConfigurations do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/connect")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/connect")
       |> Enum.to_list()
 
     connection
@@ -206,7 +206,7 @@ defmodule DocuSign.Api.ConnectConfigurations do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/connect/#{connect_id}/users")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/connect/#{encode_path_param(connect_id)}/users")
       |> add_optional_params(optional_params, opts)
       |> Enum.to_list()
 
@@ -239,7 +239,7 @@ defmodule DocuSign.Api.ConnectConfigurations do
     request =
       %{}
       |> method(:post)
-      |> url("/v2.1/accounts/#{account_id}/connect/secret")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/connect/secret")
       |> ensure_body()
       |> Enum.to_list()
 
@@ -273,7 +273,7 @@ defmodule DocuSign.Api.ConnectConfigurations do
     request =
       %{}
       |> method(:delete)
-      |> url("/v2.1/accounts/#{account_id}/connect/secret/#{key_id}")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/connect/secret/#{encode_path_param(key_id)}")
       |> Enum.to_list()
 
     connection
@@ -304,7 +304,7 @@ defmodule DocuSign.Api.ConnectConfigurations do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/connect/secret")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/connect/secret")
       |> Enum.to_list()
 
     connection
@@ -337,7 +337,7 @@ defmodule DocuSign.Api.ConnectConfigurations do
     request =
       %{}
       |> method(:delete)
-      |> url("/v2.1/accounts/#{account_id}/connect/oauth")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/connect/oauth")
       |> Enum.to_list()
 
     connection
@@ -370,7 +370,7 @@ defmodule DocuSign.Api.ConnectConfigurations do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/connect/oauth")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/connect/oauth")
       |> Enum.to_list()
 
     connection
@@ -408,7 +408,7 @@ defmodule DocuSign.Api.ConnectConfigurations do
     request =
       %{}
       |> method(:post)
-      |> url("/v2.1/accounts/#{account_id}/connect/oauth")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/connect/oauth")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()
@@ -447,7 +447,7 @@ defmodule DocuSign.Api.ConnectConfigurations do
     request =
       %{}
       |> method(:put)
-      |> url("/v2.1/accounts/#{account_id}/connect/oauth")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/connect/oauth")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()
@@ -487,7 +487,7 @@ defmodule DocuSign.Api.ConnectConfigurations do
     request =
       %{}
       |> method(:post)
-      |> url("/v2.1/accounts/#{account_id}/connect")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/connect")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()
@@ -527,7 +527,7 @@ defmodule DocuSign.Api.ConnectConfigurations do
     request =
       %{}
       |> method(:put)
-      |> url("/v2.1/accounts/#{account_id}/connect")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/connect")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()

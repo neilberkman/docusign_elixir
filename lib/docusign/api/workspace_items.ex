@@ -54,7 +54,9 @@ defmodule DocuSign.Api.WorkspaceItems do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/workspaces/#{workspace_id}/folders/#{folder_id}/files/#{file_id}")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/workspaces/#{encode_path_param(workspace_id)}/folders/#{encode_path_param(folder_id)}/files/#{encode_path_param(file_id)}"
+      )
       |> add_optional_params(optional_params, opts)
       |> Enum.to_list()
 
@@ -118,7 +120,9 @@ defmodule DocuSign.Api.WorkspaceItems do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/workspaces/#{workspace_id}/folders/#{folder_id}/files/#{file_id}/pages")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/workspaces/#{encode_path_param(workspace_id)}/folders/#{encode_path_param(folder_id)}/files/#{encode_path_param(file_id)}/pages"
+      )
       |> add_optional_params(optional_params, opts)
       |> Enum.to_list()
 
@@ -154,7 +158,9 @@ defmodule DocuSign.Api.WorkspaceItems do
     request =
       %{}
       |> method(:post)
-      |> url("/v2.1/accounts/#{account_id}/workspaces/#{workspace_id}/folders/#{folder_id}/files")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/workspaces/#{encode_path_param(workspace_id)}/folders/#{encode_path_param(folder_id)}/files"
+      )
       |> ensure_body()
       |> Enum.to_list()
 
@@ -198,7 +204,9 @@ defmodule DocuSign.Api.WorkspaceItems do
     request =
       %{}
       |> method(:put)
-      |> url("/v2.1/accounts/#{account_id}/workspaces/#{workspace_id}/folders/#{folder_id}/files/#{file_id}")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/workspaces/#{encode_path_param(workspace_id)}/folders/#{encode_path_param(folder_id)}/files/#{encode_path_param(file_id)}"
+      )
       |> ensure_body()
       |> Enum.to_list()
 
@@ -239,7 +247,9 @@ defmodule DocuSign.Api.WorkspaceItems do
     request =
       %{}
       |> method(:delete)
-      |> url("/v2.1/accounts/#{account_id}/workspaces/#{workspace_id}/folders/#{folder_id}")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/workspaces/#{encode_path_param(workspace_id)}/folders/#{encode_path_param(folder_id)}"
+      )
       |> add_optional_params(optional_params, opts)
       |> Enum.to_list()
 
@@ -292,7 +302,9 @@ defmodule DocuSign.Api.WorkspaceItems do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/workspaces/#{workspace_id}/folders/#{folder_id}")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/workspaces/#{encode_path_param(workspace_id)}/folders/#{encode_path_param(folder_id)}"
+      )
       |> add_optional_params(optional_params, opts)
       |> Enum.to_list()
 

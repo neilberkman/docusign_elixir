@@ -42,7 +42,9 @@ defmodule DocuSign.Api.EnvelopeViews do
     request =
       %{}
       |> method(:delete)
-      |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/views/correct")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/envelopes/#{encode_path_param(envelope_id)}/views/correct"
+      )
       |> add_optional_params(optional_params, opts)
       |> Enum.to_list()
 
@@ -81,7 +83,7 @@ defmodule DocuSign.Api.EnvelopeViews do
     request =
       %{}
       |> method(:post)
-      |> url("/v2.1/accounts/#{account_id}/views/console")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/views/console")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()
@@ -122,7 +124,9 @@ defmodule DocuSign.Api.EnvelopeViews do
     request =
       %{}
       |> method(:post)
-      |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/views/correct")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/envelopes/#{encode_path_param(envelope_id)}/views/correct"
+      )
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()
@@ -163,7 +167,7 @@ defmodule DocuSign.Api.EnvelopeViews do
     request =
       %{}
       |> method(:post)
-      |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/views/edit")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/envelopes/#{encode_path_param(envelope_id)}/views/edit")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()
@@ -204,7 +208,7 @@ defmodule DocuSign.Api.EnvelopeViews do
     request =
       %{}
       |> method(:post)
-      |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/views/shared")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/envelopes/#{encode_path_param(envelope_id)}/views/shared")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()
@@ -245,7 +249,9 @@ defmodule DocuSign.Api.EnvelopeViews do
     request =
       %{}
       |> method(:post)
-      |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/views/recipient")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/envelopes/#{encode_path_param(envelope_id)}/views/recipient"
+      )
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()
@@ -286,7 +292,7 @@ defmodule DocuSign.Api.EnvelopeViews do
     request =
       %{}
       |> method(:post)
-      |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/views/sender")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/envelopes/#{encode_path_param(envelope_id)}/views/sender")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()

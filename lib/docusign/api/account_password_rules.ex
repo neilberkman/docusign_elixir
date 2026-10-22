@@ -36,7 +36,7 @@ defmodule DocuSign.Api.AccountPasswordRules do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/settings/password_rules")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/settings/password_rules")
       |> Enum.to_list()
 
     connection
@@ -74,7 +74,7 @@ defmodule DocuSign.Api.AccountPasswordRules do
     request =
       %{}
       |> method(:put)
-      |> url("/v2.1/accounts/#{account_id}/settings/password_rules")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/settings/password_rules")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()

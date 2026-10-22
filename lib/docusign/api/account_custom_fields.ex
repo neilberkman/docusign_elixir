@@ -41,7 +41,7 @@ defmodule DocuSign.Api.AccountCustomFields do
     request =
       %{}
       |> method(:delete)
-      |> url("/v2.1/accounts/#{account_id}/custom_fields/#{custom_field_id}")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/custom_fields/#{encode_path_param(custom_field_id)}")
       |> add_optional_params(optional_params, opts)
       |> Enum.to_list()
 
@@ -75,7 +75,7 @@ defmodule DocuSign.Api.AccountCustomFields do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/custom_fields")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/custom_fields")
       |> Enum.to_list()
 
     connection
@@ -115,7 +115,7 @@ defmodule DocuSign.Api.AccountCustomFields do
     request =
       %{}
       |> method(:post)
-      |> url("/v2.1/accounts/#{account_id}/custom_fields")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/custom_fields")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()
@@ -158,7 +158,7 @@ defmodule DocuSign.Api.AccountCustomFields do
     request =
       %{}
       |> method(:put)
-      |> url("/v2.1/accounts/#{account_id}/custom_fields/#{custom_field_id}")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/custom_fields/#{encode_path_param(custom_field_id)}")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()

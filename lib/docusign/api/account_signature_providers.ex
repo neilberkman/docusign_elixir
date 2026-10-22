@@ -35,7 +35,7 @@ defmodule DocuSign.Api.AccountSignatureProviders do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/signatureProviders")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/signatureProviders")
       |> Enum.to_list()
 
     connection

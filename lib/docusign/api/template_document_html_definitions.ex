@@ -48,7 +48,9 @@ defmodule DocuSign.Api.TemplateDocumentHtmlDefinitions do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/templates/#{template_id}/documents/#{document_id}/html_definitions")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/templates/#{encode_path_param(template_id)}/documents/#{encode_path_param(document_id)}/html_definitions"
+      )
       |> Enum.to_list()
 
     connection

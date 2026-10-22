@@ -37,7 +37,7 @@ defmodule DocuSign.Api.AccountSignatures do
     request =
       %{}
       |> method(:delete)
-      |> url("/v2.1/accounts/#{account_id}/signatures/#{signature_id}")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/signatures/#{encode_path_param(signature_id)}")
       |> Enum.to_list()
 
     connection
@@ -78,7 +78,9 @@ defmodule DocuSign.Api.AccountSignatures do
     request =
       %{}
       |> method(:delete)
-      |> url("/v2.1/accounts/#{account_id}/signatures/#{signature_id}/#{image_type}")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/signatures/#{encode_path_param(signature_id)}/#{encode_path_param(image_type)}"
+      )
       |> Enum.to_list()
 
     connection
@@ -112,7 +114,7 @@ defmodule DocuSign.Api.AccountSignatures do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/signatures/#{signature_id}")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/signatures/#{encode_path_param(signature_id)}")
       |> Enum.to_list()
 
     connection
@@ -158,7 +160,9 @@ defmodule DocuSign.Api.AccountSignatures do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/signatures/#{signature_id}/#{image_type}")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/signatures/#{encode_path_param(signature_id)}/#{encode_path_param(image_type)}"
+      )
       |> add_optional_params(optional_params, opts)
       |> Enum.to_list()
 
@@ -201,7 +205,7 @@ defmodule DocuSign.Api.AccountSignatures do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/signatures")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/signatures")
       |> add_optional_params(optional_params, opts)
       |> Enum.to_list()
 
@@ -242,7 +246,7 @@ defmodule DocuSign.Api.AccountSignatures do
     request =
       %{}
       |> method(:post)
-      |> url("/v2.1/accounts/#{account_id}/signatures")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/signatures")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()
@@ -282,7 +286,7 @@ defmodule DocuSign.Api.AccountSignatures do
     request =
       %{}
       |> method(:put)
-      |> url("/v2.1/accounts/#{account_id}/signatures")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/signatures")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()
@@ -325,7 +329,7 @@ defmodule DocuSign.Api.AccountSignatures do
     request =
       %{}
       |> method(:put)
-      |> url("/v2.1/accounts/#{account_id}/signatures/#{signature_id}")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/signatures/#{encode_path_param(signature_id)}")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()
@@ -373,7 +377,9 @@ defmodule DocuSign.Api.AccountSignatures do
     request =
       %{}
       |> method(:put)
-      |> url("/v2.1/accounts/#{account_id}/signatures/#{signature_id}/#{image_type}")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/signatures/#{encode_path_param(signature_id)}/#{encode_path_param(image_type)}"
+      )
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()

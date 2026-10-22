@@ -48,7 +48,7 @@ defmodule DocuSign.Api.Envelopes do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/audit_events")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/envelopes/#{encode_path_param(envelope_id)}/audit_events")
       |> add_optional_params(optional_params, opts)
       |> Enum.to_list()
 
@@ -94,7 +94,7 @@ defmodule DocuSign.Api.Envelopes do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/envelopes/#{encode_path_param(envelope_id)}")
       |> add_optional_params(optional_params, opts)
       |> Enum.to_list()
 
@@ -193,7 +193,7 @@ defmodule DocuSign.Api.Envelopes do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/envelopes")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/envelopes")
       |> add_optional_params(optional_params, opts)
       |> Enum.to_list()
 
@@ -240,7 +240,7 @@ defmodule DocuSign.Api.Envelopes do
     request =
       %{}
       |> method(:post)
-      |> url("/v2.1/accounts/#{account_id}/envelopes")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/envelopes")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()
@@ -287,7 +287,7 @@ defmodule DocuSign.Api.Envelopes do
     request =
       %{}
       |> method(:put)
-      |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/envelopes/#{encode_path_param(envelope_id)}")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()
@@ -351,7 +351,7 @@ defmodule DocuSign.Api.Envelopes do
     request =
       %{}
       |> method(:put)
-      |> url("/v2.1/accounts/#{account_id}/envelopes/status")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/envelopes/status")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()
@@ -387,7 +387,7 @@ defmodule DocuSign.Api.Envelopes do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/notification")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/envelopes/#{encode_path_param(envelope_id)}/notification")
       |> Enum.to_list()
 
     connection
@@ -426,7 +426,7 @@ defmodule DocuSign.Api.Envelopes do
     request =
       %{}
       |> method(:put)
-      |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/notification")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/envelopes/#{encode_path_param(envelope_id)}/notification")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()
@@ -464,7 +464,9 @@ defmodule DocuSign.Api.Envelopes do
     request =
       %{}
       |> method(:delete)
-      |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/documents/#{document_id}/pages/#{page_number}")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/envelopes/#{encode_path_param(envelope_id)}/documents/#{encode_path_param(document_id)}/pages/#{encode_path_param(page_number)}"
+      )
       |> Enum.to_list()
 
     connection
@@ -512,7 +514,7 @@ defmodule DocuSign.Api.Envelopes do
       %{}
       |> method(:get)
       |> url(
-        "/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/documents/#{document_id}/pages/#{page_number}/page_image"
+        "/v2.1/accounts/#{encode_path_param(account_id)}/envelopes/#{encode_path_param(envelope_id)}/documents/#{encode_path_param(document_id)}/pages/#{encode_path_param(page_number)}/page_image"
       )
       |> add_optional_params(optional_params, opts)
       |> Enum.to_list()
@@ -566,7 +568,9 @@ defmodule DocuSign.Api.Envelopes do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/documents/#{document_id}/pages")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/envelopes/#{encode_path_param(envelope_id)}/documents/#{encode_path_param(document_id)}/pages"
+      )
       |> add_optional_params(optional_params, opts)
       |> Enum.to_list()
 
@@ -609,7 +613,7 @@ defmodule DocuSign.Api.Envelopes do
       %{}
       |> method(:put)
       |> url(
-        "/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/documents/#{document_id}/pages/#{page_number}/page_image"
+        "/v2.1/accounts/#{encode_path_param(account_id)}/envelopes/#{encode_path_param(envelope_id)}/documents/#{encode_path_param(document_id)}/pages/#{encode_path_param(page_number)}/page_image"
       )
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
@@ -652,7 +656,9 @@ defmodule DocuSign.Api.Envelopes do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/recipients/#{recipient_id}/initials_image")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/envelopes/#{encode_path_param(envelope_id)}/recipients/#{encode_path_param(recipient_id)}/initials_image"
+      )
       |> add_optional_params(optional_params, opts)
       |> Enum.to_list()
 
@@ -688,7 +694,9 @@ defmodule DocuSign.Api.Envelopes do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/recipients/#{recipient_id}/signature")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/envelopes/#{encode_path_param(envelope_id)}/recipients/#{encode_path_param(recipient_id)}/signature"
+      )
       |> Enum.to_list()
 
     connection
@@ -728,7 +736,9 @@ defmodule DocuSign.Api.Envelopes do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/recipients/#{recipient_id}/signature_image")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/envelopes/#{encode_path_param(envelope_id)}/recipients/#{encode_path_param(recipient_id)}/signature_image"
+      )
       |> add_optional_params(optional_params, opts)
       |> Enum.to_list()
 
@@ -764,7 +774,9 @@ defmodule DocuSign.Api.Envelopes do
     request =
       %{}
       |> method(:put)
-      |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/recipients/#{recipient_id}/initials_image")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/envelopes/#{encode_path_param(envelope_id)}/recipients/#{encode_path_param(recipient_id)}/initials_image"
+      )
       |> ensure_body()
       |> Enum.to_list()
 
@@ -800,7 +812,9 @@ defmodule DocuSign.Api.Envelopes do
     request =
       %{}
       |> method(:put)
-      |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/recipients/#{recipient_id}/signature_image")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/envelopes/#{encode_path_param(envelope_id)}/recipients/#{encode_path_param(recipient_id)}/signature_image"
+      )
       |> ensure_body()
       |> Enum.to_list()
 

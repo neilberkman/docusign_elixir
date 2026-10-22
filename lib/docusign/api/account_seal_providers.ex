@@ -34,7 +34,7 @@ defmodule DocuSign.Api.AccountSealProviders do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/seals")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/seals")
       |> Enum.to_list()
 
     connection

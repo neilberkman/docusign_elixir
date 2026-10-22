@@ -38,7 +38,7 @@ defmodule DocuSign.Api.Invoices do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/billing_invoices/#{invoice_id}")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/billing_invoices/#{encode_path_param(invoice_id)}")
       |> Enum.to_list()
 
     connection
@@ -78,7 +78,7 @@ defmodule DocuSign.Api.Invoices do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/billing_invoices")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/billing_invoices")
       |> add_optional_params(optional_params, opts)
       |> Enum.to_list()
 
@@ -112,7 +112,7 @@ defmodule DocuSign.Api.Invoices do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/billing_invoices_past_due")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/billing_invoices_past_due")
       |> Enum.to_list()
 
     connection

@@ -39,7 +39,7 @@ defmodule DocuSign.Api.AccountBrands do
     request =
       %{}
       |> method(:delete)
-      |> url("/v2.1/accounts/#{account_id}/brands/#{brand_id}")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/brands/#{encode_path_param(brand_id)}")
       |> Enum.to_list()
 
     connection
@@ -73,7 +73,7 @@ defmodule DocuSign.Api.AccountBrands do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/brands/#{brand_id}/file")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/brands/#{encode_path_param(brand_id)}/file")
       |> Enum.to_list()
 
     connection
@@ -114,7 +114,7 @@ defmodule DocuSign.Api.AccountBrands do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/brands/#{brand_id}")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/brands/#{encode_path_param(brand_id)}")
       |> add_optional_params(optional_params, opts)
       |> Enum.to_list()
 
@@ -150,7 +150,9 @@ defmodule DocuSign.Api.AccountBrands do
     request =
       %{}
       |> method(:delete)
-      |> url("/v2.1/accounts/#{account_id}/brands/#{brand_id}/logos/#{logo_type}")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/brands/#{encode_path_param(brand_id)}/logos/#{encode_path_param(logo_type)}"
+      )
       |> Enum.to_list()
 
     connection
@@ -185,7 +187,9 @@ defmodule DocuSign.Api.AccountBrands do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/brands/#{brand_id}/logos/#{logo_type}")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/brands/#{encode_path_param(brand_id)}/logos/#{encode_path_param(logo_type)}"
+      )
       |> Enum.to_list()
 
     connection
@@ -221,7 +225,9 @@ defmodule DocuSign.Api.AccountBrands do
     request =
       %{}
       |> method(:put)
-      |> url("/v2.1/accounts/#{account_id}/brands/#{brand_id}/logos/#{logo_type}")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/brands/#{encode_path_param(brand_id)}/logos/#{encode_path_param(logo_type)}"
+      )
       |> add_param(:body, :body, logo_file_bytes)
       |> Enum.to_list()
 
@@ -263,7 +269,7 @@ defmodule DocuSign.Api.AccountBrands do
     request =
       %{}
       |> method(:put)
-      |> url("/v2.1/accounts/#{account_id}/brands/#{brand_id}")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/brands/#{encode_path_param(brand_id)}")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()
@@ -307,7 +313,9 @@ defmodule DocuSign.Api.AccountBrands do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/brands/#{brand_id}/resources/#{resource_content_type}")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/brands/#{encode_path_param(brand_id)}/resources/#{encode_path_param(resource_content_type)}"
+      )
       |> add_optional_params(optional_params, opts)
       |> Enum.to_list()
 
@@ -342,7 +350,7 @@ defmodule DocuSign.Api.AccountBrands do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/brands/#{brand_id}/resources")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/brands/#{encode_path_param(brand_id)}/resources")
       |> Enum.to_list()
 
     connection
@@ -392,7 +400,9 @@ defmodule DocuSign.Api.AccountBrands do
     request =
       %{}
       |> method(:put)
-      |> url("/v2.1/accounts/#{account_id}/brands/#{brand_id}/resources/#{resource_content_type}")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/brands/#{encode_path_param(brand_id)}/resources/#{encode_path_param(resource_content_type)}"
+      )
       |> add_param(:file, :"file.xml", file_periodxml)
       |> Enum.to_list()
 
@@ -431,7 +441,7 @@ defmodule DocuSign.Api.AccountBrands do
     request =
       %{}
       |> method(:delete)
-      |> url("/v2.1/accounts/#{account_id}/brands")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/brands")
       |> add_optional_params(optional_params, opts)
       |> Enum.to_list()
 
@@ -472,7 +482,7 @@ defmodule DocuSign.Api.AccountBrands do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/brands")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/brands")
       |> add_optional_params(optional_params, opts)
       |> Enum.to_list()
 
@@ -511,7 +521,7 @@ defmodule DocuSign.Api.AccountBrands do
     request =
       %{}
       |> method(:post)
-      |> url("/v2.1/accounts/#{account_id}/brands")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/brands")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()

@@ -42,7 +42,9 @@ defmodule DocuSign.Api.AccountPermissionProfiles do
     request =
       %{}
       |> method(:delete)
-      |> url("/v2.1/accounts/#{account_id}/permission_profiles/#{permission_profile_id}")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/permission_profiles/#{encode_path_param(permission_profile_id)}"
+      )
       |> add_optional_params(optional_params, opts)
       |> Enum.to_list()
 
@@ -82,7 +84,9 @@ defmodule DocuSign.Api.AccountPermissionProfiles do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/permission_profiles/#{permission_profile_id}")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/permission_profiles/#{encode_path_param(permission_profile_id)}"
+      )
       |> add_optional_params(optional_params, opts)
       |> Enum.to_list()
 
@@ -121,7 +125,7 @@ defmodule DocuSign.Api.AccountPermissionProfiles do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/permission_profiles")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/permission_profiles")
       |> add_optional_params(optional_params, opts)
       |> Enum.to_list()
 
@@ -162,7 +166,7 @@ defmodule DocuSign.Api.AccountPermissionProfiles do
     request =
       %{}
       |> method(:post)
-      |> url("/v2.1/accounts/#{account_id}/permission_profiles")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/permission_profiles")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()
@@ -205,7 +209,9 @@ defmodule DocuSign.Api.AccountPermissionProfiles do
     request =
       %{}
       |> method(:put)
-      |> url("/v2.1/accounts/#{account_id}/permission_profiles/#{permission_profile_id}")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/permission_profiles/#{encode_path_param(permission_profile_id)}"
+      )
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()

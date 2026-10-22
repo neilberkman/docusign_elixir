@@ -41,7 +41,7 @@ defmodule DocuSign.Api.EnvelopeAttachments do
     request =
       %{}
       |> method(:delete)
-      |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/attachments")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/envelopes/#{encode_path_param(envelope_id)}/attachments")
       |> add_optional_params(optional_params, opts)
       |> Enum.to_list()
 
@@ -77,7 +77,9 @@ defmodule DocuSign.Api.EnvelopeAttachments do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/attachments/#{attachment_id}")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/envelopes/#{encode_path_param(envelope_id)}/attachments/#{encode_path_param(attachment_id)}"
+      )
       |> Enum.to_list()
 
     connection
@@ -111,7 +113,7 @@ defmodule DocuSign.Api.EnvelopeAttachments do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/attachments")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/envelopes/#{encode_path_param(envelope_id)}/attachments")
       |> Enum.to_list()
 
     connection
@@ -151,7 +153,9 @@ defmodule DocuSign.Api.EnvelopeAttachments do
     request =
       %{}
       |> method(:put)
-      |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/attachments/#{attachment_id}")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/envelopes/#{encode_path_param(envelope_id)}/attachments/#{encode_path_param(attachment_id)}"
+      )
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()
@@ -192,7 +196,7 @@ defmodule DocuSign.Api.EnvelopeAttachments do
     request =
       %{}
       |> method(:put)
-      |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/attachments")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/envelopes/#{encode_path_param(envelope_id)}/attachments")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()

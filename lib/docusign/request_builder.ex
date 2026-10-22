@@ -46,6 +46,22 @@ defmodule DocuSign.RequestBuilder do
   end
 
   @doc """
+  Percent-encode a path parameter so it occupies exactly one path segment.
+
+  Every character outside the RFC 3986 unreserved set is encoded, including
+  `/`, `?`, `#` and `%`. Values consisting of `.` or `..` are encoded as well
+  to prevent dot segments after decoding.
+  """
+  @spec encode_path_param(term()) :: String.t()
+  def encode_path_param(value) do
+    case to_string(value) do
+      "." -> "%2E"
+      ".." -> "%2E%2E"
+      string -> URI.encode(string, &URI.char_unreserved?/1)
+    end
+  end
+
+  @doc """
   Add optional parameters to a request
 
   ### Parameters

@@ -36,7 +36,7 @@ defmodule DocuSign.Api.NotaryJurisdiction do
     request =
       %{}
       |> method(:delete)
-      |> url("/v2.1/current_user/notary/jurisdictions/#{jurisdiction_id}")
+      |> url("/v2.1/current_user/notary/jurisdictions/#{encode_path_param(jurisdiction_id)}")
       |> Enum.to_list()
 
     connection
@@ -69,7 +69,7 @@ defmodule DocuSign.Api.NotaryJurisdiction do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/current_user/notary/jurisdictions/#{jurisdiction_id}")
+      |> url("/v2.1/current_user/notary/jurisdictions/#{encode_path_param(jurisdiction_id)}")
       |> Enum.to_list()
 
     connection
@@ -178,7 +178,7 @@ defmodule DocuSign.Api.NotaryJurisdiction do
     request =
       %{}
       |> method(:put)
-      |> url("/v2.1/current_user/notary/jurisdictions/#{jurisdiction_id}")
+      |> url("/v2.1/current_user/notary/jurisdictions/#{encode_path_param(jurisdiction_id)}")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()

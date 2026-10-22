@@ -43,7 +43,9 @@ defmodule DocuSign.Api.TemplateDocumentTabs do
     request =
       %{}
       |> method(:delete)
-      |> url("/v2.1/accounts/#{account_id}/templates/#{template_id}/documents/#{document_id}/tabs")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/templates/#{encode_path_param(template_id)}/documents/#{encode_path_param(document_id)}/tabs"
+      )
       |> add_optional_params(optional_params, opts)
       |> Enum.to_list()
 
@@ -84,7 +86,9 @@ defmodule DocuSign.Api.TemplateDocumentTabs do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/templates/#{template_id}/documents/#{document_id}/tabs")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/templates/#{encode_path_param(template_id)}/documents/#{encode_path_param(document_id)}/tabs"
+      )
       |> add_optional_params(optional_params, opts)
       |> Enum.to_list()
 
@@ -121,7 +125,9 @@ defmodule DocuSign.Api.TemplateDocumentTabs do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/templates/#{template_id}/documents/#{document_id}/pages/#{page_number}/tabs")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/templates/#{encode_path_param(template_id)}/documents/#{encode_path_param(document_id)}/pages/#{encode_path_param(page_number)}/tabs"
+      )
       |> Enum.to_list()
 
     connection
@@ -161,7 +167,9 @@ defmodule DocuSign.Api.TemplateDocumentTabs do
     request =
       %{}
       |> method(:post)
-      |> url("/v2.1/accounts/#{account_id}/templates/#{template_id}/documents/#{document_id}/tabs")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/templates/#{encode_path_param(template_id)}/documents/#{encode_path_param(document_id)}/tabs"
+      )
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()
@@ -203,7 +211,9 @@ defmodule DocuSign.Api.TemplateDocumentTabs do
     request =
       %{}
       |> method(:put)
-      |> url("/v2.1/accounts/#{account_id}/templates/#{template_id}/documents/#{document_id}/tabs")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/templates/#{encode_path_param(template_id)}/documents/#{encode_path_param(document_id)}/tabs"
+      )
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()

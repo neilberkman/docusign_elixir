@@ -46,7 +46,9 @@ defmodule DocuSign.Api.TemplateResponsiveHtmlPreview do
     request =
       %{}
       |> method(:post)
-      |> url("/v2.1/accounts/#{account_id}/templates/#{template_id}/responsive_html_preview")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/templates/#{encode_path_param(template_id)}/responsive_html_preview"
+      )
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()

@@ -54,7 +54,9 @@ defmodule DocuSign.Api.EnvelopeConsumerDisclosures do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/recipients/#{recipient_id}/consumer_disclosure")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/envelopes/#{encode_path_param(envelope_id)}/recipients/#{encode_path_param(recipient_id)}/consumer_disclosure"
+      )
       |> add_optional_params(optional_params, opts)
       |> Enum.to_list()
 
@@ -111,7 +113,7 @@ defmodule DocuSign.Api.EnvelopeConsumerDisclosures do
       %{}
       |> method(:get)
       |> url(
-        "/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/recipients/#{recipient_id}/consumer_disclosure/#{lang_code}"
+        "/v2.1/accounts/#{encode_path_param(account_id)}/envelopes/#{encode_path_param(envelope_id)}/recipients/#{encode_path_param(recipient_id)}/consumer_disclosure/#{encode_path_param(lang_code)}"
       )
       |> add_optional_params(optional_params, opts)
       |> Enum.to_list()

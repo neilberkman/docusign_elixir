@@ -37,7 +37,8 @@ fi
 # The Elixir generator only grew the Req client (--library=req) after 7.25.0.
 # Earlier versions silently fall back to the Tesla templates, which would
 # produce a client that does not match this library's hand-written code.
-GENERATOR_VERSION="$(${OPENAPI_CMD} version 2>/dev/null | tail -1 | tr -d '[:space:]')"
+mkdir -p "${TEMP_DIR}"
+GENERATOR_VERSION="$(cd "${TEMP_DIR}" && ${OPENAPI_CMD} version 2>/dev/null | tail -1 | tr -d '[:space:]')"
 REQUIRED_VERSION="7.26.0"
 if [ -n "${GENERATOR_VERSION}" ] && [ "${GENERATOR_VERSION%-SNAPSHOT}" = "${GENERATOR_VERSION}" ]; then
   OLDEST="$(printf '%s\n%s\n' "${REQUIRED_VERSION}" "${GENERATOR_VERSION}" | sort -V | head -1)"
@@ -90,14 +91,14 @@ mkdir -p "${TEMP_DIR}"
 rm -rf "${GEN_DIR}"
 
 echo "Generating client code with custom templates..."
-${OPENAPI_CMD} generate \
+(cd "${TEMP_DIR}" && ${OPENAPI_CMD} generate \
   -i "${SPEC_FILE}" \
   -g elixir \
   -t "${CUSTOM_TEMPLATES}" \
   -o "${GEN_DIR}" \
   --additional-properties=packageName=docusign \
   --additional-properties=invokerPackage=DocuSign \
-  --additional-properties=library=req || {
+  --additional-properties=library=req) || {
   echo "ERROR: Code generation failed"
   exit 1
 }
@@ -138,6 +139,11 @@ cp "${GEN_DIR}/lib/docu_sign/deserializer.ex" "${DOCUSIGN_DIR}/lib/docusign/dese
 
 # Apply any post-processing fixes if needed
 echo "Applying post-processing..."
+
+# Bridge until the upstream generator encodes path parameters itself.
+# Match only bare variables, so already-encoded interpolations stay unchanged.
+perl -0pi -e 's{(\|> url\(\s*"[^"]*")}{my $url = $1; $url =~ s/#\{([a-z][a-z0-9_]*)\}/#{encode_path_param($1)}/g; $url}ge' \
+  "${DOCUSIGN_DIR}/lib/docusign/api/"*.ex
 
 # Fix any lingering module name issues (shouldn't be needed with correct templates)
 find "${DOCUSIGN_DIR}/lib/docusign" -name "*.ex" -exec grep -l "DocusignESignatureRESTAPI" {} \; | while read file; do

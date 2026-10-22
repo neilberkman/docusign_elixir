@@ -68,7 +68,7 @@ defmodule DocuSign.Api.RequestLogs do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/diagnostics/request_logs/#{request_log_id}")
+      |> url("/v2.1/diagnostics/request_logs/#{encode_path_param(request_log_id)}")
       |> Enum.to_list()
 
     connection

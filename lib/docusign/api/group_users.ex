@@ -42,7 +42,7 @@ defmodule DocuSign.Api.GroupUsers do
     request =
       %{}
       |> method(:delete)
-      |> url("/v2.1/accounts/#{account_id}/groups/#{group_id}/users")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/groups/#{encode_path_param(group_id)}/users")
       |> add_optional_params(optional_params, opts)
       |> Enum.to_list()
 
@@ -84,7 +84,7 @@ defmodule DocuSign.Api.GroupUsers do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/groups/#{group_id}/users")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/groups/#{encode_path_param(group_id)}/users")
       |> add_optional_params(optional_params, opts)
       |> Enum.to_list()
 
@@ -124,7 +124,7 @@ defmodule DocuSign.Api.GroupUsers do
     request =
       %{}
       |> method(:put)
-      |> url("/v2.1/accounts/#{account_id}/groups/#{group_id}/users")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/groups/#{encode_path_param(group_id)}/users")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()

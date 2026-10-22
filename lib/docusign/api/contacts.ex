@@ -37,7 +37,7 @@ defmodule DocuSign.Api.Contacts do
     request =
       %{}
       |> method(:delete)
-      |> url("/v2.1/accounts/#{account_id}/contacts/#{contact_id}")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/contacts/#{encode_path_param(contact_id)}")
       |> Enum.to_list()
 
     connection
@@ -75,7 +75,7 @@ defmodule DocuSign.Api.Contacts do
     request =
       %{}
       |> method(:delete)
-      |> url("/v2.1/accounts/#{account_id}/contacts")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/contacts")
       |> add_optional_params(optional_params, opts)
       |> Enum.to_list()
 
@@ -115,7 +115,7 @@ defmodule DocuSign.Api.Contacts do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/contacts/#{contact_id}")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/contacts/#{encode_path_param(contact_id)}")
       |> add_optional_params(optional_params, opts)
       |> Enum.to_list()
 
@@ -154,7 +154,7 @@ defmodule DocuSign.Api.Contacts do
     request =
       %{}
       |> method(:post)
-      |> url("/v2.1/accounts/#{account_id}/contacts")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/contacts")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()
@@ -194,7 +194,7 @@ defmodule DocuSign.Api.Contacts do
     request =
       %{}
       |> method(:put)
-      |> url("/v2.1/accounts/#{account_id}/contacts")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/contacts")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()

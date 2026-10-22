@@ -36,7 +36,9 @@ defmodule DocuSign.Api.EnvelopeEmailSettings do
     request =
       %{}
       |> method(:delete)
-      |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/email_settings")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/envelopes/#{encode_path_param(envelope_id)}/email_settings"
+      )
       |> Enum.to_list()
 
     connection
@@ -70,7 +72,9 @@ defmodule DocuSign.Api.EnvelopeEmailSettings do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/email_settings")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/envelopes/#{encode_path_param(envelope_id)}/email_settings"
+      )
       |> Enum.to_list()
 
     connection
@@ -109,7 +113,9 @@ defmodule DocuSign.Api.EnvelopeEmailSettings do
     request =
       %{}
       |> method(:post)
-      |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/email_settings")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/envelopes/#{encode_path_param(envelope_id)}/email_settings"
+      )
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()
@@ -150,7 +156,9 @@ defmodule DocuSign.Api.EnvelopeEmailSettings do
     request =
       %{}
       |> method(:put)
-      |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/email_settings")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/envelopes/#{encode_path_param(envelope_id)}/email_settings"
+      )
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()

@@ -65,7 +65,7 @@ defmodule DocuSign.Api.Authorizations do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/users/#{user_id}/authorizations/agent")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/users/#{encode_path_param(user_id)}/authorizations/agent")
       |> add_optional_params(optional_params, opts)
       |> Enum.to_list()
 
@@ -105,7 +105,7 @@ defmodule DocuSign.Api.Authorizations do
     request =
       %{}
       |> method(:post)
-      |> url("/v2.1/accounts/#{account_id}/users/#{user_id}/authorization")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/users/#{encode_path_param(user_id)}/authorization")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()
@@ -148,7 +148,9 @@ defmodule DocuSign.Api.Authorizations do
     request =
       %{}
       |> method(:delete)
-      |> url("/v2.1/accounts/#{account_id}/users/#{user_id}/authorization/#{authorization_id}")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/users/#{encode_path_param(user_id)}/authorization/#{encode_path_param(authorization_id)}"
+      )
       |> Enum.to_list()
 
     connection
@@ -189,7 +191,9 @@ defmodule DocuSign.Api.Authorizations do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/users/#{user_id}/authorization/#{authorization_id}")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/users/#{encode_path_param(user_id)}/authorization/#{encode_path_param(authorization_id)}"
+      )
       |> Enum.to_list()
 
     connection
@@ -235,7 +239,9 @@ defmodule DocuSign.Api.Authorizations do
     request =
       %{}
       |> method(:put)
-      |> url("/v2.1/accounts/#{account_id}/users/#{user_id}/authorization/#{authorization_id}")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/users/#{encode_path_param(user_id)}/authorization/#{encode_path_param(authorization_id)}"
+      )
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()
@@ -276,7 +282,7 @@ defmodule DocuSign.Api.Authorizations do
     request =
       %{}
       |> method(:delete)
-      |> url("/v2.1/accounts/#{account_id}/users/#{user_id}/authorizations")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/users/#{encode_path_param(user_id)}/authorizations")
       |> add_optional_params(optional_params, opts)
       |> Enum.to_list()
 
@@ -337,7 +343,7 @@ defmodule DocuSign.Api.Authorizations do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/users/#{user_id}/authorizations")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/users/#{encode_path_param(user_id)}/authorizations")
       |> add_optional_params(optional_params, opts)
       |> Enum.to_list()
 
@@ -377,7 +383,7 @@ defmodule DocuSign.Api.Authorizations do
     request =
       %{}
       |> method(:post)
-      |> url("/v2.1/accounts/#{account_id}/users/#{user_id}/authorizations")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/users/#{encode_path_param(user_id)}/authorizations")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()

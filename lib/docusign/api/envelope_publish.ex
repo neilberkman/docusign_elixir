@@ -44,7 +44,7 @@ defmodule DocuSign.Api.EnvelopePublish do
     request =
       %{}
       |> method(:post)
-      |> url("/v2.1/accounts/#{account_id}/connect/envelopes/publish/historical")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/connect/envelopes/publish/historical")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()

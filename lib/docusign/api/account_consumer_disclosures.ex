@@ -41,7 +41,7 @@ defmodule DocuSign.Api.AccountConsumerDisclosures do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/consumer_disclosure")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/consumer_disclosure")
       |> add_optional_params(optional_params, opts)
       |> Enum.to_list()
 
@@ -81,7 +81,7 @@ defmodule DocuSign.Api.AccountConsumerDisclosures do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/consumer_disclosure/#{lang_code}")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/consumer_disclosure/#{encode_path_param(lang_code)}")
       |> Enum.to_list()
 
     connection
@@ -122,7 +122,7 @@ defmodule DocuSign.Api.AccountConsumerDisclosures do
     request =
       %{}
       |> method(:put)
-      |> url("/v2.1/accounts/#{account_id}/consumer_disclosure/#{lang_code}")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/consumer_disclosure/#{encode_path_param(lang_code)}")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()

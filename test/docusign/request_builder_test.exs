@@ -5,6 +5,26 @@ defmodule DocuSign.RequestBuilderTest do
   alias DocuSign.Model.Text
   alias DocuSign.RequestBuilder
 
+  describe "encode_path_param/1" do
+    for {value, encoded} <- [
+          {"plain-id_123.~", "plain-id_123.~"},
+          {123, "123"},
+          {"/", "%2F"},
+          {"?", "%3F"},
+          {"#", "%23"},
+          {"%", "%25"},
+          {" ", "%20"},
+          {"café", "caf%C3%A9"},
+          {".", "%2E"},
+          {"..", "%2E%2E"},
+          {"../x", "..%2Fx"}
+        ] do
+      test "encodes #{inspect(value)} as one path segment" do
+        assert RequestBuilder.encode_path_param(unquote(value)) == unquote(encoded)
+      end
+    end
+  end
+
   describe "adding optional params to request" do
     test "struct with nil values returns a map with nil values excluded" do
       request = %{}

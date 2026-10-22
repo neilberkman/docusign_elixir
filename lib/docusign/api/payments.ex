@@ -38,7 +38,7 @@ defmodule DocuSign.Api.Payments do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/billing_payments/#{payment_id}")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/billing_payments/#{encode_path_param(payment_id)}")
       |> Enum.to_list()
 
     connection
@@ -78,7 +78,7 @@ defmodule DocuSign.Api.Payments do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/billing_payments")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/billing_payments")
       |> add_optional_params(optional_params, opts)
       |> Enum.to_list()
 
@@ -117,7 +117,7 @@ defmodule DocuSign.Api.Payments do
     request =
       %{}
       |> method(:post)
-      |> url("/v2.1/accounts/#{account_id}/billing_payments")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/billing_payments")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()

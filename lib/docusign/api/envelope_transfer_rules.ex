@@ -47,7 +47,9 @@ defmodule DocuSign.Api.EnvelopeTransferRules do
     request =
       %{}
       |> method(:delete)
-      |> url("/v2.1/accounts/#{account_id}/envelopes/transfer_rules/#{envelope_transfer_rule_id}")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/envelopes/transfer_rules/#{encode_path_param(envelope_transfer_rule_id)}"
+      )
       |> Enum.to_list()
 
     connection
@@ -87,7 +89,7 @@ defmodule DocuSign.Api.EnvelopeTransferRules do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/envelopes/transfer_rules")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/envelopes/transfer_rules")
       |> add_optional_params(optional_params, opts)
       |> Enum.to_list()
 
@@ -126,7 +128,7 @@ defmodule DocuSign.Api.EnvelopeTransferRules do
     request =
       %{}
       |> method(:post)
-      |> url("/v2.1/accounts/#{account_id}/envelopes/transfer_rules")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/envelopes/transfer_rules")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()
@@ -167,7 +169,9 @@ defmodule DocuSign.Api.EnvelopeTransferRules do
     request =
       %{}
       |> method(:put)
-      |> url("/v2.1/accounts/#{account_id}/envelopes/transfer_rules/#{envelope_transfer_rule_id}")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/envelopes/transfer_rules/#{encode_path_param(envelope_transfer_rule_id)}"
+      )
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()
@@ -207,7 +211,7 @@ defmodule DocuSign.Api.EnvelopeTransferRules do
     request =
       %{}
       |> method(:put)
-      |> url("/v2.1/accounts/#{account_id}/envelopes/transfer_rules")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/envelopes/transfer_rules")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()

@@ -54,7 +54,9 @@ defmodule DocuSign.Api.DocumentResponsiveHtmlPreview do
     request =
       %{}
       |> method(:post)
-      |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/documents/#{document_id}/responsive_html_preview")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/envelopes/#{encode_path_param(envelope_id)}/documents/#{encode_path_param(document_id)}/responsive_html_preview"
+      )
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()

@@ -37,7 +37,9 @@ defmodule DocuSign.Api.EnvelopeShares do
     request =
       %{}
       |> method(:delete)
-      |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/shares/#{share_id}")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/envelopes/#{encode_path_param(envelope_id)}/shares/#{encode_path_param(share_id)}"
+      )
       |> Enum.to_list()
 
     connection
@@ -74,7 +76,7 @@ defmodule DocuSign.Api.EnvelopeShares do
     request =
       %{}
       |> method(:delete)
-      |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/shares")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/envelopes/#{encode_path_param(envelope_id)}/shares")
       |> add_optional_params(optional_params, opts)
       |> Enum.to_list()
 
@@ -108,7 +110,9 @@ defmodule DocuSign.Api.EnvelopeShares do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/shares/#{share_id}")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/envelopes/#{encode_path_param(envelope_id)}/shares/#{encode_path_param(share_id)}"
+      )
       |> Enum.to_list()
 
     connection
@@ -140,7 +144,7 @@ defmodule DocuSign.Api.EnvelopeShares do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/shares")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/envelopes/#{encode_path_param(envelope_id)}/shares")
       |> Enum.to_list()
 
     connection
@@ -177,7 +181,7 @@ defmodule DocuSign.Api.EnvelopeShares do
     request =
       %{}
       |> method(:post)
-      |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/shares")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/envelopes/#{encode_path_param(envelope_id)}/shares")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()
@@ -217,7 +221,9 @@ defmodule DocuSign.Api.EnvelopeShares do
     request =
       %{}
       |> method(:put)
-      |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/shares/#{share_id}")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/envelopes/#{encode_path_param(envelope_id)}/shares/#{encode_path_param(share_id)}"
+      )
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()
@@ -256,7 +262,7 @@ defmodule DocuSign.Api.EnvelopeShares do
     request =
       %{}
       |> method(:put)
-      |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/shares")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/envelopes/#{encode_path_param(envelope_id)}/shares")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()
@@ -310,7 +316,7 @@ defmodule DocuSign.Api.EnvelopeShares do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/envelopes/shared")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/envelopes/shared")
       |> add_optional_params(optional_params, opts)
       |> Enum.to_list()
 

@@ -38,7 +38,7 @@ defmodule DocuSign.Api.ConnectEvents do
     request =
       %{}
       |> method(:delete)
-      |> url("/v2.1/accounts/#{account_id}/connect/failures/#{failure_id}")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/connect/failures/#{encode_path_param(failure_id)}")
       |> Enum.to_list()
 
     connection
@@ -78,7 +78,7 @@ defmodule DocuSign.Api.ConnectEvents do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/connect/failures")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/connect/failures")
       |> add_optional_params(optional_params, opts)
       |> Enum.to_list()
 
@@ -113,7 +113,7 @@ defmodule DocuSign.Api.ConnectEvents do
     request =
       %{}
       |> method(:delete)
-      |> url("/v2.1/accounts/#{account_id}/connect/logs/#{log_id}")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/connect/logs/#{encode_path_param(log_id)}")
       |> Enum.to_list()
 
     connection
@@ -146,7 +146,7 @@ defmodule DocuSign.Api.ConnectEvents do
     request =
       %{}
       |> method(:delete)
-      |> url("/v2.1/accounts/#{account_id}/connect/logs")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/connect/logs")
       |> Enum.to_list()
 
     connection
@@ -185,7 +185,7 @@ defmodule DocuSign.Api.ConnectEvents do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/connect/logs/#{log_id}")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/connect/logs/#{encode_path_param(log_id)}")
       |> add_optional_params(optional_params, opts)
       |> Enum.to_list()
 
@@ -226,7 +226,7 @@ defmodule DocuSign.Api.ConnectEvents do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/connect/logs")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/connect/logs")
       |> add_optional_params(optional_params, opts)
       |> Enum.to_list()
 
@@ -265,7 +265,7 @@ defmodule DocuSign.Api.ConnectEvents do
     request =
       %{}
       |> method(:put)
-      |> url("/v2.1/accounts/#{account_id}/connect/envelopes/retry_queue")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/connect/envelopes/retry_queue")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()
@@ -301,7 +301,9 @@ defmodule DocuSign.Api.ConnectEvents do
     request =
       %{}
       |> method(:put)
-      |> url("/v2.1/accounts/#{account_id}/connect/envelopes/#{envelope_id}/retry_queue")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/connect/envelopes/#{encode_path_param(envelope_id)}/retry_queue"
+      )
       |> ensure_body()
       |> Enum.to_list()
 

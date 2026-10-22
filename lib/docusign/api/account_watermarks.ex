@@ -35,7 +35,7 @@ defmodule DocuSign.Api.AccountWatermarks do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/watermark")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/watermark")
       |> Enum.to_list()
 
     connection
@@ -73,7 +73,7 @@ defmodule DocuSign.Api.AccountWatermarks do
     request =
       %{}
       |> method(:put)
-      |> url("/v2.1/accounts/#{account_id}/watermark/preview")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/watermark/preview")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()
@@ -113,7 +113,7 @@ defmodule DocuSign.Api.AccountWatermarks do
     request =
       %{}
       |> method(:put)
-      |> url("/v2.1/accounts/#{account_id}/watermark")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/watermark")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()

@@ -50,7 +50,9 @@ defmodule DocuSign.Api.TemplateDocumentVisibility do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/templates/#{template_id}/recipients/#{recipient_id}/document_visibility")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/templates/#{encode_path_param(template_id)}/recipients/#{encode_path_param(recipient_id)}/document_visibility"
+      )
       |> Enum.to_list()
 
     connection
@@ -102,7 +104,9 @@ defmodule DocuSign.Api.TemplateDocumentVisibility do
     request =
       %{}
       |> method(:put)
-      |> url("/v2.1/accounts/#{account_id}/templates/#{template_id}/recipients/#{recipient_id}/document_visibility")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/templates/#{encode_path_param(template_id)}/recipients/#{encode_path_param(recipient_id)}/document_visibility"
+      )
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()
@@ -148,7 +152,9 @@ defmodule DocuSign.Api.TemplateDocumentVisibility do
     request =
       %{}
       |> method(:put)
-      |> url("/v2.1/accounts/#{account_id}/templates/#{template_id}/recipients/document_visibility")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/templates/#{encode_path_param(template_id)}/recipients/document_visibility"
+      )
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()

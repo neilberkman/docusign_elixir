@@ -36,7 +36,7 @@ defmodule DocuSign.Api.EnvelopeFormData do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/form_data")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/envelopes/#{encode_path_param(envelope_id)}/form_data")
       |> Enum.to_list()
 
     connection

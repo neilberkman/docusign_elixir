@@ -42,7 +42,7 @@ defmodule DocuSign.Api.TemplateDocuments do
     request =
       %{}
       |> method(:delete)
-      |> url("/v2.1/accounts/#{account_id}/templates/#{template_id}/documents")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/templates/#{encode_path_param(template_id)}/documents")
       |> add_optional_params(optional_params, opts)
       |> Enum.to_list()
 
@@ -87,7 +87,9 @@ defmodule DocuSign.Api.TemplateDocuments do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/templates/#{template_id}/documents/#{document_id}")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/templates/#{encode_path_param(template_id)}/documents/#{encode_path_param(document_id)}"
+      )
       |> add_optional_params(optional_params, opts)
       |> Enum.to_list()
 
@@ -131,7 +133,7 @@ defmodule DocuSign.Api.TemplateDocuments do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/templates/#{template_id}/documents")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/templates/#{encode_path_param(template_id)}/documents")
       |> add_optional_params(optional_params, opts)
       |> Enum.to_list()
 
@@ -174,7 +176,9 @@ defmodule DocuSign.Api.TemplateDocuments do
     request =
       %{}
       |> method(:put)
-      |> url("/v2.1/accounts/#{account_id}/templates/#{template_id}/documents/#{document_id}")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/templates/#{encode_path_param(template_id)}/documents/#{encode_path_param(document_id)}"
+      )
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()
@@ -215,7 +219,7 @@ defmodule DocuSign.Api.TemplateDocuments do
     request =
       %{}
       |> method(:put)
-      |> url("/v2.1/accounts/#{account_id}/templates/#{template_id}/documents")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/templates/#{encode_path_param(template_id)}/documents")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()

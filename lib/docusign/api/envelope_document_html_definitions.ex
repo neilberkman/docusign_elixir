@@ -49,7 +49,9 @@ defmodule DocuSign.Api.EnvelopeDocumentHtmlDefinitions do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/documents/#{document_id}/html_definitions")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/envelopes/#{encode_path_param(envelope_id)}/documents/#{encode_path_param(document_id)}/html_definitions"
+      )
       |> Enum.to_list()
 
     connection

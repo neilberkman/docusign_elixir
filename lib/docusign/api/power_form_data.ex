@@ -45,7 +45,7 @@ defmodule DocuSign.Api.PowerFormData do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/powerforms/#{power_form_id}/form_data")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/powerforms/#{encode_path_param(power_form_id)}/form_data")
       |> add_optional_params(optional_params, opts)
       |> Enum.to_list()
 

@@ -36,7 +36,9 @@ defmodule DocuSign.Api.DocumentGeneration do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/docGenFormFields")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/envelopes/#{encode_path_param(envelope_id)}/docGenFormFields"
+      )
       |> Enum.to_list()
 
     connection
@@ -77,7 +79,9 @@ defmodule DocuSign.Api.DocumentGeneration do
     request =
       %{}
       |> method(:put)
-      |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/docGenFormFields")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/envelopes/#{encode_path_param(envelope_id)}/docGenFormFields"
+      )
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()

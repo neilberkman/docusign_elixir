@@ -40,7 +40,9 @@ defmodule DocuSign.Api.Comments do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/envelopes/#{envelope_id}/comments/transcript")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/envelopes/#{encode_path_param(envelope_id)}/comments/transcript"
+      )
       |> add_optional_params(optional_params, opts)
       |> Enum.to_list()
 

@@ -41,7 +41,7 @@ defmodule DocuSign.Api.TemplateViews do
     request =
       %{}
       |> method(:post)
-      |> url("/v2.1/accounts/#{account_id}/templates/#{template_id}/views/edit")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/templates/#{encode_path_param(template_id)}/views/edit")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()

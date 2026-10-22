@@ -36,7 +36,7 @@ defmodule DocuSign.Api.ChunkedUploads do
     request =
       %{}
       |> method(:delete)
-      |> url("/v2.1/accounts/#{account_id}/chunked_uploads/#{chunked_upload_id}")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/chunked_uploads/#{encode_path_param(chunked_upload_id)}")
       |> Enum.to_list()
 
     connection
@@ -75,7 +75,7 @@ defmodule DocuSign.Api.ChunkedUploads do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/chunked_uploads/#{chunked_upload_id}")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/chunked_uploads/#{encode_path_param(chunked_upload_id)}")
       |> add_optional_params(optional_params, opts)
       |> Enum.to_list()
 
@@ -116,7 +116,7 @@ defmodule DocuSign.Api.ChunkedUploads do
     request =
       %{}
       |> method(:post)
-      |> url("/v2.1/accounts/#{account_id}/chunked_uploads")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/chunked_uploads")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()
@@ -164,7 +164,9 @@ defmodule DocuSign.Api.ChunkedUploads do
     request =
       %{}
       |> method(:put)
-      |> url("/v2.1/accounts/#{account_id}/chunked_uploads/#{chunked_upload_id}/#{chunked_upload_part_seq}")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/chunked_uploads/#{encode_path_param(chunked_upload_id)}/#{encode_path_param(chunked_upload_part_seq)}"
+      )
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()
@@ -205,7 +207,7 @@ defmodule DocuSign.Api.ChunkedUploads do
     request =
       %{}
       |> method(:put)
-      |> url("/v2.1/accounts/#{account_id}/chunked_uploads/#{chunked_upload_id}")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/chunked_uploads/#{encode_path_param(chunked_upload_id)}")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()

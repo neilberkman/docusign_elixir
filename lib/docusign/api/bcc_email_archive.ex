@@ -38,7 +38,9 @@ defmodule DocuSign.Api.BCCEmailArchive do
     request =
       %{}
       |> method(:delete)
-      |> url("/v2.1/accounts/#{account_id}/settings/bcc_email_archives/#{bcc_email_archive_id}")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/settings/bcc_email_archives/#{encode_path_param(bcc_email_archive_id)}"
+      )
       |> Enum.to_list()
 
     connection
@@ -84,7 +86,9 @@ defmodule DocuSign.Api.BCCEmailArchive do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/settings/bcc_email_archives/#{bcc_email_archive_id}")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/settings/bcc_email_archives/#{encode_path_param(bcc_email_archive_id)}"
+      )
       |> add_optional_params(optional_params, opts)
       |> Enum.to_list()
 
@@ -125,7 +129,7 @@ defmodule DocuSign.Api.BCCEmailArchive do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/settings/bcc_email_archives")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/settings/bcc_email_archives")
       |> add_optional_params(optional_params, opts)
       |> Enum.to_list()
 
@@ -164,7 +168,7 @@ defmodule DocuSign.Api.BCCEmailArchive do
     request =
       %{}
       |> method(:post)
-      |> url("/v2.1/accounts/#{account_id}/settings/bcc_email_archives")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/settings/bcc_email_archives")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()

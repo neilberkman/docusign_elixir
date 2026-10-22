@@ -50,7 +50,7 @@ defmodule DocuSign.Api.Accounts do
     request =
       %{}
       |> method(:delete)
-      |> url("/v2.1/accounts/#{account_id}")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}")
       |> add_optional_params(optional_params, opts)
       |> Enum.to_list()
 
@@ -91,7 +91,7 @@ defmodule DocuSign.Api.Accounts do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}")
       |> add_optional_params(optional_params, opts)
       |> Enum.to_list()
 
@@ -201,7 +201,7 @@ defmodule DocuSign.Api.Accounts do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/billing_charges")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/billing_charges")
       |> add_optional_params(optional_params, opts)
       |> Enum.to_list()
 
@@ -241,7 +241,7 @@ defmodule DocuSign.Api.Accounts do
     request =
       %{}
       |> method(:delete)
-      |> url("/v2.1/accounts/#{account_id}/captive_recipients/#{recipient_part}")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/captive_recipients/#{encode_path_param(recipient_part)}")
       |> add_optional_params(optional_params, opts)
       |> Enum.to_list()
 
@@ -275,7 +275,7 @@ defmodule DocuSign.Api.Accounts do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/settings/envelope_purge_configuration")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/settings/envelope_purge_configuration")
       |> Enum.to_list()
 
     connection
@@ -313,7 +313,7 @@ defmodule DocuSign.Api.Accounts do
     request =
       %{}
       |> method(:put)
-      |> url("/v2.1/accounts/#{account_id}/settings/envelope_purge_configuration")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/settings/envelope_purge_configuration")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()
@@ -348,7 +348,7 @@ defmodule DocuSign.Api.Accounts do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/settings/notification_defaults")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/settings/notification_defaults")
       |> Enum.to_list()
 
     connection
@@ -386,7 +386,7 @@ defmodule DocuSign.Api.Accounts do
     request =
       %{}
       |> method(:put)
-      |> url("/v2.1/accounts/#{account_id}/settings/notification_defaults")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/settings/notification_defaults")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()
@@ -421,7 +421,7 @@ defmodule DocuSign.Api.Accounts do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/settings")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/settings")
       |> Enum.to_list()
 
     connection
@@ -459,7 +459,7 @@ defmodule DocuSign.Api.Accounts do
     request =
       %{}
       |> method(:put)
-      |> url("/v2.1/accounts/#{account_id}/settings")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/settings")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()
@@ -513,7 +513,7 @@ defmodule DocuSign.Api.Accounts do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/shared_access")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/shared_access")
       |> add_optional_params(optional_params, opts)
       |> Enum.to_list()
 
@@ -558,7 +558,7 @@ defmodule DocuSign.Api.Accounts do
     request =
       %{}
       |> method(:put)
-      |> url("/v2.1/accounts/#{account_id}/shared_access")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/shared_access")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()
@@ -593,7 +593,7 @@ defmodule DocuSign.Api.Accounts do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/supported_languages")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/supported_languages")
       |> Enum.to_list()
 
     connection
@@ -626,7 +626,7 @@ defmodule DocuSign.Api.Accounts do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/unsupported_file_types")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/unsupported_file_types")
       |> Enum.to_list()
 
     connection

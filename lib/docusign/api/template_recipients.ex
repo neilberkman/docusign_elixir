@@ -44,7 +44,9 @@ defmodule DocuSign.Api.TemplateRecipients do
     request =
       %{}
       |> method(:delete)
-      |> url("/v2.1/accounts/#{account_id}/templates/#{template_id}/recipients/#{recipient_id}")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/templates/#{encode_path_param(template_id)}/recipients/#{encode_path_param(recipient_id)}"
+      )
       |> add_optional_params(optional_params, opts)
       |> Enum.to_list()
 
@@ -84,7 +86,7 @@ defmodule DocuSign.Api.TemplateRecipients do
     request =
       %{}
       |> method(:delete)
-      |> url("/v2.1/accounts/#{account_id}/templates/#{template_id}/recipients")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/templates/#{encode_path_param(template_id)}/recipients")
       |> add_optional_params(optional_params, opts)
       |> Enum.to_list()
 
@@ -128,7 +130,7 @@ defmodule DocuSign.Api.TemplateRecipients do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/templates/#{template_id}/recipients")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/templates/#{encode_path_param(template_id)}/recipients")
       |> add_optional_params(optional_params, opts)
       |> Enum.to_list()
 
@@ -170,7 +172,7 @@ defmodule DocuSign.Api.TemplateRecipients do
     request =
       %{}
       |> method(:post)
-      |> url("/v2.1/accounts/#{account_id}/templates/#{template_id}/recipients")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/templates/#{encode_path_param(template_id)}/recipients")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()
@@ -213,7 +215,7 @@ defmodule DocuSign.Api.TemplateRecipients do
     request =
       %{}
       |> method(:put)
-      |> url("/v2.1/accounts/#{account_id}/templates/#{template_id}/recipients")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/templates/#{encode_path_param(template_id)}/recipients")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()
@@ -254,7 +256,9 @@ defmodule DocuSign.Api.TemplateRecipients do
     request =
       %{}
       |> method(:post)
-      |> url("/v2.1/accounts/#{account_id}/templates/#{template_id}/views/recipient_preview")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/templates/#{encode_path_param(template_id)}/views/recipient_preview"
+      )
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()

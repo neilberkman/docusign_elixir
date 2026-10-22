@@ -41,7 +41,7 @@ defmodule DocuSign.Api.GroupBrands do
     request =
       %{}
       |> method(:delete)
-      |> url("/v2.1/accounts/#{account_id}/groups/#{group_id}/brands")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/groups/#{encode_path_param(group_id)}/brands")
       |> add_optional_params(optional_params, opts)
       |> Enum.to_list()
 
@@ -76,7 +76,7 @@ defmodule DocuSign.Api.GroupBrands do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/groups/#{group_id}/brands")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/groups/#{encode_path_param(group_id)}/brands")
       |> Enum.to_list()
 
     connection
@@ -115,7 +115,7 @@ defmodule DocuSign.Api.GroupBrands do
     request =
       %{}
       |> method(:put)
-      |> url("/v2.1/accounts/#{account_id}/groups/#{group_id}/brands")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/groups/#{encode_path_param(group_id)}/brands")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()

@@ -35,7 +35,7 @@ defmodule DocuSign.Api.PaymentGatewayAccounts do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/payment_gateway_accounts")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/payment_gateway_accounts")
       |> Enum.to_list()
 
     connection

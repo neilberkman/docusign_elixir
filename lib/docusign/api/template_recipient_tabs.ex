@@ -48,7 +48,9 @@ defmodule DocuSign.Api.TemplateRecipientTabs do
     request =
       %{}
       |> method(:delete)
-      |> url("/v2.1/accounts/#{account_id}/templates/#{template_id}/recipients/#{recipient_id}/tabs")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/templates/#{encode_path_param(template_id)}/recipients/#{encode_path_param(recipient_id)}/tabs"
+      )
       |> add_optional_params(optional_params, opts)
       |> Enum.to_list()
 
@@ -91,7 +93,9 @@ defmodule DocuSign.Api.TemplateRecipientTabs do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/templates/#{template_id}/recipients/#{recipient_id}/tabs")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/templates/#{encode_path_param(template_id)}/recipients/#{encode_path_param(recipient_id)}/tabs"
+      )
       |> add_optional_params(optional_params, opts)
       |> Enum.to_list()
 
@@ -132,7 +136,9 @@ defmodule DocuSign.Api.TemplateRecipientTabs do
     request =
       %{}
       |> method(:post)
-      |> url("/v2.1/accounts/#{account_id}/templates/#{template_id}/recipients/#{recipient_id}/tabs")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/templates/#{encode_path_param(template_id)}/recipients/#{encode_path_param(recipient_id)}/tabs"
+      )
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()
@@ -174,7 +180,9 @@ defmodule DocuSign.Api.TemplateRecipientTabs do
     request =
       %{}
       |> method(:put)
-      |> url("/v2.1/accounts/#{account_id}/templates/#{template_id}/recipients/#{recipient_id}/tabs")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/templates/#{encode_path_param(template_id)}/recipients/#{encode_path_param(recipient_id)}/tabs"
+      )
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()

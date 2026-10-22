@@ -42,7 +42,7 @@ defmodule DocuSign.Api.BulkSend do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/bulk_send_batch/#{bulk_send_batch_id}")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/bulk_send_batch/#{encode_path_param(bulk_send_batch_id)}")
       |> Enum.to_list()
 
     connection
@@ -94,7 +94,7 @@ defmodule DocuSign.Api.BulkSend do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/bulk_send_batch")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/bulk_send_batch")
       |> add_optional_params(optional_params, opts)
       |> Enum.to_list()
 
@@ -141,7 +141,9 @@ defmodule DocuSign.Api.BulkSend do
     request =
       %{}
       |> method(:put)
-      |> url("/v2.1/accounts/#{account_id}/bulk_send_batch/#{bulk_send_batch_id}/#{bulk_action}")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/bulk_send_batch/#{encode_path_param(bulk_send_batch_id)}/#{encode_path_param(bulk_action)}"
+      )
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()
@@ -182,7 +184,7 @@ defmodule DocuSign.Api.BulkSend do
     request =
       %{}
       |> method(:put)
-      |> url("/v2.1/accounts/#{account_id}/bulk_send_batch/#{bulk_send_batch_id}")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/bulk_send_batch/#{encode_path_param(bulk_send_batch_id)}")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()
@@ -218,7 +220,7 @@ defmodule DocuSign.Api.BulkSend do
     request =
       %{}
       |> method(:delete)
-      |> url("/v2.1/accounts/#{account_id}/bulk_send_lists/#{bulk_send_list_id}")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/bulk_send_lists/#{encode_path_param(bulk_send_list_id)}")
       |> Enum.to_list()
 
     connection
@@ -252,7 +254,7 @@ defmodule DocuSign.Api.BulkSend do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/bulk_send_lists/#{bulk_send_list_id}")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/bulk_send_lists/#{encode_path_param(bulk_send_list_id)}")
       |> Enum.to_list()
 
     connection
@@ -285,7 +287,7 @@ defmodule DocuSign.Api.BulkSend do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/bulk_send_lists")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/bulk_send_lists")
       |> Enum.to_list()
 
     connection
@@ -323,7 +325,7 @@ defmodule DocuSign.Api.BulkSend do
     request =
       %{}
       |> method(:post)
-      |> url("/v2.1/accounts/#{account_id}/bulk_send_lists")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/bulk_send_lists")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()
@@ -364,7 +366,7 @@ defmodule DocuSign.Api.BulkSend do
     request =
       %{}
       |> method(:put)
-      |> url("/v2.1/accounts/#{account_id}/bulk_send_lists/#{bulk_send_list_id}")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/bulk_send_lists/#{encode_path_param(bulk_send_list_id)}")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()
@@ -417,7 +419,9 @@ defmodule DocuSign.Api.BulkSend do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/bulk_send_batch/#{bulk_send_batch_id}/envelopes")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/bulk_send_batch/#{encode_path_param(bulk_send_batch_id)}/envelopes"
+      )
       |> add_optional_params(optional_params, opts)
       |> Enum.to_list()
 
@@ -457,7 +461,9 @@ defmodule DocuSign.Api.BulkSend do
     request =
       %{}
       |> method(:post)
-      |> url("/v2.1/accounts/#{account_id}/bulk_send_lists/#{bulk_send_list_id}/send")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/bulk_send_lists/#{encode_path_param(bulk_send_list_id)}/send"
+      )
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()
@@ -498,7 +504,9 @@ defmodule DocuSign.Api.BulkSend do
     request =
       %{}
       |> method(:post)
-      |> url("/v2.1/accounts/#{account_id}/bulk_send_lists/#{bulk_send_list_id}/test")
+      |> url(
+        "/v2.1/accounts/#{encode_path_param(account_id)}/bulk_send_lists/#{encode_path_param(bulk_send_list_id)}/test"
+      )
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()

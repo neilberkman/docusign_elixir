@@ -54,7 +54,7 @@ defmodule DocuSign.Api.BillingPlans do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/billing_plan")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/billing_plan")
       |> add_optional_params(optional_params, opts)
       |> Enum.to_list()
 
@@ -88,7 +88,7 @@ defmodule DocuSign.Api.BillingPlans do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/billing_plan/credit_card")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/billing_plan/credit_card")
       |> Enum.to_list()
 
     connection
@@ -120,7 +120,7 @@ defmodule DocuSign.Api.BillingPlans do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/billing_plan/downgrade")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/billing_plan/downgrade")
       |> Enum.to_list()
 
     connection
@@ -160,7 +160,7 @@ defmodule DocuSign.Api.BillingPlans do
     request =
       %{}
       |> method(:put)
-      |> url("/v2.1/accounts/#{account_id}/billing_plan")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/billing_plan")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()
@@ -199,7 +199,7 @@ defmodule DocuSign.Api.BillingPlans do
     request =
       %{}
       |> method(:put)
-      |> url("/v2.1/accounts/#{account_id}/billing_plan/downgrade")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/billing_plan/downgrade")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()
@@ -234,7 +234,7 @@ defmodule DocuSign.Api.BillingPlans do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/billing_plans/#{billing_plan_id}")
+      |> url("/v2.1/billing_plans/#{encode_path_param(billing_plan_id)}")
       |> Enum.to_list()
 
     connection
@@ -304,7 +304,7 @@ defmodule DocuSign.Api.BillingPlans do
     request =
       %{}
       |> method(:put)
-      |> url("/v2.1/accounts/#{account_id}/billing_plan/purchased_envelopes")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/billing_plan/purchased_envelopes")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()

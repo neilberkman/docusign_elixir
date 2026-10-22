@@ -35,7 +35,7 @@ defmodule DocuSign.Api.AccountTabSettings do
     request =
       %{}
       |> method(:get)
-      |> url("/v2.1/accounts/#{account_id}/settings/tabs")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/settings/tabs")
       |> Enum.to_list()
 
     connection
@@ -73,7 +73,7 @@ defmodule DocuSign.Api.AccountTabSettings do
     request =
       %{}
       |> method(:put)
-      |> url("/v2.1/accounts/#{account_id}/settings/tabs")
+      |> url("/v2.1/accounts/#{encode_path_param(account_id)}/settings/tabs")
       |> add_optional_params(optional_params, opts)
       |> ensure_body()
       |> Enum.to_list()
