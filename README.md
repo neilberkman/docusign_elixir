@@ -252,7 +252,7 @@ Custom headers are merged with the default headers (authorization, content-type,
 
 ## Request/Response Debugging
 
-The DocuSign Elixir client provides comprehensive debugging capabilities for HTTP requests and responses, similar to the Ruby client's debugging features.
+The DocuSign Elixir client can log HTTP request and response details at the `:debug` level. Configure Logger to allow that level to see the messages.
 
 ### Enable Debugging
 
@@ -262,52 +262,73 @@ Enable debugging in your configuration to log HTTP request/response details:
 config :docusign, debug: true
 ```
 
-Or enable it at runtime:
+Or enable it at runtime before creating a connection:
 
 ```elixir
 DocuSign.Debug.enable_debugging()
 ```
 
+The `:debug` setting controls whether debug steps are added when a connection is created. Changing it does not update existing connections. With `debug: false`, new connections have no debug steps.
+
 ### Debug Output
 
-When debugging is enabled, you'll see detailed logs including:
+With `debug: true`, the client logs:
 
-- HTTP request method, URL, and timing
-- Request and response headers (with sensitive data filtered)
-- Request and response bodies
-- SDK identification headers
+- The HTTP request method and URL
+- The HTTP response status
+- Filtered request and response headers, including SDK identification headers
+
+Bodies are omitted by default.
 
 Example debug output:
 
 ```
-[debug] GET https://demo.docusign.net/restapi/v2.1/accounts -> 200 (145.2 ms)
-[debug] Request headers: [{"authorization", "[FILTERED]"}, {"X-DocuSign-SDK", "Elixir/3.5.1"}]
-[debug] Response body: {"accounts": [...]}
+[debug] Request: GET https://demo.docusign.net/restapi/v2.1/accounts
+[debug] Request Headers: %{"authorization" => "[FILTERED]", "x-docusign-sdk" => ["Elixir/3.5.1"], ...}
+[debug] Response Status: 200
+[debug] Response Headers: %{"content-type" => ["application/json"], ...}
 ```
 
 ### Header Filtering
 
-Sensitive headers like authorization tokens are automatically filtered in debug logs. You can customize which headers to filter:
+The `authorization` header is filtered by default. In both request and response logs, each header whose name matches the filter list has its entire value replaced with `"[FILTERED]"`. Header names are kept and compared case-insensitively.
+
+You can replace the default list with a custom list. Keep `"authorization"` in it to continue filtering bearer tokens:
 
 ```elixir
 config :docusign, :debug_filter_headers, ["authorization", "x-api-key", "x-custom-secret"]
 ```
 
-### SDK Identification
+### Body Logging and Per-Request Options
 
-The client automatically includes SDK identification headers with all requests:
+Enable body logging in application configuration:
 
-- `X-DocuSign-SDK: Elixir/3.5.1` - Identifies the SDK and version
-- `User-Agent: DocuSign-Elixir/3.5.1` - Standard user agent header
+```elixir
+config :docusign, debug: true, debug_body: true
+```
 
-These headers help DocuSign track API usage and provide better support.
+Bodies are logged verbatim, without filtering. They can contain signer names, emails, and document content. Do not enable `debug_body` in production.
+
+A direct `DocuSign.Connection.request/2` call can override body and header logging:
+
+```elixir
+DocuSign.Connection.request(conn,
+  method: :get,
+  url: "/accounts",
+  debug_body: true,
+  debug_headers: false
+)
+```
+
+These per-request options require a connection created with debugging enabled. `debug_body` defaults to the application setting, or `false`. `debug_headers` defaults to `true`; setting it to `false` omits headers while keeping the method, URL, and status. A per-request `debug_body: false` overrides an application setting of `true`. Generated API functions do not forward these options.
 
 ### Configuration Options
 
 ```elixir
 config :docusign,
-  debug: true,                        # Enable/disable debug logging
-  debug_filter_headers: [             # Headers to filter in logs
+  debug: true,
+  debug_body: false,
+  debug_filter_headers: [
     "authorization",
     "x-api-key"
   ]

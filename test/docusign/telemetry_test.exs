@@ -133,6 +133,7 @@ defmodule DocuSign.TelemetryTest do
       :ets.delete(captured_events)
     end
 
+    @tag capture_log: true
     test "emits rate limit event when hitting 429", %{server: server} do
       handler_id = "test-handler-#{System.unique_integer()}"
       captured_events = :ets.new(:captured_events, [:public, :bag])

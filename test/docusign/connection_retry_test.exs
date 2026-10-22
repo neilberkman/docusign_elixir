@@ -208,6 +208,7 @@ defmodule DocuSign.ConnectionRetryTest do
       assert elapsed < 800
     end
 
+    @tag capture_log: true
     test "handles rate limits with Retry-After telemetry", %{server: server} do
       attach_rate_limit_handler()
 
@@ -246,6 +247,7 @@ defmodule DocuSign.ConnectionRetryTest do
       refute_receive {:rate_limit, [:docusign, :rate_limit, :hit], _, _}, 50
     end
 
+    @tag capture_log: true
     test "does not emit rate-limit telemetry for a 503", %{server: server} do
       attach_rate_limit_handler()
 
@@ -269,6 +271,7 @@ defmodule DocuSign.ConnectionRetryTest do
       refute_receive {:rate_limit, [:docusign, :rate_limit, :hit], _, _}, 100
     end
 
+    @tag capture_log: true
     test "emits rate-limit telemetry with nil for a 429 without Retry-After", %{server: server} do
       attach_rate_limit_handler()
 

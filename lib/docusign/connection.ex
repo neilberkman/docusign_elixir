@@ -35,6 +35,9 @@ defmodule DocuSign.Connection do
   alias DocuSign.User
   alias DocuSign.Util.Environment
 
+  require Logger
+
+  @derive {Inspect, except: [:client]}
   defstruct [:app_account, :client, :req]
 
   @type t :: %__MODULE__{
@@ -350,7 +353,7 @@ defmodule DocuSign.Connection do
     if Application.get_env(:docusign, :debug, false) do
       req
       |> Req.Request.register_options([:debug_body, :debug_headers])
-      |> Req.Request.prepend_request_steps(debug_request: &debug_request/1)
+      |> Req.Request.append_request_steps(debug_request: &debug_request/1)
       |> Req.Request.prepend_response_steps(debug_response: &debug_response/1)
     else
       req
@@ -358,15 +361,13 @@ defmodule DocuSign.Connection do
   end
 
   defp debug_request(request) do
-    if request.options[:debug_headers] do
-      require Logger
+    Logger.debug("Request: #{String.upcase(to_string(request.method))} #{request.url}")
 
-      Logger.debug("Request Headers: #{inspect(request.headers)}")
+    if Req.Request.get_option(request, :debug_headers, true) do
+      Logger.debug("Request Headers: #{inspect(filter_debug_headers(request.headers))}")
     end
 
-    if request.options[:debug_body] do
-      require Logger
-
+    if Req.Request.get_option(request, :debug_body, Application.get_env(:docusign, :debug_body, false)) do
       Logger.debug("Request Body: #{inspect(request.body)}")
     end
 
@@ -374,19 +375,25 @@ defmodule DocuSign.Connection do
   end
 
   defp debug_response({request, response}) do
-    if request.options[:debug_headers] do
-      require Logger
+    Logger.debug("Response Status: #{response.status}")
 
-      Logger.debug("Response Headers: #{inspect(response.headers)}")
+    if Req.Request.get_option(request, :debug_headers, true) do
+      Logger.debug("Response Headers: #{inspect(filter_debug_headers(response.headers))}")
     end
 
-    if request.options[:debug_body] do
-      require Logger
-
+    if Req.Request.get_option(request, :debug_body, Application.get_env(:docusign, :debug_body, false)) do
       Logger.debug("Response Body: #{inspect(response.body)}")
     end
 
     {request, response}
+  end
+
+  defp filter_debug_headers(headers) do
+    filtered_names = Enum.map(Debug.filter_headers(), &String.downcase/1)
+
+    Map.new(headers, fn {name, value} ->
+      {name, if(String.downcase(name) in filtered_names, do: "[FILTERED]", else: value)}
+    end)
   end
 
   @doc """
@@ -396,6 +403,10 @@ defmodule DocuSign.Connection do
 
   * `:ssl_options` - Override SSL options for this specific request
   * `:telemetry_metadata` - Additional metadata to include in telemetry events
+  * `:debug_headers` - Log filtered headers (default: `true`); requires `:debug` to be enabled
+  * `:debug_body` - Log bodies verbatim (default: application `:debug_body`, or `false`);
+    requires `:debug` to be enabled. Bodies can contain personal data and document content;
+    do not enable in production.
   * All other options are passed through to Req
 
   ## Examples

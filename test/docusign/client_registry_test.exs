@@ -2,6 +2,7 @@ defmodule DocuSign.ClientRegistryTest do
   use ExUnit.Case, async: false
 
   import DocuSign.ProcessHelper
+  import ExUnit.CaptureLog
   import Mox
 
   alias DocuSign.ClientRegistry
@@ -16,6 +17,7 @@ defmodule DocuSign.ClientRegistryTest do
   setup do
     {:ok, pid} = DocuSign.ClientRegistry.start_link(oauth_impl: @oauth_mock)
     on_exit(fn -> assert_down(pid) end)
+    {:ok, registry: pid}
   end
 
   describe "creating a new client" do
@@ -78,6 +80,70 @@ defmodule DocuSign.ClientRegistryTest do
   end
 
   describe "automatically refreshing access token" do
+    test "failed refresh keeps the registry alive and rebuilds the client", %{registry: pid} do
+      user_id = "refresh-failure-user"
+      cached_client = %OAuth2.Client{token: %OAuth2.AccessToken{access_token: "CACHED-SECRET-TOKEN"}}
+      rebuilt_client = %OAuth2.Client{token: %OAuth2.AccessToken{access_token: "REBUILT-TOKEN"}}
+
+      @oauth_mock
+      |> expect(:client, fn [user_id: ^user_id] -> cached_client end)
+      |> expect(:refresh_token!, fn ^cached_client, true -> cached_client end)
+      |> expect(:interval_refresh_token, fn ^cached_client -> 1000 end)
+      |> expect(:refresh_token!, fn ^cached_client, true ->
+        raise %OAuth2.Error{reason: :econnrefused}
+      end)
+
+      assert {:ok, ^cached_client} = ClientRegistry.client(user_id)
+
+      log =
+        capture_log(fn ->
+          send(pid, {:refresh_token, user_id})
+          assert %ClientRegistry.State{clients: clients} = :sys.get_state(pid)
+          refute Map.has_key?(clients, user_id)
+          assert Process.alive?(pid)
+        end)
+
+      assert log =~ "[warning]"
+      assert log =~ user_id
+      assert log =~ "Connection refused"
+      refute log =~ cached_client.token.access_token
+
+      @oauth_mock
+      |> expect(:client, fn [user_id: ^user_id] -> rebuilt_client end)
+      |> expect(:refresh_token!, fn ^rebuilt_client, true -> rebuilt_client end)
+      |> expect(:interval_refresh_token, fn ^rebuilt_client -> 1000 end)
+
+      assert {:ok, ^rebuilt_client} = ClientRegistry.client(user_id)
+    end
+
+    test "refresh for an unknown user leaves the registry unchanged", %{registry: pid} do
+      state = :sys.get_state(pid)
+      send(pid, {:refresh_token, "unknown-user"})
+      assert :sys.get_state(pid) == state
+      assert Process.alive?(pid)
+    end
+
+    test "negative refresh intervals schedule an immediate refresh", %{registry: pid} do
+      test_pid = self()
+
+      @oauth_mock
+      |> expect(:client, fn _opts -> %OAuth2.Client{} end)
+      |> expect(:refresh_token!, 3, fn client, true -> client end)
+      |> expect(:interval_refresh_token, 2, fn _client -> -5 end)
+      |> expect(:interval_refresh_token, fn _client ->
+        send(test_pid, :refreshed)
+        1000
+      end)
+
+      assert {:ok, %OAuth2.Client{}} = ClientRegistry.client("short-lived-token-user")
+      assert_receive :refreshed
+
+      assert %ClientRegistry.State{clients: %{"short-lived-token-user" => %OAuth2.Client{}}} =
+               :sys.get_state(pid)
+
+      assert Process.alive?(pid)
+    end
+
     test "client access token is refreshed after delay" do
       # 2 refreshes when clients are created, and 1 when a client gets refreshed
       expected_force_token_refresh_count = 3
@@ -98,5 +164,23 @@ defmodule DocuSign.ClientRegistryTest do
       # Wait for refresh to occur (1sec)
       Process.sleep(1_500)
     end
+  end
+
+  test "inspecting state exposes only the implementation and user IDs" do
+    client = %OAuth2.Client{
+      client_secret: "STATE-CLIENT-SECRET",
+      token: %OAuth2.AccessToken{
+        access_token: "STATE-SECRET-TOKEN",
+        refresh_token: "STATE-REFRESH-TOKEN"
+      }
+    }
+
+    inspected = inspect(%ClientRegistry.State{clients: %{"u" => client}, oauth_impl: @oauth_mock})
+
+    assert inspected =~ inspect(@oauth_mock)
+    assert inspected =~ ~s(user_ids: ["u"])
+    refute inspected =~ "STATE-CLIENT-SECRET"
+    refute inspected =~ "STATE-SECRET-TOKEN"
+    refute inspected =~ "STATE-REFRESH-TOKEN"
   end
 end

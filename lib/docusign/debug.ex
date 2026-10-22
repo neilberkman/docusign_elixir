@@ -2,8 +2,7 @@ defmodule DocuSign.Debug do
   @moduledoc """
   Debugging and logging configuration for the DocuSign Elixir client.
 
-  This module provides functionality to configure debug logging for HTTP requests and responses,
-  similar to the Ruby DocuSign client's debugging capabilities.
+  Configure debug logging for HTTP requests and responses.
 
   ## Configuration
 
@@ -11,22 +10,49 @@ defmodule DocuSign.Debug do
 
       config :docusign, debug: true
 
-  You can also configure logging at runtime:
+  You can also configure logging at runtime before creating a connection:
 
       DocuSign.Debug.enable_debugging()
       DocuSign.Debug.disable_debugging()
 
+  The `:debug` setting determines whether debug steps are added when a connection
+  is created. Changing it does not update existing connections. Messages use the
+  `:debug` log level; configure Logger to allow that level to see them.
+
   ## Debug Logging
 
-  When debugging is enabled, the client will log:
-  - HTTP request method, URL, and headers
-  - HTTP request body (with sensitive data filtered)
-  - HTTP response status, headers, and body
-  - Request/response timing information
+  With `debug: true`, the client logs the request method and URL, response status,
+  and filtered request and response headers. Bodies are omitted by default.
+
+  Set `debug_body: true` in application configuration to log bodies:
+
+      config :docusign, debug: true, debug_body: true
+
+  Bodies are logged verbatim, without filtering. They can contain signer names,
+  emails, and document content. Do not enable `debug_body` in production.
+
+  A direct `DocuSign.Connection.request/2` call can override body and header logging:
+
+      DocuSign.Connection.request(conn,
+        method: :get,
+        url: "/accounts",
+        debug_body: true,
+        debug_headers: false
+      )
+
+  These per-request options require a connection created with debugging enabled.
+  `debug_body` defaults to the application setting, or `false`. `debug_headers`
+  defaults to `true`; setting it to `false` omits headers while keeping the method,
+  URL, and status. Generated API functions do not forward these options.
 
   ## Header Filtering
 
-  Sensitive headers like authorization tokens are automatically filtered in debug logs:
+  The `authorization` header is filtered by default. In both request and response
+  logs, each header whose name matches the filter list has its entire value
+  replaced with `"[FILTERED]"`. Header names are kept and compared case-insensitively.
+
+  This configuration replaces the default list; keep `"authorization"` to continue
+  filtering bearer tokens:
 
       config :docusign, :debug_filter_headers, ["authorization", "x-api-key"]
 
@@ -49,7 +75,7 @@ defmodule DocuSign.Debug do
   @doc """
   Enable debugging for DocuSign HTTP requests.
 
-  This will enable debug logging for all DocuSign connections.
+  Connections created after this call include debug steps.
   """
   @spec enable_debugging() :: :ok
   def enable_debugging do
@@ -58,6 +84,8 @@ defmodule DocuSign.Debug do
 
   @doc """
   Disable debugging for DocuSign HTTP requests.
+
+  Connections created after this call omit debug steps.
   """
   @spec disable_debugging() :: :ok
   def disable_debugging do

@@ -1,11 +1,25 @@
 defmodule DocuSign.DebugTest do
-  use ExUnit.Case, async: true
+  use ExUnit.Case, async: false
 
   alias DocuSign.Debug
 
   # Suppress deprecation warnings for testing deprecated functions
   @compile {:no_warn_deprecated_function, {DocuSign.Debug, :middleware, 0}}
   @compile {:no_warn_deprecated_function, {DocuSign.Debug, :all_middleware, 0}}
+
+  setup do
+    original_config =
+      Map.new([:debug, :debug_filter_headers], fn key ->
+        {key, Application.fetch_env(:docusign, key)}
+      end)
+
+    on_exit(fn ->
+      Enum.each(original_config, fn
+        {key, {:ok, value}} -> Application.put_env(:docusign, key, value)
+        {key, :error} -> Application.delete_env(:docusign, key)
+      end)
+    end)
+  end
 
   describe "enable_debugging/0" do
     test "sets debug to true in application config" do
@@ -68,27 +82,6 @@ defmodule DocuSign.DebugTest do
   end
 
   describe "configuration scenarios" do
-    setup do
-      # Save original configs
-      original_debug = Application.get_env(:docusign, :debug)
-      original_filter = Application.get_env(:docusign, :debug_filter_headers)
-
-      on_exit(fn ->
-        # Restore original configs
-        if original_debug do
-          Application.put_env(:docusign, :debug, original_debug)
-        else
-          Application.delete_env(:docusign, :debug)
-        end
-
-        if original_filter do
-          Application.put_env(:docusign, :debug_filter_headers, original_filter)
-        else
-          Application.delete_env(:docusign, :debug_filter_headers)
-        end
-      end)
-    end
-
     test "runtime configuration changes are reflected immediately" do
       # Start with debugging disabled
       Debug.disable_debugging()

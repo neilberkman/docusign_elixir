@@ -9,9 +9,20 @@ defmodule DocuSign.ClientRegistry do
 
   alias DocuSign.OAuth.Impl
 
+  require Logger
+
   defmodule State do
     @moduledoc false
     defstruct clients: %{}, oauth_impl: nil
+
+    defimpl Inspect do
+      import Inspect.Algebra
+
+      def inspect(state, opts) do
+        fields = [oauth_impl: state.oauth_impl, user_ids: Map.keys(state.clients)]
+        concat(["#DocuSign.ClientRegistry.State<", to_doc(fields, opts), ">"])
+      end
+    end
   end
 
   #####
@@ -63,15 +74,24 @@ defmodule DocuSign.ClientRegistry do
   Async refreshes a token.
   """
   def handle_info({:refresh_token, user_id}, state) do
-    client = Map.get(state.clients, user_id)
-    refreshed_client = state.oauth_impl.refresh_token!(client, true)
+    case Map.get(state.clients, user_id) do
+      nil ->
+        {:noreply, state}
 
-    delay = state.oauth_impl.interval_refresh_token(refreshed_client)
-    schedule_refresh_token(user_id, delay)
+      client ->
+        refreshed_client = state.oauth_impl.refresh_token!(client, true)
 
-    updated_clients = Map.put(state.clients, user_id, refreshed_client)
+        delay = state.oauth_impl.interval_refresh_token(refreshed_client)
+        schedule_refresh_token(user_id, delay)
 
-    {:noreply, %{state | clients: updated_clients}}
+        updated_clients = Map.put(state.clients, user_id, refreshed_client)
+
+        {:noreply, %{state | clients: updated_clients}}
+    end
+  rescue
+    error ->
+      Logger.warning("Token refresh failed for user #{user_id}: #{Exception.message(error)}")
+      {:noreply, %{state | clients: Map.delete(state.clients, user_id)}}
   end
 
   defp create_client(user_id, oauth_impl) do
@@ -91,7 +111,7 @@ defmodule DocuSign.ClientRegistry do
   end
 
   defp schedule_refresh_token(user_id, seconds) do
-    Process.send_after(self(), {:refresh_token, user_id}, seconds * 1000)
+    Process.send_after(self(), {:refresh_token, user_id}, max(seconds, 0) * 1000)
   end
 
   defp oauth_implementation do

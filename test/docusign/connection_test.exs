@@ -18,6 +18,30 @@ defmodule DocuSign.ConnectionTest do
   # Deprecated functions removed in v2.0.0
   # Note: The tests for Connection.new() have been replaced with tests using Connection.get()
 
+  test "inspecting a connection hides OAuth credentials" do
+    oauth_client = %OAuth2.Client{
+      client_secret: "SECRET-CLIENT-SECRET",
+      token: %OAuth2.AccessToken{
+        access_token: "SECRET-TOKEN",
+        refresh_token: "SECRET-REFRESH-TOKEN",
+        token_type: "Bearer"
+      }
+    }
+
+    {:ok, conn} =
+      Connection.from_oauth_client(oauth_client,
+        account_id: "test-account",
+        base_uri: "https://demo.docusign.net/restapi"
+      )
+
+    inspected = inspect(conn)
+
+    assert inspected =~ "Req.Request"
+    refute inspected =~ "SECRET-TOKEN"
+    refute inspected =~ "SECRET-CLIENT-SECRET"
+    refute inspected =~ "SECRET-REFRESH-TOKEN"
+  end
+
   describe "getting a new connection for a user ID" do
     setup do
       {:ok, pid} = DocuSign.ClientRegistry.start_link(oauth_impl: @oauth_mock)
