@@ -157,7 +157,7 @@ defmodule DocuSign.SSLIntegrationTest do
         )
 
       # The named pool is configured but not started in the test environment.
-      assert conn.req.options[:finch] == DocuSign.Finch
+      assert conn.req.options[:finch] == [name: DocuSign.Finch]
 
       assert {:ok, %Req.Response{status: 200}} =
                Connection.request(conn, method: :get, url: "/test", ssl_options: [cacerts: cacerts])

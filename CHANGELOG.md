@@ -65,6 +65,8 @@
 
 ### Improvements
 
+- Pooled connections pass the Finch pool as `finch: [name: DocuSign.Finch]`. Req 0.7
+  deprecates the bare name form and printed a warning on every pooled request.
 - Fix the generated `DocuSign.Deserializer.deserialize/4` typespec, which declared its
   fourth argument as a function while every generated model passes a module. Dialyzer
   now analyses the 605 generated model modules cleanly, so the blanket

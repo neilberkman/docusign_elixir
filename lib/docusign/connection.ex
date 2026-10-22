@@ -205,7 +205,7 @@ defmodule DocuSign.Connection do
   defp configure_pooling(req) do
     if DocuSign.ConnectionPool.enabled?() do
       # Use custom Finch instance with pooling configuration
-      Req.merge(req, finch: DocuSign.ConnectionPool.finch_name())
+      Req.merge(req, finch: [name: DocuSign.ConnectionPool.finch_name()])
     else
       configure_ssl(req)
     end

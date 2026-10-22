@@ -80,7 +80,7 @@ defmodule DocuSign.ConnectionPoolIntegrationTest do
         )
 
       # Should be configured to use custom DocuSign.Finch
-      assert conn.req.options[:finch] == DocuSign.Finch
+      assert conn.req.options[:finch] == [name: DocuSign.Finch]
     end
 
     test "connection makes successful requests", %{server: server} do
@@ -139,7 +139,7 @@ defmodule DocuSign.ConnectionPoolIntegrationTest do
       assert request.options[:finch] == nil
       assert request.options[:connect_options][:transport_opts][:depth] == 5
       assert request.options[:connect_options][:transport_opts][:verify] == :verify_peer
-      assert conn.req.options[:finch] == DocuSign.Finch
+      assert conn.req.options[:finch] == [name: DocuSign.Finch]
       refute conn.req.options[:connect_options]
     end
 

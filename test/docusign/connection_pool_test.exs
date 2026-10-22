@@ -187,7 +187,7 @@ defmodule DocuSign.ConnectionPoolTest do
         )
 
       # Check that the connection is configured with custom Finch
-      assert conn.req.options[:finch] == DocuSign.Finch
+      assert conn.req.options[:finch] == [name: DocuSign.Finch]
     end
 
     test "connection uses default Finch when pooling is disabled", %{server: server} do
@@ -240,7 +240,7 @@ defmodule DocuSign.ConnectionPoolTest do
           base_uri: "http://localhost:#{server.port}"
         )
 
-      assert conn.req.options[:finch] == DocuSign.Finch
+      assert conn.req.options[:finch] == [name: DocuSign.Finch]
       refute Map.has_key?(conn.req.options, :connect_options)
       assert ConnectionPool.finch_pool_config().default[:conn_opts][:transport_opts][:depth] == 5
     end
