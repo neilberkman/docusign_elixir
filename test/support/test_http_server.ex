@@ -74,15 +74,16 @@ defmodule DocuSign.TestHTTPServer do
   end
 
   @impl true
-  def init(_opts) do
+  def init(opts) do
     Process.flag(:trap_exit, true)
 
     {:ok, server_pid} =
       Bandit.start_link(
         plug: {__MODULE__.Plug, self()},
         port: 0,
-        scheme: :http,
-        startup_log: false
+        scheme: Keyword.get(opts, :scheme, :http),
+        startup_log: false,
+        thousand_island_options: [transport_options: Keyword.get(opts, :transport_options, [])]
       )
 
     {:ok, {_host, port}} = ThousandIsland.listener_info(server_pid)

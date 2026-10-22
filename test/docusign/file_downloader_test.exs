@@ -26,6 +26,27 @@ defmodule DocuSign.FileDownloaderTest do
     {:ok, server: server, conn: conn}
   end
 
+  describe "download URL validation" do
+    test "rejects absolute and host-relative URLs", %{conn: conn} do
+      for url <- ["https://attacker.example/document.pdf", "//attacker.example/document.pdf"] do
+        assert_raise ArgumentError,
+                     "absolute URL not allowed; pass a path relative to the connection's base URI",
+                     fn -> FileDownloader.download(conn, url) end
+      end
+    end
+
+    test "downloads a relative path", %{conn: conn, server: server} do
+      DocuSign.TestHTTPServer.expect_once(server, "GET", "/document.pdf", fn conn ->
+        conn
+        |> Plug.Conn.put_resp_content_type("application/pdf")
+        |> Plug.Conn.resp(200, "pdf content")
+      end)
+
+      assert {:ok, {"pdf content", "document.pdf", "application/pdf"}} =
+               FileDownloader.download(conn, "/document.pdf", strategy: :memory, filename: "document.pdf")
+    end
+  end
+
   describe "extract_filename_from_header/1" do
     test "extracts filename from standard Content-Disposition header" do
       assert {:ok, "document.pdf"} =

@@ -170,19 +170,38 @@ defmodule DocuSign.WebhookPlugTest do
       assert {400, _, "Unable to process webhook right now."} = sent_resp(conn)
     end
 
-    test "crash hard if handler fails" do
-      conn = build_request(@webhook_event, @hmac256_key)
+    test "raises for invalid handler responses without exposing event data" do
+      payload = put_in(@webhook_event, ["data", "email"], "signer@example.com")
+      conn = build_request(payload, @hmac256_key)
 
       expected_exception_message = """
       DocuSign.WebhookPlugTest.BadHandler.handle_webhook/1 returned an invalid response. Expected {:ok, term}, :ok, {:error, reason} or :error
       Got: :timeout
-
-      Event data: #{inspect(@webhook_event)}
       """
 
-      assert_raise RuntimeError, expected_exception_message, fn ->
-        WebhookPlug.call(conn, @opts_with_bad_handler)
-      end
+      exception =
+        assert_raise RuntimeError, expected_exception_message, fn ->
+          WebhookPlug.call(conn, @opts_with_bad_handler)
+        end
+
+      refute exception.message =~ "email"
+      refute exception.message =~ payload["data"]["email"]
+      refute exception.message =~ payload["data"]["envelopeId"]
+      refute exception.message =~ payload["data"]["userId"]
+    end
+
+    test "rejects a 44-grapheme multibyte signature without raising" do
+      signature = String.duplicate("é", 44)
+      assert String.length(signature) == 44
+      refute Crypto.verify_hmac(@hmac256_key, JSON.encode!(@webhook_event), signature)
+
+      conn =
+        @webhook_event
+        |> build_request(@hmac256_key)
+        |> put_req_header("x-docusign-signature-1", signature)
+        |> WebhookPlug.call(@opts)
+
+      assert {400, _, "Bad request."} = sent_resp(conn)
     end
 
     test "accepts valid signature" do
@@ -259,6 +278,37 @@ defmodule DocuSign.WebhookPlugTest do
       assert {200, _, "Webhook received."} = sent_resp(conn)
     end
 
+    test "accepts secret as an alias for hmac_secret_key" do
+      opts =
+        WebhookPlug.init(
+          at: "/webhook/docusign",
+          handler: __MODULE__.StubHandler,
+          secret: fn -> @hmac256_key end
+        )
+
+      refute Map.has_key?(opts, :secret)
+      conn = WebhookPlug.call(build_request(@webhook_event, @hmac256_key), opts)
+      assert {200, _, "Webhook received."} = sent_resp(conn)
+    end
+
+    test "prefers hmac_secret_key over the secret alias" do
+      opts =
+        WebhookPlug.init(
+          at: "/webhook/docusign",
+          handler: __MODULE__.StubHandler,
+          hmac_secret_key: @hmac256_key,
+          secret: "other-key"
+        )
+
+      assert opts.hmac_secret_key == @hmac256_key
+    end
+
+    test "requires an HMAC secret during initialization" do
+      assert_raise ArgumentError, "DocuSign.WebhookPlug requires :hmac_secret_key", fn ->
+        WebhookPlug.init(at: "/webhook/docusign", handler: __MODULE__.StubHandler)
+      end
+    end
+
     test "accepts read_body_opts configuration" do
       conn = build_request(@webhook_event, @hmac256_key)
       conn = WebhookPlug.call(conn, @opts_with_read_body_opts)
@@ -303,7 +353,7 @@ defmodule DocuSign.WebhookPlugTest do
       plug DocuSign.WebhookPlug,
         at: "/webhook/docusign",
         handler: MyAppWeb.DocuSignHandler,
-        secret: {Application, :get_env, [:myapp, :docusign_hmac_secret]}
+        hmac_secret_key: {Application, :get_env, [:myapp, :docusign_hmac_secret]}
       """
 
       assert_raise RuntimeError, expected_exception_message, fn ->

@@ -3,28 +3,33 @@ defmodule DocuSign.OAuth.AuthorizationCodeStrategyTest do
 
   alias DocuSign.OAuth.AuthorizationCodeStrategy
   alias OAuth2.{AccessToken, Client}
+  alias Tesla.Adapter.Httpc
 
   setup do
     # Ensure the module is loaded
     Code.ensure_loaded(AuthorizationCodeStrategy)
 
     # Save current environment and clean slate for each test
-    original_client_id = Application.get_env(:docusign, :client_id)
-    original_client_secret = Application.get_env(:docusign, :client_secret)
-    original_hostname = Application.get_env(:docusign, :hostname)
+    original_env =
+      for {app, keys} <- [
+            docusign: [:client_id, :client_secret, :hostname, :ssl_options],
+            oauth2: [:adapter]
+          ],
+          key <- keys do
+        {app, key, Application.fetch_env(app, key)}
+      end
 
     Application.delete_env(:docusign, :client_id)
     Application.delete_env(:docusign, :client_secret)
     Application.delete_env(:docusign, :hostname)
+    Application.delete_env(:docusign, :ssl_options)
+    Application.delete_env(:oauth2, :adapter)
 
     on_exit(fn ->
-      # Restore original values
-      if original_client_id, do: Application.put_env(:docusign, :client_id, original_client_id)
-
-      if original_client_secret,
-        do: Application.put_env(:docusign, :client_secret, original_client_secret)
-
-      if original_hostname, do: Application.put_env(:docusign, :hostname, original_hostname)
+      Enum.each(original_env, fn
+        {app, key, {:ok, value}} -> Application.put_env(app, key, value)
+        {app, key, :error} -> Application.delete_env(app, key)
+      end)
     end)
 
     :ok
@@ -48,6 +53,57 @@ defmodule DocuSign.OAuth.AuthorizationCodeStrategyTest do
       assert client.token_url == "/oauth/token"
       assert client.redirect_uri == "https://example.com/callback"
       assert client.params["scope"] == "signature"
+      assert client.request_opts[:ssl][:verify] == :verify_peer
+    end
+
+    test "uses configured SSL options with the Httpc adapter" do
+      {:ok, cacertfile} = Briefly.create()
+      Application.put_env(:docusign, :ssl_options, cacertfile: cacertfile, depth: 5)
+      Application.put_env(:oauth2, :adapter, Httpc)
+
+      client =
+        AuthorizationCodeStrategy.client(
+          client_id: "test_client_id",
+          client_secret: "test_client_secret",
+          hostname: "account-d.docusign.com",
+          redirect_uri: "https://example.com/callback"
+        )
+
+      assert client.request_opts[:ssl][:verify] == :verify_peer
+      assert client.request_opts[:ssl][:cacertfile] == cacertfile
+      assert client.request_opts[:ssl][:depth] == 5
+    end
+
+    test "preserves explicit request options" do
+      request_opts = [ssl: [verify: :verify_none], timeout: 456]
+
+      client =
+        AuthorizationCodeStrategy.client(
+          client_id: "test_client_id",
+          client_secret: "test_client_secret",
+          hostname: "account-d.docusign.com",
+          redirect_uri: "https://example.com/callback",
+          request_opts: request_opts
+        )
+
+      assert client.request_opts == request_opts
+    end
+
+    test "leaves request options alone for other adapters" do
+      Application.put_env(:oauth2, :adapter, Tesla.Mock)
+      Application.put_env(:docusign, :ssl_options, cacertfile: "/nonexistent/cert.pem")
+
+      opts = [
+        client_id: "test_client_id",
+        client_secret: "test_client_secret",
+        hostname: "account-d.docusign.com",
+        redirect_uri: "https://example.com/callback"
+      ]
+
+      assert AuthorizationCodeStrategy.client(opts).request_opts == []
+
+      assert AuthorizationCodeStrategy.client(opts ++ [request_opts: [timeout: 456]]).request_opts ==
+               [timeout: 456]
     end
 
     test "creates OAuth2 client with custom scope" do

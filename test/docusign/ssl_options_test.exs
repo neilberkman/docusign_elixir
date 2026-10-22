@@ -1,6 +1,8 @@
 defmodule DocuSign.SSLOptionsTest do
   use ExUnit.Case
 
+  import DocuSign.EnvHelper
+
   alias DocuSign.SSLOptions
 
   doctest DocuSign.SSLOptions
@@ -16,22 +18,11 @@ defmodule DocuSign.SSLOptionsTest do
     end
 
     test "merges application config with defaults" do
-      # Temporarily set application config
-      original = Application.get_env(:docusign, :ssl_options)
-      Application.put_env(:docusign, :ssl_options, verify: :verify_none, depth: 5)
+      put_env(:docusign, :ssl_options, verify: :verify_none, depth: 5)
 
-      try do
-        opts = SSLOptions.build()
-        assert opts[:verify] == :verify_none
-        assert opts[:depth] == 5
-      after
-        # Restore original config
-        if original do
-          Application.put_env(:docusign, :ssl_options, original)
-        else
-          Application.delete_env(:docusign, :ssl_options)
-        end
-      end
+      opts = SSLOptions.build()
+      assert opts[:verify] == :verify_none
+      assert opts[:depth] == 5
     end
 
     test "runtime options override all other options" do
@@ -113,11 +104,28 @@ defmodule DocuSign.SSLOptionsTest do
 
   describe "integration with Connection module" do
     test "Connection.request/2 accepts ssl_options" do
-      # Ensure the module is loaded
-      Code.ensure_loaded!(DocuSign.Connection)
+      {:ok, cacertfile} = Briefly.create()
 
-      # Just verify the function exists and has the right arity
-      assert function_exported?(DocuSign.Connection, :request, 2)
+      req =
+        Req.new(base_url: "https://demo.docusign.net")
+        |> Req.Request.append_request_steps(
+          check_options: fn req ->
+            assert req.options[:finch] == nil
+            transport_opts = req.options[:connect_options][:transport_opts]
+            assert transport_opts[:cacertfile] == cacertfile
+            assert transport_opts[:depth] == 5
+            assert transport_opts[:verify] == :verify_peer
+            Req.Request.halt(req, %Req.Response{status: 200})
+          end
+        )
+
+      conn = %DocuSign.Connection{req: req}
+
+      assert {:ok, %Req.Response{status: 200}} =
+               DocuSign.Connection.request(conn,
+                 url: "/test",
+                 ssl_options: [cacertfile: cacertfile, depth: 5]
+               )
     end
   end
 end

@@ -113,6 +113,36 @@ defmodule DocuSign.ConnectionPoolIntegrationTest do
       assert JSON.decode!(response.body) == %{"status" => "ok"}
     end
 
+    test "per-request SSL options bypass the named pool", %{server: server} do
+      Application.put_env(:docusign, :pool_options, size: 5)
+
+      client = %OAuth2.Client{token: %OAuth2.AccessToken{access_token: "test-token"}}
+
+      {:ok, conn} =
+        Connection.from_oauth_client(client,
+          account_id: "test-account",
+          base_uri: "http://localhost:#{server.port}"
+        )
+
+      req =
+        Req.Request.append_request_steps(conn.req,
+          capture_options: fn req ->
+            send(self(), {:request, req})
+            Req.Request.halt(req, %Req.Response{status: 200})
+          end
+        )
+
+      assert {:ok, %Req.Response{status: 200}} =
+               Connection.request(%{conn | req: req}, url: "/test", ssl_options: [depth: 5])
+
+      assert_received {:request, request}
+      assert request.options[:finch] == nil
+      assert request.options[:connect_options][:transport_opts][:depth] == 5
+      assert request.options[:connect_options][:transport_opts][:verify] == :verify_peer
+      assert conn.req.options[:finch] == DocuSign.Finch
+      refute conn.req.options[:connect_options]
+    end
+
     test "pool health monitoring works" do
       # Test without pooling
       Application.delete_env(:docusign, :pool_options)

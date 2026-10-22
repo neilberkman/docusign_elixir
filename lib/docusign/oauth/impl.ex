@@ -13,6 +13,7 @@ defmodule DocuSign.OAuth.Impl do
   use OAuth2.Strategy
 
   alias OAuth2.{AccessToken, Client, Error}
+  alias Tesla.Adapter.Httpc
 
   require Logger
 
@@ -41,9 +42,18 @@ defmodule DocuSign.OAuth.Impl do
       site: "https://#{hostname}",
       authorize_url: "oauth/auth?response_type=code&scope=signature%20impersonation"
     ]
+    |> Keyword.merge(httpc_request_options())
     |> Keyword.merge(opts)
     |> Client.new()
     |> Client.put_serializer("application/json", JSON)
+  end
+
+  defp httpc_request_options do
+    if Application.get_env(:oauth2, :adapter, Httpc) == Httpc do
+      [request_opts: [ssl: DocuSign.SSLOptions.build()]]
+    else
+      []
+    end
   end
 
   defp get_default_user_id do

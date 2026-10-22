@@ -207,7 +207,14 @@ defmodule DocuSign.Connection do
       # Use custom Finch instance with pooling configuration
       Req.merge(req, finch: DocuSign.ConnectionPool.finch_name())
     else
-      # Use default Req.Finch without custom pooling
+      configure_ssl(req)
+    end
+  end
+
+  defp configure_ssl(req) do
+    if Application.get_env(:docusign, :ssl_options) do
+      Req.merge(req, connect_options: [transport_opts: DocuSign.SSLOptions.build()])
+    else
       req
     end
   end
@@ -401,7 +408,9 @@ defmodule DocuSign.Connection do
 
   ## Options
 
-  * `:ssl_options` - Override SSL options for this specific request
+  * `:ssl_options` - Override SSL options for this specific request. This bypasses
+    the shared pool for this request and uses a dynamic Req pool with these options.
+  * `:url` - Path relative to the connection's base URI. Absolute URLs are rejected.
   * `:telemetry_metadata` - Additional metadata to include in telemetry events
   * `:debug_headers` - Log filtered headers (default: `true`); requires `:debug` to be enabled
   * `:debug_body` - Log bodies verbatim (default: application `:debug_body`, or `false`);
@@ -427,6 +436,7 @@ defmodule DocuSign.Connection do
   """
   @spec request(t(), Keyword.t()) :: {:ok, Req.Response.t()} | {:error, any()}
   def request(%__MODULE__{app_account: app_account, req: req}, opts \\ []) do
+    validate_request_url!(opts[:url])
     {ssl_opts, opts, telemetry_meta} = extract_options(opts)
     {operation, metadata, start_time} = setup_telemetry(app_account, opts, telemetry_meta)
 
@@ -435,6 +445,16 @@ defmodule DocuSign.Connection do
 
     execute_request_with_telemetry(req, opts, operation, metadata, start_time)
   end
+
+  defp validate_request_url!(url) when is_binary(url) do
+    uri = URI.parse(url)
+
+    if uri.scheme || uri.host do
+      raise ArgumentError, "absolute URL not allowed; pass a path relative to the connection's base URI"
+    end
+  end
+
+  defp validate_request_url!(_url), do: :ok
 
   # Extract SSL and telemetry options from opts
   defp extract_options(opts) do
@@ -481,7 +501,7 @@ defmodule DocuSign.Connection do
         ssl_opts
       end
 
-    Req.merge(req, connect_options: [transport_opts: transport_opts])
+    Req.merge(req, finch: nil, connect_options: [transport_opts: transport_opts])
   end
 
   # Add telemetry metadata to Finch private options for correlation

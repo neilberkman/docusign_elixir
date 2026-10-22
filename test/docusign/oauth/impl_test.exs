@@ -1,5 +1,5 @@
 defmodule DocuSign.OAuth.ImplTest do
-  use ExUnit.Case, async: true
+  use ExUnit.Case, async: false
 
   import ExUnit.CaptureLog
 
@@ -7,6 +7,7 @@ defmodule DocuSign.OAuth.ImplTest do
   alias DocuSign.OAuth.Impl
   alias OAuth2.{AccessToken, Client}
   alias Plug.Conn
+  alias Tesla.Adapter.Httpc
 
   setup do
     server = DocuSign.TestHTTPServer.open()
@@ -15,6 +16,24 @@ defmodule DocuSign.OAuth.ImplTest do
 
   setup do
     # Some tests will override the application environment so reset it between tests.
+    original_env =
+      for {app, keys} <- [
+            docusign: [:token_signer, :private_key_file, :private_key_contents, :client_id, :ssl_options],
+            oauth2: [:adapter]
+          ],
+          key <- keys do
+        {app, key, Application.fetch_env(app, key)}
+      end
+
+    on_exit(fn ->
+      Enum.each(original_env, fn
+        {app, key, {:ok, value}} -> Application.put_env(app, key, value)
+        {app, key, :error} -> Application.delete_env(app, key)
+      end)
+    end)
+
+    Application.delete_env(:oauth2, :adapter)
+    Application.delete_env(:docusign, :ssl_options)
     Application.delete_env(:docusign, :token_signer)
     Application.delete_env(:docusign, :private_key_file)
     Application.delete_env(:docusign, :private_key_contents)
@@ -70,7 +89,7 @@ defmodule DocuSign.OAuth.ImplTest do
                  token_expires_in: 3600,
                  user_id: ":user-id:"
                },
-               request_opts: [],
+               request_opts: [ssl: ssl_options],
                serializers: %{"application/json" => JSON},
                site: "http://localhost",
                strategy: Impl,
@@ -78,6 +97,8 @@ defmodule DocuSign.OAuth.ImplTest do
                token_method: :post,
                token_url: "/oauth/token"
              } = OAuth.Impl.client(site: "http://localhost")
+
+      assert ssl_options[:verify] == :verify_peer
     end
 
     test "create new api client for given user ID" do
@@ -93,7 +114,7 @@ defmodule DocuSign.OAuth.ImplTest do
                  token_expires_in: 3600,
                  user_id: ":other-user-id:"
                },
-               request_opts: [],
+               request_opts: [ssl: ssl_options],
                serializers: %{"application/json" => JSON},
                site: "http://localhost",
                strategy: Impl,
@@ -101,6 +122,33 @@ defmodule DocuSign.OAuth.ImplTest do
                token_method: :post,
                token_url: "/oauth/token"
              } = OAuth.Impl.client(user_id: ":other-user-id:", site: "http://localhost")
+
+      assert ssl_options[:verify] == :verify_peer
+    end
+
+    test "uses configured SSL options with the Httpc adapter" do
+      {:ok, cacertfile} = Briefly.create()
+      Application.put_env(:docusign, :ssl_options, cacertfile: cacertfile, depth: 5)
+      Application.put_env(:oauth2, :adapter, Httpc)
+
+      client = Impl.client()
+
+      assert client.request_opts[:ssl][:verify] == :verify_peer
+      assert client.request_opts[:ssl][:cacertfile] == cacertfile
+      assert client.request_opts[:ssl][:depth] == 5
+    end
+
+    test "preserves explicit request options" do
+      request_opts = [ssl: [verify: :verify_none], timeout: 456]
+      assert Impl.client(request_opts: request_opts).request_opts == request_opts
+    end
+
+    test "leaves request options alone for other adapters" do
+      Application.put_env(:oauth2, :adapter, Tesla.Mock)
+      Application.put_env(:docusign, :ssl_options, cacertfile: "/nonexistent/cert.pem")
+
+      assert Impl.client().request_opts == []
+      assert Impl.client(request_opts: [timeout: 456]).request_opts == [timeout: 456]
     end
   end
 

@@ -78,7 +78,18 @@ defmodule DocuSign.SSLOptions do
         opts
       end
     end)
+    |> drop_cacertfile_when_cacerts_given()
     |> filter_nil_values()
+  end
+
+  # OTP's ssl ignores :cacertfile whenever :cacerts is set and logs a notice
+  # about it on every connection, so only one of the two is passed on.
+  defp drop_cacertfile_when_cacerts_given(opts) do
+    if Keyword.has_key?(opts, :cacerts) do
+      Keyword.delete(opts, :cacertfile)
+    else
+      opts
+    end
   end
 
   defp default_ssl_opts do

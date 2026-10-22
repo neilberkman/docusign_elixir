@@ -211,5 +211,38 @@ defmodule DocuSign.ConnectionPoolTest do
       # Check that the connection uses default Finch (nil or Req.Finch)
       assert conn.req.options[:finch] == nil || conn.req.options[:finch] == Req.Finch
     end
+
+    test "configured SSL options reach connections without pooling", %{server: server} do
+      Application.delete_env(:docusign, :pool_options)
+      {:ok, cacertfile} = Briefly.create()
+      Application.put_env(:docusign, :ssl_options, cacertfile: cacertfile, depth: 5)
+
+      {:ok, conn} =
+        DocuSign.Connection.from_oauth_client(%OAuth2.Client{},
+          account_id: "test-account",
+          base_uri: "http://localhost:#{server.port}"
+        )
+
+      assert conn.req.options[:finch] == nil
+      transport_opts = conn.req.options[:connect_options][:transport_opts]
+      assert transport_opts[:cacertfile] == cacertfile
+      assert transport_opts[:depth] == 5
+      assert transport_opts[:verify] == :verify_peer
+    end
+
+    test "configured SSL options stay in the shared pool when pooling is enabled", %{server: server} do
+      Application.put_env(:docusign, :pool_options, size: 5)
+      Application.put_env(:docusign, :ssl_options, depth: 5)
+
+      {:ok, conn} =
+        DocuSign.Connection.from_oauth_client(%OAuth2.Client{},
+          account_id: "test-account",
+          base_uri: "http://localhost:#{server.port}"
+        )
+
+      assert conn.req.options[:finch] == DocuSign.Finch
+      refute Map.has_key?(conn.req.options, :connect_options)
+      assert ConnectionPool.finch_pool_config().default[:conn_opts][:transport_opts][:depth] == 5
+    end
   end
 end

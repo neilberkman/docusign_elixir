@@ -64,13 +64,8 @@ defmodule DocuSign.ConnectionTest do
 
     test "consent required OAuth error returns error :consent_required" do
       # Set required config for build_consent_url
-      Application.put_env(:docusign, :client_id, "test-client-id")
-      Application.put_env(:docusign, :hostname, "test.docusign.com")
-
-      on_exit(fn ->
-        Application.delete_env(:docusign, :client_id)
-        Application.delete_env(:docusign, :hostname)
-      end)
+      put_env(:docusign, :client_id, "test-client-id")
+      put_env(:docusign, :hostname, "test.docusign.com")
 
       @oauth_mock
       |> expect(:client, fn opts ->
@@ -133,6 +128,45 @@ defmodule DocuSign.ConnectionTest do
 
       # Force server expectations to pass to prevent exit :shutdown error
       DocuSign.TestHTTPServer.pass(server)
+    end
+  end
+
+  describe "request URL validation" do
+    setup do
+      req = Req.new(base_url: "https://demo.docusign.net/restapi", auth: {:bearer, "test-token"})
+      {:ok, conn: %Connection{req: req}}
+    end
+
+    test "rejects absolute and host-relative URLs before running the request", %{conn: conn} do
+      req =
+        Req.Request.prepend_request_steps(conn.req,
+          reject_request: fn _req -> flunk("absolute URL reached the request steps") end
+        )
+
+      for url <- ["https://attacker.example/x", "//attacker.example/x", "mailto:attacker@example.com"] do
+        assert_raise ArgumentError,
+                     "absolute URL not allowed; pass a path relative to the connection's base URI",
+                     fn ->
+                       Connection.request(%{conn | req: req},
+                         url: url,
+                         ssl_options: [cacertfile: "/nonexistent/cert.pem"]
+                       )
+                     end
+      end
+    end
+
+    test "accepts a relative API path", %{conn: conn} do
+      req =
+        Req.Request.append_request_steps(conn.req,
+          check_request: fn req ->
+            assert URI.to_string(req.url) == "https://demo.docusign.net/restapi/v2.1/accounts"
+            assert Req.Request.get_header(req, "authorization") == ["Bearer test-token"]
+            Req.Request.halt(req, %Req.Response{status: 200, body: "ok"})
+          end
+        )
+
+      assert {:ok, %Req.Response{status: 200}} =
+               Connection.request(%{conn | req: req}, url: "/v2.1/accounts")
     end
   end
 

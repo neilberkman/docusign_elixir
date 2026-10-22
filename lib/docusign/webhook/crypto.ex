@@ -17,7 +17,7 @@ defmodule DocuSign.Webhook.Crypto do
 
     # `:crypto.hash_equals/2` will raise an error if the signatures are not the
     # same length. We avoid this by checking the length first.
-    if String.length(encoded_hmac) == String.length(signature) do
+    if byte_size(encoded_hmac) == byte_size(signature) do
       :crypto.hash_equals(encoded_hmac, signature)
     else
       false

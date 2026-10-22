@@ -8,7 +8,7 @@ defmodule DocuSign.WebhookPlug do
   ## Installation
 
   To handle webhook events, you must first configure your application's endpoint.
-  Add the following to `endpoint.ex`, **before** `Plug.Parsers` is loaded.
+  Add the following to `endpoint.ex`, before `Plug.Parsers` is loaded.
 
   ```elixir
   plug DocuSign.WebhookPlug,
@@ -27,7 +27,7 @@ defmodule DocuSign.WebhookPlug do
     Configure this to match whatever you set in the webhook.
   - `handler`: Custom event handler module that accepts `map()` payloads
     and processes them within your application. You must create this module.
-  - `secret`: Webhook HMAC secret obtained from the DocuSign Connect dashboard.
+  - `hmac_secret_key`: Webhook HMAC secret obtained from the DocuSign Connect dashboard.
     This can also be a function or a tuple for runtime configuration.
   - `read_body_opts`: Options passed to `Plug.Conn.read_body/2`. This can be
     used to increase the `:length` limit (default 8MB) for large webhook payloads.
@@ -102,13 +102,13 @@ defmodule DocuSign.WebhookPlug do
   plug DocuSign.WebhookPlug,
     at: "/webhook/docusign",
     handler: MyAppWeb.DocuSign.WebhookHandler,
-    secret: {Application, :get_env, [:myapp, :hmac_secret_key]}
+    hmac_secret_key: {Application, :get_env, [:myapp, :hmac_secret_key]}
 
   # Or, with a function
   plug DocuSign.WebhookPlug,
     at: "/webhook/docusign",
     handler: MyAppWeb.DocuSign.WebhookHandler,
-    secret: fn -> Application.get_env(:myapp, :hmac_secret_key) end
+    hmac_secret_key: fn -> Application.get_env(:myapp, :hmac_secret_key) end
   ```
 
   ### HMAC secret key
@@ -137,10 +137,16 @@ defmodule DocuSign.WebhookPlug do
 
   @impl true
   def init(opts) do
+    hmac_secret_key =
+      Keyword.get(opts, :hmac_secret_key, opts[:secret]) ||
+        raise ArgumentError, "DocuSign.WebhookPlug requires :hmac_secret_key"
+
     path_info = String.split(opts[:at], "/", trim: true)
 
     opts
     |> Map.new()
+    |> Map.delete(:secret)
+    |> Map.put(:hmac_secret_key, hmac_secret_key)
     |> Map.put_new(:path_info, path_info)
     |> Map.put_new(:read_body_opts, [])
   end
@@ -210,7 +216,7 @@ defmodule DocuSign.WebhookPlug do
     plug DocuSign.WebhookPlug,
       at: "/webhook/docusign",
       handler: MyAppWeb.DocuSignHandler,
-      secret: {Application, :get_env, [:myapp, :docusign_hmac_secret]}
+      hmac_secret_key: {Application, :get_env, [:myapp, :docusign_hmac_secret]}
     """
   end
 
@@ -256,8 +262,6 @@ defmodule DocuSign.WebhookPlug do
         raise RuntimeError, """
         #{inspect(handler)}.handle_webhook/1 returned an invalid response. Expected {:ok, term}, :ok, {:error, reason} or :error
         Got: #{inspect(resp)}
-
-        Event data: #{inspect(payload)}
         """
     end
   end

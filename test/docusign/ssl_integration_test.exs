@@ -3,7 +3,19 @@ defmodule DocuSign.SSLIntegrationTest do
   use ExUnit.Case, async: false
 
   alias DocuSign.Connection
+  alias DocuSign.OAuth.Impl
   alias DocuSign.SSLOptions
+
+  setup do
+    original = Application.fetch_env(:docusign, :ssl_options)
+
+    on_exit(fn ->
+      case original do
+        {:ok, value} -> Application.put_env(:docusign, :ssl_options, value)
+        :error -> Application.delete_env(:docusign, :ssl_options)
+      end
+    end)
+  end
 
   describe "SSL configuration with local test server" do
     setup do
@@ -53,14 +65,7 @@ defmodule DocuSign.SSLIntegrationTest do
     end
 
     test "per-request SSL options override defaults", %{server: server} do
-      # This test verifies that options are built correctly
-      # We can't actually test SSL over HTTP with local test server
-
-      DocuSign.TestHTTPServer.expect_once(server, "GET", "/test", fn conn ->
-        conn
-        |> Plug.Conn.put_resp_content_type("text/plain")
-        |> Plug.Conn.resp(200, "ok")
-      end)
+      Application.put_env(:docusign, :ssl_options, depth: 3)
 
       base_url = "http://localhost:#{server.port}"
 
@@ -81,18 +86,124 @@ defmodule DocuSign.SSLIntegrationTest do
         req: req
       }
 
-      # Just verify the request works without SSL options
-      # Actual SSL testing would require HTTPS setup
+      req =
+        Req.Request.append_request_steps(req,
+          capture_options: fn req ->
+            send(self(), {:request, req})
+            Req.Request.halt(req, %Req.Response{status: 200, body: "ok"})
+          end
+        )
+
+      conn = %{conn | req: req}
+
       {:ok, response} =
         Connection.request(conn,
           method: :get,
-          url: "/test"
+          url: "/test",
+          ssl_options: [depth: 5]
         )
 
+      assert_received {:request, request}
+      assert request.options[:finch] == nil
+      assert request.options[:connect_options][:transport_opts][:depth] == 5
+      assert request.options[:connect_options][:transport_opts][:verify] == :verify_peer
       assert response.status == 200
       assert response.body == "ok"
     end
   end
+
+  describe "TLS end to end" do
+    setup do
+      %{server_config: server_config, client_config: client_config} = DocuSign.TestTLS.chains()
+
+      server =
+        DocuSign.TestHTTPServer.open(
+          scheme: :https,
+          transport_options: DocuSign.TestTLS.server_transport_options(server_config)
+        )
+
+      original_pool = Application.get_env(:docusign, :pool_options)
+      original_hostname = Application.get_env(:docusign, :hostname)
+      original_client_id = Application.get_env(:docusign, :client_id)
+
+      on_exit(fn ->
+        restore_env(:pool_options, original_pool)
+        restore_env(:hostname, original_hostname)
+        restore_env(:client_id, original_client_id)
+      end)
+
+      {:ok, server: server, cacerts: client_config[:cacerts]}
+    end
+
+    @tag :capture_log
+    test "per-request SSL options complete a TLS request while pooling is enabled", %{
+      server: server,
+      cacerts: cacerts
+    } do
+      Application.put_env(:docusign, :pool_options, size: 5)
+
+      DocuSign.TestHTTPServer.expect_once(server, "GET", "/test", fn conn ->
+        conn
+        |> Plug.Conn.put_resp_content_type("application/json")
+        |> Plug.Conn.resp(200, ~s({"status": "ok"}))
+      end)
+
+      oauth_client = %OAuth2.Client{token: %OAuth2.AccessToken{access_token: "test", token_type: "Bearer"}}
+
+      {:ok, conn} =
+        Connection.from_oauth_client(oauth_client,
+          account_id: "test-account",
+          base_uri: "https://localhost:#{server.port}"
+        )
+
+      # The named pool is configured but not started in the test environment.
+      assert conn.req.options[:finch] == DocuSign.Finch
+
+      assert {:ok, %Req.Response{status: 200}} =
+               Connection.request(conn, method: :get, url: "/test", ssl_options: [cacerts: cacerts])
+
+      assert {:error, %Req.TransportError{reason: {:tls_alert, _}}} =
+               Connection.request(conn, method: :get, url: "/test", ssl_options: [depth: 2])
+    end
+
+    @tag :capture_log
+    test "JWT token request verifies the server certificate", %{server: server, cacerts: cacerts} do
+      Application.ensure_all_started(:inets)
+      # 127.0.0.1 rather than localhost: the server listens on IPv4 only.
+      Application.put_env(:docusign, :hostname, "127.0.0.1:#{server.port}")
+      Application.put_env(:docusign, :client_id, "client-id")
+
+      # Unknown CA first: httpc keeps connections alive per host and port, so a
+      # successful handshake before this point would be reused and skip verification.
+      # Tesla's httpc adapter reports every connection failure as :econnrefused, so
+      # the alert logged by the ssl application is the evidence that verification ran.
+      Application.delete_env(:docusign, :ssl_options)
+      client = Impl.client(user_id: "user")
+      assert client.request_opts[:ssl][:verify] == :verify_peer
+
+      log =
+        ExUnit.CaptureLog.capture_log(fn ->
+          assert {:error, %OAuth2.Error{reason: :econnrefused}} = OAuth2.Client.get_token(client)
+        end)
+
+      assert log =~ "Unknown CA"
+
+      DocuSign.TestHTTPServer.expect_once(server, "POST", "/oauth/token", fn conn ->
+        conn
+        |> Plug.Conn.put_resp_content_type("application/json")
+        |> Plug.Conn.resp(200, ~s({"access_token": "tok", "token_type": "Bearer", "expires_in": 3600}))
+      end)
+
+      Application.put_env(:docusign, :ssl_options, cacerts: cacerts)
+      client = Impl.client(user_id: "user")
+      assert client.request_opts[:ssl][:cacerts] == cacerts
+      refute Keyword.has_key?(client.request_opts[:ssl], :cacertfile)
+      assert %OAuth2.Client{token: %OAuth2.AccessToken{access_token: "tok"}} = Impl.get_token!(client)
+    end
+  end
+
+  defp restore_env(key, nil), do: Application.delete_env(:docusign, key)
+  defp restore_env(key, value), do: Application.put_env(:docusign, key, value)
 
   describe "SSL options building" do
     test "validates certificate files exist when validate_files is true" do

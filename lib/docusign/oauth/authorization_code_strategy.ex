@@ -34,6 +34,7 @@ defmodule DocuSign.OAuth.AuthorizationCodeStrategy do
   use OAuth2.Strategy
 
   alias OAuth2.{Client, Strategy.AuthCode}
+  alias Tesla.Adapter.Httpc
 
   @doc """
   Create a new OAuth2 client for DocuSign Authorization Code Flow.
@@ -83,6 +84,7 @@ defmodule DocuSign.OAuth.AuthorizationCodeStrategy do
       token_url: "/oauth/token",
       redirect_uri: redirect_uri
     ]
+    |> Keyword.merge(httpc_request_options())
     |> Keyword.merge(opts)
     |> Client.new()
     |> Client.put_serializer("application/json", JSON)
@@ -132,6 +134,14 @@ defmodule DocuSign.OAuth.AuthorizationCodeStrategy do
   end
 
   # Private helper functions
+
+  defp httpc_request_options do
+    if Application.get_env(:oauth2, :adapter, Httpc) == Httpc do
+      [request_opts: [ssl: DocuSign.SSLOptions.build()]]
+    else
+      []
+    end
+  end
 
   defp get_required_option(opts, key, fallback_fn) do
     case Keyword.fetch(opts, key) do
