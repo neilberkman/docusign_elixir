@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## v4.1.0 (2026-10-22)
 
 ### Security
 
