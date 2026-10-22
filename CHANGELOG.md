@@ -2,17 +2,66 @@
 
 ## Unreleased
 
+### Security
+
+- A scheduled token refresh that failed (any transport error or non-2xx from
+  the token endpoint) terminated `DocuSign.ClientRegistry`, and the GenServer
+  crash report printed every cached `OAuth2.Client`, access tokens included, at
+  error level. The refresh handler now rescues, logs the user ID and exception
+  message only, and drops that user's cached client so the next call rebuilds
+  it. The registry state and `DocuSign.Connection` redact the OAuth client on
+  inspect, so a crash in code holding a connection does not print the bearer
+  token or client secret either.
+- Debug logging replaced the `authorization` header value with `[FILTERED]`
+  in the Tesla era and stopped doing so in the Req migration, while the README
+  kept saying it did. The debug steps now apply `:debug_filter_headers`
+  (default `["authorization"]`) to request and response headers. `debug: true`
+  alone logs method, URL, status and filtered headers; bodies are logged only
+  with `debug_body: true` (application config or per request) and are logged
+  unfiltered.
+- Generated API functions percent-encode path parameters. A value containing
+  `/`, `?` or `#` previously changed the request path or appended query
+  parameters, all under the connection's bearer token. Every `url/2` call in
+  `DocuSign.Api.*` now wraps its parameters in the new
+  `DocuSign.RequestBuilder.encode_path_param/1`, which encodes everything
+  outside the RFC 3986 unreserved set and the bare `.` and `..` values. The
+  regeneration script applies this as post-processing until the upstream
+  generator emits it (openapi-generator PR #25366), and a test fails if any
+  generated URL carries a bare interpolation.
+- `DocuSign.Connection.request/2` rejects absolute URLs. Req skipped the base
+  URL for those and sent the bearer token to whatever host was given.
+- OAuth token requests for the JWT and authorization-code flows pass the
+  verified TLS options from `DocuSign.SSLOptions` to httpc instead of relying
+  on the OTP default, which only verifies peers on OTP 26 and newer.
+- Configured `:ssl_options` now apply to API traffic when `:pool_options` is
+  not set; they were only applied through the Finch pool. Per-request
+  `ssl_options:` with pooling enabled raised inside Req; that request now goes
+  through a dynamic pool with the given transport options.
+- `DocuSign.WebhookPlug` accepts `secret:` as its documentation showed, as
+  well as `hmac_secret_key:`, and raises at init without either. The HMAC
+  length guard compares bytes rather than graphemes, so a multibyte signature
+  header returns false instead of raising. The exception for an invalid
+  handler return no longer embeds the webhook payload.
+- `DocuSign.SSLOptions.build/1` drops `:cacertfile` when `:cacerts` is given,
+  since OTP ignores the file in that case and logs a notice per connection.
+- `config/dev.exs` no longer enables oauth2 debug logging, which printed token
+  responses.
+
 ### Internal
 
-- Stop vendoring the Req client templates. The Elixir generator gained a `req`
-  library upstream (openapi-generator PRs #24840 and #24841), so the API, request
-  builder, deserializer and connection templates now come from the generator
-  itself. `scripts/regen/custom_templates` keeps a single `model.mustache`
-  override, which omits nil fields when encoding rather than deriving
-  `JSON.Encoder`; DocuSign treats an explicit `null` as "clear this field".
-  Regeneration now requires OpenAPI Generator 7.26.0 or newer and the script
-  fails early on older versions. No generated code changes until the library is
-  regenerated against 7.26.0.
+- Regeneration runs against OpenAPI Generator 7.26.0 again. The upstream
+  Elixir generator cannot fall back to its embedded templates when a custom
+  template directory is given (openapi-generator PR #25365), and its merged Req
+  templates (PRs #24840 and #24841) produce code that differs from this
+  library's and fails eight tests. `scripts/regen/custom_templates` therefore
+  vendors the full template set: the pre-upstream Req templates this code was
+  generated from, upstream's supporting files, and three local deviations
+  (`model.mustache` omitting nil fields, a version-less `licenseInfo.mustache`,
+  and `encode_path_param/1` in the request builder). The script requires 7.26.0
+  or newer, runs the generator from a temporary directory so it leaves no
+  `openapitools.json` behind, and reproduces the committed code byte for byte.
+  Moving to upstream's templates is a separate change; see
+  `scripts/regen/README.md`.
 
 ### Improvements
 
